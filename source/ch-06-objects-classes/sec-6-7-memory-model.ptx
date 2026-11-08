@@ -1,0 +1,1128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<section xml:id="sec-6-7-memory-model">
+  <title>Objects in Memory: The Stack and the Heap</title>
+
+  <p>
+    It is well worth our time now to review the fundamentals of Java memory management, 
+    discuss how other languages solve the same problems, and learn the causes of and 
+    solutions to several common memory-related bugs. A robust understanding of how a Java 
+    program operates behind the scenes will pay dividends: you will write correct code 
+    from the start and avoid spending hours chasing memory-related crashes and semantic 
+    errors.
+  </p>
+
+  <subsection xml:id="subsec-6-7-1-memory-areas">
+    <title>Memory: Stack, Heap, and Static Area</title>
+
+    <p>
+      In Section 1.4, we gave an overview of four areas of memory that a running program 
+      maintains: the code segment, the static segment, the stack, and the heap. Your program's 
+      data is stored in the last three: the static segment, the stack, and the heap. It is 
+      critical to understand where a piece of data resides so that you know how to compare, 
+      copy, and modify it correctly. If you try to compare objects using the equality 
+      operators (<c>==</c> and <c>!=</c>), or if you accidentally declare an instance 
+      variable <c>static</c>, your program will behave unpredictably.
+    </p>
+
+    <subsubsection xml:id="subsubsec-6-7-1-1-the-stack">
+      <title>The Stack</title>
+
+      <p>
+        Each time a method is called, an activation record (or <em>frame</em>) is pushed 
+        onto the call stack for that method. That frame contains all of the method's local 
+        variables<mdash/>both parameters and variables declared within the method body.
+      </p>
+
+      <p>
+        The value for each primitive variable is stored directly on the stack. The value 
+        for each object variable is either <c>null</c> (a special literal indicating that 
+        no memory address is held) or a memory address pointing to the object's data in the heap.
+      </p>
+
+      <p>
+        When a method finishes executing, its frame is popped from the call stack, destroying 
+        all of its local variables. If a method held a reference to an object, that object 
+        still exists on the heap, even though the reference was removed from the stack. If 
+        there are no other references to the object (for example, if the method created the 
+        object and did not return it or store it elsewhere), then the object becomes 
+        eligible for garbage collection.
+      </p>
+
+      <p>
+        Consider the following method that we add to <c>PointDemo</c> and invoke with the 
+        argument <c>p1</c>, after creating <c>p1</c> and <c>p2</c>:
+      </p>
+
+      <program language="java">
+        <code>
+    public static void memoryExample(Point parameterPoint) {
+        Point localPoint;
+        double x = parameterPoint.getX();
+        double y = parameterPoint.getY();
+        localPoint = new Point(x, y);
+    }
+        </code>
+      </program>
+
+      <p>
+        When this method is invoked, we can picture memory as shown in <xref ref="fig-memory-two-refs"/>: 
+        on the call stack we have frames for <c>main</c> and <c>memoryExample</c>, each with 
+        its own local variables. Both methods hold references pointing to the exact same 
+        <c>Point</c> object in the heap (<c>p1</c> and <c>parameterPoint</c>).
+      </p>
+
+      <figure xml:id="fig-memory-two-refs">
+        <caption>Two references to the same object on the heap.</caption>
+        <image source="figures/figure_6_8.png" width="95%">
+          <description>
+            A memory diagram showing Call Stack on the left and Heap on the right. On the stack, 
+            the frame for main contains p1 holding 0x100 and p2 holding 0x200. Pushed above it, 
+            the frame for memoryExample contains parameterPoint holding 0x100. Both p1 and 
+            parameterPoint have arrows pointing to the same Point object at 0x100 on the heap.
+          </description>
+        </image>
+      </figure>
+
+      <p>
+        After the last line of the method executes, we can picture memory as shown in 
+        <xref ref="fig-memory-before-return"/>: there is now a third <c>Point</c> object in 
+        the heap, referenced by <c>localPoint</c>, and the local primitive variables <c>x</c> 
+        and <c>y</c> hold copied values.
+      </p>
+
+      <figure xml:id="fig-memory-before-return">
+        <caption>Memory layout just before the method returns.</caption>
+        <image source="figures/figure_6_9.png" width="95%">
+          <description>
+            A memory diagram showing memoryExample just before returning. Inside memoryExample, 
+            x holds 3.0, y holds 4.0, and localPoint holds 0x300, pointing to a new Point object 
+            at address 0x300 on the heap.
+          </description>
+        </image>
+      </figure>
+
+      <p>
+        Once <c>memoryExample</c> finishes executing, its frame is popped from the stack. 
+        The local variables <c>x</c>, <c>y</c>, <c>localPoint</c>, and <c>parameterPoint</c> 
+        are destroyed. Because <c>p1</c> in <c>main</c> still references the object at 
+        <c>0x100</c>, that object remains active. However, because the only reference to the 
+        third <c>Point</c> object was inside the popped stack frame, the object at address 
+        <c>0x300</c> is now unreachable<mdash/>there are no remaining references pointing to 
+        it from anywhere in memory. <xref ref="fig-memory-after-return"/> illustrates memory 
+        after <c>memoryExample</c> returns.
+      </p>
+
+      <figure xml:id="fig-memory-after-return">
+        <caption>Memory layout after method <c>memoryExample</c> returns.</caption>
+        <image source="figures/figure_6_10.png" width="95%">
+          <description>
+            A memory diagram showing the call stack after memoryExample has popped. Only main 
+            remains on the stack. In the heap, Point objects at 0x100 and 0x200 are active, while 
+            the abandoned Point object at 0x300 is marked as unreachable with a red dashed border 
+            and red cross for garbage collection.
+          </description>
+        </image>
+      </figure>
+    </subsubsection>
+
+    <subsubsection xml:id="subsubsec-6-7-1-2-the-heap">
+      <title>The Heap</title>
+
+      <p>
+        Each time an object is created with the <c>new</c> keyword, space is allocated for 
+        the object's data on the heap. (Remember that Java provides shortcut syntax that allows 
+        <c>String</c> literals to be created without <c>new</c>, but they are still stored in 
+        heap memory.) A reference to the object (its memory address) is placed in the variable 
+        that the object is assigned to. If that variable is a local method variable, the 
+        reference lives on the stack. An object can also be a field of another object. In that 
+        case, the reference is stored inside an object on the heap.
+      </p>
+
+      <p>
+        In <xref ref="fig-memory-ev-heap"/>, we see an <c>ElectricVehicle</c> object on the 
+        heap. The value of each primitive <c>double</c> field is stored directly within the 
+        object's memory block. Because the <c>model</c> field is a <c>String</c> (which is also 
+        an object), that value resides in a separate location on the heap. The value stored 
+        within the <c>ElectricVehicle</c> object is a reference<mdash/>the memory address of 
+        that <c>String</c> object.
+      </p>
+
+      <figure xml:id="fig-memory-ev-heap">
+        <caption>An <c>ElectricVehicle</c> object on the heap with composed <c>String</c> reference.</caption>
+        <image source="figures/figure_6_11.png" width="95%">
+          <description>
+            A memory diagram of an ElectricVehicle object at address 0x400 on the heap. Primitive 
+            fields batteryCapacityKwh, milesPerKwh, currentChargeKwh, and odometerMiles are stored 
+            directly inside the object. The model field holds address 0x500 and points to an 
+            independent String object containing 'Chevy Bolt EV' elsewhere on the heap.
+          </description>
+        </image>
+      </figure>
+
+      <p>
+        Objects stored in the heap remain there until they are removed by the automatic garbage 
+        collector that runs periodically within the JVM. An object will only be collected if 
+        there are zero active references pointing to it.
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="subsubsec-6-7-1-3-static-segment">
+      <title>The Static Segment</title>
+
+      <p>
+        Static fields<mdash/>fields that are part of a class blueprint and are shared by all 
+        instances<mdash/>are stored in the static memory segment. These variables are allocated 
+        when the JVM first encounters a line of code that references the class. Once created, 
+        they exist for the entire duration of program execution.
+      </p>
+    </subsubsection>
+  </subsection>
+
+  <subsection xml:id="subsec-6-7-2-dereferencing">
+    <title>Reference Variables and Implicit Dereferencing</title>
+
+    <p>
+      Throughout this chapter, we have drawn arrows in our memory diagrams connecting reference 
+      variables on the call stack to objects on the heap. But what is an arrow in physical 
+      computer hardware?
+    </p>
+
+    <p>
+      To understand how Java manipulates objects<mdash/>and to prepare you for the explicit 
+      pointer syntax you will encounter in languages like C and C++<mdash/>we need to examine 
+      what an address actually is and what happens when you use the dot operator (<c>.</c>).
+    </p>
+
+    <subsubsection xml:id="subsubsec-6-7-2-1-what-address-is">
+      <title>What a Memory Address Really Is</title>
+
+      <p>
+        In physical RAM, every byte of memory has a unique numerical identifier called its 
+        <em>memory address</em>. You can think of RAM as an immense row of post office boxes 
+        or lockers, numbered sequentially from zero up to the total capacity of your computer's 
+        memory.
+      </p>
+
+      <p>
+        When you write:
+      </p>
+
+      <program language="java">
+        <code>
+Point p1 = new Point(3.0, 4.0);
+        </code>
+      </program>
+
+      <p>
+        Two distinct operations occur in memory:
+      </p>
+
+      <ol>
+        <li>
+          <p>
+            The <c>new</c> operator allocates a block of bytes on the heap to store the 
+            <c>Point</c> object (its object header, its <c>x</c> field, and its <c>y</c> field), 
+            beginning at a specific byte address (such as <c>0x004A1000</c>, which we simplify 
+            as <c>0x100</c> in our diagrams).
+          </p>
+        </li>
+        <li>
+          <p>
+            The variable <c>p1</c> is allocated on the call stack. The variable <c>p1</c> does 
+            not contain the point's coordinates <c>3.0</c> and <c>4.0</c>. Instead, <c>p1</c> 
+            stores that 64-bit integer address: <c>0x100</c>.
+          </p>
+        </li>
+      </ol>
+
+      <p>
+        A reference variable is like a piece of paper with someone's street address written on 
+        it. The piece of paper is not the house; it merely tells you where to find the house 
+        if you travel to that location.
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="subsubsec-6-7-2-2-meaning-dereferencing">
+      <title>The Meaning of <q>Dereferencing</q></title>
+
+      <p>
+        In computer science, <em>dereferencing</em> means traveling to the memory address stored 
+        inside a reference variable to access the actual data located there. It is the formal 
+        term for <q>following the arrow</q> from the stack to the heap.
+      </p>
+
+      <p>
+        In Java, dereferencing is completely <em>implicit</em> (automatic). Whenever you use 
+        the dot operator on an object reference, Java performs two distinct operations in a 
+        single step:
+      </p>
+
+      <ol>
+        <li>
+          <p>
+            <strong>It follows the address:</strong> It reads the memory address stored in 
+            <c>p1</c> (<c>0x100</c>) and navigates to that location on the heap.
+          </p>
+        </li>
+        <li>
+          <p>
+            <strong>It selects the member:</strong> It accesses the requested field or invokes 
+            the requested method (such as <c>getX()</c> or <c>translate()</c>) belonging to 
+            that heap object.
+          </p>
+        </li>
+      </ol>
+
+      <p>
+        Because the dot operator handles both pointer navigation and member selection 
+        simultaneously, Java programmers rarely have to think about raw memory addresses 
+        during daily coding.
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="subsubsec-6-7-2-3-cpp-pointers">
+      <title>The C and C++ Connection: Explicit Pointers</title>
+
+      <p>
+        In lower-level languages like C and C++, memory is not hidden behind automatic language 
+        features. C++ gives programmers direct, manual control over memory, requiring them to 
+        choose explicitly how an object is stored:
+      </p>
+
+      <ul>
+        <li>
+          <p>
+            <strong>As a direct value:</strong> <c>Point point;</c> allocates the point's data 
+            directly on the stack without using a pointer.
+          </p>
+        </li>
+        <li>
+          <p>
+            <strong>As a pointer:</strong> <c>Point* p = new Point(3.0, 4.0);</c> creates a 
+            pointer variable <c>p</c> that holds a heap memory address, just like in Java.
+          </p>
+        </li>
+        <li>
+          <p>
+            <strong>As a reference alias:</strong> <c>Point&amp; ref = point;</c> creates an 
+            alternative name for an existing variable.
+          </p>
+        </li>
+      </ul>
+
+      <p>
+        Because C++ makes this distinction explicit, if you hold a pointer variable <c>p</c>, 
+        you cannot access its members using a simple dot operator. Writing <c>p.getX()</c> in 
+        C++ produces a compiler error because <c>p</c> is an address, not an object.
+      </p>
+
+      <p>
+        Instead, C and C++ require the programmer to dereference the pointer explicitly using 
+        one of two notations:
+      </p>
+
+      <ul>
+        <li>
+          <p>
+            <strong>The dereference operator (<c>*</c>):</strong> You must manually follow the 
+            address using an asterisk, and then use the dot: <c>(*p).getX()</c>. The parentheses 
+            are required because the dot operator has higher precedence than the asterisk.
+          </p>
+        </li>
+        <li>
+          <p>
+            <strong>The arrow operator (<c>-&gt;</c>):</strong> Because <c>(*p).</c> is cumbersome 
+            to write, C and C++ provide the arrow operator as shorthand: <c>p-&gt;getX()</c>. 
+            The arrow operator literally means: <q>follow this pointer address to the heap, and 
+            then select this member.</q>
+          </p>
+        </li>
+      </ul>
+    </subsubsection>
+
+    <subsubsection xml:id="subsubsec-6-7-2-4-java-pointers">
+      <title>Java References Are Pointers with Automatic Dereferencing</title>
+
+      <p>
+        When you transition to C++, pointer syntax can feel intimidating at first. However, 
+        you already understand how it works because every object variable in Java is secretly 
+        a pointer under the hood.
+      </p>
+
+      <p>
+        Java's designers simply decided to eliminate the pointer syntax (<c>*</c> and <c>-&gt;</c>) 
+        to make the language safer and easier to learn. In Java, writing:
+      </p>
+
+      <program language="java">
+        <code>
+p1.getX();
+        </code>
+      </program>
+
+      <p>
+        performs the exact same mechanical operation as writing:
+      </p>
+
+      <program language="c++">
+        <code>
+p1-&gt;getX();
+        </code>
+      </program>
+
+      <p>
+        in C++. Recognizing that Java's dot operator implicitly follows an address to the heap 
+        will make learning a language with pointers feel familiar. More importantly, it unlocks 
+        the answers to critical memory questions: why assigning one object variable to another 
+        does not copy the object, and why calling a method on <c>null</c> crashes your program.
+      </p>
+    </subsubsection>
+  </subsection>
+
+  <subsection xml:id="subsec-6-7-3-null-pointer">
+    <title>The <c>null</c> Reference and <c>NullPointerException</c></title>
+
+    <p>
+      <xref ref="listing-rectangle-class"/> is a <c>Rectangle</c> class that contains a 
+      <c>Point</c> object as a field. Take a moment to read through the class, and then we will 
+      examine what <c>null</c> means and how it relates to one of the most common bugs in 
+      computing: the <c>NullPointerException</c>.
+    </p>
+
+    <listing xml:id="listing-rectangle-class">
+      <caption>The <c>Rectangle</c> class</caption>
+      <program language="java">
+        <code>
+/**
+ * Represents a two-dimensional rectangle defined by an anchor Point 
+ * at its top-left corner, a width, and a height.
+ */
+public class Rectangle {
+ 
+    private Point topLeft;
+    private double width;
+    private double height;
+
+    /**
+     * Constructs a new Rectangle with a specified top-left anchor point 
+     * and dimensions.
+     *
+     * Precondition: width > 0.0 &amp;&amp; height > 0.0
+     * Postcondition: The rectangle is initialized with the given dimensions,
+     *                and topLeft is initialized at coordinates (x, y).
+     *
+     * @param x the x coordinate of the rectangle left
+     * @param y the y coordinate of the rectangle top
+     * @param width the horizontal width of the rectangle
+     * @param height the vertical height of the rectangle
+     */
+    public Rectangle(double x, double y, double width, double height) {
+        assert width > 0.0 &amp;&amp; height > 0.0 : "Dimensions must be positive";
+        this.topLeft = new Point(x, y);
+        this.width = width;
+        this.height = height;
+    }
+
+    /**
+     * Calculates the distance from the coordinate origin (0.0, 0.0) 
+     * to this rectangle's top-left corner by delegating to the Point object.
+     *
+     * Precondition: topLeft != null
+     * Postcondition: Returns the Euclidean distance from (0, 0) to top-left.
+     *
+     * @return the distance from (0.0, 0.0) to the top-left corner
+     */
+    public double distanceFromOrigin() {
+        assert this.topLeft != null : "Cannot calc distance: top-left point is null";
+        return this.topLeft.distanceFromOrigin();
+    }
+
+    /**
+     * Moves the rectangle to a new top-left anchor position.
+     *
+     * Precondition: None
+     * Postcondition: The rectangle's top-left corner is a new Point at (x, y);
+     *                width and height are unchanged.
+     *
+     * @param x the x coordinate of the rectangle left
+     * @param y the y coordinate of the rectangle top
+     */
+    public void moveTo(double x, double y) {
+        this.topLeft = new Point(x, y);
+    }
+
+    /**
+     * Returns the current top-left anchor Point.
+     *
+     * @return the top-left corner Point reference
+     */
+    public Point getTopLeft() {
+        return this.topLeft;
+    }
+}
+        </code>
+      </program>
+    </listing>
+
+    <p>
+      A <c>Rectangle</c> object is composed of a <c>width</c> and <c>height</c> (<c>double</c>), 
+      and a <c>Point</c> object that establishes its position. There is one constructor that 
+      initializes the width and height, and initializes <c>topLeft</c> by instantiating a new 
+      <c>Point</c> from the <c>x</c> and <c>y</c> arguments. There is one mutator<mdash/><c>moveTo</c><mdash/>that 
+      creates a new <c>Point</c> at new coordinates and assigns it to <c>topLeft</c>. There are 
+      two accessors: <c>getTopLeft</c>, and <c>distanceFromOrigin</c>, which delegates the distance 
+      calculation directly to the composed <c>Point</c>:
+    </p>
+
+    <program language="java">
+      <code>
+return this.topLeft.distanceFromOrigin();
+      </code>
+    </program>
+
+    <p>
+      <xref ref="listing-rectangle-demo"/> is a driver program called <c>RectangleDemo</c> 
+      that creates a <c>Rectangle</c> and moves it.
+    </p>
+
+    <listing xml:id="listing-rectangle-demo">
+      <caption>The <c>RectangleDemo</c> class</caption>
+      <program interactive="activecode" language="java">
+        <code>
+public class RectangleDemo {
+    public static void main(String[] args) {
+        // Creates a Rectangle and prints its distance from the origin.
+        Rectangle rect1 = new Rectangle(3.0, 4.0, 10.0, 20.0);
+        System.out.println(rect1.distanceFromOrigin());
+        
+        // Moves it and prints its distance from the origin.
+        rect1.moveTo(5.0, 12.0);
+        System.out.println(rect1.distanceFromOrigin());
+    }
+}
+        </code>
+      </program>
+    </listing>
+
+    <p>
+      This program displays the rectangle's distance from the origin after construction and 
+      after moving, producing the following output:
+    </p>
+
+    <console>
+      <output>
+5.0
+13.0
+      </output>
+    </console>
+
+    <p>
+      <xref ref="fig-rect-demo-line4"/> visualizes the stack and heap after line 4 executes. 
+      You can see a reference in <c>main</c> on the stack pointing to the <c>Rectangle</c> 
+      object <c>rect1</c> on the heap. The <c>Rectangle</c> object on the heap references a 
+      <c>Point</c> object for its <c>topLeft</c> field.
+    </p>
+
+    <figure xml:id="fig-rect-demo-line4">
+      <caption>The stack and heap after line 4 in <c>RectangleDemo.main</c> executes.</caption>
+      <image source="figures/figure_6_12.png" width="95%">
+        <description>
+          A memory diagram showing Call Stack on the left and Heap on the right. In main, rect1 
+          at 0x7FE8 holds address 0x300. On the heap, the Rectangle object at address 0x300 contains 
+          width 10.0, height 20.0, and a topLeft field holding address 0x100. An arrow from topLeft 
+          arcs out to a Point object at address 0x100 containing x equal to 3.0 and y equal to 4.0.
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      After line 8 executes, the <c>Rectangle</c> object's <c>topLeft</c> field references a 
+      new <c>Point</c> object at address <c>0x200</c>. Because the original <c>Point</c> at 
+      <c>0x100</c> no longer has any references pointing to it, it is marked for garbage 
+      collection, as illustrated in <xref ref="fig-rect-demo-line8"/>.
+    </p>
+
+    <figure xml:id="fig-rect-demo-line8">
+      <caption>Memory layout after line 8 executes (<c>moveTo</c> and garbage collection).</caption>
+      <image source="figures/figure_6_13.png" width="95%">
+        <description>
+          A memory diagram showing memory after rect1.moveTo(5.0, 12.0) executes. The Rectangle 
+          at address 0x300 now holds 0x200 in its topLeft field, pointing to a new Point object at 
+          0x200 with x 5.0 and y 12.0. The original Point object at 0x100 has zero incoming references 
+          and is marked as unreachable for garbage collection with a dashed border and red cross.
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      As we discussed in Section 6.6.1, when an object is created, its fields are initialized 
+      to default values. There is a special keyword for an unassigned object reference: 
+      <c>null</c>. It means the reference variable does not point to any object at all. In 
+      our <c>Rectangle</c> class, it makes no sense for the <c>Point</c> field to be <c>null</c>, 
+      so we initialize it in the constructor and ensure it is never set to <c>null</c>.
+    </p>
+
+    <p>
+      For some classes, an object reference may legitimately be <c>null</c> if it represents 
+      an optional component. For example, a <c>Name</c> class might have an optional 
+      <c>middleName</c> field. In methods that use that field, the programmer must verify that 
+      the reference is not <c>null</c> before dereferencing it:
+    </p>
+
+    <program language="java">
+      <code>
+// Safe defensive check before dereferencing:
+if (this.middleName != null) {
+    System.out.println("Middle initial: " + this.middleName.charAt(0));
+}
+      </code>
+    </program>
+
+    <p>
+      A <c>null</c> reference cannot be dereferenced<mdash/>the JVM cannot follow a <c>null</c> 
+      address to an object on the heap because no object exists there. If we attempt to use the 
+      dot operator on a <c>null</c> reference, the JVM throws a <c>NullPointerException</c>.
+    </p>
+
+    <p>
+      Suppose we make the common mistake of forgetting to initialize <c>topLeft</c> in our 
+      constructor:
+    </p>
+
+    <program language="java">
+      <code>
+    // Buggy constructor: forgot to initialize topLeft!
+    public Rectangle(double width, double height) {
+        this.width = width;
+        this.height = height;
+    }
+      </code>
+    </program>
+
+    <p>
+      The <c>topLeft</c> field would retain the zeroed-out <c>null</c> value assigned to it 
+      when memory was allocated on the heap. <xref ref="fig-rect-null-pointer"/> depicts memory 
+      after this modified constructor executes.
+    </p>
+
+    <figure xml:id="fig-rect-null-pointer">
+      <caption>Memory layout after the modified constructor leaves <c>topLeft</c> as <c>null</c>.</caption>
+      <image source="figures/figure_6_14.png" width="95%">
+        <description>
+          A memory diagram showing a Rectangle object at address 0x300 on the heap whose topLeft 
+          field explicitly contains null with a slash-through circle symbol. A red callout box 
+          notes that attempting to invoke methods on this null reference will crash with a 
+          NullPointerException.
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      If we run with assertions disabled, or if we omit our defensive assertion, attempting to 
+      invoke <c>rect1.distanceFromOrigin()</c> causes Java to throw an immediate exception:
+    </p>
+
+    <console>
+      <output>
+Exception in thread "main" java.lang.NullPointerException: Cannot invoke "Point.distanceFromOrigin()" because "this.topLeft" is null
+    at Rectangle.distanceFromOrigin(Rectangle.java:42)
+    at RectangleDemo.main(RectangleDemo.java:5)
+      </output>
+    </console>
+
+    <p>
+      Line 42 of <c>Rectangle.java</c> attempts to invoke <c>distanceFromOrigin</c> on 
+      <c>topLeft</c>, but <c>topLeft</c> contains <c>null</c>. Because <c>null</c> is not an 
+      object, the JVM halts with a <c>NullPointerException</c>.
+    </p>
+  </subsection>
+
+  <subsection xml:id="subsec-6-7-4-aliasing">
+    <title>Object Aliasing: Assignment (<c>=</c>) and Method Arguments</title>
+
+    <subsubsection xml:id="subsubsec-6-7-4-1-pass-by-value-objects">
+      <title>What Pass-by-Value Means with Objects</title>
+
+      <p>
+        In Section 6.7.1.1, we saw a method that accepted a <c>Point</c> object as a parameter:
+      </p>
+
+      <program language="java">
+        <code>
+    public static void memoryExample(Point parameterPoint) {
+        ...
+    }
+        </code>
+      </program>
+
+      <p>
+        When we invoke a method, Java evaluates the arguments and copies their values directly 
+        into the matching parameter variables on the call stack. For primitive types, this copies 
+        the raw data (such as an <c>int</c> or a <c>double</c>). For reference types, Java follows 
+        the exact same rule: the value stored in the argument variable is copied directly into 
+        the parameter variable on the stack. However, because the value stored in an object 
+        variable is a memory address, what gets copied is that reference<mdash/>not the object's 
+        data. The object itself remains on the heap.
+      </p>
+
+      <p>
+        The implications are profound: while reassigning a primitive parameter variable has no 
+        effect on the caller, invoking a mutator method through a reference parameter directly 
+        modifies the object on the heap.
+      </p>
+
+      <p>
+        Suppose we add the following <c>reflectPoint</c> method to <c>PointDemo.java</c>:
+      </p>
+
+      <program language="java">
+        <code>
+    /**
+     * Reflects the point across the y axis.
+     * Precondition: p != null
+     * Postcondition: p.getX() == -old(p.getX()) &amp;&amp; p.getY() == old(p.getY())
+     * 
+     * @param p The Point to reflect.
+     */
+    public static void reflectPoint(Point p) {
+        assert p != null : "A nonexistent point cannot be reflected.";
+        p.translate(-2 * p.getX(), 0);
+    }
+        </code>
+      </program>
+
+      <p>
+        And suppose we invoke <c>reflectPoint(p1)</c> in <c>main</c>:
+      </p>
+
+      <program language="java">
+        <code>
+Point p1 = new Point(3.0, 4.0);
+Point p2 = new Point(5.0, 12.0);
+reflectPoint(p1);
+        </code>
+      </program>
+
+      <p>
+        The <c>reflectPoint</c> method receives a copy of the address stored in <c>p1</c>. Both 
+        <c>p1</c> in <c>main</c>'s frame and <c>p</c> in <c>reflectPoint</c>'s frame reference 
+        the exact same heap memory block. When <c>reflectPoint</c> calls <c>p.translate(-6.0, 0)</c>, 
+        Java follows the pointer to the heap and updates <c>x</c> from <c>3.0</c> to <c>-3.0</c> 
+        directly in heap memory. <xref ref="fig-memory-reflect-point"/> illustrates memory after 
+        the <c>translate</c> method is invoked inside <c>reflectPoint</c>.
+      </p>
+
+      <figure xml:id="fig-memory-reflect-point">
+        <caption>Memory layout after <c>reflectPoint</c> mutates the object referenced by <c>p1</c>.</caption>
+        <image source="figures/figure_6_15.png" width="95%">
+          <description>
+            A memory diagram showing main on the stack with p1 holding 0x100, and reflectPoint on 
+            the stack with parameter p holding 0x100. Both variables point to the same Point object 
+            at address 0x100 on the heap, whose x field has been mutated from 3.0 to -3.0.
+          </description>
+        </image>
+      </figure>
+
+      <p>
+        This may initially feel like a violation of pass-by-value. Pass-by-value guarantees that 
+        the caller's reference variable cannot be redirected to point to a different object.
+      </p>
+
+      <p>
+        To see this, suppose we wrote a flawed version, <c>badReflectPoint</c>, attempting to 
+        create a new reflected object rather than mutating the existing one:
+      </p>
+
+      <program language="java">
+        <code>
+public static void badReflectPoint(Point p) {
+    // Reassigns the LOCAL parameter p to a new heap object;
+    // does NOT change p1 in main!
+    assert p != null : "A nonexistent point cannot be reflected.";
+    p = new Point(-p.getX(), p.getY());
+}
+        </code>
+      </program>
+
+      <p>
+        When <c>badReflectPoint(p1)</c> executes, the parameter variable <c>p</c> initially 
+        receives a reference to the object at <c>0x100</c>. But the method then allocates a new 
+        <c>Point</c> object and assigns that new memory address to <c>p</c>. This assignment 
+        updates only the local parameter in <c>badReflectPoint</c>'s stack frame. It has zero 
+        impact on <c>p1</c> in <c>main</c>, which still references the original object at 
+        <c>0x100</c>. <xref ref="fig-memory-bad-reflect"/> illustrates memory after <c>p</c> 
+        is reassigned.
+      </p>
+
+      <figure xml:id="fig-memory-bad-reflect">
+        <caption>Memory layout after <c>badReflectPoint</c> reassigns its local parameter.</caption>
+        <image source="figures/figure_6_16.png" width="95%">
+          <description>
+            A memory diagram showing badReflectPoint where parameter p has been reassigned to a 
+            new Point object at address 0x300. The original Point object at 0x100 remains unchanged 
+            at coordinates (3.0, 4.0), still referenced by p1 in main.
+          </description>
+        </image>
+      </figure>
+
+      <p>
+        When <c>badReflectPoint</c> returns, its stack frame is popped, destroying local variable 
+        <c>p</c>. Because no other reference points to the newly allocated object at <c>0x300</c>, 
+        that object is immediately abandoned for garbage collection, while <c>p1</c> in <c>main</c> 
+        remains at <m>(3.0, 4.0)</m>, completely unaffected.
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="subsubsec-6-7-4-2-aliasing-assignment">
+      <title>Object Aliasing Through the Assignment Operator</title>
+
+      <p>
+        The exact same phenomenon occurs within a single stack frame whenever we use the 
+        assignment operator (<c>=</c>) with reference variables.
+      </p>
+
+      <p>
+        When working with primitive types, copying duplicates the raw value:
+      </p>
+
+      <program language="java">
+        <code>
+int score1 = 100;
+int score2 = score1; // Copies the integer 100 into score2
+
+score2 = 85;         // Overwrites score2 with 85
+System.out.println(score1); // Still prints 100
+        </code>
+      </program>
+
+      <p>
+        When working with reference variables, Java follows the exact same mechanical rule: it 
+        copies the value from the right-hand side into the container on the left-hand side. But 
+        the value stored in a reference variable is a memory address:
+      </p>
+
+      <program language="java">
+        <code>
+Point p1 = new Point(3.0, 4.0);
+Point p3 = p1; // Copies the address stored in p1 into p3
+        </code>
+      </program>
+
+      <p>
+        Line 2 does not invoke <c>new</c>, and it does not manufacture a second <c>Point</c> 
+        object. There is still only one <c>Point</c> object in the heap. We now have two distinct 
+        variables on the call stack<mdash/><c>p1</c> and <c>p3</c><mdash/>that both hold the 
+        address <c>0x100</c>. When two or more reference variables store the same memory address, 
+        they are called <em>aliases</em>. <xref ref="fig-memory-aliasing-assignment"/> shows 
+        memory after this assignment executes.
+      </p>
+
+      <figure xml:id="fig-memory-aliasing-assignment">
+        <caption>Memory layout after an assignment (<c>=</c>) creates an alias.</caption>
+        <image source="figures/figure_6_17.png" width="95%">
+          <description>
+            A memory diagram showing main on the stack with two variables, p1 and p3, both holding 
+            address 0x100. Both variables have arrows pointing to the same single Point object at 
+            0x100 on the heap.
+          </description>
+        </image>
+      </figure>
+
+      <p>
+        Because both variables point to the same physical memory on the heap, any mutator method 
+        called through either alias modifies the shared object:
+      </p>
+
+      <program language="java">
+        <code>
+p3.translate(1.0, 2.0); // Shifts the object at 0x100 by (1.0, 2.0)
+
+System.out.println(p3.getX()); // Prints 4.0
+System.out.println(p1.getX()); // Prints 4.0!
+        </code>
+      </program>
+
+      <p>
+        Understanding that reference variables hold memory addresses also clears up another 
+        common point of confusion: the equality operator (<c>==</c>). When applied to reference 
+        variables, <c>==</c> compares the memory addresses stored in the variables, not the 
+        data stored inside the heap objects:
+      </p>
+
+      <program language="java">
+        <code>
+Point p1 = new Point(3.0, 4.0);
+Point p2 = new Point(3.0, 4.0);
+Point p3 = p1;
+
+System.out.println(p1 == p3); // true  (both hold address 0x100; they are aliases)
+System.out.println(p1 == p2); // false (0x100 != 0x200; they are distinct objects!)
+        </code>
+      </program>
+
+      <p>
+        Even though <c>p1</c> and <c>p2</c> have identical coordinate fields <m>(3.0, 4.0)</m>, 
+        they reside in separate heap allocations. Because <c>0x100 != 0x200</c>, <c>p1 == p2</c> 
+        evaluates to <c>false</c>.
+      </p>
+    </subsubsection>
+  </subsection>
+
+  <subsection xml:id="subsec-6-7-5-copy-constructors">
+    <title>True Object Duplication: The Copy Constructor</title>
+
+    <p>
+      If the assignment operator cannot duplicate an object, how do we create an independent 
+      copy of data in the heap?
+    </p>
+
+    <p>
+      Duplicating an object requires resolving critical design questions: should composed objects 
+      be shared (a <em>shallow copy</em>), or should new independent objects be allocated (a 
+      <em>deep copy</em>)? Because these decisions depend on the class design and invariants, 
+      Java places control in the hands of the class author through a specialized pattern: 
+      the <em>copy constructor</em>.
+    </p>
+
+    <subsubsection xml:id="subsubsec-6-7-5-1-copy-fundamentals">
+      <title>Copy Constructor Fundamentals</title>
+
+      <p>
+        A copy constructor is a constructor that takes a single parameter of its own class 
+        type and constructs an independent duplicate on the heap.
+      </p>
+
+      <p>
+        Let's add a copy constructor to the <c>Point</c> class:
+      </p>
+
+      <program language="java">
+        <code>
+    /**
+     * Constructs a new Point with the same coordinates as an existing Point.
+     *
+     * Precondition: toCopy != null
+     *
+     * @param toCopy the Point object to copy
+     */
+    public Point(Point toCopy) {
+        assert toCopy != null : "Cannot copy a null Point";
+        this(toCopy.x, toCopy.y);
+    }
+        </code>
+      </program>
+
+      <p>
+        Here we follow the constructor chaining pattern, invoking the primary two-parameter 
+        constructor from within the copy constructor. Within a class definition, Java allows 
+        direct access to the private fields of another object of the same class (such as 
+        <c>toCopy.x</c> and <c>toCopy.y</c>).
+      </p>
+
+      <p>
+        Code in <c>main</c> that invokes the copy constructor:
+      </p>
+
+      <program language="java">
+        <code>
+Point p1 = new Point(3.0, 4.0);
+Point p2 = new Point(5.0, 12.0);
+Point p3 = new Point(p1);
+        </code>
+      </program>
+
+      <p>
+        <xref ref="fig-memory-copy-constructor"/> illustrates memory after this code executes. 
+        <c>p1</c> and <c>p3</c> have identical coordinates, but reside in distinct heap allocations.
+      </p>
+
+      <figure xml:id="fig-memory-copy-constructor">
+        <caption>Memory layout after invoking a copy constructor.</caption>
+        <image source="figures/figure_6_18.png" width="95%">
+          <description>
+            A memory diagram showing three distinct Point objects on the heap. Variable p1 holds 
+            0x100 (x=3.0, y=4.0), p2 holds 0x200 (x=5.0, y=12.0), and p3 holds 0x300 containing 
+            independent fields x=3.0 and y=4.0 copied from p1.
+          </description>
+        </image>
+      </figure>
+    </subsubsection>
+
+    <subsubsection xml:id="subsubsec-6-7-5-2-deep-vs-shallow">
+      <title>Shallow vs. Deep Copying</title>
+
+      <p>
+        A <c>Rectangle</c> object is composed of primitive fields (<c>width</c> and <c>height</c>) 
+        and an object reference (<c>Point topLeft</c>). If we write a copy constructor that 
+        simply copies field values directly, we make a <em>shallow copy</em>:
+      </p>
+
+      <program language="java">
+        <code>
+    // Shallow copy constructor: copies references!
+    public Rectangle(Rectangle toCopy) {
+        assert toCopy != null : "Cannot copy a null Rectangle.";
+        this.topLeft = toCopy.topLeft;
+        this.width = toCopy.width;
+        this.height = toCopy.height;
+    }
+        </code>
+      </program>
+
+      <p>
+        In a shallow copy, the new object has its own primitive fields, but reference fields 
+        become aliases to the composed objects of the original instance, as shown in 
+        <xref ref="fig-shallow-copy-rect"/>. If one rectangle moves its <c>topLeft</c> point, 
+        the other rectangle is unintentionally moved as well!
+      </p>
+
+      <figure xml:id="fig-shallow-copy-rect">
+        <caption>A shallow copy of <c>Rectangle</c> sharing a single <c>Point</c> object.</caption>
+        <image source="figures/figure_6_19.png" width="95%">
+          <description>
+            A memory diagram illustrating a shallow copy. On the stack, rect1 references 0x200 
+            and rect2 references 0x300. In the heap, both distinct Rectangle objects have independent 
+            width and height fields, but both hold address 0x100 in their topLeft fields, arcing to 
+            the exact same shared Point object at address 0x100.
+          </description>
+        </image>
+      </figure>
+
+      <p>
+        Making a <em>deep copy</em> eliminates this shared-reference side effect. To make a 
+        deep copy, we allocate a brand-new <c>Point</c> object with the same coordinates, ensuring 
+        both primitive and reference fields are completely independent:
+      </p>
+
+      <program language="java">
+        <code>
+    /**
+     * Constructs a new Rectangle that is a deep copy of the parameter.
+     *
+     * Precondition: toCopy != null &amp;&amp; toCopy.topLeft != null
+     * Postcondition: this.width == toCopy.width &amp;&amp;
+     *                this.height == toCopy.height &amp;&amp;
+     *                this.topLeft.getX() == toCopy.topLeft.getX() &amp;&amp;
+     *                this.topLeft.getY() == toCopy.topLeft.getY() &amp;&amp;
+     *                this.topLeft != toCopy.topLeft
+     *
+     * @param toCopy The other Rectangle to copy.
+     */
+    public Rectangle(Rectangle toCopy) {
+        assert toCopy != null &amp;&amp; toCopy.topLeft != null : 
+            "Cannot copy a null Rectangle or a Rectangle with a null Point.";
+        this(toCopy.topLeft.getX(), toCopy.topLeft.getY(), toCopy.width, toCopy.height);
+    }
+        </code>
+      </program>
+
+      <p>
+        <xref ref="fig-deep-copy-rect"/> illustrates memory when using a deep copy constructor. 
+        Both rectangles are now completely isolated.
+      </p>
+
+      <figure xml:id="fig-deep-copy-rect">
+        <caption>A deep copy of <c>Rectangle</c> with completely independent composed objects.</caption>
+        <image source="figures/figure_6_20.png" width="95%">
+          <description>
+            A memory diagram illustrating a deep copy. On the stack, rect1 references 0x200 and 
+            rect2 references 0x300. In the heap, rect1 at 0x200 references original Point 0x100, 
+            while rect2 at 0x300 references an independent cloned Point object at address 0x400. 
+            Modifying one point has zero impact on the other.
+          </description>
+        </image>
+      </figure>
+    </subsubsection>
+  </subsection>
+
+  <subsection xml:id="subsec-6-7-6-garbage-collection">
+    <title>Object Lifetime and Automatic Garbage Collection</title>
+
+    <p>
+      When a local variable goes out of scope on the stack, its lifetime ends immediately and 
+      its memory is reclaimed by the CPU. But heap memory does not have a scope tied to curly 
+      braces (<c>{ }</c>). An object on the heap can outlive the method that instantiated it<mdash/>as 
+      long as some variable somewhere in the program still holds its address.
+    </p>
+
+    <subsubsection xml:id="subsubsec-6-7-6-1-reachability">
+      <title>The Definition of <q>Unreachable</q></title>
+
+      <p>
+        Java determines the end of an object's lifetime through <em>reachability</em>. An object 
+        is considered reachable if your running program can still access it by following active 
+        reference variables beginning from:
+      </p>
+
+      <ol>
+        <li>
+          <p>
+            Local variables currently sitting on the call stack in any active method frame.
+          </p>
+        </li>
+        <li>
+          <p>
+            Static reference fields belonging to loaded classes in the static segment.
+          </p>
+        </li>
+      </ol>
+
+      <p>
+        An object becomes <em>unreachable</em> the moment there is no longer any valid chain of 
+        references leading to it. Once unreachable, a program can never access or inspect it again.
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="subsubsec-6-7-6-2-garbage-collector">
+      <title>The Garbage Collector: The JVM's Automated Cleanup Crew</title>
+
+      <p>
+        In low-level languages like C and C++, allocating memory requires the programmer to 
+        manually release it when finished:
+      </p>
+
+      <program language="c++">
+        <code>
+// In C++: Manual memory management
+Point* ptr = new Point(3.0, 4.0); // Programmer manually allocates
+delete ptr;                       // Programmer must remember to manually free!
+        </code>
+      </program>
+
+      <p>
+        Manual memory management places a heavy cognitive burden on the developer, giving rise 
+        to two notorious categories of software bugs:
+      </p>
+
+      <ul>
+        <li>
+          <p>
+            <strong>Memory Leaks:</strong> If a programmer forgets to call <c>delete</c>, the 
+            abandoned object remains in RAM indefinitely. Over time, the application consumes 
+            all available memory until the operating system forcibly terminates it.
+          </p>
+        </li>
+        <li>
+          <p>
+            <strong>Dangling Pointers and Segmentation Faults:</strong> If a programmer calls 
+            <c>delete</c> too early while another part of the program is still using that memory 
+            address, the remaining reference becomes a <em>dangling pointer</em>. Attempting to 
+            use a dangling pointer causes data corruption, security exploits, or crashes.
+          </p>
+        </li>
+      </ul>
+
+      <p>
+        Java was deliberately designed to eliminate these errors by employing an automated 
+        runtime background service known as the <em>Garbage Collector (GC)</em>.
+      </p>
+
+      <p>
+        The JVM continuously monitors the heap behind the scenes. When the garbage collector 
+        detects that an object has zero active references pointing to it, it marks the object 
+        as unreachable (as illustrated with the red cross in <xref ref="fig-memory-after-return"/>) 
+        and reclaims that memory block so it can be reused for future <c>new</c> expressions.
+      </p>
+    </subsubsection>
+  </subsection>
+</section>

@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<section xml:id="sec-6-6-overloading">
+  <title>Overloading Methods and Constructors</title>
+
+  <p>
+    In Chapter 5, you learned that we can overload methods by writing more than one method 
+    with the same name. Overloaded methods must have different parameter lists. Java matches 
+    a method call to the appropriate method by matching the number, order, and type of 
+    arguments to the parameters.
+  </p>
+
+  <p>
+    It is also common to overload instance methods, and in particular, to overload the 
+    constructor. We overload methods if we want to provide the same operation with different 
+    levels of customization, or if we want to provide the same operation with different 
+    parameter types that cannot be handled through widening primitive conversions.
+  </p>
+
+  <subsection xml:id="subsec-6-6-1-default-constructor">
+    <title>The Default Constructor</title>
+
+    <p>
+      When we create an object with the <c>new</c> keyword, Java allocates a block of memory 
+      for the object on the heap. That memory consists of space for each of the object's 
+      fields. Fields are allocated in a way that is similar to variables on the stack: 
+      primitives are stored directly in the object, and if an object has references to other 
+      objects, then it is the references that are stored. For example, the <c>ElectricVehicle</c> 
+      class has a <c>model</c> field which is a <c>String</c>. Because a <c>String</c> is an 
+      object, <c>model</c> is a reference to another location in the heap.
+    </p>
+
+    <p>
+      When space for an object is first allocated, the memory for the fields is zeroed out. 
+      If you forget to give a field an initial value in the constructor, the fields will be 
+      assigned the default values shown in <xref ref="table-default-field-values"/>, according 
+      to their type. These are simply the values you get when zeroes are stored in the memory 
+      location.
+    </p>
+
+    <table xml:id="table-default-field-values">
+      <title>Default initial field values</title>
+      <tabular halign="left" top="medium" bottom="medium" left="medium" right="medium">
+        <row header="yes" bottom="medium">
+          <cell>Data type</cell>
+          <cell>Value</cell>
+        </row>
+        <row bottom="minor">
+          <cell>Integer types (<c>long</c>, <c>int</c>, <c>short</c>, <c>byte</c>)</cell>
+          <cell><c>0</c></cell>
+        </row>
+        <row bottom="minor">
+          <cell>Floating-point types (<c>double</c>, <c>float</c>)</cell>
+          <cell><c>0.0</c></cell>
+        </row>
+        <row bottom="minor">
+          <cell><c>char</c></cell>
+          <cell><c>'\u0000'</c> (the null character)</cell>
+        </row>
+        <row bottom="minor">
+          <cell><c>boolean</c></cell>
+          <cell><c>false</c></cell>
+        </row>
+        <row>
+          <cell>Object reference types</cell>
+          <cell><c>null</c> (a special value indicating no reference)</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      Always initialize all fields in a constructor, even if you are going to initialize a 
+      field to the zeroed-out value it has already been given by the JVM. Otherwise, another 
+      programmer reading your code will not know if the missing initialization is intentional 
+      or an oversight.
+    </p>
+
+    <p>
+      Every class in Java has a constructor, whether you write one or not. If you do not 
+      write any constructor for a class, Java automatically provides a <em>default constructor</em>. 
+      The default constructor takes no arguments and leaves the field values at their default 
+      zeroed-out values.
+    </p>
+
+    <p>
+      For example, <xref ref="listing-step-tracker-no-constructor"/> is a <c>StepTracker</c> 
+      class and <xref ref="listing-step-tracker-demo"/> is a <c>StepTrackerDemo</c> program. 
+      The <c>StepTracker</c> class has no programmer-defined constructor, so Java provides a 
+      default constructor, and the values of <c>steps</c> and <c>days</c> are each initialized 
+      to <c>0</c> when the object is created on line 5 of <c>StepTrackerDemo</c>.
+    </p>
+
+    <listing xml:id="listing-step-tracker-no-constructor">
+      <caption>A class with no programmer-defined constructor</caption>
+      <program language="java">
+        <code>
+public class StepTracker {
+    
+    private int steps;
+    private int days;
+    
+    public void addDailySteps(int newSteps) {
+        assert newSteps >= 0 : "Steps cannot be negative: " + newSteps;
+        this.steps += newSteps;
+        this.days++;
+    }
+    
+    public double getAverageSteps() {
+        return this.days != 0 ? (double) this.steps / this.days : 0.0;
+    }
+}
+        </code>
+      </program>
+    </listing>
+
+    <listing xml:id="listing-step-tracker-demo">
+      <caption>A program that creates a <c>StepTracker</c>, invoking the default constructor</caption>
+      <program interactive="activecode" language="java">
+        <code>
+public class StepTrackerDemo {
+    
+    public static void main(String[] args) {
+        // Creates a tracker for the user:
+        StepTracker myTracker = new StepTracker();
+        
+        // Displays the average steps.
+        System.out.println(myTracker.getAverageSteps());
+        
+        // Adds some steps.
+        myTracker.addDailySteps(7000);
+        
+        // Displays the average steps.
+        System.out.println(myTracker.getAverageSteps());
+    }
+}
+        </code>
+      </program>
+    </listing>
+
+    <p>
+      When line 11 in <c>StepTrackerDemo</c> executes, execution jumps to the <c>addDailySteps</c> 
+      method of <c>StepTracker</c> (line 6), and the argument <c>7000</c> is added to the 
+      <c>steps</c> field (the default value of <c>0</c> given by the JVM), making it <c>7000</c>. 
+      The <c>days</c> field, also initialized to <c>0</c> by the JVM, is incremented to <c>1</c>. 
+      The output of <c>StepTrackerDemo</c> is:
+    </p>
+
+    <console>
+      <output>
+0.0
+7000.0
+      </output>
+    </console>
+  </subsection>
+
+  <subsection xml:id="subsec-6-6-2-overloading-constructors">
+    <title>Overloading Constructors</title>
+
+    <p>
+      Suppose you decide that you want to allow a client of the <c>StepTracker</c> class to 
+      instantiate an object with existing baseline values for <c>steps</c> and <c>days</c>. 
+      You add the following parameterized constructor:
+    </p>
+
+    <program language="java">
+      <code>
+    public StepTracker(int steps, int days) {
+        assert steps >= 0 &amp;&amp; days >= 0 : "Steps and days cannot be negative";
+        this.steps = steps;
+        this.days = days;
+    }
+      </code>
+    </program>
+
+    <p>
+      If you look back at your <c>StepTrackerDemo</c> program, you will now see a compiler 
+      error on line 5:
+    </p>
+
+    <console>
+      <output>
+The constructor StepTracker() is undefined.
+      </output>
+    </console>
+
+    <p>
+      Java only creates a default constructor if there are <em>no programmer-defined constructors</em>. 
+      Once you write any constructor, Java stops providing the automatic default constructor. 
+      Any existing code that relied on creating an object with no arguments is now broken.
+    </p>
+
+    <p>
+      In many cases, you will want to allow users of your class to instantiate an object either 
+      in a default state or with custom values. You can overload the constructor to support both.
+    </p>
+
+    <p>
+      A constructor that takes no parameters is called a <em>no-arg</em> (no-argument) constructor. 
+      We can write a no-arg constructor for <c>StepTracker</c>:
+    </p>
+
+    <program language="java">
+      <code>
+    // Functional, but see below for a better way!
+    public StepTracker() {
+        this.steps = 0;
+        this.days = 0;
+    }
+      </code>
+    </program>
+
+    <p>
+      Now any code that previously relied on a zero-argument constructor will compile and run. 
+      A no-arg constructor does not necessarily have to zero out the fields<mdash/>depending on 
+      the class, different default values may be appropriate.
+    </p>
+
+    <p>
+      It is best practice in Java to <q>chain</q> constructors to eliminate redundancy. Instead 
+      of writing the no-arg constructor to assign field values directly, we should call the 
+      parameterized constructor and pass in the default values. We use the <c>this</c> keyword 
+      followed by parentheses to invoke a constructor of the same class:
+    </p>
+
+    <program language="java">
+      <code>
+    // Chain constructors with this(...) to avoid redundancy.
+    public StepTracker() {
+        this(0, 0);
+    }
+      </code>
+    </program>
+
+    <p>
+      Not only does this avoid duplicate assignment logic, but if you later add validation rules 
+      or initial setup logic to the primary constructor, the no-arg constructor inherits that 
+      behavior automatically.
+    </p>
+
+    <p>
+      The explicit constructor invocation (<c>this(0, 0);</c>) <strong>must be the very first 
+      statement</strong> in the constructor body. Once that constructor finishes and the object 
+      is in a stable initial state, additional statements may execute.
+    </p>
+
+    <p>
+      One final note regarding constructor parameters: you will notice that we name parameters 
+      according to the fields they initialize (the <c>steps</c> parameter initializes the 
+      <c>steps</c> field; the <c>days</c> parameter initializes the <c>days</c> field). This is 
+      a standard Java convention with two distinct benefits:
+    </p>
+
+    <ul>
+      <li>
+        <p>
+          It clarifies exactly which field the parameter value is intended to initialize.
+        </p>
+      </li>
+      <li>
+        <p>
+          It saves you from having to invent artificial, awkward names (such as <c>s</c> or 
+          <c>initialSteps</c>) for the same concept.
+        </p>
+      </li>
+    </ul>
+
+    <p>
+      Because a parameter is a local variable with the exact same name as a field, it shadows 
+      the field. Prepending the field name with <c>this.</c> resolves the shadowing, explicitly 
+      indicating that the left-hand variable belongs to the current heap object.
+    </p>
+  </subsection>
+
+  <subsection xml:id="subsec-6-6-3-overloading-instance-methods">
+    <title>Overloading Instance Methods</title>
+
+    <p>
+      Just as we overloaded constructors to provide different ways to initialize an object, 
+      we can overload instance methods to provide flexible ways to interact with an object's state.
+    </p>
+
+    <p>
+      In our original <c>StepTracker</c> class, the <c>addDailySteps</c> method requires an exact 
+      integer count of steps:
+    </p>
+
+    <program language="java">
+      <code>
+    public void addDailySteps(int newSteps) {
+        assert newSteps >= 0 : "Steps cannot be negative: " + newSteps;
+        this.steps += newSteps;
+        this.days++;
+    }
+      </code>
+    </program>
+
+    <p>
+      What if a user does not know their exact step count, but knows they walked 3.5 miles with 
+      an average stride length of 2.5 feet? Rather than forcing the client programmer to perform 
+      unit conversions in <c>main</c> before calling our class, we can provide an overloaded 
+      version of <c>addDailySteps</c> that accepts distance and stride length:
+    </p>
+
+    <program language="java">
+      <code>
+    public void addDailySteps(double milesWalked, double strideLengthFeet) {
+        assert milesWalked >= 0.0 &amp;&amp; strideLengthFeet > 0.0 : 
+            "Distance and stride length must be positive";
+
+        final double FEET_PER_MILE = 5280.0;
+        int calculatedSteps = (int) Math.round((milesWalked * FEET_PER_MILE) 
+                                               / strideLengthFeet);
+
+        // Delegate to the primary 1-parameter method
+        addDailySteps(calculatedSteps);
+    }
+      </code>
+    </program>
+
+    <p>
+      Notice how the overloaded method works. Instead of duplicating the state-updating code 
+      (<c>this.steps += ...; this.days++;</c>), it converts its inputs into steps and immediately 
+      delegates to the primary one-parameter <c>addDailySteps</c> method.
+    </p>
+
+    <p>
+      This follows a core software engineering principle: <em>Don't Repeat Yourself (DRY)</em>:
+    </p>
+
+    <ul>
+      <li>
+        <p>
+          <strong>A Single Source of Truth:</strong> The actual task of modifying the object's 
+          fields lives in exactly one place (the primary <c>addDailySteps(int)</c> method).
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>Maintainability:</strong> If you later decide to add validation rules (such as 
+          capping daily steps at a reasonable maximum) or log activity to a file, you only have 
+          to write that logic once in the primary method. The overloaded convenience method 
+          automatically inherits the updated behavior.
+        </p>
+      </li>
+    </ul>
+
+    <p>
+      From the perspective of client code in <c>main</c>, the class now provides a flexible, 
+      intuitive interface:
+    </p>
+
+    <program language="java">
+      <code>
+StepTracker tracker = new StepTracker();
+
+// Day 1: Log steps directly from a pedometer
+tracker.addDailySteps(8500);
+
+// Day 2: Log steps calculated from a morning walk (2.5 miles, 2.5-foot stride)
+tracker.addDailySteps(2.5, 2.5);
+
+System.out.println("Average daily steps: " + tracker.getAverageSteps());
+      </code>
+    </program>
+
+    <p>
+      When <c>tracker.addDailySteps(8500);</c> runs, Java matches the call to the <c>(int)</c> 
+      signature. When <c>tracker.addDailySteps(2.5, 2.5);</c> runs, Java matches the call to the 
+      <c>(double, double)</c> signature. The object seamlessly handles both formats while 
+      keeping its internal state consistent.
+    </p>
+  </subsection>
+</section>

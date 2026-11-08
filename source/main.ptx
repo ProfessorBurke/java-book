@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pretext xmlns:xi="http://www.w3.org/2001/XInclude">
+  <book xml:id="cs1-java">
+    <title>Java for Everyone</title>
+
+    <xi:include href="ch-06-objects-classes/ch-objects-classes.ptx" />
+  </book>
+</pretext>

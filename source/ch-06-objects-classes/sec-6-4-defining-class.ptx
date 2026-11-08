@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<section xml:id="sec-6-4-defining-class">
+  <title>Defining a Class: State and Behavior</title>
+
+  <p>
+    Now that we have seen the overall structure of a solution with a programmer-defined 
+    class, let's take a deeper look at class design and implementation.
+  </p>
+
+  <p>
+    Suppose we are tasked with creating a dashboard to track the status of an electric 
+    vehicle (EV). The EV specifications include its model, battery capacity, and its 
+    efficiency<mdash/>the distance it can travel per kilowatt-hour. It also has state 
+    information: a current charge and an odometer. The EV can be driven, it can be charged, 
+    and it can answer questions based on its specifications and current state, such as its 
+    model, odometer reading, estimated range, battery percentage, and whether it needs charging.
+  </p>
+
+  <p>
+    An EV is an excellent candidate for a class. It consists of state (model, battery 
+    capacity, efficiency, current charge, current odometer reading), behavior that accesses 
+    the state (get model, get odometer, get range, get battery percentage, needs charging), 
+    as well as behavior that changes the state (drive, charge).
+  </p>
+
+  <subsection xml:id="subsec-6-4-1-class-diagrams">
+    <title>Class Diagrams</title>
+
+    <p>
+      A class diagram is a quick way to specify and document a class. A class diagram is a 
+      structural diagram that is part of the Unified Modeling Language (UML), a general-purpose 
+      set of visual notations used to design and document software systems. Here is the class 
+      diagram for <c>ElectricVehicle</c>:
+    </p>
+
+    <table xml:id="table-electric-vehicle-class-diagram">
+      <title>Class diagram for <c>ElectricVehicle</c></title>
+      <tabular halign="left" top="medium" bottom="medium" left="medium" right="medium">
+        <row bottom="medium">
+          <cell halign="center"><strong>ElectricVehicle</strong></cell>
+        </row>
+        <row bottom="medium">
+          <cell>
+            <p>- model: String</p>
+            <p>- batteryCapacityKwh: double</p>
+            <p>- milesPerKwh: double</p>
+            <p>- currentChargeKwh: double</p>
+            <p>- odometerMiles: double</p>
+          </cell>
+        </row>
+        <row>
+          <cell>
+            <p>+ ElectricVehicle(model: String, batteryCapacityKwh: double, milesPerKwh: double)</p>
+            <p>+ drive(miles: double): void</p>
+            <p>+ charge(kwhAdded: double): void</p>
+            <p>+ getEstimatedRange(): double</p>
+            <p>+ getBatteryPercentage(): double</p>
+            <p>+ needsCharging(): boolean</p>
+            <p>+ getModel(): String</p>
+            <p>+ getOdometerMiles(): double</p>
+          </cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      The class diagram is divided into three rows: the name of the class in the first row, 
+      the fields in the second row, and the methods in the third row. Other features of the 
+      class diagram are:
+    </p>
+
+    <ul>
+      <li>
+        <p>
+          <strong>Visibility:</strong> A dash (<c>-</c>) before a class member (field or method) 
+          indicates <c>private</c> visibility. A plus sign (<c>+</c>) indicates <c>public</c> 
+          visibility.
+        </p>
+      </li>
+      <li>
+        <p>
+          Fields and parameters are shown as name, colon, data type (such as <c>model: String</c>).
+        </p>
+      </li>
+      <li>
+        <p>
+          The return type of a method is shown with a colon and the return type at the end 
+          of the method signature.
+        </p>
+      </li>
+      <li>
+        <p>
+          You can include an optional fourth row with the object's responsibilities. This is 
+          helpful when you are designing a class but have not worked out fields and methods yet. 
+          It also provides a summary of the class once the details are worked out.
+        </p>
+      </li>
+    </ul>
+
+    <p>
+      We can quickly build the skeleton of our class by following the class diagram. From the 
+      first and second rows, we declare our fields:
+    </p>
+
+    <program language="java">
+      <code>
+public class ElectricVehicle {
+
+    private String model;
+    private double batteryCapacityKwh;
+    private double milesPerKwh;
+    private double currentChargeKwh;
+    private double odometerMiles;
+      </code>
+    </program>
+
+    <p>
+      Note that each field has a dash in front of it in the class diagram, so we specify 
+      <c>private</c> visibility in the class definition. We can then fill in the method 
+      headers with empty bodies:
+    </p>
+
+    <program language="java">
+      <code>
+    public ElectricVehicle(String model, double batteryCapacityKwh, double milesPerKwh) {
+    }
+
+    public void drive(double miles) {
+    }
+
+    public void charge(double kwhAdded) {
+    }
+
+    public double getEstimatedRange() {
+        return 0.0;
+    }
+
+    public double getBatteryPercentage() {
+        return 0.0;
+    }
+
+    public boolean needsCharging() {
+        return false;
+    }
+
+    public String getModel() {
+        return "";
+    }
+
+    public double getOdometerMiles() {
+        return 0.0;
+    } 
+}
+      </code>
+    </program>
+
+    <p>
+      Each of the methods has public visibility as specified with a plus sign in the class 
+      diagram, so we put the keyword <c>public</c> as part of each header. Notice that the 
+      accessor methods (<c>getEstimatedRange</c>, <c>getBatteryPercentage</c>, <c>needsCharging</c>, 
+      <c>getModel</c>, and <c>getOdometerMiles</c>) all have a return type and take no parameters. 
+      The mutator methods (<c>drive</c>, <c>charge</c>) are void methods and do take parameters. 
+      This is often the pattern for accessors and mutators, but it is not a hard rule.
+    </p>
+
+    <p>
+      Instance methods operate on the fields of an <c>ElectricVehicle</c> object, so not all 
+      data has to come in as parameters or be returned as a result:
+    </p>
+
+    <ul>
+      <li>
+        <p>
+          The mutators change the fields of the object<mdash/>the data coming in as parameters 
+          is used to change the fields, and there is usually no need to return anything. The 
+          object itself has changed after the mutator executes.
+        </p>
+      </li>
+      <li>
+        <p>
+          The accessors return information about the data stored in the fields, such as whether 
+          the vehicle needs charging. We do not need a parameter to come in, because the method 
+          is answering a question about the object itself. We do need to return the answer, so 
+          the method has a return type.
+        </p>
+      </li>
+    </ul>
+
+    <p>
+      Sometimes we will write accessors and mutators that do not follow this pattern, but it 
+      is an important general difference between writing a class and writing a functionally 
+      decomposed program. In a functionally decomposed method, we must pass all the information 
+      into the method that it needs to fulfill its responsibilities. When we are writing an 
+      instance method, the data is already part of the object that the method was invoked on. 
+      In a functionally decomposed method, we might need to return changed values, but in an 
+      instance method, the change is made directly in the object's fields.
+    </p>
+
+    <p>
+      Let's break down the design of <c>ElectricVehicle</c> and write some of the methods.
+    </p>
+  </subsection>
+
+  <subsection xml:id="subsec-6-4-2-encapsulation-state">
+    <title>Encapsulation and Object State</title>
+
+    <p>
+      An object is an encapsulation of data and operations on that data. If we write our object 
+      properly, the data will always be in an internally consistent, coherent, and meaningful 
+      state. What does that mean? If we consider the <c>ElectricVehicle</c> class, the data 
+      includes <c>batteryCapacityKwh</c> and <c>currentChargeKwh</c>. An internally consistent 
+      and meaningful state requires the following:
+    </p>
+
+    <ul>
+      <li>
+        <p>
+          <c>currentChargeKwh</c> must be less than or equal to <c>batteryCapacityKwh</c> 
+          (as the charge cannot exceed the battery's physical capacity).
+        </p>
+      </li>
+      <li>
+        <p>
+          <c>currentChargeKwh</c> is never less than zero.
+        </p>
+      </li>
+    </ul>
+
+    <p>
+      If the <c>currentChargeKwh</c> field were <c>public</c>, an outside entity could simply 
+      change that field's value with an assignment statement. It could set the field to a value 
+      larger than <c>batteryCapacityKwh</c>, violating the invariant. It could set the field's 
+      value to a negative number, violating physical reality. The class would fail in its 
+      responsibility to maintain a coherent, meaningful state.
+    </p>
+
+    <p>
+      These rules are called <em>class invariants</em>. A class invariant is a condition or 
+      rule that must always remain true for every valid instance of a class throughout its 
+      lifetime<mdash/>from the moment the constructor finishes executing until the object is 
+      destroyed.
+    </p>
+
+    <p>
+      In our design, the <c>currentChargeKwh</c> field is <c>private</c>, and can only be 
+      changed through the <c>drive</c> and <c>charge</c> methods. The <c>drive</c> method can 
+      validate that the <c>miles</c> parameter passed to <c>drive</c> does not exceed the car's 
+      estimated range, ensuring that the battery's current charge is never negative. The 
+      <c>charge</c> method can prevent <c>currentChargeKwh</c> from exceeding <c>batteryCapacityKwh</c> 
+      by capping off the charge at the maximum value if <c>kwhAdded</c> is more charge than the 
+      battery needs (just as in the real world an EV will not absorb more charge than it can 
+      handle).
+    </p>
+
+    <p>
+      <xref ref="listing-ev-drive-charge"/> is an implementation of the <c>drive</c> and 
+      <c>charge</c> methods of <c>ElectricVehicle</c>. Pay special attention to the preconditions, 
+      postconditions, and assertions:
+    </p>
+
+    <listing xml:id="listing-ev-drive-charge">
+      <caption>The <c>drive</c> and <c>charge</c> methods of <c>ElectricVehicle</c></caption>
+      <program language="java">
+        <code>
+    /**
+     * Drives the vehicle a specified distance, increasing the odometer and
+     * reducing the battery charge accordingly.
+     *
+     * Precondition: miles > 0.0 &amp;&amp; miles &lt;= getEstimatedRange()
+     * Postcondition: odometerMiles increases by miles, and currentChargeKwh
+     *                decreases by (miles / milesPerKwh).
+     *
+     * @param miles the distance to drive in miles
+     */
+    public void drive(double miles) {
+        assert miles > 0.0 : "Distance driven must be positive: " + miles;
+        assert miles &lt;= getEstimatedRange() : 
+            "Insufficient battery range for trip: " + miles;
+
+        double energyUsed = miles / this.milesPerKwh;
+        this.currentChargeKwh -= energyUsed;
+        this.odometerMiles += miles;
+    }
+
+    /**
+     * Adds electrical energy to the battery, capped at the battery's maximum capacity.
+     *
+     * Precondition: kwhAdded > 0.0
+     * Postcondition: currentChargeKwh increases by kwhAdded, up to batteryCapacityKwh.
+     *
+     * @param kwhAdded the amount of energy added in kilowatt-hours
+     */
+    public void charge(double kwhAdded) {
+        assert kwhAdded > 0.0 : "Charge amount must be positive: " + kwhAdded;
+        this.currentChargeKwh = Math.min(this.batteryCapacityKwh,
+                                         this.currentChargeKwh + kwhAdded);
+    }
+        </code>
+      </program>
+    </listing>
+
+    <p>
+      The <c>drive</c> method takes a <c>miles</c> parameter which is the distance to drive. 
+      We have a precondition on that parameter: <c>miles > 0.0 &amp;&amp; miles &lt;= getEstimatedRange()</c>. 
+      The <c>getEstimatedRange</c> method returns the distance the vehicle can drive in its current 
+      state<mdash/>given the value of <c>currentChargeKwh</c>. Within the method, two <c>assert</c> 
+      statements check the precondition and display appropriate error messages. If no assertion 
+      throws an error, the postconditions are fulfilled: <c>odometerMiles</c> increases by 
+      <c>miles</c>, and <c>currentChargeKwh</c> decreases by <c>miles / milesPerKwh</c>.
+    </p>
+
+    <p>
+      Notice that both of these changes are internal to the object<mdash/>they both change object 
+      fields. No value is returned, but if the preconditions were met, the battery's current 
+      charge is decreased and the odometer value is increased.
+    </p>
+
+    <p>
+      The <c>charge</c> method takes a <c>kwhAdded</c> parameter representing the amount of energy 
+      to add to <c>currentChargeKwh</c>. The method precondition states that this cannot be negative, 
+      and an <c>assert</c> throws an error with a meaningful message if the precondition is violated. 
+      The method then fulfills the postcondition: it increases the <c>currentChargeKwh</c> field 
+      up to but not exceeding the <c>batteryCapacityKwh</c> field. Again, no value is returned: 
+      an internal field of the object is modified.
+    </p>
+  </subsection>
+
+  <subsection xml:id="subsec-6-4-3-fields-constructors">
+    <title>Fields and Constructors</title>
+
+    <p>
+      An object's fields are the data the object needs to maintain to fulfill its responsibilities. 
+      An object can have as many fields as it needs, of any data type, including other objects. 
+      The values in the fields comprise the object's state. Another kind of UML diagram is an 
+      <em>object diagram</em>, which shows the values in the fields of a specific instance at a 
+      specific point during program execution.
+    </p>
+
+    <p>
+      <xref ref="listing-ev-demo"/> is a class with a <c>main</c> method that creates two 
+      <c>ElectricVehicle</c> objects. We will examine the state of the <c>commuter</c> and 
+      <c>cruiser</c> objects at two points during program execution.
+    </p>
+
+    <listing xml:id="listing-ev-demo">
+      <caption><c>ElectricVehicleDemo</c> creates two objects and invokes methods on them</caption>
+      <program interactive="activecode" language="java">
+        <code>
+public class ElectricVehicleDemo {
+    
+    public static void main(String[] args) {
+        // Declares two electric vehicle variables.
+        ElectricVehicle commuter, cruiser;
+        
+        // Instantiates the ElectricVehicle objects.
+        commuter = new ElectricVehicle("Chevy Bolt EV", 65.0, 4.0);
+        cruiser = new ElectricVehicle("Hyundai Ioniq 5", 77.4, 3.9);
+
+        // Displays the estimated range for each.
+        System.out.printf("%s range: %.1f miles %n", commuter.getModel(), 
+                          commuter.getEstimatedRange());
+        System.out.printf("%s range: %.1f miles %n", cruiser.getModel(), 
+                          cruiser.getEstimatedRange());
+
+        // Drives both vehicles.
+        System.out.println("--- Driving ---");
+        commuter.drive(100.0);
+        cruiser.drive(280.0); 
+
+        // Charges the cruiser and displays its range.
+        System.out.printf("%s range: %.1f miles %n", cruiser.getModel(), 
+                          cruiser.getEstimatedRange());
+        System.out.println("--- Charging ---");
+        cruiser.charge(40.0);
+        System.out.printf("%s range: %.1f miles %n", cruiser.getModel(), 
+                          cruiser.getEstimatedRange());
+    }
+}
+        </code>
+      </program>
+    </listing>
+
+    <p>
+      In <xref ref="listing-ev-demo"/>, the <c>commuter</c> and <c>cruiser</c> objects are 
+      created on lines 9 and 10. On these lines, space is allocated for the objects on the heap 
+      and their constructors are invoked. Note again that a constructor does not have a return 
+      type, and it has the exact same name as the class. When we create an object, we write:
+    </p>
+
+    <program language="java">
+      <code>
+variable = new Class(arguments);
+      </code>
+    </program>
+
+    <p>
+      This syntax feels natural, as if we are telling Java we want to make a new <c>Class</c> 
+      (whatever that class is): a new <c>Point</c>, a new <c>ElectricVehicle</c>, a new <c>File</c>, 
+      or a new <c>Scanner</c>. Now you know that this line is invoking a constructor<mdash/>a 
+      method with the name of the class that gives the object its initial values.
+    </p>
+
+    <p>
+      The purpose of a constructor is to put an object into a stable and meaningful initial state. 
+      Once the constructor has finished executing, it should be possible to invoke any method on 
+      the object, either transforming it to a different (still consistent and meaningful) state, 
+      or returning information about the object's current state.
+    </p>
+
+    <p>
+      After lines 9 and 10 have executed, the object diagrams for <c>commuter</c> and <c>cruiser</c> 
+      show their initial state:
+    </p>
+
+    <sidebyside widths="48% 48%" margins="auto">
+      <tabular halign="left" top="medium" bottom="medium" left="medium" right="medium">
+        <row bottom="medium">
+          <cell halign="center"><strong><u>commuter:ElectricVehicle</u></strong></cell>
+        </row>
+        <row>
+          <cell>
+            <p>model = "Chevy Bolt EV"</p>
+            <p>batteryCapacityKwh = 65.0</p>
+            <p>milesPerKwh = 4.0</p>
+            <p>currentChargeKwh = 65.0</p>
+            <p>odometerMiles = 0.0</p>
+          </cell>
+        </row>
+      </tabular>
+
+      <tabular halign="left" top="medium" bottom="medium" left="medium" right="medium">
+        <row bottom="medium">
+          <cell halign="center"><strong><u>cruiser:ElectricVehicle</u></strong></cell>
+        </row>
+        <row>
+          <cell>
+            <p>model = "Hyundai Ioniq 5"</p>
+            <p>batteryCapacityKwh = 77.4</p>
+            <p>milesPerKwh = 3.9</p>
+            <p>currentChargeKwh = 77.4</p>
+            <p>odometerMiles = 0.0</p>
+          </cell>
+        </row>
+      </tabular>
+    </sidebyside>
+
+    <p>
+      After the constructor has executed, every field of the <c>ElectricVehicle</c> object has 
+      a meaningful value, and all values are internally consistent (the class invariants hold). 
+      Some of the fields are initialized from values passed into the constructor: <c>model</c>, 
+      <c>batteryCapacityKwh</c>, and <c>milesPerKwh</c>. The <c>odometerMiles</c> begins with 
+      a value of <c>0.0</c>, and <c>currentChargeKwh</c> is initialized to fully charged, which 
+      is the same value as <c>batteryCapacityKwh</c>. Any method can now be invoked on the 
+      object and it will be able to respond in a meaningful way based on its state.
+    </p>
+
+    <p>
+      On line 20, the <c>drive</c> method is invoked on the <c>commuter</c> vehicle with an 
+      argument of 100.0, and on line 21, the <c>drive</c> method is invoked on the <c>cruiser</c> 
+      object with an argument of 280.0. After these lines of code execute, the objects' states 
+      have changed, as shown in these updated object diagrams:
+    </p>
+
+    <sidebyside widths="48% 48%" margins="auto">
+      <tabular halign="left" top="medium" bottom="medium" left="medium" right="medium">
+        <row bottom="medium">
+          <cell halign="center"><strong><u>commuter:ElectricVehicle</u></strong></cell>
+        </row>
+        <row>
+          <cell>
+            <p>model = "Chevy Bolt EV"</p>
+            <p>batteryCapacityKwh = 65.0</p>
+            <p>milesPerKwh = 4.0</p>
+            <p>currentChargeKwh = 40.0</p>
+            <p>odometerMiles = 100.0</p>
+          </cell>
+        </row>
+      </tabular>
+
+      <tabular halign="left" top="medium" bottom="medium" left="medium" right="medium">
+        <row bottom="medium">
+          <cell halign="center"><strong><u>cruiser:ElectricVehicle</u></strong></cell>
+        </row>
+        <row>
+          <cell>
+            <p>model = "Hyundai Ioniq 5"</p>
+            <p>batteryCapacityKwh = 77.4</p>
+            <p>milesPerKwh = 3.9</p>
+            <p>currentChargeKwh = 5.605</p>
+            <p>odometerMiles = 280.0</p>
+          </cell>
+        </row>
+      </tabular>
+    </sidebyside>
+
+    <p>
+      The <c>drive</c> method changes internal state by modifying both the <c>odometerMiles</c> 
+      and <c>currentChargeKwh</c> fields. As a program executes and mutator messages are sent to 
+      objects, their internal state updates dynamically. Their actions in response to method 
+      invocations will be meaningful relative to their current state. For example, before line 21 
+      executes, the <c>cruiser</c> object has a <c>currentChargeKwh</c> of 77.4. If we invoked 
+      <c>needsCharging</c> on it, it would return <c>false</c>. After line 21, the <c>currentChargeKwh</c> 
+      value drops to 5.605, and <c>needsCharging</c> would return <c>true</c> if invoked.
+    </p>
+
+    <p>
+      You can also observe the internal state of your objects as a program is running by placing 
+      a breakpoint in the code and running it in your IDE debugger. <xref ref="fig-ev-variables-debugger"/> 
+      is a snapshot of the <c>commuter</c> and <c>cruiser</c> objects in the Variables pane in 
+      Eclipse after line 21 has executed. The values are identical to those shown in the object diagrams.
+    </p>
+
+    <figure xml:id="fig-ev-variables-debugger">
+      <caption><c>commuter</c> and <c>cruiser</c> after line 21 has executed.</caption>
+      <image source="figures/figure_6_3.png" width="90%">
+        <description suppress="yes"/>
+      </image>
+    </figure>
+  </subsection>
+</section>

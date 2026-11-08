@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<section xml:id="sec-6-3-structure">
+  <title>Structure of an Object-Oriented Solution</title>
+
+  <introduction>
+    <p>
+      Our programs moving forward will be composed of at least two files that you will 
+      place in the same Eclipse project:
+    </p>
+
+    <ul>
+      <li>
+        <p>
+          A program class like what you have been writing up to now, with a <c>main</c> 
+          method where program execution begins;
+        </p>
+      </li>
+      <li>
+        <p>
+          One or more class files, defining types that the <c>main</c> method can use.
+        </p>
+      </li>
+    </ul>
+
+    <p>
+      The class definitions are new data types that model entities within the problem 
+      domain. The <c>main</c> method will create instances (objects) of those classes and 
+      invoke methods on them to fulfill the system's responsibilities. As we learn about 
+      objects and classes in this chapter, our <c>main</c> method will be a procedurally 
+      designed program that uses objects to fulfill system responsibilities. In a larger-scale 
+      object-oriented system, control is more distributed: many objects collaborate to fulfill 
+      system responsibilities without being organized into a rigid hierarchical structure.
+    </p>
+
+    <p>
+      We will use a small example to illustrate class design and object creation.
+    </p>
+  </introduction>
+
+  <subsection xml:id="subsec-6-3-1-class-definition">
+    <title>A Class Definition</title>
+
+    <p>
+      <xref ref="listing-point-class"/> is a bare-bones class definition for a class 
+      called <c>Point</c>. There are no comments in this class so you can focus on the 
+      code differences between this type definition and the programs we have written 
+      previously. See what you recognize and what looks different from our prior examples:
+    </p>
+
+    <listing xml:id="listing-point-class">
+      <caption>The <c>Point</c> class definition</caption>
+      <program language="java">
+        <code>
+public class Point {
+    
+    private double x;
+    private double y;
+    
+    public Point(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
+    
+    public double distanceFromOrigin() {
+        return Math.sqrt((this.x * this.x) + (this.y * this.y));
+    }
+    
+    public void translate(double dx, double dy) {
+        this.x += dx;
+        this.y += dy;
+    }
+    
+    public double getX() {
+        return this.x;
+    }
+    
+    public double getY() {
+        return this.y;
+    }
+}
+        </code>
+      </program>
+    </listing>
+
+    <p>
+      What differences do you observe from our prior programs? You probably noticed:
+    </p>
+
+    <ul>
+      <li>
+        <p>
+          <strong>There is no <c>main</c> method!</strong> If you run this class as a 
+          Java program, a <c>.class</c> file will be created but nothing else will happen. 
+          <c>Point</c> is a type that can be used in other classes.
+        </p>
+      </li>
+      <li>
+        <p>
+          There are variable declarations at the top of the class that begin with a new 
+          keyword: <c>private</c>. These are the <em>fields</em> of a <c>Point</c> object. 
+          The <c>private</c> keyword limits the visibility of the fields to the methods 
+          within the class.
+        </p>
+      </li>
+      <li>
+        <p>
+          There is a method with the same name as the class and no return type (<c>Point</c>). 
+          This is a special type of method called a <em>constructor</em>. It is called when 
+          an object of class <c>Point</c> is created with the <c>new</c> keyword (from a 
+          method in another class), and it gives initial values to all of the object's fields.
+        </p>
+      </li>
+      <li>
+        <p>
+          Inside each method, references to the fields are prepended with a new keyword: 
+          <c>this</c>. The <c>this</c> keyword refers to the object on which the method was 
+          invoked. When a parameter variable has the exact same name as a field (as in our 
+          constructor), the parameter <em>shadows</em> (hides) the field. Prepending the 
+          field with <c>this.</c> (<q>this dot</q>) tells Java to assign the parameter 
+          <c>x</c> to the field <c>x</c> belonging to this specific object.
+        </p>
+      </li>
+    </ul>
+
+    <p>
+      We will take time throughout this chapter to explore each of these new concepts in 
+      detail. For now, try to get used to the overall structure of a class. It will help to 
+      see <c>Point</c> being used by a class with a <c>main</c> method.
+    </p>
+  </subsection>
+
+  <subsection xml:id="subsec-6-3-2-main-using-point">
+    <title>A <c>main</c> Method That Uses <c>Point</c></title>
+
+    <p>
+      <xref ref="listing-point-demo"/> is an interactive program called <c>PointDemo</c> 
+      that creates <c>Point</c> objects and invokes methods on them.
+    </p>
+
+    <listing xml:id="listing-point-demo">
+      <caption>Class with a <c>main</c> method that uses <c>Point</c></caption>
+      <program interactive="activecode" language="java">
+        <code>
+public class PointDemo {
+    
+    public static void main(String[] args) {
+        // Declares and instantiates two separate Point objects.
+        Point p1 = new Point(3.0, 4.0);
+        Point p2 = new Point(5.0, 12.0);
+    
+        // Asks each object to calculate its own distance to (0, 0).
+        System.out.println("Point 1 coordinates: (" + p1.getX() + ", " + p1.getY() + ")");
+        System.out.println("Point 1 distance to origin: " + p1.distanceFromOrigin()); 
+    
+        System.out.println("\nPoint 2 coordinates: (" + p2.getX() + ", " 
+                           + p2.getY() + ")");
+        System.out.println("Point 2 distance to origin: " + p2.distanceFromOrigin()); 
+    
+        // Moves p1 and recalculates.
+        p1.translate(3.0, 4.0); 
+        System.out.println("\nAfter moving p1 to (" + p1.getX() + ", " 
+                           + p1.getY() + "):");
+        System.out.println("New distance to origin: " + p1.distanceFromOrigin()); 
+    }
+}
+        </code>
+      </program>
+    </listing>
+
+    <p>
+      This is the output of <c>PointDemo</c>. See if you can trace how the program produces 
+      this output before you read on:
+    </p>
+
+    <console>
+      <output>
+Point 1 coordinates: (3.0, 4.0)
+Point 1 distance to origin: 5.0
+
+Point 2 coordinates: (5.0, 12.0)
+Point 2 distance to origin: 13.0
+
+After moving p1 to (6.0, 8.0):
+New distance to origin: 10.0
+      </output>
+    </console>
+  </subsection>
+
+  <subsection xml:id="subsec-6-3-3-how-they-work-together">
+    <title>How They Work Together</title>
+
+    <p>
+      Let's walk through the execution of <c>PointDemo</c>, beginning with lines 5 and 6<mdash/>object 
+      construction:
+    </p>
+
+    <ol>
+      <li>
+        <p>
+          On line 5, we declare a variable, <c>p1</c>, of type <c>Point</c>. In the same line, 
+          we create an instance of <c>Point</c> (an object) using the <c>new</c> keyword. 
+          We pass two arguments to the constructor: <c>3.0</c> and <c>4.0</c>.
+        </p>
+      </li>
+      <li>
+        <p>
+          In response, Java allocates memory for the object in the heap (enough space to 
+          store the fields, <c>x</c> and <c>y</c>), and control jumps to the constructor 
+          (<c>Point</c>), with arguments <c>3.0</c> and <c>4.0</c>.
+        </p>
+      </li>
+      <li>
+        <p>
+          The constructor in <c>Point</c> begins execution. <c>this.x</c> is assigned the value 
+          of the parameter variable <c>x</c>, which holds <c>3.0</c> (copied from the argument). 
+          What is <c>this</c>? It is a reference to the new object on the heap. When we 
+          assign <c>3.0</c> to <c>this.x</c>, we are assigning a value to the <c>x</c> field 
+          of the new <c>Point</c> object. We then assign the value in the parameter variable 
+          <c>y</c> to <c>this.y</c>, the constructor finishes executing, and control returns 
+          to line 5 in <c>PointDemo.main</c>.
+        </p>
+      </li>
+      <li>
+        <p>
+          Line 5 is an assignment statement. The right side has finished executing, so Java 
+          places a reference to the new <c>Point</c> object into the variable <c>p1</c>.
+        </p>
+      </li>
+      <li>
+        <p>
+          Line 6 executes. This is very similar to line 5<mdash/>we are creating another 
+          <c>Point</c> object, but this time with different values for <c>x</c> and <c>y</c>. 
+          Java allocates another block of memory on the heap for a second <c>Point</c> object.
+        </p>
+      </li>
+      <li>
+        <p>
+          The constructor executes again, but this time, <c>this</c> is a reference to the 
+          new <c>Point</c> object in the heap that was just allocated. Its fields receive 
+          the values <c>5.0</c> and <c>12.0</c>. The constructor finishes executing and control 
+          returns to <c>PointDemo.main</c>, where the assignment statement completes and Java 
+          stores the reference to the new object in <c>p2</c>.
+        </p>
+      </li>
+    </ol>
+
+    <p>
+      There are now two <c>Point</c> objects in the heap: one is referenced by <c>p1</c> 
+      and holds <c>3.0</c> in its <c>x</c> field and <c>4.0</c> in its <c>y</c> field; the 
+      second is referenced by <c>p2</c> and holds <c>5.0</c> in its <c>x</c> field and <c>12.0</c> 
+      in its <c>y</c> field. <xref ref="fig-point-demo-initial"/> depicts the stack and the 
+      heap at this point during execution.
+    </p>
+
+    <figure xml:id="fig-point-demo-initial">
+      <caption>The stack and heap after line 6 in <c>PointDemo.main</c> executes.</caption>
+      <image source="figures/figure_6_1.png" width="95%">
+        <description>
+          A memory diagram showing the call stack on the left and the heap on the right. 
+          On the call stack, the main method frame contains two reference variables: p1 holding 
+          address 0x100, and p2 holding address 0x200. On the heap, two separate Point objects 
+          are allocated. The first object at address 0x100 contains field x equal to 3.0 and field 
+          y equal to 4.0, with an arrow pointing from p1 to address 0x100. The second object at 
+          address 0x200 contains field x equal to 5.0 and field y equal to 12.0, with an arrow 
+          pointing from p2 to address 0x200.
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      These objects will stay in the heap until there are no references to them. The references 
+      to <c>p1</c> and <c>p2</c> have a lifetime that extends to the end of <c>main</c>, so 
+      the data will remain in the heap until <c>main</c> finishes executing.
+    </p>
+
+    <p>
+      Execution now reaches line 9 of <c>main</c>, and the program begins to invoke methods 
+      on the two objects. On lines 9<ndash/>14, accessor methods are invoked. <em>Accessor methods</em> 
+      are value-returning methods that access the internal state of an object without changing 
+      the object. They sometimes return the values stored in fields (like <c>getX</c> and 
+      <c>getY</c>), and they sometimes use the values in fields to answer more complicated 
+      questions about the object (like <c>distanceFromOrigin</c>).
+    </p>
+
+    <p>
+      Let's continue with our step-by-step walkthrough of <c>main</c> and focus on the accessors:
+    </p>
+
+    <ol start="7">
+      <li>
+        <p>
+          In <c>PointDemo.main</c>, line 9 executes. On this line, we invoke two methods, one 
+          after the other, on <c>p1</c>. First, we invoke the <c>getX</c> method. Execution 
+          jumps to <c>getX</c> in <c>Point</c>, which returns the value in <c>this.x</c>. 
+          When we invoke the method on <c>p1</c>, the reference from <c>p1</c> is copied into 
+          <c>this</c>. When <c>getX</c> returns <c>this.x</c>, it returns <c>3.0</c><mdash/>the 
+          value stored in <c>x</c> in the <c>Point</c> object in the heap referenced by <c>p1</c>. 
+          Back in <c>PointDemo.main</c>, we then invoke <c>getY</c>, execution jumps to <c>getY</c> 
+          in <c>Point</c>, and the method returns <c>p1</c>'s <c>y</c> value: <c>4.0</c>. The 
+          coordinates are printed, giving us our first line of output.
+        </p>
+      </li>
+      <li>
+        <p>
+          Back in <c>PointDemo.main</c>, line 10 executes. This line invokes 
+          <c>distanceFromOrigin</c> on <c>p1</c>. Execution jumps to <c>distanceFromOrigin</c> 
+          in <c>Point</c>, which returns the result of the distance formula, calculating the 
+          distance from <m>(0, 0)</m> to <m>(\text{this.x}, \text{this.y})</m>. Because the method 
+          is invoked on <c>p1</c>, <c>this.x</c> is <c>3.0</c> and <c>this.y</c> is <c>4.0</c>. 
+          The method returns <c>5.0</c> to line 10 in <c>PointDemo.main</c>, which prints it.
+        </p>
+      </li>
+      <li>
+        <p>
+          Execution moves to line 12, which is equivalent to line 9, except the methods 
+          <c>getX</c> and <c>getY</c> are invoked on <c>p2</c>. Therefore it is <c>p2</c>'s 
+          reference that is copied into <c>this</c>. When <c>this.x</c> is returned in <c>Point</c>, 
+          <c>5.0</c> is returned; when <c>this.y</c> is returned, <c>12.0</c> is returned. 
+          The values are printed.
+        </p>
+      </li>
+      <li>
+        <p>
+          Similarly, when line 14 executes in <c>PointDemo.main</c>, <c>distanceFromOrigin</c> 
+          is invoked on <c>p2</c>, so the distance from <m>(0, 0)</m> to <m>(5.0, 12.0)</m> is 
+          calculated, returned, and printed.
+        </p>
+      </li>
+    </ol>
+
+    <p>
+      When we invoke a method on an object, the code for that method in the class definition 
+      executes. The data that it executes on<mdash/>the object's fields<mdash/>are the fields of the 
+      object before the dot in the invocation. When we invoke a method on <c>p1</c>, such as 
+      <c>p1.distanceFromOrigin()</c>, <c>this.x</c> and <c>this.y</c> are the <c>x</c> and 
+      <c>y</c> stored in the <c>Point</c> in the heap that <c>p1</c> references. When we invoke 
+      the same method on <c>p2</c>, <c>this.x</c> and <c>this.y</c> are the variables in the 
+      <c>Point</c> in the heap that <c>p2</c> references. Methods are the way that we access 
+      or change an object's state.
+    </p>
+
+    <p>
+      Methods that change an object's state are called <em>mutators</em>. The <c>Point</c> class 
+      has one mutator: <c>translate</c>. It takes two parameters: <c>dx</c> and <c>dy</c>. 
+      These are the values by which we shift <c>this.x</c> and <c>this.y</c>. We invoke the 
+      <c>translate</c> method once in <c>PointDemo</c>:
+    </p>
+
+    <ol start="11">
+      <li>
+        <p>
+          When execution reaches line 17, the <c>translate</c> method is invoked on <c>p1</c>, 
+          with arguments <c>3.0</c> and <c>4.0</c>. Execution jumps to <c>translate</c> in 
+          <c>Point</c>. <c>this.x</c> and <c>this.y</c> are on the left side of an assignment 
+          statement, so they refer to the memory locations on the heap that <c>p1</c> references. 
+          When <c>3.0</c> (<c>dx</c>) is added to <c>this.x</c>, the result is <c>6.0</c>, stored 
+          in <c>this.x</c> in the heap. When <c>4.0</c> (<c>dy</c>) is added to <c>this.y</c>, 
+          the result is <c>8.0</c>, stored in <c>this.y</c> in the heap.
+        </p>
+      </li>
+      <li>
+        <p>
+          Execution proceeds to line 18, which invokes <c>getX</c> and <c>getY</c> on <c>p1</c>. 
+          Because <c>p1</c> has new values, the updated coordinates <m>(6.0, 8.0)</m> are printed.
+        </p>
+      </li>
+      <li>
+        <p>
+          Execution proceeds to line 20, which invokes <c>distanceFromOrigin</c> on <c>p1</c>. 
+          Again, because <c>p1</c>'s state has changed, a new distance from the origin (<c>10.0</c>) 
+          is returned and printed.
+        </p>
+      </li>
+    </ol>
+
+    <p>
+      <xref ref="fig-point-demo-translated"/> depicts the stack and the heap after line 17 in 
+      <c>PointDemo.main</c> executes.
+    </p>
+
+    <figure xml:id="fig-point-demo-translated">
+      <caption>The stack and heap after line 17 in <c>PointDemo.main</c> executes.</caption>
+      <image source="figures/figure_6_2.png" width="95%">
+        <description>
+          A memory diagram showing the call stack on the left and the heap on the right after 
+          p1 is translated. On the call stack, p1 still references address 0x100 and p2 still 
+          references address 0x200. On the heap, the Point object at 0x100 now contains updated 
+          fields x equal to 6.0 and y equal to 8.0. The second Point object at 0x200 remains 
+          unchanged with x equal to 5.0 and y equal to 12.0.
+        </description>
+      </image>
+    </figure>
+  </subsection>
+</section>

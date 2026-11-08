@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-6-12-moving-on" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Moving On!</title>
+
+  <p>
+    Congratulations! In this chapter, you crossed the defining threshold of modern software
+    engineering, transitioning from procedural decomposition to designing robust, extensible
+    systems using object-oriented programming:
+  </p>
+
+  <ul>
+    <li>
+      <p>
+        <strong>Shifting your design mindset:</strong> Moving beyond standalone functions to model
+        software as communities of interacting objects that bundle data (state) together with
+        operations (behavior).
+      </p>
+    </li>
+    <li>
+      <p>
+        <strong>Establishing rigorous encapsulation and information hiding:</strong> Declaring
+        private instance variables to protect internal data and exposing public constructors,
+        accessors, and mutators to govern access.
+      </p>
+    </li>
+    <li>
+      <p>
+        <strong>Organizing multi-class solutions:</strong> Structuring classes across separate
+        source files in an IDE and visualizing blueprints and instances with UML class diagrams.
+      </p>
+    </li>
+    <li>
+      <p>
+        <strong>Distinguishing static versus instance scope:</strong> Distinguishing between state
+        belonging to individual heap objects and shared class-level constants and counters.
+      </p>
+    </li>
+    <li>
+      <p>
+        <strong>Crafting flexible initialization contracts:</strong> Overloading constructors to
+        provide multiple ways to instantiate objects, writing copy constructors, and using the
+        <c>this</c> reference to resolve variable shadowing and chain constructors.
+      </p>
+    </li>
+    <li>
+      <p>
+        <strong>Mastering the Java memory model:</strong> Visualizing how reference variables on
+        the call stack point to dynamic objects in heap memory, untangling reference aliasing,
+        contrasting shallow versus deep copies, defending against <c>null</c>, and seeing how
+        Java's garbage collector automatically reclaims unreachable memory.
+      </p>
+    </li>
+    <li>
+      <p>
+        <strong>Integrating with the Java Object hierarchy:</strong> Overriding <c>toString()</c>
+        to produce informative, human-readable representations and implementing value-based
+        <c>equals()</c> methods to compare object contents rather than memory addresses.
+      </p>
+    </li>
+    <li>
+      <p>
+        <strong>Authoring contract-driven Javadoc specifications:</strong> Formally defining class
+        invariants in header comments and documenting method contracts without leaking private
+        implementation details.
+      </p>
+    </li>
+    <li>
+      <p>
+        <strong>Verifying stateful behavior with Arrange–Act–Assert:</strong> Validating object
+        state transitions across mutations, enforcing preconditions with defensive assertions,
+        and modeling operational lifecycles using UML state-transition diagrams.
+      </p>
+    </li>
+    <li>
+      <p>
+        <strong>Composing collaborating systems:</strong> Using Class–Responsibility–Collaborator
+        (CRC) cards to decompose problem domains, establishing unidirectional <q>has-a</q>
+        relationships, and coordinating multiple objects in a complete capstone case study.
+      </p>
+    </li>
+  </ul>
+
+  <p>
+    You are now fully equipped to tackle the programming exercises at the end of this chapter.
+    Work through the steps: model your problem domain on paper with CRC cards or class diagrams,
+    define your class invariants upfront, scaffold your classes with compiling method stubs,
+    enforce your preconditions with assertions, build Arrange–Act–Assert unit tests that verify
+    both valid transitions and error boundaries, and use your IDE's debugger and memory diagrams
+    to trace reference variables whenever you need to inspect object state on the heap!
+  </p>
+</section>

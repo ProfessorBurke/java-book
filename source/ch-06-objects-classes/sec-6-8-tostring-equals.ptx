@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<section xml:id="sec-6-8-tostring-equals">
+  <title>Printing and Comparing Objects: toString and equals</title>
+
+  <p>
+    One of the defining benefits of object-oriented design is <em>extensibility</em>: the 
+    ability to add functionality to an existing system without modifying the original code. 
+    Object-oriented languages provide extensibility primarily through a mechanism called 
+    <em>inheritance</em>, which we will explore in detail in a future chapter. We can gain 
+    an immediate glimpse of the benefits of inheritance now, however, by adding methods to 
+    our classes that allow us to print, compare, and concatenate our objects naturally.
+  </p>
+
+  <p>
+    All classes in Java are children of a universal parent class called <c>Object</c>. The 
+    <c>Object</c> class provides default behaviors that all Java classes automatically 
+    inherit. Let's examine two of those foundational behaviors: object comparison and 
+    converting an object to a <c>String</c>.
+  </p>
+
+  <subsection xml:id="subsec-6-8-1-object-comparison">
+    <title>Object Comparison</title>
+
+    <p>
+      As you know, if you compare two object references with the equality operators (<c>==</c> 
+      or <c>!=</c>), it is the stack values<mdash/>the memory addresses of the objects on the 
+      heap<mdash/>that are compared. Take a moment to form a mental picture of the stack and the 
+      heap after this code executes:
+    </p>
+
+    <program language="java">
+      <code>
+Point p1 = new Point(3.0, 4.0);
+Point p2 = p1;
+Point p3 = new Point(p1);
+      </code>
+    </program>
+
+    <p>
+      You should be picturing two distinct <c>Point</c> objects in the heap. Both hold 
+      coordinate values <m>(3.0, 4.0)</m>, but the first object is referenced by both <c>p1</c> 
+      and <c>p2</c>, while the second object is referenced by <c>p3</c>. The first object was 
+      created with <c>new</c> and its address stored in <c>p1</c>. The assignment statement on 
+      the next line makes <c>p2</c> an alias to that same memory address. On the third line, 
+      another memory block is allocated on the heap, the copy constructor is invoked (copying 
+      coordinates <m>3.0</m> and <m>4.0</m>), and that new address is stored in <c>p3</c>.
+    </p>
+
+    <p>
+      If we test these references with the equality operator:
+    </p>
+
+    <ul>
+      <li>
+        <p>
+          <c>p1 == p2</c> evaluates to <c>true</c> because both variables hold the exact same 
+          heap memory address.
+        </p>
+      </li>
+      <li>
+        <p>
+          <c>p1 == p3</c> (or <c>p2 == p3</c>) evaluates to <c>false</c> because, even though 
+          their coordinate fields hold identical values, they point to separate heap allocations. 
+          The values stored on the call stack are different.
+        </p>
+      </li>
+    </ul>
+
+    <p>
+      One of the methods that all classes inherit from <c>Object</c> is the <c>equals</c> method. 
+      You have encountered it when comparing <c>String</c> instances (where <c>==</c> checks 
+      reference identity rather than text equality). We can invoke the inherited <c>equals</c> 
+      method on our <c>Point</c>, <c>Rectangle</c>, or <c>ElectricVehicle</c> objects directly. 
+      Unfortunately, the default implementation inside <c>Object</c> simply returns the result 
+      of the <c>==</c> operator! Therefore, calling <c>p1.equals(p3)</c> still returns <c>false</c>.
+    </p>
+
+    <p>
+      However, we can customize the <c>equals</c> method by <em>overriding</em> it. To override 
+      a method means to write a custom version of an inherited method for a specific class. 
+      Java will automatically invoke your custom version on objects of your class, rather than 
+      the inherited default. To override a method, the method signature must match the original 
+      signature exactly.
+    </p>
+
+    <p>
+      There is an established, professional pattern for writing <c>equals</c> methods:
+    </p>
+
+    <ol>
+      <li>
+        <p>
+          Place the <c>@Override</c> annotation above the method header so the compiler verifies 
+          that your signature matches the parent method.
+        </p>
+      </li>
+      <li>
+        <p>
+          Declare the exact signature: <c>public boolean equals(Object obj)</c>. Note that the 
+          parameter type is <c>Object</c>, not your class type, and is conventionally named <c>obj</c>.
+        </p>
+      </li>
+      <li>
+        <p>
+          Check for reference identity using <c>this == obj</c> as an immediate fast path.
+        </p>
+      </li>
+      <li>
+        <p>
+          Verify that the incoming argument is not <c>null</c> and belongs to the exact same class.
+        </p>
+      </li>
+      <li>
+        <p>
+          Cast the <c>Object</c> parameter to your class type and compare all significant fields.
+        </p>
+      </li>
+    </ol>
+
+    <p>
+      <xref ref="listing-point-equals"/> illustrates an <c>equals</c> method for the <c>Point</c> 
+      class adhering to this pattern:
+    </p>
+
+    <listing xml:id="listing-point-equals">
+      <caption>An <c>equals</c> method for the <c>Point</c> class</caption>
+      <program language="java">
+        <code>
+    /**
+     * Indicates whether some other object is "equal to" this Point.
+     * Two points are considered equal if they are the exact same instance,
+     * or if the other object is also a Point with identical x and y coordinates.
+     *
+     * Precondition: None (obj may be null or any object type).
+     * Postcondition: Returns true if obj is an instance of Point with coordinates
+     *                matching this point; false otherwise. The state of this Point
+     *                and obj are unchanged.
+     *
+     * @param obj the reference object with which to compare
+     * @return true if this Point is equal to the obj argument; false otherwise
+     */
+    @Override
+    public boolean equals(Object obj) {
+        boolean equal = false;
+        if (this == obj) {
+            // Check if obj is the exact same instance as this
+            equal = true;
+        } else if (obj != null &amp;&amp; obj.getClass() == this.getClass()) {
+            // If the object exists and is of the same class, compare fields
+            Point other = (Point) obj;
+            equal = (Double.compare(this.x, other.x) == 0 
+                     &amp;&amp; Double.compare(this.y, other.y) == 0);
+        }
+        return equal;
+    }
+        </code>
+      </program>
+    </listing>
+
+    <p>
+      Let's trace how this method functions:
+    </p>
+
+    <ul>
+      <li>
+        <p>
+          On line 16, we initialize a boolean result flag to <c>false</c>, adhering to the 
+          single-exit design pattern.
+        </p>
+      </li>
+      <li>
+        <p>
+          On line 17, we check <c>this == obj</c>. If both variables hold the exact same heap 
+          address, they are aliases representing the exact same instance, so <c>equal</c> is 
+          set to <c>true</c>.
+        </p>
+      </li>
+      <li>
+        <p>
+          If they are not the same physical instance, the <c>else if</c> branch executes. It 
+          uses short-circuit evaluation: if <c>obj</c> is <c>null</c>, evaluation halts and 
+          avoids calling methods on a null reference. If <c>obj</c> is non-null, <c>obj.getClass() == this.getClass()</c> 
+          verifies that the object was instantiated from the <c>Point</c> blueprint (rather than 
+          being a <c>String</c> or a <c>Scanner</c>).
+        </p>
+      </li>
+      <li>
+        <p>
+          Once verified, line 23 safely casts <c>obj</c> to <c>Point other</c>, giving the 
+          compiler access to <c>Point</c>'s coordinate fields.
+        </p>
+      </li>
+      <li>
+        <p>
+          Line 24 compares coordinates using <c>Double.compare(this.x, other.x) == 0</c>. Using 
+          <c>Double.compare</c> is the professional Java standard for floating-point values 
+          because it properly handles IEEE 754 edge cases, such as distinguishing <c>-0.0</c> 
+          from <c>+0.0</c> and treating <c>Double.NaN</c> consistently.
+        </p>
+      </li>
+    </ul>
+
+    <p>
+      When writing an <c>equals</c> method for an object composed of other objects (such as 
+      <c>Rectangle</c> holding a <c>Point topLeft</c>), you must perform a <em>deep comparison</em>. 
+      Compare reference fields using their respective <c>.equals()</c> methods rather than 
+      <c>==</c>. For example, in <c>Rectangle.equals</c>:
+    </p>
+
+    <program language="java">
+      <code>
+equal = (Double.compare(this.width, other.width) == 0)
+        &amp;&amp; (Double.compare(this.height, other.height) == 0)
+        &amp;&amp; (this.topLeft.equals(other.topLeft));
+      </code>
+    </program>
+  </subsection>
+
+  <subsection xml:id="subsec-6-8-2-overriding-tostring">
+    <title>Overriding <c>toString</c></title>
+
+    <p>
+      Have you ever observed the cryptic output produced when printing an object directly? 
+      If you pass an object reference to <c>System.out.println(p1)</c> before overriding its 
+      display method, the console displays output such as:
+    </p>
+
+    <console>
+      <output>
+Point@1dbd16a6
+      </output>
+    </console>
+
+    <p>
+      This string is produced by the default <c>toString</c> implementation inherited from 
+      <c>Object</c>. It consists of the class name (<c>Point</c>), an at-sign (<c>@</c>), and 
+      the object's unsigned hexadecimal <em>hash code</em>, an integer generated from the 
+      object's memory address that serves as a temporary identifier.
+    </p>
+
+    <p>
+      Java implicitly invokes an object's <c>toString</c> method whenever an object is passed 
+      to <c>System.out.print</c> or <c>println</c>, and whenever an object is concatenated with 
+      a <c>String</c> using the <c>+</c> operator:
+    </p>
+
+    <program language="java">
+      <code>
+System.out.println("The value of p1 is: " + p1);
+      </code>
+    </program>
+
+    <p>
+      yields:
+    </p>
+
+    <console>
+      <output>
+The value of p1 is: Point@1dbd16a6
+      </output>
+    </console>
+
+    <p>
+      Just like <c>equals</c>, we can override <c>toString</c> to return a meaningful, 
+      human-readable representation of our object's state. Whenever our object is printed or 
+      concatenated, Java will automatically call our custom version in place of the default. 
+      The method header is always:
+    </p>
+
+    <program language="java">
+      <code>
+public String toString()
+      </code>
+    </program>
+
+    <p>
+      <xref ref="listing-point-tostring"/> shows the overridden <c>toString</c> method for <c>Point</c>:
+    </p>
+
+    <listing xml:id="listing-point-tostring">
+      <caption>The <c>toString</c> method for the <c>Point</c> class</caption>
+      <program language="java">
+        <code>
+    /**
+     * Returns a string representation of this Point in (x, y) coordinate format.
+     *
+     * Precondition: None.
+     * Postcondition: Returns a formatted String containing this Point's coordinates;
+     *                the state of this Point is unchanged.
+     *
+     * @return a string formatted as "(x, y)" representing this point's coordinates
+     */
+    @Override
+    public String toString() {
+        return "(" + this.x + ", " + this.y + ")";
+    }
+        </code>
+      </program>
+    </listing>
+
+    <p>
+      With this method in place, our concatenation statement now outputs:
+    </p>
+
+    <console>
+      <output>
+The value of p1 is: (3.0, 4.0)
+      </output>
+    </console>
+
+    <p>
+      For composite objects like <c>Rectangle</c>, we write a <em>deep <c>toString</c></em>, 
+      incorporating the string representation of component objects:
+    </p>
+
+    <listing xml:id="listing-rectangle-tostring">
+      <caption>The <c>toString</c> method for the <c>Rectangle</c> class</caption>
+      <program language="java">
+        <code>
+    /**
+     * Returns a string representation of this Rectangle, including its topLeft
+     * corner coordinates, width, and height.
+     *
+     * Precondition: None (topLeft may be null or an initialized Point).
+     * Postcondition: Returns a formatted String describing this Rectangle's state;
+     *                the state of this Rectangle and its topLeft point are unchanged.
+     *
+     * @return a string formatted as "Rectangle[topLeft=(x, y), width=W, height=H]"
+     */
+    @Override
+    public String toString() {
+        return "Rectangle[topLeft=" + this.topLeft 
+               + ", width=" + this.width 
+               + ", height=" + this.height + "]";
+    }
+        </code>
+      </program>
+    </listing>
+
+    <p>
+      If we construct a <c>Rectangle</c> of width <c>10.0</c> and height <c>20.0</c> anchored 
+      at coordinate <m>(3.0, 4.0)</m>, passing the rectangle to <c>System.out.println(rect)</c> 
+      implicitly calls <c>rect.toString()</c>, printing:
+    </p>
+
+    <console>
+      <output>
+Rectangle[topLeft=(3.0, 4.0), width=10.0, height=20.0]
+      </output>
+    </console>
+
+    <p>
+      Notice a significant advantage of string concatenation: if <c>this.topLeft</c> happens 
+      to be <c>null</c>, Java safely appends the text literal <c>"null"</c> rather than attempting 
+      to call <c>toString()</c> on a null reference, preventing a <c>NullPointerException</c>.
+    </p>
+
+    <p>
+      Whenever you need to inspect an object during debugging, or present its state to users 
+      in a log or console table, overriding <c>toString</c> gives you immediate, convenient 
+      text output across the entire Java language ecosystem.
+    </p>
+  </subsection>
+</section>

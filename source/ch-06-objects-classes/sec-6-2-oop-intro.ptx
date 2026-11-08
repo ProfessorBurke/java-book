@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<section xml:id="sec-6-2-oop-intro">
+  <title>What is Object-Oriented Programming?</title>
+
+  <p>
+    Programming languages fall into different approaches<mdash/>or <em>paradigms</em><mdash/>for 
+    solving computational problems, including procedural (such as C and Pascal), 
+    functional (Haskell, Clojure), object-oriented (Java, C#), and multi-paradigm 
+    (C++, Python). Each paradigm offers its own methodology for organizing software.
+  </p>
+
+  <p>
+    In Chapter 5, we solved problems using a procedural (functional decomposition) approach. 
+    In procedural programming, data and behavior are kept separate: data is stored in local 
+    variables inside <c>main</c>, and we pass those values back and forth as arguments 
+    to <c>static</c> helper methods. You will still use procedural decomposition in 
+    object-oriented programming, but on a smaller scale<mdash/>when writing the code 
+    inside individual methods.
+  </p>
+
+  <p>
+    On a larger scale, object-oriented programming decomposes a system into objects that 
+    collaborate to solve a problem. Rather than separating data from the methods that 
+    process it, an object bundles its own data (called its <em>state</em>) together with 
+    the operations it can perform (called its <em>behavior</em>).
+  </p>
+
+  <p>
+    Much of the software you use every day is composed of objects, behind the scenes. 
+    For example, when you interact with a graphical application or mobile app, each 
+    visual control on the screen<mdash/>such as a button, a text box, or a slider<mdash/>is 
+    represented internally as an object. Each object is responsible for maintaining its 
+    own state and carrying out its own behavior. A button object knows what text or icon 
+    it displays and how to respond when clicked; a text box object knows what characters 
+    have been typed into it and can provide that text to other parts of the program on request.
+  </p>
+
+  <p>
+    In fact, you have been programming with objects since Chapter 2. Every <c>String</c>, 
+    <c>Scanner</c>, <c>File</c>, and <c>PrintWriter</c> you have used in your programs is 
+    an object. When you wrote <c>cityFile.exists()</c>, you asked a <c>File</c> object to 
+    check its own internal path and report whether that file existed on disk.
+  </p>
+
+  <p>
+    Decomposing a system into interacting objects provides two immediate software 
+    engineering benefits:
+  </p>
+
+  <ul>
+    <li>
+      <p>
+        <strong>Encapsulation:</strong> Bundling data (state) and the operations on that 
+        data (behavior) together into a single unit<mdash/>an object. Encapsulation makes 
+        development and testing easier because an object is a self-contained component 
+        that can be built and unit-tested independently. It also simplifies maintenance, 
+        making it much easier to locate and update logic in a specific component than to 
+        hunt through a sprawling, monolithic program.
+      </p>
+    </li>
+
+    <li>
+      <p>
+        <strong>Information hiding:</strong> Concealing an object's internal details 
+        from the rest of the software system. In practice, this means hiding the object's 
+        internal data variables and allowing other parts of the program to interact with 
+        the object strictly through well-defined methods. Just as you did not need to 
+        know how a <c>Scanner</c> buffers bytes in memory to call <c>nextInt()</c>, hiding 
+        internal state protects data from accidental corruption. While some textbooks treat 
+        information hiding as a required part of encapsulation, separating the two helps 
+        explain why some languages (like Python) bundle data and methods together without 
+        enforcing strict private access, whereas Java uses both.
+      </p>
+    </li>
+  </ul>
+
+  <p>
+    Object-oriented design offers additional advantages such as extensibility through 
+    inheritance mechanisms. We will explore inheritance, polymorphism, and dynamic 
+    binding in future chapters, but you will get a taste of the advantages in 
+    <xref ref="sec-6-8-tostring-equals"/>. To begin building our own objects, we first need 
+    to learn how to write a class: the blueprint that defines what state and behavior an 
+    object will possess.
+  </p>
+</section>

@@ -1,0 +1,690 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exercises xml:id="sec-6-12-exercises" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Programming Projects</title>
+
+  <introduction>
+    <p>
+      The following projects require you to design, implement, and verify complete Java
+      classes in your local development environment (IDE). Each project emphasizes strict
+      encapsulation, explicit class invariants, defensive input validation, and automated
+      verification using the Arrange–Act–Assert pattern with Java assertions (<c>-ea</c>).
+    </p>
+  </introduction>
+
+  <!-- ============================================================ -->
+  <!-- Project 1: DoughBatch                                        -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-dough-batch">
+    <title>Artisan Dough Batch Tracker</title>
+    <statement>
+      <p>
+        In professional baking, formulas are expressed as percentages relative to total flour
+        weight (baker's percentages). Hydration—the ratio of water mass to flour mass—is the
+        single most important factor governing dough extensibility, crumb structure, and baking
+        characteristics.
+      </p>
+      <p>
+        Design and implement an immutable class named <c>DoughBatch</c> that tracks flour,
+        water, and salt masses in grams, calculates hydration percentage, and supports scaling.
+      </p>
+
+      <table xml:id="table-project-dough-batch">
+        <title>UML Class Diagram for <c>DoughBatch</c></title>
+        <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+          <col width="100%"/>
+          <row header="yes">
+            <cell halign="center"><strong>DoughBatch</strong></cell>
+          </row>
+          <row>
+            <cell>
+              <p>- flourGrams : double</p>
+              <p>- waterGrams : double</p>
+              <p>- saltGrams : double</p>
+            </cell>
+          </row>
+          <row>
+            <cell>
+              <p>+ DoughBatch(flourGrams : double, waterGrams : double, saltGrams : double)</p>
+              <p>+ getFlourGrams() : double</p>
+              <p>+ getWaterGrams() : double</p>
+              <p>+ getSaltGrams() : double</p>
+              <p>+ calculateHydration() : double</p>
+              <p>+ calculateTotalMass() : double</p>
+              <p>+ calculateSaltPercentage() : double</p>
+              <p>+ scale(factor : double) : DoughBatch</p>
+              <p>+ equals(obj : Object) : boolean</p>
+              <p>+ toString() : String</p>
+            </cell>
+          </row>
+        </tabular>
+      </table>
+
+      <p><strong>Class Invariants and Requirements:</strong></p>
+      <ul>
+        <li><p><c>flourGrams &gt; 0.0</c></p></li>
+        <li><p><c>waterGrams &gt; 0.0</c></p></li>
+        <li><p><c>saltGrams &gt;= 0.0</c></p></li>
+        <li>
+          <p>
+            <c>calculateHydration()</c> returns <m>(\text{waterGrams} / \text{flourGrams}) \times 100.0</m>.
+          </p>
+        </li>
+        <li>
+          <p>
+            <c>scale(factor)</c> returns a <em>new</em> <c>DoughBatch</c> with all ingredient
+            masses multiplied by <c>factor</c>. The factor must be strictly positive (<c>factor &gt; 0.0</c>).
+          </p>
+        </li>
+        <li>
+          <p>
+            Override <c>equals(Object)</c> using <c>Double.compare()</c> with an epsilon tolerance
+            of <m>10^{-4}</m> grams.
+          </p>
+        </li>
+      </ul>
+      <p>
+        Write an Arrange–Act–Assert test class named <c>DoughBatchTest</c> verifying construction,
+        hydration math, scaling immutability, and rejection of non-positive flour weights.
+      </p>
+    </statement>
+    <hint>
+      <p>
+        Notice that <c>scale()</c> returns a new instance rather than modifying existing fields.
+        This preserves immutability, similar to how Java's <c>String.toUpperCase()</c> works.
+      </p>
+    </hint>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 2: CharacterAttribute                                -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-character-attribute">
+    <title>Role-Playing Game Character Attribute</title>
+    <statement>
+      <p>
+        In role-playing games (RPGs), character attributes (such as Strength, Agility, or Wisdom)
+        have a permanent base score and dynamic temporary modifiers (buffs and debuffs from spells,
+        equipment, or injuries). The effective score is clamped within standard game bounds.
+      </p>
+      <p>
+        Design and implement a class named <c>CharacterAttribute</c> that manages a single
+        attribute's state.
+      </p>
+
+      <table xml:id="table-project-character-attribute">
+        <title>UML Class Diagram for <c>CharacterAttribute</c></title>
+        <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+          <col width="100%"/>
+          <row header="yes">
+            <cell halign="center"><strong>CharacterAttribute</strong></cell>
+          </row>
+          <row>
+            <cell>
+              <p>- name : String</p>
+              <p>- baseValue : int</p>
+              <p>- modifier : int</p>
+              <p>- minAllowed : int</p>
+              <p>- maxAllowed : int</p>
+            </cell>
+          </row>
+          <row>
+            <cell>
+              <p>+ CharacterAttribute(name : String, baseValue : int, minAllowed : int, maxAllowed : int)</p>
+              <p>+ CharacterAttribute(name : String, baseValue : int)</p>
+              <p>+ getName() : String</p>
+              <p>+ getBaseValue() : int</p>
+              <p>+ getModifier() : int</p>
+              <p>+ getEffectiveValue() : int</p>
+              <p>+ applyModifier(delta : int) : void</p>
+              <p>+ resetModifier() : void</p>
+              <p>+ permanentlyIncreaseBase(delta : int) : void</p>
+              <p>+ toString() : String</p>
+            </cell>
+          </row>
+        </tabular>
+      </table>
+
+      <p><strong>Class Invariants and Requirements:</strong></p>
+      <ul>
+        <li><p><c>name != null &amp;&amp; !name.trim().isEmpty()</c></p></li>
+        <li><p><c>minAllowed &lt; maxAllowed</c></p></li>
+        <li><p><c>baseValue &gt;= minAllowed &amp;&amp; baseValue &lt;= maxAllowed</c></p></li>
+        <li>
+          <p>
+            The 2-parameter constructor defaults <c>minAllowed = 1</c> and <c>maxAllowed = 100</c>
+            using explicit constructor chaining (<c>this(...)</c>).
+          </p>
+        </li>
+        <li>
+          <p>
+            <c>getEffectiveValue()</c> returns <c>baseValue + modifier</c>, clamped so it never
+            falls below <c>minAllowed</c> or exceeds <c>maxAllowed</c>.
+          </p>
+        </li>
+      </ul>
+      <p>
+        Write a test suite in <c>CharacterAttributeTest</c> verifying that extreme negative
+        modifiers clamp to <c>minAllowed</c> and extreme positive buffs clamp to <c>maxAllowed</c>.
+      </p>
+    </statement>
+    <hint>
+      <p>
+        Use <c>Math.max(minAllowed, Math.min(maxAllowed, baseValue + modifier))</c> to implement
+        clamping cleanly in one line.
+      </p>
+    </hint>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 3: RoomRenovation                                    -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-room-renovation">
+    <title>Room Renovation and Flooring Estimator</title>
+    <statement>
+      <p>
+        Contractors estimating interior remodeling must calculate both floor surface area
+        (for tile or hardwood flooring) and perimeter wall length (for baseboard molding),
+        adding standard industry waste allowances.
+      </p>
+      <p>
+        Design and implement a class named <c>RoomRenovation</c> that models a rectangular room.
+      </p>
+
+      <table xml:id="table-project-room-renovation">
+        <title>UML Class Diagram for <c>RoomRenovation</c></title>
+        <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+          <col width="100%"/>
+          <row header="yes">
+            <cell halign="center"><strong>RoomRenovation</strong></cell>
+          </row>
+          <row>
+            <cell>
+              <p>- roomLabel : String</p>
+              <p>- lengthFeet : double</p>
+              <p>- widthFeet : double</p>
+              <p>- flooringUnitCost : double</p>
+            </cell>
+          </row>
+          <row>
+            <cell>
+              <p>+ RoomRenovation(roomLabel : String, lengthFeet : double, widthFeet : double, flooringUnitCost : double)</p>
+              <p>+ getRoomLabel() : String</p>
+              <p>+ getLengthFeet() : double</p>
+              <p>+ getWidthFeet() : double</p>
+              <p>+ getFlooringUnitCost() : double</p>
+              <p>+ calculateFloorArea() : double</p>
+              <p>+ calculatePerimeter() : double</p>
+              <p>+ calculateFlooringCost(wasteAllowancePercent : double) : double</p>
+              <p>+ calculateBaseboardCost(costPerLinearFoot : double) : double</p>
+              <p>+ toString() : String</p>
+            </cell>
+          </row>
+        </tabular>
+      </table>
+
+      <p><strong>Class Invariants and Requirements:</strong></p>
+      <ul>
+        <li><p><c>roomLabel != null &amp;&amp; !roomLabel.trim().isEmpty()</c></p></li>
+        <li><p><c>lengthFeet &gt; 0.0 &amp;&amp; widthFeet &gt; 0.0</c></p></li>
+        <li><p><c>flooringUnitCost &gt;= 0.0</c></p></li>
+        <li>
+          <p>
+            <c>calculateFlooringCost(wastePercent)</c> asserts <c>wastePercent &gt;= 0.0</c> and computes:
+            <me>\text{area} \times \left(1.0 + \frac{\text{wastePercent}}{100.0}\right) \times \text{flooringUnitCost}</me>
+          </p>
+        </li>
+      </ul>
+      <p>
+        Write a verification program <c>RenovationDemo</c> that configures three rooms in a house,
+        computes total material requirements with a 10% flooring waste factor, and displays an
+        itemized bill of materials.
+      </p>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 4: RoofObstruction                                   -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-roof-obstruction">
+    <title>Rooftop Solar Shading and Setback Calculator</title>
+    <statement>
+      <p>
+        When designing residential rooftop solar panel arrays, engineers must account for shade
+        cast by rooftop obstructions (such as chimneys, HVAC units, or parapets). The shadow
+        length cast by an obstruction of height <m>h</m> when the sun is at elevation angle
+        <m>\theta</m> is given by trigonometry:
+        <me>L = \frac{h}{\tan(\theta)}</me>
+      </p>
+      <p>
+        Design and implement a class named <c>RoofObstruction</c> to calculate minimum solar
+        setback distances.
+      </p>
+
+      <table xml:id="table-project-roof-obstruction">
+        <title>UML Class Diagram for <c>RoofObstruction</c></title>
+        <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+          <col width="100%"/>
+          <row header="yes">
+            <cell halign="center"><strong>RoofObstruction</strong></cell>
+          </row>
+          <row>
+            <cell>
+              <p>- identifier : String</p>
+              <p>- heightInches : double</p>
+              <p>- widthInches : double</p>
+            </cell>
+          </row>
+          <row>
+            <cell>
+              <p>+ RoofObstruction(identifier : String, heightInches : double, widthInches : double)</p>
+              <p>+ getIdentifier() : String</p>
+              <p>+ getHeightInches() : double</p>
+              <p>+ getWidthInches() : double</p>
+              <p>+ calculateShadowLength(solarElevationDegrees : double) : double</p>
+              <p>+ calculateBufferZoneArea(solarElevationDegrees : double) : double</p>
+              <p>+ isPanelShaded(panelDistanceInches : double, solarElevationDegrees : double) : boolean</p>
+              <p>+ toString() : String</p>
+            </cell>
+          </row>
+        </tabular>
+      </table>
+
+      <p><strong>Class Invariants and Requirements:</strong></p>
+      <ul>
+        <li><p><c>identifier != null &amp;&amp; !identifier.trim().isEmpty()</c></p></li>
+        <li><p><c>heightInches &gt; 0.0 &amp;&amp; widthInches &gt; 0.0</c></p></li>
+        <li>
+          <p>
+            <c>calculateShadowLength(solarElevationDegrees)</c> requires that <m>\theta</m> satisfy
+            <c>solarElevationDegrees &gt; 0.0 &amp;&amp; solarElevationDegrees &lt; 90.0</c>.
+            Convert the angle to radians via <c>Math.toRadians()</c> before calling <c>Math.tan()</c>.
+          </p>
+        </li>
+        <li>
+          <p>
+            <c>isPanelShaded()</c> returns <c>true</c> if a solar panel placed at distance
+            <c>panelDistanceInches</c> falls within the shadow length.
+          </p>
+        </li>
+      </ul>
+      <p>
+        Write unit tests in <c>RoofObstructionTest</c> testing winter solstice sun angles (e.g.,
+        <m>22^\circ</m>) and summer solstice sun angles (e.g., <m>65^\circ</m>).
+      </p>
+    </statement>
+    <hint>
+      <p>
+        Java's <c>Math.tan()</c> expects radians, not degrees. Always call
+        <c>Math.toRadians(solarElevationDegrees)</c> first.
+      </p>
+    </hint>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 5: MaritimeHorizon                                   -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-maritime-horizon">
+    <title>Maritime Horizon and Lighthouse Range Calculator</title>
+    <statement>
+      <p>
+        Because the Earth is curved, the distance an observer at sea can see before the surface
+        drops below the horizon depends on the observer's eye height above sea level. Accounting
+        for standard atmospheric refraction, the geometric distance to the horizon in nautical
+        miles is modeled by:
+        <me>d \approx 1.17 \times \sqrt{h}</me>
+        where <m>h</m> is the height of eye in feet. When observing a raised target (such as a
+        lighthouse lantern of height <m>H</m>), the maximum distance of geographical visibility
+        is the sum of the observer's horizon distance and the target's horizon distance:
+        <me>D_{\text{max}} = 1.17 \times \sqrt{h} + 1.17 \times \sqrt{H}</me>
+      </p>
+      <p>
+        Design and implement a class named <c>MaritimeHorizon</c>.
+      </p>
+
+      <table xml:id="table-project-maritime-horizon">
+        <title>UML Class Diagram for <c>MaritimeHorizon</c></title>
+        <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+          <col width="100%"/>
+          <row header="yes">
+            <cell halign="center"><strong>MaritimeHorizon</strong></cell>
+          </row>
+          <row>
+            <cell>
+              <p>- vesselOrStationName : String</p>
+              <p>- eyeHeightFeet : double</p>
+            </cell>
+          </row>
+          <row>
+            <cell>
+              <p>+ MaritimeHorizon(vesselOrStationName : String, eyeHeightFeet : double)</p>
+              <p>+ getVesselOrStationName() : String</p>
+              <p>+ getEyeHeightFeet() : double</p>
+              <p>+ calculateDistanceToHorizon() : double</p>
+              <p>+ calculateGeographicRange(target : MaritimeHorizon) : double</p>
+              <p>+ canSightingOccur(target : MaritimeHorizon, separationDistanceNauticalMiles : double) : boolean</p>
+              <p>+ toString() : String</p>
+            </cell>
+          </row>
+        </tabular>
+      </table>
+
+      <p><strong>Class Invariants and Requirements:</strong></p>
+      <ul>
+        <li><p><c>vesselOrStationName != null &amp;&amp; !vesselOrStationName.trim().isEmpty()</c></p></li>
+        <li><p><c>eyeHeightFeet &gt;= 0.0</c></p></li>
+        <li>
+          <p>
+            <c>calculateGeographicRange(target)</c> accepts another <c>MaritimeHorizon</c> instance,
+            validates that <c>target != null</c>, and sums both horizon distances.
+          </p>
+        </li>
+        <li>
+          <p>
+            <c>canSightingOccur()</c> asserts that <c>separationDistanceNauticalMiles &gt;= 0.0</c>
+            and returns whether the separation is less than or equal to the combined geographic range.
+          </p>
+        </li>
+      </ul>
+      <p>
+        Write a simulation program <c>MaritimeDemo</c> modeling a container ship bridge (height
+        of eye 75 ft), a small sailboat cockpit (height of eye 9 ft), and a historic offshore
+        lighthouse (focal plane height 130 ft).
+      </p>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 6: Star and Exoplanet                                -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-star-exoplanet">
+    <title>Exoplanet Orbital Period and Habitable Zone Model</title>
+    <statement>
+      <p>
+        Astronomers discovering extrasolar planets use physical laws to characterize planetary
+        orbits. By Kepler's Third Law, a planet's orbital period <m>T</m> (in Earth years)
+        around a host star of mass <m>M</m> (in solar masses <m>M_\odot</m>) at semi-major axis
+        <m>a</m> (in Astronomical Units, AU) is:
+        <me>T = \sqrt{\frac{a^3}{M}}</me>
+        A star's circumstellar habitable zone (the range of orbital distances where liquid water
+        can exist) scales with the star's bolometric luminosity <m>L</m> (relative to our Sun):
+        <me>r_{\text{inner}} \approx \sqrt{\frac{L}{1.1}}, \quad r_{\text{outer}} \approx \sqrt{\frac{L}{0.53}}</me>
+      </p>
+      <p>
+        Design and implement two collaborating classes: <c>Star</c> and <c>Exoplanet</c>.
+      </p>
+
+      <table xml:id="table-project-star">
+        <title>UML Class Diagram for <c>Star</c></title>
+        <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+          <col width="100%"/>
+          <row header="yes">
+            <cell halign="center"><strong>Star</strong></cell>
+          </row>
+          <row>
+            <cell>
+              <p>- name : String</p>
+              <p>- massSolarMasses : double</p>
+              <p>- luminositySolar : double</p>
+            </cell>
+          </row>
+          <row>
+            <cell>
+              <p>+ Star(name : String, massSolarMasses : double, luminositySolar : double)</p>
+              <p>+ getName() : String</p>
+              <p>+ getMassSolarMasses() : double</p>
+              <p>+ getLuminositySolar() : double</p>
+              <p>+ getHabitableZoneInnerAU() : double</p>
+              <p>+ getHabitableZoneOuterAU() : double</p>
+              <p>+ isInHabitableZone(orbitalDistanceAU : double) : boolean</p>
+              <p>+ toString() : String</p>
+            </cell>
+          </row>
+        </tabular>
+      </table>
+
+      <table xml:id="table-project-exoplanet">
+        <title>UML Class Diagram for <c>Exoplanet</c></title>
+        <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+          <col width="100%"/>
+          <row header="yes">
+            <cell halign="center"><strong>Exoplanet</strong></cell>
+          </row>
+          <row>
+            <cell>
+              <p>- designation : String</p>
+              <p>- semiMajorAxisAU : double</p>
+              <p>- hostStar : Star</p>
+            </cell>
+          </row>
+          <row>
+            <cell>
+              <p>+ Exoplanet(designation : String, semiMajorAxisAU : double, hostStar : Star)</p>
+              <p>+ getDesignation() : String</p>
+              <p>+ getSemiMajorAxisAU() : double</p>
+              <p>+ getHostStar() : Star</p>
+              <p>+ calculateOrbitalPeriodYears() : double</p>
+              <p>+ calculateOrbitalPeriodDays() : double</p>
+              <p>+ isPotentiallyHabitable() : boolean</p>
+              <p>+ toString() : String</p>
+            </cell>
+          </row>
+        </tabular>
+      </table>
+
+      <p><strong>Class Invariants and Requirements:</strong></p>
+      <ul>
+        <li><p><c>name</c> and <c>designation</c> must not be null or blank.</p></li>
+        <li><p><c>massSolarMasses &gt; 0.0</c> and <c>luminositySolar &gt; 0.0</c>.</p></li>
+        <li><p><c>semiMajorAxisAU &gt; 0.0</c> and <c>hostStar != null</c>.</p></li>
+        <li>
+          <p>
+            <c>Exoplanet.isPotentiallyHabitable()</c> delegates directly to
+            <c>hostStar.isInHabitableZone(this.semiMajorAxisAU)</c>, demonstrating message passing.
+          </p>
+        </li>
+      </ul>
+      <p>
+        Write an automated test suite in <c>ExoplanetTest</c> modeling our Sun (<m>1.0 M_\odot, 1.0 L_\odot</m>)
+        and Earth (<m>1.0 \text{ AU}</m>), verifying that Earth has an orbital period of approximately
+        365.25 days and resides within the habitable zone. Then test Proxima Centauri and Proxima b.
+      </p>
+    </statement>
+    <hint>
+      <p>
+        Convert years to days using <c>periodYears * 365.25</c>.
+      </p>
+    </hint>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 7: WeatherObservation and FlightSafetyAdvisor        -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-flight-safety">
+    <title>Aviation Flight Category and Crosswind Safety Advisor</title>
+    <statement>
+      <p>
+        General aviation pilots rely on METAR weather observations to determine whether flight
+        conditions meet FAA flight rules: Visual Flight Rules (VFR), Marginal VFR (MVFR), or
+        Instrument Flight Rules (IFR). In addition, pilots must calculate the crosswind component
+        relative to the active runway heading:
+        <me>V_{\text{cross}} = V_{\text{wind}} \times |\sin(\alpha_{\text{wind}} - \alpha_{\text{runway}})|</me>
+      </p>
+      <p>
+        Design and implement two classes: an immutable <c>WeatherObservation</c> and an analytical
+        <c>FlightSafetyAdvisor</c>.
+      </p>
+
+      <table xml:id="table-project-weather-obs">
+        <title>UML Class Diagram for <c>WeatherObservation</c></title>
+        <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+          <col width="100%"/>
+          <row header="yes">
+            <cell halign="center"><strong>WeatherObservation</strong></cell>
+          </row>
+          <row>
+            <cell>
+              <p>- stationId : String</p>
+              <p>- visibilityMiles : double</p>
+              <p>- cloudCeilingFeet : int</p>
+              <p>- windSpeedKnots : double</p>
+              <p>- windDirectionDegrees : int</p>
+            </cell>
+          </row>
+          <row>
+            <cell>
+              <p>+ WeatherObservation(stationId : String, visibilityMiles : double, cloudCeilingFeet : int, windSpeedKnots : double, windDirectionDegrees : int)</p>
+              <p>+ getStationId() : String</p>
+              <p>+ getVisibilityMiles() : double</p>
+              <p>+ getCloudCeilingFeet() : int</p>
+              <p>+ getWindSpeedKnots() : double</p>
+              <p>+ getWindDirectionDegrees() : int</p>
+              <p>+ determineFlightCategory() : String</p>
+              <p>+ toString() : String</p>
+            </cell>
+          </row>
+        </tabular>
+      </table>
+
+      <table xml:id="table-project-flight-advisor">
+        <title>UML Class Diagram for <c>FlightSafetyAdvisor</c></title>
+        <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+          <col width="100%"/>
+          <row header="yes">
+            <cell halign="center"><strong>FlightSafetyAdvisor</strong></cell>
+          </row>
+          <row>
+            <cell>
+              <p>- maxDemonstratedCrosswindKnots : double</p>
+            </cell>
+          </row>
+          <row>
+            <cell>
+              <p>+ FlightSafetyAdvisor(maxDemonstratedCrosswindKnots : double)</p>
+              <p>+ getMaxDemonstratedCrosswindKnots() : double</p>
+              <p>+ calculateCrosswindComponent(obs : WeatherObservation, runwayHeadingDegrees : int) : double</p>
+              <p>+ isSafeToLand(obs : WeatherObservation, runwayHeadingDegrees : int) : boolean</p>
+              <p>+ toString() : String</p>
+            </cell>
+          </row>
+        </tabular>
+      </table>
+
+      <p><strong>FAA Category Rules and Class Invariants:</strong></p>
+      <ul>
+        <li><p><c>visibilityMiles &gt;= 0.0</c> and <c>cloudCeilingFeet &gt;= 0</c>.</p></li>
+        <li><p><c>windSpeedKnots &gt;= 0.0</c> and <c>windDirectionDegrees</c> between 0 and 360.</p></li>
+        <li>
+          <p>
+            <c>determineFlightCategory()</c> returns:
+            <ul>
+              <li><p><c>"VFR"</c> if ceiling <m>\ge 3000</m> ft and visibility <m>\ge 5.0</m> miles.</p></li>
+              <li><p><c>"MVFR"</c> if ceiling is 1000–2999 ft or visibility is 3.0–4.9 miles.</p></li>
+              <li><p><c>"IFR"</c> if ceiling is &lt; 1000 ft or visibility is &lt; 3.0 miles.</p></li>
+            </ul>
+          </p>
+        </li>
+        <li>
+          <p>
+            <c>isSafeToLand()</c> returns <c>true</c> if and only if the flight category is <c>"VFR"</c>
+            and the crosswind component does not exceed <c>maxDemonstratedCrosswindKnots</c>.
+          </p>
+        </li>
+      </ul>
+      <p>
+        Write unit tests in <c>FlightSafetyTest</c> verifying correct flight category classification
+        and crosswind math across multiple runway headings.
+      </p>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 8: StormTracker                                      -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-storm-tracker">
+    <title>Tropical Cyclone Lifecycle and Saffir-Simpson Tracker</title>
+    <statement>
+      <p>
+        Meteorological organizations track the lifecycle of tropical cyclones as they intensify
+        and weaken over the ocean. As new aircraft reconnaissance advisories arrive, the system
+        must update the storm's current sustained wind speed, update peak lifetime intensity,
+        and classify the storm on the Saffir-Simpson Hurricane Wind Scale:
+      </p>
+      <ul>
+        <li><p>Tropical Depression: &lt; 34 knots</p></li>
+        <li><p>Tropical Storm: 34–63 knots</p></li>
+        <li><p>Category 1 Hurricane: 64–82 knots</p></li>
+        <li><p>Category 2 Hurricane: 83–95 knots</p></li>
+        <li><p>Category 3 Major Hurricane: 96–112 knots</p></li>
+        <li><p>Category 4 Major Hurricane: 113–136 knots</p></li>
+        <li><p>Category 5 Major Hurricane: <m>\ge 137</m> knots</p></li>
+      </ul>
+      <p>
+        Design and implement a stateful tracker class named <c>StormTracker</c>.
+      </p>
+
+      <table xml:id="table-project-storm-tracker">
+        <title>UML Class Diagram for <c>StormTracker</c></title>
+        <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+          <col width="100%"/>
+          <row header="yes">
+            <cell halign="center"><strong>StormTracker</strong></cell>
+          </row>
+          <row>
+            <cell>
+              <p>- stormName : String</p>
+              <p>- basin : String</p>
+              <p>- currentWindSpeedKnots : double</p>
+              <p>- peakWindSpeedKnots : double</p>
+              <p>- advisoryCount : int</p>
+              <p>- active : boolean</p>
+            </cell>
+          </row>
+          <row>
+            <cell>
+              <p>+ StormTracker(stormName : String, basin : String, initialWindSpeedKnots : double)</p>
+              <p>+ getStormName() : String</p>
+              <p>+ getBasin() : String</p>
+              <p>+ getCurrentWindSpeedKnots() : double</p>
+              <p>+ getPeakWindSpeedKnots() : double</p>
+              <p>+ getAdvisoryCount() : int</p>
+              <p>+ isActive() : boolean</p>
+              <p>+ recordAdvisory(newWindSpeedKnots : double) : void</p>
+              <p>+ markDissipated() : void</p>
+              <p>+ getSaffirSimpsonCategory() : String</p>
+              <p>+ isMajorHurricane() : boolean</p>
+              <p>+ toString() : String</p>
+            </cell>
+          </row>
+        </tabular>
+      </table>
+
+      <p><strong>Class Invariants and Requirements:</strong></p>
+      <ul>
+        <li><p><c>stormName</c> and <c>basin</c> must not be null or blank.</p></li>
+        <li><p><c>currentWindSpeedKnots &gt;= 0.0</c>.</p></li>
+        <li><p><c>peakWindSpeedKnots &gt;= currentWindSpeedKnots</c> at all times.</p></li>
+        <li><p><c>advisoryCount &gt;= 1</c>.</p></li>
+        <li>
+          <p>
+            <c>recordAdvisory(newWindSpeedKnots)</c> asserts that the storm <c>isActive()</c>
+            and that <c>newWindSpeedKnots &gt;= 0.0</c>. It updates <c>currentWindSpeedKnots</c>,
+            increments <c>advisoryCount</c>, and updates <c>peakWindSpeedKnots</c> if the new
+            wind speed exceeds the previous peak.
+          </p>
+        </li>
+        <li>
+          <p>
+            <c>markDissipated()</c> transitions <c>active</c> to <c>false</c>. Subsequent calls to
+            <c>recordAdvisory()</c> must fail with an assertion error.
+          </p>
+        </li>
+      </ul>
+      <p>
+        Write an automated test class in <c>StormTrackerTest</c> verifying a simulated lifecycle:
+        formation at 30 knots, rapid intensification to a 120-knot Category 4 hurricane,
+        weakening to 50 knots (confirming that peak intensity remains 120 knots), dissipation,
+        and rejection of post-dissipation advisory updates.
+      </p>
+    </statement>
+  </exercise>
+</exercises>

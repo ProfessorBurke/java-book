@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<section xml:id="sec-6-10-unit-testing">
+  <title>Unit Testing Classes: The Arrange–Act–Assert Pattern</title>
+
+  <p>
+    In Chapter 5, we wrote unit tests for static methods. Testing static methods was 
+    relatively straightforward and stateless: you fed arguments into a function and 
+    checked whether the return value matched an expected output.
+  </p>
+
+  <p>
+    Classes, however, are <em>stateful</em>. An object's methods interact with private 
+    fields residing in the heap, and a method's behavior depends directly on what happened 
+    to that object earlier in execution. When we test an object, we are not just testing a 
+    single mathematical calculation<mdash/>we are testing state transitions and verifying 
+    that class invariants hold across mutations.
+  </p>
+
+  <p>
+    To bring discipline and clarity to testing stateful classes, professional software 
+    engineers use the industry-standard Arrange<ndash/>Act<ndash/>Assert (AAA) pattern.
+  </p>
+
+  <subsection xml:id="subsec-6-10-1-aaa-pattern">
+    <title>The Arrange–Act–Assert (AAA) Pattern</title>
+
+    <p>
+      Every unit test method should focus on testing one specific behavior or state transition. 
+      The AAA pattern breaks that test into three clear, chronological phases:
+    </p>
+
+    <ol>
+      <li>
+        <p>
+          <strong>Arrange (Set up the initial state):</strong> Create the necessary objects 
+          on the heap and configure them into a known, predictable starting state. This often 
+          involves calling a constructor and perhaps an initial setup method.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>Act (Execute the behavior under test):</strong> Invoke the specific mutator 
+          or state-changing method you wish to verify (such as <c>point.translate(10.0, 5.0);</c>).
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>Assert (Verify the outcome):</strong> Inspect the object's resulting state 
+          by calling accessor methods, <c>equals()</c>, or <c>toString()</c>. Compare the 
+          actual results against your expected values using assertions. Verify both that the 
+          requested change occurred and that other fields were not accidentally corrupted.
+        </p>
+      </li>
+    </ol>
+
+    <figure xml:id="fig-arrange-act-assert">
+      <caption>The Arrange<ndash/>Act<ndash/>Assert pattern for stateful unit testing.</caption>
+      <image source="figures/figure_6_21.png" width="95%">
+        <description>
+          A diagram showing the three sequential phases of the Arrange-Act-Assert pattern 
+          connected by downward arrows. Box 1: ARRANGE in blue, showing object construction 
+          on the heap. Box 2: ACT in amber, showing invocation of the mutator method under test. 
+          Box 3: ASSERT in green, showing state verification and invariant checks using Java 
+          assert statements.
+        </description>
+      </image>
+    </figure>
+  </subsection>
+
+  <subsection xml:id="subsec-6-10-2-writing-test-driver">
+    <title>Writing a Stateful Unit Test Driver</title>
+
+    <p>
+      Until we introduce automated testing frameworks like JUnit in a later course, we can 
+      apply the Arrange<ndash/>Act<ndash/>Assert pattern inside a standalone driver class 
+      using <c>assert</c> statements. While a comprehensive test suite would verify every 
+      constructor, mutator, and accessor, we will focus here on <c>Rectangle.moveTo</c> to 
+      illustrate how to test a state transition and verify that class invariants hold.
+    </p>
+
+    <p>
+      <xref ref="listing-rectangle-tester"/> demonstrates how we organize test code with the 
+      Arrange<ndash/>Act<ndash/>Assert pattern:
+    </p>
+
+    <listing xml:id="listing-rectangle-tester">
+      <caption>Testing a stateful method with Arrange<ndash/>Act<ndash/>Assert</caption>
+      <program interactive="activecode" language="java">
+        <code>
+/**
+ * A unit test demonstrating the Arrange–Act–Assert pattern
+ * and invariant verification on a stateful Rectangle object.
+ * 
+ * Run with assertions enabled:
+ * java -ea RectangleTester
+ */
+public class RectangleTester {
+ 
+    public static void main(String[] args) {
+        // 1. ARRANGE: Set up a baseline rectangle at (3.0, 4.0) with size 10.0 x 20.0
+        Rectangle rect = new Rectangle(3.0, 4.0, 10.0, 20.0);
+        Point targetPosition = new Point(15.0, 25.0);
+
+        // 2. ACT: Invoke the mutator under test
+        rect.moveTo(15.0, 25.0);
+
+        // 3. ASSERT:
+        // A. Verify primary postcondition: Did the rectangle move to the new position?
+        assert rect.getTopLeft().equals(targetPosition) : 
+            "moveTo failed to update position.";
+
+        // B. Verify unmutated state: Did width and height remain completely unchanged?
+        assert rect.getWidth() == 10.0 : "Width was accidentally modified!";
+        assert rect.getHeight() == 20.0 : "Height was accidentally modified!";
+
+        // C. Verify class invariants: Is the state still legally valid?
+        assert rect.getTopLeft() != null : 
+            "Invariant broken: topLeft reference is null.";
+        assert rect.getWidth() > 0.0 &amp;&amp; rect.getHeight() > 0.0 : 
+            "Invariant broken: dimensions must be positive.";
+
+        System.out.println("All assertions passed! Rectangle successfully moved: " + rect);
+    }
+}
+        </code>
+      </program>
+    </listing>
+
+    <p>
+      When this executes with assertions enabled (<c>-ea</c>), the program prints:
+    </p>
+
+    <console>
+      <output>
+All assertions passed! Rectangle successfully moved: Rectangle[topLeft=(15.0, 25.0), width=10.0, height=20.0]
+      </output>
+    </console>
+
+    <p>
+      Notice how testing a stateful object differs from testing a simple math function. In 
+      <c>RectangleTester</c>, we do not just check one return value; our assertions inspect 
+      three distinct facets of the object's health:
+    </p>
+
+    <ol>
+      <li>
+        <p>
+          <strong>Testing the target behavior:</strong> We verify that <c>rect.getTopLeft()</c> 
+          now equals <m>(15.0, 25.0)</m>.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>Testing for unintended side effects:</strong> Moving a rectangle across the 
+          screen should never stretch or shrink it. We verify that <c>width</c> remains <c>10.0</c> 
+          and <c>height</c> remains <c>20.0</c>.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>Testing class invariants:</strong> Even after a state transition, our class 
+          rules must hold: <c>rect</c> must never have a null position, and its dimensions 
+          must remain strictly positive.
+        </p>
+      </li>
+    </ol>
+  </subsection>
+</section>

@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-6-11-case-study" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Case Study: A Community Kitchen Bakery Tracker</title>
+
+  <introduction>
+    <sidebyside widths="58% 38%" margins="auto" valign="middle">
+      <p>
+        Commercial baking equipment is expensive. To lower the barrier for aspiring food
+        entrepreneurs, many communities organize shared-use commissary kitchens and baker
+        cooperatives. In these community kitchens, multiple independent bakers share high-end
+        commercial equipment—such as 60-quart spiral mixers and multi-deck stone baking
+        ovens—sharing utility expenses and maintenance overhead. Imagine you have been hired
+        by a non-profit culinary incubator to write a software tool that tracks dough batch
+        production, manages shared oven runtime, enforces baking safety invariants, and calculates
+        accurate production costs per loaf for member bakers.
+      </p>
+      <figure xml:id="figure-community-bakery">
+        <caption>Artisan bakers collaborating in a shared community commercial kitchen. (Image generated with AI).</caption>
+        <image source="figures/community_bakery_header.png">
+          <shortdescription>Artisan bakers working side-by-side preparing sourdough loaves in a shared commercial bakery kitchen.</shortdescription>
+        </image>
+      </figure>
+    </sidebyside>
+    <p>
+      This case study integrates all the core object-oriented principles introduced in this chapter:
+      state encapsulation, constructors with validation, class invariants, object composition,
+      message passing, and state-transition enforcement verified via unit tests.
+    </p>
+  </introduction>
+
+  <subsection xml:id="subsec-case-study-domain-model">
+    <title>Domain Modeling and CRC Cards</title>
+    <p>
+      Before writing Java code, object-oriented designers identify the key domain entities,
+      their specific responsibilities, and how they collaborate. A proven design tool for this
+      stage is the <term>Class-Responsibility-Collaborator (CRC) card</term><fn>Kent Beck and Ward
+      Cunningham, <q>A Laboratory For Teaching Object-Oriented Thinking,</q> <pubtitle>OOPSLA '89
+      Conference Proceedings</pubtitle>, ACM, 1989.</fn>, which uses a simple index card layout
+      to record a class's name, responsibilities, and collaborators.
+    </p>
+    <p>
+      For our community bakery tracker, we identify two primary domain classes:
+    </p>
+    <ul>
+      <li>
+        <p>
+          <c>Oven</c>: Models a shared piece of physical kitchen equipment. Its responsibilities
+          include tracking its capacity, hourly energy rate, and cumulative runtime across all
+          bakers who use it.
+        </p>
+      </li>
+      <li>
+        <p>
+          <c>RecipeBatch</c>: Models a specific batch of dough prepared by an entrepreneur.
+          Its responsibilities include tracking recipe name, loaf yield, ingredient cost, bake
+          time, and whether the batch has been baked. It collaborates with an <c>Oven</c> to
+          complete baking and compute total cost per loaf.
+        </p>
+      </li>
+    </ul>
+
+    <sidebyside widths="48% 48%" margins="auto" valign="top">
+      <figure xml:id="figure-6-22">
+        <caption>Figure 6-22: CRC card for the <c>RecipeBatch</c> class.</caption>
+        <image source="figures/figure_6_22.png">
+          <shortdescription>CRC card for RecipeBatch showing responsibilities such as tracking recipe name, ingredients, and bake state, collaborating with Oven.</shortdescription>
+        </image>
+      </figure>
+      <figure xml:id="figure-6-23">
+        <caption>Figure 6-23: CRC card for the <c>Oven</c> class.</caption>
+        <image source="figures/figure_6_23.png">
+          <shortdescription>CRC card for Oven showing responsibilities such as recording runtime and calculating cumulative operating costs.</shortdescription>
+        </image>
+      </figure>
+    </sidebyside>
+  </subsection>
+
+  <subsection xml:id="subsec-case-study-class-specifications">
+    <title>UML Class Specifications</title>
+    <p>
+      Translating the CRC cards into formal UML class specifications clarifies each class's
+      internal state representation and public method signatures. Following standard UML
+      conventions, private members are marked with a minus sign (<c>-</c>) and public members
+      with a plus sign (<c>+</c>).
+    </p>
+
+    <table xml:id="table-class-diagram-oven">
+      <title>UML Class Diagram for <c>Oven</c></title>
+      <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+        <col width="100%"/>
+        <row header="yes">
+          <cell halign="center"><strong>Oven</strong></cell>
+        </row>
+        <row>
+          <cell>
+            <p>- name : String</p>
+            <p>- maxCapacity : int</p>
+            <p>- hourlyOperatingCost : double</p>
+            <p>- totalHoursRun : double</p>
+          </cell>
+        </row>
+        <row>
+          <cell>
+            <p>+ Oven(name : String, maxCapacity : int, hourlyOperatingCost : double)</p>
+            <p>+ getName() : String</p>
+            <p>+ getMaxCapacity() : int</p>
+            <p>+ getHourlyOperatingCost() : double</p>
+            <p>+ getTotalHoursRun() : double</p>
+            <p>+ recordRunTime(hours : double) : void</p>
+            <p>+ calculateCumulativeEnergyCost() : double</p>
+            <p>+ toString() : String</p>
+          </cell>
+        </row>
+      </tabular>
+    </table>
+
+<table xml:id="table-class-diagram-recipe-batch">
+      <title>UML Class Diagram for <c>RecipeBatch</c></title>
+      <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+        <col width="100%"/>
+        <row header="yes">
+          <cell halign="center"><strong>RecipeBatch</strong></cell>
+        </row>
+        <row>
+          <cell>
+            <p>- recipeName : String</p>
+            <p>- yieldLoaves : int</p>
+            <p>- ingredientCost : double</p>
+            <p>- bakeTimeHours : double</p>
+            <p>- baked : boolean</p>
+          </cell>
+        </row>
+        <row>
+          <cell>
+            <p>+ RecipeBatch(recipeName : String, yieldLoaves : int, ingredientCost : double, bakeTimeHours : double)</p>
+            <p>+ getRecipeName() : String</p>
+            <p>+ getYieldLoaves() : int</p>
+            <p>+ getIngredientCost() : double</p>
+            <p>+ getBakeTimeHours() : double</p>
+            <p>+ isBaked() : boolean</p>
+            <p>+ bake(oven : Oven) : void</p>
+            <p>+ calculateTotalCost(oven : Oven) : double</p>
+            <p>+ calculateCostPerLoaf(oven : Oven) : double</p>
+            <p>+ toString() : String</p>
+          </cell>
+        </row>
+      </tabular>
+    </table>
+  </subsection>
+
+  <subsection xml:id="subsec-case-study-state-machine">
+    <title>State-Transition Modeling</title>
+    <p>
+      An essential responsibility of <c>RecipeBatch</c> is lifecycle state management. Once a batch
+      of dough has been baked in an oven, it cannot be unbaked, nor should a baker accidentally
+      send the same batch through the baking cycle a second time.
+    </p>
+    <p>
+      We model this behavior using a UML state-transition diagram (<xref ref="figure-6-24"/>).
+      When constructed, a <c>RecipeBatch</c> enters the <c>Unbaked</c> state with <c>baked == false</c>.
+      Invoking <c>bake(oven)</c> transitions the batch to the <c>Baked</c> state, recording the bake
+      time on the oven. If <c>bake(oven)</c> is invoked on an already baked batch, the method rejects
+      the transition and throws an <c>AssertionError</c>, maintaining the batch's integrity.
+    </p>
+
+    <figure xml:id="figure-6-24">
+      <caption>Figure 6-24: State-transition diagram for <c>RecipeBatch</c>.</caption>
+      <image source="figures/figure_6_24.png" width="90%">
+        <shortdescription>UML State-Transition diagram showing transition from Unbaked to Baked on bake(), and a solid self-loop on Baked indicating AssertionError on duplicate bake attempts.</shortdescription>
+      </image>
+    </figure>
+  </subsection>
+
+  <subsection xml:id="subsec-case-study-step1-stubs">
+    <title>Step 1: Outlines and Class Invariants</title>
+    <p>
+      We begin implementation by defining class outlines that document the class invariants.
+      Every field is marked <c>private</c>, ensuring encapsulation.
+    </p>
+
+    <listing xml:id="listing-oven-outline">
+      <caption>Outline and invariants for <c>Oven.java</c>.</caption>
+      <program language="java">
+        <input>
+<![CDATA[
+public class Oven {
+    // Class Invariants:
+    // 1. name != null && !name.trim().isEmpty()
+    // 2. maxCapacity > 0
+    // 3. hourlyOperatingCost >= 0.0
+    // 4. totalHoursRun >= 0.0
+
+    private String name;
+    private int maxCapacity;
+    private double hourlyOperatingCost;
+    private double totalHoursRun;
+
+    public Oven(String name, int maxCapacity, double hourlyOperatingCost) {
+        // Constructor validation will enforce invariants
+    }
+
+    public void recordRunTime(double hours) {
+        // Must validate hours > 0.0 before updating totalHoursRun
+    }
+
+    public double calculateCumulativeEnergyCost() {
+        return 0.0; // Stub
+    }
+}
+]]>
+        </input>
+      </program>
+    </listing>
+
+    <listing xml:id="listing-recipe-batch-outline">
+      <caption>Outline and invariants for <c>RecipeBatch.java</c>.</caption>
+      <program language="java">
+        <input>
+<![CDATA[
+public class RecipeBatch {
+    // Class Invariants:
+    // 1. recipeName != null && !recipeName.trim().isEmpty()
+    // 2. yieldLoaves > 0
+    // 3. ingredientCost >= 0.0
+    // 4. bakeTimeHours > 0.0
+
+    private String recipeName;
+    private int yieldLoaves;
+    private double ingredientCost;
+    private double bakeTimeHours;
+    private boolean baked;
+
+    public RecipeBatch(String recipeName, int yieldLoaves, 
+                       double ingredientCost, double bakeTimeHours) {
+        // Constructor validation will enforce invariants
+    }
+
+    public void bake(Oven oven) {
+        // Enforces preconditions: oven != null, !baked, yieldLoaves <= oven.getMaxCapacity()
+    }
+
+    public double calculateTotalCost(Oven oven) {
+        return 0.0; // Stub
+    }
+
+    public double calculateCostPerLoaf(Oven oven) {
+        return 0.0; // Stub
+    }
+}
+]]>
+        </input>
+      </program>
+    </listing>
+  </subsection>
+
+  <subsection xml:id="subsec-case-study-step2-testing">
+    <title>Step 2: Test-Driven Verification</title>
+    <p>
+      Following the Arrange–Act–Assert pattern introduced in <xref ref="sec-6-10-unit-testing"/>,
+      we write a unit test class before completing the full implementations. Running Java with
+      the <c>-ea</c> (enable assertions) flag verifies that our invariants and state transitions
+      work as specified.
+    </p>
+
+    <listing xml:id="listing-bakery-test">
+      <caption>Unit tests in <c>BakeryTest.java</c> verifying state transitions and costs.</caption>
+      <program language="java" interactive="activecode" label="activecode-bakery-test">
+        <code>
+<![CDATA[
+public class BakeryTest {
+    public static void main(String[] args) {
+        testSuccessfulBake();
+        testDoubleBakePrevention();
+        testOverCapacityPrevention();
+        System.out.println("All Bakery tests passed successfully!");
+    }
+
+    private static void testSuccessfulBake() {
+        // Arrange
+        Oven oven = new Oven("Deck Oven A", 4, 3.50);
+        RecipeBatch batch = new RecipeBatch("Sourdough", 4, 6.00, 0.75);
+
+        // Act
+        batch.bake(oven);
+
+        // Assert
+        assert batch.isBaked() : "Batch should be marked as baked";
+        assert Math.abs(oven.getTotalHoursRun() - 0.75) < 1e-6 : "Oven runtime should be 0.75 hours";
+        
+        double expectedEnergy = 0.75 * 3.50; // $2.625
+        double expectedTotalCost = 6.00 + expectedEnergy; // $8.625
+        double expectedPerLoaf = expectedTotalCost / 4.0; // $2.15625
+
+        assert Math.abs(batch.calculateTotalCost(oven) - expectedTotalCost) < 1e-4 : "Total cost mismatch";
+        assert Math.abs(batch.calculateCostPerLoaf(oven) - expectedPerLoaf) < 1e-4 : "Cost per loaf mismatch";
+    }
+
+    private static void testDoubleBakePrevention() {
+        // Arrange
+        Oven oven = new Oven("Deck Oven B", 6, 4.00);
+        RecipeBatch batch = new RecipeBatch("Baguettes", 4, 5.00, 0.50);
+        batch.bake(oven);
+
+        // Act & Assert (attempting to bake twice must fail)
+        boolean caught = false;
+        try {
+            batch.bake(oven);
+        } catch (AssertionError e) {
+            caught = true;
+        }
+        assert caught : "Baking an already baked batch must trigger an AssertionError!";
+    }
+
+    private static void testOverCapacityPrevention() {
+        // Arrange: 8 loaves in a 4-loaf capacity oven
+        Oven oven = new Oven("Small Deck", 4, 2.50);
+        RecipeBatch batch = new RecipeBatch("Party Buns", 8, 8.00, 0.50);
+
+        // Act & Assert
+        boolean caught = false;
+        try {
+            batch.bake(oven);
+        } catch (AssertionError e) {
+            caught = true;
+        }
+        assert caught : "Baking a batch that exceeds oven capacity must fail!";
+    }
+}
+]]>
+        </code>
+      </program>
+    </listing>
+  </subsection>
+
+  <subsection xml:id="subsec-case-study-step3-implementation">
+    <title>Step 3: Complete Class Implementations</title>
+    <p>
+      With tests in place, we write the full implementations of <c>Oven</c> and <c>RecipeBatch</c>,
+      ensuring that defensive checks protect every invariant.
+    </p>
+
+    <listing xml:id="listing-oven-full">
+      <caption>The complete <c>Oven.java</c> class.</caption>
+      <program language="java">
+        <input>
+<![CDATA[
+public class Oven {
+    private String name;
+    private int maxCapacity;
+    private double hourlyOperatingCost;
+    private double totalHoursRun;
+
+    public Oven(String name, int maxCapacity, double hourlyOperatingCost) {
+        assert name != null && !name.trim().isEmpty() : "Oven name cannot be null or blank";
+        assert maxCapacity > 0 : "Max capacity must be positive";
+        assert hourlyOperatingCost >= 0.0 : "Hourly operating cost cannot be negative";
+
+        this.name = name.trim();
+        this.maxCapacity = maxCapacity;
+        this.hourlyOperatingCost = hourlyOperatingCost;
+        this.totalHoursRun = 0.0;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public int getMaxCapacity() {
+        return this.maxCapacity;
+    }
+
+    public double getHourlyOperatingCost() {
+        return this.hourlyOperatingCost;
+    }
+
+    public double getTotalHoursRun() {
+        return this.totalHoursRun;
+    }
+
+    public void recordRunTime(double hours) {
+        assert hours > 0.0 : "Bake runtime hours must be strictly positive";
+        this.totalHoursRun += hours;
+    }
+
+    public double calculateCumulativeEnergyCost() {
+        return this.totalHoursRun * this.hourlyOperatingCost;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Oven[name='%s', capacity=%d loaves, rate=$%.2f/hr, totalHours=%.2f hrs]",
+                this.name, this.maxCapacity, this.hourlyOperatingCost, this.totalHoursRun);
+    }
+}
+]]>
+        </input>
+      </program>
+    </listing>
+
+    <listing xml:id="listing-recipe-batch-full">
+      <caption>The complete <c>RecipeBatch.java</c> class.</caption>
+      <program language="java">
+        <input>
+<![CDATA[
+public class RecipeBatch {
+    private String recipeName;
+    private int yieldLoaves;
+    private double ingredientCost;
+    private double bakeTimeHours;
+    private boolean baked;
+
+    public RecipeBatch(String recipeName, int yieldLoaves, 
+                       double ingredientCost, double bakeTimeHours) {
+        assert recipeName != null && !recipeName.trim().isEmpty() : "Recipe name cannot be blank";
+        assert yieldLoaves > 0 : "Yield must be greater than zero";
+        assert ingredientCost >= 0.0 : "Ingredient cost cannot be negative";
+        assert bakeTimeHours > 0.0 : "Bake time must be greater than zero";
+
+        this.recipeName = recipeName.trim();
+        this.yieldLoaves = yieldLoaves;
+        this.ingredientCost = ingredientCost;
+        this.bakeTimeHours = bakeTimeHours;
+        this.baked = false;
+    }
+
+    public String getRecipeName() {
+        return this.recipeName;
+    }
+
+    public int getYieldLoaves() {
+        return this.yieldLoaves;
+    }
+
+    public double getIngredientCost() {
+        return this.ingredientCost;
+    }
+
+    public double getBakeTimeHours() {
+        return this.bakeTimeHours;
+    }
+
+    public boolean isBaked() {
+        return this.baked;
+    }
+
+    public void bake(Oven oven) {
+        assert oven != null : "Cannot bake using a null oven reference";
+        assert !this.baked : "Cannot bake batch '" + this.recipeName + "': already baked!";
+        assert this.yieldLoaves <= oven.getMaxCapacity() : 
+                String.format("Batch yield (%d loaves) exceeds oven capacity (%d loaves)!", 
+                              this.yieldLoaves, oven.getMaxCapacity());
+
+        oven.recordRunTime(this.bakeTimeHours);
+        this.baked = true;
+    }
+
+    public double calculateTotalCost(Oven oven) {
+        assert oven != null : "Oven reference cannot be null for cost calculation";
+        double energyCost = this.bakeTimeHours * oven.getHourlyOperatingCost();
+        return this.ingredientCost + energyCost;
+    }
+
+    public double calculateCostPerLoaf(Oven oven) {
+        return this.calculateTotalCost(oven) / this.yieldLoaves;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("RecipeBatch[name='%s', yield=%d loaves, ingredients=$%.2f, time=%.2f hrs, baked=%b]",
+                this.recipeName, this.yieldLoaves, this.ingredientCost, this.bakeTimeHours, this.baked);
+    }
+}
+]]>
+        </input>
+      </program>
+    </listing>
+  </subsection>
+
+  <subsection xml:id="subsec-case-study-step4-simulation">
+    <title>Step 4: Putting It All Together: The Production Simulation</title>
+    <p>
+      Finally, we create <c>BakeryDemo.java</c> to simulate a typical morning production run
+      in the community kitchen. Multiple independent batches share a single stone deck oven,
+      illustrating object collaboration and cost aggregation.
+    </p>
+
+    <listing xml:id="listing-bakery-demo-full">
+      <caption>Simulating morning baking production in <c>BakeryDemo.java</c>.</caption>
+     <program language="java" interactive="activecode" label="activecode-bakery-demo">
+        <code>
+<![CDATA[
+public class BakeryDemo {
+    public static void main(String[] args) {
+        // Initialize the shared community commercial oven
+        Oven sharedDeckOven = new Oven("Stone Hearth Deck #1", 4, 3.20);
+        System.out.println("=== Community Kitchen Morning Bake Session ===");
+        System.out.println("Initialized: " + sharedDeckOven);
+        System.out.println();
+
+        // Independent bakers prepare their respective batches
+        RecipeBatch batch1 = new RecipeBatch("Country Sourdough", 4, 7.50, 0.75); // 45 min
+        RecipeBatch batch2 = new RecipeBatch("Dark Rye Boule",    2, 4.20, 0.50); // 30 min
+        RecipeBatch batch3 = new RecipeBatch("Brioche Rolls",     4, 8.80, 0.60); // 36 min
+
+        RecipeBatch[] schedule = { batch1, batch2, batch3 };
+
+        // Process batches through the shared oven
+        for (RecipeBatch batch : schedule) {
+            System.out.println("Staging: " + batch.getRecipeName());
+            System.out.printf("  Pre-bake status: baked = %b%n", batch.isBaked());
+            
+            batch.bake(sharedDeckOven);
+            
+            double totalCost = batch.calculateTotalCost(sharedDeckOven);
+            double costPerLoaf = batch.calculateCostPerLoaf(sharedDeckOven);
+            
+            System.out.printf("  Post-bake status: baked = %b%n", batch.isBaked());
+            System.out.printf("  Total Production Cost: $%.2f (Ingredients: $%.2f | Energy: $%.2f)%n",
+                    totalCost, batch.getIngredientCost(), (totalCost - batch.getIngredientCost()));
+            System.out.printf("  Cost Per Loaf: $%.2f%n%n", costPerLoaf);
+        }
+
+        // Summary of shared equipment utilization
+        System.out.println("=== Kitchen Equipment Daily Utilization ===");
+        System.out.printf("Oven Name:              %s%n", sharedDeckOven.getName());
+        System.out.printf("Total Active Run Time:  %.2f hours%n", sharedDeckOven.getTotalHoursRun());
+        System.out.printf("Total Energy Cost Incurred: $%.2f%n", sharedDeckOven.calculateCumulativeEnergyCost());
+    }
+}
+]]>
+        </code>
+      </program>
+    </listing>
+  </subsection>
+</section>

@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<section xml:id="sec-6-5-static-instance">
+  <title>Static vs. Instance Members</title>
+
+  <subsection xml:id="subsec-6-5-1-methods">
+    <title>Instance Methods vs. Static Methods</title>
+
+    <p>
+      You might be wondering what happened to the <c>static</c> keyword that we placed in 
+      front of every method in Chapters 2 through 5! Let's review the difference between 
+      <c>static</c> and instance methods from Chapter 5:
+    </p>
+
+    <ul>
+      <li>
+        <p>
+          <strong>Static Methods:</strong> These methods are part of a class. You do not create 
+          an object to use a static method<mdash/>you call the method directly on the class itself. 
+          For example, <c>Double.parseDouble()</c> and <c>Math.sqrt()</c> are called directly on 
+          the <c>Double</c> and <c>Math</c> classes (not on instances of those classes), as well 
+          as methods we wrote in Chapter 5, such as <c>AqSummaryMethod.getRecommendation()</c>.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>Instance Methods:</strong> These are methods that operate on an individual 
+          object's data (an object is also called an <em>instance</em>). You must first create 
+          an object instance using <c>new</c> before calling methods on that instance. For 
+          example, methods on a <c>Scanner</c> (<c>nextInt()</c>, <c>nextLine()</c>), and on a 
+          <c>File</c> (<c>exists()</c>), and now you have seen programmer-defined instance methods, 
+          such as <c>getX()</c> and <c>translate()</c> on <c>Point</c>, and <c>drive()</c> and 
+          <c>needsCharging()</c> on <c>ElectricVehicle</c>.
+        </p>
+      </li>
+    </ul>
+
+    <p>
+      You now have the tools to understand these differences in more depth. An instance method 
+      operates with or on the data of an instance. It can give different responses every time 
+      it is invoked because the response is based on the current state of the object on which 
+      the method is invoked:
+    </p>
+
+    <ul>
+      <li>
+        <p>
+          <c>"hello".length()</c> returns <c>5</c>, but <c>"".length()</c> returns <c>0</c>. 
+          The <c>length()</c> method is executed each time, but the data it operates on is 
+          different (<c>"hello"</c> versus <c>""</c>).
+        </p>
+      </li>
+      <li>
+        <p>
+          We saw <c>p1.getX()</c> and <c>p2.getX()</c> return two different values (<c>3.0</c> 
+          and <c>5.0</c>, respectively), because the internal <c>x</c> coordinate for each 
+          <c>Point</c> object was different.
+        </p>
+      </li>
+      <li>
+        <p>
+          <c>cruiser.drive(100.0)</c> and <c>commuter.drive(100.0)</c> will not return anything, 
+          but each will change the internal state of the <c>cruiser</c> and <c>commuter</c> 
+          objects based on the values in their respective <c>milesPerKwh</c> fields. After the 
+          methods execute, <c>commuter</c> will hold a <c>currentChargeKwh</c> of <c>40.0</c>, 
+          <c>cruiser</c> will hold a <c>currentChargeKwh</c> of <c>51.759</c>, and both will 
+          have an <c>odometerMiles</c> reading of <c>100.0</c>.
+        </p>
+      </li>
+      <li>
+        <p>
+          If we invoke <c>cruiser.drive(100.0)</c> and <c>commuter.drive(100.0)</c> a second time, 
+          the result is different because each object starts from a different internal state. 
+          The <c>commuter</c> charge drops to <c>15.0</c>, <c>cruiser</c> drops to <c>26.118</c>, 
+          and both advance to <c>200.0</c> on their odometers.
+        </p>
+      </li>
+    </ul>
+
+    <p>
+      Pure utility static methods, like the methods in the <c>Math</c> class, are stateless: 
+      given the same arguments, they will always return the exact same result. <c>Math.sqrt(25.0)</c>, 
+      for example, will always evaluate to <c>5.0</c>. There is no internal data that changes the 
+      way the <c>sqrt()</c> method operates, and there shouldn't be!
+    </p>
+
+    <p>
+      Static methods that are library methods, like the <c>Math</c> methods, offer generic 
+      functionality that can be used across many programming problems. Static methods are also 
+      helper methods that can be invoked from another static method, like the methods we wrote 
+      in Chapter 5.
+    </p>
+
+    <p>
+      The <c>main</c> method must be <c>static</c> because it is where program execution begins, 
+      before any objects have been created. Any helper methods that the <c>main</c> method calls 
+      directly must also be <c>static</c>, unless they are invoked on an instantiated object.
+    </p>
+  </subsection>
+
+  <subsection xml:id="subsec-6-5-2-variables">
+    <title>Instance Variables vs. Static Variables</title>
+
+    <p>
+      Just as Java allows both instance and static methods, fields can also be instance (object 
+      data) or static (class data). The difference is critical: a field declared with the keyword 
+      <c>static</c> belongs to the class, not an individual object. It is stored in the Static 
+      memory segment (not the stack or the heap). A static field is shared among all objects of 
+      that class. If one instance changes it, it changes for all instances.
+    </p>
+
+    <p>
+      This can be the source of subtle bugs for beginning programmers. Let's look at an example. 
+      Suppose in <c>Point</c> we had accidentally declared the <c>x</c> and <c>y</c> fields as 
+      <c>static</c>:
+    </p>
+
+    <program language="java">
+      <code>
+// Mistake! Do not declare instance fields static!    
+private static double x;
+private static double y;
+      </code>
+    </program>
+
+    <p>
+      Technically, these fields should be referenced in the code as <c>Point.x</c> and <c>Point.y</c>, 
+      not <c>this.x</c> and <c>this.y</c>. However, referencing them as <c>this.x</c> and 
+      <c>this.y</c> is not a syntax error. Once you make the mistake of declaring instance fields 
+      as <c>static</c>, everywhere you reference the fields with <c>this.</c>, Eclipse places 
+      a warning symbol in the margin: <q>The static field Point.x should be accessed in a static way.</q> 
+      The compiler is warning you that <c>x</c> is a static field, so accessing it through 
+      <c>this.</c> is confusing and indirect<mdash/><c>x</c> is not part of the individual object 
+      referenced by <c>this</c>.
+    </p>
+
+    <p>
+      The code will still execute, however. Let's trace what happens when lines 5, 6, and 17 of 
+      <c>PointDemo.main</c> execute:
+    </p>
+
+    <program language="java">
+      <code>
+Point p1 = new Point(3.0, 4.0);
+Point p2 = new Point(5.0, 12.0);
+p1.translate(3.0, 4.0); 
+      </code>
+    </program>
+
+    <p>
+      Before line 5 executes, the Java Virtual Machine loads the <c>Point</c> class into the 
+      Static memory segment. The static fields <c>x</c> and <c>y</c> are created and each is given 
+      a default value of <c>0.0</c>. On line 5, memory is allocated on the heap for <c>p1</c>. 
+      No space is needed inside the object for <c>x</c> and <c>y</c> because those are static 
+      fields, though housekeeping information is stored (such as a link to the class blueprint).
+    </p>
+
+    <p>
+      The constructor is invoked with the arguments <c>3.0</c> and <c>4.0</c>. Inside the constructor:
+    </p>
+
+    <program language="java">
+      <code>
+this.x = x;
+this.y = y;
+      </code>
+    </program>
+
+    <p>
+      <c>Point.x</c> (the shared static field) is assigned <c>3.0</c>, and <c>Point.y</c> is 
+      assigned <c>4.0</c>. Execution returns to <c>PointDemo.main</c>, the object reference is 
+      assigned to <c>p1</c>, and we proceed to line 6. <xref ref="fig-memory-static-p1"/> shows 
+      the stack, heap, and static segment after line 5 executes.
+    </p>
+
+    <figure xml:id="fig-memory-static-p1">
+      <caption>Memory layout after line 5 executes with accidental static fields.</caption>
+      <image source="figures/figure_6_4.png" width="95%">
+        <description>
+          A three-column memory diagram showing Call Stack on the left, Heap in the center, 
+          and Static Segment on the right. On the stack, p1 holds address 0x100. On the heap, 
+          an empty Point object exists at address 0x100 containing class linkage but no instance 
+          variables. In the Static Segment, the Point class blueprint contains shared static 
+          fields x set to 3.0 and y set to 4.0.
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      On line 6, we create another <c>Point</c> object, passing <c>5.0</c> and <c>12.0</c> to 
+      the constructor. Memory is allocated on the heap for <c>p2</c>. Inside the constructor, 
+      we assign <c>5.0</c> to <c>Point.x</c> and <c>12.0</c> to <c>Point.y</c>, overwriting the 
+      <c>3.0</c> and <c>4.0</c> that were previously there!
+    </p>
+
+    <p>
+      Because static fields are shared, every time a constructor or mutator executes, the field 
+      is overwritten for all objects. There is only one copy in memory. <xref ref="fig-memory-static-p2"/> 
+      shows memory after line 6 executes.
+    </p>
+
+    <figure xml:id="fig-memory-static-p2">
+      <caption>Memory layout after line 6 executes: p2 overwrites the shared static fields.</caption>
+      <image source="figures/figure_6_5.png" width="95%">
+        <description>
+          A three-column memory diagram after p2 is created. On the stack, p1 references 0x100 
+          and p2 references 0x200. On the heap, two Point objects exist, neither containing x 
+          or y fields. In the Static Segment, the shared fields inside Point have been overwritten: 
+          x is now 5.0 and y is now 12.0. Both p1 and p2 now see these overwritten values.
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      On line 17, when <c>p1.translate(3.0, 4.0)</c> runs, it adds <c>3.0</c> to <c>Point.x</c> 
+      (<m>5.0 + 3.0 = 8.0</m>) and <c>4.0</c> to <c>Point.y</c> (<m>12.0 + 4.0 = 16.0</m>), 
+      because <c>p2</c> had already overwritten the original coordinates. Anything that happens 
+      to either <c>p1</c> or <c>p2</c> changes the data for both. Invoking <c>getX()</c> and 
+      <c>getY()</c> on either point will return the exact same coordinates. <xref ref="fig-memory-static-translated"/> 
+      shows memory after line 17 executes.
+    </p>
+
+    <figure xml:id="fig-memory-static-translated">
+      <caption>Memory layout after line 17 executes: mutating p1 mutates the shared data for p2.</caption>
+      <image source="figures/figure_6_6.png" width="95%">
+        <description>
+          A three-column memory diagram after p1.translate(3.0, 4.0) runs. On the stack, p1 and 
+          p2 remain unchanged. On the heap, both Point objects remain empty of instance fields. 
+          In the Static Segment, shared fields x and y are updated to 8.0 and 16.0 respectively, 
+          altering the state observed through both p1 and p2 simultaneously.
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      If you encounter a bug where creating or modifying one object mysteriously alters the data 
+      inside a completely different object, check your class definition immediately<mdash/>you have 
+      almost certainly declared an instance field as <c>static</c>.
+    </p>
+  </subsection>
+
+  <subsection xml:id="subsec-6-5-3-constants-counters">
+    <title>Constants and Class Counters</title>
+
+    <p>
+      So why does Java support static, class-level fields? Do they serve a useful purpose? Absolutely!
+    </p>
+
+    <p>
+      Static fields are the right tool when data truly belongs to the entire class rather than an 
+      individual instance. Two common uses include shared constants (like <c>Math.PI</c> or 
+      conversion factors) and class-wide counters that track the total number of objects created.
+    </p>
+
+    <subsubsection xml:id="subsubsec-6-5-3-1-constants">
+      <title>Static Constants</title>
+
+      <p>
+        Suppose our EV dashboard wants to display an EV's data in metric units, even though it 
+        is stored in imperial units. In the odometer calculation, we might use a conversion factor:
+      </p>
+
+      <program language="java">
+        <code>
+final double KM_PER_MILE = 1.609344;
+        </code>
+      </program>
+
+      <p>
+        Conversion factors are an excellent candidate for storage as static fields. Instead of 
+        declaring <c>KM_PER_MILE</c> inside a single method, it can be shared across the entire 
+        <c>ElectricVehicle</c> class. Static fields, by convention, are declared above instance 
+        fields:
+      </p>
+
+      <program language="java">
+        <code>
+public class ElectricVehicle {
+
+    private static final double KM_PER_MILE = 1.609344;
+
+    private String model;
+    private double batteryCapacityKwh;
+    private double milesPerKwh;
+    ...
+        </code>
+      </program>
+
+      <p>
+        Within the class code, <c>KM_PER_MILE</c> can be referenced by the class name dot field: 
+        <c>ElectricVehicle.KM_PER_MILE</c>. Prepending the name with the class name is recommended 
+        for clarity, so another programmer reading the code immediately recognizes that the 
+        constant is defined at the class level.
+      </p>
+
+      <p>
+        The advantage of a static constant is that it is stored once<mdash/>in the Static memory 
+        segment for the <c>ElectricVehicle</c> class blueprint. If it were an instance field, every 
+        single <c>ElectricVehicle</c> object on the heap would carry its own duplicate copy, 
+        wasting memory. If it were local to a method, it would be allocated on the call stack 
+        every time that method executes.
+      </p>
+
+      <p>
+        If the constant is useful to other parts of the program (just as <c>Math.PI</c> is used 
+        broadly across programs), it should be declared <c>public</c>. It then becomes part of 
+        the class's public interface.
+      </p>
+
+      <p>
+        Up until now, we have insisted that fields must always be <c>private</c> to protect data 
+        integrity. A <c>public static final</c> constant is the one accepted exception to this 
+        rule. Because the <c>final</c> keyword prevents anyone from ever reassigning the variable, 
+        making a constant <c>public</c> exposes the useful value without any risk of data corruption.
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="subsubsec-6-5-3-2-counters">
+      <title>Static Object Counters</title>
+
+      <p>
+        A static field can also act as an accumulator that all objects contribute to. Suppose we 
+        wanted to track how many <c>Point</c> objects have been created during program execution. 
+        We can add a static counter field to the class, and have each constructor execution 
+        increment that count:
+      </p>
+
+      <program language="java">
+        <code>
+public class Point {
+
+    private static int pointCount = 0;
+
+    private double x;
+    private double y;
+
+    public Point(double x, double y) {
+        this.x = x;
+        this.y = y;
+        Point.pointCount++;
+    }
+        </code>
+      </program>
+
+      <p>
+        We can also provide a public static accessor method so clients can inspect the count:
+      </p>
+
+      <program language="java">
+        <code>
+    /**
+     * Returns the number of Point objects created.
+     * 
+     * @return the number of Point objects created.
+     */
+    public static int getPointCount() {
+        return Point.pointCount;
+    }
+        </code>
+      </program>
+
+      <p>
+        This method is declared <c>static</c> because <c>pointCount</c> is a static field. A client 
+        programmer should not have to instantiate a <c>Point</c> object (which would increment 
+        the counter!) simply to query how many points have already been created.
+      </p>
+
+      <p>
+        The <c>pointCount</c> field resides in the Static memory location for <c>Point</c>, with 
+        an initial value of <c>0</c>. Each time a <c>Point</c> object is created with <c>new</c>, 
+        the constructor executes and increments <c>Point.pointCount</c>. If we ran this version of 
+        <c>Point</c> in <c>PointDemo.main</c> and paused after creating two points, <c>Point.pointCount</c> 
+        would equal <c>2</c>.
+      </p>
+
+      <p>
+        If you cannot see your static variables when running in the Eclipse debugger, click on the 
+        three dots in the upper right of the Variables pane, choose <strong>Java</strong>, and select 
+        <strong>Show Static Variables</strong>. You will see <c>pointCount</c> in each object's 
+        memory area, marked with a small <c>S</c>, as shown in <xref ref="fig-debugger-static-var"/>.
+      </p>
+
+      <figure xml:id="fig-debugger-static-var">
+        <caption>Showing static variables in the Eclipse debugger.</caption>
+        <image source="figures/figure_6_7.jpg" width="90%">
+          <description>
+            A screenshot of the Eclipse debugger Variables pane showing two Point instances. 
+            Under each instance, static variables are displayed with a small red 'S' decorator icon, 
+            showing pointCount equal to 2 shared identically across both variables.
+          </description>
+        </image>
+      </figure>
+    </subsubsection>
+  </subsection>
+
+  <subsection xml:id="subsec-6-5-4-static-barrier">
+    <title>The Static Barrier: Why Static Methods Cannot Access Instance Fields</title>
+
+    <p>
+      Now that we have explored both instance and static members, a natural question arises about 
+      how they interact. We have seen that an instance method can freely access a static field 
+      (such as the <c>Point</c> constructor incrementing <c>Point.pointCount</c>). But can a 
+      static method access an instance field or call an instance method?
+    </p>
+
+    <p>
+      The relationship between the static world and the instance world is a one-way street. 
+      An instance method has complete access to everything in the class: it can read instance 
+      fields, modify instance fields, call other instance methods, read static constants, and 
+      invoke static helper methods.
+    </p>
+
+    <p>
+      A <c>static</c> method, however, hits a rigid architectural wall: <strong>a static method 
+      can never directly access an instance variable or invoke an instance method without an 
+      explicit object reference</strong>.
+    </p>
+
+    <subsubsection xml:id="subsubsec-6-5-4-1-which-object">
+      <title>Which Object Would <c>this</c> Be?</title>
+
+      <p>
+        Recall from Section 6.3 that whenever an instance method executes, Java implicitly passes 
+        a reference to the specific object sitting before the dot. That reference is stored in 
+        the <c>this</c> keyword:
+      </p>
+
+      <ul>
+        <li>
+          <p>
+            When you invoke <c>p1.distanceFromOrigin()</c>, <c>this</c> points to <c>p1</c>'s 
+            object on the heap.
+          </p>
+        </li>
+        <li>
+          <p>
+            When you invoke <c>p2.distanceFromOrigin()</c>, <c>this</c> points to <c>p2</c>'s 
+            object on the heap.
+          </p>
+        </li>
+      </ul>
+
+      <p>
+        Instance methods can freely reference <c>x</c> and <c>y</c> because <c>this.x</c> and 
+        <c>this.y</c> always have a concrete target in memory.
+      </p>
+
+      <p>
+        A <c>static</c> method, by contrast, is invoked on the class itself (<c>Point.getPointCount()</c>), 
+        not on an object. Because no object was used to call the method, a static method has no 
+        <c>this</c> reference. There is no implicit heap address passed into the call.
+      </p>
+
+      <p>
+        Imagine what would happen if Java allowed a static method to read an instance variable directly:
+      </p>
+
+      <program language="java">
+        <code>
+public class Point {
+    private double x; // Instance variable (one per object on the heap)
+    private double y; // Instance variable (one per object on the heap)
+
+    // COMPILER ERROR: Attempting to read instance fields from a static method!
+    public static void printCoordinates() {
+        System.out.println("(" + x + ", " + y + ")"); 
+    }
+}
+        </code>
+      </program>
+
+      <p>
+        If you call <c>Point.printCoordinates()</c> from <c>main</c>, the compiler faces an 
+        impossible question: <em>whose <c>x</c> and <c>y</c> should it print?</em>
+      </p>
+
+      <ul>
+        <li>
+          <p>
+            If our program has instantiated five different <c>Point</c> objects on the heap, 
+            which of the five sets of coordinates should Java choose?
+          </p>
+        </li>
+        <li>
+          <p>
+            What if our program has not created any <c>Point</c> objects yet? Where would <c>x</c> 
+            and <c>y</c> come from?
+          </p>
+        </li>
+      </ul>
+
+      <p>
+        Because a static method has no <c>this</c> pointer targeting a specific instance on the 
+        heap, referencing an instance variable inside a static method is logically undefined. 
+        If you attempt to write code like the example above, the Java compiler immediately halts 
+        with a diagnostic error:
+      </p>
+
+      <console>
+        <output>
+Cannot make a static reference to the non-static field x.
+        </output>
+      </console>
+
+      <p>
+        The compiler is warning you that you are inside a static method belonging to the class as 
+        a whole. You are trying to use an instance member (<c>x</c>), but you have not told the 
+        compiler which specific object on the heap to inspect.
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="subsubsec-6-5-4-2-static-using-objects">
+      <title>A Static Method Can Use an Object</title>
+
+      <p>
+        Does this mean a static method can never interact with an object? Not at all! A static 
+        method simply cannot access an instance member <em>implicitly</em>.
+      </p>
+
+      <p>
+        If a static method needs to work with instance data, it must be given an <em>explicit 
+        object reference</em><mdash/>either passed in as a parameter or instantiated locally 
+        with <c>new</c><mdash/>and access that data using the dot operator:
+      </p>
+
+      <program language="java">
+        <code>
+// LEGAL: The static method is explicitly given an object to examine
+public static void printPoint(Point p) {
+    // Java knows exactly whose coordinates to read: p's!
+    System.out.println("(" + p.getX() + ", " + p.getY() + ")");
+}
+        </code>
+      </program>
+
+      <p>
+        Here, <c>printPoint</c> is a static helper method. It does not possess an implicit 
+        <c>this</c> reference, but because we explicitly passed it the parameter <c>p</c>, 
+        the compiler knows precisely which heap object to read.
+      </p>
+
+      <p>
+        To summarize:
+      </p>
+
+      <ul>
+        <li>
+          <p>
+            <strong>Inside an instance method:</strong> You are standing inside an object on the 
+            heap. You can see your own instance fields (<c>this.x</c>), other instance methods, 
+            and all shared class-level static members.
+          </p>
+        </li>
+        <li>
+          <p>
+            <strong>Inside a static method:</strong> You are standing outside on the class 
+            blueprint. You can see shared static fields and call other static methods, but you 
+            cannot see inside any individual heap object unless you hold an explicit reference 
+            to that object.
+          </p>
+        </li>
+      </ul>
+    </subsubsection>
+  </subsection>
+</section>
