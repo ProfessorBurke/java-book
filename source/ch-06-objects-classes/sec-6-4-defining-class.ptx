@@ -2,26 +2,31 @@
 <section xml:id="sec-6-4-defining-class">
   <title>Defining a Class: State and Behavior</title>
 
-  <p>
-    Now that we have seen the overall structure of a solution with a programmer-defined 
-    class, let's take a deeper look at class design and implementation.
-  </p>
+  
+  <introduction>
+    <p>
+      Now that we have seen the overall structure of a solution with a programmer-defined 
+      class, let's take a deeper look at class design and implementation.
+    </p>
 
-  <p>
-    Suppose we are tasked with creating a dashboard to track the status of an electric 
-    vehicle (EV). The EV specifications include its model, battery capacity, and its 
-    efficiency<mdash/>the distance it can travel per kilowatt-hour. It also has state 
-    information: a current charge and an odometer. The EV can be driven, it can be charged, 
-    and it can answer questions based on its specifications and current state, such as its 
-    model, odometer reading, estimated range, battery percentage, and whether it needs charging.
-  </p>
+    <p>
+      Suppose we are tasked with creating a dashboard to track the status of an electric 
+      vehicle (EV). The EV specifications include its model, battery capacity, and its 
+      efficiency<mdash/>the distance it can travel per kilowatt-hour. It also has state 
+      information: a current charge and an odometer. The EV can be driven, it can be charged, 
+      and it can answer questions based on its specifications and current state, such as its 
+      model, odometer reading, estimated range, battery percentage, and whether it needs charging.
+    </p>
 
-  <p>
-    An EV is an excellent candidate for a class. It consists of state (model, battery 
-    capacity, efficiency, current charge, current odometer reading), behavior that accesses 
-    the state (get model, get odometer, get range, get battery percentage, needs charging), 
-    as well as behavior that changes the state (drive, charge).
-  </p>
+    <p>
+      An EV is an excellent candidate for a class. It consists of state (model, battery 
+      capacity, efficiency, current charge, current odometer reading), behavior that accesses 
+      the state (get model, get odometer, get range, get battery percentage, needs charging), 
+      as well as behavior that changes the state (drive, charge).
+    </p>
+  </introduction>
+
+
 
   <subsection xml:id="subsec-6-4-1-class-diagrams">
     <title>Class Diagrams</title>
@@ -36,6 +41,7 @@
     <table xml:id="table-electric-vehicle-class-diagram">
       <title>Class diagram for <c>ElectricVehicle</c></title>
       <tabular halign="left" top="medium" bottom="medium" left="medium" right="medium">
+        <col width="100%"/>
         <row bottom="medium">
           <cell halign="center"><strong>ElectricVehicle</strong></cell>
         </row>
@@ -102,8 +108,7 @@
       first and second rows, we declare our fields:
     </p>
 
-    <program language="java">
-      <code>
+    <program language="java" line-numbers="yes">
 public class ElectricVehicle {
 
     private String model;
@@ -111,7 +116,6 @@ public class ElectricVehicle {
     private double milesPerKwh;
     private double currentChargeKwh;
     private double odometerMiles;
-      </code>
     </program>
 
     <p>
@@ -120,8 +124,7 @@ public class ElectricVehicle {
       headers with empty bodies:
     </p>
 
-    <program language="java">
-      <code>
+    <program language="java" line-numbers="yes">
     public ElectricVehicle(String model, double batteryCapacityKwh, double milesPerKwh) {
     }
 
@@ -151,7 +154,6 @@ public class ElectricVehicle {
         return 0.0;
     } 
 }
-      </code>
     </program>
 
     <p>
@@ -260,8 +262,7 @@ public class ElectricVehicle {
 
     <listing xml:id="listing-ev-drive-charge">
       <caption>The <c>drive</c> and <c>charge</c> methods of <c>ElectricVehicle</c></caption>
-      <program language="java">
-        <code>
+      <program language="java" line-numbers="yes">
     /**
      * Drives the vehicle a specified distance, increasing the odometer and
      * reducing the battery charge accordingly.
@@ -295,7 +296,6 @@ public class ElectricVehicle {
         this.currentChargeKwh = Math.min(this.batteryCapacityKwh,
                                          this.currentChargeKwh + kwhAdded);
     }
-        </code>
       </program>
     </listing>
 
@@ -344,8 +344,7 @@ public class ElectricVehicle {
 
     <listing xml:id="listing-ev-demo">
       <caption><c>ElectricVehicleDemo</c> creates two objects and invokes methods on them</caption>
-      <program interactive="activecode" language="java">
-        <code>
+      <program language="java" line-numbers="yes">
 public class ElectricVehicleDemo {
     
     public static void main(String[] args) {
@@ -376,7 +375,6 @@ public class ElectricVehicleDemo {
                           cruiser.getEstimatedRange());
     }
 }
-        </code>
       </program>
     </listing>
 
@@ -387,10 +385,8 @@ public class ElectricVehicleDemo {
       type, and it has the exact same name as the class. When we create an object, we write:
     </p>
 
-    <program language="java">
-      <code>
+    <program language="java" line-numbers="yes">
 variable = new Class(arguments);
-      </code>
     </program>
 
     <p>
@@ -414,6 +410,7 @@ variable = new Class(arguments);
 
     <sidebyside widths="48% 48%" margins="auto">
       <tabular halign="left" top="medium" bottom="medium" left="medium" right="medium">
+        <col width="100%"/>
         <row bottom="medium">
           <cell halign="center"><strong><u>commuter:ElectricVehicle</u></strong></cell>
         </row>
@@ -429,6 +426,7 @@ variable = new Class(arguments);
       </tabular>
 
       <tabular halign="left" top="medium" bottom="medium" left="medium" right="medium">
+        <col width="100%"/>
         <row bottom="medium">
           <cell halign="center"><strong><u>cruiser:ElectricVehicle</u></strong></cell>
         </row>
@@ -463,6 +461,7 @@ variable = new Class(arguments);
 
     <sidebyside widths="48% 48%" margins="auto">
       <tabular halign="left" top="medium" bottom="medium" left="medium" right="medium">
+        <col width="100%"/>
         <row bottom="medium">
           <cell halign="center"><strong><u>commuter:ElectricVehicle</u></strong></cell>
         </row>
@@ -478,6 +477,7 @@ variable = new Class(arguments);
       </tabular>
 
       <tabular halign="left" top="medium" bottom="medium" left="medium" right="medium">
+        <col width="100%"/>
         <row bottom="medium">
           <cell halign="center"><strong><u>cruiser:ElectricVehicle</u></strong></cell>
         </row>

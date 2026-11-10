@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<!--******************************************-->
+<!--*  Authored with PreTeXt                 *-->
+<!--*  pretextbook.org                       *-->
+<!--*  Theme: default-modern                 *-->
+<!--*  Palette:                              *-->
+<!--******************************************-->
+
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body class="ignore-math">
+<figure class="table table-like"><figcaption><span class="type">Table</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">4.17<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span>Loop test plan for <code class="code-inline tex2jax_ignore">ScoreAverager</code><div class="autopermalink" aria-hidden="true" data-description="Table 4.17: Loop test plan for ScoreAverager"><a tabindex="-1" href="#table-loop-test-plan-score-averager" title="Copy heading and permalink for Table 4.17: Loop test plan for ScoreAverager" aria-label="Copy heading and permalink for Table 4.17: Loop test plan for ScoreAverager">🔗</a></div></figcaption><div class="tabular-box natural-width"><table class="tabular">
+<tr class="header-horizontal">
+<th scope="col" class="l m b1 r1 l1 t1 lines">Test Case</th>
+<th scope="col" class="l m b1 r1 l0 t1 lines">Category / Purpose</th>
+<th scope="col" class="l m b1 r1 l0 t1 lines">Input Stream</th>
+<th scope="col" class="l m b1 r1 l0 t1 lines">Expected Output</th>
+<th scope="col" class="l m b1 r1 l0 t1 lines">Pass / Fail</th>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">1</td>
+<td class="l m b1 r1 l0 t0" style="max-width:180px;">
+<div class="para">Zero Iterations<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-loop-test-plan-score-averager-2-7-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para">
+<em class="emphasis">(Bypass / Immediate Sentinel: verifies no division by zero)</em><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-loop-test-plan-score-averager-2-7-2-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</td>
+<td class="l m b1 r1 l0 t0 lines">-1</td>
+<td class="l m b1 r1 l0 t0 lines">“No scores were entered.”</td>
+<td class="l m b1 r1 l0 t0 lines">Pass</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">2</td>
+<td class="l m b1 r1 l0 t0" style="max-width:180px;">
+<div class="para">One Iteration<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-loop-test-plan-score-averager-2-8-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para">
+<em class="emphasis">(Single Item and verifies sentinel is not added to sum)</em><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-loop-test-plan-score-averager-2-8-2-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</td>
+<td class="l m b1 r1 l0 t0 lines">85, -1</td>
+<td class="l m b1 r1 l0 t0" style="max-width:180px;">
+<div class="para">Number of scores entered: 1<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-loop-test-plan-score-averager-2-8-4-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para">Average score           : 85.00<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-loop-test-plan-score-averager-2-8-4-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</td>
+<td class="l m b1 r1 l0 t0 lines">Pass</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">3</td>
+<td class="l m b1 r1 l0 t0" style="max-width:180px;">
+<div class="para">Multiple Iterations<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-loop-test-plan-score-averager-2-9-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para">
+<em class="emphasis">(Typical / Nominal Case)</em><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-loop-test-plan-score-averager-2-9-2-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</td>
+<td class="l m b1 r1 l0 t0 lines">80, 90, 100, -1</td>
+<td class="l m b1 r1 l0 t0" style="max-width:180px;">
+<div class="para">Number of scores entered: 3<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-loop-test-plan-score-averager-2-9-4-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para">Average score           : 90.00<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-loop-test-plan-score-averager-2-9-4-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</td>
+<td class="l m b1 r1 l0 t0 lines">Pass</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">4</td>
+<td class="l m b1 r1 l0 t0" style="max-width:180px;">
+<div class="para">Lower Data Boundary<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-loop-test-plan-score-averager-2-10-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para">
+<em class="emphasis">(Lowest Valid Score)</em><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-loop-test-plan-score-averager-2-10-2-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</td>
+<td class="l m b1 r1 l0 t0 lines">0, 0, -1</td>
+<td class="l m b1 r1 l0 t0" style="max-width:180px;">
+<div class="para">Number of scores entered: 2<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-loop-test-plan-score-averager-2-10-4-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para">Average score           : 0.00<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-loop-test-plan-score-averager-2-10-4-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</td>
+<td class="l m b1 r1 l0 t0 lines">Pass</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">5</td>
+<td class="l m b1 r1 l0 t0" style="max-width:180px;">
+<div class="para">Upper Data Boundary<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-loop-test-plan-score-averager-2-11-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para">
+<em class="emphasis">(Highest Valid Score)</em><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-loop-test-plan-score-averager-2-11-2-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</td>
+<td class="l m b1 r1 l0 t0 lines">100, 100, -1</td>
+<td class="l m b1 r1 l0 t0" style="max-width:180px;">
+<div class="para">Number of scores entered: 2<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-loop-test-plan-score-averager-2-11-4-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para">Average score           : 100.00<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-loop-test-plan-score-averager-2-11-4-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</td>
+<td class="l m b1 r1 l0 t0 lines">Pass</td>
+</tr>
+</table></div>
+</figure><span class="incontext"><a class="internal" href="sec-4-9-loop-errors-testing.html#table-loop-test-plan-score-averager">In Context</a></span>
+</body>
+</html>

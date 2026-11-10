@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<!--******************************************-->
+<!--*  Authored with PreTeXt                 *-->
+<!--*  pretextbook.org                       *-->
+<!--*  Theme: default-modern                 *-->
+<!--*  Palette:                              *-->
+<!--******************************************-->
+
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body class="ignore-math">
+<figure class="listing figure-like"><figcaption><span class="type">Listing</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">6.6<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span>The <code class="code-inline tex2jax_ignore">drive</code> and <code class="code-inline tex2jax_ignore">charge</code> methods of <code class="code-inline tex2jax_ignore">ElectricVehicle</code><div class="autopermalink" aria-hidden="true" data-description="Listing 6.6: The drive and charge methods of ElectricVehicle"><a tabindex="-1" href="#listing-ev-drive-charge" title="Copy heading and permalink for Listing 6.6: The drive and charge methods of ElectricVehicle" aria-label="Copy heading and permalink for Listing 6.6: The drive and charge methods of ElectricVehicle">🔗</a></div></figcaption><div class="listing__contents"><div class="code-box"><pre class="program clipboardable line-numbers"><code class="language-java">/**
+ * Drives the vehicle a specified distance, increasing the odometer and
+ * reducing the battery charge accordingly.
+ *
+ * Precondition: miles &gt; 0.0 &amp;&amp; miles &lt;= getEstimatedRange()
+ * Postcondition: odometerMiles increases by miles, and currentChargeKwh
+ *                decreases by (miles / milesPerKwh).
+ *
+ * @param miles the distance to drive in miles
+ */
+public void drive(double miles) {
+    assert miles &gt; 0.0 : "Distance driven must be positive: " + miles;
+    assert miles &lt;= getEstimatedRange() : 
+        "Insufficient battery range for trip: " + miles;
+
+    double energyUsed = miles / this.milesPerKwh;
+    this.currentChargeKwh -= energyUsed;
+    this.odometerMiles += miles;
+}
+
+/**
+ * Adds electrical energy to the battery, capped at the battery's maximum capacity.
+ *
+ * Precondition: kwhAdded &gt; 0.0
+ * Postcondition: currentChargeKwh increases by kwhAdded, up to batteryCapacityKwh.
+ *
+ * @param kwhAdded the amount of energy added in kilowatt-hours
+ */
+public void charge(double kwhAdded) {
+    assert kwhAdded &gt; 0.0 : "Charge amount must be positive: " + kwhAdded;
+    this.currentChargeKwh = Math.min(this.batteryCapacityKwh,
+                                     this.currentChargeKwh + kwhAdded);
+}
+</code></pre></div></div>
+</figure><span class="incontext"><a class="internal" href="sec-6-4-defining-class.html#listing-ev-drive-charge">In Context</a></span>
+</body>
+</html>

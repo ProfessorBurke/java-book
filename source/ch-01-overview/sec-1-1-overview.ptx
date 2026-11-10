@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-1-1-overview" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Chapter Overview</title>
+
+  <introduction>
+    <p>
+      Welcome to computer programming! Learning to program in Java is one of the most
+      practical and empowering skills you can develop, giving you the ability to instruct
+      a computer to solve complex problems, automate repetitive tasks, and bring creative
+      ideas to life.
+    </p>
+
+    <p>
+      However, writing computer software is very different from using software as an
+      end-user. When you click an icon or tap an app on your phone, the underlying
+      mechanics are hidden behind polished interfaces. As a software developer, you can
+      no longer afford to treat the computer as a magic black box. If you try to learn
+      programming purely as an exercise in memorizing Java syntax rules, you will
+      inevitably hit walls of frustration when things do not work as expected.
+    </p>
+
+    <p>
+      To become a confident, effective programmer, you need a mental model of what is
+      physically taking place beneath the surface when your code runs. That foundation
+      begins right here in Chapter 1.
+    </p>
+  </introduction>
+
+  <subsection xml:id="subsec-1-1-1-demystifying-machine">
+    <title>Demystifying the Machine: Hardware &amp; the Fetch-and-Execute Cycle</title>
+
+    <p>
+      Before looking at a single line of Java, we will explore how computer hardware
+      functions. At its heart, a Central Processing Unit (CPU) is an astonishingly fast
+      but remarkably literal calculator. It does not understand high-level concepts like
+      <q>draw a button</q> or <q>calculate sales tax.</q> Instead, it operates in a
+      continuous, rhythmic heartbeat known as the fetch-and-execute cycle: retrieving
+      microscopic machine-language instructions from memory, decoding them, and carrying
+      them out step by step.
+    </p>
+
+    <p>
+      Understanding this hardware cycle clarifies:
+    </p>
+
+    <ul>
+      <li>
+        <p>Why computers require instructions that are completely unambiguous.</p>
+      </li>
+      <li>
+        <p>How programs represent data using binary switches (bits and bytes).</p>
+      </li>
+      <li>
+        <p>
+          How main memory (RAM) is organized and why managing memory effectively is
+          central to programming.
+        </p>
+      </li>
+    </ul>
+
+    <p>
+      When you understand how a CPU reads and processes memory, programming stops feeling
+      like an abstract puzzle and becomes an intuitive process of directing real hardware.
+    </p>
+  </subsection>
+
+  <subsection xml:id="subsec-1-1-2-java-solution-jvm">
+    <title>The Java Solution: Bytecode and the Java Virtual Machine (JVM)</title>
+
+    <p>
+      Different physical computers speak different native machine languages; a processor in
+      an Intel-based Windows PC does not understand the binary instructions built for an
+      Apple silicon Mac or an Android smartphone. Historically, this meant software written
+      for one machine had to be rewritten or recompiled for every other platform.
+    </p>
+
+    <p>
+      Java revolutionized software development by introducing a brilliant layer of
+      abstraction: the Java Virtual Machine (JVM).
+    </p>
+
+    <p>
+      In this chapter, you will learn how the Java compiler translates your human-readable
+      source code into an intermediate format called Java bytecode. Instead of running
+      directly on your physical processor, this bytecode is executed by the JVM. Because
+      the JVM acts as a universal interpreter running on top of any operating system, Java
+      delivers on its famous promise: <q>Write Once, Run Anywhere.</q> Understanding the
+      relationship between your source code, the compiler, and the JVM will give you the
+      clarity needed to navigate builds and runtime environments throughout your programming
+      journey.
+    </p>
+  </subsection>
+
+  <subsection xml:id="subsec-1-1-3-setting-up-workshop">
+    <title>Setting Up Your Workshop: The JDK, the Command Line, and Eclipse</title>
+
+    <p>
+      A craftsperson needs both an understanding of their materials and mastery of their tools.
+      The second half of this chapter is hands-on: you will configure your professional
+      software development environment.
+    </p>
+
+    <p>
+      We will walk through:
+    </p>
+
+    <ol>
+      <li>
+        <p>
+          The Java Development Kit (JDK): Installing the official tools—including the Java
+          compiler (<c>javac</c>) and the runtime launcher (<c>java</c>)—that allow your
+          computer to build and run Java applications.
+        </p>
+      </li>
+      <li>
+        <p>
+          The Command Line &amp; JShell: Compiling and executing a classic <q>Hello, World!</q>
+          program directly from your system’s terminal. Working at the command line strips away
+          unnecessary distractions, letting you see the direct relationship between <c>.java</c>
+          source files and <c>.class</c> bytecode files. You will also meet JShell, Java's
+          interactive Read-Eval-Print Loop (REPL), which provides an instant scratchpad for
+          experimenting with code snippets.
+        </p>
+      </li>
+      <li>
+        <p>
+          The Eclipse IDE: Graduating to a modern Integrated Development Environment (IDE). An
+          IDE combines a smart code editor, compiler, file manager, and debugger into a single
+          workspace. You will learn how to create a project, write your code, and run programs
+          seamlessly within Eclipse.
+        </p>
+      </li>
+    </ol>
+
+    <p>
+      By the end of this chapter, you will understand how instructions flow from your keyboard
+      into memory and through the CPU, your tools will be installed and configured, and you
+      will have written and executed your very first Java program. With this foundation in
+      place, you will be fully prepared to dive into Chapter 2 and begin programming!
+    </p>
+  </subsection>
+</section>

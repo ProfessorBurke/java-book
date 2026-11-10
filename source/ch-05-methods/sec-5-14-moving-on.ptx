@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-5-14-moving-on" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Moving On!</title>
+
+  <p>
+    Congratulations! In this chapter, you transformed your programming approach from writing sprawling, monolithic programs to designing modular, professional software using functional decomposition:
+  </p>
+
+  <ul>
+    <li>
+      <p>
+        <strong>Decomposing complex problems:</strong> Breaking tasks into manageable, single-purpose subtasks using top-down design and structure charts to establish clean procedural abstractions.
+      </p>
+    </li>
+    <li>
+      <p>
+        <strong>Passing information safely:</strong> Using formal parameters and actual arguments, guided by Java’s left-to-right evaluation order and strict pass-by-value mechanics.
+      </p>
+    </li>
+    <li>
+      <p>
+        <strong>Tracing execution on the call stack:</strong> Visualizing how activation records (stack frames) are pushed on invocation and popped on return to govern memory allocation and variable lifetime.
+      </p>
+    </li>
+    <li>
+      <p>
+        <strong>Navigating scope and lifetime boundaries:</strong> Distinguishing between compile-time block visibility and runtime memory duration to eliminate side effects and prevent namespace collisions.
+      </p>
+    </li>
+    <li>
+      <p>
+        <strong>Writing value-returning and predicate methods:</strong> Returning computed results and Boolean states, and composing method calls directly into expressions to make selection and loop logic readable.
+      </p>
+    </li>
+    <li>
+      <p>
+        <strong>Overloading method signatures:</strong> Handling different data types seamlessly and applying method delegation to provide convenient default values without duplicating code.
+      </p>
+    </li>
+    <li>
+      <p>
+        <strong>Documenting method contracts:</strong> Authoring professional Javadoc comments with preconditions, postconditions, and units to unlock instant hover documentation and autocomplete in your IDE.
+      </p>
+    </li>
+    <li>
+      <p>
+        <strong>Verifying and testing individual units:</strong> Enforcing method contracts with precondition assertions, isolating random number generation from game logic, and building automated, self-checking unit test drivers.
+      </p>
+    </li>
+  </ul>
+
+  <p>
+    You are now fully equipped to tackle the programming exercises at the end of this chapter. Work through the steps: decompose each problem on paper with a structure chart, write clear Javadoc contracts for each proposed helper, establish method stubs so your program compiles and runs immediately, build self-checking unit test drivers targeting boundary inputs, and use Eclipse's debugger to watch stack frames push and pop on the call stack whenever you need to trace control flow.
+  </p>
+</section>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-2-3-class-structure" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Class Structure</title>
+
+  <p>
+    Java programs generally consist of many Java classes. One of the classes must contain a <c>main</c> method, which is where program execution begins. For this chapter and the next three, we will write programs consisting of a single Java class containing a <c>main</c> method. In chapter 5, we will learn how to build programs made up of multiple interacting objects defined by multiple classes.
+  </p>
+
+  <p>
+    A class that serves as an executable program is declared using the keywords <c>public class</c>, followed by the name of the class and a pair of curly braces that enclose the class contents, as we saw in <xref ref="listing-mulch-calculator" />:
+  </p>
+
+  <program language="java"><![CDATA[public class MulchCalculator {
+    // Contents of the class go here
+}]]></program>
+
+  <p>
+    The class name must match the file name exactly, including capitalization (but without the <c>.java</c> extension). In <xref ref="listing-mulch-calculator" />, the class name is <c>MulchCalculator</c>, so the file must be saved as <c>MulchCalculator.java</c>. (When you create a class with the New Class dialog box in Eclipse, Eclipse will properly name your class and file.)
+  </p>
+
+  <p>
+    Inside the class, there must be a method named <c>main</c>, which takes this standard form:
+  </p>
+
+  <program language="java"><![CDATA[public static void main(String[] args) {
+    // Your program statements go here
+}]]></program>
+
+  <p>
+    For now, don’t worry about the exact meaning of every word in the <c>main</c> method header, such as <c>public</c>, <c>static</c>, <c>void</c>, and <c>String[] args</c>. (Although it’s completely natural to wonder!) We will break down each of these keywords in upcoming chapters.
+  </p>
+
+  <p>
+    When you compile a Java source file (<c>.java</c>), the compiler generates a corresponding binary file with the <c>.class</c> extension. For example, compiling <c>MulchCalculator.java</c> produces <c>MulchCalculator.class</c>. The <c>.java</c> file contains your human-readable source code. The <c>.class</c> file contains Java bytecode<mdash />the instructions that will execute on the JVM.
+  </p>
+
+  <p>
+    In programming, names that you create<mdash />such as the names of classes, variables, and methods<mdash />are called <term>identifiers</term>. Java’s compiler does not strictly enforce how you capitalize an identifier. You could name a class in all lowercase letters (like <c>mulchcalculator</c>), and your program would compile and run without any errors. However, the Java community adheres to strict naming conventions to make code consistent, and easy for other programmers to read.
+  </p>
+
+  <p>
+    In fact, the capitalization style of an identifier immediately signals what role it plays in your program:
+  </p>
+
+  <ul>
+    <li>
+      <title>PascalCase (UpperCamelCase)</title>
+      <p>
+        Used for types, such as classes (and later, interfaces, records, and enumerations). Words are joined together with every word capitalized, including the first<mdash />as in <c>MulchCalculator</c> or <c>HelloWorld</c>.
+      </p>
+    </li>
+    <li>
+      <title>camelCase (lowerCamelCase)</title>
+      <p>
+        Used for variables and methods. Identifiers begin with a lowercase letter, and each subsequent word is capitalized<mdash />as in <c>mulchDepth</c> or <c>calculateTotal()</c>.
+      </p>
+    </li>
+    <li>
+      <title>UPPER_SNAKE_CASE</title>
+      <p>
+        Used for constants (fixed values that never change, such as <c>Math.PI</c>). These are written in all uppercase letters, with words separated by underscores<mdash />as in <c>MAX_VALUE</c>.
+      </p>
+    </li>
+  </ul>
+
+  <p>
+    At the very top of a Java file, before the class header, you will often see two types of compiler directives: package declarations and import declarations.
+  </p>
+
+  <p>
+    Java classes are organized into packages, which mirror the folder structure of your file system. Related classes are grouped into packages to keep large-scale projects and libraries organized.
+  </p>
+
+  <p>
+    In Eclipse’s New Class dialog box, you left the <c>Package</c> field blank, which places your code in the default package. When a class is in the default package, there is no package declaration at the top of the file. (You may have noticed Eclipse showing a warning that <q>The use of the default package is discouraged.</q> For our early learning programs, you can safely ignore this warning<mdash />using the default package keeps your setup simple and makes sharing single <c>.java</c> files effortless).
+  </p>
+
+  <p>
+    In <xref ref="listing-mulch-calculator" />, you saw an import declaration:
+  </p>
+
+  <program language="java"><![CDATA[import java.util.Scanner;]]></program>
+
+  <p>
+    This line tells the compiler where to find the <c>Scanner</c> class inside Java's standard library. Importing it allows you to refer to it by its simple name (<c>Scanner</c>) throughout your code. Without this import, you would have to type out its full, cumbersome package path every single time you used it:
+  </p>
+
+  <program language="java"><![CDATA[// What you would have to write without an import:
+java.util.Scanner keyboard = new java.util.Scanner(System.in);]]></program>
+
+  <p>
+    You can place as many import statements at the top of your file as your program requires.
+  </p>
+
+  <p>
+    In <xref ref="listing-mulch-calculator" />, you will notice blank lines and indented text. In programming, blank lines, spaces, and tabs are collectively referred to as <term>whitespace</term>.
+  </p>
+
+  <p>
+    Java is largely a <q>free-format</q> language: the compiler ignores whitespace except where spaces are strictly necessary to separate keywords and identifiers (such as the space between <c>public</c>, <c>class</c>, and <c>MulchCalculator</c>).
+  </p>
+
+  <p>
+    To make code readable and maintainable, professional programmers follow established indentation and style conventions:
+  </p>
+
+  <ul>
+    <li>
+      <title>Flush Left</title>
+      <p>
+        The package and import declarations, as well as the <c>public class</c> header, start flush against the left margin.
+      </p>
+    </li>
+    <li>
+      <title>Class Body Indentation</title>
+      <p>
+        Everything declared inside the class curly braces <c>{ ... }</c> is indented by a consistent number of spaces (four spaces is the standard in Java).
+      </p>
+    </li>
+    <li>
+      <title>Method Body Indentation</title>
+      <p>
+        Everything written inside a method's curly braces is indented by an additional four spaces (eight spaces from the left margin).
+      </p>
+    </li>
+    <li>
+      <title>Comment Spacing</title>
+      <p>
+        Include a single space between the comment marker (<c>//</c> or <c>/*</c>) and the first letter of your comment text.
+      </p>
+    </li>
+    <li>
+      <title>Paragraphing</title>
+      <p>
+        Use single blank lines to separate logical groups of statements (similar to paragraphs in an essay), while keeping closely related lines grouped together without blank lines.
+      </p>
+    </li>
+  </ul>
+
+  <p>
+    You should practice following these indentation and spacing guidelines in all your programs. If your indentation ever gets messy in Eclipse, select your code and press <kbd>Ctrl+I</kbd> (or <kbd>Cmd+I</kbd> on macOS)<mdash />or choose <menuchoice><guimenu>Source</guimenu><guimenuitem>Correct Indentation</guimenuitem></menuchoice> from the menu<mdash />and Eclipse will automatically re-align your code according to standard Java formatting rules.
+  </p>
+</section>

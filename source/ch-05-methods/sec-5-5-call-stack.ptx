@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-5-5-call-stack" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Memory in Action: The Call Stack</title>
+
+  <introduction>
+    <p>
+      In Chapter 1, we introduced the four primary segments of program memory: the Code Segment, the Static Segment, the Stack, and the Heap. Then in Chapter 3, we saw that when a method runs, the Java Virtual Machine allocates space on the stack for its local variables.
+    </p>
+
+    <p>
+      Now that our programs are decomposed into multiple methods that call one another, we need to examine how the JVM orchestrates method execution behind the scenes. Understanding how memory is allocated and released as methods are invoked will give you a concrete mental model of program flow, demystify the rules of variable scope, and show you exactly why Java’s pass-by-value mechanism works the way it does.
+    </p>
+  </introduction>
+
+  <!-- ============================================================ -->
+  <!-- 5.5.1 The Stack: A last-in, first-out (LIFO) structure      -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-5-1-stack-lifo">
+    <title>The Stack: A Last-In, First-Out (LIFO) Structure</title>
+
+    <p>
+      The <term>call stack</term> is a dedicated region of memory structured like a spring-loaded cafeteria tray dispenser or a vertical stack of plates. When you place a plate on top of a stack, it is the first plate available to be removed. You cannot pull a plate from the middle or bottom of the stack without first removing all the plates stacked above it. This organization is known as a <term>Last-In, First-Out (LIFO)</term> data structure: the last item pushed onto the stack is always the first item popped off.
+    </p>
+
+    <p>
+      In computer memory:
+    </p>
+
+    <ul>
+      <li>
+        <p>
+          <strong>Push:</strong> When a method is called, the JVM allocates a fresh block of memory called a <term>stack frame</term> (or <term>activation record</term>) and pushes it onto the top of the call stack.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>Active Execution:</strong> The CPU or JVM only ever executes code within the context of the topmost stack frame. Any frames beneath it represent calling methods that are paused, waiting for the active method to complete.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>Pop:</strong> When a method reaches its closing curly brace (or a <c>return</c> statement), its work is finished. The JVM immediately pops that method’s stack frame off the stack and deallocates its memory. Execution then resumes in the frame directly beneath it.
+        </p>
+      </li>
+    </ul>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 5.5.2 Anatomy of a Stack Frame                              -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-5-2-anatomy-stack-frame">
+    <title>Anatomy of a Stack Frame</title>
+
+    <p>
+      Every time a method is invoked, its stack frame is constructed with the memory required to run that specific invocation. A stack frame holds three essential components:
+    </p>
+
+    <ol>
+      <li>
+        <p>
+          <strong>Parameter Variables:</strong> Storage for each formal parameter declared in the method header, initialized with copies of the argument values passed by the caller.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>Local Variables:</strong> Storage for any variables declared inside the method body.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>Return Address &amp; Bookkeeping:</strong> The memory address of the exact bytecode instruction in the calling method where execution must resume once this method finishes.
+        </p>
+      </li>
+    </ol>
+
+    <p>
+      When a method begins, its parameters and local variables are born (allocated in memory). When the method returns, those variables are destroyed (deallocated). They exist only as long as that specific stack frame remains on the call stack.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 5.5.3 Tracing a Method Call on the Stack                     -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-5-3-tracing-method-call">
+    <title>Tracing a Method Call on the Stack</title>
+
+    <p>
+      To see how stack frames are created, stacked, and destroyed, let’s trace the execution of <xref ref="listing-call-stack-demo" />.
+    </p>
+
+    <listing xml:id="listing-call-stack-demo">
+      <caption>CallStackDemo.java</caption>
+      <program language="java">
+<![CDATA[public class CallStackDemo {
+
+    public static void main(String[] args) {
+        int currentScore = 85;
+        applyBonus(currentScore);
+        System.out.println("Back in main, score: " + currentScore);
+    }
+
+    public static void applyBonus(int score) {
+        int bonus = 10;
+        score = score + bonus;
+        System.out.println("Inside applyBonus, score: " + score);
+    }
+}]]>
+      </program>
+    </listing>
+
+    <p>
+      Let’s trace the program step by step:
+    </p>
+
+    <paragraphs>
+      <title>Step 1: Program Launch</title>
+      <p>
+        When the program begins, the JVM calls <c>main</c>. It pushes a stack frame for <c>main</c> onto the empty call stack. On line 3, <c>main</c> declares the <c>int</c> variable <c>currentScore</c> and initializes it to <c>85</c>.
+      </p>
+
+      <figure xml:id="figure-call-stack-step-1">
+        <title>Call Stack: Program Launch (Step 1)</title>
+        <caption>The JVM pushes the <c>main()</c> stack frame onto the call stack upon program launch.</caption>
+        <image source="figures/figure_5_2.png" width="75%">
+          <shortdescription>Call stack diagram showing the main frame active at the bottom with args and currentScore set to 85.</shortdescription>
+          <description>
+            <p>
+              A vertical call stack memory container showing the main frame active at the base. Inside the frame, the variable args stores a reference pointer and currentScore holds 85. The region above remains open available stack memory.
+            </p>
+          </description>
+        </image>
+      </figure>
+    </paragraphs>
+
+    <paragraphs>
+      <title>Step 2: Method Invocation</title>
+      <p>
+        On line 4, <c>main</c> calls <c>applyBonus(currentScore)</c>. Before jumping to line 8, Java does three things:
+      </p>
+      <ol>
+        <li><p>It evaluates the argument <c>currentScore</c>, obtaining <c>85</c>.</p></li>
+        <li><p>It pushes a new stack frame for <c>applyBonus</c> onto the top of the stack.</p></li>
+        <li><p>It copies <c>85</c> into the parameter variable <c>score</c> and records that control must return to line 5 of <c>main</c>.</p></li>
+      </ol>
+      <p>
+        Execution in <c>main</c> is now suspended. The top frame (<c>applyBonus</c>) is active.
+      </p>
+
+      <figure xml:id="figure-call-stack-step-2">
+        <title>Call Stack: Method Invocation (Step 2)</title>
+        <caption>The JVM pushes <c>applyBonus()</c> on top of the call stack, suspending <c>main()</c> and copying <c>85</c> into the parameter <c>score</c>.</caption>
+        <image source="figures/figure_5_3.png" width="75%">
+          <shortdescription>Call stack diagram showing applyBonus active on top of suspended main frame, with parameter score initialized to 85.</shortdescription>
+          <description>
+            <p>
+              Call stack diagram showing two frames. The main frame is suspended at the bottom at line 4 with currentScore equal to 85. Above it, the newly pushed applyBonus frame is active with parameter score initialized to 85, bonus uninitialized, and a return address pointing to line 5 in main.
+            </p>
+          </description>
+        </image>
+      </figure>
+    </paragraphs>
+
+    <paragraphs>
+      <title>Step 3: Helper Method Execution</title>
+      <p>
+        Execution jumps to line 9. The local variable <c>bonus</c> is declared and initialized to <c>10</c>. On line 10, the statement <c>score = score + bonus;</c> adds 10 to 85, updating <c>score</c> to 95.
+      </p>
+      <p>
+        Notice that this assignment modifies only the <c>score</c> variable located inside <c>applyBonus</c>’s frame. The <c>currentScore</c> variable sitting in <c>main</c>’s frame remains completely untouched.
+      </p>
+
+      <figure xml:id="figure-call-stack-step-3">
+        <title>Call Stack: Helper Method Execution (Step 3)</title>
+        <caption>Executing statements inside <c>applyBonus()</c> updates only its local parameter <c>score</c> to <c>95</c>, leaving <c>currentScore</c> in <c>main()</c> unaffected.</caption>
+        <image source="figures/figure_5_4.png" width="75%">
+          <shortdescription>Call stack diagram showing score updated to 95 and bonus set to 10 inside applyBonus, while main's currentScore remains 85.</shortdescription>
+          <description>
+            <p>
+              Call stack diagram during active execution of applyBonus. Local variable bonus is set to 10 and score is updated to 95. In the suspended main frame beneath, currentScore remains 85, demonstrating that local modifications do not affect caller variables.
+            </p>
+          </description>
+        </image>
+      </figure>
+
+      <p>
+        Line 11 executes, displaying:
+      </p>
+
+      <console>
+        <output>Inside applyBonus, score: 95</output>
+      </console>
+    </paragraphs>
+
+    <paragraphs>
+      <title>Step 4: Method Return and Frame Deallocation</title>
+      <p>
+        On line 12, <c>applyBonus</c> reaches its closing curly brace. Its job is done.
+      </p>
+      <p>
+        The JVM pops <c>applyBonus</c>’s frame off the stack. The memory allocated for <c>score</c> and <c>bonus</c> is wiped away and reclaimed. Those variables no longer exist anywhere in the computer's memory.
+      </p>
+
+      <figure xml:id="figure-call-stack-step-4">
+        <title>Call Stack: Method Return and Deallocation (Step 4)</title>
+        <caption>The <c>applyBonus()</c> stack frame is popped off and destroyed, returning control to <c>main()</c> with <c>currentScore</c> safely intact at <c>85</c>.</caption>
+        <image source="figures/figure_5_5.png" width="75%">
+          <shortdescription>Call stack diagram showing applyBonus popped and deallocated, with main resuming execution at line 5.</shortdescription>
+          <description>
+            <p>
+              Call stack diagram showing the applyBonus frame popped off and deallocated. The main frame resumes active execution at line 5 with currentScore still storing 85.
+            </p>
+          </description>
+        </image>
+      </figure>
+    </paragraphs>
+
+    <paragraphs>
+      <title>Step 5: Resuming the Caller</title>
+      <p>
+        Control returns to line 5 in <c>main</c> (the return address). The <c>main</c> frame is once again the top, active frame.
+      </p>
+      <p>
+        Line 5 prints <c>currentScore</c>. Because <c>currentScore</c> resides in <c>main</c>'s stack frame and was never touched by <c>applyBonus</c>, it still contains <c>85</c>:
+      </p>
+
+      <console>
+        <output>Back in main, score: 85</output>
+      </console>
+
+      <p>
+        Finally, <c>main</c> reaches line 6. Its stack frame is popped off the stack. The call stack is now empty, and the JVM terminates the program.
+      </p>
+    </paragraphs>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 5.5.4 Scope vs. Lifetime                                     -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-5-4-scope-vs-lifetime">
+    <title>Scope vs. Lifetime</title>
+
+    <p>
+      Tracing the call stack clarifies a distinction that frequently confuses new programmers: the difference between a variable’s scope and its lifetime.
+    </p>
+
+    <ul>
+      <li>
+        <p>
+          <strong>Scope is a spatial (compile-time) concept:</strong> It refers to the region of source code text where a variable’s name is legally recognized by the compiler. In Java, local variables and parameters have block scope: they can only be referenced from the line where they are declared down to the closing curly brace <c>}</c> of that block. The compiler will reject any attempt to use <c>bonus</c> inside <c>main</c>, or <c>currentScore</c> inside <c>applyBonus</c>.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>Lifetime is a temporal (run-time) concept:</strong> It refers to the span of time during program execution between when memory is allocated for a variable and when that memory is released. A parameter or local variable’s lifetime begins when its stack frame is pushed onto the stack and ends when that frame is popped off.
+        </p>
+      </li>
+    </ul>
+
+    <p>
+      These two concepts do not always overlap. While <c>applyBonus</c> was executing in Step 3, the variable <c>currentScore</c> in <c>main</c> was alive in memory (its frame was sitting on the stack), but it was out of scope (code inside <c>applyBonus</c> could not see or access it).
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 5.5.5 Pass-by-Value Grounded in Memory                       -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-5-5-pass-by-value-memory">
+    <title>Pass-by-Value Grounded in Memory</title>
+
+    <p>
+      The call stack diagram illustrates why Java’s parameter-passing mechanism is called <term>pass-by-value</term>:
+    </p>
+
+    <p>
+      Java always passes arguments by value. When you pass an argument to a method, Java evaluates the argument expression to a single value and copies that value into the parameter variable in the newly created stack frame.
+    </p>
+
+    <p>
+      Because parameters and caller variables live in entirely separate stack frames:
+    </p>
+
+    <ol>
+      <li>
+        <p>The method parameter is a distinct variable with its own dedicated memory slot.</p>
+      </li>
+      <li>
+        <p>Any assignment to a parameter variable (such as <c>score = score + bonus;</c>) alters only the copy stored in the active stack frame.</p>
+      </li>
+      <li>
+        <p>When the method returns, that stack frame vanishes. The caller’s original variables in the underlying frame remain completely unaffected.</p>
+      </li>
+    </ol>
+
+    <p>
+      In short, a method cannot modify the value of a caller's primitive variable.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 5.5.6 A Glimpse at Stack Overflow                           -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-5-6-stack-overflow">
+    <title>A Glimpse at Stack Overflow</title>
+
+    <p>
+      Because physical RAM is finite, the call stack is allocated a fixed amount of memory (typically between one and two megabytes per thread in modern JVMs<fn>Oracle Corporation, <q>The java Command,</q> Java Platform, Standard Edition Tools Reference (Java SE 22), <url href="https://docs.oracle.com/en/java/javase/22/docs/specs/man/java.html" visual="docs.oracle.com/en/java/javase/22/docs/specs/man/java.html">Oracle Java Tools Reference</url>. The <c>-Xss</c> option specifies the thread stack size. On 64-bit platforms, default values are 1,024 KB for Linux/macOS on x64 and 2,048 KB for Linux/macOS on Aarch64 (Apple Silicon). For Windows, the documentation notes that the default <q>depends on virtual memory,</q> which Microsoft's PE linker specification sets to a 1 MB default reservation for 64-bit executables.</fn>). Under normal circumstances, this is more than enough for thousands of nested method calls.
+    </p>
+
+    <p>
+      If a chain of methods keeps calling other methods without ever returning, stack frames will pile up until the allocated stack space is exhausted. When this happens, the JVM halts execution with a <c>java.lang.StackOverflowError</c>.
+    </p>
+
+    <p>
+      While this error is most famous in recursion (methods that call themselves, which you will study later), beginners frequently trigger it by treating method calls as one-way jumps rather than round-trip tasks. A classic example is a text-based adventure game where each room is written as a separate method: the player starts in <c>porch()</c>, which calls <c>hallway()</c>, which calls <c>kitchen()</c>, which calls <c>porch()</c>. Because no method ever finishes, the stack never unwinds. If the player explores enough rooms, the program inevitably crashes.
+    </p>
+
+    <p>
+      To avoid runaway stacks, remember that every method call is an obligation to return. Navigation and repeated actions should almost always be driven by a loop in a controlling method like <c>main</c>, with helper methods called to perform a single task and immediately return.
+    </p>
+  </subsection>
+
+</section>

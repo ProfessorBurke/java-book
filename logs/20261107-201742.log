@@ -1,0 +1,183 @@
+INFO    : Since no target was supplied, we will use "web".
+
+INFO    : Building target web
+INFO    : XSL conversion of D:\CCRI\__Java book rewrite\cs1-java-textbook\source\main.ptx by C:\Users\Maggie\.ptx\2.56.2\core\xsl\utilities\pretext-enhanced-source.xsl
+INFO    : messages from the log for XSL processing (prefaced with a *):
+WARNING : * PTX:DEPRECATE: (2026-07-30) the external directory is a property of your source, and is now declared with a "directories/@external" attribute within "docinfo".  The publication file entry "source/directories/@external" is honored meanwhile, but please relocate it.
+INFO    : successful application of C:\Users\Maggie\.ptx\2.56.2\core\xsl\utilities\pretext-enhanced-source.xsl
+INFO    : discovering source file's directory name: D:\CCRI\__Java book rewrite\cs1-java-textbook\source
+WARNING : (2026-07-30) the external directory is a property of your source, and is now declared with a "directories/@external" attribute within "docinfo". The publisher file entry "source/directories/@external" is honored meanwhile, but please relocate it.
+INFO    : verifying and expanding input directory: D:\CCRI\__Java book rewrite\cs1-java-textbook\source\../assets
+INFO    : input directory expanded to absolute path: D:\CCRI\__Java book rewrite\cs1-java-textbook\assets
+INFO    : Generating any needed assets.
+WARNING : Now generating QR codes
+WARNING : You are trying to generate qrcodes, but the publication file does not have a base URL. This will result in qrcodes that do not point to anything meaningful.
+INFO    : XSL conversion of D:\CCRI\__Java book rewrite\cs1-java-textbook\source\main.ptx by C:\Users\Maggie\.ptx\2.56.2\core\xsl\utilities\report-publisher-variables.xsl
+INFO    : messages from the log for XSL processing (prefaced with a *):
+WARNING : * PTX:DEPRECATE: (2026-07-30) the external directory is a property of your source, and is now declared with a "directories/@external" attribute within "docinfo".  The publication file entry "source/directories/@external" is honored meanwhile, but please relocate it.
+INFO    : successful application of C:\Users\Maggie\.ptx\2.56.2\core\xsl\utilities\report-publisher-variables.xsl
+INFO    : discovering source file's directory name: D:\CCRI\__Java book rewrite\cs1-java-textbook\source
+WARNING : (2026-07-30) the external directory is a property of your source, and is now declared with a "directories/@external" attribute within "docinfo". The publisher file entry "source/directories/@external" is honored meanwhile, but please relocate it.
+INFO    : verifying and expanding input directory: D:\CCRI\__Java book rewrite\cs1-java-textbook\source\../assets
+INFO    : input directory expanded to absolute path: D:\CCRI\__Java book rewrite\cs1-java-textbook\assets
+INFO    : manufacturing QR codes from D:\CCRI\__Java book rewrite\cs1-java-textbook\source\main.ptx for placement in D:\CCRI\__Java book rewrite\cs1-java-textbook\generated-assets\qrcode
+INFO    : XSL conversion of D:\CCRI\__Java book rewrite\cs1-java-textbook\source\main.ptx by C:\Users\Maggie\.ptx\2.56.2\core\xsl\extract-qrcode.xsl
+INFO    : messages from the log for XSL processing (prefaced with a *):
+WARNING : * PTX:DEPRECATE: (2026-07-30) the external directory is a property of your source, and is now declared with a "directories/@external" attribute within "docinfo".  The publication file entry "source/directories/@external" is honored meanwhile, but please relocate it.
+INFO    : successful application of C:\Users\Maggie\.ptx\2.56.2\core\xsl\extract-qrcode.xsl
+INFO    : QR code creation complete
+INFO    : Removing temporary directory C:\Users\Maggie\AppData\Local\Temp\ptx-9skwdfpt
+INFO    : Finished generating assets.
+
+INFO    : Preparing to build into D:\CCRI\__Java book rewrite\cs1-java-textbook\output\web.
+WARNING : Node.js must be installed to build CSS files.  Please install node.js and npm.
+ Will try to use prebuilt CSS files instead.
+WARNING : Cannot find npm.  Will try to use prebuilt CSS files instead.
+WARNING : Unable to install npm packages to build css files.  Non-default CSS themes require node.js and npm to be installed.  See https://pretextbook.org/doc/guide/html/node-and-npm.html
+WARNING : 
+INFO    : discovering source file's directory name: D:\CCRI\__Java book rewrite\cs1-java-textbook\source
+WARNING : (2026-07-30) the external directory is a property of your source, and is now declared with a "directories/@external" attribute within "docinfo". The publisher file entry "source/directories/@external" is honored meanwhile, but please relocate it.
+INFO    : verifying and expanding input directory: D:\CCRI\__Java book rewrite\cs1-java-textbook\source\../assets
+INFO    : input directory expanded to absolute path: D:\CCRI\__Java book rewrite\cs1-java-textbook\assets
+INFO    : discovering source file's directory name: D:\CCRI\__Java book rewrite\cs1-java-textbook\source
+INFO    : XSL conversion of D:\CCRI\__Java book rewrite\cs1-java-textbook\source\main.ptx by C:\Users\Maggie\.ptx\2.56.2\core\xsl\utilities\report-publisher-variables.xsl
+INFO    : messages from the log for XSL processing (prefaced with a *):
+WARNING : * PTX:DEPRECATE: (2026-07-30) the external directory is a property of your source, and is now declared with a "directories/@external" attribute within "docinfo".  The publication file entry "source/directories/@external" is honored meanwhile, but please relocate it.
+INFO    : successful application of C:\Users\Maggie\.ptx\2.56.2\core\xsl\utilities\report-publisher-variables.xsl
+INFO    : Downloading rs services file from https://runestone.academy/cdn/runestone/latest/webpack_static_imports.xml.
+INFO    : Runestone Services via online CDN query: version 8.4.0
+INFO    : Downloading Runestone Services, version 8.4.0
+INFO    : Extracting Runestone Services from archive file
+INFO    : Node.js not available. Relying on prebuilt default-modern.
+INFO    : Using prebuilt CSS theme: default-modern with options: {'options': {'primary-color': '#195684', 'secondary-color': '#932c1c'}, 'contrast-checks': {'primary-color': '#fff', 'secondary-color': '#fff', 'primary-color-dark': '#23241f'}}
+INFO    : converting D:\CCRI\__Java book rewrite\cs1-java-textbook\source\main.ptx to HTML in C:\Users\Maggie\AppData\Local\Temp\ptx-pucxdtvi
+INFO    : XSL conversion of D:\CCRI\__Java book rewrite\cs1-java-textbook\source\main.ptx by C:\Users\Maggie\.ptx\2.56.2\core\xsl\pretext-html.xsl
+INFO    : messages from the log for XSL processing (prefaced with a *):
+WARNING : * PTX:DEPRECATE: (2026-07-30) the external directory is a property of your source, and is now declared with a "directories/@external" attribute within "docinfo".  The publication file entry "source/directories/@external" is honored meanwhile, but please relocate it.
+WARNING : * PTX:WARNING: In a section containing subsections, any content that is not inside a subsection needs to be inside an <introduction> and/or  <conclusion>.
+INFO    : *              located at: pretext/book/chapter/section
+INFO    : *              located within: "sec-6-4-defining-class" (xml:id), "Defining a Class: State and Behavior" (title)
+WARNING : * PTX:WARNING: In a section containing subsections, any content that is not inside a subsection needs to be inside an <introduction> and/or  <conclusion>.
+INFO    : *              located at: pretext/book/chapter/section
+INFO    : *              located within: "sec-6-6-overloading" (xml:id), "Overloading Methods and Constructors" (title)
+WARNING : * PTX:WARNING: In a section containing subsections, any content that is not inside a subsection needs to be inside an <introduction> and/or  <conclusion>.
+INFO    : *              located at: pretext/book/chapter/section
+INFO    : *              located within: "sec-6-7-memory-model" (xml:id), "Objects in Memory: The Stack and the Heap" (title)
+WARNING : * PTX:WARNING: In a section containing subsections, any content that is not inside a subsection needs to be inside an <introduction> and/or  <conclusion>.
+INFO    : *              located at: pretext/book/chapter/section
+INFO    : *              located within: "sec-6-8-tostring-equals" (xml:id), "Printing and Comparing Objects: toString and equals" (title)
+WARNING : * PTX:WARNING: In a section containing subsections, any content that is not inside a subsection needs to be inside an <introduction> and/or  <conclusion>.
+INFO    : *              located at: pretext/book/chapter/section
+INFO    : *              located within: "sec-6-9-javadoc" (xml:id), "Documenting Classes with Javadoc" (title)
+WARNING : * PTX:WARNING: In a section containing subsections, any content that is not inside a subsection needs to be inside an <introduction> and/or  <conclusion>.
+INFO    : *              located at: pretext/book/chapter/section
+INFO    : *              located within: "sec-6-10-unit-testing" (xml:id), "Unit Testing Classes: The Arrange–Act–Assert Pattern" (title)
+WARNING : * PTX:WARNING: In a subsection containing subsubsections, any content that is not inside a subsubsection needs to be inside an <introduction> and/or  <conclusion>.
+INFO    : *              located at: pretext/book/chapter/section/subsection
+INFO    : *              located within: "subsec-6-5-3-constants-counters" (xml:id), "Constants and Class Counters" (title)
+WARNING : * PTX:WARNING: In a subsection containing subsubsections, any content that is not inside a subsubsection needs to be inside an <introduction> and/or  <conclusion>.
+INFO    : *              located at: pretext/book/chapter/section/subsection
+INFO    : *              located within: "subsec-6-5-4-static-barrier" (xml:id), "The Static Barrier: Why Static Methods Cannot Access Instance Fields" (title)
+WARNING : * PTX:WARNING: In a subsection containing subsubsections, any content that is not inside a subsubsection needs to be inside an <introduction> and/or  <conclusion>.
+INFO    : *              located at: pretext/book/chapter/section/subsection
+INFO    : *              located within: "subsec-6-7-1-memory-areas" (xml:id), "Memory: Stack, Heap, and Static Area" (title)
+WARNING : * PTX:WARNING: In a subsection containing subsubsections, any content that is not inside a subsubsection needs to be inside an <introduction> and/or  <conclusion>.
+INFO    : *              located at: pretext/book/chapter/section/subsection
+INFO    : *              located within: "subsec-6-7-2-dereferencing" (xml:id), "Reference Variables and Implicit Dereferencing" (title)
+WARNING : * PTX:WARNING: In a subsection containing subsubsections, any content that is not inside a subsubsection needs to be inside an <introduction> and/or  <conclusion>.
+INFO    : *              located at: pretext/book/chapter/section/subsection
+INFO    : *              located within: "subsec-6-7-5-copy-constructors" (xml:id), "True Object Duplication: The Copy Constructor" (title)
+WARNING : * PTX:WARNING: In a subsection containing subsubsections, any content that is not inside a subsubsection needs to be inside an <introduction> and/or  <conclusion>.
+INFO    : *              located at: pretext/book/chapter/section/subsection
+INFO    : *              located within: "subsec-6-7-6-garbage-collection" (xml:id), "Object Lifetime and Automatic Garbage Collection" (title)
+WARNING : * PTX:WARNING: In a subsection containing subsubsections, any content that is not inside a subsubsection needs to be inside an <introduction> and/or  <conclusion>.
+INFO    : *              located at: pretext/book/chapter/section/subsection
+INFO    : *              located within: "subsec-6-9-4-documenting-fields" (xml:id), "Documenting Fields: Constants, Counters, and Instance State" (title)
+WARNING : * PTX:WARNING:   a <tabular> has at least one paragraph (<p>) inside a <cell>, yet there are no <col> elements with a @width attribute.  Default widths will be supplied.
+INFO    : *              located at: pretext/book/chapter/section/subsection/table/tabular
+INFO    : *              located within: "table-electric-vehicle-class-diagram" (xml:id), "Class diagram for ElectricVehicle" (title)
+WARNING : * PTX:WARNING:   a <tabular> has at least one paragraph (<p>) inside a <cell>, yet there are no <col> elements with a @width attribute.  Default widths will be supplied.
+INFO    : *              located at: pretext/book/chapter/section/subsection/sidebyside/tabular
+INFO    : *              located within: "subsec-6-4-3-fields-constructors" (xml:id), "Fields and Constructors" (title)
+WARNING : * PTX:WARNING:   a <tabular> has at least one paragraph (<p>) inside a <cell>, yet there are no <col> elements with a @width attribute.  Default widths will be supplied.
+INFO    : *              located at: pretext/book/chapter/section/subsection/sidebyside/tabular
+INFO    : *              located within: "subsec-6-4-3-fields-constructors" (xml:id), "Fields and Constructors" (title)
+WARNING : * PTX:WARNING:   a <tabular> has at least one paragraph (<p>) inside a <cell>, yet there are no <col> elements with a @width attribute.  Default widths will be supplied.
+INFO    : *              located at: pretext/book/chapter/section/subsection/sidebyside/tabular
+INFO    : *              located within: "subsec-6-4-3-fields-constructors" (xml:id), "Fields and Constructors" (title)
+WARNING : * PTX:WARNING:   a <tabular> has at least one paragraph (<p>) inside a <cell>, yet there are no <col> elements with a @width attribute.  Default widths will be supplied.
+INFO    : *              located at: pretext/book/chapter/section/subsection/sidebyside/tabular
+INFO    : *              located within: "subsec-6-4-3-fields-constructors" (xml:id), "Fields and Constructors" (title)
+INFO    : * PTX:INFO:   checking all deprecated elements.
+WARNING : * PTX:DEPRECATE: (2016-05-23) <br> can no longer be used to create multiline output; you may use <line> elements in select situations (23 times)
+INFO    : *              located at: pretext/book/chapter/section/subsection/table/tabular/row/cell/br
+INFO    : *              located within: "table-class-diagram-oven" (xml:id), "UML Class Diagram for Oven" (title)
+INFO    : *              located at: pretext/book/chapter/section/subsection/table/tabular/row/cell/br
+INFO    : *              located within: "table-class-diagram-oven" (xml:id), "UML Class Diagram for Oven" (title)
+INFO    : *              located at: pretext/book/chapter/section/subsection/table/tabular/row/cell/br
+INFO    : *              located within: "table-class-diagram-oven" (xml:id), "UML Class Diagram for Oven" (title)
+INFO    : *              located at: pretext/book/chapter/section/subsection/table/tabular/row/cell/br
+INFO    : *              located within: "table-class-diagram-oven" (xml:id), "UML Class Diagram for Oven" (title)
+INFO    : *              located at: pretext/book/chapter/section/subsection/table/tabular/row/cell/br
+INFO    : *              located within: "table-class-diagram-oven" (xml:id), "UML Class Diagram for Oven" (title)
+INFO    : *              located at: pretext/book/chapter/section/subsection/table/tabular/row/cell/br
+INFO    : *              located within: "table-class-diagram-oven" (xml:id), "UML Class Diagram for Oven" (title)
+INFO    : *              located at: pretext/book/chapter/section/subsection/table/tabular/row/cell/br
+INFO    : *              located within: "table-class-diagram-oven" (xml:id), "UML Class Diagram for Oven" (title)
+INFO    : *              located at: pretext/book/chapter/section/subsection/table/tabular/row/cell/br
+INFO    : *              located within: "table-class-diagram-oven" (xml:id), "UML Class Diagram for Oven" (title)
+INFO    : *              located at: pretext/book/chapter/section/subsection/table/tabular/row/cell/br
+INFO    : *              located within: "table-class-diagram-oven" (xml:id), "UML Class Diagram for Oven" (title)
+INFO    : *              located at: pretext/book/chapter/section/subsection/table/tabular/row/cell/br
+INFO    : *              located within: "table-class-diagram-oven" (xml:id), "UML Class Diagram for Oven" (title)
+INFO    : *              located at: pretext/book/chapter/section/subsection/table/tabular/row/cell/br
+INFO    : *              located within: "table-class-diagram-recipe-batch" (xml:id), "UML Class Diagram for RecipeBatch" (title)
+INFO    : *              located at: pretext/book/chapter/section/subsection/table/tabular/row/cell/br
+INFO    : *              located within: "table-class-diagram-recipe-batch" (xml:id), "UML Class Diagram for RecipeBatch" (title)
+INFO    : *              located at: pretext/book/chapter/section/subsection/table/tabular/row/cell/br
+INFO    : *              located within: "table-class-diagram-recipe-batch" (xml:id), "UML Class Diagram for RecipeBatch" (title)
+INFO    : *              located at: pretext/book/chapter/section/subsection/table/tabular/row/cell/br
+INFO    : *              located within: "table-class-diagram-recipe-batch" (xml:id), "UML Class Diagram for RecipeBatch" (title)
+INFO    : *              located at: pretext/book/chapter/section/subsection/table/tabular/row/cell/br
+INFO    : *              located within: "table-class-diagram-recipe-batch" (xml:id), "UML Class Diagram for RecipeBatch" (title)
+INFO    : *              located at: pretext/book/chapter/section/subsection/table/tabular/row/cell/br
+INFO    : *              located within: "table-class-diagram-recipe-batch" (xml:id), "UML Class Diagram for RecipeBatch" (title)
+INFO    : *              located at: pretext/book/chapter/section/subsection/table/tabular/row/cell/br
+INFO    : *              located within: "table-class-diagram-recipe-batch" (xml:id), "UML Class Diagram for RecipeBatch" (title)
+INFO    : *              located at: pretext/book/chapter/section/subsection/table/tabular/row/cell/br
+INFO    : *              located within: "table-class-diagram-recipe-batch" (xml:id), "UML Class Diagram for RecipeBatch" (title)
+INFO    : *              located at: pretext/book/chapter/section/subsection/table/tabular/row/cell/br
+INFO    : *              located within: "table-class-diagram-recipe-batch" (xml:id), "UML Class Diagram for RecipeBatch" (title)
+INFO    : *              located at: pretext/book/chapter/section/subsection/table/tabular/row/cell/br
+INFO    : *              located within: "table-class-diagram-recipe-batch" (xml:id), "UML Class Diagram for RecipeBatch" (title)
+INFO    : *              located at: pretext/book/chapter/section/subsection/table/tabular/row/cell/br
+INFO    : *              located within: "table-class-diagram-recipe-batch" (xml:id), "UML Class Diagram for RecipeBatch" (title)
+INFO    : *              located at: pretext/book/chapter/section/subsection/table/tabular/row/cell/br
+INFO    : *              located within: "table-class-diagram-recipe-batch" (xml:id), "UML Class Diagram for RecipeBatch" (title)
+INFO    : *              located at: pretext/book/chapter/section/subsection/table/tabular/row/cell/br
+INFO    : *              located within: "table-class-diagram-recipe-batch" (xml:id), "UML Class Diagram for RecipeBatch" (title)
+INFO    : * --------------
+WARNING : * PTX:DEPRECATE: (2024-11-19) program/input now should be program/code. An automatic correction will be attempted. (6 times)
+INFO    : *              located at: pretext/book/chapter/section/subsection/listing/program/input
+INFO    : *              located within: "listing-oven-outline" (xml:id)
+INFO    : *              located at: pretext/book/chapter/section/subsection/listing/program/input
+INFO    : *              located within: "listing-recipe-batch-outline" (xml:id)
+INFO    : *              located at: pretext/book/chapter/section/subsection/listing/program/input
+INFO    : *              located within: "listing-bakery-test" (xml:id)
+INFO    : *              located at: pretext/book/chapter/section/subsection/listing/program/input
+INFO    : *              located within: "listing-oven-full" (xml:id)
+INFO    : *              located at: pretext/book/chapter/section/subsection/listing/program/input
+INFO    : *              located within: "listing-recipe-batch-full" (xml:id)
+INFO    : *              located at: pretext/book/chapter/section/subsection/listing/program/input
+INFO    : *              located within: "listing-bakery-demo-full" (xml:id)
+INFO    : * --------------
+INFO    : successful application of C:\Users\Maggie\.ptx\2.56.2\core\xsl\pretext-html.xsl
+INFO    : Removing temporary directory C:\Users\Maggie\AppData\Local\Temp\ptx-pucxdtvi
+INFO    : Removing temporary directory C:\Users\Maggie\AppData\Local\Temp\ptx-lfp5o69y
+INFO    : 
+Finished build for target web. Run `pretext view web` to see the results.
+
+INFO    : 
+Success!  Built requested target(s) without errors.
+
+INFO    : 

@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-3-7-specialized-branching" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Specialized Branching: The <c>switch</c> Statement and Conditional Operator</title>
+
+  
+  <introduction>
+    <p>
+      You can accomplish every branching operation with one of the forms of <c>if</c> statement covered in this chapter. However, Java provides two additional branching options that are good choices for specific cases.
+    </p>
+
+    <!-- ============================================================ -->
+    <!-- 3.7.1 The switch statement                                   -->
+  </introduction>
+
+
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-3-7-1-switch-statement">
+    <title>The <c>switch</c> Statement</title>
+
+    <p>
+      A <c>switch</c> statement is an excellent choice when you need to execute different code based on a specific, discrete value stored in an integer, character, or <c>String</c> variable. For example, your program might need to:
+    </p>
+
+    <ul>
+      <li><p>Process a user selection from a console menu (e.g., 1, 2, 3, or <q>Save</q>, <q>Open</q>, <q>Quit</q>),</p></li>
+      <li><p>Translate a directional keypress in a game (e.g., <c>'W'</c>, <c>'A'</c>, <c>'S'</c>, <c>'D'</c>),</p></li>
+      <li><p>Map a month number (1–12) to its name or number of days, or</p></li>
+      <li><p>Respond to a status code from a drone or sensor (0 for Idle, 1 for Active, 2 for Low Battery).</p></li>
+    </ul>
+
+    <p>
+      While you could write a series of <c>if-else-if</c> statements testing <c>==</c> or <c>.equals()</c> for each of these values, a <c>switch</c> statement often provides a much more readable, structured layout. <xref ref="listing-likert-processor" /> uses a <c>switch</c> statement to turn a user’s numbered response into its text meaning:
+    </p>
+
+    <listing xml:id="listing-likert-processor">
+      <title><c>LikertProcessor.java</c></title>
+      <program language="java" line-numbers="yes"><![CDATA[import java.util.Scanner;
+ 
+public class LikertProcessor {
+ 
+    public static void main(String[] args) {
+        
+        Scanner stdin;              // To obtain user input.
+        int response;               // Response from the user.
+        String responseText;        // Response in text form.
+        
+        // Obtain the user's input.
+        stdin = new Scanner(System.in);
+        System.out.println("Are you likely to vote in the upcoming election?");
+        System.out.print("Enter a value from 1 (Not at all likely) ");
+        System.out.print("to 5 (Very likely): ");
+        response = stdin.nextInt();
+        stdin.close();
+        
+        // Convert the user's response to text.
+        switch (response) {
+            case 1:
+                responseText = "not at all likely";
+                break;
+            case 2:
+                responseText = "somewhat unlikely";
+                break;
+            case 3:
+                responseText = "neither likely nor unlikely";
+                break;
+            case 4:
+                responseText = "somewhat likely";
+                break;
+            case 5: 
+                responseText = "very likely";
+                break;
+            default:
+                responseText = "(unknown: invalid response)";
+                break;
+        } // end switch
+        
+        // Display the user's response as text.
+        System.out.print("You are " + responseText);
+        System.out.println(" to vote in the upcoming election.");
+    }
+}]]></program>
+    </listing>
+
+    <p>
+      The <c>switch</c> statement in <xref ref="listing-likert-processor" /> is found on lines 20-39. It selects code to execute based on the value in the variable <c>response</c>, with branches for five specific values (1-5) and a <c>default</c> branch to handle any value that is not 1-5.
+    </p>
+
+    <p>
+      Like an <c>if</c> statement, a <c>switch</c> is a compound statement: a statement that is composed of other programming statements.
+    </p>
+
+    <p>
+      The syntax is the keyword <c>switch</c>, followed by an expression (often simply a variable) in parentheses. The expression must evaluate to a 32-bit or smaller integer type (<c>byte</c>, <c>short</c>, <c>int</c>, <c>char</c>) or a <c>String</c>. (Some other object types that we haven’t learned yet are also allowed.) In <xref ref="listing-likert-processor" />, the expression is the integer variable <c>response</c>, which we obtained from the user on line 16. The logic of this <c>switch</c> is equivalent to <c>if (response == 1) {…}, else if (response == 2) {…}</c>, etc.
+    </p>
+
+    <p>
+      After the expression, we open the <c>switch</c> statement with an open curly brace. It is closed on line 39.
+    </p>
+
+    <p>
+      Within the <c>switch</c>, we have a series of <c>case</c> labels<mdash />one for each value of <c>response</c> that we want to handle. A <c>case</c> label is composed of the keyword <c>case</c>, a value for <c>response</c> that we want to handle, and a colon. After each <c>case</c> label is the code we want to execute if <c>response</c> is equal to the <c>case</c> value. The value must be a compile-time constant<mdash />a literal value or a <c>final</c> variable.
+    </p>
+
+    <p>
+      You might notice that the code after each <c>case</c> label is not enclosed in curly braces and that the code following each label ends with the keyword <c>break</c>. This is a critical feature of <c>switch</c> statements that’s different from most other Java constructs.
+    </p>
+
+    <p>
+      A <c>switch</c> statement compares the value of the expression after the word <c>switch</c> to each <c>case</c> value, one at a time, until it finds a matching value.
+    </p>
+
+    <p>
+      Execution then proceeds with the code following that label until the closing curly brace of the <c>switch</c> is reached, or a <c>break</c> statement is reached. The <c>break</c> statement breaks out of the <c>switch</c>, to the first line of code following the closing curly brace of the <c>switch</c>.
+    </p>
+
+    <p>
+      If no matching values are found and there is a <c>default</c> label, then the code following the <c>default</c> label will execute. In <xref ref="listing-likert-processor" />, we must give the variable <c>responseText</c> a value before we print it on line 42<mdash />if we don’t, the compiler will flag a <q>variable not initialized</q> error and the code won’t compile. Because the user might not enter one of the expected values of 1-5, we must give <c>responseText</c> a default value, either before or within the <c>switch</c> statement.
+    </p>
+
+    <p>
+      The <c>default</c> label of a <c>switch</c> statement is the best place to do this, because the <c>switch</c> statement is where the <c>responseText</c> variable is getting a value. This means anybody reading the code can see within this block the value <c>responseText</c> will get for all possible values of <c>response</c>.
+    </p>
+
+    <p>
+      The <c>break</c> statement is a critical component of each <c>case</c>. If you forget the <c>break</c> statement within a <c>case</c>, execution <q>falls through</q> to the next <c>case</c> and continues until either the closing curly brace of the <c>switch</c> is reached or a <c>break</c> is reached. Consider the following (buggy) variation of the <c>switch</c> code in <xref ref="listing-likert-processor" />:
+    </p>
+
+    <program language="java"><![CDATA[switch (response) {
+    case 1:
+        responseText = "not at all likely";
+        break;
+    case 2:
+        responseText = "somewhat unlikely";
+    case 3:
+        responseText = "neither likely nor unlikely";
+        break;
+    case 4:
+        responseText = "somewhat likely";
+        break;
+    case 5: 
+        responseText = "very likely";
+        break;
+    default:
+        responseText = "(unknown: invalid response)";
+        break;
+} // end switch]]></program>
+
+    <p>
+      In this code, if the <c>response</c> variable contains any value but 2, the code will behave as before. But if the <c>response</c> variable contains 2, execution will jump to <c>case 2:</c> within the <c>switch</c>, <c>responseText</c> will be assigned the value <c>"somewhat unlikely"</c>, and then because there is no <c>break</c>, execution will fall through to <c>case 3:</c>, and <c>responseText</c> will be assigned the value <c>"neither likely nor unlikely"</c>. The <c>break</c> on the next line then breaks execution out of the <c>switch</c>, to the first line of code following the closing curly brace.
+    </p>
+
+    <p>
+      Falling through is a feature of a <c>switch</c> statement that allows a programmer to write multiple cases that are handled by the same code. Note that you can’t write a range condition in a <c>switch</c>, e.g. you can’t test for values between 1 and 10. A <c>switch</c> tests for exact values. To handle a few different values with the same code, programmers take advantage of the <q>fall through</q> property. For example, suppose we only wanted to tally up the number of people who say they are likely to vote and the number of people who say they are unlikely to vote<mdash />then we might write the following code:
+    </p>
+
+    <program language="java"><![CDATA[int totalLikely = 0;
+int totalUnlikely = 0;
+switch (response) {
+    case 1:
+    case 2:
+        totalUnlikely++;
+        break;
+    case 4:
+    case 5: 
+        totalLikely++;
+        break;
+} // end switch]]></program>
+
+    <p>
+      In this code, we want to handle values of 1 and 2 by incrementing the <c>totalUnlikely</c> variable, and we want to handle values of 4 and 5 by incrementing the <c>totalLikely</c> variable. (There is no action to take for any other values.) To do this, we write two <c>case</c> statements followed by the handling code. If <c>response</c> holds 1, <c>case 1:</c> is the entry point and execution <q>falls through</q> to the code under <c>case 2:</c>, incrementing <c>totalUnlikely</c>. The value 4 is similar<mdash />execution <q>falls through</q> to the code under <c>case 5:</c>, incrementing <c>totalLikely</c>.
+    </p>
+
+    <p>
+      The <q>fall through</q> property is useful, but it is the source of many bugs. Programmers sometimes forget to put a <c>break</c> in, as a <c>switch</c> statement is the only statement in Java that requires a <c>break</c> in normal functioning.
+    </p>
+
+    <p>
+      Always check that you have a <c>break</c> after every case, and if you are intentionally falling through, document that with a comment. (We did not include a comment above because there’s no code after <c>case 1:</c> and <c>case 4:</c>, so the intention to fall through is clear.) It is best practice to always put a <c>break</c> at the end of every case<mdash />even if it’s the last case in a <c>switch</c> statement or the <c>default</c> case, because the code might be modified to include additional cases.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 3.7.2 The conditional operator ?:                            -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-3-7-2-conditional-operator">
+    <title>The Conditional Operator <c>?:</c></title>
+
+    <p>
+      Java’s final selection option is not a statement, but an operator, called the conditional (or ternary) operator. The syntax takes a little getting used to, but the conditional operator allows us to write concise expressions for choosing between two values.
+    </p>
+
+    <p>
+      In <xref ref="subsec-3-3-1-pairing-if-else" />, we introduced <c>if-else</c> statements with the following code:
+    </p>
+
+    <program language="java"><![CDATA[if (score >= 60) {
+    result = "pass";
+} else {
+    result = "retake";
+}]]></program>
+
+    <p>
+      This code is an excellent candidate for the conditional operator. With it, we can achieve the same result (assigning either <c>"pass"</c> or <c>"retake"</c> to <c>result</c> based on the value in <c>score</c>) in a single line:
+    </p>
+
+    <program language="java"><![CDATA[result = (score >= 60) ? "pass" : "retake";]]></program>
+
+    <p>
+      Let’s break it down.
+    </p>
+
+    <p>
+      The conditional expression <c>(score &gt;= 60) ? "pass" : "retake"</c> is to the right of the assignment operator. It evaluates to a single value, which is then assigned to <c>result</c>.
+    </p>
+
+    <p>
+      Once you are accustomed to reading the conditional operator, the advantage is not just brevity, but clarity. It is immediately obvious that this line is purely an assignment to <c>result</c>.
+    </p>
+
+    <p>
+      The operator takes three operands, which is why it is called a ternary operator (unlike a unary operator like <c>-</c> or <c>++</c>, or a binary operator like <c>*</c> or <c>&amp;&amp;</c>):
+    </p>
+
+    <ol>
+      <li>
+        <p>The Boolean expression is any expression evaluating to <c>true</c> or <c>false</c>. While the parentheses are optional in Java, including them is good practice for readability.</p>
+      </li>
+      <li>
+        <p>The <c>?</c> separates the condition from the true branch.</p>
+      </li>
+      <li>
+        <p>The true branch (<c>expressionIfTrue</c>) is evaluated only if the Boolean expression is <c>true</c>.</p>
+      </li>
+      <li>
+        <p>The <c>:</c> separates the true branch from the false branch.</p>
+      </li>
+      <li>
+        <p>The false branch (<c>expressionIfFalse</c>) is evaluated only if the Boolean expression is <c>false</c>.</p>
+      </li>
+    </ol>
+
+    <p>
+      In our example, if <c>score &gt;= 60</c> is <c>true</c>, then the entire expression evaluates to <c>"pass"</c>. If it’s <c>false</c>, then the entire expression evaluates to <c>"retake"</c>. Either <c>"pass"</c> or <c>"retake"</c> is assigned to <c>result</c>.
+    </p>
+
+    <p>
+      Because this is an expression that yields a value, you can use it anywhere an expression of that resulting type is valid. Common patterns for ternary operator include pluralization:
+    </p>
+
+    <program language="java"><![CDATA[String output = "You are " + age + ((age == 1) ? " year old." : " years old.");]]></program>
+
+    <p>
+      Finding minimum or maximum values:
+    </p>
+
+    <program language="java"><![CDATA[int max = (a > b) ? a : b;]]></program>
+
+    <p>
+      Ensuring values are within a safe or valid range (called <q>clamping</q>):
+    </p>
+
+    <program language="java"><![CDATA[int speed = (currentSpeed > SPEED_LIMIT) ? SPEED_LIMIT : currentSpeed;]]></program>
+
+    <p>
+      And selecting an argument to a method call without having to store the result in a variable first:
+    </p>
+
+    <program language="java"><![CDATA[displayStatus(isOnline ? "Active" : "Offline");]]></program>
+
+    <p>
+      In these examples, the true and false expressions of each conditional expression evaluate to the same type. Both the true and false expressions must produce compatible types. For example, if you assign the result to an <c>int</c>, both branches must produce integers. If you mix numeric types, Java applies standard widening rules:
+    </p>
+
+    <program language="java"><![CDATA[// baseSalary is widened to double if needed
+double value = (bonusEligible) ? baseSalary * 1.1 : baseSalary;]]></program>
+
+    <p>
+      For readable code, avoid nesting conditional operators inside one another (e.g., <c>a ? b : c ? d : e</c>). While syntactically legal, nested ternary expressions are notoriously difficult to read; stick to a standard <c>if-else</c> or <c>switch</c> structure when dealing with more than two possible outcomes.
+    </p>
+
+    <p>
+      <xref ref="table-operator-precedence-conditional" /> is our operator precedence table with the conditional operator included.
+    </p>
+
+    <table xml:id="table-operator-precedence-conditional">
+      <title>Operator precedence including the conditional operator (new row in bold)</title>
+      <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+        <col width="22%"/>
+        <col width="26%"/>
+        <col width="18%"/>
+        <col width="34%"/>
+        <row header="yes">
+          <cell><strong>Category</strong></cell>
+          <cell><strong>Operators / Syntax</strong></cell>
+          <cell><strong>Associativity</strong></cell>
+          <cell><strong>Description</strong></cell>
+        </row>
+        <row>
+          <cell>Primary / grouping</cell>
+          <cell>
+            <p><c>()</c></p>
+            <p><c>method()</c></p>
+          </cell>
+          <cell>Left-to-right</cell>
+          <cell>Parentheses (grouping), method calls, and member access (e.g. <c>Math.PI</c>)</cell>
+        </row>
+        <row>
+          <cell>Postfix</cell>
+          <cell><c>expr++</c> <c>expr--</c></cell>
+          <cell>Left-to-right</cell>
+          <cell>Post-increment and post-decrement</cell>
+        </row>
+        <row>
+          <cell>Prefix / Unary</cell>
+          <cell>
+            <p><c>++expr</c> <c>--expr</c></p>
+            <p><c>+expr</c> <c>-expr</c></p>
+            <p><c>!</c></p>
+          </cell>
+          <cell>Right-to-left</cell>
+          <cell>
+            <p>Pre-increment/decrement</p>
+            <p>Unary plus and minus</p>
+            <p>Logical not</p>
+          </cell>
+        </row>
+        <row>
+          <cell>Multiplicative</cell>
+          <cell><c>*</c> <c>/</c> <c>%</c></cell>
+          <cell>Left-to-right</cell>
+          <cell>Multiplication, division, mod</cell>
+        </row>
+        <row>
+          <cell>Additive</cell>
+          <cell><c>+</c> <c>-</c></cell>
+          <cell>Left-to-right</cell>
+          <cell>Addition and subtraction</cell>
+        </row>
+        <row>
+          <cell>Relational</cell>
+          <cell><c>&lt;</c> <c>&lt;=</c> <c>&gt;</c> <c>&gt;=</c></cell>
+          <cell>Left-to-right</cell>
+          <cell>Less than, less than or equal to, greater than, greater than or equal to</cell>
+        </row>
+        <row>
+          <cell>Equality</cell>
+          <cell><c>==</c> <c>!=</c></cell>
+          <cell>Left-to-right</cell>
+          <cell>Equal to, not equal to</cell>
+        </row>
+        <row>
+          <cell>Logical and</cell>
+          <cell><c>&amp;&amp;</c></cell>
+          <cell>Left-to-right</cell>
+          <cell>Logical and</cell>
+        </row>
+        <row>
+          <cell>Logical or</cell>
+          <cell><c>||</c></cell>
+          <cell>Left-to-right</cell>
+          <cell>Logical or</cell>
+        </row>
+        <row bottom="medium" top="medium">
+          <cell><strong>Conditional (new)</strong></cell>
+          <cell><strong><c>?:</c></strong></cell>
+          <cell><strong>Right-to-left</strong></cell>
+          <cell><strong>Conditional, or ternary, operator</strong></cell>
+        </row>
+        <row>
+          <cell>Assignment</cell>
+          <cell><c>=</c> <c>+=</c> <c>-=</c> <c>*=</c> <c>/=</c> <c>%=</c></cell>
+          <cell>Right-to-left</cell>
+          <cell>Assignment and compound assignment</cell>
+        </row>
+      </tabular>
+    </table>
+  </subsection>
+</section>

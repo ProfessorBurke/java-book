@@ -1,0 +1,847 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-2-5-arithmetic" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Arithmetic</title>
+
+  
+  <introduction>
+    <p>
+      In this section, we’ll take a closer look at expressions that calculate a value using arithmetic. As a quick refresher, an expression is a piece of program code that represents or computes a value. An expression can be a literal, a variable, a method call that evaluates to a value, or several of these things combined with operators such as <c>+</c> and <c>&gt;</c>. The value of an expression can be assigned to a variable (as on lines 19, 22, 25, 28, 32, 33, and 34 of <xref ref="listing-mulch-calculator" />), used as a parameter in a method call (lines 21, 24, 27, and 37), or combined with other values into a more complicated expression (lines 32, 33, 34, and 37). Expressions are an essential part of programming. In this section we will dig into the details of arithmetic expressions<mdash />expressions that evaluate to a numeric value. You will learn how to build them, what operations are available in Java, and how to avoid some of the common errors that arise because of the underlying fixed-space binary representation. Later we will cover expressions that evaluate to non-numeric results, such as the <c>boolean</c> and <c>String</c> values.
+    </p>
+
+    <p>
+      The basic building blocks of expressions are literals (such as <c>674</c>, <c>3.14</c>, <c>true</c>, <c>'X'</c>, and <c>"Hello"</c>), variables, and method calls that return a value. Arithmetic expressions are composed of numeric operands and operators. Operands are expressions that evaluate to a number (an integer or floating-point value). Consider Line 32 of <xref ref="listing-mulch-calculator" />:
+    </p>
+
+    <program language="java"><![CDATA[depthInFeet = depth / 12.0;]]></program>
+
+    <p>
+      The expression is on the right side of the assignment operator and is <c>depth / 12.0</c>. There are two operands<mdash />the expression <c>depth</c> and the expression <c>12.0</c>. The first operand, <c>depth</c>, is a variable and evaluates to the value that is stored in the variable at the time that the statement executes. The second operand is a literal and evaluates to what is literally typed in the program<mdash /><c>12.0</c>. There is one operator<mdash /><c>/</c><mdash />which is the division operator in Java.
+    </p>
+
+    <!-- ============================================================ -->
+    <!-- 2.5.1 Arithmetic Operators                                   -->
+  </introduction>
+
+
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-2-5-1-arithmetic-operators">
+    <title>Arithmetic Operators</title>
+
+    <p>
+      Let’s begin with the basic arithmetic operators that are going to work as you expect: <c>+</c> (addition), <c>-</c> (subtraction) and <c>*</c> (multiplication). Each of these operators takes two operands: one on each side of the operator. The addition operator will add together the values of its two operands, so the result is the sum. The subtraction operator will subtract the value of the second operand from the first, so the result is the difference, and the multiplication operator will multiply together the values of the two operands, so the result is the product.
+    </p>
+
+    <p>
+      Let’s look at three straightforward examples that use all literal operands:
+    </p>
+
+    <program language="java"><![CDATA[int total = 90 + 85;
+double difference = 500.0 - 200.0;
+int product = 3 * 5;]]></program>
+
+    <p>
+      After these three lines of code execute, <c>total</c> will have the value 175, <c>difference</c> will have the value 300.0, and <c>product</c> will have the value 15. Now let’s look at three more examples, just to illustrate that the operands in arithmetic expressions can be more complicated than a single literal.
+    </p>
+
+    <program language="java"><![CDATA[total = stdin.nextInt() + stdin.nextInt();
+difference = (first + second) / 2.0 - (third + fourth) / 2.0;
+product = quantity * 5;]]></program>
+
+    <p>
+      In the more complicated expressions, you can see that the operands to arithmetic expressions can be method calls (<c>stdin.nextInt()</c>), other arithmetic expressions (<c>(first + second) / 2.0 - (third + fourth) / 2.0</c>), and they can include variables (<c>first</c>, <c>second</c>, <c>third</c>, <c>fourth</c>, and <c>quantity</c>). These can be combined, as long as each unit is an expression that evaluates to the correct type of number.
+    </p>
+
+    <p>
+      The only (slightly) tricky part for new programmers is learning that a multiplication will only take place if we use the asterisk <c>*</c> operator. You cannot append two variables, or a literal and a variable together, to perform multiplication (e.g. we might write <m>5x</m> in Algebra, but in Java if you have a variable <c>x</c> you cannot multiply it by five by writing <c>5x</c>), similarly, we cannot append an expression with parentheses to perform multiplication, again, as we might in Algebra<mdash /><m>5(x)</m><mdash />and there are no other multiplication operators, such as the dot or <m>\times</m>. If you want to multiply two numeric expressions together, you must put an asterisk between them.
+    </p>
+
+    <p>
+      Division in Java (and many other languages, including C, C++, and C#) might work a little differently than you expect. The arithmetic operators are overloaded. This means that they are defined for different data types. For now, we will consider just two broad categories<mdash />integers and reals. If we have two integer operands on either side of <c>+</c>, <c>-</c>, or <c>*</c>, then Java knows to perform an integer addition, subtraction, or multiplication. If we have two real operands, then Java knows to perform a floating-point addition, subtraction, or multiplication. Those operations are handled differently at the hardware level, but they always give us the answer we expect (unless something goes wrong), so we might not even question why they work for both types of numbers.
+    </p>
+
+    <p>
+      The division operator is also overloaded<mdash />it works for both integer and real operands<mdash />but integer division and floating-point division are two different operations. When we use a standard calculator to divide, if the result has a decimal part, we see it. For example, if we divide 10 by 4, we will get the result 2.5. In Java, if we divide integer 10 by integer 4, we get the result 2. An integer division shows us how many whole times the divisor fits into the dividend. There are two whole 4s in 10. Another way to think of it is that the decimal part is simply truncated off.
+    </p>
+
+    <p>
+      However, if either of the operands is a floating-point expression, then Java will perform a floating-point division. For example, <c>10.0 / 4</c>, <c>10 / 4.0</c>, and <c>10.0 / 4.0</c> will all evaluate to 2.5.
+    </p>
+
+    <p>
+      This is a very common source of errors for new programmers! One of the most common errors is calculating a percentage by dividing two integers and multiplying by 100. Consider the following code:
+    </p>
+
+    <program language="java"><![CDATA[int score = 85; 
+int total = 100; 
+double percentage = score / total * 100.0; // Result is 0.0!]]></program>
+
+    <p>
+      New programmers naturally think that because <c>percentage</c> is declared as a <c>double</c>, a double division will be calculated. But both <c>score</c> and <c>total</c> are integers, so an integer division is calculated, resulting in zero. Even multiplying by the literal double <c>100.0</c> can’t save this calculation!
+    </p>
+
+    <p>
+      If you have two integers but you want to perform a floating-point calculation, you can cast one of them to a <c>double</c>, as follows:
+    </p>
+
+    <program language="java"><![CDATA[double percentage = (double)score / total * 100.0;]]></program>
+
+    <p>
+      Because one operand is now a <c>double</c>, a floating-point division is calculated, and 85.0 is assigned to <c>percentage</c>. Note that this does not change the data type of the variable <c>score</c><mdash /><c>(double)score</c> is simply an expression that evaluates to a <c>double</c>.
+    </p>
+
+    <p>
+      Now let’s look at an arithmetic operation that may not be familiar to you<mdash />modulus, or mod. Modulus is the companion to integer division. Where an integer division results in the number of whole divisors in the dividend, an integer modulus results in what is left over of the dividend, after the whole divisors have been removed. You may remember doing this sort of division before you learned how to calculate a division with a decimal result. You might have written, <q>13 divided by 3 is 4, remainder 1.</q> In Java, we write those two calculations as follows:
+    </p>
+
+    <program language="java"><![CDATA[int quotient = 13 / 3;
+int remainder = 13 % 3;]]></program>
+
+    <p>
+      Notice that in both calculations, we are writing the dividend, the operator, and the divisor. With the division operator, <c>/</c>, the result is how many whole times the divisor fits in the dividend. The value of <c>quotient</c> after this code executes is 4. With the mod operator, <c>%</c>, the result is the remainder (what’s left in 13) after you’ve taken as many whole divisors (3) out as you can. The value of <c>remainder</c> after this code executes is 1.
+    </p>
+
+    <p>
+      Although the concept is certainly familiar, the operation is probably new, so it is worth practicing with it to become accustomed to the order in which you write the operands and the result. This is a great use for JShell<mdash />practice with Java arithmetic and use JShell to check your calculations.
+    </p>
+
+    <p>
+      Modulus is surprisingly useful. If you calculate the mod of a sequence of numbers by the same divisor, for example the numbers 1%2, 2%2, …, 10%2, or 1%3, 2%3, … 10%3, you might notice that you get a result of zero when your divisor divides evenly into the dividend (e.g. 2%2, 4%2, 6%2, 8%2, and 10%2 are all zero, as are 3%3, 6%3, and 9%3). This can be used to determine if a number is odd or even (modding by two), or just evenly divisible by another number (if you want something to happen each time a count reaches the next multiple of 10, for example).
+    </p>
+
+    <p>
+      Note: If the first number is smaller than the second number, the result is simply the first number. For example, in <c>2 % 5</c>, 5 fits into 2 zero whole times, leaving all 2 as the remainder.
+    </p>
+
+    <p>
+      It’s also useful when converting a total quantity into larger and smaller units, such as converting total seconds into hours, minutes, and seconds, for any operation that needs to <q>wrap around</q> (like a Caesar cipher), and for extracting digits from a number.
+    </p>
+
+    <p>
+      Now that we’ve covered the basic arithmetic operators, it’s worth talking about widening operations in some detail. We previously discussed narrowing in the context of assignment statements: if you assign a literal <c>int</c> to a variable of a smaller integer type (<c>byte</c> or <c>short</c>), Java will automatically narrow the <c>int</c> (convert it to the smaller type) if its value is within the range of values for that type.
+    </p>
+
+    <p>
+      Widening, you might have guessed, is the opposite operation<mdash />it is when Java automatically converts a value to a larger type. This can happen if you have two operands that evaluate to different types within the same expression. For example, let’s return to our percentage calculation from earlier:
+    </p>
+
+    <program language="java"><![CDATA[double percentage = (double)score / total * 100.0;]]></program>
+
+    <p>
+      The calculation on the right contains a division between a <c>double</c> (<c>score</c> converted to <c>double</c>) and an integer (<c>total</c>). We already know Java performs double division, but how does it do that when one of the operands is an integer? Java will automatically widen the integer to the <c>double</c> type before performing the calculation. (Again, just as with the <c>(double)</c> casting, this doesn’t change the type of <c>total</c>. It is simply a behind-the-scenes operation that is performed so Java can calculate the division.)
+    </p>
+
+    <p>
+      Java will widen from a smaller data type to a larger. Java considers widening to be generally safe because the larger type has a much wider range (preventing overflow). Converting between integer types (<c>int</c> to <c>long</c>) or between floating-point types (<c>float</c> to <c>double</c>) never loses data. However, converting very large integers to <c>float</c> or <c>double</c> can occasionally lose some precision in the least significant digits because floating-point types store fewer significant bits. The widening order is:
+    </p>
+
+    <p>
+      <c>int</c> <m>\to</m> <c>long</c> <m>\to</m> <c>float</c> <m>\to</m> <c>double</c>
+    </p>
+
+    <p>
+      An expression of one type can be converted to another type only if it is to the right in the order. So an <c>int</c> can be converted to a <c>long</c>, <c>float</c>, or <c>double</c>, a <c>long</c> can be converted to a <c>float</c> or <c>double</c>, and a <c>float</c> can be converted to a <c>double</c> without any loss of information. If you have an expression that contains a <c>float</c> and a <c>double</c>, the <c>float</c> will be converted to <c>double</c> before the calculation is performed.
+    </p>
+
+    <p>
+      If you’re wondering why <c>byte</c> and <c>short</c> aren’t in the widening order, it’s because they (and variables of type <c>char</c>!) are always converted to the <c>int</c> type before a calculation.
+    </p>
+
+    <p>
+      Widening is also applied to assignment statements. For example, you might see an integer literal assigned to a <c>double</c> variable, as in:
+    </p>
+
+    <program language="java"><![CDATA[double length = 20;]]></program>
+
+    <p>
+      The literal 20 will be widened to a <c>double</c> before being stored in the variable <c>length</c>. Remember the <q>bad</q> example of integer division from before? Here is the code, with a small change:
+    </p>
+
+    <program language="java"><![CDATA[double percentage = score / total * 100; // Result is 0.0!]]></program>
+
+    <p>
+      The expression on the right, <c>score / total * 100</c>, is an integer division followed by an integer multiplication (integer calculations because both operands are integers for both operations). But the value stored in <c>percentage</c> is 0.0, because the entire expression on the right is evaluated first as an integer (producing 0), and only then is that final result widened to 0.0 as it is stored in the <c>double</c> variable.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 2.5.2 String Conversion and Concatenation                    -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-2-5-2-string-concatenation">
+    <title>String Conversion and Concatenation</title>
+
+    <p>
+      You may have noticed, in <xref ref="listing-mulch-calculator" />, that the addition operator <c>+</c> is overloaded for another data type, <c>String</c>! On line 37, there is an expression that combines <c>String</c> literals with a <c>double</c> variable using the <c>+</c> operator.
+    </p>
+
+    <program language="java"><![CDATA[System.out.println("You need " + cubicYards + " cubic yards of mulch.");]]></program>
+
+    <p>
+      When the addition operator is used with <c>String</c> operands, Java concatenates (appends) the two <c>String</c> operands together. If only one operand is a <c>String</c>, the other is converted to a <c>String</c> before the concatenation takes place. In the code above, the <c>String</c> <q>You need </q> is first concatenated with the value in the variable <c>cubicYards</c>. This is a <c>double</c>, so it is converted to a <c>String</c> version of the value in the <c>double</c>. (Suppose <c>cubicYards</c> holds 1.85, then the converted value is <q>1.85</q>.) The converted value is then concatenated with <q>You need </q>. The resulting <c>String</c>, <q>You need 1.85</q>, is then the first operand to a concatenation with the second string, <q> cubic yards of mulch.</q> Those two strings are concatenated together, resulting in <q>You need 1.85 cubic yards of mulch.</q>
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 2.5.3 Compound Assignments, Increment, and Decrement         -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-2-5-3-compound-assignments">
+    <title>Compound Assignments, Increment, and Decrement</title>
+
+    <p>
+      It is very common to perform a calculation on a variable and store the result back in the same variable. For example, in game software you might want to change the player’s score or health. The way an assignment statement is structured, there is an expression to the right of the assignment operator that is evaluated, and the result is then stored in the variable on the left. If you want to add to a variable, it must appear on both the right (in the calculation) and the left (as the variable being assigned into) of the assignment. For example, here we add one to a variable <c>score</c> that starts with a value of zero:
+    </p>
+
+    <program language="java"><![CDATA[int score = 0;
+score = score + 1;]]></program>
+
+    <p>
+      Here we subtract two from a variable <c>health</c> that starts with a value of five:
+    </p>
+
+    <program language="java"><![CDATA[int health = 5;
+health = health - 2;]]></program>
+
+    <p>
+      Java provides compound assignment operators (sometimes called augmented assignment operators in other languages) that combine the <q>variable = variable +</q> or <q>variable = variable -</q> part of the assignment into simply <q>variable +=</q> and <q>variable -=</q>. For example, here are our two assignments from above written with the compound assignment operators:
+    </p>
+
+    <program language="java"><![CDATA[score += 1;
+health -= 2;]]></program>
+
+    <p>
+      There are compound assignment operators for all of the arithmetic operators we just covered. Assume two variables <c>x</c> and <c>y</c>, which have already been given values:
+    </p>
+
+    <program language="java"><![CDATA[x -= y; // same as: x = x - y;
+x *= y; // same as: x = x * y;
+x /= y; // same as: x = x / y;
+x %= y; // same as: x = x % y;]]></program>
+
+    <p>
+      The combined assignment operator <c>+=</c> even works with strings. Just as with numbers, <c>text += " more";</c> is simply shorthand for <c>text = text + " more";</c>. It combines the value referenced by <c>text</c> with the string <q> more</q> and assigns the new result back to the variable <c>text</c>.
+    </p>
+
+    <p>
+      There is even a further shorthand for adding one to a numeric variable<mdash />the increment operator<mdash />and subtracting one from a numeric variable<mdash />the decrement operator. These two operators are widely used in Java. The increment <c>++</c> and decrement <c>--</c> operators are unary operators, meaning they work on a single operand. They can be placed before (prefix) or after (postfix) the operand, but they work differently in the two positions.
+    </p>
+
+    <p>
+      When you apply the increment operator to a numeric variable, one is added to the variable’s value. When you apply the decrement operator, one is subtracted from the variable’s value. If the increment or decrement operation stands alone on one line, then it doesn’t matter if it’s prefix or postfix.
+    </p>
+
+    <p>
+      However, when we embed the increment or decrement operation in a larger expression, they behave differently. They both still increment or decrement the variable, but they do it at different times. If you use the prefix increment operator, the variable is incremented and then it is evaluated. If you use the postfix increment operator, the variable is evaluated and then it is incremented. It is the same for decrement.
+    </p>
+
+    <p>
+      Here is an example:
+    </p>
+
+    <program language="java"><![CDATA[int score = 0;             // score is 0
+score++;            // score is 1
+score--;            // score is 0 
+int x = ++score;    // x is 1, score is 1
+int y = score++;    // y is 1, score is 2]]></program>
+
+    <p>
+      In our example, we have written <c>int x = ++score;</c>. Here we are using the prefix increment operator, so the value in <c>score</c> is incremented from 0 to 1 and then the expression is evaluated. It evaluates to 1, and that value is stored in the variable <c>x</c>. On the next line, we have <c>int y = score++;</c>. Here we are using the postfix increment operator, so <c>score</c> is evaluated. It evaluates to 1, and that value is stored in the variable <c>y</c>. It is then incremented to 2. So after the line executes, <c>y</c> holds 1 and <c>score</c> holds 2.
+    </p>
+
+    <p>
+      The confusion about when an incremented variable is evaluated is actually the source of many errors! This is another opportunity to try some increments, make predictions about the results, and use JShell to confirm them. Because mixing increment operators into larger mathematical calculations can lead to confusing and error-prone code, many professional software developers usually keep <c>++</c> and <c>--</c> on their own separate lines (e.g., <c>score++;</c>). Keeping the increment on its own line achieves the exact same result while keeping your code less error-prone and easier to read.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 2.5.4 The Math Class                                         -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-2-5-4-math-class">
+    <title>The Math Class</title>
+
+    <p>
+      While basic operators handle everyday calculations like addition and multiplication, many programs require more advanced operations like finding a square root, raising a number to a power, or working with trigonometry. Like most programming languages, Java provides a built-in library of standard mathematical functions and constants, bundled together in the <c>Math</c> class.
+    </p>
+
+    <p>
+      Java’s <c>Math</c> class lives inside the <c>java.lang</c> package. You can reference classes inside this package by their name without an import statement.
+    </p>
+
+    <p>
+      A library cannot add symbols to Java, like <m>\pi</m> or <m>\sqrt{\phantom{x}}</m>. It can only build functionality using the language, so the math constants and functions are either variable names or methods that you will invoke. To use them, you will prepend them with the library name, <c>Math</c>. Here are tables of constants and some common methods:
+    </p>
+
+    <table xml:id="table-math-constants">
+      <title>Math class constants</title>
+      <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+        <col width="20%"/>
+        <col width="20%"/>
+        <col width="20%"/>
+        <col width="40%"/>
+        <row header="yes">
+          <cell><strong>Constant</strong></cell>
+          <cell><strong>Argument Types</strong></cell>
+          <cell><strong>Return Type</strong></cell>
+          <cell><strong>Description and Example</strong></cell>
+        </row>
+        <row>
+          <cell><c>Math.PI</c></cell>
+          <cell>(None)</cell>
+          <cell><c>double</c></cell>
+          <cell>The mathematical constant <m>\pi \approx 3.141592653589793</m>.</cell>
+        </row>
+        <row>
+          <cell><c>Math.E</c></cell>
+          <cell>(None)</cell>
+          <cell><c>double</c></cell>
+          <cell>The base of the natural logarithm <m>e \approx 2.718281828459045</m>.</cell>
+        </row>
+        <row>
+          <cell><c>Math.TAU</c></cell>
+          <cell>(None)</cell>
+          <cell><c>double</c></cell>
+          <cell>Value of tau (<m>\tau = 2\pi \approx 6.283185307179586</m>).</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <table xml:id="table-math-operations">
+      <title>Common and useful mathematical operations</title>
+      <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+        <col width="22%"/>
+        <col width="22%"/>
+        <col width="18%"/>
+        <col width="38%"/>
+        <row header="yes">
+          <cell><strong>Method</strong></cell>
+          <cell><strong>Argument Types</strong></cell>
+          <cell><strong>Return Type</strong></cell>
+          <cell><strong>Description and Example</strong></cell>
+        </row>
+        <row>
+          <cell><c>Math.sqrt(x)</c></cell>
+          <cell><c>double</c></cell>
+          <cell><c>double</c></cell>
+          <cell>
+            <p>Returns the square root of <m>x</m>.</p>
+            <p><c>Math.sqrt(9.0)</c> <m>\to</m> <c>3.0</c></p>
+          </cell>
+        </row>
+        <row>
+          <cell><c>Math.pow(x, y)</c></cell>
+          <cell><c>double</c>, <c>double</c></cell>
+          <cell><c>double</c></cell>
+          <cell>
+            <p>Returns <m>x</m> raised to the power of <m>y</m> (<m>x^y</m>).</p>
+            <p><c>Math.pow(2.0, 3.0)</c> <m>\to</m> <c>8.0</c></p>
+          </cell>
+        </row>
+        <row>
+          <cell><c>Math.abs(x)</c></cell>
+          <cell><c>int</c>, <c>long</c>, <c>float</c>, <c>double</c></cell>
+          <cell>Same as argument</cell>
+          <cell>
+            <p>Returns the absolute value of <m>x</m>.</p>
+            <p><c>Math.abs(-15)</c> <m>\to</m> <c>15</c></p>
+          </cell>
+        </row>
+        <row>
+          <cell><c>Math.max(x, y)</c></cell>
+          <cell><c>int</c>, <c>long</c>, <c>float</c>, <c>double</c></cell>
+          <cell>Same as arguments</cell>
+          <cell>
+            <p>Returns the larger of <m>x</m> and <m>y</m>.</p>
+            <p><c>Math.max(12, 25)</c> <m>\to</m> <c>25</c></p>
+          </cell>
+        </row>
+        <row>
+          <cell><c>Math.min(x, y)</c></cell>
+          <cell><c>int</c>, <c>long</c>, <c>float</c>, <c>double</c></cell>
+          <cell>Same as arguments</cell>
+          <cell>
+            <p>Returns the smaller of <m>x</m> and <m>y</m>.</p>
+            <p><c>Math.min(12, 25)</c> <m>\to</m> <c>12</c></p>
+          </cell>
+        </row>
+        <row>
+          <cell><c>Math.round(x)</c></cell>
+          <cell><c>double</c>, <c>float</c></cell>
+          <cell><c>long</c>, <c>int</c></cell>
+          <cell>
+            <p>Rounds to the nearest whole number.</p>
+            <p><c>Math.round(3.7)</c> <m>\to</m> <c>4</c></p>
+          </cell>
+        </row>
+        <row>
+          <cell><c>Math.floor(x)</c></cell>
+          <cell><c>double</c></cell>
+          <cell><c>double</c></cell>
+          <cell>
+            <p>Rounds down to the nearest whole integer.</p>
+            <p><c>Math.floor(3.9)</c> <m>\to</m> <c>3.0</c></p>
+          </cell>
+        </row>
+        <row>
+          <cell><c>Math.ceil(x)</c></cell>
+          <cell><c>double</c></cell>
+          <cell><c>double</c></cell>
+          <cell>
+            <p>Rounds up to the nearest whole integer.</p>
+            <p><c>Math.ceil(3.1)</c> <m>\to</m> <c>4.0</c></p>
+          </cell>
+        </row>
+        <row>
+          <cell><c>Math.random()</c></cell>
+          <cell>(None)</cell>
+          <cell><c>double</c></cell>
+          <cell>Returns a pseudorandom number in the range <m>[0.0, 1.0)</m> (greater than or equal to <m>0.0</m> and strictly less than <m>1.0</m>).</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      You will note from <xref ref="table-math-constants" /> that the <c>Math</c> class offers the constants <c>Math.PI</c>, <c>Math.E</c>, and <c>Math.TAU</c>, which are useful in geometric, trigonometric, and scientific calculations. For example, you can use either <c>Math.PI</c> or <c>Math.TAU</c> when calculating the circumference of a circle.
+    </p>
+
+    <p>
+      The operations in <xref ref="table-math-operations" /> are among the most commonly used in programming. Some will be familiar from mathematics, such as <c>sqrt()</c>, <c>round()</c>, and <c>pow()</c> (although not necessarily by those names), while others may be new to you. You should practice with these in JShell to get comfortable passing the correct number and type of arguments, and to confirm how they work by comparing your predictions against JShell’s output. Begin with the examples in the table. The table might raise a few more questions than answers, so we’ll go over it here so you have the foundation needed to use these operations in a Java program.
+    </p>
+
+    <p>
+      The <c>Math</c> methods evaluate to (return) a value, which is why we refer to them informally as functions. Functions evaluate to a value. If a <c>Math</c> function returns a <c>double</c>, you can use that method call anywhere an expression of type <c>double</c> is valid, including on the right side of an assignment, as an operand in arithmetic, or as an argument to another method.
+    </p>
+
+    <p>
+      Notice that several operations accept <c>double</c> arguments. Java will automatically widen an <c>int</c>, <c>long</c>, or <c>float</c> argument to a <c>double</c>. So while <c>Math.sqrt()</c> expects a <c>double</c> argument, you can pass in an integer, and Java will convert it to a <c>double</c> before executing the method.
+    </p>
+
+    <p>
+      Let’s look at a few of these operations in more detail. Java doesn’t have an exponentiation operator, as some languages do. (The <c>^</c> symbol is the bitwise XOR operator, not the exponent operator.) Instead, you use <c>Math.pow(base, exponent)</c> to raise a number to a power. The first argument is the base, and the second is the exponent. While you will typically pass variables as arguments, literals illustrate how the argument order matters: <c>Math.pow(5, 2)</c> evaluates to <m>5^2</m>, or 25.0, whereas <c>Math.pow(2, 5)</c> evaluates to <m>2^5</m>, or 32.0. Note that <c>Math.pow()</c> always returns a <c>double</c>, even when the result is a whole number.
+    </p>
+
+    <p>
+      The <c>Math.max()</c> and <c>Math.min()</c> methods take two arguments and return the larger or smaller value, respectively. They are overloaded for <c>int</c>, <c>long</c>, <c>float</c>, and <c>double</c>, returning the same type as the arguments passed in. If you pass two different types (such as an <c>int</c> and a <c>double</c>), Java widens the narrower type and returns the wider type (in this example, <c>double</c>). If you need to find the maximum of three (or more) values, you can nest the calls: <c>Math.max(a, Math.max(b, c))</c>.
+    </p>
+
+    <p>
+      The <c>Math.round()</c>, <c>Math.ceil()</c>, and <c>Math.floor()</c> methods all handle rounding, but in different ways. <c>Math.round()</c> works as you expect from mathematics, with the floating-point argument being rounded to the closest whole number (and rounding up at .5). <c>Math.ceil()</c> always rounds up, and <c>Math.floor()</c> always rounds down. The return types of these methods are worth paying attention to! <c>Math.round()</c> returns an integer type, but which one depends on what you pass in. If the argument is a <c>double</c>, <c>Math.round()</c> returns a <c>long</c>, and if it’s a <c>float</c>, <c>Math.round()</c> returns an <c>int</c>. Both <c>Math.ceil()</c> and <c>Math.floor()</c>, however, return a <c>double</c>, not an integer type.
+    </p>
+
+    <p>
+      The <c>Math.random()</c> method generates a pseudo-random <c>double</c> value in the range of 0 (inclusive) to 1 (exclusive), meaning the value generated can be 0.0, but it will always be less than 1.0. To scale this value to an integer range, multiply by the number of possible outcomes (max-min + 1), convert to an <c>int</c>, and then add the minimum value. The following two examples will help illustrate this process. The first generates a pseudo-random value between 18 and 110, and the second between 1 and 6. Note that it’s very important to place parentheses around the multiplication before casting. If you cast the result of <c>Math.random()</c> to an integer, it will always be 0!
+    </p>
+
+    <program language="java"><![CDATA[int age = (int)(Math.random() * 93) + 18; // Generates 18-110
+int dieRoll = (int)(Math.random() * 6) + 1; // Generates 1, 2, 3, 4, 5, or 6]]></program>
+
+    <p>
+      <xref ref="table-math-trig-log" /> shows common logarithmic and trigonometric operations, including natural log (log base <m>e</m>), log base ten, and sine, cosine, and tangent. Some of the operations might not work as you expect. First, the trigonometric functions expect an input in radians, not degrees. The <c>Math</c> class provides a <c>toRadians</c> method that will convert degrees to radians, so if you have a value in degrees, you can convert it before passing it to a trigonometric function. Second, the <c>log</c> function is an <m>\ln</m> function<mdash />it is returning a natural logarithm. There is also a <c>log10</c> function which returns the logarithm base 10.
+    </p>
+
+    <table xml:id="table-math-trig-log">
+      <title>Common logarithmic and trigonometric operations</title>
+      <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+        <col width="25%"/>
+        <col width="22%"/>
+        <col width="18%"/>
+        <col width="35%"/>
+        <row header="yes">
+          <cell><strong>Method / Constant</strong></cell>
+          <cell><strong>Argument Types</strong></cell>
+          <cell><strong>Return Type</strong></cell>
+          <cell><strong>Description and Example</strong></cell>
+        </row>
+        <row>
+          <cell><c>Math.log(x)</c></cell>
+          <cell><c>double</c></cell>
+          <cell><c>double</c></cell>
+          <cell>Returns the natural logarithm (<m>\ln</m>, base <m>e</m>) of <m>x</m>.</cell>
+        </row>
+        <row>
+          <cell><c>Math.log10(x)</c></cell>
+          <cell><c>double</c></cell>
+          <cell><c>double</c></cell>
+          <cell>
+            <p>Returns the base-10 logarithm of <m>x</m>.</p>
+            <p><c>Math.log10(100.0)</c> <m>\to</m> <c>2.0</c></p>
+          </cell>
+        </row>
+        <row>
+          <cell><c>Math.sin(rad)</c></cell>
+          <cell><c>double</c> (radians)</cell>
+          <cell><c>double</c></cell>
+          <cell>Returns the sine of the angle given in radians.</cell>
+        </row>
+        <row>
+          <cell><c>Math.cos(rad)</c></cell>
+          <cell><c>double</c> (radians)</cell>
+          <cell><c>double</c></cell>
+          <cell>Returns the cosine of the angle given in radians.</cell>
+        </row>
+        <row>
+          <cell><c>Math.tan(rad)</c></cell>
+          <cell><c>double</c> (radians)</cell>
+          <cell><c>double</c></cell>
+          <cell>Returns the tangent of the angle given in radians.</cell>
+        </row>
+        <row>
+          <cell><c>Math.toRadians(deg)</c></cell>
+          <cell><c>double</c> (degrees)</cell>
+          <cell><c>double</c></cell>
+          <cell>
+            <p>Converts an angle measured in degrees to radians.</p>
+            <p><c>Math.toRadians(180.0)</c> <m>\to</m> <c>3.14159...</c></p>
+          </cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      <xref ref="listing-projectile-calculator" /> uses some of the <c>Math</c> methods we have just learned in a program that performs some projectile motion calculations. Look carefully at how the methods are used within the program.
+    </p>
+
+    <listing xml:id="listing-projectile-calculator">
+      <title><c>ProjectileCalculator.java</c></title>
+      <program language="java" line-numbers="yes"><![CDATA[/**
+ * Calculate the speed (horizontal and vertical velocity) of a projectile
+ * initially launched at a given speed and angle (hard-coded).
+ */
+public class ProjectileCalculator {
+    public static void main(String[] args) {
+        
+        final double GRAVITY = 9.80665; // Acceleration due to gravity in m/s^2
+        double launchSpeed = 25.0;             // Meters per second (input)
+        double launchAngle = 40.0;             // Degrees (input)
+        double angleInRadians;         // Launch angle converted to radians.
+        double vx, vy;                 // Hor. and vert. velocity components.
+        double flightTime;                    // Time in air in seconds.
+        double maxHeight;              // Maximum height reached (meters).
+        double totalDistance;                 // Horizontal distance (meters).
+        
+        // Convert degrees to radians for Java's trig functions
+        angleInRadians = Math.toRadians(launchAngle);
+
+        // Calculate horizontal and vertical components of velocity
+        vx = launchSpeed * Math.cos(angleInRadians);
+        vy = launchSpeed * Math.sin(angleInRadians);
+
+        // Calculate flight time, max height, and total distance
+        flightTime = (2 * vy) / GRAVITY;
+        maxHeight = Math.pow(vy, 2) / (2 * GRAVITY);
+        totalDistance = vx * flightTime;
+
+        // Display results rounded to two decimal places
+        System.out.println("=== Projectile Launch Calculator ===");
+        System.out.println("Launch Speed        : " + launchSpeed + " m/s");
+        System.out.println("Launch Angle        : " + launchAngle + " degrees");
+        System.out.println("------------------------------------");
+        System.out.print("Horizontal Velocity : " + Math.round(vx * 100.0) / 100.0);
+        System.out.println(" m/s");
+        System.out.print("Vertical Velocity   : " + Math.round(vy * 100.0) / 100.0);
+        System.out.println(" m/s");
+        System.out.print("Time in Air         : ");
+        System.out.println(Math.round(flightTime * 100.0) / 100.0 + " seconds");
+        System.out.print("Peak Height         : ");
+        System.out.println(Math.round(maxHeight * 100.0) / 100.0 + " meters");
+        System.out.print("Total Range         : ");
+        System.out.println(Math.round(totalDistance * 100.0) / 100.0 + " meters");
+    }
+}]]></program>
+    </listing>
+
+    <p>
+      Let’s talk about how the <c>Math</c> class methods are used in <xref ref="listing-projectile-calculator" />. On line 18, we invoke the <c>Math.toRadians</c> method and pass in the variable <c>launchAngle</c> as an argument. Notice that this method call appears to the right of an assignment. <c>toRadians(launchAngle)</c> will return the value in <c>launchAngle</c> converted to radians, and that will be stored in the variable <c>angleInRadians</c>. It is very common to put a value-returning method call to the right of the assignment and store the result in a variable for later use.
+    </p>
+
+    <p>
+      On the next two lines of code, lines 21 and 22, we can see calls to <c>Math.cos</c> and <c>Math.sin</c> embedded within a more complex expression<mdash />a multiplication. On line 21, Java will evaluate <c>angleInRadians</c> by looking up its value, pass that to <c>Math.cos</c>, and then multiply the return value by <c>launchSpeed</c>. That entire expression is to the right of the assignment, so the result will then be assigned to <c>vx</c>. The next line will execute in a similar way, except the call is to <c>Math.sin</c>. It is also very common to combine method calls with other operators in expressions.
+    </p>
+
+    <p>
+      On line 34, the <c>Math.round</c> method is invoked with the expression <c>vx * 100.0</c> as the argument. The expression <c>vx * 100.0</c> will be evaluated and the result will be passed to <c>Math.round</c>. The result of <c>Math.round</c> is then divided by 100.0, and the result of that expression is concatenated with the string <q>Horizontal Velocity : </q>. The <c>String</c> is then passed to the <c>System.out.print</c> method. When you see programming statements with several expressions nested within each other, evaluate them from the inside out. <c>vx * 100.0</c> must be evaluated so the result can be passed to <c>Math.round</c>. <c>Math.round</c> must return a result that can then be divided by 100.0. The division must take place before we can concatenate the result with <q>Horizontal Velocity : </q>, and the <c>String</c> must be constructed before we can pass it as an argument to <c>System.out.print</c>.
+    </p>
+
+    <p>
+      There is one other line of note in <xref ref="listing-projectile-calculator" />, and that’s line 8, on which we define the constant <c>GRAVITY</c>. The acceleration due to gravity is a value that should not change as the program is executing, so it is defined with the <c>final</c> keyword and named with all caps.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 2.5.5 Precedence Rules                                       -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-2-5-5-precedence-rules">
+    <title>Precedence Rules</title>
+
+    <p>
+      One thing we’ve glossed over in our discussion of arithmetic is order of operations<mdash />the rules that Java uses to resolve evaluation order within an expression that contains multiple operations. You probably learned the memory aid PEMDAS in school to help you evaluate a mathematical expression containing more than one operator. (If you didn’t, PEMDAS stands for Parentheses, Exponentiation, Multiplication and Division, Addition and Subtraction.) Java preserves the PEMDAS order of operations. However, programming languages have many more operators than the ones in PEMDAS, so as we learn operators, we must learn how they fit into the order of evaluation.
+    </p>
+
+    <p>
+      Here is a precedence table for the operators we’ve learned so far:
+    </p>
+
+    <table xml:id="table-precedence-rules">
+      <title>Precedence of arithmetic and assignment operations</title>
+      <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+        <col width="22%"/>
+        <col width="26%"/>
+        <col width="18%"/>
+        <col width="34%"/>
+        <row header="yes">
+          <cell><strong>Category</strong></cell>
+          <cell><strong>Operators / Syntax</strong></cell>
+          <cell><strong>Associativity</strong></cell>
+          <cell><strong>Description</strong></cell>
+        </row>
+        <row>
+          <cell>Primary / grouping</cell>
+          <cell>
+            <p><c>()</c></p>
+            <p><c>method()</c></p>
+          </cell>
+          <cell>Left-to-right</cell>
+          <cell>Parentheses (grouping), method calls, and member access (e.g. <c>Math.PI</c>)</cell>
+        </row>
+        <row>
+          <cell>Postfix</cell>
+          <cell><c>expr++</c> <c>expr--</c></cell>
+          <cell>Left-to-right</cell>
+          <cell>Post-increment and post-decrement</cell>
+        </row>
+        <row>
+          <cell>Prefix / Unary</cell>
+          <cell>
+            <p><c>++expr</c> <c>--expr</c></p>
+            <p><c>+expr</c> <c>-expr</c></p>
+          </cell>
+          <cell>Right-to-left</cell>
+          <cell>Pre-increment/decrement, Unary plus and minus</cell>
+        </row>
+        <row>
+          <cell>Multiplicative</cell>
+          <cell><c>*</c> <c>/</c> <c>%</c></cell>
+          <cell>Left-to-right</cell>
+          <cell>Multiplication, division, mod</cell>
+        </row>
+        <row>
+          <cell>Additive</cell>
+          <cell><c>+</c> <c>-</c></cell>
+          <cell>Left-to-right</cell>
+          <cell>Addition and subtraction</cell>
+        </row>
+        <row>
+          <cell>Assignment</cell>
+          <cell><c>=</c> <c>+=</c> <c>-=</c> <c>*=</c> <c>/=</c> <c>%=</c></cell>
+          <cell>Right-to-left</cell>
+          <cell>Assignment and compound assignment</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      One term in this table that we also haven’t discussed is associativity, which you can see is either left-to-right or right-to-left. When an expression contains operators of different precedence levels, Java uses precedence to determine which operation to perform first (such as performing multiplication before addition). But what happens when an expression contains two or more operators with the same precedence?
+    </p>
+
+    <p>
+      In that situation, Java relies on associativity as a tiebreaker.
+    </p>
+
+    <ul>
+      <li>
+        <title>Left-to-right associativity</title>
+        <p>
+          Operations are grouped from left to right. All standard arithmetic operators (<c>*</c>, <c>/</c>, <c>%</c>, <c>+</c>, <c>-</c>) are left-associative. For example, <c>12 - 4 - 2</c> is grouped as <c>(12 - 4) - 2</c> (evaluating to 6), rather than <c>12 - (4 - 2)</c> (which would evaluate to 10).
+        </p>
+      </li>
+      <li>
+        <title>Right-to-left associativity</title>
+        <p>
+          Operations are grouped from right to left. The most common example is the assignment operator (<c>=</c>). In the expression <c>x = y = 5;</c>, Java groups the expression as <c>x = (y = 5);</c>, assigning 5 to <c>y</c> first, and then assigning that result to <c>x</c>.
+        </p>
+      </li>
+    </ul>
+
+    <p>
+      You can think of both precedence and associativity as determining where Java places invisible parentheses: Java groups by precedence first, and then for operators with the same precedence, Java groups by associativity.
+    </p>
+
+    <p>
+      You may not have thought of unary plus and minus as operators. You see unary minus when you write a negative literal (such as <c>-5</c>), and we think of the minus sign as part of the number. It is an operator, though, and it has a higher precedence than the arithmetic operators, as you can see.
+    </p>
+
+    <p>
+      A common misconception among students who have learned PEMDAS is that multiplication has a higher precedence than division, and that addition has a higher precedence than subtraction, because of their order in the mnemonic. However, multiplication, division, and mod all have the same level of precedence. If they appear in the same expression, the associativity (left-to-right) is used to determine the order in which they are calculated. It is the same with addition and subtraction. (This is no different from how these operations work in math.)
+    </p>
+
+    <p>
+      When you are writing code, it is a good idea to make the order of calculations explicit with parentheses. Other programmers may not, however, so it is important that you understand the order in which operations will be evaluated in an expression so that you can read others’ code. (And look it up if you don’t remember!)
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 2.5.6 Pitfalls of Finite Binary Representation               -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-2-5-6-pitfalls-binary">
+    <title>Pitfalls of Finite Binary Representation</title>
+
+    
+    <introduction>
+      <p>
+        When we do math on paper, numbers have infinite precision, and we can write numbers as large as our paper allows and use symbols to represent infinite repetition. Computers, however, do not have infinite space. In Java, every numeric type is stored in a finite number of bits using binary (base 2).
+      </p>
+
+      <p>
+        Because memory is finite and many common decimals cannot be represented exactly in binary, programs sometimes produce surprising mathematical results. Understanding these limitations early will save you from subtle bugs down the road.
+      </p>
+
+      <!-- 2.5.6.1 Integer Overflow and the "Odometer" Effect -->
+    </introduction>
+
+
+    <subsubsection xml:id="subsubsec-2-5-6-1-integer-overflow">
+      <title>Integer Overflow and the <q>Odometer</q> Effect</title>
+
+      <p>
+        In Java, an <c>int</c> is stored in 32 bits, meaning it can only represent integers from <m>-2{,}147{,}483{,}648</m> to <m>+2{,}147{,}483{,}647</m>. Java provides handy constants in the standard library to represent these boundary values: <c>Integer.MIN_VALUE</c> and <c>Integer.MAX_VALUE</c>.
+      </p>
+
+      <p>
+        What happens if you have the largest possible integer and try to add 1 to it, as in the code below?
+      </p>
+
+      <program language="java"><![CDATA[int max = Integer.MAX_VALUE;
+System.out.println("Maximum int: " + max);
+System.out.println("Max plus one: " + (max + 1));]]></program>
+
+      <p>
+        This code will print:
+      </p>
+
+      <console>
+        <output>Maximum int: 2147483647
+Max plus one: -2147483648</output>
+      </console>
+
+      <p>
+        Adding 1 to the maximum positive integer does not produce an error, nor does it stop at the maximum. Instead, it silently overflows and wraps around to the lowest possible negative number (<c>Integer.MIN_VALUE</c>).
+      </p>
+
+      <p>
+        Think of this like an old mechanical car odometer that reaches 999999 and rolls over to 000000. In Java’s two's-complement binary system, rolling over the highest positive number lands squarely on the smallest negative number.
+      </p>
+
+      <p>
+        Similarly, underflow occurs if you subtract 1 from <c>Integer.MIN_VALUE</c><mdash />it wraps around to <c>Integer.MAX_VALUE</c>.
+      </p>
+
+      <p>
+        Note that Java does not warn you when an integer overflows. If your program might handle quantities larger than 2 billion (such as bank balances, file sizes in bytes, or national populations), use the 64-bit <c>long</c> type instead of <c>int</c>. Be especially careful about variables storing temporary results of additions or multiplications. Your data may always fall within the integer range, but if a calculation with your data might result in a value outside the range, use a <c>long</c>.
+      </p>
+    </subsubsection>
+
+    <!-- 2.5.6.2 Inexact Decimals in Base 2 -->
+    <subsubsection xml:id="subsubsec-2-5-6-2-inexact-decimals">
+      <title>Inexact Decimals in Base 2</title>
+
+      <p>
+        We are accustomed to the base-10 decimal system. In decimal, simple fractions based on prime factors of 10 (2 and 5) do not repeat. For example, <m>1 / 2 = 0.5</m>, <m>1 / 2^2 = 1 / 4 = 0.25</m>, <m>1 / 5 = 0.2</m>, and <m>1 / (2 \times 5) = 0.1</m>. However, fractions with other denominators repeat, for example, <m>1 / 3 = 0.3333333\ldots</m>.
+      </p>
+
+      <p>
+        Computers do not use base 10; they use base 2 (binary). In binary, the only prime factor is 2. As a result, only fractions whose denominators are powers of two (e.g. <m>1 / 2</m>, <m>1 / 4</m>, <m>1 / 8</m>, <m>1 / 16</m>, etc.) terminate.
+      </p>
+
+      <p>
+        You might have noticed that 10 is not a power of 2! So a fraction such as <m>1 / 10</m> cannot be represented (as a decimal) in a finite number of binary bits. In base 2, 0.1 becomes an infinitely repeating binary fraction:
+      </p>
+
+      <md>0.1_{10} = 0.0001100110011\ldots_2 = 0.0\overline{0011}_2</md>
+
+      <p>
+        Because a <c>double</c> has only 53 bits of precision to store the fractional part, it must round off this infinite repetition. Try this in JShell:
+      </p>
+
+      <console>
+        <input prompt="jshell&gt; ">0.1 + 0.2</input>
+        <output>$1 ==&gt; 0.30000000000000004</output>
+      </console>
+
+      <p>
+        Because of this tiny rounding discrepancy, adding 0.1 ten times in a program will yield 0.9999999999999999, not 1.0.
+      </p>
+
+      <p>
+        Don’t worry<mdash />programmers deal with this every day, and there are standard strategies for working around it. Because floating-point numbers are almost always close approximations rather than exact values, we will see in Chapter 3 that you should avoid checking whether two numbers are strictly equal. Instead, you check whether the difference between them falls within an acceptable threshold.
+      </p>
+
+      <p>
+        And if you ever need exact decimal arithmetic for monetary calculations, Java provides a dedicated class called <c>BigDecimal</c>.
+      </p>
+    </subsubsection>
+
+    <!-- 2.5.6.3 Finite Precision and "Lost" Operands (Absorption) -->
+    <subsubsection xml:id="subsubsec-2-5-6-3-finite-precision-absorption">
+      <title>Finite Precision and <q>Lost</q> Operands (Absorption)</title>
+
+      <p>
+        A <c>double</c> can represent astonishingly large numbers (up to approximately <m>1.8 \times 10^{308}</m>) by using scientific notation under the hood: a significand (the digits) multiplied by an exponent (<m>2^{\text{power}}</m>). However, a <c>double</c> only has enough space to preserve approximately 15 to 17 decimal digits of precision.
+      </p>
+
+      <p>
+        Before a computer can add two numbers in scientific notation, it must normalize them so that their exponents match. When you add a tiny number to a massive number, the computer shifts the decimal point of the smaller number so far to the right that its significant digits fall off the edge of available memory:
+      </p>
+
+      <program language="java"><![CDATA[double massive = 10_000_000_000_000_000.0; // 10^16 (16 digits)
+double small   = 1.0;
+double sum = massive + small;
+System.out.println("Massive number: " + massive);
+System.out.println("Sum with 1.0  : " + sum);
+System.out.println("sum - massive: " + (sum - massive));]]></program>
+
+      <p>
+        This produces the following output:
+      </p>
+
+      <console>
+        <output>Massive number: 1.0E16
+Sum with 1.0  : 1.0E16
+sum - massive: 0.0</output>
+      </console>
+
+      <p>
+        The 1.0 was completely <q>absorbed</q> (lost) because <m>10^{16}</m> already consumes all 16 digits of precision that a <c>double</c> can track. To the computer, <m>10^{16} + 1.0</m> is simply <m>10^{16}</m>.
+      </p>
+    </subsubsection>
+
+    <!-- 2.5.6.4 Division by Zero: Integers vs. Floating-Point -->
+    <subsubsection xml:id="subsubsec-2-5-6-4-division-by-zero">
+      <title>Division by Zero: Integers vs. Floating-Point</title>
+
+      <p>
+        In mathematics, division by zero is undefined. In Java, how the system handles division by zero depends entirely on whether you are using integers or floating-point numbers.
+      </p>
+
+      <p>
+        If you attempt to divide an integer by zero, Java immediately halts execution and throws an error:
+      </p>
+
+      <program language="java"><![CDATA[int result = 5 / 0; // Throws ArithmeticException: / by zero]]></program>
+
+      <p>
+        Unlike an integer zero (which represents an exact count of nothing), a floating-point <c>0.0</c> represents a point on a continuous number line. Following the IEEE 754 standard, Java treats dividing a real number by zero not as a fatal program crash, but as approaching mathematical infinity:
+      </p>
+
+      <program language="java"><![CDATA[System.out.println(5.0 / 0.0);   // Prints: Infinity
+System.out.println(-5.0 / 0.0);  // Prints: -Infinity]]></program>
+
+      <p>
+        If an operation is mathematically undefined and has no sensible representation on a number line, Java produces the special floating-point value <c>NaN</c>:
+      </p>
+
+      <program language="java"><![CDATA[System.out.println(0.0 / 0.0);           // Prints: NaN
+System.out.println(Math.sqrt(-4.0));     // Prints: NaN]]></program>
+
+      <p>
+        You can access these values directly through constants such as <c>Double.POSITIVE_INFINITY</c> and <c>Double.NaN</c>. If you ever see <c>NaN</c> or <c>Infinity</c> printed in your program’s output, check your computations<mdash />you likely divided by a variable that evaluated to zero or took the square root of a negative number.
+      </p>
+    </subsubsection>
+  </subsection>
+</section>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<!--******************************************-->
+<!--*  Authored with PreTeXt                 *-->
+<!--*  pretextbook.org                       *-->
+<!--*  Theme: default-modern                 *-->
+<!--*  Palette:                              *-->
+<!--******************************************-->
+
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body class="ignore-math">
+<figure class="listing figure-like"><figcaption><span class="type">Listing</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">6.20<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span>The <code class="code-inline tex2jax_ignore">Rectangle</code> class<div class="autopermalink" aria-hidden="true" data-description="Listing 6.20: The Rectangle class"><a tabindex="-1" href="#listing-rectangle-class" title="Copy heading and permalink for Listing 6.20: The Rectangle class" aria-label="Copy heading and permalink for Listing 6.20: The Rectangle class">🔗</a></div></figcaption><div class="listing__contents"><div class="code-box"><pre class="program clipboardable line-numbers"><code class="language-java">/**
+ * Represents a two-dimensional rectangle defined by an anchor Point 
+ * at its top-left corner, a width, and a height.
+ */
+public class Rectangle {
+ 
+    private Point topLeft;
+    private double width;
+    private double height;
+
+    /**
+     * Constructs a new Rectangle with a specified top-left anchor point 
+     * and dimensions.
+     *
+     * Precondition: width &gt; 0.0 &amp;&amp; height &gt; 0.0
+     * Postcondition: The rectangle is initialized with the given dimensions,
+     *                and topLeft is initialized at coordinates (x, y).
+     *
+     * @param x the x coordinate of the rectangle left
+     * @param y the y coordinate of the rectangle top
+     * @param width the horizontal width of the rectangle
+     * @param height the vertical height of the rectangle
+     */
+    public Rectangle(double x, double y, double width, double height) {
+        assert width &gt; 0.0 &amp;&amp; height &gt; 0.0 : "Dimensions must be positive";
+        this.topLeft = new Point(x, y);
+        this.width = width;
+        this.height = height;
+    }
+
+    /**
+     * Calculates the distance from the coordinate origin (0.0, 0.0) 
+     * to this rectangle's top-left corner by delegating to the Point object.
+     *
+     * Precondition: topLeft != null
+     * Postcondition: Returns the Euclidean distance from (0, 0) to top-left.
+     *
+     * @return the distance from (0.0, 0.0) to the top-left corner
+     */
+    public double distanceFromOrigin() {
+        assert this.topLeft != null : "Cannot calc distance: top-left point is null";
+        return this.topLeft.distanceFromOrigin();
+    }
+
+    /**
+     * Moves the rectangle to a new top-left anchor position.
+     *
+     * Precondition: None
+     * Postcondition: The rectangle's top-left corner is a new Point at (x, y);
+     *                width and height are unchanged.
+     *
+     * @param x the x coordinate of the rectangle left
+     * @param y the y coordinate of the rectangle top
+     */
+    public void moveTo(double x, double y) {
+        this.topLeft = new Point(x, y);
+    }
+
+    /**
+     * Returns the current top-left anchor Point.
+     *
+     * @return the top-left corner Point reference
+     */
+    public Point getTopLeft() {
+        return this.topLeft;
+    }
+}
+</code></pre></div></div>
+</figure><span class="incontext"><a class="internal" href="sec-6-7-memory-model.html#listing-rectangle-class">In Context</a></span>
+</body>
+</html>

@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-2-9-case-study-drone" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Putting It All Together: Writing an Input-Processing-Output Program</title>
+
+  
+  <introduction>
+    <p>
+      You now have all the tools you need to solve problems that obtain input from the user at the console, process the input using arithmetic, math functions, and string formatting, and display the results to the user. Let’s work through an example problem and then you can try some of the exercises at the end of the chapter.
+    </p>
+
+    <!-- ============================================================ -->
+    <!-- 2.9.1 The Problem                                            -->
+  </introduction>
+
+
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-2-9-1-the-problem">
+    <title>The Problem</title>
+
+    <sidebyside widths="60% 36%" margins="auto" valign="middle">
+      <p>
+        A search-and-rescue drone needs to fly a circular inspection path around a target location within a park. Prompt the user for the target’s center coordinates (x and y), and the inspection radius. Produce output that includes the total perimeter distance the drone will fly, and a table of the (x, y) coordinates at 45, 135, 225, and 315 degrees. Assume the southwest corner of the park is at (0, 0), so all park coordinates have positive x and y values, and a negative x or y value would be outside of the park area. We have not learned how to validate input, so you may assume that the user is entering the correct type of data at the prompt, that the values for x and y are non-negative, and the circle radius is positive.
+      </p>
+      <stack>
+        <image source="figures/drone_nepal.jpg">
+          <shortdescription>Search and rescue drone in Nepal in 2015.</shortdescription>
+        </image>
+        <p>
+          <em>Search and rescue drone in Nepal in 2015. (Photo: <url href="https://commons.wikimedia.org/wiki/File:Drone_surveillance_helps_search_and_rescue_in_Nepal_(17313224411).jpg" visual="commons.wikimedia.org">Jessica Lea/DFID</url>, Open Government Licence / CC BY 2.0)</em>
+        </p>
+      </stack>
+    </sidebyside>
+
+    <p>
+      Here is an example of how the program will look running:
+    </p>
+
+    <console>
+      <input prompt="Enter center X coordinate: ">100.0</input>
+      <input prompt="Enter center Y coordinate: ">250.0</input>
+      <input prompt="Enter perimeter radius   : ">50.0</input>
+      <output>
+Total Perimeter Distance : 314.16 meters
+
+Waypoint      Angle (deg)     X Coord     Y Coord
+--------------------------------------------------
+Northeast          45.00       135.36      285.36
+Northwest         135.00        64.64      285.36
+Southwest         225.00        64.64      214.64
+Southeast         315.00       135.36      214.64</output>
+    </console>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 2.9.2 Solution Process                                       -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-2-9-2-solution-process">
+    <title>Solution Process</title>
+
+    <p>
+      We will practice a five-step problem-solving process on a complete project at the end of each chapter:
+    </p>
+
+    <ol>
+      <li>
+        <p><strong>Deconstruct the Problem</strong></p>
+        <ul>
+          <li><p>Identify what data must go in (inputs), what must come out (outputs), and what constraints exist.</p></li>
+          <li><p>Identify the allowable range of inputs and spot potential edge cases (e.g., zero, negative numbers, or maximum limits).</p></li>
+          <li><p>Work through concrete examples by hand with a pencil and paper so you understand the manual steps.</p></li>
+        </ul>
+      </li>
+      <li>
+        <p><strong>Design the Algorithm</strong></p>
+        <ul>
+          <li><p>Write out a step-by-step plan in plain English or pseudocode before writing actual Java syntax.</p></li>
+          <li><p>Identify the tools and formulas needed (such as arithmetic operators or methods from Java's Math library).</p></li>
+          <li><p>If multiple approaches exist, compare them for simplicity, clarity, and correctness.</p></li>
+        </ul>
+      </li>
+      <li>
+        <p><strong>Establish Your Test Cases</strong></p>
+        <ul>
+          <li><p>Turn your hand calculations from Step 1 into a formal test table with specific inputs and expected outputs.</p></li>
+          <li><p>Include typical inputs, boundary cases, and edge cases to ensure full coverage.</p></li>
+        </ul>
+      </li>
+      <li>
+        <p><strong>Implement the Solution in Java</strong></p>
+        <ul>
+          <li><p>Translate your pseudocode plan into Java statements following standard naming and formatting conventions.</p></li>
+          <li><p>Build incrementally: write a few lines at a time and verify they compile rather than typing the entire program at once.</p></li>
+        </ul>
+      </li>
+      <li>
+        <p><strong>Verify and Refine</strong></p>
+        <ul>
+          <li><p>Run your program against your test cases and compare the actual console output to your expected results.</p></li>
+          <li><p>If you encounter a bug, fix the cause and re-run all previous test cases to ensure your fix didn't break something else.</p></li>
+        </ul>
+      </li>
+    </ol>
+
+    <p>
+      Although these steps are numbered, you can always revisit an earlier step if you need to! It’s better to revisit a step and program a correct solution than to proceed from an incomplete understanding or a poor design choice.
+    </p>
+
+    <p>
+      As we work through the problem here, try each problem-solving step on your own before you read through each section.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 2.9.3 Deconstruct the Drone Search and Rescue Problem        -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-2-9-3-deconstruct">
+    <title>Deconstruct the Drone Search and Rescue Problem</title>
+
+    <p>
+      We can see the inputs in both the problem description and in the sample run: the user is entering an (x, y) coordinate and a radius. We can also see constraints on the inputs in the problem description: x and y must be non-negative, and the radius must be positive. From the sample output, we can see the unit of the inputs is meters.
+    </p>
+
+    <p>
+      These constraints can help us find edge cases<mdash />inputs that are at the very boundaries of acceptable input and for which a solution is defined.
+    </p>
+
+    <p>
+      The smallest possible inputs for x and y are zero, and the smallest meaningful non-negative radius might be one meter. (Smaller inputs would be valid, such as a centimeter (.01) or even a millimeter (.001), but are unrealistically small for the problem domain.)
+    </p>
+
+    <p>
+      What are the largest meaningful (x, y) and radius values? We might look at land measurements and drone specifications (or ask the client for these values). Taking into account the drone’s battery life and flight time to (x, y) before beginning the search, we decide on 5000 as the upper bound for each of x and y, and 2000 for the radius.
+    </p>
+
+    <p>
+      Armed with these numbers, we can begin solving the problem on paper, with a calculator. We should begin with any sample runs that we’re given, to confirm that we know how to solve the problem. In the sample run, we’re given inputs of 100 for x, 250 for y, and 50 for the radius. Drawing on our knowledge of geometry and trigonometry, we write the following formulas and plug our numbers in:
+    </p>
+
+    <md>
+      <mrow>\text{Perimeter} \amp = 2 \pi r = 2 \times \pi \times 50.0 \approx 314.16\text{ m}</mrow>
+      <mrow>x_{\text{NE}} \amp = r \cos(45^\circ) + x_{\text{center}} = 50.0 \cos(45^\circ) + 100.0 \approx 135.36</mrow>
+      <mrow>y_{\text{NE}} \amp = r \sin(45^\circ) + y_{\text{center}} = 50.0 \sin(45^\circ) + 250.0 \approx 285.36</mrow>
+    </md>
+
+    <p>
+      Plugging in the numbers from the sample run, we get the same outputs as those provided, meaning our formulas are correct and we can try other inputs. The sample run is a typical case, or normal case<mdash />it contains every-day, middle-of-the-road inputs that represent normal operating conditions. What happens when we plug in our edge cases? For our smallest numbers at the northeast point of the drone’s flight path, we get:
+    </p>
+
+    <md>
+      <mrow>\text{Perimeter} \amp = 2 \pi (1.0) \approx 6.28\text{ m}</mrow>
+      <mrow>x_{\text{NE}} \amp = 1.0 \cos(45^\circ) + 0.0 \approx 0.71</mrow>
+      <mrow>y_{\text{NE}} \amp = 1.0 \sin(45^\circ) + 0.0 \approx 0.71</mrow>
+    </md>
+
+    <p>
+      Which again, is ridiculously small, but doesn’t seem to cause any sort of computational problem. However, if we move to the other quadrants, we find that we have negative coordinates<mdash />our search path has gone outside of the park.
+    </p>
+
+    <p>
+      For this version of the program, we will also assume as a precondition that the search center (x, y) is located far enough inside the park that the entire search perimeter remains within park boundaries (i.e., <m>x \ge \text{radius}</m> and <m>y \ge \text{radius}</m>). A precondition is a condition that must be true for a block of code to execute correctly. (If the precondition isn’t met, there are no guarantees about the output.) In Chapter 3, we will learn how to use <c>if</c> statements to automatically detect and reject centers that would fly the drone out of the park. In our program, if x or y is less than the radius, some of the resulting coordinates will be negative.
+    </p>
+
+    <p>
+      When we plug in our maximum values of (5000, 5000) and 2000, we get a perimeter of 12566.37 and coordinates of 6414.21 and 3585.79 (in various combinations for the different waypoints). None of these cause any sort of computational error, and they all make sense.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 2.9.4 Design the Algorithm                                   -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-2-9-4-design-algorithm">
+    <title>Design the Algorithm</title>
+
+    <p>
+      Now that we understand the problem and have solved several examples by hand, we’re ready to design a solution. In an input-processing-output problem, we’ll usually start with obtaining inputs from the user, followed by performing some calculations with the inputs to produce temporary and final results, and then display those results to the user. It’s often helpful to write out the steps in pseudocode, first. Pseudocode is a natural-language description of a programming solution that is structured like a program. We might write:
+    </p>
+
+    <ol>
+      <li><p>Obtain inputs for <c>centerX</c>, <c>centerY</c>, and <c>radius</c> from the user.</p></li>
+      <li><p>Calculate the perimeter using the formula <m>\text{perimeter} = 2 \times \pi \times \text{radius}</m>.</p></li>
+      <li>
+        <p>Calculate the x,y coordinates of the waypoints using the formulas:</p>
+        <md>
+          <mrow>x \amp = \text{radius} \times \cos(\text{angle}) + \text{centerX}</mrow>
+          <mrow>y \amp = \text{radius} \times \sin(\text{angle}) + \text{centerY}</mrow>
+        </md>
+      </li>
+      <li><p>Display the perimeter to the user.</p></li>
+      <li><p>Display a table of waypoints with columns for Waypoints, Angle, X coordinate, Y coordinate.</p></li>
+    </ol>
+
+    <p>
+      Once you have an outline, you can add more detail, for example, you could expand step 1 as follows:
+    </p>
+
+    <p>
+      <line>Prompt the user for the center x coordinate with a print statement</line>
+      <line>Read a double using a Scanner</line>
+      <line>etc.</line>
+    </p>
+
+    <p>
+      From our pseudocode, we can see that we’re going to be using a <c>Scanner</c> and we’ll be writing prompts using <c>System.out.print</c>. We know that we will need to use the <c>Math</c> library functions for sine and cosine, and also <c>toRadians</c>, if we’re going to be using degrees for the waypoints, since the trigonometric functions expect inputs in radians. We’ll need to review <c>printf</c> for the output table.
+    </p>
+
+    <p>
+      As you add detail to your outline, you might find there are different ways to solve the problem. For input-processing-output problems such as this one, those choices are mostly about variables. Should you have variables for all of the results, or should you calculate the results in the output table? Should you have temporary results for the calculations, or should you implement each formula in a single line? For the clearest code, and especially while you are learning, it makes the most sense to have variables for your output values, and not to calculate the results in the already-complicated <c>printf</c> statements. When you implement the calculations, consider line length and whether you might want to examine the intermediate results for correctness. If they will be longer than 80 characters, or if you have errors and want to examine the results of each piece of the equation, break them out onto separate lines with separate variables.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 2.9.5 Establish Test Cases                                   -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-2-9-5-establish-test-cases">
+    <title>Establish Test Cases</title>
+
+    <p>
+      From our calculations by hand, we have test cases for a typical case and two edge cases (understanding that the edge case with small inputs results in negative output values). Even though our park problem specifies positive coordinates as a precondition, a defensive programmer also asks: 'What happens if someone accidentally enters a negative number?' We include the fourth case not because it represents a valid park location, but to verify that negative signs don't break our mathematical formulas or cause the numbers to spill over their <c>%11.2f</c> column widths. For every test case, we must calculate the expected results by hand. We produce the following table for testing:
+    </p>
+
+    <table xml:id="table-drone-test-cases">
+      <title>Test cases for the drone program</title>
+      <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+        <col width="18%"/>
+        <col width="18%"/>
+        <col width="18%"/>
+        <col width="22%"/>
+        <col width="24%"/>
+        <row header="yes">
+          <cell><strong>Test case</strong></cell>
+          <cell><strong>Inputs</strong></cell>
+          <cell><strong>Expected output: perimeter</strong></cell>
+          <cell><strong>Expected output: waypoints</strong></cell>
+          <cell><strong>Testing rationale</strong></cell>
+        </row>
+        <row>
+          <cell>Typical case</cell>
+          <cell>(100.0, 250.0), 50.0</cell>
+          <cell>314.16 m</cell>
+          <cell>
+            <p>NE: (135.36, 285.36)</p>
+            <p>NW: (64.64, 285.36)</p>
+            <p>SW: (64.64, 214.64)</p>
+            <p>SE: (135.36, 214.64)</p>
+          </cell>
+          <cell>Validates standard, mid-range positive coordinates and confirms general arithmetic.</cell>
+        </row>
+        <row>
+          <cell>Lower boundary</cell>
+          <cell>(0.0, 0.0), 1.0</cell>
+          <cell>6.28 m</cell>
+          <cell>
+            <p>NE: (0.71, 0.71)</p>
+            <p>NW: (-0.71, 0.71)</p>
+            <p>SW: (-0.71, -0.71)</p>
+            <p>SE: (0.71, -0.71)</p>
+          </cell>
+          <cell>Tests the smallest physically realistic search radius at the exact origin.</cell>
+        </row>
+        <row>
+          <cell>Upper boundary</cell>
+          <cell>(5000.0, 5000.0), 2000.0</cell>
+          <cell>12566.37 m</cell>
+          <cell>
+            <p>NE: (6414.21, 6414.21)</p>
+            <p>NW: (3585.79, 6414.21)</p>
+            <p>SW: (3585.79, 3585.79)</p>
+            <p>SE: (6414.21, 3585.79)</p>
+          </cell>
+          <cell>Tests maximum operational range (5 km out, 2 km radius) and verifies that 4-digit coordinates maintain column alignment.</cell>
+        </row>
+        <row>
+          <cell>Directional edge case</cell>
+          <cell>(-800.0, -1500.0), 350.0</cell>
+          <cell>2199.11 m</cell>
+          <cell>
+            <p>NE: (-552.51, -1252.51)</p>
+            <p>NW: (-1047.49, -1252.51)</p>
+            <p>SW: (-1047.49, -1747.49)</p>
+            <p>SE: (-552.51, -1747.49)</p>
+          </cell>
+          <cell>Confirms that negative center coordinates (West/South) calculate properly and that negative signs fit inside the <c>%11.2f</c> columns.</cell>
+        </row>
+      </tabular>
+    </table>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 2.9.6 Implement the Solution in Java                         -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-2-9-6-implement-solution">
+    <title>Implement the Solution in Java</title>
+
+    <p>
+      Now that we have a pseudocode outline of our solution, we’ve identified the methods and libraries we’ll need to use, and we have a set of test cases we can use to confirm our solution is correct, it’s time to get programming! While it might be tempting to translate your entire algorithm to code, hoping that it will immediately run (and produce the correct results) when you hit the green arrow, that process often leads to frustration as you chase after the source of syntax, run-time, and semantic bugs.
+    </p>
+
+    <p>
+      It’s better to write the program incrementally<mdash />coding and testing one piece at a time. That way, when you have a bug, you know that the cause is the code you just wrote, and it’s easier to find and fix. (And you will have bugs! Even experienced programmers write bugs into their code. That’s why we write our programs incrementally.)
+    </p>
+
+    <p>
+      For an input-processing-output program such as this one, here are some common strategies for breaking the program down as you program it:
+    </p>
+
+    <ul>
+      <li><p>Write code to obtain and print the inputs. Once that is working, write the calculations and print the results to the console. Once the results are correct, produce the table.</p></li>
+      <li><p>Hard-code the input values and write the calculation code, printing the results to the console. With the calculations all set, you can add obtaining inputs and producing the tabular output in whatever order you choose.</p></li>
+      <li><p>Start with comments<mdash />put a single-line comment in for each block of code you plan to write. You can also put in TODO comments (like the one Eclipse starts you out with) for the code you need to write. Then start adding the code using one of the strategies described above.</p></li>
+    </ul>
+
+    <p>
+      <xref ref="listing-drone-search" /> is one solution to this problem that is well-documented, follows Java naming and whitespace conventions, and is easy to read:
+    </p>
+
+    <listing xml:id="listing-drone-search">
+      <title><c>DroneSearch.java</c></title>
+      <program language="java" line-numbers="yes"><![CDATA[import java.util.Scanner;
+
+/**
+ * Given a center (x,y) coordinate and radius, calculates the perimeter of the search
+ * circle and the (x,y) coordinates of waypoints at 45, 135, 225, and 315 degrees.
+ */
+public class DroneSearch {
+
+    public static void main(String[] args) {
+
+        // Inputs for the center and radius of the search.
+        double centerX, centerY, radius;
+        // Calculated results.
+        double perimeter, neX, neY, nwX, nwY, swX, swY, seX, seY;
+        // For obtaining input from the user.
+        Scanner stdin;
+
+        // Obtain the center (x,y) coordinate and the search radius.
+        stdin = new Scanner(System.in);
+        System.out.print("Enter center X coordinate: ");
+        centerX = stdin.nextDouble();
+
+        System.out.print("Enter center Y coordinate: ");
+        centerY = stdin.nextDouble();
+
+        System.out.print("Enter perimeter radius   : ");
+        radius = stdin.nextDouble();
+        stdin.close();
+
+        // Calculate the perimeter length of the search and the
+        // (x, y) coordinates at 45, 135, 225, and 315 degrees.
+        perimeter = Math.PI * 2 * radius;
+        neX = radius * Math.cos(Math.toRadians(45)) + centerX;
+        neY = radius * Math.sin(Math.toRadians(45)) + centerY;
+
+        nwX = radius * Math.cos(Math.toRadians(135)) + centerX;
+        nwY = radius * Math.sin(Math.toRadians(135)) + centerY;
+
+        swX = radius * Math.cos(Math.toRadians(225)) + centerX;
+        swY = radius * Math.sin(Math.toRadians(225)) + centerY;
+
+        seX = radius * Math.cos(Math.toRadians(315)) + centerX;
+        seY = radius * Math.sin(Math.toRadians(315)) + centerY;
+
+        // Display the perimeter to the user.
+        System.out.printf("Total Perimeter Distance : %.2f meters%n%n", perimeter);
+
+        // Display the table header for the waypoint coordinates.
+        System.out.printf("%-14s %11s", "Waypoint", "Angle (deg)");
+        System.out.printf("%11s %11s%n", "X Coord", "Y Coord");
+        System.out.println("--------------------------------------------------");
+
+        // Display the waypoint coordinates.
+        System.out.printf("%-14s %11.2f %11.2f %11.2f%n", "Northeast", 45.0, neX, neY);
+        System.out.printf("%-14s %11.2f %11.2f %11.2f%n", "Northwest", 135.0, nwX, nwY);
+        System.out.printf("%-14s %11.2f %11.2f %11.2f%n", "Southwest", 225.0, swX, swY);
+        System.out.printf("%-14s %11.2f %11.2f %11.2f%n", "Southeast", 315.0, seX, seY);
+    }
+}]]></program>
+    </listing>
+
+    <p>
+      <xref ref="listing-drone-search" /> implements our algorithm. At the top of the <c>main</c> method, we define all variables in groups<mdash />input variables, calculation results, and the <c>Scanner</c>. The program then creates the <c>Scanner</c> and obtains <c>double</c> inputs from the user, using the pattern prompt/assignment statement with <c>Scanner</c> token reader for each input. The program calculates and stores the results in variables. Finally, it displays the perimeter, followed by the table header, followed by the table of calculated results.
+    </p>
+
+    <p>
+      The program uses Java naming conventions<mdash />PascalCase for the class name, and camelCase for variable names. There is one statement per line, and where lines are too long to be printed without wrapping around, the statements are broken across multiple lines. The code follows the pattern comment / code / blank line for each logical block of code (variable declarations, input, processing, and then three output sections).
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 2.9.7 Verify and Refine                                      -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-2-9-7-verify-refine">
+    <title>Verify and Refine</title>
+
+    <p>
+      If you type in and run <xref ref="listing-drone-search" />, you will see that it produces the correct output when you run it on the four test cases and compare the output to the expected results. But what if it hadn’t?
+    </p>
+
+    <p>
+      As we briefly mentioned in <xref ref="sec-2-2-app-overview" />, errors generally fall into three categories: syntax, run-time, and semantic (logic) errors. You can’t run your program until you’ve fixed all of the syntax errors. Once you start testing, you might encounter run-time errors, in which your program crashes with an exception, and semantic errors, in which your program finishes running, but it produces the wrong behavior or results.
+    </p>
+
+    <p>
+      You might get a run-time exception if you accidentally declare your input variables as integers, read inputs using <c>nextInt</c>, and then try to enter a double at a prompt. (You could also generate exceptions by entering text at the prompts, rather than numbers. We don’t know how to guard against this sort of error yet.)
+    </p>
+
+    <p>
+      Whether you have run-time or semantic errors, the best way to find them is by running your program in a debugger. Debuggers are tools that allow you to slow down your program’s execution and examine its state<mdash />the values in the variables<mdash />before and after each line executes. Most IDE’s have a built-in debugger, including Eclipse.
+    </p>
+
+    <p>
+      We will run our program in Eclipse’s debugger (even though it’s working!) so that we are prepared to use it when we write a program that crashes or doesn’t produce the correct results.
+    </p>
+
+    <p>
+      A debugger cannot help you if your program runs at full computer speed and finishes in a fraction of a millisecond. To inspect what is happening, you must tell the computer where to pause. You do this by setting a breakpoint. A breakpoint is a marker attached to a specific line of code that signals to the Java Virtual Machine: <q>Execute normally until you reach this line, then freeze execution immediately before running it.</q>
+    </p>
+
+    <p>
+      When hunting for a bug, place your breakpoint just before the section of code where you suspect trouble begins. In our <c>DroneSearch</c> program, the inputs are simple, so the math calculations are where errors are most likely to occur. Line 32 (<c>perimeter = Math.PI * 2 * radius;</c>) is an ideal spot to pause and begin working through the program execution line-by-line.
+    </p>
+
+    <p>
+      To set a breakpoint in Eclipse, find the vertical blue ruler on the far-left edge of the code editor (to the left of the line numbers). Double-click in that margin directly next to line 32. A small blue circle will appear in the margin. That blue circle is your active breakpoint. (Double-clicking it a second time will remove it).
+    </p>
+
+    <p>
+      Do not click the usual green Run button (the white triangle inside a green circle). Instead, look just to the left of it on the main Eclipse toolbar and click the Debug button (the small green bug icon). Alternatively, right-click inside <c>DroneSearch.java</c> and choose <menuchoice><guimenu>Debug As</guimenu><guimenuitem>Java Application</guimenuitem></menuchoice>.
+    </p>
+
+    <p>
+      Because line 32 sits after the user prompts, your program will start running normally at first. Look at the Console view at the bottom of Eclipse, enter the inputs for test case 1 (100.0, 250.0, and 50.0), and press Enter after each one. The moment you press Enter for the radius on line 27, the program reaches line 32 and pauses.
+    </p>
+
+    <p>
+      When execution pauses at your breakpoint, Eclipse will display a dialog box asking if you want to switch to the debug perspective. Click Switch (and check Remember my decision so Eclipse switches automatically in the future).
+    </p>
+
+    <p>
+      Recall that in Eclipse, a perspective is a customized screen layout designed for a specific task. The Debug perspective reorganizes your workspace to give you maximum visibility into your running program:
+    </p>
+
+    <ul>
+      <li><p><strong>Debug View (Top Left)</strong>: Shows the thread of execution and the method call stack. You will see that <c>DroneSearch.main</c> is currently suspended at line 32.</p></li>
+      <li><p><strong>Variables View (Top Right)</strong>: This is the most valuable pane in the debugger. It displays every variable currently active in memory, its data type, and its current value.</p></li>
+      <li><p><strong>Editor View (Center)</strong>: Your code is still front and center, but line 32 is now highlighted in green with a small arrow in the margin. This highlight indicates the current execution line<mdash />the statement Java is poised to run next.</p></li>
+      <li><p><strong>Console View (Bottom)</strong>: Remains active so you can see past output or interact with prompts.</p></li>
+    </ul>
+
+    <p>
+      Look closely at the Variables view in the top right. Notice that <c>centerX</c>, <c>centerY</c>, and <c>radius</c> already contain the values you entered at the console (100.0, 250.0, and 50.0). However, you will not see the variables that don’t yet have a value. That is because the lines assigning them values haven’t executed yet.
+    </p>
+
+    <p>
+      Whenever your program produces an incorrect calculation (a semantic error), the Variables view is where you solve the mystery:
+    </p>
+
+    <ul>
+      <li><p>Did the variable receive the input value you expected? If <c>radius</c> shows 0.0 here, you know the bug happened during input reading, before the math ever began.</p></li>
+      <li><p>Are the variables storing the numbers your hand calculations predicted? If, after the calculations execute, the variables have the wrong values, you know the calculations are wrong.</p></li>
+      <li><p>Is the output displaying correctly? If the variables have the correct values but you’re seeing something different when they print, the problem is with your output statements.</p></li>
+    </ul>
+
+    <p>
+      Let’s watch the calculation statements execute! To execute your program line by line, look at the small toolbar at the top of the Debug view (or in Eclipse’s main toolbar) for the Step Over button (an arrow bending over two dots). (You can mouse over the buttons to view a tool tip with their names, if you’re not sure.) You can also simply press the keyboard shortcut <kbd>F6</kbd>.
+    </p>
+
+    <p>
+      Press <kbd>F6</kbd> (Step Over) once. The green highlight advances to line 33. Line 32 has just finished executing. Look at the Variables view: <c>perimeter</c> has now appeared with the value 314.1592653589793. Press <kbd>F6</kbd> again. Line 33 executes, and <c>neX</c> appears in the Variables view with the value 135.3553.... Continue pressing <kbd>F6</kbd> to step through lines 34 through 43, watching each waypoint coordinate appear in memory.
+    </p>
+
+    <p>
+      If you ever write a mathematical formula with a typo<mdash />for instance, accidentally subtracting the center offset instead of adding it<mdash />stepping through with <kbd>F6</kbd> lets you pinpoint the exact line where a variable takes on a bogus value.
+    </p>
+
+    <p>
+      Once you have inspected the variables and identified what you needed to know, you have two choices for how to finish:
+    </p>
+
+    <ul>
+      <li><p><strong>Resume (F8)</strong>: If you want to let the rest of the program run to completion at normal speed, click the green Resume button (the play button) or press <kbd>F8</kbd>. The remaining calculations will run, the table will print to the console, and the program will terminate cleanly.</p></li>
+      <li><p><strong>Terminate (Ctrl+F2)</strong>: If you found your bug and want to stop immediately so you can fix your code, click the red square Terminate button. This halts the program instantly.</p></li>
+    </ul>
+
+    <p>
+      Once debugging is finished, you will want your standard code-editing screen back. Look at the very top-right corner of the Eclipse window. You will see two small perspective buttons: one labeled Debug (which is currently active) and one labeled Java. Click the Java button. Your screen will immediately snap back to your familiar coding layout. (You can also choose <menuchoice><guimenu>Window</guimenu><guisubmenu>Perspective</guisubmenu><guisubmenu>Open Perspective</guisubmenu><guimenuitem>Java</guimenuitem></menuchoice> from the menu bar).
+    </p>
+
+    <p>
+      Finally, you can double-click the blue dot on line 32 to remove the breakpoint. Your program will only break if you run it in the debugger (not if you run it normally), but old breakpoints left in code can surprise you by halting your program where you don’t expect when you’re debugging.
+    </p>
+
+    <p>
+      Novice programmers often try to debug by sprinkling dozens of <c>System.out.println()</c> statements throughout their code to see what variables contain, and then spend another hour deleting those print statements once the bug is fixed. Professional software engineers rarely do that. Learning to use Eclipse’s debugger gives you x-ray vision into computer memory. You can freeze time, inspect every memory slot on the stack, and verify your logic statement by statement.
+    </p>
+  </subsection>
+</section>

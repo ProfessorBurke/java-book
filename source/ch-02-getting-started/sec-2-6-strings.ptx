@@ -1,0 +1,590 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-2-6-strings" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Manipulating Text: Working with Strings</title>
+
+  
+  <introduction>
+    <p>
+      So far, we have worked primarily with numbers. But almost every real-world application<mdash />from updating menu items to processing user input or reading a file<mdash />requires manipulating text. In Java, text is represented using the <c>String</c> type.
+    </p>
+
+    <p>
+      While working with strings feels very natural, strings introduce one of the most fundamental concepts in Java: the difference between a primitive type and an object.
+    </p>
+
+    <!-- ============================================================ -->
+    <!-- 2.6.1 What is a String?                                      -->
+  </introduction>
+
+
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-2-6-1-what-is-a-string">
+    <title>What is a String?</title>
+
+    <p>
+      A <c>String</c> is an ordered, indexed sequence of characters. A <c>String</c> literal is enclosed in double quotation marks:
+    </p>
+
+    <program language="java"><![CDATA[String greeting = "Hello, World!";]]></program>
+
+    <p>
+      Notice that while a character literal (<c>char</c>) is enclosed in single quotes (<c>'A'</c>), a string literal is always enclosed in double quotes (<c>"A"</c>). A string literal can even be composed of just one character or no characters at all (<c>""</c>, known as the <term>empty string</term>).
+    </p>
+
+    <p>
+      Every character in a string occupies a specific numerical position called its <term>index</term>. Like many programming languages, Java uses zero-based indexing: the first character is always at index 0, the second is at index 1, and so on.
+    </p>
+
+    <p>
+      Consider the string <c>"Java"</c>:
+    </p>
+
+    <figure xml:id="figure-string-indices">
+      <title>Characters and indices in the string <q>Java</q></title>
+      <image source="figures/figure_2_3.png" width="65%">
+        <shortdescription>The indices 0, 1, 2, 3 positioned directly above character boxes containing 'J', 'a', 'v', 'a'.</shortdescription>
+        <description>
+          <p>
+            Diagram illustrating 0-based string indexing for <q>Java</q>. A row of four contiguous white rectangular cells contains the stored characters <c>'J'</c>, <c>'a'</c>, <c>'v'</c>, and <c>'a'</c>. Positioned directly above each box, without enclosing cells, are their 0-based position indices: 0 above <c>'J'</c>, 1 above <c>'a'</c>, 2 above <c>'v'</c>, and 3 above <c>'a'</c>.
+          </p>
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      The letter J is at index 0, there is a letter a at index 1, v at index 2, and another a at index 3. If we need to access individual characters of a string, we must do so through their indices. Because counting begins at 0, the index of the final character is always one less than the total number of characters in the string. For a string with four characters, the last valid index is 3.
+    </p>
+
+    <p>
+      Because double quotes are used to mark the beginning and end of a string literal, what happens if you want to include an actual double quote inside your text, as in this example?
+    </p>
+
+    <program language="java"><![CDATA[// This causes a compiler error!
+String quote = "She said, "Hello!" to everyone.";]]></program>
+
+    <p>
+      The Java compiler sees the second quote as the end of the string <c>"She said, "</c>, and becomes confused by the word <c>Hello!</c>, which, to Java, falls outside of the string literal.
+    </p>
+
+    <p>
+      To include special characters inside a string literal, Java provides <term>escape sequences</term>. An escape sequence is a backslash (<c>\</c>) followed by a character. The backslash tells the compiler to treat the next character inside the string literal as special. Escaping a character is a way to either take the syntactical meaning away from a character or give a syntactical meaning to a character. For example, a quote or backslash has special syntactical meaning within (or at the end of) a string. Escaping a quote or backslash takes away the syntactical meaning so we can include the literal character in the string. Some ordinary characters, like n and t, have a special meaning when escaped. Some common escape sequences are shown in <xref ref="table-escape-sequences" />.
+    </p>
+
+    <table xml:id="table-escape-sequences">
+      <title>Escape sequences</title>
+      <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+        <col width="25%"/>
+        <col width="25%"/>
+        <col width="50%"/>
+        <row header="yes">
+          <cell><strong>Escape sequence</strong></cell>
+          <cell><strong>Name</strong></cell>
+          <cell><strong>What it represents</strong></cell>
+        </row>
+        <row>
+          <cell><c>\"</c></cell>
+          <cell>Double quote</cell>
+          <cell>Inserts a literal <c>"</c> character</cell>
+        </row>
+        <row>
+          <cell><c>\'</c></cell>
+          <cell>Single quote</cell>
+          <cell>Inserts a literal <c>'</c> character</cell>
+        </row>
+        <row>
+          <cell><c>\\</c></cell>
+          <cell>Backslash</cell>
+          <cell>Inserts a literal <c>\</c> character</cell>
+        </row>
+        <row>
+          <cell><c>\n</c></cell>
+          <cell>Newline</cell>
+          <cell>Moves output to the beginning of the next line</cell>
+        </row>
+        <row>
+          <cell><c>\t</c></cell>
+          <cell>Tab</cell>
+          <cell>Inserts a horizontal tab space</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      Here is an example block of code with some escape sequences embedded in string literals:
+    </p>
+
+    <program language="java"><![CDATA[String quote = "She said, \"Hello!\" to everyone.";
+String path  = "C:\\Users\\Alice\\Documents";
+String menu  = "1.\tCoffee\n2.\tTea";
+
+System.out.println(quote);
+System.out.println(path);
+System.out.println(menu);]]></program>
+
+    <p>
+      This produces the following output:
+    </p>
+
+    <console>
+      <output>She said, "Hello!" to everyone.
+C:\Users\Alice\Documents
+1.     Coffee
+2.     Tea</output>
+    </console>
+
+    <p>
+      You can see that a double-quote within the string <c>quote</c> is literally inserted into the string if it’s first escaped with a backslash. (And to include a literal backslash in a string, as with the <c>path</c> variable, each backslash must be escaped with a backslash.) Notice that the tab and newline in the <c>menu</c> string are not surrounded by any space within the literal string, and they add white space (horizontal and vertical, respectively) to the string, which you can see when it’s displayed to the console. Practice with escape sequences in JShell to test your understanding and confirm the results.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 2.6.2 Primitives vs. Objects: The Memory Picture             -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-2-6-2-primitives-vs-objects">
+    <title>Primitives vs. Objects: The Memory Picture</title>
+
+    <p>
+      In <xref ref="sec-2-4-variables-types" />, we explored Java’s eight primitive types (<c>int</c>, <c>double</c>, <c>boolean</c>, <c>char</c>, etc.). <c>String</c> is not a primitive type. Notice that <c>String</c> begins with a capital S, which we know signals a class name. The primitive type names all begin with a lowercase letter.
+    </p>
+
+    <p>
+      A <c>String</c> is an object, and the variables we declare to hold them are called <term>reference variables</term>.
+    </p>
+
+    <p>
+      To understand the difference between primitives and objects, let’s briefly review how Java organizes computer memory:
+    </p>
+
+    <ul>
+      <li>
+        <title>The Stack</title>
+        <p>
+          When you declare a variable inside a method, that variable lives on the stack. For a primitive variable, the stack holds the actual raw value. For example, <c>int age = 21;</c> stores the binary representation of 21 directly inside the variable <c>age</c>.
+        </p>
+      </li>
+      <li>
+        <title>The Heap</title>
+        <p>
+          The heap is a large pool of shared memory where Java stores objects. Objects are typically larger and more complex than simple primitives.
+        </p>
+      </li>
+    </ul>
+
+    <p>
+      When you declare a <c>String</c> variable:
+    </p>
+
+    <program language="java"><![CDATA[String city = "Boston";]]></program>
+
+    <p>
+      The actual text data (<c>"Boston"</c>) lives in the heap. The variable <c>city</c> on the stack does not contain the letters 'B', 'o', 's', 't', 'o', 'n'. Instead, it stores a reference<mdash />the memory address that points to where the <c>"Boston"</c> object lives in the heap. This is illustrated in <xref ref="figure-string-reference-heap" />.
+    </p>
+
+    <figure xml:id="figure-string-reference-heap">
+      <title>String variable on the stack referencing a String object on the heap</title>
+      <image source="figures/figure_2_4.png" width="80%">
+        <shortdescription>The city reference variable on the stack points to a String object holding "Boston" on the heap.</shortdescription>
+        <description>
+          <p>
+            Memory diagram showing the stack and heap layout for <c>String city = "Boston";</c>. Inside the stack frame for <c>main</c> on the call stack, the local variable <c>city</c> at memory address <c>0x7FF0</c> stores a reference address (<c>0x5000</c>). A direct pointer arrow leads from this address cell to the address tag on a <c>String object</c> located on the heap, which stores the string value <q>Boston</q>.
+          </p>
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      Because objects bundle together both data and behavior, Java provides methods specifically designed to work with an object's data. These methods constitute the operations that you can use to operate on an object of a specific type. To access an object’s methods, we use dot notation:
+    </p>
+
+    <program language="java"><![CDATA[objectReference.methodName()]]></program>
+
+    <p>
+      The dot operator (<c>.</c>) tells Java to follow the reference from the stack variable to the object in the heap and run the method following the dot on that object.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 2.6.3 Java's VIP Treatment: Syntactic Sugar for Strings       -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-2-6-3-syntactic-sugar">
+    <title>Java's VIP Treatment: Syntactic Sugar for Strings</title>
+
+    
+    <introduction>
+      <p>
+        Variables of type <c>String</c> have a built-in feel in Java, despite that they are objects. We can have a literal of type <c>String</c> and we can create a <c>String</c> without using the <c>new</c> keyword. We can concatenate two <c>String</c> objects together with the <c>+</c> operator. This special language support is often called <term>syntactic sugar</term>. This support was built into Java to make strings as effortless to use as a primitive. Let’s take a quick tour of the special syntactic support for strings.
+      </p>
+    </introduction>
+
+
+
+    <subsubsection xml:id="subsubsec-2-6-3-1-string-literals">
+      <title>String Literals</title>
+
+      <p>
+        You can create a <c>String</c> simply by typing text inside double quotes. You do not need to write <c>new String("Java Basics")</c> (although you can):
+      </p>
+
+      <program language="java"><![CDATA[String title = "Java Basics"; // No new keyword required]]></program>
+
+      <p>
+        Behind the scenes, the Java compiler automatically constructs a <c>String</c> object in the heap for you. For almost all other classes in Java, creating an object requires using the <c>new</c> keyword:
+      </p>
+
+      <program language="java"><![CDATA[Scanner input = new Scanner(System.in);]]></program>
+    </subsubsection>
+
+    <subsubsection xml:id="subsubsec-2-6-3-2-concatenation-operator">
+      <title>The Concatenation Operator (<c>+</c>)</title>
+
+      <p>
+        Java generally does not allow operators (like <c>+</c>, <c>-</c>, or <c>*</c>) to be used on objects. The one major exception is the plus sign (<c>+</c>) when used with strings, where it performs string concatenation (joining two strings end-to-end):
+      </p>
+
+      <program language="java"><![CDATA[String firstName = "Ada";
+String lastName  = "Lovelace";
+String fullName  = firstName + " " + lastName;
+System.out.println(fullName); // Prints: Ada Lovelace]]></program>
+
+      <p>
+        You can also use the compound assignment operator <c>+=</c> to append text:
+      </p>
+
+      <program language="java"><![CDATA[String message = "Loading";
+message += "...";
+System.out.println(message); // Prints: Loading...]]></program>
+    </subsubsection>
+
+    <subsubsection xml:id="subsubsec-2-6-3-3-mixed-type-concatenation">
+      <title>Mixed-Type Concatenation</title>
+
+      <p>
+        If either operand to the <c>+</c> operator is a <c>String</c>, Java automatically converts the other operand into its string representation and concatenates them:
+      </p>
+
+      <program language="java"><![CDATA[int score = 95;
+String report = "Final score: " + score; // "Final score: 95"]]></program>
+
+      <p>
+        Be mindful of operator precedence when combining arithmetic with string concatenation. Because <c>+</c> evaluates from left to right:
+      </p>
+
+      <program language="java"><![CDATA[System.out.println("Total: " + 5 + 3);   // Prints: Total: 53
+System.out.println("Total: " + (5 + 3)); // Prints: Total: 8]]></program>
+
+      <p>
+        In the first line, <c>"Total: " + 5</c> evaluates to the string <c>"Total: 5"</c>, and then <c>"Total: 5" + 3</c> produces <c>"Total: 53"</c>. In the second line, the parentheses force the integer addition <c>5 + 3</c> to evaluate first.
+      </p>
+    </subsubsection>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 2.6.4 String Methods                                         -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-2-6-4-string-methods">
+    <title>String Methods</title>
+
+    
+    <introduction>
+      <p>
+        Methods are the operations that you can perform on an object of a specific type. The <c>String</c> class provides dozens of built-in methods. Here are five essential methods that you will use frequently:
+      </p>
+
+      <table xml:id="table-essential-string-methods">
+        <title>Essential String methods</title>
+        <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+          <col width="32%"/>
+          <col width="18%"/>
+          <col width="50%"/>
+          <row header="yes">
+            <cell><strong>Method</strong></cell>
+            <cell><strong>Return type</strong></cell>
+            <cell><strong>Description</strong></cell>
+          </row>
+          <row>
+            <cell><c>length()</c></cell>
+            <cell><c>int</c></cell>
+            <cell>Returns the total number of characters in the <c>String</c>.</cell>
+          </row>
+          <row>
+            <cell><c>charAt(int index)</c></cell>
+            <cell><c>char</c></cell>
+            <cell>Returns the character at the specified index.</cell>
+          </row>
+          <row>
+            <cell><c>substring(int start, int end)</c></cell>
+            <cell><c>String</c></cell>
+            <cell>Extracts and returns a slice of the <c>String</c> from <c>start</c> up to (but not including) <c>end</c>.</cell>
+          </row>
+          <row>
+            <cell><c>toUpperCase()</c></cell>
+            <cell><c>String</c></cell>
+            <cell>Returns a copy of the <c>String</c> in all uppercase letters.</cell>
+          </row>
+          <row>
+            <cell><c>toLowerCase()</c></cell>
+            <cell><c>String</c></cell>
+            <cell>Returns a copy of the <c>String</c> in all lowercase letters.</cell>
+          </row>
+        </tabular>
+      </table>
+
+      <p>
+        Let’s look at each of these in action:
+      </p>
+    </introduction>
+
+
+
+    <subsubsection xml:id="subsubsec-2-6-4-1-length">
+      <title>Finding Length with <c>length()</c></title>
+
+      <p>
+        The <c>length()</c> method counts every character in the string, including spaces, punctuation, and escape characters:
+      </p>
+
+      <program language="java"><![CDATA[String phrase = "Java rocks!";
+int count = phrase.length();
+System.out.println(count); // Prints: 11]]></program>
+
+      <p>
+        Notice the parentheses on <c>phrase.length()</c>. In Java, finding the length of a string requires calling a method. We always put parentheses at the end of a method call, even if there are no arguments to include in the parentheses.
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="subsubsec-2-6-4-2-charat">
+      <title>Accessing Individual Characters with <c>charAt(index)</c></title>
+
+      <p>
+        To retrieve a single character from a specific position, pass its index to <c>charAt()</c>:
+      </p>
+
+      <program language="java"><![CDATA[String language = "Java";
+char firstLetter = language.charAt(0); // 'J'
+char lastLetter  = language.charAt(language.length() - 1); // 'a' at index 3]]></program>
+
+      <p>
+        If you provide an index that is negative, or an index greater than or equal to <c>length()</c>, Java halts and throws a <c>StringIndexOutOfBoundsException</c>. For <c>"Java"</c> (length 4), asking for <c>language.charAt(4)</c> causes an error because valid indices are only 0, 1, 2, 3.
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="subsubsec-2-6-4-3-substring">
+      <title>Extracting Slices with <c>substring()</c></title>
+
+      <p>
+        The <c>substring()</c> method extracts a smaller piece of text from an existing string, returning a new <c>String</c>. It takes two integer parameters:
+      </p>
+
+      <ul>
+        <li>
+          <title><c>beginIndex</c></title>
+          <p>The index where the slice starts (inclusive).</p>
+        </li>
+        <li>
+          <title><c>endIndex</c></title>
+          <p>The index where the slice stops (exclusive<mdash />it stops just before this index).</p>
+        </li>
+      </ul>
+
+      <program language="java"><![CDATA[String greeting = "Hello, World!";
+String word1 = greeting.substring(0, 5);  // Indices 0 through 4 -> "Hello"
+String word2 = greeting.substring(7, 12); // Indices 7 through 11 -> "World"]]></program>
+
+      <p>
+        Why does <c>endIndex</c> stop one character early? This design has two convenient mathematical properties:
+      </p>
+
+      <ul>
+        <li>
+          <p>The length of the extracted substring is always <c>endIndex - beginIndex</c> (<m>5 - 0 = 5</m> characters).</p>
+        </li>
+        <li>
+          <p>Slices can be glued back together naturally: <c>greeting.substring(0, 5) + greeting.substring(5, 12)</c>.</p>
+        </li>
+      </ul>
+
+      <p>
+        Java also provides an overloaded version with just one argument: <c>substring(beginIndex)</c>. It extracts everything from <c>beginIndex</c> all the way to the end of the string:
+      </p>
+
+      <program language="java"><![CDATA[String rest = greeting.substring(7); // "World!"]]></program>
+    </subsubsection>
+
+    <subsubsection xml:id="subsubsec-2-6-4-4-case-conversion">
+      <title>Changing Case: <c>toUpperCase</c> and <c>toLowerCase</c></title>
+
+      <p>
+        When working with text, you often need to standardize how words are capitalized<mdash />for instance, ensuring that a user’s response of <c>"yes"</c>, <c>"Yes"</c>, or <c>"YES"</c> can all be processed the same way. The <c>String</c> class provides two methods for converting the case of your text, <c>toUpperCase()</c> and <c>toLowerCase()</c>.
+      </p>
+
+      <p>
+        Here is a basic example:
+      </p>
+
+      <program language="java"><![CDATA[String title = "Java Programming 101!";
+
+String shouting = title.toUpperCase(); // "JAVA PROGRAMMING 101!"
+String whisper  = title.toLowerCase(); // "java programming 101!"]]></program>
+
+      <p>
+        A common question is: what counts as uppercase or lowercase?
+      </p>
+
+      <ul>
+        <li>
+          <title>Alphabetic characters change</title>
+          <p>
+            Standard English letters (a–z and A–Z), as well as cased letters in other alphabets supported by Unicode (such as <c>'é'</c> <m>\to</m> <c>'É'</c> or <c>'ñ'</c> <m>\to</m> <c>'Ñ'</c>), are converted to their corresponding opposite case.
+          </p>
+        </li>
+        <li>
+          <title>Non-letter characters are untouched</title>
+          <p>
+            Characters that have no concept of case<mdash />such as digits (0–9), punctuation (<c>!</c>, <c>?</c>, <c>,</c>), symbols (<c>$</c>, <c>@</c>, <c>#</c>), and whitespace (spaces, tabs, newlines)<mdash />remain completely unchanged.
+          </p>
+        </li>
+        <li>
+          <title>Languages without case</title>
+          <p>
+            Characters in writing systems that do not use uppercase and lowercase (such as Chinese, Japanese, or Arabic) are simply copied over as-is.
+          </p>
+        </li>
+      </ul>
+
+      <p>
+        Notice in the example above that the space, the digit characters 101, and the exclamation point ! were unaffected. Only the alphabetic characters were converted.
+      </p>
+
+      <p>
+        The most critical detail to remember about <c>toUpperCase()</c> and <c>toLowerCase()</c> is that they do not change the value of the original <c>String</c>. Calling <c>title.toUpperCase()</c> does not alter the text stored inside the <c>title</c> object. It cannot<mdash />strings in Java are permanently fixed once created in memory. (More on that in the next section.) Instead, the method inspects the characters of <c>title</c>, builds a brand-new <c>String</c> object in the heap containing the uppercase text, and returns a reference to that new object.
+      </p>
+
+      <p>
+        A classic semantic error is calling the method and forgetting to capture the result:
+      </p>
+
+      <program language="java"><![CDATA[String state = "rhode island";
+// This creates an uppercase string in memory, but immediately throws it away!
+state.toUpperCase(); 
+System.out.println(state); // Still prints: rhode island]]></program>
+
+      <p>
+        Because <c>state.toUpperCase()</c> leaves the original <c>state</c> variable completely untouched, the uppercase string was created in the heap and then instantly abandoned.
+      </p>
+
+      <p>
+        If you want your variable to reflect the change, you must reassign the variable so it points to the newly returned object:
+      </p>
+
+      <program language="java"><![CDATA[String state = "rhode island";
+// Reassign 'state' to point to the newly created uppercase string
+state = state.toUpperCase(); 
+System.out.println(state); // Prints: RHODE ISLAND]]></program>
+
+      <p>
+        Standardizing case is particularly helpful when preparing input for comparisons or searching. If you prompt a user:
+      </p>
+
+      <program language="java"><![CDATA[System.out.print("Do you wish to continue? (Y/N): ");
+String response = keyboard.nextLine();
+// Standardize the response so 'y' and 'Y' both become "Y"
+response = response.toUpperCase();]]></program>
+
+      <p>
+        By converting the response to uppercase immediately, your program only needs to check for <c>"Y"</c>, without worrying about whether the user typed lowercase 'y' or uppercase 'Y'.
+      </p>
+    </subsubsection>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 2.6.5 Immutability: Strings Never Change                     -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-2-6-5-immutability">
+    <title>Immutability: Strings Never Change</title>
+
+    <p>
+      There is one critical property of Java strings that trips up almost every beginner: Strings are <term>immutable</term>.
+    </p>
+
+    <p>
+      An object is immutable if its internal data cannot be modified after it is created.
+    </p>
+
+    <p>
+      When you call a method like <c>toUpperCase()</c> or <c>substring()</c>, you might expect it to alter the existing string in place. But it does not, as we saw in the last section:
+    </p>
+
+    <program language="java"><![CDATA[String state = "rhode island";
+state.toUpperCase(); 
+System.out.println(state); // Still prints: rhode island]]></program>
+
+    <p>
+      Because strings cannot be modified in the heap, <c>toUpperCase()</c> does not touch the original <c>"rhode island"</c> object. Instead, it manufactures a brand-new <c>String</c> object containing <c>"RHODE ISLAND"</c> in the heap and returns a reference to that new object. In the code above, because we did not capture that returned reference, the new object was simply ignored and discarded! Here is what this operation looks like in memory:
+    </p>
+
+    <figure xml:id="figure-string-immutability">
+      <title>Memory after <c>toUpperCase</c> is invoked on an immutable String object</title>
+      <image source="figures/figure_2_5_immutability_combined.png" width="85%">
+        <shortdescription>Two-step diagram showing state initially referencing "rhode island", and after state.toUpperCase() leaving a new "RHODE ISLAND" object unreferenced.</shortdescription>
+        <description>
+          <p>
+            Two-panel memory diagram illustrating string immutability. Panel 1 (Initially) shows the local variable <c>state</c> on the stack pointing to a heap <c>String object</c> containing <q>rhode island</q>. Panel 2 (After <c>state.toUpperCase();</c>) shows that <c>state</c> remains pointing to the original untouched <q>rhode island</q> object, while a brand-new <c>String object</c> containing <q>RHODE ISLAND</q> sits unreferenced and abandoned on the heap.
+          </p>
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      A new <c>"RHODE ISLAND"</c> object is created in the heap, but because it isn’t assigned to a reference variable on the stack, it is immediately abandoned. The original <c>"rhode island"</c> object was never altered, and the <c>state</c> variable continues pointing directly to it.
+    </p>
+
+    <p>
+      If you want <c>state</c> to reflect the change, you must assign the returned reference back to a variable:
+    </p>
+
+    <program language="java"><![CDATA[String state = "rhode island";
+state = state.toUpperCase(); 
+System.out.println(state); // Prints: RHODE ISLAND]]></program>
+
+    <p>
+      Here is what the updated code looks like in memory:
+    </p>
+
+    <figure xml:id="figure-string-reassignment">
+      <title>Memory after a String variable is reassigned</title>
+      <image source="figures/figure_2_6_reassignment_combined.png" width="85%">
+        <shortdescription>Two-step diagram showing state initially referencing "rhode island", and after reassignment referencing "RHODE ISLAND" while "rhode island" is abandoned.</shortdescription>
+        <description>
+          <p>
+            Two-panel memory diagram illustrating string reassignment. Panel 1 (Initially) shows the local variable <c>state</c> at address <c>0x7FF0</c> on the stack holding reference <c>0x6000</c> and pointing to the heap <c>String object</c> containing <q>rhode island</q>. Panel 2 (After <c>state = state.toUpperCase();</c>) shows that <c>state</c> has been updated on the stack to hold reference <c>0x7200</c>, pointing to the new uppercase <c>String object</c> containing <q>RHODE ISLAND</q>, while the original <q>rhode island</q> object at <c>0x6000</c> sits abandoned with a dashed red border and no referencing variables.
+          </p>
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      A new <c>"RHODE ISLAND"</c> object is created in the heap, and the <c>state</c> variable has its reference updated to point to that new object. The original <c>"rhode island"</c> object was never modified; it simply no longer has any variables pointing to it. Java will eventually reclaim that abandoned memory through an automatic process called <term>garbage collection</term>.
+    </p>
+
+    <p>
+      This behavior is true for every method in the <c>String</c> class. Methods that seem to modify a string always return a new, distinct <c>String</c> object.
+    </p>
+
+    <p>
+      One thing that learners sometimes find confusing about immutability is the distinction between the variable and the object:
+    </p>
+
+    <ul>
+      <li>
+        <p>The object in the heap cannot be changed.</p>
+      </li>
+      <li>
+        <p>The variable (reference) on the stack can be changed.</p>
+      </li>
+    </ul>
+
+    <p>
+      The variable <c>state</c> is like an arrow. You can point that arrow at a different object in the heap anytime you like, but the text inside the <c>String</c> object itself can never be edited.
+    </p>
+  </subsection>
+</section>

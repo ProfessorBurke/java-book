@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xml:id="ch-04-loops" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Repetition Statements and File Processing</title>
+
+  <xi:include href="sec-4-1-overview.ptx" />
+  <xi:include href="sec-4-2-conditional-loops.ptx" />
+  <xi:include href="sec-4-3-variable-roles.ptx" />
+  <xi:include href="sec-4-4-counting-loops-for.ptx" />
+  <xi:include href="sec-4-5-sentinel-loops.ptx" />
+  <xi:include href="sec-4-6-nested-loops.ptx" />
+  <xi:include href="sec-4-7-designing-loops.ptx" />
+  <xi:include href="sec-4-8-loop-invariants.ptx" />
+  <xi:include href="sec-4-9-loop-errors-testing.ptx" />
+  <xi:include href="sec-4-10-reading-files-scanner.ptx" />
+  <xi:include href="sec-4-11-writing-files-printwriter.ptx" />
+  <xi:include href="sec-4-12-moving-on.ptx" /> 
+  <xi:include href="sec-4-13-exercises.ptx" /> 
+</chapter>

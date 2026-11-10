@@ -49,7 +49,7 @@
 
     <listing xml:id="listing-point-class">
       <caption>The <c>Point</c> class definition</caption>
-      <program language="java">
+      <program language="java" line-numbers="yes">
         <code>
 public class Point {
     

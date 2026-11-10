@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-5-4-parameters-arguments" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Passing Information: Parameters and Arguments</title>
+
+  <introduction>
+    <p>
+      Methods become far more powerful when we can customize how they work. You have actually been passing information to <c>void</c> methods since your first Java program: every time you write <c>System.out.println("Hello")</c>, the text inside the parentheses is an argument passed to the method to tell it what to display. In Chapter 2, you passed multiple arguments of different types to <c>System.out.printf</c> to format output.
+    </p>
+
+    <p>
+      In this section, we will explore how to write our own methods that accept inputs. We will look at the mechanics of defining parameters and passing arguments, and we’ll peek behind the curtain at how Java copies and handles those values so we can avoid common bugs.
+    </p>
+  </introduction>
+
+  <!-- ============================================================ -->
+  <!-- 5.4.1 Defining a method with formal parameters               -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-4-1-formal-parameters">
+    <title>Defining a Method with Formal Parameters</title>
+
+    <p>
+      Let’s specialize the <c>greetUser()</c> method by adding two formal parameters. A <term>formal parameter</term> (often simply <q>parameter</q>) is a variable declared in the method header that allows the calling method to pass in a value when the method is invoked. As previously written, our <c>greetUser()</c> method printed the same message every time it was invoked. By adding two parameters, we can greet the user by name with a customized message:
+    </p>
+
+    <program language="java">
+<![CDATA[public static void greetUser(String name, boolean isReturningUser) {
+    if (isReturningUser) {
+        System.out.println("Welcome back, " + name + "! Good to see you again.");
+    } else {
+        System.out.println("Welcome to the platform, " + name + "! Glad you're here.");
+    }
+}]]>
+    </program>
+
+    <p>
+      In this version of the method, we define two parameters: the user’s name (<c>String name</c>) and a boolean (<c>boolean isReturningUser</c>). Within the method, we customize the message based on whether the user has visited before (<c>isReturningUser</c> is <c>true</c>) and incorporate the user’s name.
+    </p>
+
+    <p>
+      Invoking the method with these arguments:
+    </p>
+
+    <pre>greetUser("Maya", true);</pre>
+
+    <p>
+      results in this output to the console:
+    </p>
+
+    <console>
+      <output>Welcome back, Maya! Good to see you again.</output>
+    </console>
+
+    <p>
+      Whereas invoking with these arguments:
+    </p>
+
+    <pre>greetUser("Greta", false);</pre>
+
+    <p>
+      yields this output:
+    </p>
+
+    <console>
+      <output>Welcome to the platform, Greta! Glad you’re here.</output>
+    </console>
+
+    <p>
+      Let’s look at the mechanics of defining a method with parameters.
+    </p>
+
+    <p>
+      When defining a method, the parameter list goes within the parentheses after the method name. Each parameter is a data type followed by the parameter name, and if there is more than one parameter, they are separated by commas. A parameter can be any data type, including object reference types (like <c>String name</c>) and primitive types (like <c>boolean isReturningUser</c>). Here are a few examples of method headers with different parameter types:
+    </p>
+
+    <program language="java">
+<![CDATA[public static void displayAqi(int aqi, String cityName)
+public static void printBox(int width, int height, char borderChar)
+public static void printReceipt(double subtotal, double taxRate, boolean isMember)
+public static void printStanding(String studentId, int completedCredits, double gpa)]]>
+    </program>
+
+    <p>
+      There are a couple of common mistakes to avoid when writing method headers:
+    </p>
+
+    <ul>
+      <li>
+        <p>
+          <strong>Semicolons do not belong after the closing parenthesis:</strong> Putting a semicolon after the parameter list results in a compiler error complaining of a missing method body:
+        </p>
+        <program language="java">
+<![CDATA[public static void displayAqi(int aqi, String cityName); // ERROR! Missing method body]]>
+        </program>
+      </li>
+      <li>
+        <p>
+          <strong>Each parameter declaration must include its type:</strong> Even if you are defining several parameters of the same type, you cannot take the shortcut of listing a comma-delimited set of parameter names after a single data type, as you can when defining local variables:
+        </p>
+        <program language="java">
+<![CDATA[public static void printCoordinates(int x, int y) // Valid.
+public static void printCoordinates(int x, y)     // Syntax error!]]>
+        </program>
+      </li>
+    </ul>
+
+    <p>
+      Parameters are variables within the method, so we follow the usual identifier (naming) rules for parameter names.
+    </p>
+
+    <p>
+      Some beginning programmers find the lack of initialization code for parameters puzzling. In our <c>greetUser</c> example, we jump into testing the <c>isReturningUser</c> variable, but where did it get its value? Parameters come into a method with their values already set by the calling method.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 5.4.2 Invoking a method with argument expressions            -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-4-2-argument-expressions">
+    <title>Invoking a Method with Argument Expressions</title>
+
+    <p>
+      When we invoke a method from <c>main</c> or from another calling method, we must pass in <term>argument expressions</term> that match each of the parameters declared in the method header. These values specialize how the method functions and give the parameter variables their initial values.
+    </p>
+
+    <p>
+      In our <c>greetUser</c> method header, we have two formal parameter variables: <c>name</c> and <c>isReturningUser</c>:
+    </p>
+
+    <program language="java">
+<![CDATA[public static void greetUser(String name, boolean isReturningUser)]]>
+    </program>
+
+    <p>
+      Java matches the expressions passed in when the method is called to the declared parameters in order. To invoke (call) this method, we must pass in exactly two arguments: an expression that evaluates to a <c>String</c> followed by an expression that evaluates to a <c>boolean</c>.
+    </p>
+
+    <p>
+      If the number, type, or order of expressions passed in the call doesn’t match the number, type, and order of parameter variables in the method declaration, Java will flag the call with a compile-time error.
+    </p>
+
+    <p>
+      You will recall from Chapter 2 that an <term>expression</term> is a piece of code that represents or calculates a single value. The simplest expression is a literal value (such as <c>5</c>, <c>"Maya"</c>, <c>true</c>, or <c>3.14159</c>). A variable is an expression that evaluates to the value last stored in that variable. We can also build more complicated expressions with a combination of variables, literals, method calls, and operators. These are all valid calls to <c>greetUser</c> illustrating examples of expressions passed as arguments:
+    </p>
+
+    <program language="java">
+<![CDATA[greetUser(firstName + " " + lastName, true);
+greetUser(name, numVisits > 0);
+greetUser(stdin.nextLine(), hasVisited);]]>
+    </program>
+
+    <p>
+      In the first example, we pass two <c>String</c> variables concatenated together as the first argument, matched to the parameter variable <c>name</c>. In the second example, we pass simply a <c>String</c> variable, and in the third, we pass the result of a value-returning <c>Scanner</c> method <c>nextLine()</c>. For the second argument, in the first example we pass the literal boolean <c>true</c>, in the second we pass the result of the relational expression <c>numVisits &gt; 0</c>, and in the third we pass a boolean variable.
+    </p>
+
+    <p>
+      Java checks at compile-time that every expression in the argument list:
+    </p>
+
+    <ol>
+      <li>
+        <p>Uses variables that are guaranteed to be initialized before the method is called, and</p>
+      </li>
+      <li>
+        <p>Has a compatible data type that matches the corresponding parameter in the parameter list.</p>
+      </li>
+    </ol>
+
+    <p>
+      When we say an argument must match the parameter, this does not always require an identical type. As we saw in Section 2.5 when examining arithmetic expressions and assignment statements, Java automatically performs <term>widening primitive conversions</term><mdash />safely converting a smaller numeric type into a larger, compatible type following the widening order:
+    </p>
+
+    <p>
+      <c>int</c> <m>\longrightarrow</m> <c>long</c> <m>\longrightarrow</m> <c>float</c> <m>\longrightarrow</m> <c>double</c>
+    </p>
+
+    <p>
+      Because passing an argument into a method behaves just like an assignment statement, the exact same widening rules apply. For example, if a method declares a parameter of type <c>double</c><mdash />such as our <c>printReceipt</c> method or the standard library’s <c>Math.sqrt</c><mdash />you can safely pass an <c>int</c> value like <c>20</c>. Java will automatically widen that integer to the <c>double</c> value <c>20.0</c> when initializing the parameter. However, Java will never automatically narrow a type during a method call; attempting to pass a <c>double</c> argument into an <c>int</c> parameter will immediately trigger a compile-time type mismatch error.
+    </p>
+
+    <p>
+      When we invoke a method, Java first evaluates all of the expressions in the argument list from left to right, producing a list of values. Those values are then copied into the parameter variables, giving them their initial values. This is why we don’t initialize parameter variables within a method<mdash />they are given values when the method is called.
+    </p>
+
+    <p>
+      When we invoke <c>greetUser</c> with the line:
+    </p>
+
+    <program language="java">
+<![CDATA[greetUser(name, numVisits > 0);]]>
+    </program>
+
+    <p>
+      Java first evaluates the variable <c>name</c>. It evaluates to the last value assigned to <c>name</c> (<c>"Maya"</c>, for example). It then evaluates the expression <c>numVisits &gt; 0</c>, which requires evaluating the variable <c>numVisits</c> (imagine it holds the value <c>2</c>), and then evaluating <c>2 &gt; 0</c>, which is <c>true</c>. Java then copies the value <c>"Maya"</c> into the parameter variable <c>name</c> in <c>greetUser</c>, and the value <c>true</c> into the parameter variable <c>isReturningUser</c> in <c>greetUser</c>, and execution proceeds to the first line of <c>greetUser</c>.
+    </p>
+
+    <note>
+      <title>Terminology: Parameters vs. Arguments</title>
+      <p>
+        You might hear experienced programmers use the words <q>parameter</q> and <q>argument</q> interchangeably. Technically, the variables declared in the method header are <term>formal parameters</term>, and the expressions passed in the method call are either <term>actual parameters</term> or <term>arguments</term>. In the interest of correctness and clarity, we use the terms <term>parameter</term> or <term>parameter variable</term> for the variables declared within the method header and <term>argument</term> for the expressions passed to the method call.
+      </p>
+    </note>
+  </subsection>
+
+</section>

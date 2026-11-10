@@ -1,0 +1,551 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-4-6-nested-loops" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Nested Loops</title>
+
+  <introduction>
+    <p>
+      So far, all the loops we have written have been one-dimensional: a single loop control variable steps through a sequence of values to repeat an action.
+    </p>
+
+    <p>
+      However, many real-world computing problems are inherently two-dimensional or multi-dimensional:
+    </p>
+
+    <ul>
+      <li><p>Displaying a table with rows and columns.</p></li>
+      <li><p>Scanning through a digital image made of pixels arranged in a grid of width and height.</p></li>
+      <li><p>Inspecting every square on a chessboard or coordinate grid.</p></li>
+      <li><p>Processing data across multiple days, where each day contains multiple hours.</p></li>
+    </ul>
+
+    <p>
+      To handle multi-dimensional repetition, Java allows you to place one loop inside the body of another. This construct is called a <term>nested loop</term>.
+    </p>
+  </introduction>
+
+  <!-- ============================================================ -->
+  <!-- 4.6.1 The mechanics of nested loops                          -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-6-1-mechanics-nested-loops">
+    <title>The Mechanics of Nested Loops</title>
+
+    <p>
+      In a nested loop structure, we refer to the enclosing loop as the <term>outer loop</term> and the loop inside it as the <term>inner loop</term>. <xref ref="listing-simple-nested" /> demonstrates this relationship with a simple nested <c>while</c> loop:
+    </p>
+
+    <listing xml:id="listing-simple-nested">
+      <title><c>SimpleNested.java</c></title>
+      <program language="java" line-numbers="yes"><![CDATA[/**
+ * Illustrates a nested loop.
+ */
+public class SimpleNested {
+ 
+    public static void main(String[] args) {
+        int row = 0;
+        while (row < 3) {        // Outer loop
+            int col = 0;
+            while (col < 4) {     // Inner loop
+                System.out.println(row + ", " + col);
+                col++;
+            } // inner while
+            row++;
+        } // outer while
+    }
+}]]></program>
+    </listing>
+
+    <p>
+      In <xref ref="listing-simple-nested" />, notice where each control element lives:
+    </p>
+
+    <ul>
+      <li><p>The outer loop initializes <c>row</c> on line 7, tests <c>row &lt; 3</c> on line 8, and increments <c>row</c> on line 14.</p></li>
+      <li><p>The inner loop is completely enclosed within the body of the outer loop: it initializes <c>col</c> on line 9, tests <c>col &lt; 4</c> on line 10, and increments <c>col</c> on line 12.</p></li>
+    </ul>
+
+    <p>
+      When this program runs:
+    </p>
+
+    <ol>
+      <li><p><c>row</c> is initialized to 0, and the outer condition <c>0 &lt; 3</c> evaluates to <c>true</c>.</p></li>
+      <li><p>Execution enters the outer loop body and hits line 9: <c>int col = 0;</c>.</p></li>
+      <li><p>The inner condition <c>0 &lt; 4</c> is <c>true</c>, so the inner body executes, printing <c>0, 0</c> and incrementing <c>col</c> to 1.</p></li>
+      <li><p>Crucially, control now returns to the top of the inner loop (line 10). The inner loop continues running until <c>col</c> reaches 4, at which point <c>col &lt; 4</c> becomes <c>false</c>.</p></li>
+      <li><p>Once the inner loop finishes, execution advances to line 14: <c>row</c> increments to 1.</p></li>
+      <li><p>Control returns to the top of the outer loop (line 8). The condition <c>1 &lt; 3</c> is <c>true</c>, so execution enters the outer loop again.</p></li>
+      <li><p>Line 9 executes a second time: <c>col</c> is re-declared and reset back to 0, starting the entire inner loop over from scratch.</p></li>
+    </ol>
+
+    <p>
+      This flow of control is easy to see in a nested <c>while</c> loop because you can physically see line 9 sitting inside the outer loop’s body.
+    </p>
+
+    <p>
+      The exact same flow of control occurs if we rewrite this using <c>for</c> loops:
+    </p>
+
+    <program language="java"><![CDATA[for (int row = 0; row < 3; row++) {        // Outer loop
+    for (int col = 0; col < 4; col++) {     // Inner loop
+        System.out.println(row + ", " + col);
+    } // inner for
+} // outer for]]></program>
+
+    <p>
+      When reading a nested <c>for</c> loop, you must remember that whenever execution re-enters the inner loop from above, its initializer (<c>int col = 0</c>) runs again, resetting the inner counter back to zero.
+    </p>
+
+    <p>
+      An intuitive mental model for understanding how control flows through a nested loop is an analog clock:
+    </p>
+
+    <ul>
+      <li><p>The outer loop is the hour hand.</p></li>
+      <li><p>The inner loop is the minute hand.</p></li>
+    </ul>
+
+    <p>
+      For every single step the outer loop takes, the inner loop must run through its entire, complete cycle from start to finish before the outer loop can advance to its next value.
+    </p>
+
+    <p>
+      Because the inner loop runs to completion on every iteration of the outer loop, the total number of times the inner loop body executes is the product of the two iteration counts:
+    </p>
+
+    <md>\text{Total Iterations} = \text{Outer Iterations} \times \text{Inner Iterations}</md>
+
+    <p>
+      In <xref ref="listing-simple-nested" /> above:
+    </p>
+
+    <ul>
+      <li><p>The outer loop repeats three times (<c>row = 0, 1, 2</c>).</p></li>
+      <li><p>For each row, the inner loop repeats four times (<c>col = 0, 1, 2, 3</c>).</p></li>
+      <li><p>Therefore, the inner <c>println</c> statement executes <m>3 \times 4 = 12</m> times.</p></li>
+    </ul>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 4.6.2 Tracing the Execution Grid                             -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-6-2-tracing-execution-grid">
+    <title>Tracing the Execution Grid</title>
+
+    <p>
+      <xref ref="table-tracing-nested-loop" /> traces the execution of the nested loop in <xref ref="listing-simple-nested" />, illustrating why the inner loop repeats so many times:
+    </p>
+
+    <table xml:id="table-tracing-nested-loop">
+      <title>Tracing the nested loop</title>
+      <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+        <col width="8%"/>
+        <col width="18%"/>
+        <col width="18%"/>
+        <col width="16%"/>
+        <col width="40%"/>
+        <row header="yes">
+          <cell><strong>Step</strong></cell>
+          <cell><strong>Outer Variable (<c>row</c>)</strong></cell>
+          <cell><strong>Inner Variable (<c>col</c>)</strong></cell>
+          <cell><strong>Output Printed</strong></cell>
+          <cell><strong>What Just Happened?</strong></cell>
+        </row>
+        <row>
+          <cell>1</cell>
+          <cell>0 (Pass 1)</cell>
+          <cell>0</cell>
+          <cell><c>0, 0</c></cell>
+          <cell>Outer loop starts; inner loop initialized to 0</cell>
+        </row>
+        <row>
+          <cell>2</cell>
+          <cell>0</cell>
+          <cell>1</cell>
+          <cell><c>0, 1</c></cell>
+          <cell>Inner loop increments</cell>
+        </row>
+        <row>
+          <cell>3</cell>
+          <cell>0</cell>
+          <cell>2</cell>
+          <cell><c>0, 2</c></cell>
+          <cell>Inner loop increments</cell>
+        </row>
+        <row>
+          <cell>4</cell>
+          <cell>0</cell>
+          <cell>3</cell>
+          <cell><c>0, 3</c></cell>
+          <cell>Inner loop reaches its limit</cell>
+        </row>
+        <row>
+          <cell>5</cell>
+          <cell>0</cell>
+          <cell>4</cell>
+          <cell><em>(none)</em></cell>
+          <cell>Inner condition <c>col &lt; 4</c> is <c>false</c>; inner loop terminates</cell>
+        </row>
+        <row>
+          <cell>6</cell>
+          <cell>1 (Pass 2)</cell>
+          <cell>0</cell>
+          <cell><c>1, 0</c></cell>
+          <cell>Outer loop increments to 1; inner loop restarts at 0</cell>
+        </row>
+        <row>
+          <cell>7</cell>
+          <cell>1</cell>
+          <cell>1</cell>
+          <cell><c>1, 1</c></cell>
+          <cell>Inner loop runs its full cycle again</cell>
+        </row>
+        <row>
+          <cell>8</cell>
+          <cell>1</cell>
+          <cell>2</cell>
+          <cell><c>1, 2</c></cell>
+          <cell>Inner loop increments</cell>
+        </row>
+        <row>
+          <cell>9</cell>
+          <cell>1</cell>
+          <cell>3</cell>
+          <cell><c>1, 3</c></cell>
+          <cell>Inner loop finishes second full cycle</cell>
+        </row>
+        <row>
+          <cell>10</cell>
+          <cell>2 (Pass 3)</cell>
+          <cell>0</cell>
+          <cell><c>2, 0</c></cell>
+          <cell>Outer loop increments to 2; inner loop restarts at 0</cell>
+        </row>
+        <row>
+          <cell>11</cell>
+          <cell>2</cell>
+          <cell>1</cell>
+          <cell><c>2, 1</c></cell>
+          <cell>Inner loop increments</cell>
+        </row>
+        <row>
+          <cell>12</cell>
+          <cell>2</cell>
+          <cell>2</cell>
+          <cell><c>2, 2</c></cell>
+          <cell>Inner loop increments</cell>
+        </row>
+        <row>
+          <cell>13</cell>
+          <cell>2</cell>
+          <cell>3</cell>
+          <cell><c>2, 3</c></cell>
+          <cell>Final execution</cell>
+        </row>
+        <row>
+          <cell>14</cell>
+          <cell>3</cell>
+          <cell><mdash /></cell>
+          <cell><em>(none)</em></cell>
+          <cell>Outer condition <c>row &lt; 3</c> is <c>false</c>; nested structure ends</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      Notice step 6 and step 10: whenever control returns to the outer loop, the inner loop’s initializer runs again, resetting <c>col</c> back to 0.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 4.6.3 Producing Tabular Reports (Rows and Columns)           -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-6-3-producing-tabular-reports">
+    <title>Producing Tabular Reports (Rows and Columns)</title>
+
+    <p>
+      The most common application of nested loops in early programming is printing formatted tables and grids. This requires combining three distinct output techniques:
+    </p>
+
+    <ul>
+      <li><p><strong>The outer loop controls the rows:</strong> Each pass of the outer loop represents one horizontal line of the table.</p></li>
+      <li><p><strong>The inner loop controls the columns:</strong> Inside the inner loop, use <c>System.out.print()</c> (or <c>printf</c>) without a newline to print values side-by-side across the current row.</p></li>
+      <li><p><strong>Advance to the next row:</strong> Immediately after the inner loop finishes<mdash />but still inside the outer loop<mdash />call an empty <c>System.out.println()</c> to drop the cursor down to the start of the next line.</p></li>
+    </ul>
+
+    <p>
+      Here is a program that generates a complete multiplication table using this exact pattern:
+    </p>
+
+    <listing xml:id="listing-multiplication-table">
+      <title><c>MultiplicationTable.java</c></title>
+      <program language="java" line-numbers="yes"><![CDATA[public class MultiplicationTable {
+ 
+    public static void main(String[] args) {
+        System.out.println("           === 10x10 MULTIPLICATION TABLE ===\n");
+ 
+        // Outer loop controls the rows (1 through 10)
+        for (int row = 1; row <= 10; row++) {
+ 
+            // Inner loop controls the columns across the current row
+            for (int col = 1; col <= 10; col++) {
+                int product = row * col;
+                // Print each product right-aligned in a 5-space column
+                System.out.printf("%5d", product);
+            }
+ 
+            // After all 10 columns are printed, advance to the next row
+            System.out.println();
+        }
+    }
+}]]></program>
+    </listing>
+
+    <p>
+      This produces the following output:
+    </p>
+
+    <console>
+      <output>           === 10x10 MULTIPLICATION TABLE ===
+ 
+    1    2    3    4    5    6    7    8    9   10
+    2    4    6    8   10   12   14   16   18   20
+    3    6    9   12   15   18   21   24   27   30
+    4    8   12   16   20   24   28   32   36   40
+    5   10   15   20   25   30   35   40   45   50
+    6   12   18   24   30   36   42   48   54   60
+    7   14   21   28   35   42   49   56   63   70
+    8   16   24   32   40   48   56   64   72   80
+    9   18   27   36   45   54   63   72   81   90
+   10   20   30   40   50   60   70   80   90  100</output>
+    </console>
+
+    <p>
+      Notice the coordination: the inner loop prints ten numbers horizontally across the screen, and the outer loop issues a single newline before starting the next row.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 4.6.4 Generating Coordinate Matrices                         -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-6-4-generating-coordinate-matrices">
+    <title>Generating Coordinate Matrices</title>
+
+    <p>
+      Nested loops are equally useful when calculating mathematical or geographic coordinate matrices.
+    </p>
+
+    <p>
+      Recall our search-and-rescue drone from Chapter 2. Suppose that instead of flying in a circle, a drone needs to systematically sweep an area divided into a rectangular survey grid. Given a grid of rows and columns, we can generate every inspection point <m>(x, y)</m>:
+    </p>
+
+    <program language="java"><![CDATA[int spacing = 20; // 20 meters between inspection points
+ 
+// Sweep through an area: x spans 0 to 60 meters, y spans 0 to 40 meters
+for (int y = 0; y <= 40; y += spacing) {
+    for (int x = 0; x <= 60; x += spacing) {
+        System.out.printf("(%2d, %2d)  ", x, y);
+    }
+    System.out.println();
+}]]></program>
+
+    <p>
+      This program produces the following output:
+    </p>
+
+    <console>
+      <output>( 0,  0)  (20,  0)  (40,  0)  (60,  0)  
+( 0, 20)  (20, 20)  (40, 20)  (60, 20)  
+( 0, 40)  (20, 40)  (40, 40)  (60, 40)</output>
+    </console>
+
+    <p>
+      Notice that the outer loop controls <c>y</c> (the vertical coordinate) and the inner loop controls <c>x</c> (the horizontal movement). This matches how we read text: left to right across a line, then down to the next line.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 4.6.5 Common traps in nested loops                           -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-6-5-common-traps-nested-loops">
+    <title>Common Traps in Nested Loops</title>
+
+    <p>
+      We’ve already busted some of the most common nested loop misconceptions that beginning programmers face:
+    </p>
+
+    <ul>
+      <li><p>Believing the inner loop picks up where it left off, rather than starting over for each iteration of the outer loop.</p></li>
+      <li><p>Mapping the correct loop to rows and columns when iterating over a grid.</p></li>
+      <li><p>Accurately tracing a nested loop execution and predicting the result.</p></li>
+      <li><p>Understanding that nested loop iterations are multiplicative and being able to calculate how many times the inner loop code will execute.</p></li>
+    </ul>
+
+    <p>
+      There are a few more frequent beginner traps that we’ll cover here.
+    </p>
+
+    <paragraphs>
+      <title>Trap 1: The Reset Trap (Initializing in the wrong loop)</title>
+      <p>
+        One of the most frequent logical bugs occurs when combining a gatherer with a nested loop.
+      </p>
+
+      <p>
+        Suppose you want to calculate the sum of each individual row in a grid:
+      </p>
+
+      <program language="java"><![CDATA[// BUG: 'rowTotal' is initialized in the wrong place!
+int rowTotal = 0; 
+ 
+for (int row = 1; row <= 3; row++) {
+    for (int col = 1; col <= 4; col++) {
+        rowTotal += col;
+    }
+    System.out.println("Row " + row + " total: " + rowTotal);
+}]]></program>
+
+      <p>
+        This code produces the following output:
+      </p>
+
+      <console>
+        <output>Row 1 total: 10
+Row 2 total: 20
+Row 3 total: 30</output>
+      </console>
+
+      <p>
+        Because <c>int rowTotal = 0;</c> was declared and initialized outside the outer loop, it is never reset to zero when moving to the next row. Row 2's calculation begins with Row 1's total already inside it.
+      </p>
+
+      <p>
+        If a variable is meant to track something for an individual pass of the outer loop (such as the sum of a single row or an average for a single student), declare and initialize it inside the outer loop, right before the inner loop begins:
+      </p>
+
+      <program language="java"><![CDATA[// CORRECT: 'rowTotal' resets to 0 at the start of every new row
+for (int row = 1; row <= 3; row++) {
+    int rowTotal = 0; // Fresh accumulator for this specific row!
+ 
+    for (int col = 1; col <= 4; col++) {
+        rowTotal += col;
+    }
+    System.out.println("Row " + row + " total: " + rowTotal);
+}]]></program>
+    </paragraphs>
+
+    <paragraphs>
+      <title>Trap 2: Updating the wrong counter (the muscle-memory bug)</title>
+      <p>
+        When typing a nested <c>for</c> loop, programmers often write the outer loop with <c>i</c>, and then create the inner loop with <c>j</c>. But out of pure habit and muscle memory, their fingers type <c>i++</c> in the inner loop’s update section:
+      </p>
+
+      <program language="java"><![CDATA[// DANGEROUS: Updating 'i' instead of 'j'
+for (int i = 0; i < 3; i++) {
+    for (int j = 0; j < 4; i++) { // BUG: Typed i++ instead of j++!
+        System.out.print("*");
+    }
+    System.out.println();
+}]]></program>
+
+      <p>
+        This creates a catastrophic bug:
+      </p>
+
+      <ol>
+        <li><p>The inner loop checks <c>j &lt; 4</c>.</p></li>
+        <li><p>But line 2 increments <c>i</c>, not <c>j</c>!</p></li>
+        <li><p>Because <c>j</c> never increases, <c>j &lt; 4</c> remains <c>true</c> forever, creating an infinite loop.</p></li>
+        <li><p>Meanwhile, <c>i</c> leaps ahead wildly, corrupting the outer loop’s counting.</p></li>
+      </ol>
+
+      <p>
+        Double-check the third clause of your inner <c>for</c> loop header. Ensure the variable being tested in the middle condition matches the variable being modified in the update step.
+      </p>
+    </paragraphs>
+
+    <paragraphs>
+      <title>Trap 3: Confusing who controls what (Row vs. column inversion)</title>
+      <p>
+        Another common stumbling block is swapping the responsibilities of the two loops.
+      </p>
+
+      <p>
+        Suppose a problem asks you to print a grid that is 2 rows tall and 5 columns wide:
+      </p>
+
+      <console>
+        <output>* * * * *
+* * * * *</output>
+      </console>
+
+      <p>
+        Beginners often look at the numbers 2 and 5 and instinctively write:
+      </p>
+
+      <program language="java"><![CDATA[// BUG: Produces 5 rows of 2 asterisks instead!
+for (int i = 0; i < 5; i++) {         // Thinks 5 = width
+    for (int j = 0; j < 2; j++) {     // Thinks 2 = height
+        System.out.print("* ");
+    }
+    System.out.println();
+}]]></program>
+
+      <p>
+        This loop runs the outer loop 5 times, printing 5 tall rows of 2 asterisks. The shape is completely inverted.
+      </p>
+
+      <p>
+        Remember that printing to a screen always moves line by line (top to bottom):
+      </p>
+
+      <ul>
+        <li><p>The outer loop dictates how many lines (rows) appear on your screen.</p></li>
+        <li><p>The inner loop dictates how many characters (columns) appear across each line.</p></li>
+        <li><p>To prevent confusion, avoid generic names like <c>i</c> and <c>j</c> for grid problems; naming your counters <c>row</c> and <c>col</c> makes an accidental inversion immediately obvious.</p></li>
+      </ul>
+    </paragraphs>
+
+    <paragraphs>
+      <title>Trap 4: The name-shadowing trap (reusing the same loop variable name)</title>
+      <p>
+        Because loop counters are often named <c>i</c>, beginners sometimes accidentally use <c>i</c> for both loops:
+      </p>
+
+      <program language="java"><![CDATA[// BUG: Reusing 'i' causes a compiler error or severe logical failure!
+for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 5; i++) { // ERROR: Duplicate local variable i
+        System.out.print("*");
+    }
+}]]></program>
+
+      <p>
+        In Java, declaring <c>int i</c> in the inner loop when <c>i</c> is already active in the outer loop causes a compiler error: <q>Duplicate local variable i.</q>
+      </p>
+
+      <p>
+        Even if the inner variable wasn't re-declared (e.g., writing <c>for (i = 0; ...)</c>), the inner loop would constantly reset the outer loop's counter back to 0, causing an infinite loop.
+      </p>
+
+      <p>
+        The best practice is to use distinct, meaningful names whenever possible, such as <c>row</c> and <c>col</c>, <c>hour</c> and <c>minute</c>, or <c>x</c> and <c>y</c>. If you use traditional short names, follow the standard mathematical convention: use <c>i</c> for the outer loop, <c>j</c> for the inner loop, and <c>k</c> for a third nested level.
+      </p>
+    </paragraphs>
+
+    <paragraphs>
+      <title>Trap 5: The Computational cost trap</title>
+      <p>
+        Be mindful of how quickly nested loops multiply:
+      </p>
+
+      <ul>
+        <li><p>A single loop running 1,000 iterations takes less than a millisecond.</p></li>
+        <li><p>Two nested loops of 1,000 iterations execute the inner body <m>1{,}000 \times 1{,}000 = 1{,}000{,}000</m> (one million) times.</p></li>
+        <li><p>Three nested loops of 1,000 iterations execute the body <m>1{,}000 \times 1{,}000 \times 1{,}000 = 1{,}000{,}000{,}000</m> (one billion) times, which will noticeably freeze a program for several seconds!</p></li>
+      </ul>
+
+      <p>
+        Whenever you nest loops, keep an eye on your bounds to ensure you are not creating unintended performance bottlenecks.
+      </p>
+    </paragraphs>
+  </subsection>
+</section>

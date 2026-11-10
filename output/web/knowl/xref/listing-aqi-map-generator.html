@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<!--******************************************-->
+<!--*  Authored with PreTeXt                 *-->
+<!--*  pretextbook.org                       *-->
+<!--*  Theme: default-modern                 *-->
+<!--*  Palette:                              *-->
+<!--******************************************-->
+
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body class="ignore-math">
+<figure class="listing figure-like"><figcaption><span class="type">Listing</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">4.21<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><code class="code-inline tex2jax_ignore">AqiMapGenerator.java</code><div class="autopermalink" aria-hidden="true" data-description="Listing 4.21: AqiMapGenerator.java"><a tabindex="-1" href="#listing-aqi-map-generator" title="Copy heading and permalink for Listing 4.21: AqiMapGenerator.java" aria-label="Copy heading and permalink for Listing 4.21: AqiMapGenerator.java">🔗</a></div></figcaption><div class="listing__contents"><div class="code-box"><pre class="program clipboardable line-numbers"><code class="language-java">import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+ 
+/**
+ * Reads air quality monitoring data from a text file and writes
+ * a complete, interactive HTML map using Leaflet.js and Esri basemaps.
+ */
+public class AqiMapGenerator {
+ 
+    public static void main(String[] args) throws FileNotFoundException {
+           
+        File inputFile;      // The file with city data.
+        File outputFile;     // The HTML map output.
+        Scanner fileScanner;  // For reading city data.
+        PrintWriter htmlWriter;      // For writing HTML file.
+        String name;                // City name.
+        double latitude, longitude;  // City location.
+        int aqi;                    // City air quality.
+        String color, status;        // For writing to HTML.
+        int count = 0;              // Counts the number of records.
+ 
+        // Creates the input and output files.
+        inputFile = new File("aqi_data.txt");
+        outputFile = new File("aqi_map.html");
+ 
+        // Verifies the data file exists before proceeding.
+        if (!inputFile.exists()) {
+            System.out.println("Error: Could not locate " + inputFile.getName());
+        } else {
+ 
+            fileScanner = new Scanner(inputFile);
+            htmlWriter = new PrintWriter(outputFile);
+   
+            // 1. Write the HTML header and Leaflet.js setup
+            htmlWriter.println("&lt;!DOCTYPE html&gt;");
+            htmlWriter.println("&lt;html&gt;");
+            htmlWriter.println("&lt;head&gt;");
+            htmlWriter.println("    &lt;title&gt;US Air Quality Map&lt;/title&gt;");
+            htmlWriter.println("    &lt;meta charset=\"UTF-8\"&gt;");
+            htmlWriter.println("    &lt;link rel=\"stylesheet\" href=\"https://unpkg.com/leaflet@1.9.4/dist/leaflet.css\" /&gt;");
+            htmlWriter.println("    &lt;script src=\"https://unpkg.com/leaflet@1.9.4/dist/leaflet.js\"&gt;&lt;/script&gt;");
+            htmlWriter.println("    &lt;style&gt;");
+            htmlWriter.println("        body { margin: 0; padding: 0; font-family: sans-serif; }");
+            htmlWriter.println("        #map { height: 100vh; width: 100vw; }");
+            htmlWriter.println("    &lt;/style&gt;");
+            htmlWriter.println("&lt;/head&gt;");
+            htmlWriter.println("&lt;body&gt;");
+            htmlWriter.println("    &lt;div id=\"map\"&gt;&lt;/div&gt;");
+            htmlWriter.println("    &lt;script&gt;");
+   
+            // Center map over the contiguous US (zoom level 4)
+            htmlWriter.println("        var map = L.map('map').setView([39.8283, -98.5795], 4);");
+   
+            // Use Esri Light Gray basemap (requires no API key; works on local files)
+            htmlWriter.println("        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {");
+            htmlWriter.println("            attribution: 'Tiles &amp;copy; Esri &amp;mdash; Esri, DeLorme, NAVTEQ',");
+            htmlWriter.println("            maxZoom: 16");
+            htmlWriter.println("        }).addTo(map);");
+   
+            // 2. Loop through the file, reading one city record per cycle
+            while (fileScanner.hasNext()) {
+                name = fileScanner.nextLine();
+                latitude = Double.parseDouble(fileScanner.nextLine());
+                longitude = Double.parseDouble(fileScanner.nextLine());
+                aqi = Integer.parseInt(fileScanner.nextLine());
+   
+                // Determines the official EPA color and category
+                if (aqi &lt;= 50) {
+                    color = "#00e400"; // Green
+                    status = "Good";
+                } else if (aqi &lt;= 100) {
+                    color = "#ffff00"; // Yellow
+                    status = "Moderate";
+                } else if (aqi &lt;= 150) {
+                    color = "#ff7e00"; // Orange
+                    status = "Unhealthy for Sensitive Groups";
+                } else if (aqi &lt;= 200) {
+                    color = "#ff0000"; // Red
+                    status = "Unhealthy";
+                } else if (aqi &lt;= 300) {
+                    color = "#8f3f97"; // Purple
+                    status = "Very Unhealthy";
+                } else {
+                    color = "#7e0023"; // Maroon
+                    status = "Hazardous";
+                }
+   
+                // Writes a circle marker with an interactive popup for this city
+                htmlWriter.printf("        L.circle([%.4f, %.4f], {%n", latitude, longitude);
+                htmlWriter.printf("            color: '%s',%n", color);
+                htmlWriter.printf("            fillColor: '%s',%n", color);
+                htmlWriter.printf("            fillOpacity: 0.6,%n");
+                htmlWriter.printf("            radius: 50000%n");
+                htmlWriter.printf("        }).addTo(map).bindPopup('&lt;b&gt;%s&lt;/b&gt;&lt;br&gt;AQI: %d (%s)');%n", name, aqi, status);
+   
+                count++;
+            } // while (data in file)
+   
+            // 3. Closes the JavaScript and HTML tags
+            htmlWriter.println("    &lt;/script&gt;");
+            htmlWriter.println("&lt;/body&gt;");
+            htmlWriter.println("&lt;/html&gt;");
+   
+            // 4. Closes both file streams
+            fileScanner.close();
+            htmlWriter.close(); // Flushes all data to disk!
+   
+            System.out.printf("Success! Processed %d stations and generated 'aqi_map.html'.%n", count);
+            System.out.println("Double-click 'aqi_map.html' in your project folder to view the map.");
+        } // else (input file exists)
+    } // main
+} // class
+</code></pre></div></div>
+</figure><span class="incontext"><a class="internal" href="sec-4-11-writing-files-printwriter.html#listing-aqi-map-generator">In Context</a></span>
+</body>
+</html>

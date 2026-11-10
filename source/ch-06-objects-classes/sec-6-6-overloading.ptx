@@ -2,19 +2,24 @@
 <section xml:id="sec-6-6-overloading">
   <title>Overloading Methods and Constructors</title>
 
-  <p>
-    In Chapter 5, you learned that we can overload methods by writing more than one method 
-    with the same name. Overloaded methods must have different parameter lists. Java matches 
-    a method call to the appropriate method by matching the number, order, and type of 
-    arguments to the parameters.
-  </p>
+  
+  <introduction>
+    <p>
+      In Chapter 5, you learned that we can overload methods by writing more than one method 
+      with the same name. Overloaded methods must have different parameter lists. Java matches 
+      a method call to the appropriate method by matching the number, order, and type of 
+      arguments to the parameters.
+    </p>
 
-  <p>
-    It is also common to overload instance methods, and in particular, to overload the 
-    constructor. We overload methods if we want to provide the same operation with different 
-    levels of customization, or if we want to provide the same operation with different 
-    parameter types that cannot be handled through widening primitive conversions.
-  </p>
+    <p>
+      It is also common to overload instance methods, and in particular, to overload the 
+      constructor. We overload methods if we want to provide the same operation with different 
+      levels of customization, or if we want to provide the same operation with different 
+      parameter types that cannot be handled through widening primitive conversions.
+    </p>
+  </introduction>
+
+
 
   <subsection xml:id="subsec-6-6-1-default-constructor">
     <title>The Default Constructor</title>
@@ -91,8 +96,7 @@
 
     <listing xml:id="listing-step-tracker-no-constructor">
       <caption>A class with no programmer-defined constructor</caption>
-      <program language="java">
-        <code>
+      <program language="java" line-numbers="yes">
 public class StepTracker {
     
     private int steps;
@@ -108,14 +112,12 @@ public class StepTracker {
         return this.days != 0 ? (double) this.steps / this.days : 0.0;
     }
 }
-        </code>
       </program>
     </listing>
 
     <listing xml:id="listing-step-tracker-demo">
       <caption>A program that creates a <c>StepTracker</c>, invoking the default constructor</caption>
-      <program interactive="activecode" language="java">
-        <code>
+      <program language="java" line-numbers="yes">
 public class StepTrackerDemo {
     
     public static void main(String[] args) {
@@ -132,7 +134,6 @@ public class StepTrackerDemo {
         System.out.println(myTracker.getAverageSteps());
     }
 }
-        </code>
       </program>
     </listing>
 
@@ -161,14 +162,12 @@ public class StepTrackerDemo {
       You add the following parameterized constructor:
     </p>
 
-    <program language="java">
-      <code>
+    <program language="java" line-numbers="yes">
     public StepTracker(int steps, int days) {
         assert steps >= 0 &amp;&amp; days >= 0 : "Steps and days cannot be negative";
         this.steps = steps;
         this.days = days;
     }
-      </code>
     </program>
 
     <p>
@@ -198,14 +197,12 @@ The constructor StepTracker() is undefined.
       We can write a no-arg constructor for <c>StepTracker</c>:
     </p>
 
-    <program language="java">
-      <code>
+    <program language="java" line-numbers="yes">
     // Functional, but see below for a better way!
     public StepTracker() {
         this.steps = 0;
         this.days = 0;
     }
-      </code>
     </program>
 
     <p>
@@ -221,13 +218,11 @@ The constructor StepTracker() is undefined.
       followed by parentheses to invoke a constructor of the same class:
     </p>
 
-    <program language="java">
-      <code>
+    <program language="java" line-numbers="yes">
     // Chain constructors with this(...) to avoid redundancy.
     public StepTracker() {
         this(0, 0);
     }
-      </code>
     </program>
 
     <p>
@@ -283,14 +278,12 @@ The constructor StepTracker() is undefined.
       integer count of steps:
     </p>
 
-    <program language="java">
-      <code>
+    <program language="java" line-numbers="yes">
     public void addDailySteps(int newSteps) {
         assert newSteps >= 0 : "Steps cannot be negative: " + newSteps;
         this.steps += newSteps;
         this.days++;
     }
-      </code>
     </program>
 
     <p>
@@ -300,8 +293,7 @@ The constructor StepTracker() is undefined.
       version of <c>addDailySteps</c> that accepts distance and stride length:
     </p>
 
-    <program language="java">
-      <code>
+    <program language="java" line-numbers="yes">
     public void addDailySteps(double milesWalked, double strideLengthFeet) {
         assert milesWalked >= 0.0 &amp;&amp; strideLengthFeet > 0.0 : 
             "Distance and stride length must be positive";
@@ -313,7 +305,6 @@ The constructor StepTracker() is undefined.
         // Delegate to the primary 1-parameter method
         addDailySteps(calculatedSteps);
     }
-      </code>
     </program>
 
     <p>
@@ -348,8 +339,7 @@ The constructor StepTracker() is undefined.
       intuitive interface:
     </p>
 
-    <program language="java">
-      <code>
+    <program language="java" line-numbers="yes">
 StepTracker tracker = new StepTracker();
 
 // Day 1: Log steps directly from a pedometer
@@ -359,7 +349,6 @@ tracker.addDailySteps(8500);
 tracker.addDailySteps(2.5, 2.5);
 
 System.out.println("Average daily steps: " + tracker.getAverageSteps());
-      </code>
     </program>
 
     <p>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-1-2-hardware-cycle" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Computer Organization and the Fetch and Execute Cycle</title>
+
+  <p>
+    To understand how a computer executes a program, you only need to look at the
+    relationship between two primary hardware components: Main Memory (RAM) and the
+    Central Processing Unit (CPU). Main memory can be thought of as a vast, ordered
+    grid of numbered storage boxes, each identified by a unique numerical address.
+    RAM holds both the data your program works with and the step-by-step instructions
+    of the program itself while the computer is turned on. The CPU is the processing
+    engine of the computer. It contains the electronic circuitry needed to perform
+    arithmetic and logical comparisons, along with a small collection of ultra-fast
+    internal storage slots called registers used to hold values during immediate
+    calculations. The CPU and main memory are connected by a high-speed communication
+    channel called the bus, which allows the CPU to read instructions and data from
+    memory and write results back.
+  </p>
+
+  <figure xml:id="figure-cpu-and-memory">
+    <caption>The CPU and memory</caption>
+    <image source="figures/figure_1_1.png" width="90%">
+      <shortdescription>Diagram showing the CPU components connected to addressed main memory via a system bus.</shortdescription>
+    </image>
+  </figure>
+
+  <p>
+    Although modern software can perform sophisticated tasks, the physical CPU is capable
+    of executing only its native machine language—a primitive set of instructions encoded
+    entirely as binary numbers (sequences of 0s and 1s). Each machine-language instruction
+    performs only a microscopic, elementary operation, such as copying a number from a
+    memory address into a CPU register, adding two values together, or checking whether a
+    result equals zero. Because writing software directly in strings of binary numbers is
+    unimaginably tedious and error-prone, programmers write code in high-level programming
+    languages (such as Java, C++, or Python) that use readable English words, familiar
+    punctuation, and mathematical operators. Before the physical hardware can execute
+    this code, a specialized program called a compiler must translate the human-readable
+    source code into the binary machine-language instructions that the CPU can directly
+    understand.
+  </p>
+
+  <table xml:id="table-machine-language-instructions">
+    <title>Example Machine Language Instructions and Assembly Mnemonics</title>
+    <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+      <col width="24%"/>
+      <col width="22%"/>
+      <col width="16%"/>
+      <col width="38%"/>
+      <row header="yes">
+        <cell halign="center"><strong>Binary Machine Code</strong></cell>
+        <cell halign="center"><strong>Assembly Mnemonic</strong></cell>
+        <cell halign="center"><strong>Operation</strong></cell>
+        <cell halign="center"><strong>Description</strong></cell>
+      </row>
+      <row>
+        <cell><c>0001 0001 0110 0100</c></cell>
+        <cell><c>LOAD R1, [100]</c></cell>
+        <cell>Load</cell>
+        <cell>Copy the 8-bit value from memory address 100 into CPU register R1.</cell>
+      </row>
+      <row>
+        <cell><c>0001 0010 0110 0101</c></cell>
+        <cell><c>LOAD R2, [101]</c></cell>
+        <cell>Load</cell>
+        <cell>Copy the 8-bit value from memory address 101 into CPU register R2.</cell>
+      </row>
+      <row>
+        <cell><c>0010 0011 0001 0010</c></cell>
+        <cell><c>ADD R3, R1, R2</c></cell>
+        <cell>Arithmetic</cell>
+        <cell>Add the values in R1 and R2 using the ALU; store the sum in R3.</cell>
+      </row>
+      <row>
+        <cell><c>0011 0011 0110 0110</c></cell>
+        <cell><c>STORE R3, [102]</c></cell>
+        <cell>Store</cell>
+        <cell>Copy the value from register R3 into memory address 102.</cell>
+      </row>
+      <row>
+        <cell><c>0100 0000 1100 1000</c></cell>
+        <cell><c>JUMP [200]</c></cell>
+        <cell>Branch</cell>
+        <cell>Change the Program Counter (PC) to address 200, jumping execution there.</cell>
+      </row>
+      <row>
+        <cell><c>0101 0001 1100 1000</c></cell>
+        <cell><c>JUMP_IF_ZERO R1, [200]</c></cell>
+        <cell>Conditional</cell>
+        <cell>If register R1 equals zero, jump to address 200; otherwise continue sequentially.</cell>
+      </row>
+    </tabular>
+  </table>
+
+  <p>
+    Once a compiled program is loaded into memory, the CPU carries it out through a
+    continuous process known as the fetch-and-execute cycle (sometimes called the
+    instruction cycle). Inside the CPU, a dedicated register called the Program
+    Counter (PC) holds the memory address of the next instruction to be run. The cycle
+    repeats billions of times every second in three distinct steps:
+  </p>
+
+  <ol>
+    <li>
+      <p>
+        <strong>Fetch:</strong> The CPU retrieves the instruction waiting at the memory
+        address currently indicated by the Program Counter and loads it into its internal
+        instruction register.
+      </p>
+    </li>
+    <li>
+      <p>
+        <strong>Decode:</strong> The CPU’s control circuitry translates the binary
+        instruction to determine what operation needs to be performed (such as an addition,
+        memory lookup, or comparison) and what data values are involved.
+      </p>
+    </li>
+    <li>
+      <p>
+        <strong>Execute:</strong> The CPU carries out the operation, updates any affected
+        registers or memory addresses, and advances the Program Counter to the address of
+        the next sequential instruction.
+      </p>
+    </li>
+  </ol>
+
+  <p>
+    This cycle runs without pause until the program explicitly tells the processor to halt.
+    By repeating this simple loop of fetching, decoding, and executing primitive machine
+    instructions at incomprehensible speeds, the CPU brings complex software to life.
+  </p>
+
+  <figure xml:id="figure-fetch-decode-execute-cycle">
+    <caption>The fetch-decode-execute cycle</caption>
+    <image source="figures/figure_1_2.png" width="85%">
+      <shortdescription>Cyclic flowchart showing the three stages of the CPU instruction cycle: Fetch, Decode, and Execute.</shortdescription>
+    </image>
+  </figure>
+</section>

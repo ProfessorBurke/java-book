@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<!--******************************************-->
+<!--*  Authored with PreTeXt                 *-->
+<!--*  pretextbook.org                       *-->
+<!--*  Theme: default-modern                 *-->
+<!--*  Palette:                              *-->
+<!--******************************************-->
+
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body class="ignore-math">
+<figure class="listing figure-like"><figcaption><span class="type">Listing</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">2.22<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><code class="code-inline tex2jax_ignore">DroneSearch.java</code><div class="autopermalink" aria-hidden="true" data-description="Listing 2.22: DroneSearch.java"><a tabindex="-1" href="#listing-drone-search" title="Copy heading and permalink for Listing 2.22: DroneSearch.java" aria-label="Copy heading and permalink for Listing 2.22: DroneSearch.java">🔗</a></div></figcaption><div class="listing__contents"><div class="code-box"><pre class="program clipboardable line-numbers"><code class="language-java">import java.util.Scanner;
+
+/**
+ * Given a center (x,y) coordinate and radius, calculates the perimeter of the search
+ * circle and the (x,y) coordinates of waypoints at 45, 135, 225, and 315 degrees.
+ */
+public class DroneSearch {
+
+    public static void main(String[] args) {
+
+        // Inputs for the center and radius of the search.
+        double centerX, centerY, radius;
+        // Calculated results.
+        double perimeter, neX, neY, nwX, nwY, swX, swY, seX, seY;
+        // For obtaining input from the user.
+        Scanner stdin;
+
+        // Obtain the center (x,y) coordinate and the search radius.
+        stdin = new Scanner(System.in);
+        System.out.print("Enter center X coordinate: ");
+        centerX = stdin.nextDouble();
+
+        System.out.print("Enter center Y coordinate: ");
+        centerY = stdin.nextDouble();
+
+        System.out.print("Enter perimeter radius   : ");
+        radius = stdin.nextDouble();
+        stdin.close();
+
+        // Calculate the perimeter length of the search and the
+        // (x, y) coordinates at 45, 135, 225, and 315 degrees.
+        perimeter = Math.PI * 2 * radius;
+        neX = radius * Math.cos(Math.toRadians(45)) + centerX;
+        neY = radius * Math.sin(Math.toRadians(45)) + centerY;
+
+        nwX = radius * Math.cos(Math.toRadians(135)) + centerX;
+        nwY = radius * Math.sin(Math.toRadians(135)) + centerY;
+
+        swX = radius * Math.cos(Math.toRadians(225)) + centerX;
+        swY = radius * Math.sin(Math.toRadians(225)) + centerY;
+
+        seX = radius * Math.cos(Math.toRadians(315)) + centerX;
+        seY = radius * Math.sin(Math.toRadians(315)) + centerY;
+
+        // Display the perimeter to the user.
+        System.out.printf("Total Perimeter Distance : %.2f meters%n%n", perimeter);
+
+        // Display the table header for the waypoint coordinates.
+        System.out.printf("%-14s %11s", "Waypoint", "Angle (deg)");
+        System.out.printf("%11s %11s%n", "X Coord", "Y Coord");
+        System.out.println("--------------------------------------------------");
+
+        // Display the waypoint coordinates.
+        System.out.printf("%-14s %11.2f %11.2f %11.2f%n", "Northeast", 45.0, neX, neY);
+        System.out.printf("%-14s %11.2f %11.2f %11.2f%n", "Northwest", 135.0, nwX, nwY);
+        System.out.printf("%-14s %11.2f %11.2f %11.2f%n", "Southwest", 225.0, swX, swY);
+        System.out.printf("%-14s %11.2f %11.2f %11.2f%n", "Southeast", 315.0, seX, seY);
+    }
+}
+</code></pre></div></div>
+</figure><span class="incontext"><a class="internal" href="sec-2-9-case-study-drone.html#listing-drone-search">In Context</a></span>
+</body>
+</html>

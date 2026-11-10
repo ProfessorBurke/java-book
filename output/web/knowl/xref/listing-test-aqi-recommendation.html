@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<!--******************************************-->
+<!--*  Authored with PreTeXt                 *-->
+<!--*  pretextbook.org                       *-->
+<!--*  Theme: default-modern                 *-->
+<!--*  Palette:                              *-->
+<!--******************************************-->
+
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body class="ignore-math">
+<figure class="listing figure-like"><figcaption><span class="type">Listing</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">5.14<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span>TestAqiRecommendation.java<div class="autopermalink" aria-hidden="true" data-description="Listing 5.14: TestAqiRecommendation.java"><a tabindex="-1" href="#listing-test-aqi-recommendation" title="Copy heading and permalink for Listing 5.14: TestAqiRecommendation.java" aria-label="Copy heading and permalink for Listing 5.14: TestAqiRecommendation.java">🔗</a></div></figcaption><div class="listing__contents"><div class="code-box"><pre class="program clipboardable"><code class="language-java">public class TestAqiRecommendation {
+
+    public static void main(String[] args) {
+        System.out.println("Running unit tests for getRecommendation...
+");
+
+        int failures = 0;
+
+        // Category 1: Healthy (0 - 50)
+        failures += runTest(0, "Healthy air quality; safe to engage in outdoor activities.");
+        failures += runTest(25, "Healthy air quality; safe to engage in outdoor activities.");
+        failures += runTest(50, "Healthy air quality; safe to engage in outdoor activities.");
+
+        // Category 2: Moderate (51 - 150)
+        failures += runTest(51, "Moderate air quality; sensitive groups limit outdoor activities.");
+        failures += runTest(100, "Moderate air quality; sensitive groups limit outdoor activities.");
+        failures += runTest(150, "Moderate air quality; sensitive groups limit outdoor activities.");
+
+        // Category 3: Unhealthy (151 - 500)
+        failures += runTest(151, "Unhealthy air quality; limit outdoor activities.");
+        failures += runTest(300, "Unhealthy air quality; limit outdoor activities.");
+        failures += runTest(500, "Unhealthy air quality; limit outdoor activities.");
+
+        // Summary report
+        System.out.println();
+        if (failures == 0) {
+            System.out.println("ALL TESTS PASSED.");
+        } else {
+            System.out.println("TEST RUN FAILED: " + failures + " error(s) detected.");
+        }
+    } // main
+
+    /**
+     * Executes a single test case, comparing the actual result 
+     * with the expected output.
+     *
+     * @param aqi      the test argument passed to getRecommendation
+     * @param expected the promised postcondition output string
+     * @return 0 if the test passed, or 1 if the test failed
+     */
+    public static int runTest(int aqi, String expected) {
+        String actual = AqSummaryMethod.getRecommendation(aqi);
+
+        if (actual.equals(expected)) {
+            System.out.println("PASS: AQI " + aqi);
+            return 0;
+        } else {
+            System.out.println("FAIL: AQI " + aqi);
+            System.out.println("   Expected: "" + expected + """);
+            System.out.println("   Actual:   "" + actual + """);
+            return 1;
+        }
+    } // runTest
+}
+</code></pre></div></div>
+</figure><span class="incontext"><a class="internal" href="sec-5-11-testing-methods.html#listing-test-aqi-recommendation">In Context</a></span>
+</body>
+</html>

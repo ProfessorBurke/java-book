@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xml:id="ch-02-getting-started" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Getting Started with Java</title>
+
+  <xi:include href="sec-2-1-overview.ptx" />
+  <xi:include href="sec-2-2-app-overview.ptx" />
+  <xi:include href="sec-2-3-class-structure.ptx" />
+  <xi:include href="sec-2-4-variables-types.ptx" />
+  <xi:include href="sec-2-5-arithmetic.ptx" /> 
+  <xi:include href="sec-2-6-strings.ptx" /> 
+  <xi:include href="sec-2-7-output-system-out.ptx" /> 
+  <xi:include href="sec-2-8-input-scanner.ptx" /> 
+  <xi:include href="sec-2-9-case-study-drone.ptx" /> 
+  <xi:include href="sec-2-10-moving-on.ptx" /> 
+  <xi:include href="sec-2-11-exercises.ptx" /> 
+</chapter>

@@ -114,12 +114,10 @@
       <c>static</c>:
     </p>
 
-    <program language="java">
-      <code>
+    <program language="java" line-numbers="yes">
 // Mistake! Do not declare instance fields static!    
 private static double x;
 private static double y;
-      </code>
     </program>
 
     <p>
@@ -138,12 +136,10 @@ private static double y;
       <c>PointDemo.main</c> execute:
     </p>
 
-    <program language="java">
-      <code>
+    <program language="java" line-numbers="yes">
 Point p1 = new Point(3.0, 4.0);
 Point p2 = new Point(5.0, 12.0);
 p1.translate(3.0, 4.0); 
-      </code>
     </program>
 
     <p>
@@ -158,11 +154,9 @@ p1.translate(3.0, 4.0);
       The constructor is invoked with the arguments <c>3.0</c> and <c>4.0</c>. Inside the constructor:
     </p>
 
-    <program language="java">
-      <code>
+    <program language="java" line-numbers="yes">
 this.x = x;
 this.y = y;
-      </code>
     </program>
 
     <p>
@@ -241,15 +235,20 @@ this.y = y;
   <subsection xml:id="subsec-6-5-3-constants-counters">
     <title>Constants and Class Counters</title>
 
-    <p>
-      So why does Java support static, class-level fields? Do they serve a useful purpose? Absolutely!
-    </p>
+    
+    <introduction>
+      <p>
+        So why does Java support static, class-level fields? Do they serve a useful purpose? Absolutely!
+      </p>
 
-    <p>
-      Static fields are the right tool when data truly belongs to the entire class rather than an 
-      individual instance. Two common uses include shared constants (like <c>Math.PI</c> or 
-      conversion factors) and class-wide counters that track the total number of objects created.
-    </p>
+      <p>
+        Static fields are the right tool when data truly belongs to the entire class rather than an 
+        individual instance. Two common uses include shared constants (like <c>Math.PI</c> or 
+        conversion factors) and class-wide counters that track the total number of objects created.
+      </p>
+    </introduction>
+
+
 
     <subsubsection xml:id="subsubsec-6-5-3-1-constants">
       <title>Static Constants</title>
@@ -259,10 +258,8 @@ this.y = y;
         is stored in imperial units. In the odometer calculation, we might use a conversion factor:
       </p>
 
-      <program language="java">
-        <code>
+      <program language="java" line-numbers="yes">
 final double KM_PER_MILE = 1.609344;
-        </code>
       </program>
 
       <p>
@@ -272,8 +269,7 @@ final double KM_PER_MILE = 1.609344;
         fields:
       </p>
 
-      <program language="java">
-        <code>
+      <program language="java" line-numbers="yes">
 public class ElectricVehicle {
 
     private static final double KM_PER_MILE = 1.609344;
@@ -282,7 +278,6 @@ public class ElectricVehicle {
     private double batteryCapacityKwh;
     private double milesPerKwh;
     ...
-        </code>
       </program>
 
       <p>
@@ -324,8 +319,7 @@ public class ElectricVehicle {
         increment that count:
       </p>
 
-      <program language="java">
-        <code>
+      <program language="java" line-numbers="yes">
 public class Point {
 
     private static int pointCount = 0;
@@ -338,15 +332,13 @@ public class Point {
         this.y = y;
         Point.pointCount++;
     }
-        </code>
       </program>
 
       <p>
         We can also provide a public static accessor method so clients can inspect the count:
       </p>
 
-      <program language="java">
-        <code>
+      <program language="java" line-numbers="yes">
     /**
      * Returns the number of Point objects created.
      * 
@@ -355,7 +347,6 @@ public class Point {
     public static int getPointCount() {
         return Point.pointCount;
     }
-        </code>
       </program>
 
       <p>
@@ -395,25 +386,30 @@ public class Point {
   <subsection xml:id="subsec-6-5-4-static-barrier">
     <title>The Static Barrier: Why Static Methods Cannot Access Instance Fields</title>
 
-    <p>
-      Now that we have explored both instance and static members, a natural question arises about 
-      how they interact. We have seen that an instance method can freely access a static field 
-      (such as the <c>Point</c> constructor incrementing <c>Point.pointCount</c>). But can a 
-      static method access an instance field or call an instance method?
-    </p>
+    
+    <introduction>
+      <p>
+        Now that we have explored both instance and static members, a natural question arises about 
+        how they interact. We have seen that an instance method can freely access a static field 
+        (such as the <c>Point</c> constructor incrementing <c>Point.pointCount</c>). But can a 
+        static method access an instance field or call an instance method?
+      </p>
 
-    <p>
-      The relationship between the static world and the instance world is a one-way street. 
-      An instance method has complete access to everything in the class: it can read instance 
-      fields, modify instance fields, call other instance methods, read static constants, and 
-      invoke static helper methods.
-    </p>
+      <p>
+        The relationship between the static world and the instance world is a one-way street. 
+        An instance method has complete access to everything in the class: it can read instance 
+        fields, modify instance fields, call other instance methods, read static constants, and 
+        invoke static helper methods.
+      </p>
 
-    <p>
-      A <c>static</c> method, however, hits a rigid architectural wall: <strong>a static method 
-      can never directly access an instance variable or invoke an instance method without an 
-      explicit object reference</strong>.
-    </p>
+      <p>
+        A <c>static</c> method, however, hits a rigid architectural wall: <strong>a static method 
+        can never directly access an instance variable or invoke an instance method without an 
+        explicit object reference</strong>.
+      </p>
+    </introduction>
+
+
 
     <subsubsection xml:id="subsubsec-6-5-4-1-which-object">
       <title>Which Object Would <c>this</c> Be?</title>
@@ -454,8 +450,7 @@ public class Point {
         Imagine what would happen if Java allowed a static method to read an instance variable directly:
       </p>
 
-      <program language="java">
-        <code>
+      <program language="java" line-numbers="yes">
 public class Point {
     private double x; // Instance variable (one per object on the heap)
     private double y; // Instance variable (one per object on the heap)
@@ -465,7 +460,6 @@ public class Point {
         System.out.println("(" + x + ", " + y + ")"); 
     }
 }
-        </code>
       </program>
 
       <p>
@@ -522,14 +516,12 @@ Cannot make a static reference to the non-static field x.
         with <c>new</c><mdash/>and access that data using the dot operator:
       </p>
 
-      <program language="java">
-        <code>
+      <program language="java" line-numbers="yes">
 // LEGAL: The static method is explicitly given an object to examine
 public static void printPoint(Point p) {
     // Java knows exactly whose coordinates to read: p's!
     System.out.println("(" + p.getX() + ", " + p.getY() + ")");
 }
-        </code>
       </program>
 
       <p>

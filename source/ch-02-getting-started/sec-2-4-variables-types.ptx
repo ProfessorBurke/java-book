@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-2-4-variables-types" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Data: Variables, Literals, and Types</title>
+
+  
+  <introduction>
+    <p>
+      In chapter 1 we learned that programs store data in computer memory, and everything stored in memory is stored as binary numbers. (Technically, data is stored using some physical method that we interpret as binary numbers.) Fortunately, modern programming languages provide data types that allow us to think of data in a way that is closer to the problems we’re solving: as text, as individual characters, and as integers and real numbers in decimal (base ten). It is important to remember, though, that the underlying representation is a finite number of binary bits that are interpreted by Java as text, a number, or something else. When the underlying representation can impact your high-level programming, we will discuss how and why.
+    </p>
+
+    <p>
+      Every piece of data in a Java program has a type. The type specifies how many bits are set aside for that piece of data and how they are organized and interpreted. Java provides eight primitive data types (four integer types, two real types, a character type, and a Boolean type) and many class data types (such as <c>String</c> and <c>Scanner</c>). The classes that we are writing in this chapter and the next two, like <c>MulchCalculator</c>, are programs. But most classes are data types, and we will learn to create our own data types in chapter 5.
+    </p>
+
+    <p>
+      Let’s focus in on that idea of a <q>piece of data.</q> Each individual variable and literal in a program is a piece of data. In our <c>MulchCalculator</c> program, we have eight variables, declared in the method header on line 9 and on lines 10 to 16 (<c>args</c>, <c>stdin</c>, <c>length</c>, <c>width</c>, <c>depth</c>, <c>depthInFeet</c>, <c>cubicFeet</c>, and <c>cubicYards</c>), and we have seven literals in the program. The literals are, in the order you see them in the program, <c>&quot;Enter the length of the area in feet: &quot;</c>, <c>&quot;Enter the width of the area in feet: &quot;</c>, <c>&quot;Enter the desired depth in inches: &quot;</c>, <c>12.0</c>, <c>27.0</c>, <c>&quot;You need &quot;</c>, and <c>&quot; cubic yards of mulch.&quot;</c>. Each variable and literal is a piece of data that has a data type and is stored in the computer’s memory at some point while the program is running.
+    </p>
+
+    <p>
+      To understand the difference between a variable and a literal, it will be very helpful to understand statements, expressions, and evaluation. We will revisit these ideas throughout the book. For now, briefly, a program is composed of programming statements. Each statement is a complete instruction that commands the program to do something. In our program, all statements end with a semicolon, and they are listed one to a line. (Later we will learn about block statements, which are enclosed in curly braces.)
+    </p>
+
+    <p>
+      Many statements contain expressions. Expressions are pieces of code that represent or calculate a single value. When Java encounters an expression in code, it evaluates it, meaning it performs the necessary arithmetic or lookups to reduce that expression down to its final value.
+    </p>
+
+    <p>
+      Now we have the tools to clearly distinguish between a literal and a variable. A literal and a variable can both be expressions that evaluate to a value. A literal evaluates to (literally) what you type. So, for example, the literal <c>12.0</c> evaluates to 12.0, and the literal <c>&quot;You need &quot;</c> evaluates to <q>You need </q>. So on line 32, when we divide <c>depth</c> by 12.0, we are dividing the value in the variable <c>depth</c> by, literally, 12.0. And on line 37, when we’re concatenating the value <c>cubicYards</c> to the literal <c>&quot;You need &quot;</c>, we will end up with a <c>String</c> that begins with, literally, <q>You need </q>, and ends with the value in <c>cubicYards</c>, converted to a <c>String</c>.
+    </p>
+
+    <p>
+      What does a variable evaluate to? A variable evaluates to the last value assigned to it during the program’s execution. We will talk more about assignments in a moment, but for now, assignments are the statements with a variable on the left, an equals sign, and an expression on the right, and they give the expression’s value to the variable on the left. For a moment, imagine we had this code in the program:
+    </p>
+
+    <program language="java" line-numbers="yes"><![CDATA[System.out.print("Enter the desired depth in inches: ");
+  depth = stdin.nextDouble();
+  depth = depth / 12.0;]]></program>
+
+    <p>
+      It’s very similar to <xref ref="listing-mulch-calculator" />, but instead of storing the depth converted to feet in the variable <c>depthInFeet</c>, we’re storing it back in the variable <c>depth</c>. Then, if the user enters 4 at the prompt, the value in <c>depth</c> after line 2 executes is 4, and the value in <c>depth</c> after line 3 executes is .3 repeating. If we ask Java to evaluate <c>depth</c> after line 2, it would evaluate to 4, but if we ask Java to evaluate <c>depth</c> after line 3, it would evaluate to .3 repeating. And it never evaluates to <c>depth</c><mdash />the thing we literally type in the program<mdash />it always evaluates to the value assigned to <c>depth</c>.
+    </p>
+
+    <p>
+      Every expression in Java has a type. We declare the types of variables with variable declarations, like on lines 9 and 10-16 in <xref ref="listing-mulch-calculator" />. Java assigns types to literals based on defaults, and it infers expression types from the types of the operands in the expressions. It is our responsibility to write our code so that our operations are appropriate for the types of data involved.
+    </p>
+
+    <!-- ============================================================ -->
+    <!-- 2.4.1 Java’s Primitive Types                                 -->
+  </introduction>
+
+
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-2-4-1-primitive-types">
+    <title>Java’s Primitive Types</title>
+
+    
+    <introduction>
+      <p>
+        So what are the available data types?
+      </p>
+
+      <p>
+        Every variable in Java must have a data type that tells the compiler how much memory to reserve and what kind of data can be stored there. Java provides eight primitive types<mdash />fundamental building blocks built directly into the language. They fall into four general categories:
+      </p>
+
+      <ul>
+        <li>
+          <title>Integer types (whole numbers)</title>
+          <p>
+            <c>byte</c> (8 bits), <c>short</c> (16 bits), <c>int</c> (32 bits), and <c>long</c> (64 bits).
+          </p>
+        </li>
+        <li>
+          <title>Floating-point types (numbers with decimal fractions)</title>
+          <p>
+            <c>float</c> (32 bits) and <c>double</c> (64 bits).
+          </p>
+        </li>
+        <li>
+          <title>Character type (single letters or symbols)</title>
+          <p>
+            <c>char</c> (16 bits).
+          </p>
+        </li>
+        <li>
+          <title>Logical type (truth values)</title>
+          <p>
+            <c>boolean</c> (representing either <c>true</c> or <c>false</c>).
+          </p>
+        </li>
+      </ul>
+
+      <p>
+        Why does Java offer four different types just for whole numbers? The answer comes down to memory and range. A computer stores everything in binary bits (0s and 1s). The more bits a type uses, the more distinct values it can represent, and the wider its numerical range:
+      </p>
+
+      <p>
+        An 8-bit <c>byte</c> has <m>2^8 = 256</m> possible bit combinations. Because Java integers are signed (they can be positive or negative), a <c>byte</c> splits those combinations evenly around zero, spanning from <m>-128</m> to <m>+127</m>.
+      </p>
+
+      <p>
+        A 16-bit <c>short</c> doubles the bits, providing <m>2^{16} = 65{,}536</m> combinations (<m>-32{,}768</m> to <m>+32{,}767</m>).
+      </p>
+
+      <p>
+        Doubling the bits again, a 32-bit <c>int</c> provides over 4 billion combinations, and (doubling again) a 64-bit <c>long</c> provides over 18 quintillion combinations.
+      </p>
+
+      <p>
+        In modern programming, <c>int</c> is the standard default choice for whole numbers, and <c>double</c> is the standard default for decimal numbers. The smaller types (<c>byte</c> and <c>short</c>) are primarily used in specialized situations, such as processing large streams of raw binary data or working with massive datasets where saving every byte of memory counts.
+      </p>
+
+      <!-- 2.4.1.1 Integer Primitives -->
+    </introduction>
+
+
+    <subsubsection xml:id="subsubsec-2-4-1-1-integer-primitives">
+      <title>Integer Primitives</title>
+
+      <p>
+        <xref ref="table-integer-data-types" /> lays out the four primitive integer types, their bit-widths, and their exact numerical ranges.
+      </p>
+
+      <table xml:id="table-integer-data-types">
+        <title>Summary of integer data types</title>
+        <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+          <col width="15%"/>
+          <col width="15%"/>
+          <col width="30%"/>
+          <col width="40%"/>
+          <row header="yes">
+            <cell><strong>Data Type</strong></cell>
+            <cell><strong>Size (Bytes)</strong></cell>
+            <cell><strong>Range of Values</strong></cell>
+            <cell><strong>Typical Use / Best Practice</strong></cell>
+          </row>
+          <row>
+            <cell><c>byte</c></cell>
+            <cell>1 byte</cell>
+            <cell><m>-128</m> to <m>127</m> (<m>-2^7</m> to <m>2^7 - 1</m>)</cell>
+            <cell>Rare; used for raw binary files or large data streams.</cell>
+          </row>
+          <row>
+            <cell><c>short</c></cell>
+            <cell>2 bytes</cell>
+            <cell><m>-32{,}768</m> to <m>32{,}767</m> (<m>-2^{15}</m> to <m>2^{15} - 1</m>)</cell>
+            <cell>Extremely rare; historical/legacy use.</cell>
+          </row>
+          <row>
+            <cell><c>int</c></cell>
+            <cell>4 bytes</cell>
+            <cell>
+              <p><m>-2{,}147{,}483{,}648</m> to <m>2{,}147{,}483{,}647</m></p>
+              <p>(<m>-2^{31}</m> to <m>2^{31} - 1</m>)</p>
+            </cell>
+            <cell>The default choice for all counting, indexing, and normal whole numbers.</cell>
+          </row>
+          <row>
+            <cell><c>long</c></cell>
+            <cell>8 bytes</cell>
+            <cell>
+              <p><m>-9{,}223{,}372{,}036{,}854{,}775{,}808</m> to <m>9{,}223{,}372{,}036{,}854{,}775{,}807</m></p>
+              <p>(<m>-2^{63}</m> to <m>2^{63} - 1</m>)</p>
+            </cell>
+            <cell>Values exceeding 2 billion (timestamps, large financial sums); append <c>L</c>.</cell>
+          </row>
+        </tabular>
+      </table>
+
+      <p>
+        If you have an integer literal in a program, its data type will be <c>int</c> by default. This can make assignment statements a little confusing when you’re assigning a literal to a variable that isn’t of the <c>int</c> type. When a value is moved from a smaller representation to a larger one (e.g. <c>int</c> to <c>long</c>), the operation is called <term>widening</term>. When a value is moved from a larger representation to a smaller one (e.g. <c>int</c> to <c>byte</c>), the operation is called <term>narrowing</term>. Because narrowing can cause data loss, Java will never automatically narrow a variable. However, for integer literals, Java provides a helpful exception: it allows automatic narrowing only if the literal fits within the target type's range.
+      </p>
+
+      <p>
+        If you are assigning an integer literal to a <c>byte</c> or <c>short</c> variable, Java will check that the literal can be stored in the smaller number of bits, and if it can, it will assign it to the variable. If it can’t, Java will flag a <q>type mismatch</q> syntax error and tell you that it cannot convert from an <c>int</c> to a <c>byte</c> or <c>short</c>.
+      </p>
+
+      <program language="java"><![CDATA[byte b1 = 127;     // This is fine because 127 can be represented in eight bits.
+byte b2 = 128;     // This flags a "type mismatch" syntax error.]]></program>
+
+      <p>
+        If you need an integer literal in your program that is the size of a <c>long</c>, append an uppercase or lowercase <c>L</c> to the end of the literal. (We recommend an uppercase <c>L</c>, because a lowercase <c>l</c> can look like the digit one.)
+      </p>
+
+      <program language="java"><![CDATA[long bigNumber = 2147483648L;]]></program>
+
+      <p>
+        While we ordinarily write numbers in base 10 (decimal), Java allows you to write integer literals in other number bases using special prefixes. To write a number in hexadecimal (base 16), prefix the literal with <c>0x</c> or <c>0X</c> (e.g., <c>0x1A</c> evaluates to 26). To write in binary (base 2), prefix it with <c>0b</c> or <c>0B</c> (e.g., <c>0b1010</c> evaluates to 10).
+      </p>
+
+      <p>
+        However, you must be extremely cautious with octal (base 8), because in Java, any number beginning with a leading zero is interpreted as octal. In everyday life, we often pad numbers with leading zeros for visual alignment (such as writing 012 to represent the number twelve). In Java, writing <c>int code = 012;</c> does not store the value 12; because of that innocent-looking leading zero, Java evaluates it in base 8, resulting in the decimal value 10 (<m>1 \times 8^1 + 2 \times 8^0</m>). Even more confusingly, writing something like <c>int month = 08;</c> or <c>int day = 09;</c> will trigger an immediate compiler error, because the digits 8 and 9 do not exist in octal! Unless you deliberately intend to write a base-8 number, never put a leading zero in front of an integer literal.
+      </p>
+
+      <p>
+        Another natural habit we have when writing numbers for visual clarity is using a separator, such as a comma in numbers or a space. You cannot use commas or spaces inside a Java number<mdash />a comma separates arguments, and spaces separate words. However, Java offers an elegant alternative: you can use an underscore (<c>_</c>) anywhere between digits as a visual separator. (You don’t have to use it to separate thousands exclusively, but you can only put an underscore between two digits.) The following code is perfectly legal in Java:
+      </p>
+
+      <program language="java"><![CDATA[int twoBillion = 2_000_000_000;]]></program>
+    </subsubsection>
+
+    <!-- 2.4.1.2 Floating-Point Primitives -->
+    <subsubsection xml:id="subsubsec-2-4-1-2-floating-point-primitives">
+      <title>Floating-Point Primitives</title>
+
+      <p>
+        The <c>float</c> and <c>double</c> data types represent numbers with decimal points using an international hardware standard known as IEEE 754. Because computers store these numbers in binary (base 2) rather than decimal (base 10), their precision does not translate into an exact number of decimal places.
+      </p>
+
+      <p>
+        A <c>float</c> occupies 4 bytes (32 bits) of memory. It can store positive or negative values up to roughly <m>3.4 \times 10^{38}</m>, but it only provides roughly 7 decimal digits of precision. If you try to store a number with more than 7 digits, the trailing digits will be lost to rounding errors. A <c>double</c> occupies 8 bytes (64 bits) of memory. It provides <q>double precision,</q> allowing values up to roughly <m>1.8 \times 10^{308}</m> with 15 to 17 decimal digits of precision.
+      </p>
+
+      <p>
+        In modern software development, memory is plentiful, so you should almost always use <c>double</c> whenever you need numbers with fractional parts.
+      </p>
+
+      <p>
+        If you have a floating-point literal in a program, its data type will be <c>double</c> by default, and Java will not narrow a <c>double</c> literal to a <c>float</c>. To make a literal of type <c>float</c>, you must append an <c>F</c> or <c>f</c> to the end of the number. For example, <c>1.2F</c> stands for 1.2 considered as a value of type <c>float</c>.
+      </p>
+
+      <program language="java"><![CDATA[float smallReal = 1.2F;   // This is fine; 1.2 is represented as a float.
+float babyReal = 1.2;     // This flags a "type mismatch" syntax error.]]></program>
+
+      <p>
+        Real numbers can also be represented in an exponential (E) form such as <c>1.3E12</c> or <c>12.3737E-108</c>. The <c>E12</c> and <c>E-108</c> represent powers of 10, so that <c>1.3E12</c> means <m>1.3 \times 10^{12}</m> and <c>12.3737E-108</c> means <m>12.3737 \times 10^{-108}</m>. This format can be useful for expressing very large and very small numbers. They are, again, doubles. If you want to use E notation to write a literal <c>float</c>, append <c>F</c> to the end of the number (e.g. <c>1.3E12F</c>).
+      </p>
+
+      <p>
+        Java will sometimes use E notation, which can be jarring if you haven’t seen it before! If a <c>double</c> calculation produces a number greater than or equal to 10 million (such as <c>1.5E7</c>) or a tiny fraction smaller than 0.001 (such as <c>5.0E-4</c>), Java will automatically display the result in this exponential notation. Don't worry<mdash />the calculation is correct! Later in this chapter, you will learn how to use <c>System.out.printf</c> to force Java to display numbers in standard decimal form.
+      </p>
+
+      <p>
+        <xref ref="table-real-data-types" /> summarizes the two floating-point primitive types, their bit-widths, and their exact numerical ranges.
+      </p>
+
+      <table xml:id="table-real-data-types">
+        <title>Summary of real data types</title>
+        <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+          <col width="15%"/>
+          <col width="15%"/>
+          <col width="30%"/>
+          <col width="40%"/>
+          <row header="yes">
+            <cell><strong>Data Type</strong></cell>
+            <cell><strong>Size (Bytes)</strong></cell>
+            <cell><strong>Range &amp; Precision</strong></cell>
+            <cell><strong>Typical Use / Best Practice</strong></cell>
+          </row>
+          <row>
+            <cell><c>float</c></cell>
+            <cell>4 bytes</cell>
+            <cell>
+              <p>Range: <m>\pm 1.4 \times 10^{-45}</m> to <m>\pm 3.4 \times 10^{38}</m></p>
+              <p>Precision: <m>\approx 7</m> decimal digits</p>
+            </cell>
+            <cell>Rare in general programming. Used when saving memory in massive numeric datasets (e.g., 3D graphics coordinates, game physics, or machine learning). Requires appending <c>F</c> or <c>f</c> to literals (e.g., <c>1.2F</c>).</cell>
+          </row>
+          <row>
+            <cell><c>double</c></cell>
+            <cell>8 bytes</cell>
+            <cell>
+              <p>Range: <m>\pm 4.9 \times 10^{-324}</m> to <m>\pm 1.8 \times 10^{308}</m></p>
+              <p>Precision: <m>15</m> to <m>17</m> decimal digits</p>
+            </cell>
+            <cell>The default choice for all calculations involving decimal points and fractions. Provides <q>double precision</q> to avoid rounding errors. All standard decimal literals (e.g., <c>3.14</c>, <c>0.5</c>) are <c>double</c> by default.</cell>
+          </row>
+        </tabular>
+      </table>
+    </subsubsection>
+
+    <!-- 2.4.1.3 The char and boolean Primitives -->
+    <subsubsection xml:id="subsubsec-2-4-1-3-char-boolean-primitives">
+      <title>The char and boolean Primitives</title>
+
+      <p>
+        A variable of type <c>char</c> occupies two bytes in memory, and stores a single character from virtually any language, such as <c>'A'</c>, <c>'*'</c>, <c>'م'</c>, and <c>'π'</c>, as well as non-printing characters such as backspace, tab, and carriage return. At the time Java was created, two bytes was enough memory to store all characters in the Unicode set. Unicode was later expanded to include characters stored in three or four bytes. In the rare case that you need to store one of these characters, you can store it in two Java <c>char</c> variables. Character literals are delineated by single quotes, as in the examples above.
+      </p>
+
+      <p>
+        You can also write a character literal as its Unicode code point. A Unicode literal consists of <c>\u</c> followed by four hexadecimal digits. (The tables on the Unicode consortium’s website show the values in hexadecimal, so you won’t have to convert from decimal!) The four character literals shown above (uppercase A, asterisk, mim, and pi) would be written <c>'\u0041'</c>, <c>'\u002A'</c>, <c>'\u0645'</c>, and <c>'\u03C0'</c> as Unicode literals, respectively.
+      </p>
+
+      <p>
+        Values of type <c>char</c> are closely related to integer values, since a character is stored as a 16-bit integer. In fact, we will learn algorithms in which we manipulate character data as integers.
+      </p>
+
+      <p>
+        The two <c>boolean</c> literals are <c>true</c> and <c>false</c>, typed exactly as shown here (all lowercase, and not enclosed in quotes). We’ll learn more about <c>boolean</c> literals, variables, and expressions in the next chapter.
+      </p>
+
+      <p>
+        It is completely understandable if the discussion of numeric ranges and storage in this section made your head spin a little! Don’t worry<mdash />if you need the exact number of bytes or limits for a specific data type, you can always refer to the tables in this chapter. The most important takeaway is this: in pure mathematics, numbers can stretch to infinity and real numbers have continuous, infinite precision. In a computer, however, all numbers are finite, limited in precision, and stored in binary.
+      </p>
+
+      <p>
+        In the upcoming section on arithmetic, we will look at the surprising errors that can happen when calculations bump up against the boundaries of a fixed, finite representation<mdash />and how to handle them. (Errors are always more fun to study when they’re happening to somebody else!)
+      </p>
+    </subsubsection>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 2.4.2 Variables and Assignment Statements                     -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-2-4-2-variables-assignments">
+    <title>Variables and Assignment Statements</title>
+
+    
+    <introduction>
+      <p>
+        A variable is a named location in the computer’s memory used to store a value while your program runs. Think of a variable as a labeled storage container: its name (the label) allows you to refer to the data, its type dictates what kind of data fits inside, and its value is whatever item is currently placed in the container. As the word variable implies, the value stored inside can change (vary) as your program executes, allowing your code to keep track of scores, perform ongoing calculations, and respond dynamically to user input. When you write a program, you might need a variable to store each input, temporary calculation, and result.
+      </p>
+
+      <p>
+        <xref ref="listing-mulch-calculator" /> has eight variables<mdash /><c>args</c>, which you need not worry about for now, <c>stdin</c>, which is of type <c>Scanner</c>, and <c>length</c>, <c>width</c>, <c>depth</c>, <c>depthInFeet</c>, <c>cubicFeet</c>, and <c>cubicYards</c>, all of type <c>double</c>.
+      </p>
+
+      <!-- 2.4.2.1 Declaring Variables and Giving Them Values -->
+    </introduction>
+
+
+    <subsubsection xml:id="subsubsec-2-4-2-1-declaring-variables">
+      <title>Declaring Variables and Giving Them Values</title>
+
+      <p>
+        Let’s begin with variable declarations and naming. In our programs in this book, we will declare variables at the top of the method they belong to, under the method header. Technically, you only need to declare a variable before you give it a value, but if you declare all of a method’s variables at the top of the method (with a few exceptions we’ll discuss as they arise), then anybody reading your code will always know where to go to see the type of a variable and, if you’ve commented it, a description.
+      </p>
+
+      <p>
+        To declare a variable, give the type of the variable followed by a space, and then the variable name, followed by a semicolon. You can also declare more than one variable of the same type in one declaration, by separating the names with commas. Here are some examples:
+      </p>
+
+      <program language="java"><![CDATA[int numberOfPages, count;
+char firstLetter;
+double area, elapsedTime;
+boolean validInput;]]></program>
+
+      <p>
+        A good practice is to declare one variable to a line followed by a single-line comment, as in <xref ref="listing-mulch-calculator" />. The comment should provide additional information about the variable that will help a person understand the variable’s role in the program. (Such as the unit of the data and whether the variable is calculated or obtained from the user.) If variables are closely related or are so obvious they don’t require a comment, you can declare them together on one line without sacrificing readability.
+      </p>
+
+      <p>
+        There are certain rules which govern what can be a variable name. First, you can’t use a Java reserved word as a variable name. Reserved words are words with special meaning to Java. Reserved words you’ve seen include <c>public</c>, <c>class</c>, <c>static</c>, <c>void</c>, <c>int</c>, and <c>double</c>, among others. Second, your variable name can consist of letters, numbers, the dollar sign, and the underscore only (no other characters), and may not begin with a number. This means that you cannot have a space in a variable name.
+      </p>
+
+      <p>
+        Java is case sensitive, meaning that it recognizes the difference between uppercase and lowercase letters. Therefore, <c>numberOfPages</c> and <c>numberofpages</c> are two different names. Mistyping a name is a common and frustrating error, but most programming editors (including Eclipse) have an autocomplete feature to help prevent it. If you type control-space while you’re typing a name in Eclipse, it will offer you a menu of options that include the text you’ve typed.
+      </p>
+
+      <p>
+        You may have noticed that when a variable name consists of more than one word, the words are run together with the first letter of each word capitalized. This is called <term>camelCase</term>, and it is the convention for naming variables in Java. (In other words, Java doesn’t care if you use camelCase, but Java programmers are accustomed to variables being named with camelCase.)
+      </p>
+
+      <p>
+        Most importantly, variable names are meaningful. This means that a variable name clearly communicates what is stored in it, usually drawing from the language of the problem description or domain. For example, if you are told to obtain the number of pages from the user, it makes sense to call the variable <c>numberOfPages</c> and not <c>numSheets</c>, because <c>numberOfPages</c> relates back to the problem description. A person reading your code who is familiar with the problem will immediately know what <c>numberOfPages</c> is, whereas <c>numSheets</c> will be unfamiliar.
+      </p>
+
+      <p>
+        To assign a value to a variable<mdash />to put a value in its container<mdash />use an assignment statement. To write an assignment statement, write the variable name, the assignment operator, which is the equals sign, and then an expression that evaluates to the same type as the variable. Here are examples of assignment statements with some of the variables we declared above:
+      </p>
+
+      <program language="java"><![CDATA[count = count + 1;
+numberOfPages = stdin.nextInt();
+firstLetter = 'A';
+area = length * width;]]></program>
+
+      <p>
+        It is also allowed to declare a variable and assign a value to it on the same line, as in:
+      </p>
+
+      <program language="java"><![CDATA[double average = 0.0;]]></program>
+
+      <p>
+        Beginning programmers sometimes think that an assignment statement is an equality statement, because the assignment operator is the equals sign. But an assignment statement is a programming statement that executes<mdash />it does something. When an assignment statement executes, it executes right to left. The expression on the right is evaluated and the value is then stored in the variable on the left. This means that we can have the same variable on the left and right side of an assignment statement, as in <c>count = count + 1</c>. When Java reaches this statement, it looks up the value of <c>count</c>, adds 1 to it, and then stores the result back in <c>count</c>.
+      </p>
+
+      <p>
+        In the second assignment statement, we are invoking the <c>Scanner</c> method <c>nextInt</c>, which we will discuss in detail in a later section. This method obtains input from the console. Whatever value the user types, it is converted to an integer (if possible) and then stored in the variable <c>numberOfPages</c>. In the third assignment, we are assigning a literal character <c>'A'</c> to <c>firstLetter</c>. And in the last, we have a slightly more complex expression involving multiplication. The variables <c>length</c> and <c>width</c> will be evaluated (this is the case where the variable name refers to the value in the container, not the container itself), their values multiplied together, and the result will be stored in the variable <c>area</c>.
+      </p>
+
+      <p>
+        You cannot use a variable in an expression until it’s been given a value with an assignment statement. Notice in <xref ref="listing-mulch-calculator" />, <c>depth</c> is given a value on line 28 before it’s used on line 32 to give <c>depthInFeet</c> a value. On line 33, we are calculating <c>cubicFeet</c> from <c>length</c>, <c>width</c>, and <c>depthInFeet</c>. These variables got values before line 33, on lines 22, 25, and 32, respectively. If you try to use a variable before it has a value, Java will flag the code with <q>The local variable … may not have been initialized.</q>
+      </p>
+    </subsubsection>
+
+    <!-- 2.4.2.2 Where Variables Live in Memory -->
+    <subsubsection xml:id="subsubsec-2-4-2-2-where-variables-live">
+      <title>Where Variables Live in Memory</title>
+
+      <p>
+        It is important to understand something about how variables are stored in memory, because there are differences in how Java treats data stored on the stack and data that is stored in the heap. This discussion will be a simplification of Java memory management, but it will give you the background you need for programming effectively in Java.
+      </p>
+
+      <p>
+        When a method (such as <c>main</c>) executes, Java places a frame on the stack. The frame includes space for some housekeeping information for the method as well as space for all of the variables declared in the method. As the method executes and each variable is assigned a value, if the variable is a primitive variable, the value is placed in its space in stack memory.
+      </p>
+
+      <p>
+        If a variable is not a primitive variable, such as <c>stdin</c> (and <c>args</c>), then it is a reference to an object. Space for the variable is still allocated on the stack in the method’s frame, but the data will not be stored there. Space for the data will be allocated in the heap. That space is allocated using the <c>new</c> keyword, as in line 19 in <xref ref="listing-mulch-calculator" />:
+      </p>
+
+      <program language="java"><![CDATA[stdin = new Scanner(System.in);]]></program>
+
+      <p>
+        Line 19 allocates space in the heap for a <c>Scanner</c> object and stores the memory address of that space in the variable <c>stdin</c> on the stack. So in <xref ref="listing-mulch-calculator" />, the <c>double</c> variables <c>length</c>, <c>width</c>, <c>depth</c>, etc. will all be eight-byte locations on the stack holding a <c>double</c> value stored using the IEEE 754 format. The variables <c>args</c> and <c>stdin</c> will typically be four bytes, used to store the heap memory address where the data is stored.
+      </p>
+
+      <!-- ============================================================ -->
+      <!-- Figure 2.2: Stack and Heap in Memory                         -->
+      <!-- ============================================================ -->
+      <figure xml:id="figure-stack-heap-memory">
+        <title>Stack and heap in memory</title>
+        <image source="figure_2_2.png" width="85%">
+          <shortdescription>Stack frame for main with primitive values and reference pointers to heap-allocated objects.</shortdescription>
+          <description>
+            <p>
+              Diagram illustrating stack and heap memory during the execution of <c>MulchCalculator</c>. The call stack contains a stack frame for the <c>main</c> method holding local primitive variables (<c>length</c>, <c>width</c>, <c>depth</c>, <c>depthInFeet</c>, <c>cubicFeet</c>, <c>cubicYards</c>) with their 64-bit IEEE 754 floating-point values stored directly inside the stack frame, while reference variables (<c>args</c> and <c>stdin</c>) hold memory addresses that point to dynamically allocated object data on the heap (such as the <c>Scanner</c> object created with the <c>new</c> keyword).
+            </p>
+          </description>
+        </image>
+      </figure>
+
+      <p>
+        Once a method is finished executing, its frame is removed from the call stack and the variables declared in the method, called <term>local variables</term>, no longer exist. We think of the existence of variables in two different ways: their <term>lifetime</term>, which refers to when the memory space physically exists on the call stack, and their <term>scope</term>, which refers to where that variable can be seen and used in the program.
+      </p>
+
+      <p>
+        The lifetime of a local variable begins when the method is called and ends when the method finishes and its frame is removed. The scope of a variable begins at its declaration and ends at the closing curly brace of the block it was declared in. In our program, all of our local variables come into scope at their declaration within <c>main</c>, and go out of scope at the closing curly brace at the end of <c>main</c>.
+      </p>
+
+      <p>
+        For now, remember the stack / heap distinction that local primitives are stored on the stack and objects are references on the stack to data stored in the heap, and that heap memory is allocated with the <c>new</c> keyword. We will revisit this when we encounter programming situations in which you treat stack and heap variables differently.
+      </p>
+    </subsubsection>
+
+    <!-- 2.4.2.3 Constants (Using the final Keyword) -->
+    <subsubsection xml:id="subsubsec-2-4-2-3-constants">
+      <title>Constants (Using the final Keyword)</title>
+
+      <p>
+        As the name implies, variables are designed to vary<mdash />their values can change throughout the execution of a program. Often, however, your program needs to work with values that should never change while the program runs. Examples of values that shouldn’t change while a program is running include mathematical constants such as pi, conversion factors such as the number of seconds in a minute, and organizational rules, such as the maximum number of attempted logins.
+      </p>
+
+      <p>
+        In Java, a variable whose value cannot be changed once initialized is called a <term>constant</term>. To turn a regular variable into a constant, add the <c>final</c> keyword before the data type:
+      </p>
+
+      <program language="java"><![CDATA[final double SALES_TAX_RATE = 0.0625;
+final int INCHES_PER_FOOT   = 12;]]></program>
+
+      <p>
+        The <c>final</c> keyword acts as a permanent lock on that memory location. If you accidentally attempt to assign a new value to a <c>final</c> variable later in the program, the Java compiler will flag the line with an error.
+      </p>
+
+      <program language="java"><![CDATA[final int MAX_ATTEMPTS = 3;
+MAX_ATTEMPTS = 4; 
+// ERROR: The final local variable MAX_ATTEMPTS cannot be assigned.]]></program>
+
+      <p>
+        Earlier, we saw that variables use camelCase and classes use PascalCase. For constants, Java follows a completely different convention: all uppercase letters with words separated by underscores, often called <term>UPPER_SNAKE_CASE</term>. This formatting immediately alerts anyone reading your code that this identifier represents a permanent, read-only value. You will see this convention in Java’s standard library with constants like <c>Math.PI</c> and <c>Integer.MAX_VALUE</c>.
+      </p>
+
+      <p>
+        Beginners often wonder why they should use constants, rather than simply typing the literal values into the code. Using constants provides three major software engineering benefits:
+      </p>
+
+      <ol>
+        <li>
+          <title>Eliminating <q>Magic Numbers</q></title>
+          <p>
+            A magic number is a raw numeric literal that appears in code without an explanation of what it means. Compare these two lines:
+          </p>
+          <program language="java"><![CDATA[double total = subtotal + (subtotal * 0.0625);           // Magic number
+double total = subtotal + (subtotal * SALES_TAX_RATE);   // Named constant]]></program>
+          <p>
+            In Version A, anyone reading the code (including you six months later) has to guess what <c>0.0625</c> represents. Is it sales tax? A shipping fee? A discount? In Version B, the code is self-documenting<mdash />the constant’s name explains its exact purpose.
+          </p>
+        </li>
+        <li>
+          <title>A Single Point of Change (Maintenance)</title>
+          <p>
+            Imagine writing a large accounting program where the sales tax rate is used in forty different calculations across your code. If you hardcode <c>0.0625</c> everywhere and the legislature changes the tax rate to <c>0.07</c>, you would have to search for all forty occurrences and update them manually<mdash />hoping you don't miss one or accidentally change a different <c>0.0625</c> that represented something else!
+          </p>
+          <p>
+            With a constant, you only change the value in a single place<mdash />where the constant is defined. Once updated, every calculation that uses the constant will automatically use the new value.
+          </p>
+        </li>
+        <li>
+          <title>Accidental Modification Protection</title>
+          <p>
+            By adding <c>final</c>, you recruit the compiler to safeguard your data. It guarantees that neither you nor a teammate can accidentally overwrite a critical conversion factor midway through a complex algorithm.
+          </p>
+        </li>
+      </ol>
+
+      <p>
+        From a memory perspective, a <c>final</c> local variable is stored on the stack in the exact same way as a standard variable. The only difference is that the compiler enforces a strict rule: once a value is written into that memory slot, no statement in your program is allowed to overwrite it.
+      </p>
+    </subsubsection>
+  </subsection>
+</section>

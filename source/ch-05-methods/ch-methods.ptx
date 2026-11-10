@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xml:id="ch-05-methods" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Methods and Functional Decomposition</title>
+
+  <xi:include href="sec-5-1-overview.ptx" />
+  <xi:include href="sec-5-2-procedural-abstraction.ptx" />
+  <xi:include href="sec-5-3-anatomy-static-method.ptx" />
+  <xi:include href="sec-5-4-parameters-arguments.ptx" />
+  <xi:include href="sec-5-5-call-stack.ptx" />
+  <xi:include href="sec-5-6-value-returning-methods.ptx" />
+  <xi:include href="sec-5-7-boolean-methods.ptx" />
+  <xi:include href="sec-5-8-scope-lifetime.ptx" />
+  <xi:include href="sec-5-9-method-overloading.ptx" />
+  <xi:include href="sec-5-10-javadoc.ptx" />
+  <xi:include href="sec-5-11-testing-methods.ptx" />
+  <xi:include href="sec-5-12-debugging-methods.ptx" />
+  <xi:include href="sec-5-13-putting-it-together.ptx" />
+  <xi:include href="sec-5-14-moving-on.ptx" /> 
+  <xi:include href="sec-5-15-exercises.ptx" /> 
+</chapter>

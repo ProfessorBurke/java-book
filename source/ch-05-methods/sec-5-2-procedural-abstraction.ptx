@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-5-2-procedural-abstraction" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Procedural Abstraction and Functional Decomposition</title>
+
+  <introduction>
+    <p>
+      As programs grow in size, cramming all your logic into a single, sprawling <c>main</c> method becomes unmanageable. To build complex software without becoming overwhelmed, software engineers rely on two related principles: <term>procedural abstraction</term> and <term>functional decomposition</term>.
+    </p>
+  </introduction>
+
+  <!-- ============================================================ -->
+  <!-- 5.2.1 Procedural abstraction                                 -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-2-1-procedural-abstraction">
+    <title>Procedural Abstraction</title>
+
+    <p>
+      You have already used procedural abstraction throughout this book without knowing its formal name:
+    </p>
+
+    <ul>
+      <li>
+        <p>When you call <c>Math.sqrt(25.0)</c>, you do not know<mdash />or care<mdash />what mathematical algorithm Java uses under the hood.</p>
+      </li>
+      <li>
+        <p>When you call <c>Integer.parseInt("42")</c>, you do not need to read the source code that converts characters to binary digits.</p>
+      </li>
+    </ul>
+
+    <p>
+      <term>Procedural abstraction</term> is the practice of separating <em>what</em> a unit of code does from <em>how</em> it accomplishes that task.
+    </p>
+
+    <p>
+      A method acts like a <term>black box</term>:
+    </p>
+
+    <ul>
+      <li>
+        <p><strong>The Interface (the outside):</strong> What data goes in (parameters), and what result comes out (the return value).</p>
+      </li>
+      <li>
+        <p><strong>The Implementation (the inside):</strong> The internal statements that carry out the work.</p>
+      </li>
+    </ul>
+
+    <p>
+      When you design your own methods, you create your own abstractions. As long as a method fulfills its contract as specified by the interface<mdash />accepting specified inputs and producing the promised output<mdash />other parts of your program can use it without worrying about its internal machinery.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 5.2.2 Functional decomposition                              -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-2-2-functional-decomposition">
+    <title>Functional Decomposition</title>
+
+    <p>
+      <term>Functional decomposition</term> (often called <term>top-down design</term>) is the architectural process of taking a complex problem and systematically breaking it into smaller, manageable, self-contained sub-tasks.
+    </p>
+
+    <p>
+      How do you break a problem into sub-tasks?
+    </p>
+
+    <ol>
+      <li>
+        <p>
+          <strong>Understand the problem domain:</strong> Discuss the requirements with your instructor, client, or team; work through examples by hand with a pencil and paper; and explore edge cases.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>Identify single-responsibility tasks:</strong> Look for distinct milestones in the problem:
+        </p>
+        <ul>
+          <li><p>Gathering or reading raw input</p></li>
+          <li><p>Validating that data falls within acceptable bounds</p></li>
+          <li><p>Performing a specialized calculation</p></li>
+          <li><p>Classifying a value into a category</p></li>
+          <li><p>Formatting text or displaying a report</p></li>
+        </ul>
+      </li>
+      <li>
+        <p>
+          <strong>Define the contract for each task:</strong> For every sub-task you identify, clearly articulate:
+        </p>
+        <ul>
+          <li><p><strong>Input:</strong> What exact data does this task need to do its job?</p></li>
+          <li><p><strong>Processing:</strong> What logical steps or formulas will it apply?</p></li>
+          <li><p><strong>Output:</strong> What result must it hand back to the caller?</p></li>
+        </ul>
+      </li>
+    </ol>
+
+    <p>
+      In a functionally decomposed program, the <c>main</c> method acts like an executive manager: it does not perform all the heavy lifting itself; instead, it delegates specific jobs to specialized subordinate methods. Those helper methods may, in turn, delegate smaller sub-tasks to other methods.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 5.2.3 Modeling design with structure charts                  -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-2-3-structure-charts">
+    <title>Modeling Design with Structure Charts</title>
+
+    <p>
+      Software engineers often visualize functional decomposition using a <term>structure chart</term><fn>For the formal notation and rules of structure charts, see Edward Yourdon and Larry L. Constantine, <pubtitle>Structured Design: Fundamentals of a Discipline of Computer Program and Systems Design</pubtitle> (Englewood Cliffs, NJ: Prentice-Hall, 1979), app. A.</fn> (sometimes called a <term>hierarchy chart</term>).
+    </p>
+
+    <p>
+      In a structure chart:
+    </p>
+
+    <ul>
+      <li>
+        <p>Each box represents a distinct method.</p>
+      </li>
+      <li>
+        <p>An arrow connecting two boxes indicates a method call (the caller sits above the called method and the arrow is from the caller to the called).</p>
+      </li>
+      <li>
+        <p>Small annotated arrows alongside the lines show the flow of data: inputs moving toward the helper method (arguments), and output flowing back to the caller (return values). These arrows are called <term>data flows</term> (or couples) and often have an open (for data) or closed (for control) circle on the end.</p>
+      </li>
+    </ul>
+
+    <p>
+      An example will be illustrative. Imagine we are writing a program to process city Air Quality Index (AQI) records:
+    </p>
+
+    <ul>
+      <li>
+        <p>The program reads city records from a file (each record consisting of a city name and an AQI integer).</p>
+      </li>
+      <li>
+        <p>It validates that the AQI is within the valid range of <m>0</m> to <m>500</m>.</p>
+      </li>
+      <li>
+        <p>For valid records, it classifies the air quality and displays an aligned report table containing the city name, the AQI reading, and the health guidance.</p>
+      </li>
+    </ul>
+
+    <p>
+      Instead of writing one giant loop in <c>main</c>, we decompose the problem into three single-responsibility helper methods:
+    </p>
+
+    <ol>
+      <li>
+        <p><strong><c>isValidAqi</c>:</strong></p>
+        <ul>
+          <li><p><strong>Input:</strong> AQI reading (<c>int</c>)</p></li>
+          <li><p><strong>Processing:</strong> Check if AQI is between <m>0</m> and <m>500</m> inclusive</p></li>
+          <li><p><strong>Output:</strong> Valid or invalid (<c>boolean</c>)</p></li>
+        </ul>
+      </li>
+      <li>
+        <p><strong><c>getGuidance</c>:</strong></p>
+        <ul>
+          <li><p><strong>Input:</strong> AQI reading (<c>int</c>)</p></li>
+          <li><p><strong>Processing:</strong> Match the numeric AQI to its health category (e.g., <q>Good</q>, <q>Moderate</q>, <q>Unhealthy</q>)</p></li>
+          <li><p><strong>Output:</strong> Health guidance description (<c>String</c>)</p></li>
+        </ul>
+      </li>
+      <li>
+        <p><strong><c>formatTableRow</c>:</strong></p>
+        <ul>
+          <li><p><strong>Input:</strong> City name (<c>String</c>), AQI reading (<c>int</c>), guidance description (<c>String</c>)</p></li>
+          <li><p><strong>Processing:</strong> Format the values into a neat, column-aligned line</p></li>
+          <li><p><strong>Output:</strong> Formatted table line (<c>String</c>)</p></li>
+        </ul>
+      </li>
+    </ol>
+
+    <figure xml:id="figure-structure-chart-aqi">
+      <title>Structure Chart for the Air Quality Reporting Program</title>
+      <caption>Functional decomposition of <c>main</c> into helper methods <c>isValidAqi</c>, <c>getGuidance</c>, and <c>formatTableRow</c>, with annotated data couples (arguments and return values) and control flags.</caption>
+      <image source="figures/figure_5_1.png" width="95%">
+        <shortdescription>Structure chart showing main calling isValidAqi, getGuidance, and formatTableRow with data and control couples.</shortdescription>
+        <description>
+          <p>
+            A hierarchical structure chart illustrating functional decomposition for an Air Quality Index reporting program. The top-level caller box represents the main method. Three downward arrows indicate method calls to subordinate helper methods: isValidAqi on the left, getGuidance in the center, and formatTableRow on the right. Small annotated arrows with circles at their tails show data and control flows along the invocation lines: aqi (int) flows down to isValidAqi, which returns an isValid (boolean) control flag with a filled circle; aqi (int) flows down to getGuidance, which returns guidance (String) with an open circle; and city, aqi, and guidance flow down to formatTableRow, which returns formattedRow (String) with an open circle. A notation key at the bottom defines open-circle arrows as data couples and filled-circle arrows as control couples.
+          </p>
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      From this structure chart, the division of labor is transparent:
+    </p>
+
+    <ul>
+      <li>
+        <p><c>main</c> calls <c>isValidAqi</c>, passing the <c>aqi</c> integer and receiving a <c>boolean</c> back.</p>
+      </li>
+      <li>
+        <p><c>main</c> calls <c>getGuidance</c>, passing the <c>aqi</c> and receiving the health description <c>String</c> back.</p>
+      </li>
+      <li>
+        <p><c>main</c> calls <c>formatTableRow</c>, passing the city name, AQI, and guidance string, receiving the aligned row text back to print.</p>
+      </li>
+    </ul>
+
+    <p>
+      Notice that none of these helper methods know that the data came from a file or that it is being printed to a console! They simply perform their pure mathematical or text-processing task and return the result.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 5.2.4 Implementation Strategies                              -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-2-4-implementation-strategies">
+    <title>Implementation Strategies</title>
+
+    <p>
+      Once you have your structure chart roadmap, how do you actually write the code? Trying to write all four methods at once before pressing Run is a recipe for debugging headaches.
+    </p>
+
+    <p>
+      Instead, developers use two complementary implementation strategies:
+    </p>
+
+    <paragraphs>
+      <title>Strategy 1: Top-Down Development with Stubs</title>
+      <p>
+        In top-down development, you write the high-level <c>main</c> method first, filling in calls to your helper methods before you have actually implemented their logic.
+      </p>
+      <p>
+        To allow your code to compile and run, you create <term>method stubs</term><mdash />minimal placeholder methods that match the required interface but contain no real logic. For example, we might write our <c>isValidAqi</c> method to always return <c>true</c>, and our <c>getGuidance</c> and <c>formatTableRow</c> methods to return dummy strings such as <c>"PENDING"</c> while we implement <c>main</c>.
+      </p>
+      <p>
+        Stubs allow you to build, run, and test the overall control flow of <c>main</c> immediately. Once the broad structure is working, you replace each stub one by one with its real implementation.
+      </p>
+    </paragraphs>
+
+    <paragraphs>
+      <title>Strategy 2: Bottom-Up Development and Isolated Unit Testing</title>
+      <p>
+        In bottom-up development, you do the exact opposite: you write and verify the smallest, lowest-level building blocks first, before writing the high-level program that coordinates them.
+      </p>
+      <ul>
+        <li>
+          <p>You write <c>isValidAqi(int aqi)</c> first.</p>
+        </li>
+        <li>
+          <p>
+            Before writing a single line of file-reading code, you test <c>isValidAqi</c> in isolation<mdash />either by experimenting with it in JShell or by calling it with test values in a temporary scratchpad:
+          </p>
+          <program language="java">
+<![CDATA[System.out.println(isValidAqi(42));   // Expected: true
+System.out.println(isValidAqi(-5));   // Expected: false
+System.out.println(isValidAqi(505));  // Expected: false]]>
+          </program>
+        </li>
+        <li>
+          <p>Once you are 100% confident that <c>isValidAqi</c> is bug-free, you set it aside and implement <c>getGuidance</c>.</p>
+        </li>
+        <li>
+          <p>Finally, you assemble your pre-tested, verified building blocks inside <c>main</c>.</p>
+        </li>
+      </ul>
+      <p>
+        Whether you scaffold from the top down using stubs or construct from the bottom up using isolated tests, modular programming transforms software development: you can focus on the implementation of one design component at a time, and you never have to debug an entire application all at once. If a bug occurs, you can isolate and fix the single responsible method without breaking the rest of your system.
+      </p>
+    </paragraphs>
+  </subsection>
+
+</section>

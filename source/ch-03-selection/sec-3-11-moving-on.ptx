@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-3-11-moving-on" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Moving On!</title>
+
+  <p>
+    Congratulations!
+  </p>
+
+  <p>
+    In this chapter, you expanded on your Java programming foundation with the following critical skills:
+  </p>
+
+  <ul>
+    <li>
+      <p>Building Boolean expressions with the relational and logical operators.</p>
+    </li>
+    <li>
+      <p>Choosing and implementing the appropriate selection structure based on the properties of the problem.</p>
+    </li>
+    <li>
+      <p>Understanding exactly when code in a decision structure executes by knowing how to complement a Boolean expression (even tricky compound expressions).</p>
+    </li>
+    <li>
+      <p>Writing assertions to validate programmer assumptions, and enabling them in development code.</p>
+    </li>
+    <li>
+      <p>Designing test cases with full branch coverage that include boundary values.</p>
+    </li>
+  </ul>
+
+  <p>
+    You are now fully equipped to tackle the programming exercises at the end of this chapter. Work through the steps: explore the problem on paper, design your algorithm by categorizing the decisions, build your testing table, develop the code incrementally, and test your code, using Eclipse’s Code Coverage to validate that your testing plan hit all branches of your program.
+  </p>
+</section>

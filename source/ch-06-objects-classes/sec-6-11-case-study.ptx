@@ -13,13 +13,15 @@
         by a non-profit culinary incubator to write a software tool that tracks dough batch
         production, manages shared oven runtime, enforces baking safety invariants, and calculates
         accurate production costs per loaf for member bakers.
-      </p>
-      <figure xml:id="figure-community-bakery">
-        <caption>Artisan bakers collaborating in a shared community commercial kitchen. (Image generated with AI).</caption>
+      </p>   
+       <stack>
         <image source="figures/community_bakery_header.png">
           <shortdescription>Artisan bakers working side-by-side preparing sourdough loaves in a shared commercial bakery kitchen.</shortdescription>
         </image>
-      </figure>
+		<p>
+		 <em>Artisan bakers collaborating in a shared community commercial kitchen. (Image generated with AI).</em>
+        </p>
+		</stack>
     </sidebyside>
     <p>
       This case study integrates all the core object-oriented principles introduced in this chapter:
@@ -180,8 +182,7 @@
 
     <listing xml:id="listing-oven-outline">
       <caption>Outline and invariants for <c>Oven.java</c>.</caption>
-      <program language="java">
-        <input>
+      <program language="java" line-numbers="yes">
 <![CDATA[
 public class Oven {
     // Class Invariants:
@@ -208,14 +209,12 @@ public class Oven {
     }
 }
 ]]>
-        </input>
       </program>
     </listing>
 
     <listing xml:id="listing-recipe-batch-outline">
       <caption>Outline and invariants for <c>RecipeBatch.java</c>.</caption>
-      <program language="java">
-        <input>
+      <program language="java" line-numbers="yes">
 <![CDATA[
 public class RecipeBatch {
     // Class Invariants:
@@ -248,7 +247,6 @@ public class RecipeBatch {
     }
 }
 ]]>
-        </input>
       </program>
     </listing>
   </subsection>
@@ -264,8 +262,8 @@ public class RecipeBatch {
 
     <listing xml:id="listing-bakery-test">
       <caption>Unit tests in <c>BakeryTest.java</c> verifying state transitions and costs.</caption>
-      <program language="java" interactive="activecode" label="activecode-bakery-test">
-        <code>
+      <program language="java" >
+        
 <![CDATA[
 public class BakeryTest {
     public static void main(String[] args) {
@@ -327,7 +325,7 @@ public class BakeryTest {
     }
 }
 ]]>
-        </code>
+        
       </program>
     </listing>
   </subsection>
@@ -341,8 +339,7 @@ public class BakeryTest {
 
     <listing xml:id="listing-oven-full">
       <caption>The complete <c>Oven.java</c> class.</caption>
-      <program language="java">
-        <input>
+      <program language="java" line-numbers="yes">
 <![CDATA[
 public class Oven {
     private String name;
@@ -393,14 +390,12 @@ public class Oven {
     }
 }
 ]]>
-        </input>
       </program>
     </listing>
 
     <listing xml:id="listing-recipe-batch-full">
       <caption>The complete <c>RecipeBatch.java</c> class.</caption>
-      <program language="java">
-        <input>
+      <program language="java" line-numbers="yes">
 <![CDATA[
 public class RecipeBatch {
     private String recipeName;
@@ -471,7 +466,6 @@ public class RecipeBatch {
     }
 }
 ]]>
-        </input>
       </program>
     </listing>
   </subsection>
@@ -486,8 +480,8 @@ public class RecipeBatch {
 
     <listing xml:id="listing-bakery-demo-full">
       <caption>Simulating morning baking production in <c>BakeryDemo.java</c>.</caption>
-     <program language="java" interactive="activecode" label="activecode-bakery-demo">
-        <code>
+     <program language="java" line-numbers="yes">
+        
 <![CDATA[
 public class BakeryDemo {
     public static void main(String[] args) {
@@ -528,7 +522,7 @@ public class BakeryDemo {
     }
 }
 ]]>
-        </code>
+       
       </program>
     </listing>
   </subsection>

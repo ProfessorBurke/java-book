@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-5-9-method-overloading" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Method Overloading</title>
+
+  <introduction>
+    <p>
+      Sometimes we want a method to perform the same conceptual task on different kinds of data, or we want to provide a simplified version of a method that automatically applies sensible default settings. Java’s solution to this design need is to allow us to write multiple versions of the same method within a class, called <term>method overloading</term>.
+    </p>
+  </introduction>
+
+  <!-- ============================================================ -->
+  <!-- 5.9.1 Method signature                                       -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-9-1-method-signature">
+    <title>Method Signature</title>
+
+    <p>
+      Java uses the <term>method signature</term> to match a method call to the code that will execute.
+    </p>
+
+    <p>
+      A method’s signature consists of the method name together with the parameter list. This includes the number, order, and type of parameters, but not their names. Note that the method signature does not include the method’s access modifiers (<c>public</c>, <c>private</c>), the <c>static</c> keyword, or its return type.
+    </p>
+
+    <p>
+      The <c>parseInt</c> method in the <c>Integer</c> class is an overloaded method. The two methods have different signatures:
+    </p>
+
+    <program language="java">
+<![CDATA[public static int parseInt(String s)
+public static int parseInt(String s, int radix)]]>
+    </program>
+
+    <p>
+      The first method takes one parameter, a <c>String</c>, and the second takes two parameters: a <c>String</c> and an <c>int</c>. If Java sees this invocation:
+    </p>
+
+    <program language="java">
+<![CDATA[numDays = Integer.parseInt("31");]]>
+    </program>
+
+    <p>
+      it matches the call to the first <c>parseInt</c> method<mdash />the one with a single <c>String</c> parameter. If it sees this invocation:
+    </p>
+
+    <program language="java">
+<![CDATA[hexValue = Integer.parseInt("FF0000", 16);]]>
+    </program>
+
+    <p>
+      it matches the call to the second <c>parseInt</c> method<mdash />the one with a <c>String</c> parameter and an <c>int</c> parameter, in that order.
+    </p>
+
+    <p>
+      It’s helpful, when thinking about your method signatures, to write them in the same shorthand used by the Java compiler<fn>When you attempt to invoke a method with the wrong parameter list, the error message from the compiler refers to the method signature as <c>methodName(parameterType, ..., parameterType)</c>, e.g., <q>The method parseInt(String) in the type Integer is not applicable for the arguments (double).</q></fn>. The two <c>parseInt</c> signatures become:
+    </p>
+
+    <program language="java">
+<![CDATA[parseInt(String)
+parseInt(String, int)]]>
+    </program>
+
+    <p>
+      It is easy to see that the signatures are different when the methods are written this way.
+    </p>
+
+    <p>
+      Suppose we want to overload a method, given this header:
+    </p>
+
+    <program language="java">
+<![CDATA[public static int badExample(String s, int r)]]>
+    </program>
+
+    <p>
+      The following methods do <em>not</em> have different signatures, despite some differences in their method headers:
+    </p>
+
+    <program language="java">
+<![CDATA[public static double badExample(String s, int r) // Same signature! Only return type differs.
+public static int badExample(String st, int ra)  // Same signature! Only parameter names differ.
+private int badExample(String s, int r)          // Same signature! Only modifiers differ.]]>
+    </program>
+
+    <p>
+      In the first example, <c>badExample</c> has the same name and parameter list, but returns a <c>double</c>. You may return a different result type from an overloaded method, but the signature must also differ. If this method were invoked with the arguments <c>("FF0000", 16)</c>, Java wouldn’t know which method to match to the call.
+    </p>
+
+    <p>
+      The second example is identical to the original method header except that the parameter names are different. This has no bearing on the method signature. In the last example, the modifiers are different<mdash />the method is now <c>private</c> and there is no <c>static</c> modifier. This, again, does not change the method signature.
+    </p>
+
+    <p>
+      If we write the <c>badExample</c> method signatures using the Java compiler shorthand, they all boil down to the exact same signature: <c>badExample(String, int)</c>.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 5.9.2 Writing an overloaded method                          -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-9-2-writing-overloaded-methods">
+    <title>Writing an Overloaded Method</title>
+
+    <introduction>
+      <p>
+        Overloading a method is a design choice. Developers overload methods primarily for two reasons: to perform the same conceptual task on different kinds of data, or to provide sensible default parameters through method delegation.
+      </p>
+    </introduction>
+
+    <!-- 5.9.2.1 Methods that operate on different data -->
+    <subsubsection xml:id="subsubsec-5-9-2-1-different-data">
+      <title>Methods That Operate on Different Data</title>
+
+      <p>
+        One reason we overload a method is to perform the same task on different kinds of data. Overloading the method name makes the method seamless to use<mdash />the programmer doesn’t have to hunt for a specialized name for the specific data type they hold.
+      </p>
+
+      <p>
+        Suppose we want to write a method that returns the number of days in a month, but we want the caller to be able to enter the month as either a <c>String</c> (e.g., <c>"January"</c>, <c>"February"</c>, ..., <c>"December"</c>) or as an integer (e.g., <m>1, 2, \dots, 12</m>). We can write an overloaded <c>getMonthDays</c> method:
+      </p>
+
+      <program language="java">
+<![CDATA[public static int getMonthDays(int month) {
+    int days;
+
+    switch (month) {
+        case 2:
+            days = 28;
+            break;
+
+        case 4: case 6: case 9: case 11:
+            days = 30;
+            break;
+
+        case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+            days = 31;
+            break;
+
+        default:
+            days = -1; // Invalid month
+            break;
+    } // switch
+    return days;
+}]]>
+      </program>
+
+      <p>
+        And we fill in a companion body for the <c>getMonthDays</c> method with a <c>String</c> parameter:
+      </p>
+
+      <program language="java">
+<![CDATA[public static int getMonthDays(String month) { 
+    int days;
+
+    switch (month.toLowerCase()) {
+        case "february":
+            days = 28;
+            break;
+        // ... (remaining months handled similarly)
+        default:
+            days = -1;
+            break;
+    } // switch
+    return days;
+}]]>
+      </program>
+
+      <p>
+        If we put these methods in the same class, a programmer can invoke <c>getMonthDays</c> with either a <c>String</c> or an <c>int</c>. The caller doesn’t need to remember clumsy, specialized names like <c>getMonthDaysByName(String)</c> versus <c>getMonthDaysByNumber(int)</c>.
+      </p>
+
+      <p>
+        Note that if you have two methods with the same name in different classes, the method is not overloaded. By definition, method overloading is a relationship between methods declared in the <em>same</em> class. If two separate classes each contain a <c>getMonthDays</c> method, they are not overloaded; each class simply defines its own independent method within its own class boundary.
+      </p>
+
+      <p>
+        There are many examples in the Java library of overloaded methods that operate on different kinds of data. We’ve used two versions of the <c>Scanner</c> constructor<mdash />one that takes an <c>InputStream</c> (<c>System.in</c>) as a parameter and one that takes a <c>File</c>. You may not think of the <c>print</c> and <c>println</c> methods as overloaded, but there are ten <c>println</c> methods<mdash />one for each primitive type, one for <c>String</c>, one for <c>char[]</c>, one for generic <c>Object</c>, plus a parameterless version that outputs a blank line!
+      </p>
+    </subsubsection>
+
+    <!-- 5.9.2.2 Method delegation -->
+    <subsubsection xml:id="subsubsec-5-9-2-2-method-delegation">
+      <title>Method Delegation</title>
+
+      <p>
+        An overloaded method is also an excellent design choice if you want to allow, but not require, customization in a method call. Consider our <c>greetUser</c> method from <xref ref="sec-5-4-parameters-arguments" />:
+      </p>
+
+      <program language="java">
+<![CDATA[public static void greetUser(String name, boolean isReturningUser) {
+    if (isReturningUser) {
+        System.out.println("Welcome back, " + name + "! Good to see you again.");
+    } else {
+        System.out.println("Welcome to the platform, " + name + "! Glad you're here.");
+    }
+}]]>
+      </program>
+
+      <p>
+        Suppose we want to provide a default version of this method: one that doesn’t require the caller to supply the <c>isReturningUser</c> parameter.
+      </p>
+
+      <p>
+        We might be tempted to copy and paste the <c>println</c> code into the new method. But if we later decide to change the greeting wording, we would have to remember to change it in both methods. The standard, professional way to write an overloaded method with defaults in Java is to have the simpler method delegate the work to the more detailed one:
+      </p>
+
+      <program language="java">
+<![CDATA[public static void greetUser(String name) {
+    greetUser(name, false); // Delegates to the two-parameter version!
+}]]>
+      </program>
+
+      <p>
+        This may not feel like a huge savings with a method this simple, but the principle of avoiding duplicate code applies whether it’s a simple print statement or several pages of complex calculations: duplicated code causes maintenance headaches over the lifetime of your program.
+      </p>
+    </subsubsection>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 5.9.3 How Java resolves overloaded method calls             -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-9-3-resolving-overloaded-calls">
+    <title>How Java Resolves Overloaded Method Calls</title>
+
+    <p>
+      When you invoke an overloaded method, how does Java determine which version of the method to execute?
+    </p>
+
+    <p>
+      This decision is made entirely at compile time. The Java compiler examines the number, types, and order of the argument expressions provided at the call site and searches the class for the best-matching method signature. This compile-time binding ensures that by the time your program runs, the JVM already knows the exact method to jump to without needing to figure it out on the fly.
+    </p>
+
+    <p>
+      To select the winning method, the compiler follows a strict hierarchy:
+    </p>
+
+    <paragraphs>
+      <title>1. The Compiler Looks for an Exact Match</title>
+      <p>
+        First, the compiler looks for a method signature where every parameter type matches the type of the corresponding argument expression identically:
+      </p>
+      <program language="java">
+<![CDATA[public static void display(int value) {
+    System.out.println("int version: " + value);
+}
+
+public static void display(double value) {
+    System.out.println("double version: " + value);
+}]]>
+      </program>
+      <p>
+        If you call <c>display(42);</c>, Java passes an <c>int</c> literal. It matches <c>display(int)</c> exactly and prints <c>int version: 42</c>.
+      </p>
+      <p>
+        If you call <c>display(3.14);</c>, Java passes a <c>double</c> literal. It matches <c>display(double)</c> exactly and prints <c>double version: 3.14</c>.
+      </p>
+    </paragraphs>
+
+    <paragraphs>
+      <title>2. The Compiler Looks for a Compatible Match via Widening</title>
+      <p>
+        If no exact match exists, the compiler checks whether any overloaded version can accept the arguments through widening primitive conversions (following the widening order we studied in Section 2.5: <c>int</c> <m>\longrightarrow</m> <c>long</c> <m>\longrightarrow</m> <c>float</c> <m>\longrightarrow</m> <c>double</c>).
+      </p>
+      <p>
+        Suppose we delete the <c>display(int)</c> method from our class, leaving only <c>display(double)</c>:
+      </p>
+      <program language="java">
+<![CDATA[// display(int) no longer exists in the class!
+display(42);]]>
+      </program>
+      <p>
+        Because there is no exact <c>display(int)</c> method, Java widens the <c>int</c> argument <c>42</c> to the <c>double</c> value <c>42.0</c> and successfully invokes <c>display(double)</c>. (Remember, Java will automatically widen primitive values to find a match, but it will never automatically narrow them).
+      </p>
+    </paragraphs>
+
+    <paragraphs>
+      <title>3. Ambiguous Invocations: When the Compiler Refuses to Guess</title>
+      <p>
+        What happens when multiple overloaded methods match an invocation, but neither method is clearly more specific than the other?
+      </p>
+      <p>
+        Consider this class with two multi-parameter overloaded methods:
+      </p>
+      <program language="java">
+<![CDATA[public static void process(int a, double b) {
+    System.out.println("int, double version");
+}
+
+public static void process(double a, int b) {
+    System.out.println("double, int version");
+}]]>
+      </program>
+      <p>
+        Now consider what happens if a caller provides two <c>int</c> arguments:
+      </p>
+      <program language="java">
+<![CDATA[process(5, 10); // COMPILER ERROR: reference to process is ambiguous]]>
+      </program>
+      <p>
+        Let's examine why the compiler halts with an error:
+      </p>
+      <ul>
+        <li>
+          <p>To call the first version, <c>process(int, double)</c>, the first argument <c>5</c> is an exact match, but the second argument <c>10</c> must be widened from <c>int</c> to <c>double</c>.</p>
+        </li>
+        <li>
+          <p>To call the second version, <c>process(double, int)</c>, the second argument <c>10</c> is an exact match, but the first argument <c>5</c> must be widened from <c>int</c> to <c>double</c>.</p>
+        </li>
+      </ul>
+      <p>
+        Both methods are equally valid candidates, and each requires exactly one widening conversion. Because Java refuses to guess the programmer's intent, it rejects the code with an ambiguous method invocation error.
+      </p>
+    </paragraphs>
+
+    <paragraphs>
+      <title>Resolving Ambiguity</title>
+      <p>
+        When the compiler reports an ambiguous invocation, you can resolve the tie by making your intent explicit using a type cast or a literal of the desired type:
+      </p>
+      <program language="java">
+<![CDATA[// Explicitly clarifies that you want the first method:
+process(5, (double) 10); // or process(5, 10.0);
+
+// Explicitly clarifies that you want the second method:
+process((double) 5, 10); // or process(5.0, 10);]]>
+      </program>
+      <p>
+        By explicitly casting one of the arguments, you provide an exact match for one signature and eliminate the ambiguity.
+      </p>
+    </paragraphs>
+  </subsection>
+
+</section>

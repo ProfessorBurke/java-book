@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-3-1-overview" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Chapter Overview</title>
+
+  <p>
+    In the previous chapter, you learned to write Java programs that obtain input from the user, process that data with mathematical operations and text formatting, and display the results with precision. Those programs followed a sequential flow of control, executing statements from top to bottom within the <c>main</c> method. However, sequential execution has clear limitations: it cannot adapt to changing conditions or make decisions based on program state. In <xref ref="listing-drone-search" />, for example, our code had no way to prevent calculating negative coordinates if a user entered inputs that directed the drone outside the designated search boundary.
+  </p>
+
+  <p>
+    In this chapter, you will learn how to select which code executes next using selection statements (often called branching). Selection statements evaluate Boolean expressions that resolve to either <c>true</c> or <c>false</c>. We will examine the relational and logical operators used to construct these conditions, explore why reference types like <c>String</c> require special comparison methods rather than standard equality operators, and evaluate the trade-offs between different branching structures such as if-else chains, nested conditions, and <c>switch</c> statements. Finally, we will cover how to design comprehensive test cases to verify that every path through your code executes as intended.
+  </p>
+
+  <paragraphs>
+    <title>Roadmap for Chapter 3</title>
+    <ul>
+      <li>
+        <p>
+           <xref ref="sec-3-2-forming-conditions" /> 
+          Forming Conditions: if statements, relational and equality operators &amp; boolean variables<mdash />Writing branching code, evaluating relationships between values (<c>&lt;</c>, <c>&gt;</c>, <c>==</c>, <c>!=</c>) and capturing state using <c>boolean</c> variables.
+        </p>
+      </li>
+      <li>
+        <p>
+           <xref ref="sec-3-3-two-way-decisions" /> 
+          Two-way decisions: if-else &amp; complements<mdash />Handling alternative outcomes and understanding how <c>else</c> represents the logical complement of the condition.
+        </p>
+      </li>
+      <li>
+        <p>
+           <xref ref="sec-3-4-multi-way-branching" /> 
+           Multi-Way Branching: Series if-else &amp; Nested Selection<mdash />Distinguishing between independent decisions, mutually exclusive series, and hierarchical (nested) decisions.
+        </p>
+      </li>
+      <li>
+        <p>
+          <xref ref="sec-3-5-compound-conditions" /> 
+          Compound Conditions: Logical Operators &amp; De Morgan’s Laws<mdash />Combining expressions using <c>&amp;&amp;</c>, <c>||</c>, and <c>!</c>, understanding short-circuit evaluation, and simplifying inverted logic.
+        </p>
+      </li>
+      <li>
+        <p>
+          <xref ref="sec-3-6-comparing-strings" /> 
+          Beyond Primitives: Comparing Strings and Objects<mdash />Why <c>==</c> fails for text, how reference comparison differs from value comparison, and using <c>.equals()</c> and <c>compareTo()</c>.
+        </p>
+      </li>
+      <li>
+        <p>
+          <xref ref="sec-3-7-specialized-branching" /> 
+          Specialized Branching: switch Statements &amp; the Conditional Operator<mdash />Mapping discrete values with <c>switch</c> and writing concise inline expressions using the ternary operator (<c>?:</c>).
+        </p>
+      </li>
+      <li>
+        <p>
+           <xref ref="sec-3-8-assertions" /> 
+          Defensive Code: Assertions<mdash />Using <c>assert</c> statements to document assumptions and verify internal program invariants during development.
+        </p>
+      </li>
+      <li>
+        <p>
+           <xref ref="sec-3-9-design-verification" /> 
+          Design &amp; Verification: Choosing Constructs and Testing Branches<mdash />Selecting the best selection structure for a given problem, tracing execution paths, and designing test cases for complete branch coverage.
+        </p>
+      </li>
+    </ul>
+  </paragraphs>
+
+  <p>
+    Once you’ve mastered the concepts in this chapter, you’ll recognize when a problem requires a branching solution. You’ll be able to choose the most appropriate selection structure and implement it with precise Boolean expressions for both primitive and <c>String</c> types. And you’ll have the tools for writing correct code with assertions and an understanding of execution paths and how to test them. Let’s get started.
+  </p>
+</section>

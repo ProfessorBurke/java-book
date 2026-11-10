@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<!--******************************************-->
+<!--*  Authored with PreTeXt                 *-->
+<!--*  pretextbook.org                       *-->
+<!--*  Theme: default-modern                 *-->
+<!--*  Palette:                              *-->
+<!--******************************************-->
+
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body class="ignore-math">
+<figure class="table table-like"><figcaption><span class="type">Table</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">4.7<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span>Additional variable roles<div class="autopermalink" aria-hidden="true" data-description="Table 4.7: Additional variable roles"><a tabindex="-1" href="#table-additional-variable-roles" title="Copy heading and permalink for Table 4.7: Additional variable roles" aria-label="Copy heading and permalink for Table 4.7: Additional variable roles">🔗</a></div></figcaption><div class="tabular-box natural-width"><table class="tabular">
+<tr class="header-horizontal">
+<th scope="col" class="l m b1 r1 l1 t1 lines">Role name</th>
+<th scope="col" class="l m b1 r1 l0 t1 lines">Description &amp; purpose</th>
+<th scope="col" class="l m b1 r1 l0 t1 lines">How its value changes</th>
+<th scope="col" class="l m b1 r1 l0 t1 lines">Java example</th>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">Fixed value</td>
+<td class="l m b1 r1 l0 t0 lines">Represents a quantity that does not change after its initial assignment.</td>
+<td class="l m b1 r1 l0 t0 lines">Set once (by literal, input, or calculation) and remains constant throughout its scope.</td>
+<td class="l m b1 r1 l0 t0" style="max-width:180px;">
+<div class="para">
+<code class="code-inline tex2jax_ignore">final double PI = 3.14159;</code><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-additional-variable-roles-2-6-4-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para">
+<code class="code-inline tex2jax_ignore">int targetNumber = (int)(Math.random() * 10) + 1;</code><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-additional-variable-roles-2-6-4-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">Follower</td>
+<td class="l m b1 r1 l0 t0 lines">Tracks the “previous” value of another variable, always trailing it by one step.</td>
+<td class="l m b1 r1 l0 t0 lines">Updated immediately before or after the tracked variable moves to a new value.</td>
+<td class="l m b1 r1 l0 t0" style="max-width:180px;">
+<div class="para">Tracking consecutive duplicates or change over time:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-additional-variable-roles-2-7-4-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para">
+<code class="code-inline tex2jax_ignore">int previousGuess = userGuess;</code><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-additional-variable-roles-2-7-4-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para">
+<code class="code-inline tex2jax_ignore">userGuess = stdin.nextInt();</code><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-additional-variable-roles-2-7-4-3" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">One-way flag</td>
+<td class="l m b1 r1 l0 t0 lines">A <code class="code-inline tex2jax_ignore">boolean</code> variable that records whether a specific state or event has occurred.</td>
+<td class="l m b1 r1 l0 t0 lines">Starts with an initial state (usually <code class="code-inline tex2jax_ignore">false</code>) and changes at most once (to <code class="code-inline tex2jax_ignore">true</code>), never reverting back.</td>
+<td class="l m b1 r1 l0 t0" style="max-width:180px;">
+<div class="para">In search or prime-checking loops:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-additional-variable-roles-2-8-4-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">Temporary</td>
+<td class="l m b1 r1 l0 t0 lines">Holds a value for a very short duration, usually across just two or three lines of code.</td>
+<td class="l m b1 r1 l0 t0 lines">Assigned immediately before it is used and discarded immediately afterward.</td>
+<td class="l m b1 r1 l0 t0" style="max-width:180px;">
+<div class="para">Classic 3-line variable swap:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-additional-variable-roles-2-9-4-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0" style="max-width:96px;">
+<div class="para">Walker<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-additional-variable-roles-2-10-1-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para">
+<em class="emphasis">(Revisit after Chapter 6)</em><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-additional-variable-roles-2-10-1-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</td>
+<td class="l m b1 r1 l0 t0 lines">Moves through a data structure (such as an array), but its movements depend on the structure’s contents rather than a fixed step.</td>
+<td class="l m b1 r1 l0 t0 lines">Successive values depend on the data structure being traversed.</td>
+<td class="l m b1 r1 l0 t0" style="max-width:180px;">
+<div class="para">Jumping through a <code class="code-inline tex2jax_ignore">String</code> from one delimiter to the next:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-additional-variable-roles-2-10-4-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0" style="max-width:96px;">
+<div class="para">Organizer<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-additional-variable-roles-2-11-1-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para">
+<em class="emphasis">(Revisit after Chapter 6)</em><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-additional-variable-roles-2-11-1-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</td>
+<td class="l m b1 r1 l0 t0 lines">A composite collection (like an array) whose elements are rearranged or sorted.</td>
+<td class="l m b1 r1 l0 t0 lines">The variable’s identity doesn’t change, but its internal elements are reordered.</td>
+<td class="l m b1 r1 l0 t0" style="max-width:180px;">
+<div class="para">Imagine <code class="code-inline tex2jax_ignore">int[] numbers = {5, 2, 8, 1};</code> is reordered in place as the loop executes.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-additional-variable-roles-2-11-4-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</td>
+</tr>
+</table></div>
+</figure><span class="incontext"><a class="internal" href="sec-4-3-variable-roles.html#table-additional-variable-roles">In Context</a></span>
+</body>
+</html>

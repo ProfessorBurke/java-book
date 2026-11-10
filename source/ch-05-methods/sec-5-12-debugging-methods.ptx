@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-5-12-debugging-methods" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Debugging Methods</title>
+
+  <introduction>
+    <p>
+      In <xref ref="sec-2-9-case-study-drone" />, you were introduced to the power of the Eclipse debugger: setting breakpoints to freeze time, inspecting the <guilabel>Variables</guilabel> view to monitor state, and using <term>Step Over</term> (<kbd>F6</kbd>) to walk through sequential calculations line by line.
+    </p>
+
+    <p>
+      Once you begin decomposing programs into multiple methods, however, debugging takes on a new dimension. Your program no longer moves purely from top to bottom through a single sequence of statements in <c>main</c>. Instead, execution jumps back and forth across different methods, passing arguments into parameter variables, creating new local scopes, returning calculated values, and unwinding the call stack.
+    </p>
+
+    <p>
+      When a method produces an unexpected return value or triggers a semantic bug, relying solely on <term>Step Over</term> is no longer enough<mdash />it treats the entire method call as a black box and jumps straight past it. To find and fix bugs inside modular programs, you need to navigate into and out of methods at will.
+    </p>
+  </introduction>
+
+  <!-- ============================================================ -->
+  <!-- 5.12.1 Step over vs. step into: Opening the black box       -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-12-1-step-over-vs-into">
+    <title>Step Over vs. Step Into: Opening the Black Box</title>
+
+    <p>
+      Consider the modular shipping calculation program below. The <c>main</c> method prompts for package details and invokes <c>calculateShipping()</c>, which in turn invokes two helper methods: <c>calculateBaseFee()</c> and <c>calculateDistanceSurcharge()</c>.
+    </p>
+
+    <listing xml:id="listing-shipping-calculator">
+      <caption>ShippingCalculator.java</caption>
+      <program language="java">
+<![CDATA[/**
+ * Demonstrates method invocation and debugger stepping controls.
+ */
+public class ShippingCalculator {
+
+    public static void main(String[] args) {
+        double weightLbs = 12.5;
+        int distanceMiles = 350;
+        boolean isExpedited = true;
+
+        System.out.println("Calculating shipping quote...");
+        double totalCost = calculateShipping(weightLbs, distanceMiles, isExpedited);
+        System.out.printf("Total Shipping Cost: $%.2f%n", totalCost);
+    }
+
+    public static double calculateShipping(double weight, int distance, boolean expedited) {
+        double baseFee = calculateBaseFee(weight);
+        double distanceFee = calculateDistanceSurcharge(distance);
+        double subtotal = baseFee + distanceFee;
+
+        if (expedited) {
+            subtotal = subtotal * 1.50; // 50% surcharge for expedited shipping
+        }
+        return subtotal;
+    }
+
+    public static double calculateBaseFee(double weight) {
+        double flatRate = 5.00;
+        double perPound = 1.25;
+        return flatRate + (weight * perPound);
+    }
+
+    public static double calculateDistanceSurcharge(int distance) {
+        if (distance > 250) {
+            return (distance - 250) * 0.08;
+        }
+        return 0.0;
+    }
+}]]>
+      </program>
+    </listing>
+
+    <p>
+      Suppose you place a breakpoint on line 12 (<c>double totalCost = calculateShipping(...);</c>) and launch the program using the <guibutton>Debug</guibutton> button (the green bug icon). The program freezes on line 12 before calling the method.
+    </p>
+
+    <p>
+      At this point, you have a critical choice to make on the debugger toolbar:
+    </p>
+
+    <ul>
+      <li>
+        <p>
+          <strong>Step Over (<kbd>F6</kbd>): Treat the Method as a Unit.</strong> If you press <kbd>F6</kbd>, the Java Virtual Machine executes the entire <c>calculateShipping()</c> method (and all helper methods it calls) behind the scenes at full computer speed. The debugger pauses next on line 13, and the variable <c>totalCost</c> appears in your <guilabel>Variables</guilabel> view. If you already trust <c>calculateShipping()</c> and simply want to see what happens next in <c>main</c>, <term>Step Over</term> is the fastest choice.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>Step Into (<kbd>F5</kbd>): Dive Inside the Method.</strong> If <c>calculateShipping</c> is returning the wrong value, skipping over the method does not help you diagnose why. Instead of pressing <kbd>F6</kbd>, press <kbd>F5</kbd> (or click the <guilabel>Step Into</guilabel> button<mdash />an arrow pointing down toward a dot). Execution immediately jumps to line 17: the first line inside the body of <c>calculateShipping()</c>!
+        </p>
+      </li>
+    </ul>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 5.12.2 Visualizing stack frames in the Debug View            -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-12-2-stack-frames-debug-view">
+    <title>Visualizing Stack Frames in the Debug View</title>
+
+    <p>
+      The moment you press <kbd>F5</kbd> to step into <c>calculateShipping()</c>, two transformations occur in your Eclipse workspace:
+    </p>
+
+    <ol>
+      <li>
+        <p>
+          <strong>The Call Stack Grows in the Debug View:</strong> Look at the <guilabel>Debug</guilabel> pane in the top-left corner. Previously, it showed only one entry under the main thread:
+        </p>
+        <pre>ShippingCalculator.main(String[]) line: 12</pre>
+        <p>
+          Now, an active new stack frame is pushed directly on top of it:
+        </p>
+        <pre>
+ShippingCalculator.calculateShipping(double, int, boolean) line: 17
+ShippingCalculator.main(String[]) line: 12
+        </pre>
+        <p>
+          This list of method calls is called the <term>call stack</term>. It records the trail of breadcrumbs your program followed to get here. The method at the top is the one currently running; the methods below it are suspended, waiting patiently for the methods above them to return.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>The Variables View Switches Scope:</strong> Look at the <guilabel>Variables</guilabel> pane in the top-right corner. The variables from <c>main</c> (<c>weightLbs</c>, <c>distanceMiles</c>, <c>isExpedited</c>) have vanished! In their place, you now see the parameter variables for <c>calculateShipping</c>: <c>weight = 12.5</c>, <c>distance = 350</c>, and <c>expedited = true</c>.
+        </p>
+        <p>
+          This confirms Java's strict rule of <term>local scope</term>: a method can only see its own parameters and local variables.
+        </p>
+      </li>
+    </ol>
+
+    <p>
+      While paused inside <c>calculateShipping</c>, you can click directly on the lower <c>main</c> frame in the <guilabel>Debug</guilabel> pane. Eclipse will temporarily switch the <guilabel>Variables</guilabel> view to display the variables of <c>main</c>. Click back on the top frame (<c>calculateShipping</c>) to return your view to the active line.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 5.12.3 Stepping Out: Using Step Return                       -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-12-3-stepping-out-step-return">
+    <title>Stepping Out: Using Step Return</title>
+
+    <p>
+      Once you are inside a method, you can use <term>Step Over</term> (<kbd>F6</kbd>) to move statement-by-statement through its calculations. For example, stepping over line 17 calls <c>calculateBaseFee()</c>, computes <c>20.625</c>, and stores it in <c>baseFee</c>.
+    </p>
+
+    <p>
+      However, imagine you stepped into a long helper method with 40 lines of code or a complex loop. You have verified that the inputs are correct, you see that the logic works, and you do not want to press <kbd>F6</kbd> forty more times just to reach the end of the method.
+    </p>
+
+    <p>
+      This is where <term>Step Return</term> (<kbd>F7</kbd>) comes in (sometimes referred to as <q>Step Out</q> in general software engineering terminology). Look for the toolbar button with an arrow pointing up and to the right, away from a dot, or press keyboard shortcut <kbd>F7</kbd>.
+    </p>
+
+    <p>
+      When you press <kbd>F7</kbd>:
+    </p>
+
+    <ol>
+      <li>
+        <p>The JVM executes all remaining statements in the current method at full speed until it hits a <c>return</c> statement.</p>
+      </li>
+      <li>
+        <p>The method returns its value to the caller.</p>
+      </li>
+      <li>
+        <p>The top stack frame is popped off the call stack and discarded.</p>
+      </li>
+      <li>
+        <p>Execution suspends immediately back in the calling method, right at the point where the method was invoked.</p>
+      </li>
+    </ol>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 5.12.4 The "Accidental Step Into" Trap                       -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-12-4-accidental-step-into">
+    <title>The <q>Accidental Step Into</q> Trap (And How to Escape It)</title>
+
+    <p>
+      Every beginner debugging with methods eventually experiences this moment of panic:
+    </p>
+
+    <p>
+      You are paused on a line such as:
+    </p>
+
+    <pre>System.out.println("Result: " + Math.sqrt(value));</pre>
+
+    <p>
+      You intend to press <kbd>F6</kbd>, but your finger slips and presses <kbd>F5</kbd> (<term>Step Into</term>). Suddenly, Eclipse opens a strange, unfamiliar file such as <c>PrintStream.class</c> or <c>Math.class</c>, showing hundreds of lines of complex internal Java library code that you didn't write!
+    </p>
+
+    <p>
+      Do not panic. You did not break your program or corrupt Eclipse. You simply asked the debugger to step into standard Java API library source code.
+    </p>
+
+    <p>
+      To escape, immediately press <term>Step Return</term> (<kbd>F7</kbd>). Eclipse will execute the rest of the Java library method and instantly pop you right back out to your own code in <c>main</c>.
+    </p>
+
+    <p>
+      You can configure Eclipse to prevent this trap permanently. Go to <menuchoice><guimenu>Window</guimenu><guimenuitem>Preferences</guimenuitem></menuchoice> (or <menuchoice><guimenu>Eclipse</guimenu><guimenuitem>Preferences</guimenuitem></menuchoice> on macOS), navigate to <menuchoice><guimenu>Java</guimenu><guisubmenu>Debug</guisubmenu><guimenuitem>Step Filtering</guimenuitem></menuchoice>, and check <guilabel>Use Step Filters</guilabel>. Select all default Java libraries (<c>java.*</c>, <c>javax.*</c>, <c>sun.*</c>). When step filtering is active, pressing <kbd>F5</kbd> on a line with <c>System.out.println()</c> or <c>Math.sqrt()</c> will automatically skip the library internals and only step into your custom methods. You can toggle step filtering on and off using the keyboard shortcut <kbd>Shift+F5</kbd>.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 5.12.5 Summary of Debugger Stepping Controls                -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-12-5-summary-stepping-controls">
+    <title>Summary of Debugger Stepping Controls</title>
+
+    <p>
+      Mastering these five controls turns the Eclipse debugger into an interactive x-ray machine for tracing modular Java code:
+    </p>
+
+    <table xml:id="table-eclipse-debugger-controls">
+      <title>Eclipse Debugger Execution and Stepping Controls</title>
+      <tabular>
+        <col width="16%" />
+        <col width="14%" />
+        <col width="22%" />
+        <col width="48%" />
+        <row header="yes" bottom="medium">
+          <cell>Command</cell>
+          <cell>Shortcut</cell>
+          <cell>Toolbar Icon</cell>
+          <cell>Behavior When Paused on a Method Call</cell>
+        </row>
+        <row top="small">
+          <cell><term>Step Over</term></cell>
+          <cell><kbd>F6</kbd></cell>
+          <cell>Arrow bending over dot</cell>
+          <cell>Executes the method call as a single step without pausing inside it; suspends at the next statement in the current method.</cell>
+        </row>
+        <row top="small">
+          <cell><term>Step Into</term></cell>
+          <cell><kbd>F5</kbd></cell>
+          <cell>Arrow pointing down to dot</cell>
+          <cell>Follows execution down into the called method; suspends at the first executable statement in the callee body.</cell>
+        </row>
+        <row top="small">
+          <cell><term>Step Return</term></cell>
+          <cell><kbd>F7</kbd></cell>
+          <cell>Arrow pointing up/out</cell>
+          <cell>Runs all remaining code in the current method and suspends immediately after returning to the calling method.</cell>
+        </row>
+        <row top="small">
+          <cell><term>Resume</term></cell>
+          <cell><kbd>F8</kbd></cell>
+          <cell>Green play triangle</cell>
+          <cell>Resumes full-speed execution until the next breakpoint is encountered or the program terminates.</cell>
+        </row>
+        <row top="small">
+          <cell><term>Terminate</term></cell>
+          <cell><kbd>Ctrl+F2</kbd></cell>
+          <cell>Red square</cell>
+          <cell>Halts the program immediately and ends the debugging session.</cell>
+        </row>
+      </tabular>
+    </table>
+  </subsection>
+
+</section>

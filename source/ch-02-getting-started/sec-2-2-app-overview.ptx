@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-2-2-app-overview" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Java Application Overview</title>
+
+  <p>
+    Let’s write a program that does a little more than <xref ref="listing-hello-world" />. This will give us the opportunity to discuss program structure, documentation, input, output, data types, and arithmetic in a Java program. Create a new Java class by right-clicking on your project default package and choosing <c>New-&gt;Class</c>.
+  </p>
+
+  <p>
+    In the <c>New Java Class</c> dialog box, confirm that your file is in the correct project folder (and if not, click the <c>Browse</c> button and choose the correct project), confirm that the <c>.java</c> file will be in the default package (if not, delete the offered package name), type <c>MulchCalculator</c> in the <c>Name</c> box, check the <c>public static void main(String[] args)</c> check box, and click <c>Finish</c>. In the <c>MulchCalculator.java</c> editing window, type in <xref ref="listing-mulch-calculator" /> (be sure to delete the <c>// TODO…</c> comment line.) From here forward, when you type in a listing, you will choose a project to put the Java file in and follow the steps described above. We won’t repeat them every time, unless there’s a change in the process.
+  </p>
+
+  <listing xml:id="listing-mulch-calculator">
+    <title><c>MulchCalculator.java</c></title>
+    <program language="java" line-numbers="yes"><![CDATA[import java.util.Scanner;
+/**
+ * Calculates the amount of mulch needed to cover a rectangular
+ * area to a specified depth. The length and width are entered
+ * in feet, and the depth is entered in inches.
+ */
+public class MulchCalculator {
+
+    public static void main(String[] args) {
+        Scanner stdin;       // To obtain console input.
+        double length;       // Length of the mulched area (ft).
+        double width;        // Width of the mulched area (ft).
+        double depth;        // Depth of the mulched area (in).
+        double depthInFeet;  // Depth converted to feet.
+        double cubicFeet;    // Cubic feet (calculated).
+        double cubicYards;   // Cubic yards (calculated).
+
+        // Obtain the dimensions of the area requiring mulch.
+        stdin = new Scanner(System.in);
+
+        System.out.print("Enter the length of the area in feet: ");
+        length = stdin.nextDouble();
+
+        System.out.print("Enter the width of the area in feet: ");
+        width = stdin.nextDouble();
+
+        System.out.print("Enter the desired depth in inches: ");
+        depth = stdin.nextDouble();
+        stdin.close();
+
+        // Calculate the cubic yards of mulch required.
+        depthInFeet = depth / 12.0;
+        cubicFeet = length * width * depthInFeet;
+        cubicYards = cubicFeet / 27.0;
+
+        // Display the cubic yards required to the user.
+        System.out.println("You need " + cubicYards + " cubic yards of mulch.");
+    }
+}]]></program>
+  </listing>
+
+  <p>
+    <xref ref="listing-mulch-calculator" /> has a lot more code than our <q>hello world</q> program from earlier, so take your time typing it in and be careful to match the punctuation, spelling, and capitalization exactly. Type the code yourself rather than copying and pasting it, because typing will force you to notice every semicolon, brace, and keyword. As you type, see if you can guess what each line of code is doing.
+  </p>
+
+  <p>
+    In programming, errors generally fall into three categories: syntax, run-time, and semantic (logic) errors. Right now, as you type, the only errors you can encounter are syntax error: violations of Java’s strict grammar rules, such as forgetting a semicolon, leaving a quote unclosed, or mismatching curly braces.
+  </p>
+
+  <p>
+    Eclipse actively checks your syntax as you type. If it detects a mistake, it flags the line with a red 'x' in the left margin and a red squiggly underline beneath the problem code. Mousing over the red 'x' or the underline displays a pop-up message explaining what went wrong. Don't be alarmed if Eclipse marks a line with red while you are in the middle of typing it – it doesn't know you aren't done yet! Wait until you have finished typing the entire line before checking for red error markers.
+  </p>
+
+  <figure xml:id="figure-eclipse-syntax-error">
+    <title>Eclipse flags a syntax error</title>
+    <image source="figure_2_1.png" width="85%">
+      <shortdescription>Eclipse flags a syntax error with a red x and tooltip on missing semicolon.</shortdescription>
+      <description>
+        <p>
+          A red x next to line 22 with a box that says <q>Syntax error, insert <q>;</q> to complete Statement.</q> Line 22 is the prompt for the length of the area in feet, and there is a little red highlight after the parentheses where there should be a semicolon.
+        </p>
+      </description>
+    </image>
+  </figure>
+
+  <p>
+    Once the program is typed in and Eclipse is not reporting any syntax errors, save and run the program. Unlike <xref ref="listing-hello-world" />, this program asks the user for input. Type in some values for the length, width, and depth of the mulched area at the prompts (pressing enter after each value) and you should get a result. For example, here is a console session in which the user entered 30, 10, and 2 at the prompts:
+  </p>
+
+  <console>
+    <input prompt="Enter the length of the area in feet: ">30</input>
+    <input prompt="Enter the width of the area in feet: ">10</input>
+    <input prompt="Enter the desired depth in inches: ">2</input>
+    <output>You need 1.8518518518518519 cubic yards of mulch.</output>
+  </console>
+
+  <p>
+    Now that you’ve run the program, revisit your educated guesses about how each line of code contributes to the program’s functionality. There should be some fairly obvious connections between the program and the output, for example, the line <c>System.out.print("Enter the length of the area in feet: ");</c> and the prompt in the console <q>Enter the length of the area in feet:</q> are clearly connected, and you can probably read the calculations and make sense of them, even if you don’t yet feel confident writing your own.
+  </p>
+
+  <p>
+    Some lines might be less obvious, such as <c>stdin = new Scanner(System.in);</c> and lines beginning with <c>double</c>, like <c>double length;</c>. By the end of this chapter, you will have a working familiarity with everything in this program, and you will be able to write your own programs that solve similar problems.
+  </p>
+
+  <p>
+    We will go through everything in this program first, as an overview, and then we’ll cover each topic in depth in subsequent sections.
+  </p>
+
+  <p>
+    Let’s start on line 1, with the <c>import java.util.Scanner;</c> statement. An import statement allows us to use a shorter name for a program element that is contained in another package. (In this example, the <c>Scanner</c> data type, or class, is in the <c>java.util</c> package.) The import statement on line 1 allows us to refer to the <c>Scanner</c> by its simple name (<c>Scanner</c>) rather than having to type its fully qualified name (<c>java.util.Scanner</c>) every time we use it in the program.
+  </p>
+
+  <p>
+    On lines 2 through 6 in the program, we see a Javadoc comment. A comment is a notation that is intended to be read by other programmers. A Javadoc comment begins with <c>/**</c> and ends with <c>*/</c> and can extend over many lines.
+  </p>
+
+  <p>
+    In Java, all program code must reside inside a class definition. Line 7 begins this definition with <c>public class</c> followed by the class name and an opening curly brace. The public class name will also be the name of the file (with the <c>.java</c> extension), and at the end of the program, there will be a closing curly brace. (In our program, that closing curly brace is on line 39.) The class definition (right now you can think of this as the program) is contained within the curly braces.
+  </p>
+
+  <p>
+    Line 9 is the header for the main method. All Java programs begin execution in the method called <c>main</c>. That is why there’s a checkbox in the New Class dialog box for adding <c>public static void main(String[] args)</c> to your class! A method’s code is also enclosed in curly braces, so there is an opening curly brace on line 9, and the matching closing curly brace is on line 38. Try clicking next to the closing curly brace in Eclipse, and Eclipse will highlight its matching opening curly brace. This can be very helpful when you have too many or too few curly braces in your program!
+  </p>
+
+  <p>
+    Lines 10 through 16 are variable declarations. These lines tell Java what data type each variable is. The data type determines how the value is stored in memory and what operations are allowed on the variable. Most of the variables in our program are of the <c>double</c> data type, which is a 64-bit numeric type used for numbers with decimal points (stored somewhat like scientific notation, with a sign, significant digits, and an exponent). We can perform arithmetic on <c>double</c> variables. The only non-double variable is our <c>Scanner</c> variable.
+  </p>
+
+  <p>
+    On line 19, we create a <c>Scanner</c>. A <c>Scanner</c> must be created using the pattern you see on line 19: <c>new Scanner(…)</c>, with one or more arguments in parentheses that tell the <c>Scanner</c> where the input is coming from. This <c>Scanner</c> is used to get input from the user in the console. We will always pass <c>System.in</c> as the argument when we’re reading input from the console. (Later, when we learn to read from files, we will pass in a reference to a <c>File</c> object.)
+  </p>
+
+  <p>
+    On lines 21 through 28, we have a series of print statements and statements that use the <c>Scanner</c>. Each of these pairs of statements displays a prompt to the user and reads in their response, converting it to an appropriate data type, and storing the converted value in the variable on the left (e.g. <c>length</c>, <c>width</c>, <c>depth</c>).
+  </p>
+
+  <p>
+    After the statements that read values from the console, we close the <c>Scanner</c>.
+  </p>
+
+  <p>
+    Lines 32, 33, and 34 perform calculations and store the results. For example, on line 32, we divide the value for <c>depth</c> that we obtained from the user by 12.0, converting depth in inches to depth in feet, and store the result in the variable <c>depthInFeet</c>. Now that <c>depthInFeet</c> has a value, we can then use it in the next calculation, <c>cubicFeet = length * width * depthInFeet;</c>.
+  </p>
+
+  <p>
+    Line 37 displays the final result – <c>cubicYards</c> – to the console. It embeds the number in a sentence using string concatenation, which combines text with the variable’s value using the <c>+</c> operator. (Programmers call a block of text a <q>string.</q>)
+  </p>
+
+  <p>
+    Finally, there are several single-line comments in the program: on the same line immediately following each variable declaration, and on lines 18, 31, and 36. Single-line comments are preceded by <c>//</c> and extend to the end of the line. These are annotations for programmers to read and don’t impact program execution.
+  </p>
+
+  <p>
+    When a Java program runs, execution always begins at the first statement inside the <c>main</c> method. You may have intuitively assumed that the computer executes your instructions one by one from top to bottom, and if so, your intuition was correct! The order in which statements are executed is called the flow of control, and executing in order from top to bottom is called sequential flow of control. Sequential execution is Java’s default behavior: each statement finishes before the next one begins, unless a control structure (such as a conditional branch or a loop) directs execution elsewhere.
+  </p>
+
+  <p>
+    Now that you’ve had an overview, let’s talk about each of these program elements in more detail.
+  </p>
+</section>

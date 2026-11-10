@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exercises xml:id="sec-2-11-exercises" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Programming Projects</title>
+
+  <introduction>
+    <p>
+      The following programming projects require you to design, implement, and verify complete Java programs in your local integrated development environment (IDE), such as Eclipse. Each project reinforces the Input-Processing-Output (IPO) design pattern: obtaining interactive console input with <c>Scanner</c>, performing calculations with arithmetic operators and the <c>Math</c> library, and presenting formatted results to the console.
+    </p>
+  </introduction>
+
+  <!-- ============================================================ -->
+  <!-- Project 1: Dough Scaler                                      -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-dough-scaler">
+    <title>Dough Scaler</title>
+    <statement>
+      <p>
+        Professional bakers measure ingredients using <q>Baker’s Percentages,</q> where every ingredient is weighed relative to the total weight of flour (100%). A standard sourdough recipe calls for 100% flour, 72% water (hydration), 2% salt, and 1.5% yeast.
+      </p>
+      <p>
+        Write a program that prompts the baker for their desired total dough weight in grams. Using the formula:
+      </p>
+      <md>\text{Flour Weight} = \frac{\text{Total Dough Weight}}{1.0 + 0.72 + 0.02 + 0.015} = \frac{\text{Total Dough Weight}}{1.755}</md>
+      <p>
+        calculate the required weight of each ingredient in grams and display a neat, formatted recipe table.
+      </p>
+      <p>
+        Here is an example of the program running:
+      </p>
+      <console>
+        <input prompt="Enter desired total dough weight (grams): ">1800.0</input>
+        <output>
+========================================
+INGREDIENT          PERCENT    WEIGHT (g)
+========================================
+Bread Flour          100.0%       1025.6
+Water (Hydration)     72.0%        738.5
+Fine Sea Salt          2.0%         20.5
+Instant Yeast          1.5%         15.4
+========================================
+Total Batch Weight:               1800.0 g</output>
+      </console>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 2: Tabletop RPG Character Generator                 -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-rpg-character">
+    <title>Tabletop RPG Character Generator</title>
+    <statement>
+      <p>
+        In tabletop role-playing games (like Dungeons &amp; Dragons), a character’s core ability score determines their <q>ability modifier</q> using integer math:
+      </p>
+      <md>\text{Ability Modifier} = (\text{Score} - 10) / 2</md>
+      <p>
+        Write a program that prompts the player for their character’s first name, character class (e.g., <q>Paladin</q>), and raw Strength score (1 to 20).
+      </p>
+      <p>
+        The program should:
+        <ol>
+          <li><p>Generate the character's official codename by extracting their first initial and combining it with their class name in all capital letters (e.g., <c>'L' + "PALADIN"</c> <m>\to</m> <c>"L-PALADIN"</c>).</p></li>
+          <li><p>Calculate the Strength modifier using integer division.</p></li>
+          <li><p>Calculate their maximum carrying capacity (<m>\text{strength} \times 15\text{ lbs}</m>) and push/drag limit (<m>\text{strength} \times 30\text{ lbs}</m>).</p></li>
+          <li><p>Display a formatted character card.</p></li>
+        </ol>
+      </p>
+      <p>
+        Here is an example of the program running:
+      </p>
+      <console>
+        <input prompt="Enter character first name : ">Glorielle</input>
+        <input prompt="Enter character class      : ">Rogue</input>
+        <input prompt="Enter Strength score (1-20): ">17</input>
+        <output>
+----------------------------------------
+CHARACTER CODENAME: G-ROGUE
+Name Length       : 7 letters
+Strength Score    : 17
+Ability Modifier  : +3
+Carrying Capacity : 255 lbs
+Max Drag / Lift   : 510 lbs
+----------------------------------------</output>
+      </console>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 3: DIY Estimator                                    -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-diy-estimator">
+    <title>DIY Estimator</title>
+    <statement>
+      <p>
+        A homeowner is remodeling a rectangular room. Write a program that prompts for the room’s length, width, and ceiling height in feet.
+      </p>
+      <p>
+        The program must calculate:
+        <ol>
+          <li><p>Floor Area: <m>\text{length} \times \text{width}</m>. Floor tiles are sold in boxes that cover 15 sq ft each. Use <c>Math.ceil()</c> to calculate the whole number of tile boxes required.</p></li>
+          <li><p>Wall Surface Area: <m>2 \times (\text{length} + \text{width}) \times \text{height}</m>. Assume the room has one door (21 sq ft) and two windows (15 sq ft each) that do not need paint.</p></li>
+          <li><p>Paint Cans Required: One gallon of paint covers 350 sq ft. Assuming two coats of paint are applied, use <c>Math.ceil()</c> to determine the whole number of 1-gallon cans to purchase.</p></li>
+        </ol>
+      </p>
+      <p>
+        Here is an example of the program running:
+      </p>
+      <console>
+        <input prompt="Enter room length (feet) : ">16.0</input>
+        <input prompt="Enter room width (feet)  : ">12.0</input>
+        <input prompt="Enter ceiling height (ft): ">9.0</input>
+        <output>
+=== Renovation Materials Estimate ===
+Floor Area            :   192.00 sq ft
+Tile Boxes Needed     :   13 boxes (at 15 sq ft/box)
+
+Net Wall Area (1 coat):   453.00 sq ft
+Total Paint Surface   :   906.00 sq ft (2 coats)
+1-Gallon Cans Needed  :   3 cans</output>
+      </console>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 4: Solar Shadow and Solar Panel Performance         -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-solar-shadow">
+    <title>Solar Shadow and Solar Panel Performance</title>
+    <statement>
+      <p>
+        An engineer needs to evaluate the shadows cast by an obstruction and the solar capture efficiency for a roof installation. You will obtain the height of the object (that casts a shadow) in meters. The program will evaluate the conditions at three sun elevations (simulating different times of day): 25° (mid-morning), 65° (noon), and 35° (late afternoon). The program will calculate the shadow length in meters, the hypotenuse in meters, the optimal panel tilt, and the efficiency of the panel on a flat roof using the following formulas:
+      </p>
+      <md>
+        <mrow>\text{Shadow Length} \amp = \frac{\text{height}}{\tan(\text{sunAngle})}</mrow>
+        <mrow>\text{Hypotenuse} \amp = \frac{\text{height}}{\sin(\text{sunAngle})}</mrow>
+        <mrow>\text{Optimal Panel Tilt} \amp = 90^\circ - \text{sunAngle}</mrow>
+        <mrow>\text{Flat Roof Capture Efficiency} \amp = \sin(\text{sunAngle}) \times 100\%</mrow>
+      </md>
+      <p>
+        Here is an example of the program running:
+      </p>
+      <console>
+        <input prompt="Enter obstruction height (meters): ">12.5</input>
+        <output>
+Time of Day   Sun Angle  Shadow (m)   Hypotenuse (m)   Panel Tilt  Flat Capture
+---------------------------------------------------------------------------------
+Mid-Morning      25.0°        26.81            29.58        65.0°         42.3%
+Solar Noon       65.0°         5.83            13.79        25.0°         90.6%
+Afternoon        35.0°        17.85            21.79        55.0°         57.4%</output>
+      </console>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 5: Distance to the Earth’s Horizon                  -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-earth-horizon">
+    <title>Distance to the Earth’s Horizon</title>
+    <statement>
+      <p>
+        How far can you see before the curvature of the Earth hides the horizon? The program will obtain the observer’s eye height in feet. The program will calculate the geometric distance to the horizon from four fixed viewing platforms: user height, top of a lighthouse (120 ft), skyscraper observation deck (1,250 ft), and commercial jet cruising altitude (35,000 ft).
+      </p>
+      <p>
+        To solve this, use an approximation of the Earth’s radius <m>R = 20{,}908{,}800\text{ ft}</m> (<m>3{,}960\text{ miles}</m>) and calculate the horizon distance as <m>d = \sqrt{2Rh + h^2}</m> feet. Divide by 5,280 to calculate the number of visible miles. One mile is 1.60934 kilometers.
+      </p>
+      <p>
+        Here is an example of the program running:
+      </p>
+      <console>
+        <input prompt="Enter the observer's eye height (feet): ">6.0</input>
+        <output>
+Viewing Platform             Height (ft)   Horizon (miles)    Horizon (km)
+-------------------------------------------------------------------------
+Beach Walker                        6.00              3.00            4.83
+Lighthouse                        120.00             13.42           21.59
+Skyscraper Deck                 1,250.00             43.30           69.69
+Cruising Jet                   35,000.00            229.23          368.91</output>
+      </console>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 6: Exoplanet Orbit and Speed Calculator             -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-exoplanet-orbit">
+    <title>Exoplanet Orbit and Speed Calculator</title>
+    <statement>
+      <p>
+        According to Kepler’s Third Law of Planetary Motion, the orbital period (<m>T</m>, in Earth years) of an exoplanet orbiting a star is determined by its average distance from the star (<m>a</m>, in Astronomical Units, AU) and the mass of the star (<m>M</m>, relative to our Sun):
+      </p>
+      <md>T = \sqrt{\frac{a^3}{M}}</md>
+      <p>
+        Write a program that prompts the astronomer for the exoplanet name, the orbital distance in AU, and the host star’s mass. Calculate:
+        <ol>
+          <li><p>The orbital period in Earth years (<m>T</m>) and in Earth days (<m>T \times 365.25</m>).</p></li>
+          <li><p>The total orbital perimeter distance in millions of kilometers (<m>C</m>), using <m>2 \pi a</m> (or <c>Math.TAU * a</c>) multiplied by <m>149.6\text{ million km/AU}</m>.</p></li>
+          <li>
+            <p>The average orbital velocity in km/s:</p>
+            <md>\text{Velocity} = \frac{\text{Orbital Path Distance in km}}{\text{Orbital Period in seconds}}</md>
+          </li>
+        </ol>
+      </p>
+      <p>
+        Here is an example of the program running:
+      </p>
+      <console>
+        <input prompt="Enter exoplanet designation : ">Kepler-22b</input>
+        <input prompt="Enter orbital distance (AU) : ">0.85</input>
+        <input prompt="Enter star mass (Solar mass): ">0.97</input>
+        <output>
+--- Orbital Profile: KEPLER-22B ---
+Orbital Period (years) : 0.795 years
+Orbital Period (days)  : 290.5 days
+Orbital Path Distance  : 800.08 million km
+Average Orbital Speed  : 31.87 km/s</output>
+      </console>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 7: Pilot’s Cloud Base and Dew Point Estimator       -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-cloud-base-estimator">
+    <title>Pilot’s Cloud Base and Dew Point Estimator</title>
+    <statement>
+      <p>
+        Before takeoff, general aviation pilots need to know the Cloud Base Altitude (the Lifted Condensation Level)<mdash />the altitude above the ground where clouds begin to form.
+      </p>
+      <p>
+        Write a program that prompts the pilot for the ground surface temperature (in <m>^\circ\text{F}</m>) and the relative humidity (as a percentage, e.g., <m>60\%</m>). The program calculates:
+        <ol>
+          <li>
+            <p>Dew Point (<m>T_d</m> in <m>^\circ\text{F}</m>): Estimated using the rule of thumb:</p>
+            <md>T_d = T - \left(\frac{100 - RH}{5}\right) \times 1.8</md>
+          </li>
+          <li>
+            <p>Temperature–Dew Point Spread: <m>\text{Spread} = T - T_d</m>.</p>
+          </li>
+          <li>
+            <p>Cloud Base Altitude: Because rising unsaturated air cools at roughly <m>4.4^\circ\text{F}</m> per 1,000 ft faster than the dew point drops:</p>
+            <md>\text{Cloud Base (feet AGL)} = \left(\frac{\text{Spread}}{4.4}\right) \times 1000</md>
+          </li>
+        </ol>
+      </p>
+      <p>
+        Here is an example of the program running:
+      </p>
+      <console>
+        <input prompt="Enter surface temperature (deg F): ">75.0</input>
+        <input prompt="Enter relative humidity (percent): ">60.0</input>
+        <output>
+=== Pre-Flight Weather Analysis ===
+Surface Temperature   :  75.0°F
+Estimated Dew Point   :  60.6°F
+Temp / Dewpoint Spread:   14.4°F
+------------------------------------
+Estimated Cloud Base  : 3,273 feet above ground level</output>
+      </console>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 8: Thunderstorm Distance and Speed of Sound         -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-thunderstorm-distance">
+    <title>Thunderstorm Distance and Speed of Sound</title>
+    <statement>
+      <p>
+        When you see lightning, the light reaches you almost instantly, but the sound of thunder travels much more slowly. The speed of sound in air (<m>v</m>, in meters per second) depends on the air temperature (<m>T</m>, in <m>^\circ\text{C}</m>):
+      </p>
+      <md>v = 331.3 \times \sqrt{1 + \frac{T}{273.15}}</md>
+      <p>
+        Write a program that prompts the user for the air temperature in Celsius and the seconds elapsed between seeing the lightning flash and hearing the thunder. Calculate:
+        <ol>
+          <li><p>The speed of sound in m/s and in miles per hour (<m>1\text{ m/s} = 2.23694\text{ mph}</m>).</p></li>
+          <li><p>The distance to the lightning strike in meters, kilometers, and miles (<m>1\text{ mile} = 1609.34\text{ meters}</m>).</p></li>
+        </ol>
+      </p>
+      <p>
+        Here is an example of the program running:
+      </p>
+      <console>
+        <input prompt="Enter air temperature (Celsius): ">24.0</input>
+        <input prompt="Enter seconds until thunder    : ">6.5</input>
+        <output>
+=== Thunderstorm Proximity Report ===
+Speed of Sound at 24.0°C :  345.5 m/s (772.9 mph)
+Lightning Strike Distance:
+ In meters              :  2,245.8 m
+ In kilometers          :  2.25 km
+ In miles               :  1.40 miles</output>
+      </console>
+    </statement>
+  </exercise>
+</exercises>

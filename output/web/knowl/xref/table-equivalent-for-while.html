@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<!--******************************************-->
+<!--*  Authored with PreTeXt                 *-->
+<!--*  pretextbook.org                       *-->
+<!--*  Theme: default-modern                 *-->
+<!--*  Palette:                              *-->
+<!--******************************************-->
+
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body class="ignore-math">
+<figure class="table table-like"><figcaption><span class="type">Table</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">4.8<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span>Equivalent <code class="code-inline tex2jax_ignore">for</code> and <code class="code-inline tex2jax_ignore">while</code> loops<div class="autopermalink" aria-hidden="true" data-description="Table 4.8: Equivalent for and while loops"><a tabindex="-1" href="#table-equivalent-for-while" title="Copy heading and permalink for Table 4.8: Equivalent for and while loops" aria-label="Copy heading and permalink for Table 4.8: Equivalent for and while loops">🔗</a></div></figcaption><div class="tabular-box natural-width"><table class="tabular">
+<tr class="header-horizontal">
+<th scope="col" class="l m b1 r1 l1 t1 lines">
+<code class="code-inline tex2jax_ignore">while</code> loop</th>
+<th scope="col" class="l m b1 r1 l0 t1 lines">
+<code class="code-inline tex2jax_ignore">for</code> loop</th>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines"><div class="code-box"><pre class="program"><code class="language-java">seconds = 5;
+while (seconds &gt; 0) {
+    System.out.println(seconds + "...");
+    seconds--;
+}
+</code></pre></div></td>
+<td class="l m b1 r1 l0 t0 lines"><div class="code-box"><pre class="program"><code class="language-java">for (seconds = 5; seconds &gt; 0; seconds--) {
+    System.out.println(seconds + "...");
+}
+</code></pre></div></td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines"><div class="code-box"><pre class="program"><code class="language-java">int i = 0;
+while (i &lt; 10) {
+    System.out.println("Hello world!");
+    i += 1;
+}
+</code></pre></div></td>
+<td class="l m b1 r1 l0 t0 lines"><div class="code-box"><pre class="program"><code class="language-java">for (int i = 0; i &lt; 10; i += 1) {
+    System.out.println("Hello world!");
+}
+</code></pre></div></td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines"><div class="code-box"><pre class="program"><code class="language-java">int powerOfTwo = 1;
+while (powerOfTwo &lt;= 16) {
+    System.out.println(powerOfTwo);
+    powerOfTwo *= 2;
+}
+</code></pre></div></td>
+<td class="l m b1 r1 l0 t0 lines"><div class="code-box"><pre class="program"><code class="language-java">for (int powerOfTwo = 1; powerOfTwo &lt;= 16; powerOfTwo *= 2) {
+    System.out.println(powerOfTwo);
+}
+</code></pre></div></td>
+</tr>
+</table></div>
+</figure><span class="incontext"><a class="internal" href="sec-4-4-counting-loops-for.html#table-equivalent-for-while">In Context</a></span>
+</body>
+</html>

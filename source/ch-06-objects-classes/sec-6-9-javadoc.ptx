@@ -2,37 +2,42 @@
 <section xml:id="sec-6-9-javadoc">
   <title>Documenting Classes with Javadoc</title>
 
-  <p>
-    In Chapter 4, you learned how to document individual static methods using Javadoc comments, 
-    detailing preconditions, postconditions, <c>@param</c> tags, and <c>@return</c> tags. 
-    When documenting an entire object-oriented class, our documentation responsibilities expand. 
-    A class is not just a collection of disconnected functions; it is a blueprint for stateful 
-    objects that live on the heap.
-  </p>
+  
+  <introduction>
+    <p>
+      In Chapter 4, you learned how to document individual static methods using Javadoc comments, 
+      detailing preconditions, postconditions, <c>@param</c> tags, and <c>@return</c> tags. 
+      When documenting an entire object-oriented class, our documentation responsibilities expand. 
+      A class is not just a collection of disconnected functions; it is a blueprint for stateful 
+      objects that live on the heap.
+    </p>
 
-  <p>
-    Documenting a class introduces three essential concepts:
-  </p>
+    <p>
+      Documenting a class introduces three essential concepts:
+    </p>
 
-  <ol>
-    <li>
-      <p>
-        The Class-Level Javadoc Comment (describing the high-level abstraction and its class invariants).
-      </p>
-    </li>
-    <li>
-      <p>
-        Preserving Information Hiding in Documentation (why public documentation must never reveal 
-        private fields or internal data structures).
-      </p>
-    </li>
-    <li>
-      <p>
-        Documenting Constructors and Method Contracts Against State (why constructor Javadoc omits 
-        <c>@return</c>, and how method contracts interact with internal fields).
-      </p>
-    </li>
-  </ol>
+    <ol>
+      <li>
+        <p>
+          The Class-Level Javadoc Comment (describing the high-level abstraction and its class invariants).
+        </p>
+      </li>
+      <li>
+        <p>
+          Preserving Information Hiding in Documentation (why public documentation must never reveal 
+          private fields or internal data structures).
+        </p>
+      </li>
+      <li>
+        <p>
+          Documenting Constructors and Method Contracts Against State (why constructor Javadoc omits 
+          <c>@return</c>, and how method contracts interact with internal fields).
+        </p>
+      </li>
+    </ol>
+  </introduction>
+
+
 
   <subsection xml:id="subsec-6-9-1-class-level-comment">
     <title>The Class-Level Comment and Class Invariants</title>
@@ -94,14 +99,12 @@
       For example, you might be tempted to write a comment like this:
     </p>
 
-    <program language="java">
-      <code>
+    <program language="java" line-numbers="yes">
 /**
  * Represents a 2D geometric point. Stores the coordinates in two
  * private double variables named x and y on the heap.
  */
 public class Point { ... }
-      </code>
     </program>
 
     <p>
@@ -210,33 +213,38 @@ public class Point { ... }
   <subsection xml:id="subsec-6-9-4-documenting-fields">
     <title>Documenting Fields: Constants, Counters, and Instance State</title>
 
-    <p>
-      Just as we document classes, constructors, and methods, we also write Javadoc comments for 
-      the fields declared inside a class. However, because fields can be static or non-static, 
-      public or private, the purpose and audience of each field comment depends entirely on its role:
-    </p>
+    
+    <introduction>
+      <p>
+        Just as we document classes, constructors, and methods, we also write Javadoc comments for 
+        the fields declared inside a class. However, because fields can be static or non-static, 
+        public or private, the purpose and audience of each field comment depends entirely on its role:
+      </p>
 
-    <ul>
-      <li>
-        <p>
-          A field Javadoc comment sits directly above the field declaration using the standard 
-          <c>/** ... */</c> syntax.
-        </p>
-      </li>
-      <li>
-        <p>
-          Unlike methods, field comments do not use <c>@param</c> or <c>@return</c> tags. A field 
-          comment consists of a concise description of what the field represents, any units of 
-          measurement (such as pixels, miles, or units), and its allowable range or invariants.
-        </p>
-      </li>
-    </ul>
+      <ul>
+        <li>
+          <p>
+            A field Javadoc comment sits directly above the field declaration using the standard 
+            <c>/** ... */</c> syntax.
+          </p>
+        </li>
+        <li>
+          <p>
+            Unlike methods, field comments do not use <c>@param</c> or <c>@return</c> tags. A field 
+            comment consists of a concise description of what the field represents, any units of 
+            measurement (such as pixels, miles, or units), and its allowable range or invariants.
+          </p>
+        </li>
+      </ul>
 
-    <p>
-      We will look at the three distinct kinds of fields you will encounter in classes like <c>Point</c>: 
-      public static constants, private static tracking fields (such as a class-wide counter), and 
-      private instance fields (an individual object's state).
-    </p>
+      <p>
+        We will look at the three distinct kinds of fields you will encounter in classes like <c>Point</c>: 
+        public static constants, private static tracking fields (such as a class-wide counter), and 
+        private instance fields (an individual object's state).
+      </p>
+    </introduction>
+
+
 
     <subsubsection xml:id="subsubsec-6-9-4-1-public-constants">
       <title>Documenting Public Static Final Fields (Constants)</title>
@@ -253,14 +261,12 @@ public class Point { ... }
         an <c>ORIGIN</c> constant to our <c>Point</c> class, we might declare and document it like this:
       </p>
 
-      <program language="java">
-        <code>
+      <program language="java" line-numbers="yes">
     /**
      * An immutable Point positioned at the Cartesian origin (0.0, 0.0).
      * Useful as a default reference position or origin marker.
      */
     public static final Point ORIGIN = new Point(0.0, 0.0);
-        </code>
       </program>
 
       <p>
@@ -279,10 +285,8 @@ public class Point { ... }
         <c>Point</c> class:
       </p>
 
-      <program language="java">
-        <code>
+      <program language="java" line-numbers="yes">
     private static int pointCount = 0;
-        </code>
       </program>
 
       <p>
@@ -321,14 +325,12 @@ public class Point { ... }
         </li>
       </ul>
 
-      <program language="java">
-        <code>
+      <program language="java" line-numbers="yes">
     /**
      * The total number of Point objects instantiated during program execution.
      * Incremented in each constructor; exposed publicly via getPointCount().
      */
     private static int pointCount = 0;
-        </code>
       </program>
     </subsubsection>
 
@@ -371,8 +373,7 @@ public class Point { ... }
 
       <listing xml:id="listing-point-fully-documented">
         <caption>A fully documented <c>Point</c> class</caption>
-        <program language="java">
-          <code>
+        <program language="java" line-numbers="yes">
 /**
  * Represents a specific point in a two-dimensional Cartesian coordinate system.
  * Point coordinates are real numbers on an infinite plane.
@@ -534,7 +535,6 @@ public class Point {
         return equal;
     } 
 }
-          </code>
         </program>
       </listing>
     </subsubsection>

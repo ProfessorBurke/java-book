@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<!--******************************************-->
+<!--*  Authored with PreTeXt                 *-->
+<!--*  pretextbook.org                       *-->
+<!--*  Theme: default-modern                 *-->
+<!--*  Palette:                              *-->
+<!--******************************************-->
+
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body class="ignore-math">
+<figure class="table table-like"><figcaption><span class="type">Table</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">2.10<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span>Precedence of arithmetic and assignment operations<div class="autopermalink" aria-hidden="true" data-description="Table 2.10: Precedence of arithmetic and assignment operations"><a tabindex="-1" href="#table-precedence-rules" title="Copy heading and permalink for Table 2.10: Precedence of arithmetic and assignment operations" aria-label="Copy heading and permalink for Table 2.10: Precedence of arithmetic and assignment operations">🔗</a></div></figcaption><div class="tabular-box natural-width"><table class="tabular">
+<tr class="header-horizontal">
+<th scope="col" class="l m b1 r1 l1 t1 lines">Category</th>
+<th scope="col" class="l m b1 r1 l0 t1 lines">Operators / Syntax</th>
+<th scope="col" class="l m b1 r1 l0 t1 lines">Associativity</th>
+<th scope="col" class="l m b1 r1 l0 t1 lines">Description</th>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">Primary / grouping</td>
+<td class="l m b1 r1 l0 t0" style="max-width:156px;">
+<div class="para">
+<code class="code-inline tex2jax_ignore">()</code><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-precedence-rules-2-6-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para">
+<code class="code-inline tex2jax_ignore">method()</code><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-precedence-rules-2-6-2-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</td>
+<td class="l m b1 r1 l0 t0 lines">Left-to-right</td>
+<td class="l m b1 r1 l0 t0 lines">Parentheses (grouping), method calls, and member access (e.g. <code class="code-inline tex2jax_ignore">Math.PI</code>)</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">Postfix</td>
+<td class="l m b1 r1 l0 t0 lines">
+<code class="code-inline tex2jax_ignore">expr++</code> <code class="code-inline tex2jax_ignore">expr--</code>
+</td>
+<td class="l m b1 r1 l0 t0 lines">Left-to-right</td>
+<td class="l m b1 r1 l0 t0 lines">Post-increment and post-decrement</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">Prefix / Unary</td>
+<td class="l m b1 r1 l0 t0" style="max-width:156px;">
+<div class="para">
+<code class="code-inline tex2jax_ignore">++expr</code> <code class="code-inline tex2jax_ignore">--expr</code><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-precedence-rules-2-8-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para">
+<code class="code-inline tex2jax_ignore">+expr</code> <code class="code-inline tex2jax_ignore">-expr</code><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-precedence-rules-2-8-2-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</td>
+<td class="l m b1 r1 l0 t0 lines">Right-to-left</td>
+<td class="l m b1 r1 l0 t0 lines">Pre-increment/decrement, Unary plus and minus</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">Multiplicative</td>
+<td class="l m b1 r1 l0 t0 lines">
+<code class="code-inline tex2jax_ignore">*</code> <code class="code-inline tex2jax_ignore">/</code> <code class="code-inline tex2jax_ignore">%</code>
+</td>
+<td class="l m b1 r1 l0 t0 lines">Left-to-right</td>
+<td class="l m b1 r1 l0 t0 lines">Multiplication, division, mod</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">Additive</td>
+<td class="l m b1 r1 l0 t0 lines">
+<code class="code-inline tex2jax_ignore">+</code> <code class="code-inline tex2jax_ignore">-</code>
+</td>
+<td class="l m b1 r1 l0 t0 lines">Left-to-right</td>
+<td class="l m b1 r1 l0 t0 lines">Addition and subtraction</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">Assignment</td>
+<td class="l m b1 r1 l0 t0 lines">
+<code class="code-inline tex2jax_ignore">=</code> <code class="code-inline tex2jax_ignore">+=</code> <code class="code-inline tex2jax_ignore">-=</code> <code class="code-inline tex2jax_ignore">*=</code> <code class="code-inline tex2jax_ignore">/=</code> <code class="code-inline tex2jax_ignore">%=</code>
+</td>
+<td class="l m b1 r1 l0 t0 lines">Right-to-left</td>
+<td class="l m b1 r1 l0 t0 lines">Assignment and compound assignment</td>
+</tr>
+</table></div>
+</figure><span class="incontext"><a class="internal" href="sec-2-5-arithmetic.html#table-precedence-rules">In Context</a></span>
+</body>
+</html>

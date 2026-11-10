@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-4-10-reading-files-scanner" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Reading Text Files with <c>Scanner</c></title>
+
+  <introduction>
+    <p>
+      When you save a photo, adjust user settings, or write a Java program, that data is stored in a file on persistent storage (such as a solid state drive or hard drive). While data stored in RAM disappears the moment a program terminates, files on disk remain preserved. Almost every practical application interacts with files: reading configuration data when launching and saving user progress when quitting.
+    </p>
+
+    <p>
+      Being able to read from and write to files is a fundamental software engineering skill. It also saves immense testing time: rather than manually typing twenty lines of test input into the console every time you run a loop, you can store your test data in a text file and let your program read it automatically in milliseconds.
+    </p>
+
+    <p>
+      Files generally fall into two broad formats: binary or text. While all files on disk are physically stored as binary bits, a text file consists of bytes that represent a sequence of human-readable characters, typically encoded using the universal UTF-8 standard. Fortunately, you don’t need to worry about manually translating raw bytes into characters<mdash />Java’s <c>Scanner</c> class handles all the decoding behind the scenes. In fact, once you open a file, reading from it uses the exact same <c>Scanner</c> methods you already know!
+    </p>
+  </introduction>
+
+  <!-- ============================================================ -->
+  <!-- 4.10.1 The File class                                        -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-10-1-file-class">
+    <title>The <c>File</c> Class</title>
+
+    <p>
+      When we created a <c>Scanner</c> to read user input from the keyboard, we passed <c>System.in</c> to the <c>Scanner</c>’s constructor with a line of code such as <c>Scanner stdin = new Scanner(System.in)</c>. If we want to read from a file with a <c>Scanner</c>, we can use a different <c>Scanner</c> constructor that takes a <c>File</c> object as a parameter. To use that constructor and read from a file, we must first create the <c>File</c> object.
+    </p>
+
+    <p>
+      In Java, the <c>File</c> class (located in the <c>java.io</c> package) represents a file or directory pathway on your operating system. A <c>File</c> object does not actually open the file or read its data; think of it as a programmatic address label pointing to a location on your disk.
+    </p>
+
+    <p>
+      To create a <c>File</c> object, pass the file's path as a string to the constructor. If you pass just the filename (such as <c>"data.txt"</c>), you are using a relative path. Java resolves relative paths against the program's current working directory.
+    </p>
+
+    <program language="java"><![CDATA[import java.io.File;
+// ...
+File dataFile = new File("data.txt");]]></program>
+
+    <p>
+      In Eclipse, the default working directory is the project root folder<mdash />the folder containing <c>src</c> and <c>bin</c>, not the <c>src</c> folder itself! When adding a text file to your project in Eclipse, drag or create it directly in the top-level project folder. If you place it inside <c>src</c>, Java will not be able to find it using just the file’s name.
+    </p>
+
+    <p>
+      The <c>File</c> class provides helpful utility methods to inspect a file before attempting to read it. For example, you can call <c>exists()</c> to verify that a file is present on disk:
+    </p>
+
+    <program language="java"><![CDATA[if (dataFile.exists()) {
+    System.out.println("File found! Ready to process.");
+} else {
+    System.out.println("Error: Could not locate " + dataFile.getAbsolutePath());
+}]]></program>
+
+    <p>
+      The <c>getAbsolutePath()</c> method returns the full operating-system file path (e.g., <c>C:\Users\...\project\data.txt</c>), which is invaluable for debugging when your program cannot find a file.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 4.10.2 Creating a file-reading Scanner                       -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-10-2-creating-file-reading-scanner">
+    <title>Creating a File-Reading <c>Scanner</c></title>
+
+    <introduction>
+      <p>
+        Once you have created a <c>File</c> object, you can create a <c>Scanner</c> to read from the file. The <c>File</c> object itself gives us some operating system access (such as determining if a file exists at the path we passed to the constructor). It does not give us methods for reading from the file.
+      </p>
+
+      <p>
+        Creating a <c>Scanner</c> that can read from a file is easy. This code will create a <c>Scanner</c> to read from the file <c>"data.txt"</c>, assuming the code above that created the <c>dataFile</c> object:
+      </p>
+
+      <program language="java"><![CDATA[Scanner fileScanner = new Scanner(dataFile);]]></program>
+    </introduction>
+
+    <!-- ============================================================ -->
+    <!-- 4.10.2.1 Checked versus unchecked exceptions                 -->
+    <!-- ============================================================ -->
+    <subsubsection xml:id="subsubsec-4-10-2-1-checked-vs-unchecked">
+      <title>Checked Versus Unchecked Exceptions</title>
+
+      <p>
+        There is one additional requirement when creating a <c>Scanner</c> that reads from a file: we must acknowledge the possibility that the file might not be there.
+      </p>
+
+      <p>
+        In Java, errors that occur while a program is running are represented by exceptions. You have already seen unchecked exceptions, such as the <c>ArithmeticException</c> that occurs if you divide an integer by zero:
+      </p>
+
+      <console>
+        <output>Exception in thread "main" java.lang.ArithmeticException: / by zero</output>
+      </console>
+
+      <p>
+        And as you may have already experienced, when an exception is thrown, the program crashes with a red error message.
+      </p>
+
+      <p>
+        Java divides exceptions into two categories: checked exceptions and unchecked exceptions. It is a programmer’s responsibility to handle checked exceptions using special exception-handling code because they represent a catastrophic event that is outside of the programmer’s control. We must write defensive code so our program can recover gracefully.
+      </p>
+
+      <p>
+        Unchecked exceptions, like the <c>ArithmeticException</c>, are generally thrown when there’s a programming error (a bug). Those should be resolved by fixing the error in the code. We don’t have to write special exception-handling code to handle them<mdash />we just need to fix the bug so they don’t happen again.
+      </p>
+
+      <p>
+        But checked exceptions are different. These represent exceptional conditions that are outside of the programmer's direct control, such as a network connection dropping or a file missing from the hard drive. Even if your code is 100% bug-free, a user might accidentally delete <c>data.txt</c> or misspell its name.
+      </p>
+
+      <p>
+        Because missing files are an ever-present reality of interacting with operating systems, <c>FileNotFoundException</c> is a checked exception. Java enforces a strict rule: you must acknowledge checked exceptions in your code, or the compiler will refuse to compile your program.
+      </p>
+    </subsubsection>
+
+    <!-- ============================================================ -->
+    <!-- 4.10.2.2 Throwing checked exceptions                         -->
+    <!-- ============================================================ -->
+    <subsubsection xml:id="subsubsec-4-10-2-2-throwing-checked-exceptions">
+      <title>Throwing Checked Exceptions</title>
+
+      <p>
+        When code might trigger a checked exception, Java gives you two choices:
+      </p>
+
+      <ol>
+        <li><p><strong>Handle it:</strong> Catch the exception using a <c>try-catch</c> block and recover gracefully (for example, by prompting the user for a different filename). We will learn how to write <c>try-catch</c> blocks in a future chapter.</p></li>
+        <li><p><strong>Declare it (<q>Pass the buck</q>):</strong> Acknowledge that the exception might happen and let it pass up to the caller. Because our focus right now is on learning loops and file processing, we will choose the second option: declaring that our <c>main</c> method might throw the exception.</p></li>
+      </ol>
+
+      <p>
+        To do this, add a <c>throws</c> clause to the <c>main</c> method header:
+      </p>
+
+      <program language="java"><![CDATA[import java.io.File; 
+import java.io.FileNotFoundException; // Required import! 
+import java.util.Scanner; 
+ 
+public class FileReadDemo { 
+    public static void main(String[] args) throws FileNotFoundException { 
+        File dataFile = new File("data.txt"); 
+        Scanner fileScanner = new Scanner(dataFile); // Now the compiler is happy! 
+        // ... 
+    } 
+}]]></program>
+
+      <p>
+        You can also write <c>throws IOException</c>. <c>IOException</c> (Input/Output Exception) is the broader parent class that encompasses file errors, so either is acceptable.
+      </p>
+
+      <p>
+        When you omit the <c>throws</c> clause, Eclipse flags <c>new Scanner(dataFile)</c> with a red squiggly underline. Clicking the lightbulb in the margin reveals the Quick Fix: <term>Add throws declaration</term>, which will insert the clause and the import automatically.
+      </p>
+
+      <p>
+        (Note: If the file actually is missing when your program runs, passing the exception out of <c>main</c> means the JVM will halt your program and display the red stack trace in the console).
+      </p>
+    </subsubsection>
+
+    <!-- ============================================================ -->
+    <!-- 4.10.2.3 Who’s throwing the exceptions                       -->
+    <!-- ============================================================ -->
+    <subsubsection xml:id="subsubsec-4-10-2-3-whos-throwing-exceptions">
+      <title>Who’s Throwing the Exceptions</title>
+
+      <p>
+        You might wonder why programming languages use the terms <q>throw</q> and <q>caught.</q> Think of an exception like a hot potato:
+      </p>
+
+      <ol>
+        <li><p><strong>The exception originates inside a method when something fails:</strong> In our code, when <c>new Scanner(dataFile)</c> looks for <c>"data.txt"</c> and cannot find it on disk, the <c>Scanner</c> constructor halts its work and throws a <c>FileNotFoundException</c> object backward to the method that called it (<c>main</c>).</p></li>
+        <li><p><strong>The calling method must respond:</strong> When <c>main</c> receives that thrown exception, it must either catch it (handle it) or throw it again up to whatever called <c>main</c>.</p></li>
+        <li>
+          <p><strong>The Call Chain:</strong> Exceptions travel backward along the call chain<mdash />the sequence of method calls that led to the problem. If <c>main()</c> called a method named <c>openFile()</c>, and <c>openFile()</c> called the <c>Scanner</c> constructor:</p>
+          <p><c>main()  ---&gt;  openFile()  ---&gt;  Scanner constructor</c></p>
+          <p>If the file is missing, the <c>Scanner</c> constructor throws the exception to <c>openFile()</c>. If <c>openFile()</c> does not handle it, it throws it back to <c>main()</c>. Any method that does not handle the exception must have the <c>throws</c> clause in its header.</p>
+        </li>
+        <li><p><strong>The Final Stop:</strong> Because our <c>main</c> method declared <c>throws FileNotFoundException</c>, it throws the exception up to the Java Virtual Machine itself. Having no one left to pass the potato to, the JVM halts execution and prints the error message to your console.</p></li>
+      </ol>
+    </subsubsection>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 4.10.3 Reading tokens and lines from the file                -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-10-3-reading-tokens-lines">
+    <title>Reading Tokens and Lines from the File</title>
+
+    <p>
+      In <xref ref="listing-air-quality-summary" />, the user entered an air quality index (AQI) at the console and the program issued an appropriate alert. In this section and the next, we will write a program that will display an air quality map in a web browser using data read from a file.
+    </p>
+
+    <p>
+      To start, we will learn to read data for a single city from a file with a <c>Scanner</c>. Assume we have a text file named <c>one_aqi_city.txt</c> in our project's working directory. Rather than jamming all the data onto a single line, each piece of information is placed on its own line:
+    </p>
+
+    <p>
+      <line>City name</line>
+      <line>City latitude</line>
+      <line>City longitude</line>
+      <line>City AQI</line>
+    </p>
+
+    <p>
+      For example:
+    </p>
+
+    <console>
+      <output>Seattle
+47.6062
+-122.3321
+42</output>
+    </console>
+
+    <p>
+      To read these values<mdash />a line of text, two floating-point values, and an integer, we can use the <c>Scanner</c> methods <c>nextLine()</c>, <c>nextDouble()</c>, and <c>nextInt()</c>, just as we do when reading from the console. <xref ref="listing-read-one-city" /> opens a file called <c>one_aqi_city.txt</c>, reads each value, and displays them in the console:
+    </p>
+
+    <listing xml:id="listing-read-one-city">
+      <title><c>ReadOneCity.java</c></title>
+      <program language="java" line-numbers="yes"><![CDATA[import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+ 
+/**
+ * Reads AQI and location data for one city from a file.
+ */
+public class ReadOneCity {
+ 
+    public static void main(String[] args) throws FileNotFoundException {
+        
+        File cityFile;       // The file with city data.
+        Scanner fileScanner;  // For reading city data.
+        String name;               // City name.
+        double latitude, longitude;  // City location.
+        int aqi;                   // City air quality.
+        
+        // Reads the city data from the file.
+        cityFile = new File("one_aqi_city.txt");
+        if (!cityFile.exists()) {
+            System.out.println("The file was not found.");
+        } else {
+            // Read the city data from the file.
+            fileScanner = new Scanner(cityFile);
+            name = fileScanner.nextLine();
+            latitude = fileScanner.nextDouble();
+            longitude = fileScanner.nextDouble();
+            aqi = fileScanner.nextInt();
+            fileScanner.close();
+            
+            // Display the city data to the console.
+            System.out.printf("%-20s%s%n", "Name:", name);
+            System.out.printf("%-20s%f%n", "Latitude:", latitude);
+            System.out.printf("%-20s%f%n", "Longitude:", longitude);
+            System.out.printf("%-20s%d%n", "AQI:", aqi);
+        }
+    }
+}]]></program>
+    </listing>
+
+    <p>
+      Assuming the data for Seattle above, this program produces the following output:
+    </p>
+
+    <console>
+      <output>Name:                Seattle          
+Latitude:            47.606200
+Longitude:           -122.332100
+AQI:                 42</output>
+    </console>
+
+    <p>
+      On line 20 we check that the file exists before creating the <c>Scanner</c> by calling the <c>exists()</c> method on the <c>File</c> object. Notice that we still need <c>throws FileNotFoundException</c> on line 10; even though our <c>if</c> statement checks for the file, the compiler still requires the method header to declare that the <c>Scanner</c> constructor could throw the exception.
+    </p>
+
+    <p>
+      If the file exists, we create the <c>Scanner</c> and read the data from the file on lines 24-28. The only difference between reading from the file and reading from the console is that we don’t need to prompt the file! But as with reading from the console, we do assume we will be obtaining each value in a specific order. A file cannot read a prompt; it simply delivers data in order. Because of this, our program relies entirely on the file being structured in the exact order we expect.
+    </p>
+
+    <p>
+      On line 29, we close the <c>Scanner</c>. Closing a file scanner is vital because it releases the operating system's file lock, ensuring other programs can read, edit, or delete the file when our program finishes.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 4.10.4 Reading from a file mixing tokens and lines           -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-10-4-reading-loop-mixing-tokens-lines">
+    <title>Reading from a File in a Loop Mixing Tokens and Lines</title>
+
+    <p>
+      We have now read one record of information from a file. In real-world data processing, however, a file almost always consists of an unknown number of records, each with the same format but different data. We will now expand our program to read zero, one, or hundreds of city records from a file, where each record consists of a city name, latitude, longitude, and AQI, in that order.
+    </p>
+
+    <p>
+      To read an arbitrary number of records from a file, we use a loop and either the <c>hasNext()</c> or <c>hasNextLine()</c> <c>Scanner</c> method. The <c>hasNext()</c> method looks ahead and returns <c>true</c> if there is another non-whitespace token (a word or number) left in the file, ignoring any spaces or blank lines.
+    </p>
+
+    <p>
+      In contrast, the <c>hasNextLine()</c> method returns <c>true</c> if the <c>Scanner</c> has not yet reached the end of the file<mdash />meaning there is another line of input available, even if that line is completely empty.
+    </p>
+
+    <p>
+      Within the loop, we read and process one complete city record. <xref ref="listing-aqi-file-reader" /> is an update to our last program that reads every record of AQI data from the file <c>aqi_data.txt</c>:
+    </p>
+
+    <listing xml:id="listing-aqi-file-reader">
+      <title><c>AqiFileReader.java</c></title>
+      <program language="java" line-numbers="yes"><![CDATA[import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+ 
+/**
+ * Reads and prints AQI and location data from a file.
+ */
+public class AqiFileReader {
+ 
+    public static void main(String[] args) throws FileNotFoundException {
+        
+        File cityFile;       // The file with city data.
+        Scanner fileScanner;  // For reading city data.
+        String name;               // City name.
+        double latitude, longitude;  // City location.
+        int aqi;                   // City air quality.
+        
+        // Reads the city data from the file.
+        cityFile = new File("aqi_data.txt");
+        if (!cityFile.exists()) {
+            System.out.println("The file was not found.");
+        } else {
+            fileScanner = new Scanner(cityFile);
+            while (fileScanner.hasNext()) {
+                // Reads the data for the next city.
+                name = fileScanner.nextLine();
+                latitude = fileScanner.nextDouble();
+                longitude = fileScanner.nextDouble();
+                aqi = fileScanner.nextInt();
+ 
+                // Consumes the newline if more data follows.
+                if (fileScanner.hasNext()) {
+                    fileScanner.nextLine();
+                }
+ 
+                // Displays the city data to the console.
+                System.out.printf("%-20s%s%n", "Name:", name);
+                System.out.printf("%-20s%f%n", "Latitude:", latitude);
+                System.out.printf("%-20s%f%n", "Longitude:", longitude);
+                System.out.printf("%-20s%d%n", "AQI:", aqi);
+            } // while
+            fileScanner.close();
+        } // else (file exists)
+    } // main
+} // class]]></program>
+    </listing>
+
+    <p>
+      This program is very similar to <xref ref="listing-read-one-city" />, with a few important changes. Once we have confirmed that the file exists and created the <c>Scanner</c> on line 23, we begin a file reading loop using <c>fileScanner.hasNext()</c> as the loop entry condition. If the file is empty, we will simply never enter the loop, the <c>Scanner</c> will be closed on line 42, and the program will terminate.
+    </p>
+
+    <p>
+      If the file isn’t empty, execution enters the loop and reads and processes one complete record of data.
+    </p>
+
+    <p>
+      As with <xref ref="listing-read-one-city" />, this loop operates under the precondition that the file is well-formed. If the file is corrupted, for example, if a latitude coordinate is missing or contains letters like <c>"NA"</c>, Java will halt with an <c>InputMismatchException</c> or <c>NoSuchElementException</c>. In a future chapter, you will learn how to write exception-handling code to recover from corrupted files gracefully.
+    </p>
+
+    <p>
+      A critically important (and potentially confusing) line in this loop is on lines 32-34:
+    </p>
+
+    <program language="java"><![CDATA[if (fileScanner.hasNext()) {
+    fileScanner.nextLine();
+}]]></program>
+
+    <p>
+      These lines appear immediately after we have read a complete single record from the file. If we omit this check, our program will throw an <c>InputMismatchException</c> before it reads the second record. Here is the domino effect that occurs if line 33 is omitted:
+    </p>
+
+    <ol>
+      <li><p>On line 29, <c>fileScanner.nextInt()</c> reads the AQI integer (e.g., 42). As we learned in Chapter 2, token-reading methods leave the trailing newline character (<c>\n</c>) sitting in the input stream.</p></li>
+      <li><p>Control circles back to the top of the loop, and line 26 executes: <c>name = fileScanner.nextLine()</c>.</p></li>
+      <li><p>Because a newline was left behind, <c>nextLine()</c> immediately swallows that empty newline, storing an empty string (<c>""</c>) into <c>name</c>.</p></li>
+      <li><p>Next, line 27 attempts to read a <c>double</c> for latitude. But because the scanner is out of alignment, the next piece of text waiting in the file is the city name of the next city (such as <c>"San Francisco"</c>).</p></li>
+      <li><p>Java cannot convert <c>"San Francisco"</c> into a <c>double</c>, causing an immediate <c>InputMismatchException</c>.</p></li>
+    </ol>
+
+    <p>
+      Lines 32–34 prevent this by consuming the leftover newline after the AQI is read, queuing up the scanner so it is poised at the start of the next city name when the loop repeats.
+    </p>
+
+    <p>
+      You might ask: Why not just write <c>fileScanner.nextLine();</c> without the <c>if</c> check?
+    </p>
+
+    <p>
+      Because of what happens at the very end of the file. If the file has no trailing newline after the final AQI number, calling <c>nextLine()</c> at the bottom of the last record would attempt to read past the end of the file, crashing your program with a <c>NoSuchElementException</c>. By checking <c>if (fileScanner.hasNext())</c> first, we only consume the newline if another real data record actually follows, ensuring the loop terminates cleanly on the final record.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 4.10.5 Reading lines and converting                          -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-10-5-reading-lines-converting">
+    <title>Reading from a File in a Loop Reading Lines and Converting</title>
+
+    <p>
+      Another approach to reading records from a file is to separate reading from type conversion. In this approach, we read each line as raw text using <c>nextLine()</c> and then convert it using two utility methods: <c>Integer.parseInt()</c> and <c>Double.parseDouble()</c>. In fact, these are the exact methods that <c>Scanner</c> calls behind the scenes inside <c>nextInt()</c> and <c>nextDouble()</c> to convert text tokens into numeric values.
+    </p>
+
+    <p>
+      We can replace lines 26-34 in <xref ref="listing-aqi-file-reader" /> with the following reading and conversion lines:
+    </p>
+
+    <program language="java"><![CDATA[name = fileScanner.nextLine();
+line = fileScanner.nextLine();
+latitude = Double.parseDouble(line);
+line = fileScanner.nextLine();
+longitude = Double.parseDouble(line);
+line = fileScanner.nextLine();
+aqi = Integer.parseInt(line);]]></program>
+
+    <p>
+      In this code, each numeric value is now read on one line and parsed on the next, e.g. we read the line containing the latitude value on line 27, and we convert it to a <c>double</c> on line 28.
+    </p>
+
+    <p>
+      The <c>Double.parseDouble()</c> method is a utility method that takes a <c>String</c> version of a real number as a parameter and returns a numeric <c>double</c>. Similarly, <c>Integer.parseInt()</c> takes a <c>String</c> version of an integer and returns a numeric <c>int</c>. These methods will throw a <c>NumberFormatException</c> if the argument is a <c>String</c> that cannot be converted to the numeric type.
+    </p>
+
+    <p>
+      Our approach uses a temporary <c>String</c> variable <c>line</c> to read a line from the file before converting, but it is common practice to combine each read/parse pair into a single line by passing the <c>String</c> result of <c>nextLine()</c> to the parsing methods <c>parseInt()</c> and <c>parseDouble()</c>:
+    </p>
+
+    <program language="java"><![CDATA[name = fileScanner.nextLine();
+latitude = Double.parseDouble(fileScanner.nextLine());
+longitude = Double.parseDouble(fileScanner.nextLine());
+aqi = Integer.parseInt(fileScanner.nextLine());]]></program>
+
+    <p>
+      This doesn’t require a temporary variable and makes it clear that the reading and conversion code together produce the value for the variable. The advantage to writing the code across two lines with a temporary variable is that it gives you something to examine if you need to run your program in the debugger.
+    </p>
+
+    <p>
+      When we read every line from the file using <c>nextLine()</c>, we never mix reading tokens with reading lines, and we no longer need to consume a newline after reading a record. This simplifies the code and improves its readability.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 4.10.6 Variable roles and files                              -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-10-6-variable-roles-files">
+    <title>Variable Roles and Files</title>
+
+    <p>
+      In <xref ref="sec-4-3-variable-roles" /> we explored four common variable roles (stepper, most-recent holder, most-wanted holder, and gatherer). All of these roles apply when processing file data in a loop, just as they did when reading data from the console.
+    </p>
+
+    <p>
+      In <xref ref="listing-aqi-file-reader" />, each of our record variables (<c>name</c>, <c>latitude</c>, <c>longitude</c>, and <c>aqi</c>) is a most-recent holder. Each one stores a single field from the record that was most recently read from the file. These values are processed (in this case, printed), and on the next pass through the loop, they are overwritten by the fields from the next record.
+    </p>
+
+    <p>
+      <xref ref="listing-aqi-file-reader-alt" /> adds variables in stepper, most-wanted holder, and gatherer roles to find the city with the cleanest air quality and calculate the average AQI across all cities in the file:
+    </p>
+
+    <listing xml:id="listing-aqi-file-reader-alt">
+      <title><c>AqiFileReaderAlt.java</c></title>
+      <program language="java" line-numbers="yes"><![CDATA[import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+ 
+/**
+ * Reads AQI and location data from a file and prints summary statistics.
+ */
+public class AqiFileReaderAlt {
+ 
+    public static void main(String[] args) throws FileNotFoundException {
+        
+        File cityFile;       // The file with city data.
+        Scanner fileScanner;  // For reading city data.
+        String name;               // City name.
+        double latitude, longitude;  // City location.
+        int aqi;                           // City air quality.
+        int bestAqi = Integer.MAX_VALUE;    // Cleanest air. (MWH)
+        String bestCity = "";               // Cleanest AQI city. (MWH)
+        int countCities = 0;               // Number of cities. (Stepper)
+        int totalAqi = 0;                  // Total AQI for average. (Gatherer)
+        
+        // Reads the city data from the file and accumulates summary data.
+        cityFile = new File("aqi_data.txt");
+        if (!cityFile.exists()) {
+            System.out.println("The file was not found.");
+        } else {
+            fileScanner = new Scanner(cityFile);
+            while (fileScanner.hasNext()) {
+                // Reads the data for the next city.
+                name = fileScanner.nextLine();
+                latitude = Double.parseDouble(fileScanner.nextLine());
+                longitude = Double.parseDouble(fileScanner.nextLine());
+                aqi = Integer.parseInt(fileScanner.nextLine());
+                
+                // Find the lowest AQI and total AQI values; add to count.
+                countCities++;
+                totalAqi += aqi;
+                if (aqi < bestAqi) {
+                    bestAqi = aqi;
+                    bestCity = name;
+                }
+            } // while 
+            fileScanner.close();
+            
+            // Display the summary information.
+            if (countCities > 0) {
+                System.out.print(bestCity + " has the best air quality");
+                System.out.println(", with an AQI of " + bestAqi + ".");
+                System.out.print("The average AQI is ");
+                System.out.printf("%.2f.%n", (double)totalAqi / countCities);
+            } // if (there was data)
+        } // else (file does exist) 
+    } // main
+} // class]]></program>
+    </listing>
+
+    <p>
+      Depending on the file, this program might produce the following output:
+    </p>
+
+    <console>
+      <output>Boston has the best air quality, with an AQI of 28.
+The average AQI is 75.92.</output>
+    </console>
+
+    <p>
+      To average the AQI values in the file, we use a combination of a stepper (<c>countCities</c>) and a gatherer (<c>totalAqi</c>). This is a common pattern to use when you don’t know how many records are in the file<mdash />a stepper to count the records, and a gatherer to accumulate a total. Before the loop, both variables are initialized to zero. In the loop, after reading a record from the file (into our most-recent holder variables), we increment <c>countCities</c> and add <c>aqi</c> to <c>totalAqi</c>.
+    </p>
+
+    <p>
+      After the loop terminates, line 46 checks <c>if (countCities &gt; 0)</c>. This protects the program from dividing by zero and printing summary statistics for nonexistent data if the file is empty. If the test is <c>true</c>, on line 50, we cast <c>(double) totalAqi</c> to ensure the division produces floating-point precision, preventing integer division from truncating the <c>.92</c> decimal fraction.
+    </p>
+
+    <p>
+      To find the city with the best air quality, we use a pair of most-wanted holder variables:
+    </p>
+
+    <program language="java"><![CDATA[if (aqi < bestAqi) {
+    bestAqi = aqi;
+    bestCity = name;
+}]]></program>
+
+    <p>
+      The first most-wanted holder, <c>bestAqi</c>, holds the lowest AQI reading we’ve encountered so far. (We initialize it to <c>Integer.MAX_VALUE</c> so that the very first reading in the file is guaranteed to be lower).
+    </p>
+
+    <p>
+      However, we’re interested in knowing not just the low reading, but which city has the lowest reading, so we must also have a variable to hold the name from the record with the lowest AQI reading. Whenever our test finds a city with a lower AQI than is stored in <c>bestAqi</c>, we update both <c>bestAqi</c> and <c>bestCity</c> to store the corresponding name from the same record.
+    </p>
+
+    <p>
+      This is a very common design pattern whenever you need to find an extreme record in a dataset and preserve its identifying details.
+    </p>
+  </subsection>
+</section>

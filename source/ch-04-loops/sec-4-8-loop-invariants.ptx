@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-4-8-loop-invariants" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Verifying Loop State: Invariants and Assertions</title>
+
+  <introduction>
+    <p>
+      When you test a program, running it with a few sample inputs can demonstrate that it works for those specific numbers. But in professional software development<mdash />especially in critical systems like medical devices, automotive controllers, or financial networks<mdash />programmers need a higher level of confidence. We need to be able to reason about why a loop is correct under all possible circumstances.
+    </p>
+
+    <p>
+      To do this, computer scientists use formal contracts about program state. In Chapter 2, we introduced the concept of a precondition as a logical requirement that must hold true before code executes. In Chapter 3, we learned how to verify preconditions and test our assumptions using assertions. In this section, we will expand that toolbox to include postconditions and loop invariants, applying them specifically to verify that our loops behave correctly from start to finish.
+    </p>
+  </introduction>
+
+  <!-- ============================================================ -->
+  <!-- 4.8.1 The Contract of a Loop                                 -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-8-1-contract-of-a-loop">
+    <title>The Contract of a Loop: Preconditions, Postconditions, and Invariants</title>
+
+    <p>
+      Every well-designed loop operates like a miniature contract within your program:
+    </p>
+
+    <p>
+      <c>[ Precondition ]  ---&gt;  ( Loop Execution / Invariant )  ---&gt;  [ Postcondition ]</c>
+    </p>
+
+    <ol>
+      <li>
+        <p><strong>Precondition:</strong> A condition that must be true immediately before entering the loop. If the precondition is violated, the loop cannot be expected to run correctly. For example, if a loop calculates a factorial (<m>n!</m>), a reasonable precondition is that <m>n \ge 0</m> (and <m>n \le 12</m> when using an <c>int</c>).</p>
+      </li>
+      <li>
+        <p><strong>Postcondition:</strong> A condition guaranteed to be true immediately after the loop terminates. The postcondition defines the work the loop was supposed to accomplish. For a counting loop that sums numbers from 1 to 10, the postcondition guarantees that the counter has reached 11 and the sum contains the total of all 10 values.</p>
+      </li>
+      <li>
+        <p><strong>Loop Invariant:</strong> A logical condition that remains true before and after every single iteration of the loop. An invariant represents the fundamental truth that the loop preserves as it advances toward completion.</p>
+      </li>
+    </ol>
+
+    <p>
+      While comments can describe preconditions and postconditions in plain English, comments are passive<mdash />the computer ignores them. To actively verify that these contracts hold true while your code executes, Java provides the <c>assert</c> statement.
+    </p>
+
+    <p>
+      Recall from Chapter 3 that an assertion evaluates a boolean expression and halts the program with an <c>AssertionError</c> if that expression evaluates to <c>false</c>:
+    </p>
+
+    <program language="java"><![CDATA[// Assert with an explanatory error message
+assert count == 10 : "Expected counter to reach 10, but found " + count;]]></program>
+
+    <p>
+      Remember that assertions are disabled by default in Java. To activate them during testing, you must enable them by passing the <c>-ea</c> flag to the Java Virtual Machine (either from the command line as <c>java -ea MyProgram</c> or by adding <c>-ea</c> to the VM arguments box in Eclipse’s Run Configurations).
+    </p>
+
+    <p>
+      A common question when learning assertions is: Why not just use an <c>if</c> statement to check these conditions?
+    </p>
+
+    <p>
+      The answer lies in the fundamental difference between handling runtime events and hunting software bugs:
+    </p>
+
+    <ul>
+      <li>
+        <p><strong>Use <c>if</c> statements for production logic:</strong> An <c>if</c> statement handles events that can naturally happen when real users run your finished software<mdash />such as a user mistyping their password, entering a negative number at a console prompt, or selecting a file that does not exist. Your program should gracefully recover from these situations.</p>
+      </li>
+      <li>
+        <p><strong>Use <c>assert</c> statements for development verification:</strong> Assertions check for internal programmer logic errors<mdash />conditions that should never happen if the program was designed correctly.</p>
+      </li>
+    </ul>
+
+    <p>
+      Because assertions are stripped out at runtime when <c>-ea</c> is omitted, they add zero performance overhead to your finished, production software. They exist purely as internal <q>sanity checks</q> for you, the developer, while you write, test, and debug your code.
+    </p>
+
+    <p>
+      Within a loop, assertions transform abstract design promises into executable checkpoints:
+    </p>
+
+    <ul>
+      <li>
+        <p><strong>Guarding Preconditions:</strong> Placing an <c>assert</c> immediately before a loop verifies that your data is in a valid state before the loop begins. If a variable holds an invalid starting value, the assertion fires immediately, preventing the loop from ever executing with corrupted data.</p>
+      </li>
+      <li>
+        <p><strong>Confirming Postconditions:</strong> Placing an <c>assert</c> immediately after a loop confirms that the loop fulfilled its contract upon termination<mdash />verifying that counters reached their expected values, accumulators stayed within physical boundaries, and the loop stopped for the intended reason.</p>
+      </li>
+    </ul>
+
+    <p>
+      By pairing preconditions and postconditions with <c>assert</c>, you recruit the Java Virtual Machine to act as an automated testing assistant, catching logic bugs the exact millisecond they occur.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 4.8.2 Verifying counters and accumulators upon loop exit     -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-8-2-verifying-counters-accumulators">
+    <title>Verifying Counters and Accumulators Upon Loop Exit</title>
+
+    <p>
+      The most immediate practical use of assertions is verifying that loop variables satisfy expected boundaries upon exit, guarding against off-by-one errors and corrupted calculations.
+    </p>
+
+    <paragraphs>
+      <title>1. Verifying loop counters (steppers)</title>
+      <p>
+        Consider a <c>for</c> loop designed to process a fixed number of items:
+      </p>
+
+      <program language="java"><![CDATA[int totalItems = 25;
+int processedCount = 0;
+ 
+for (int i = 0; i < totalItems; i++) {
+    // Process item...
+    processedCount++;
+}
+ 
+// POSTCONDITION ASSERTION:
+assert processedCount == totalItems : "Processed count mismatch! Expected " 
+        + totalItems + ", but processed " + processedCount;]]></program>
+
+      <p>
+        If an error occurred<mdash />such as an accidental early jump or an incorrect loop bound<mdash />the assertion immediately catches it at the loop exit.
+      </p>
+    </paragraphs>
+
+    <paragraphs>
+      <title>2. Verifying accumulators (gatherers)</title>
+      <p>
+        When summing non-negative numbers (such as prices, distances, or scores), the running total should never decrease:
+      </p>
+
+      <program language="java"><![CDATA[int totalScore = 0;
+int count = 0;
+ 
+// ... sentinel loop gathering positive scores ...
+ 
+// POSTCONDITION ASSERTIONS:
+assert count >= 0 : "Count cannot be negative: " + count;
+assert totalScore >= 0 : "Total score cannot be negative: " + totalScore;]]></program>
+    </paragraphs>
+
+    <paragraphs>
+      <title>3. Verifying Sentinel Loop Termination</title>
+      <p>
+        When a sentinel-controlled loop finishes, what value must the input variable hold? It must hold the sentinel value! Asserting this confirms that the loop terminated due to the intended signal rather than an unhandled jump:
+      </p>
+
+      <program language="java"><![CDATA[// Primed-loop pattern using -1 as sentinel:
+System.out.print("Enter score (-1 to stop): ");
+int score = stdin.nextInt();
+ 
+while (score != -1) {
+    total += score;
+    System.out.print("Enter score (-1 to stop): ");
+    score = stdin.nextInt();
+}
+ 
+// POSTCONDITION ASSERTION:
+assert score == -1 : "Loop exited, but score was not -1: " + score;]]></program>
+    </paragraphs>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 4.8.3 A complete example: Factorial with assertions          -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-8-3-example-factorial-assertions">
+    <title>A Complete Example: Factorial with Assertions</title>
+
+    <p>
+      <xref ref="listing-factorial-verifier" /> calculates a factorial (<m>n!</m>). Notice how preconditions, loop invariants, and postconditions work together to verify correctness:
+    </p>
+
+    <listing xml:id="listing-factorial-verifier">
+      <title><c>FactorialVerifier.java</c></title>
+      <program language="java" line-numbers="yes"><![CDATA[import java.util.Scanner;
+ 
+/**
+ * Calculates the factorial of 0 <= n <= 12 obtained
+ * from the user.
+ */
+public class FactorialVerifier {
+ 
+    public static void main(String[] args) {
+        Scanner stdin;       // To obtain n.
+        int n;               // From the user; 0-12.
+        int product = 1;     // The factorial of n.
+        
+        // Obtains n from the user.
+        stdin = new Scanner(System.in);
+        System.out.print("Enter a non-negative integer (0 to 12): ");
+        n = stdin.nextInt();
+        stdin.close();
+ 
+        // 1. PRECONDITION: Factorial is only defined for non-negative numbers,
+        // and 13! exceeds the 32-bit capacity of an int.
+        assert n >= 0 && n <= 12 : "Input out of valid bounds: " + n;
+ 
+        // 2. LOOP: Multiply numbers from 1 up to n
+        for (int factor = 1; factor <= n; factor++) {
+            // LOOP INVARIANT: product contains the factorial of (factor - 1)
+            product *= factor;
+            // LOOP INVARIANT: checking for overflow... or is it?
+            assert product > 0 : "Arithmetic overflow detected at factor " + factor;
+        }
+ 
+        // 3. POSTCONDITION: Factorial of any valid input is at least 1
+        assert product >= 1 : "Invalid postcondition: factorial result must be >= 1";
+        
+        // Displays the factorial.
+        System.out.printf("%d! = %,d%n", n, product);
+    }
+}]]></program>
+    </listing>
+
+    <p>
+      If you run this program with normal inputs like 5, it prints:
+    </p>
+
+    <console>
+      <output>5! = 120</output>
+    </console>
+
+    <p>
+      However, if you enable assertions with <c>-ea</c> and enter 15, the assertion on line 22 catches the out-of-bounds input and throws an exception:
+    </p>
+
+    <console>
+      <output>Exception in thread "main" java.lang.AssertionError: Input out of valid bounds: 15
+       at FactorialVerifier.main(FactorialVerifier.java:22)</output>
+    </console>
+
+    <p>
+      Now, let’s try an experiment: comment out the assertion on line 22 and run the program again with an input of 15. The program runs to completion and produces the following output:
+    </p>
+
+    <console>
+      <output>15! = 2,004,310,016</output>
+    </console>
+
+    <p>
+      This result is completely wrong (the true value of <m>15!</m> is over <m>1.3 \times 10^{12}</m>, or 1.3 trillion). Even worse, this catastrophic error was not caught by the assertion inside the loop on line 29 (<c>assert product &gt; 0</c>). That assertion relied on the naive assumption that binary overflow always turns a number negative.
+    </p>
+
+    <p>
+      When Java calculates <m>15!</m> using a 32-bit <c>int</c>, the value overflows <m>2^{31} - 1</m> (<c>Integer.MAX_VALUE</c>) multiple times. By sheer coincidence of binary arithmetic, the 32-bit truncated pattern still has a 0 in its sign bit, leaving it as a positive (corrupted) number! In fact, the calculation does not turn negative until factor 17.
+    </p>
+
+    <p>
+      This demonstrates why preconditions are so vital: trying to detect an error after a calculation has overflowed is notoriously unreliable. It is far safer to guard the gates before the loop ever begins.
+    </p>
+
+    <paragraphs>
+      <title>Mathematical Note: What is a true loop invariant here?</title>
+      <p>
+        At the top of each cycle, we can state: <c>// Invariant: product == (factor - 1)!</c>. This statement is mathematically true before every iteration, and it remains true when the loop finishes (when <c>factor</c> equals <m>n + 1</m>, meaning <c>product</c> equals <m>n!</m>). However, we cannot write an executable assertion to verify it<mdash />if we already had a simple way to calculate a factorial, we wouldn't need to write the loop in the first place! This formal invariant serves as excellent documentation in a comment, but it is not a condition we can directly evaluate with an <c>assert</c> statement.
+      </p>
+    </paragraphs>
+
+    <paragraphs>
+      <title>Key Takeaways for Robust Loops</title>
+      <ul>
+        <li><p><strong>State your assumptions:</strong> Before writing a loop, ask yourself what must be true about your variables before the loop begins (precondition).</p></li>
+        <li><p><strong>Know your guarantee:</strong> When the loop finishes, determine the exact state your variables must satisfy (postcondition).</p></li>
+        <li><p><strong>Use assertions during testing:</strong> Adding <c>assert</c> statements turns silent bugs, accidental off-by-one errors, and boundary overflows into immediate, clear notifications while you are developing your code.</p></li>
+        <li><p><strong>Document what you cannot test:</strong> If a formal condition or invariant cannot be easily checked with an executable <c>assert</c> statement (such as the factorial invariant), document it clearly as a comment so anyone reading your code understands the underlying logic.</p></li>
+      </ul>
+    </paragraphs>
+  </subsection>
+</section>

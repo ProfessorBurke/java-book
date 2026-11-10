@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-4-2-conditional-loops" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Conditional Loops: <c>while</c> and <c>do-while</c></title>
+
+  <introduction>
+    <p>
+      Suppose you’d like to write a program that allows the user to guess a number. The program will randomly generate a number, and then it lets the user guess until they guess correctly. We know how to randomly generate a number with <c>Math.random()</c>, we know how to obtain a guess from the user with <c>nextInt()</c>, and we know how to compare the user’s guess to the number using an <c>if</c> statement. But we haven’t yet learned how to repeat obtaining a guess, comparing it to the number, and telling the user they haven’t guessed correctly yet. For that we’ll need a loop. <xref ref="listing-guess-the-number" /> is a program that plays a guess-the-number game with the user.
+    </p>
+
+    <listing xml:id="listing-guess-the-number">
+      <title><c>GuessTheNumber.java</c></title>
+      <program language="java" line-numbers="yes"><![CDATA[import java.util.Scanner;
+ 
+/**
+ * Plays a number guessing game with the user.
+ */
+public class GuessTheNumber {
+ 
+    public static void main(String[] args) {
+        
+        Scanner stdin;       // For obtaining the user's guess.
+        int magicNumber;     // The randomly generated number.
+        int userGuess;       // The user's current guess.
+        
+        // Randomly generate a number for the user to guess.
+        magicNumber = (int)(Math.random() * 10) + 1;
+        
+        // Obtain the user's first guess.
+        stdin = new Scanner(System.in);
+        System.out.println("I'm thinking of a number between 1 and 10.");
+        System.out.print("What is your guess? ");
+        userGuess = stdin.nextInt();
+        
+        // Compare the user's guess to the random number.
+        // If they're not the same, get another guess.
+        // Repeat until they guess correctly.
+        while (userGuess != magicNumber) {
+            System.out.println("That's not it!  Try again!");
+            System.out.print("What is your guess? ");
+            userGuess = stdin.nextInt();
+        }
+        
+        // Print a message once they've guessed correctly,
+        // and close the Scanner since we won't be getting
+        // more input.
+        System.out.println("You got it!");
+        stdin.close();
+    }
+}]]></program>
+    </listing>
+
+    <p>
+      The output of this program will vary depending on what value is randomly generated for <c>magicNumber</c> and what guesses the user makes, but here is an example run:
+    </p>
+
+    <console>
+      <output>I'm thinking of a number between 1 and 10.</output>
+      <input prompt="What is your guess? ">10</input>
+      <output>That's not it!  Try again!</output>
+      <input prompt="What is your guess? ">9</input>
+      <output>That's not it!  Try again!</output>
+      <input prompt="What is your guess? ">8</input>
+      <output>You got it!</output>
+    </console>
+
+    <p>
+      Much of <xref ref="listing-guess-the-number" /> should be familiar, but on lines 26-30, we see the new structure: a <c>while</c> loop. The syntax of the <c>while</c> loop is the keyword <c>while</c> followed by a Boolean expression in parentheses. This is the same kind of Boolean expression you learned to write in Chapter 3, and it is used in a similar way<mdash />to test the program’s state and decide which code to execute next. We refer to this first line as the loop header. Following the Boolean expression we have the conditionally executed statement, and as with selection code, this can be a block statement, enclosed in curly braces. (A <c>while</c> loop will almost always be a block statement out of necessity, as you will see.) We call this the loop body.
+    </p>
+
+    <p>
+      When control reaches the loop header, the condition after the keyword <c>while</c> is evaluated. If it evaluates to <c>true</c>, the loop body executes. (In <xref ref="listing-guess-the-number" />, this is the code on lines 27-29.) This might seem a lot like an <c>if</c> statement, but there’s one crucial difference! Once execution has reached the end of the loop body, execution returns to the loop header and the condition is evaluated again. If it’s <c>true</c>, the loop body executes again. The loop body will continue to execute until the condition in the loop header is <c>false</c>. Once that condition is <c>false</c>, execution resumes at the first line of code following the loop body. A <c>while</c> loop is a pre-test loop: a loop that tests the condition before entering the loop body.
+    </p>
+
+    <p>
+      <xref ref="figure-flowchart-guess-number" /> is a flowchart of the loop in <xref ref="listing-guess-the-number" />. There is an arrow at the end of the loop body that returns to the test (resulting in a visual loop). The only way the loop is exited is when the test evaluates to <c>false</c>.
+    </p>
+
+    <figure xml:id="figure-flowchart-guess-number">
+      <title>Flowchart of the <c>while</c> loop in <xref ref="listing-guess-the-number" /></title>
+	  <caption>Flowchart for number guessing game.</caption>
+      <image source="figures/figure_4_1.svg" width="85%">
+        <shortdescription>Flowchart of while loop testing userGuess != magicNumber, executing loop body if true and repeating.</shortdescription>
+        <description>
+          <p>
+            Flowchart diagram showing the while loop from Listing 4.1. The flow enters a decision diamond testing whether userGuess is not equal to magicNumber. If true, the flow proceeds into the loop body statements to display an error and read another guess, with a return arrow looping back up to the decision diamond. If false, the loop terminates and control moves to the closing statements.
+          </p>
+        </description>
+      </image>
+    </figure>
+  </introduction>
+
+  <!-- ============================================================ -->
+  <!-- 4.2.1 Constructing a loop                                    -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-2-1-constructing-a-loop">
+    <title>Constructing a Loop</title>
+
+    <p>
+      Mastering loop syntax is relatively simple because it mirrors an <c>if</c> statement; the real challenge is making the loop execute the correct number of times by properly managing a loop control variable. To do that, we need to understand what makes a loop tick.
+    </p>
+
+    <p>
+      A <c>while</c> loop checks its Boolean condition before each iteration. If the condition is <c>true</c>, the body executes; if <c>false</c>, the loop ends. But this raises a critical question: If a condition is <c>true</c> when the loop begins, how does it ever stop?
+    </p>
+
+    <p>
+      For a loop to terminate, something inside the loop body must change the program state so that the condition (<c>userGuess != magicNumber</c>) eventually becomes <c>false</c>. This test contains two variables, but they play very different roles:
+    </p>
+
+    <ul>
+      <li>
+        <p><c>magicNumber</c> is a fixed target. It is generated once at the start of the game and remains constant throughout the round.</p>
+      </li>
+      <li>
+        <p><c>userGuess</c> is the moving value. Each time through the loop, the program prompts the user for a new guess.</p>
+      </li>
+    </ul>
+
+    <p>
+      Because <c>userGuess</c> is the variable that changes on each cycle to eventually satisfy the exit condition, we call it the <term>loop control variable</term>. It controls when the loop is exited.
+    </p>
+
+    <p>
+      To write a loop that executes correctly, you must coordinate three essential operations for your loop control variable:
+    </p>
+
+    <ol>
+      <li>
+        <p><strong>The Initializer (The Setup):</strong> Giving the loop control variable an initial value before the loop starts (e.g., getting the user's first guess).</p>
+      </li>
+      <li>
+        <p><strong>The Test (The Gatekeeper):</strong> Evaluating the condition at the top of each iteration to decide whether to continue.</p>
+      </li>
+      <li>
+        <p><strong>The Updater (The Progress):</strong> Modifying the loop control variable inside the loop body (e.g., prompting for the next guess) so the loop makes progress toward terminating.</p>
+      </li>
+    </ol>
+
+    <p>
+      If you omit the updater<mdash />or update the wrong variable<mdash />your program will loop forever!
+    </p>
+
+    <p>
+      Let’s look at another example of a <c>while</c> loop. Before you read beyond <xref ref="listing-countdown" />, identify the loop control variable and initializer, test, and updater in the program:
+    </p>
+
+    <listing xml:id="listing-countdown">
+      <title><c>Countdown.java</c></title>
+      <program language="java" line-numbers="yes"><![CDATA[/**
+ * Print a countdown from 5 to blastoff.
+ */
+public class Countdown {
+ 
+    public static void main(String[] args) {
+        int seconds;  // The second in the countdown.
+        
+        // Count down from 5 to 1.
+        seconds = 5;
+        while (seconds > 0) {
+            System.out.println(seconds + "...");
+            seconds--;
+        }
+        // Blastoff!
+        System.out.println("Blastoff!");
+    }
+}]]></program>
+    </listing>
+
+    <p>
+      This program produces the following output:
+    </p>
+
+    <console>
+      <output>5...
+4...
+3...
+2...
+1...
+Blastoff!</output>
+    </console>
+
+    <p>
+      There is only one variable in <xref ref="listing-countdown" />, which makes it easy to identify <c>seconds</c> as the loop control variable. The reason why, though, is that it controls loop entry on line 11 (<c>seconds &gt; 0</c>), and it is updated on line 13 (<c>seconds--;</c>). The updater, critically, is inside the loop body and ensures that the loop entry condition becomes <c>false</c> exactly when we want it to be<mdash />when <c>seconds</c> reaches 0 after printing the final count. The initializer is on line 10, giving <c>seconds</c> its initial value of 5.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 4.2.2 Common loop errors                                     -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-2-2-common-loop-errors">
+    <title>Common Loop Errors</title>
+
+    <p>
+      The initializer, test, and updater work together to ensure that the loop executes exactly the correct number of times and that the loop control variable has the correct values for each iteration.
+    </p>
+
+    <p>
+      Common loop programming errors include off-by-one errors, infinite loops, and loops that are never entered. Here are some examples of how each of these problems can arise from slight changes to the initializer, test, and updater:
+    </p>
+
+    <ul>
+      <li>
+        <p><strong>Off-by-one error:</strong></p>
+        <ul>
+          <li><p>The <c>seconds</c> variable is given an initial value of 4 or 6, so the countdown starts at 4 or 6 instead of 5.</p></li>
+          <li><p>The test is <c>seconds &gt;= 0</c> or <c>seconds &gt; 1</c>, so the countdown ends at 0 or 2 instead of 1.</p></li>
+          <li><p>The updater is before the print statement, so the loop prints from 4 to 0 instead of 5 to 1.</p></li>
+        </ul>
+      </li>
+      <li>
+        <p><strong>Infinite loop:</strong></p>
+        <ul>
+          <li><p>The updater is <c>seconds++</c>, so the test is always <c>true</c>.</p></li>
+          <li><p>The updater is missing, so the test is always <c>true</c>.</p></li>
+          <li><p>The initializer sets <c>seconds</c> to 0 and the test is <c>seconds &lt;= 0</c>, so the test is always <c>true</c>.</p></li>
+        </ul>
+      </li>
+      <li>
+        <p><strong>Loop never entered:</strong></p>
+        <ul>
+          <li><p>The <c>seconds</c> variable is given an initial value of 0, so the test is never <c>true</c>.</p></li>
+          <li><p>The test is <c>seconds &lt; 0</c>, so the test is never <c>true</c>.</p></li>
+          <li><p>The test is <c>seconds &gt; 5</c>, so the test is never <c>true</c>.</p></li>
+        </ul>
+      </li>
+    </ul>
+
+    <p>
+      Each of these mistakes is easy to make; for example, initializing a variable to 0 and incrementing the loop control variable at the end of a loop are common practices. A programmer might forget that this loop is counting down, and not up.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 4.2.3 Post-test loops: the do-while statement                -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-2-3-post-test-loops">
+    <title>Post-Test Loops: The <c>do-while</c> Statement</title>
+
+    <introduction>
+      <p>
+        The <c>while</c> loop is a pre-test loop: it evaluates its condition before executing the loop body. If the condition is <c>false</c> on the very first check, the body is skipped entirely and executes zero times.
+      </p>
+
+      <p>
+        However, many programming situations naturally require the body to execute at least once before any test can take place. For example, when asking a user for input, you cannot validate their response until you have prompted them and read their answer at least once.
+      </p>
+
+      <p>
+        For these situations, Java provides a post-test loop: the <c>do-while</c> loop. A <c>do-while</c> loop executes its body first, and only then tests the condition at the bottom.
+      </p>
+
+      <program language="java"><![CDATA[do {
+    // Loop body (statements to repeat)
+} while (booleanExpression);]]></program>
+
+      <p>
+        Notice two critical syntax details:
+      </p>
+
+      <ul>
+        <li><p>The loop begins with the keyword <c>do</c> and a pair of curly braces defining the body.</p></li>
+        <li><p>The loop header (<c>while (booleanExpression)</c>) sits at the very end and must be followed by a semicolon (<c>;</c>).</p></li>
+      </ul>
+
+      <p>
+        Omitting this trailing semicolon is one of the most common syntax errors made by new Java programmers!
+      </p>
+
+      <figure xml:id="figure-flowchart-while-vs-dowhile">
+        <title><c>while</c> versus <c>do-while</c> flowcharts</title>
+		<caption>Pre-test vs. post-test flowcharts.</caption>
+        <image source="figures/figure_4_2.svg" width="85%">
+          <shortdescription>Flowcharts comparing pre-test while loop (test at top) with post-test do-while loop (test at bottom).</shortdescription>
+          <description>
+            <p>
+              Two-panel flowchart diagram comparing loop structures. The left panel shows a pre-test while loop where execution reaches the condition diamond first before entering the body. The right panel shows a post-test do-while loop where execution passes directly into the body first before reaching the condition diamond at the bottom.
+            </p>
+          </description>
+        </image>
+      </figure>
+
+      <p>
+        Because the test is at the bottom, the loop body is guaranteed to execute at least once, regardless of whether the condition is <c>true</c> or <c>false</c>. Use the following guidelines when choosing between a <c>while</c> and <c>do-while</c>:
+      </p>
+
+      <ul>
+        <li><p>Use a <c>while</c> loop when the action is conditional from the very beginning and might not need to execute at all (0 or more times).</p></li>
+        <li><p>Use a <c>do-while</c> loop when the action must happen at least once before you can make a decision<mdash />most commonly when prompting for and reading user input (1 or more times).</p></li>
+      </ul>
+    </introduction>
+
+    <!-- ============================================================ -->
+    <!-- 4.2.3.1 Comparing while and do-while to validate input       -->
+    <!-- ============================================================ -->
+    <subsubsection xml:id="subsubsec-4-2-3-1-comparing-while-do-while">
+      <title>Comparing <c>while</c> and <c>do-while</c> to Validate Input</title>
+
+      <p>
+        Recall our free-throw calculation from <xref ref="listing-percent-success" /> in Chapter 3. We guarded against dividing by zero using an <c>if</c> statement:
+      </p>
+
+      <program language="java"><![CDATA[if (totalFreethrows > 0) {
+    percentSuccess = (successfulFreethrows / (double) totalFreethrows) * 100.0;
+    System.out.printf("%.1f%%.%n", percentSuccess);
+}]]></program>
+
+      <p>
+        If the user entered 0 or a negative number in Chapter 3, the program simply printed nothing and terminated. Now that we have loops, we can insist that the user enter a valid, positive number before we proceed.
+      </p>
+
+      <p>
+        In an input validation loop, the variable holding the user’s input is the loop control variable. And, importantly, the loop entry condition describes invalid input. In this example, <c>totalFreethrows &lt;= 0</c> describes invalid input; <c>totalFreethrows &gt; 0</c> describes valid input. We enter the loop when input is invalid because we’re going to give the user another chance to enter valid input in the loop.
+      </p>
+
+      <p>
+        Let’s compare input validation with a pre-test (<c>while</c>) loop and a post-test (<c>do-while</c>) loop. Here is the code written with a pre-test loop:
+      </p>
+
+      <program language="java"><![CDATA[System.out.print("Enter total free throws (> 0): ");
+totalFreethrows = stdin.nextInt(); 
+
+while (totalFreethrows <= 0) {
+    System.out.println("Invalid! Must be greater than 0.");
+    System.out.print("Enter total free throws (> 0): ");
+    totalFreethrows = stdin.nextInt(); 
+}]]></program>
+
+      <p>
+        This loop follows the pattern that we’ve seen previously: an initializer before the loop header, the loop entry condition, and then the loop body which contains the updater. We must obtain an input from the user for both the initializer and the updater. Therefore we must duplicate the prompt and code that reads the user’s input. We call the code that reads the user’s input the first time a <term>priming read</term>.
+      </p>
+
+      <p>
+        In a <c>do-while</c> loop, the initializer and updater are combined, since the loop body executes before the test. There is therefore only one prompt and input statement in the code:
+      </p>
+
+      <program language="java"><![CDATA[do {
+    System.out.print("Enter total free throws (> 0): ");
+    totalFreethrows = stdin.nextInt();
+    
+    if (totalFreethrows <= 0) {
+        System.out.println("Invalid! Must be greater than 0.");
+    }
+} while (totalFreethrows <= 0);]]></program>
+
+      <p>
+        You might notice, though, that if we want to print an error message for invalid input, we need to put a check inside the post-test loop (<c>if (totalFreethrows &lt;= 0)</c>). When we write a pre-test loop as an input validation loop, we are only in the loop if the input is bad, so there’s no need for an additional check.
+      </p>
+
+      <p>
+        For the user, the two blocks of code behave in exactly the same way. The user enters a value at the prompt. If it’s valid, the program moves on. If it’s less than or equal to zero, the user gets the invalid message and is prompted to enter a value again, and that repeats as long as they’re entering a value less than or equal to zero.
+      </p>
+
+      <p>
+        When validating user input, both <c>while</c> and <c>do-while</c> loops work effectively, but they require different trade-offs:
+      </p>
+
+      <ul>
+        <li>
+          <p><strong>The Primed <c>while</c> Loop:</strong> You must write the prompt and read statements twice (once before the loop to prime it, and once inside the loop to update it). However, the loop body only executes when input is invalid, so your error message does not require an inner <c>if</c> check.</p>
+        </li>
+        <li>
+          <p><strong>The <c>do-while</c> Loop:</strong> You only have to write the prompt and read statements once inside the loop body. However, because the body always executes on the very first try, you must wrap your error message in an <c>if</c> statement to avoid displaying an error to a user who entered valid data immediately.</p>
+        </li>
+      </ul>
+
+      <p>
+        Neither approach is wrong. Some programmers prefer the primed <c>while</c> loop because it avoids duplicating the condition; others prefer <c>do-while</c> because it avoids duplicating the prompt. Choose the one that feels most readable to you.
+      </p>
+    </subsubsection>
+
+    <!-- ============================================================ -->
+    <!-- 4.2.3.2 Block-level scope                                    -->
+    <!-- ============================================================ -->
+    <subsubsection xml:id="subsubsec-4-2-3-2-block-level-scope">
+      <title>Block-Level Scope</title>
+
+      <p>
+        In our <c>do-while</c> example above, notice that <c>totalFreethrows</c> was assigned a value inside the loop body, but it was declared before the loop began.
+      </p>
+
+      <p>
+        New programmers are often tempted to declare a variable at the exact moment they first read it:
+      </p>
+
+      <program language="java"><![CDATA[// SYNTAX ERROR: The do-while scope trap!
+do {
+    System.out.print("Enter total free throws (> 0): ");
+    int totalFreethrows = stdin.nextInt(); // Declared inside the block
+    
+    if (totalFreethrows <= 0) {
+        System.out.println("Invalid! Must be greater than 0.");
+    }
+} while (totalFreethrows <= 0); // Compiler error!]]></program>
+
+      <p>
+        This code fails to compile because of Java’s rules for block-level scope.
+      </p>
+
+      <p>
+        A variable declared inside a block of code<mdash />enclosed by curly braces <c>{ }</c><mdash />only exists within that block. It is created at the point of its declaration and is destroyed the moment execution leaves the closing brace <c>}</c>.
+      </p>
+
+      <p>
+        In a <c>do-while</c> loop:
+      </p>
+
+      <ul>
+        <li><p>The loop body ends at the closing brace <c>}</c>.</p></li>
+        <li><p>The loop condition (<c>while (totalFreethrows &lt;= 0);</c>) sits outside those braces.</p></li>
+      </ul>
+
+      <p>
+        Because the condition is evaluated after the closing brace, any variable declared inside the <c>do</c> block is already out of scope and invisible to the <c>while</c> test. Furthermore, even if the loop could compile, the rest of your program wouldn't be able to use <c>totalFreethrows</c> to calculate the percentage once the loop finished.
+      </p>
+
+      <p>
+        To make a variable accessible both inside the loop body, within the <c>while</c> condition, and in subsequent code, you must declare it before the <c>do</c> block:
+      </p>
+
+      <program language="java"><![CDATA[// CORRECT: Declared outside the loop
+int totalFreethrows;
+ 
+do {
+    System.out.print("Enter total free throws (> 0): ");
+    totalFreethrows = stdin.nextInt(); // Assigned inside the block
+    
+    if (totalFreethrows <= 0) {
+        System.out.println("Invalid! Must be greater than 0.");
+    }
+} while (totalFreethrows <= 0);
+ 
+// totalFreethrows is still in scope and ready to use!]]></program>
+
+      <p>
+        Whenever you write a <c>do-while</c> loop, always declare your loop control variable before the <c>do</c> keyword so its scope covers the entire structure.
+      </p>
+    </subsubsection>
+  </subsection>
+</section>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<!--******************************************-->
+<!--*  Authored with PreTeXt                 *-->
+<!--*  pretextbook.org                       *-->
+<!--*  Theme: default-modern                 *-->
+<!--*  Palette:                              *-->
+<!--******************************************-->
+
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body class="ignore-math">
+<figure class="listing figure-like"><figcaption><span class="type">Listing</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">4.1<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><code class="code-inline tex2jax_ignore">GuessTheNumber.java</code><div class="autopermalink" aria-hidden="true" data-description="Listing 4.1: GuessTheNumber.java"><a tabindex="-1" href="#listing-guess-the-number" title="Copy heading and permalink for Listing 4.1: GuessTheNumber.java" aria-label="Copy heading and permalink for Listing 4.1: GuessTheNumber.java">🔗</a></div></figcaption><div class="listing__contents"><div class="code-box"><pre class="program clipboardable line-numbers"><code class="language-java">import java.util.Scanner;
+ 
+/**
+ * Plays a number guessing game with the user.
+ */
+public class GuessTheNumber {
+ 
+    public static void main(String[] args) {
+        
+        Scanner stdin;       // For obtaining the user's guess.
+        int magicNumber;     // The randomly generated number.
+        int userGuess;       // The user's current guess.
+        
+        // Randomly generate a number for the user to guess.
+        magicNumber = (int)(Math.random() * 10) + 1;
+        
+        // Obtain the user's first guess.
+        stdin = new Scanner(System.in);
+        System.out.println("I'm thinking of a number between 1 and 10.");
+        System.out.print("What is your guess? ");
+        userGuess = stdin.nextInt();
+        
+        // Compare the user's guess to the random number.
+        // If they're not the same, get another guess.
+        // Repeat until they guess correctly.
+        while (userGuess != magicNumber) {
+            System.out.println("That's not it!  Try again!");
+            System.out.print("What is your guess? ");
+            userGuess = stdin.nextInt();
+        }
+        
+        // Print a message once they've guessed correctly,
+        // and close the Scanner since we won't be getting
+        // more input.
+        System.out.println("You got it!");
+        stdin.close();
+    }
+}
+</code></pre></div></div>
+</figure><span class="incontext"><a class="internal" href="sec-4-2-conditional-loops.html#listing-guess-the-number">In Context</a></span>
+</body>
+</html>

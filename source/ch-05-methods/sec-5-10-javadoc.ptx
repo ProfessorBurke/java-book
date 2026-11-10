@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-5-10-javadoc" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Documenting Methods with Javadoc Comments</title>
+
+  <introduction>
+    <p>
+      Throughout this textbook, you have regularly consulted the official Java API documentation for classes like <c>Math</c>, <c>String</c>, <c>Scanner</c>, and <c>Integer</c>. Have you ever wondered how Oracle produces thousands of pages of consistent, searchable, cross-referenced HTML documentation for every class in the Java Development Kit?
+    </p>
+
+    <p>
+      They don’t write those web pages by hand. Instead, the documentation is extracted directly from special comments written inside the Java source code files using a tool called <term>Javadoc</term>.
+    </p>
+
+    <p>
+      Javadoc is Java’s standard documentation generator. By writing Javadoc comments directly above your methods, you can generate the exact same professional documentation web pages for your own programs and make your code self-documenting inside modern development environments.
+    </p>
+  </introduction>
+
+  <!-- ============================================================ -->
+  <!-- 5.10.1 Procedural Abstraction and the Method Contract       -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-10-1-procedural-abstraction-contract">
+    <title>Procedural Abstraction and the Method Contract</title>
+
+    <p>
+      In <xref ref="sec-5-2-procedural-abstraction" />, we introduced the concept of procedural abstraction: treating a method as a <q>black box</q> where a caller only needs to know what the method does, not how its internal statements carry out the work.
+    </p>
+
+    <p>
+      A Javadoc comment represents the <term>contract</term> between the author of the method and the programmer who calls it:
+    </p>
+
+    <ul>
+      <li>
+        <p>It specifies the <term>preconditions</term> (what inputs the method expects and any restrictions or valid ranges on those inputs).</p>
+      </li>
+      <li>
+        <p>It specifies the <term>postconditions</term> (what result the method promises to return or what observable action it performs).</p>
+      </li>
+      <li>
+        <p>It deliberately hides internal implementation details (such as whether the method uses a <c>switch</c> statement, an <c>if-else</c> ladder, or a loop).</p>
+      </li>
+    </ul>
+
+    <p>
+      When another programmer uses your method, they should be able to read its Javadoc comment and understand immediately how to invoke it correctly without ever needing to read its method body.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 5.10.2 Anatomy of a Javadoc Comment                         -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-10-2-anatomy-javadoc-comment">
+    <title>Anatomy of a Javadoc Comment</title>
+
+    <p>
+      Javadoc comments use a special opening delimiter that distinguishes them from ordinary comments:
+    </p>
+
+    <ul>
+      <li>
+        <p>Single-line comments begin with <c>//</c> and are ignored by Javadoc.</p>
+      </li>
+      <li>
+        <p>Standard multi-line block comments begin with <c>/*</c> and end with <c>*/</c>, and are also ignored by Javadoc.</p>
+      </li>
+      <li>
+        <p>Javadoc comments begin with <c>/**</c> (a forward slash followed by two asterisks) and end with <c>*/</c>.</p>
+      </li>
+    </ul>
+
+    <p>
+      A Javadoc comment must be placed immediately preceding the method header it describes, with no blank lines or intervening code between the closing <c>*/</c> and the method header.
+    </p>
+
+    <p>
+      Inside the comment, we use a combination of descriptive prose and special Javadoc block tags that begin with the <c>@</c> symbol:
+    </p>
+
+    <program language="java">
+<![CDATA[/**
+ * Calculates the volume of a right circular cylinder.
+ *
+ * @param radius the radius of the circular base in meters (must be positive)
+ * @param height the height of the cylinder in meters (must be positive)
+ * @return the total volume in cubic meters
+ */
+public static double calculateCylinderVolume(double radius, double height) {
+    return Math.PI * radius * radius * height;
+}]]>
+    </program>
+
+    <p>
+      A standard method Javadoc comment contains three distinct sections:
+    </p>
+
+    <ol>
+      <li>
+        <p>
+          <strong>The Summary Sentence:</strong> The very first sentence should be a concise, direct description of what the method does. In generated web pages and IDE popups, this first sentence is extracted and used as the quick-summary headline.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>The <c>@param</c> Tag:</strong> You must include one <c>@param</c> tag for each parameter declared in the method header. The tag is followed by the parameter variable’s name and a clear description of its purpose, expected units (e.g., meters, dollars, radians, miles per hour), and any valid ranges.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>The <c>@return</c> Tag:</strong> For value-returning methods, you must include a single <c>@return</c> tag describing the value and data type handed back to the caller. (If a method is declared <c>void</c>, the <c>@return</c> tag is omitted).
+        </p>
+      </li>
+    </ol>
+
+    <p>
+      If a method declares that it passes along a checked exception (such as <c>throws FileNotFoundException</c> from Chapter 4), you also include a <c>@throws</c> tag explaining under what circumstances that exception will be thrown.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 5.10.3 A Complete Example: Documenting getMonthDays         -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-10-3-example-getmonthdays">
+    <title>A Complete Example: Documenting <c>getMonthDays</c></title>
+
+    <p>
+      <xref ref="listing-javadoc-get-month-days" /> demonstrates how we document our overloaded <c>getMonthDays</c> methods from <xref ref="sec-5-9-method-overloading" />:
+    </p>
+
+    <listing xml:id="listing-javadoc-get-month-days">
+      <caption>Documenting overloaded methods with Javadoc</caption>
+      <program language="java">
+<![CDATA[/**
+ * Returns the number of days in a specified month.
+ *
+ * @param month the month number from 1 (January) through 12 (December)
+ * @return the number of days in the month (28, 30, or 31), or -1 if the 
+ *         month number is invalid
+ */
+public static int getMonthDays(int month) {
+    // ...
+    return days;
+}
+
+/**
+ * Returns the number of days in a specified month by name.
+ * Month names are case-insensitive.
+ *
+ * @param monthName the full English name of the month (e.g., "January", "April")
+ * @return the number of days in the month (28, 30, or 31), or -1 if the 
+ *         month name is not recognized
+ */
+public static int getMonthDays(String monthName) {
+    // ...
+    return days;
+}]]>
+      </program>
+    </listing>
+
+    <p>
+      Notice how the documentation for each overloaded method explicitly states its expectations: the integer version specifies the expected range 1 through 12, the string version clarifies that names are case-insensitive, and both specify that the method returns <c>-1</c> to signal an error if the month is invalid.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 5.10.4 Eclipse support for Javadoc                          -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-10-4-eclipse-support-javadoc">
+    <title>Eclipse Support for Javadoc</title>
+
+    <p>
+      While generating standalone HTML pages is useful for distributing libraries, the most immediate benefit of Javadoc during daily programming is inside your Integrated Development Environment (IDE).
+    </p>
+
+    <p>
+      Modern IDEs like Eclipse automatically parse Javadoc comments as you type:
+    </p>
+
+    <ul>
+      <li>
+        <p>
+          <strong>Instant Documentation Tooltips:</strong> Whenever you hover your mouse over a method call in the code editor, your IDE displays a formatted pop-up window showing the method's summary, parameter requirements, and return value.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>Autocomplete Integration:</strong> When you use autocomplete (pressing <kbd>Ctrl+Space</kbd> in Eclipse), the IDE displays your Javadoc description right beside each suggested method name in the completion menu.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>Automatic Template Generation:</strong> If you type <c>/**</c> on the line immediately above a method header and press <kbd>Enter</kbd>, Eclipse will automatically read the method's signature and generate a skeleton Javadoc comment with all the <c>@param</c> and <c>@return</c> tags pre-filled and waiting for your descriptions. (Do this after you’ve written a complete method header, and remember to modify the Javadoc if you change the method header.)
+        </p>
+      </li>
+    </ul>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 5.10.5 Guidelines for Professional Method Documentation     -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-10-5-guidelines-documentation">
+    <title>Guidelines for Professional Method Documentation</title>
+
+    <p>
+      Writing effective documentation requires practice. Use the following rules of thumb when documenting your methods:
+    </p>
+
+    <ol>
+      <li>
+        <p>
+          <strong>Document the interface, not the implementation:</strong> Describe <em>what</em> the method accomplishes, not the internal code mechanisms. Write <q>Determines whether an AQI reading is within safe limits,</q> not <q>Uses an if-statement with a logical AND operator to check the reading variable.</q> One way of thinking about it is to describe <q>why,</q> not <q>what.</q> If you refactor your method body later, your Javadoc should remain valid.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>Always specify units and boundaries:</strong> If a parameter represents time, state whether it expects seconds or milliseconds. If a parameter represents an angle, state whether it expects degrees or radians. Ambiguous units are a notorious source of real-world software defects.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>Avoid redundant filler:</strong> Do not write <c>@param aqi the aqi</c>. A comment that merely repeats the variable name adds visual clutter without providing insight. State the purpose clearly: <c>@param aqi the Air Quality Index reading between 0 and 500</c>.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>Begin with an active verb phrase:</strong> By convention, Javadoc summary sentences begin with a present-tense active verb phrase: <q>Calculates the monthly payment...,</q> <q>Validates user input...,</q> or <q>Formats a report table row....</q>
+        </p>
+      </li>
+    </ol>
+  </subsection>
+
+</section>

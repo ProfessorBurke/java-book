@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-5-1-overview" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Methods and Functional Decomposition</title>
+
+  <p>
+    You now have the tools to write programs that can process arbitrary amounts of data and adapt dynamically to changing conditions using Java’s branching and looping control structures. While these structures are computationally powerful enough to express almost any algorithm, real-world problems quickly introduce a new challenge: complexity. Writing an entire application inside a single, sprawling <c>main</c> method quickly becomes overwhelming to read, test, and maintain.
+  </p>
+
+  <p>
+    Fortunately, software engineers have developed proven strategies for managing complexity. One foundational approach is <term>functional decomposition</term> (often called <term>top-down design</term>): breaking a large, intimidating problem down into smaller, self-contained sub-tasks. Armed with that architectural roadmap, we can build our software from the bottom up: writing, testing, and verifying the smallest, lowest-level building blocks in isolation before assembling them into a larger system.
+  </p>
+
+  <p>
+    In this chapter, you will learn how to organize Java programs into modular, reusable units called <term>methods</term>. We will explore how information passes into methods, how methods calculate and return values, how to streamline complex control flow with Boolean methods, and how to overload methods so they can operate on different data types.
+  </p>
+
+  <p>
+    We will also look under the hood at the call stack to see how Java allocates and reclaims memory as methods execute. Understanding these memory mechanics prevents subtle scope bugs and clarifies exactly how data flows across your application. Finally, we will cover professional documentation standards using Javadoc and demonstrate how to test individual methods in isolation.
+  </p>
+
+  <list xml:id="list-chapter-5-roadmap">
+    <title>Roadmap for Chapter 5</title>
+    <ul>
+      <li>
+        <p>
+          <xref ref="sec-5-2-procedural-abstraction" /> Procedural Abstraction &amp; Functional Decomposition<mdash />Breaking a complex problem into smaller, single-responsibility subtasks. Top-down design vs. bottom-up implementation.
+        </p>
+      </li>
+      <li>
+        <p>
+          <xref ref="sec-5-3-anatomy-static-method" /> Anatomy of a Static Method<mdash />Method declarations, the <c>void</c> return type, calling methods, and tracing execution flow.
+        </p>
+      </li>
+      <li>
+        <p>
+          <xref ref="sec-5-4-parameters-arguments" /> Passing Information: Parameters and Arguments<mdash />Formal parameters vs. actual arguments, type matching, and the pass-by-value mechanism.
+        </p>
+      </li>
+      <li>
+        <p>
+          <xref ref="sec-5-5-call-stack" /> Memory in Action: The Call Stack<mdash />Visualizing stack frames, activation records, and how variables are born and destroyed as methods are called and return.
+        </p>
+      </li>
+      <li>
+        <p>
+          <xref ref="sec-5-6-value-returning-methods" /> Value-Returning Methods<mdash />The <c>return</c> statement, non-void types, unreachable code compiler errors, and composability in expressions.
+        </p>
+      </li>
+      <li>
+        <p>
+          <xref ref="sec-5-7-boolean-methods" /> Boolean (Predicate) Methods<mdash />Writing methods that return <c>boolean</c> (e.g., <c>isLeapYear()</c>, <c>isValidInput()</c>) to simplify decision structures and loops.
+        </p>
+      </li>
+      <li>
+        <p>
+          <xref ref="sec-5-8-scope-lifetime" /> Variable Scope and Lifetime<mdash />Local variables, shadowing, and why variables inside helper methods are invisible to <c>main</c>.
+        </p>
+      </li>
+      <li>
+        <p>
+          <xref ref="sec-5-9-method-overloading" /> Method Overloading<mdash />Reusing method names with distinct parameter signatures.
+        </p>
+      </li>
+      <li>
+        <p>
+          <xref ref="sec-5-10-javadoc" /> Documenting Methods with Javadoc Comments<mdash />Authoring professional API documentation using standard tags (<c>@param</c>, <c>@return</c>, and <c>@throws</c>) to establish clear method contracts and communicate behavioral expectations to other developers.
+        </p>
+      </li>
+      <li>
+        <p>
+          <xref ref="sec-5-11-testing-methods" /> Testing Methods<mdash />Verifying method behavior in isolation by constructing targeted test suites, validating pre/postconditions, and writing standalone driver programs to inspect return values across normal and boundary inputs.
+        </p>
+      </li>
+      <li>
+        <p>
+          <xref ref="sec-5-12-debugging-methods" /> Debugging Methods<mdash />Stepping into, over, and out of method calls in the Eclipse debugger to trace execution across the call stack, inspect local parameter scopes, and isolate bugs in modular code.
+        </p>
+      </li>
+    </ul>
+  </list>
+
+  <p>
+    Once you master the concepts in this chapter, you will no longer write monolithic programs. You will be able to design modular, readable software composed of well-crafted methods, backed by a solid mental model of how data moves through memory. Let’s get started.
+  </p>
+</section>

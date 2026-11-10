@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-3-9-design-verification" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Design and Verification: Choosing Constructs and Testing Branches</title>
+
+  <!-- ============================================================ -->
+  <!-- 3.9.1 Choosing the best selection structure                  -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-3-9-1-choosing-best-structure">
+    <title>Choosing the Best Selection Structure</title>
+
+    <p>
+      We have explored several selection structures in this chapter. How do you choose the right one for a programming problem? Examine the problem description and ask yourself a few questions about each decision point:
+    </p>
+
+    <ul>
+      <li>
+        <p><strong>Is there an optional action that should execute under certain conditions, but otherwise be skipped?</strong></p>
+        <p>Choose a single <c>if</c> statement. Examples:</p>
+        <ul>
+          <li><p>Performing a division only if the divisor is not zero (<c>divisor != 0</c>).</p></li>
+          <li><p>Adding the cost of an optional downloadable content pack to a video game order only if the customer selects it.</p></li>
+          <li><p>Resetting an audio level to 100 if the requested volume exceeds the maximum limit.</p></li>
+        </ul>
+      </li>
+      <li>
+        <p><strong>Are there two mutually exclusive paths where one or the other must execute?</strong></p>
+        <p>Choose an <c>if-else</c> statement. Examples:</p>
+        <ul>
+          <li><p>Displaying <q>pass</q> versus <q>retake</q> based on whether a score meets the cutoff.</p></li>
+          <li><p>Printing whether an integer is even or odd (<c>number % 2 == 0</c>).</p></li>
+          <li><p>Granting or denying access based on whether a password matches the stored credentials.</p></li>
+        </ul>
+      </li>
+      <li>
+        <p><strong>Are you choosing between two simple values to assign, print, or pass to a method?</strong></p>
+        <p>Choose the conditional operator (<c>?:</c>). Examples:</p>
+        <ul>
+          <li>
+            <p>Correcting pluralization in output:</p>
+            <program language="java"><![CDATA[count + " item" + (count == 1 ? "" : "s")]]></program>
+          </li>
+          <li>
+            <p>Finding the smaller of two numbers:</p>
+            <program language="java"><![CDATA[int min = (a < b) ? a : b;]]></program>
+          </li>
+          <li>
+            <p>Selecting an inline status label:</p>
+            <program language="java"><![CDATA["Status: " + (hasPassed ? "Complete" : "In Progress")]]></program>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p><strong>Are there three or more mutually exclusive paths based on ranges or complex conditions?</strong></p>
+        <p>Choose an <c>if-else if</c> structure. Include a trailing <c>else</c> to catch the remaining case or handle unpredicted inputs. Examples:</p>
+        <ul>
+          <li><p>Sifting continuous exam scores into letter grades.</p></li>
+          <li><p>Recommending attire based on temperature intervals (e.g. freezing, mild, warm, hot).</p></li>
+          <li><p>Calculating package shipping rates based on tiered weight ranges.</p></li>
+        </ul>
+      </li>
+      <li>
+        <p><strong>Are you selecting among several paths based on exact matches to discrete integer, character, or <c>String</c> values?</strong></p>
+        <p>Choose a <c>switch</c> statement. Include a <c>default</c> case to handle unexpected values. Examples:</p>
+        <ul>
+          <li><p>Converting a day number (1-7) into a weekday name (<q>Monday</q>, <q>Tuesday</q>, etc.).</p></li>
+          <li><p>Handling menu commands (<q>open</q>, <q>save</q>, <q>quit</q>).</p></li>
+          <li><p>Directing a game character based on directional key inputs (<c>'W'</c>, <c>'A'</c>, <c>'S'</c>, <c>'D'</c>).</p></li>
+        </ul>
+      </li>
+      <li>
+        <p><strong>Must an inner decision only be evaluated if a preceding condition has already been satisfied?</strong></p>
+        <p>Choose a nested <c>if</c> structure. Examples:</p>
+        <ul>
+          <li><p>Checking if a citizen is registered to vote only after confirming they meet the age requirement (<c>age &gt;= 18</c>).</p></li>
+          <li><p>Checking if an account has sufficient funds only after confirming the PIN is valid.</p></li>
+          <li><p>Checking if a password meets length requirements (<c>password.length() &gt;= 8</c>), and only if it’s long enough, checking if it meets complexity rules.</p></li>
+        </ul>
+      </li>
+    </ul>
+
+    <p>
+      There are situations in which more than one decision structure can solve the same problem. For example, a nested <c>if</c> structure can often be rewritten as a single <c>if</c> statement using a compound Boolean expression (<c>&amp;&amp;</c> or <c>||</c>).
+    </p>
+
+    <p>
+      When both approaches work, choose the structure that gives you the most readable, unambiguous code and most naturally reflects the logic of the problem description. If one check is a strict guard condition protecting the second check, nesting is often clearer. If two conditions must simply both hold true to proceed, a compound expression using <c>&amp;&amp;</c> is usually more concise and idiomatic (expected by experienced programmers).
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 3.9.2 Tracing execution paths in a selection structure       -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-3-9-2-tracing-execution-paths">
+    <title>Tracing Execution Paths in a Selection Structure</title>
+
+    <p>
+      A program with no branching statements, such as those we wrote in Chapter 2, has a single path of execution: each statement executes in order from the start of the <c>main</c> method until the end is reached. Once we add branching statements, a program has more than one possible execution paths.
+    </p>
+
+    <p>
+      With a simple <c>if</c> statement, we break the program into two paths: one in which the <c>if</c> code executes, and one in which it doesn’t.
+    </p>
+
+    <p>
+      With an <c>if-else</c>, the program again has two paths: one in which the <c>if</c> code executes, and one in which the <c>else</c> code executes.
+    </p>
+
+    <p>
+      With a series <c>if</c> or <c>switch</c> statement, the program has a path for each block in the series or case in the <c>switch</c>. If there is no final <c>else</c> or <c>default</c> case, the program also has a path for the series <c>if</c> or <c>switch</c> structure being skipped. <xref ref="figure-flowchart-sequential-vs-series" /> illustrates sequential execution versus branching execution with a series <c>if</c> statement using flowchart symbols. A diamond represents a decision point, and each box represents a statement.
+    </p>
+
+    <figure xml:id="figure-flowchart-sequential-vs-series">
+      <title>Flowchart comparing sequential execution with series <c>if</c> branching</title>
+      <image source="figures/figure_3_9.png" width="90%">
+        <shortdescription>Flowchart contrasting linear sequential execution with a multi-way series if decision containing diamonds and statement boxes.</shortdescription>
+        <description>
+          <p>
+            Two-panel flowchart diagram in black and white. The left panel shows sequential execution with a single vertical path flowing from Start through Statement 1, Statement 2, and Statement 3 to End. The right panel shows series <c>if</c> branching: Condition 1 diamond branches True to Action 1 (merging to End) or False to Condition 2 diamond; Condition 2 branches True to Action 2 (merging to End) or False to Else Action, showing three mutually exclusive execution paths.
+          </p>
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      As we add or nest selection statements, the paths can increase multiplicatively. For example, if we have a simple <c>if</c> followed by another simple <c>if</c>, there are four possible paths: both statements execute, both statements are skipped, the first statement executes and the second doesn’t, and the second statement executes and the first doesn’t. (Note that in some programs, fewer than four paths are practically possible because the variable values or dependent conditions make certain combinations unreachable.)
+    </p>
+
+    <p>
+      Whereas a series <c>if</c> with three branches (<c>if-else if-else</c>) creates three paths through a program, implementing the same decision with three separate <c>if</c> statements creates eight paths through the program, increasing complexity and making the correctness of the program more difficult to verify.
+    </p>
+
+    <figure xml:id="figure-flowchart-two-separate-ifs">
+      <title>Flowchart of four execution paths through two separate <c>if</c> statements</title>
+      <image source="figures/figure_3_10.png" width="80%">
+        <shortdescription>Flowchart showing two sequential decision diamonds, generating four independent paths depending on whether each condition is True or False.</shortdescription>
+        <description>
+          <p>
+            Flowchart diagram in black and white illustrating two separate <c>if</c> statements. Execution flows into Condition 1; True executes Statement 1 while False bypasses it. Both branches merge into Condition 2; True executes Statement 2 while False bypasses it, both merging into End. A summary box lists the four distinct paths: Path 1 (True, True: executes Statements 1 &amp; 2), Path 2 (True, False: executes Statement 1 only), Path 3 (False, True: executes Statement 2 only), and Path 4 (False, False: skips both statements).
+          </p>
+        </description>
+      </image>
+    </figure>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 3.9.3 Designing Test Cases: Branch Coverage and Boundaries   -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-3-9-3-branch-coverage-boundaries">
+    <title>Designing Test Cases: Branch Coverage and Boundaries</title>
+
+    <p>
+      When beginners test their code, they often make one of two mistakes: they run the program once with a <q>happy</q> input and assume it works, or they randomly type in several different numbers without a clear plan.
+    </p>
+
+    <p>
+      Testing five or six positive numbers (like 5, 10, and 25) doesn’t actually test the program thoroughly<mdash />it just tests the exact same calculation five or six times! To verify a program efficiently without wasting time on redundant tests, developers rely on two foundational concepts: branch coverage and boundary value analysis.
+    </p>
+
+    <p>
+      In Chapter 2, a single test run executed every statement in the program. With selection structures, executing every line of code is no longer enough.
+    </p>
+
+    <p>
+      Consider a single <c>if</c> statement:
+    </p>
+
+    <program language="java"><![CDATA[if (totalFreethrows > 0) {
+    // calculate and display percentage
+}]]></program>
+
+    <p>
+      If you only run this code with <c>totalFreethrows = 10</c>, the condition evaluates to <c>true</c>, and every statement inside the block executes. You have achieved 100% statement coverage, but you have completely ignored the second path: what happens when the condition is <c>false</c>?
+    </p>
+
+    <p>
+      Professional developers aim for branch coverage (also called decision coverage). Branch coverage requires that every decision point evaluates to both <c>true</c> and <c>false</c> at least once across your suite of tests. Achieving 100% branch coverage ensures that no branch in your program goes untested.
+    </p>
+
+    <p>
+      To avoid running redundant tests, we divide the infinite set of possible inputs into equivalence classes (or <q>buckets</q>). An equivalence class is a range of data that the program is expected to treat the exact same way. If code works for one representative value in a bucket, it will almost certainly work for all other values in that same bucket.
+    </p>
+
+    <p>
+      For our freethrow check (<c>totalFreethrows &gt; 0</c>), the universe of integers splits into two primary equivalence classes:
+    </p>
+
+    <ul>
+      <li>
+        <p><strong>Valid / Positive attempts:</strong> Any integer greater than 0 (1, 2, 10, 50 …). Testing 10 tests this entire class.</p>
+      </li>
+      <li>
+        <p><strong>Non-positive attempts:</strong> Zero and negative integers (0, -1, -5, …). Testing -5 tests this entire class.</p>
+      </li>
+    </ul>
+
+    <p>
+      Testing both classes ensures we have exercised both paths of our decision.
+    </p>
+
+    <p>
+      Experience shows that programming bugs cluster disproportionately around the boundaries where conditions flip. Developers frequently write <c>&lt;</c> when they intended <c>&lt;=</c>, or make off-by-one errors when defining ranges.
+    </p>
+
+    <p>
+      Boundary value analysis is the practice of testing the exact edges between equivalence classes. For any numerical threshold, you should test:
+    </p>
+
+    <ul>
+      <li><p>The exact boundary value where the behavior changes.</p></li>
+      <li><p>The value immediately below the boundary.</p></li>
+      <li><p>The value immediately above the boundary.</p></li>
+    </ul>
+
+    <p>
+      For the condition <c>totalFreethrows &gt; 0</c>:
+    </p>
+
+    <ul>
+      <li><p>0 is the exact boundary (the threshold where division by zero would occur).</p></li>
+      <li><p>1 is the value immediately above (the smallest positive integer that should execute the calculation).</p></li>
+      <li><p>-1 is the value immediately below (a negative value that should be skipped).</p></li>
+    </ul>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 3.9.4 Building a Test Plan Table                             -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-3-9-4-building-test-plan-table">
+    <title>Building a Test Plan Table</title>
+
+    <p>
+      Before running a program, developers document their intended verification steps in a test plan table. Planning your tests before you run the code prevents confirmation bias: it forces you to calculate what the program ought to do before you observe what it actually does.
+    </p>
+
+    <p>
+      A standard test plan table includes five simple columns:
+    </p>
+
+    <ol>
+      <li><p><strong>Test Case #:</strong> A unique identifier.</p></li>
+      <li><p><strong>Path / Purpose:</strong> Which branch or boundary is being verified.</p></li>
+      <li><p><strong>Inputs:</strong> The exact values entered by the user.</p></li>
+      <li><p><strong>Expected Output:</strong> The exact result or screen output predicted by the programmer.</p></li>
+      <li><p><strong>Pass / Fail:</strong> Filled in after running the test to verify that the actual output matches the expectation.</p></li>
+    </ol>
+
+    <p>
+      In <xref ref="listing-percent-success" />, our program calculates free-throw shooting percentage using a single <c>if</c> statement to guard against division by zero:
+    </p>
+
+    <program language="java"><![CDATA[if (totalFreethrows > 0) {
+    percentSuccess = (double)successfulFreethrows / totalFreethrows * 100.0;
+    System.out.print("The percentage of successful freethrows is ");
+    System.out.printf("%.1f%%.%n", percentSuccess);
+}]]></program>
+
+    <p>
+      Because this structure has exactly two paths (the <c>if</c> block executes, or it is skipped), we can achieve complete branch and boundary coverage with just four well-chosen test cases, as shown in <xref ref="table-test-plan-freethrow" />.
+    </p>
+
+    <table xml:id="table-test-plan-freethrow">
+      <title>Test plan for <xref ref="listing-percent-success" /></title>
+      <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+        <col width="12%"/>
+        <col width="32%"/>
+        <col width="20%"/>
+        <col width="24%"/>
+        <col width="12%"/>
+        <row header="yes">
+          <cell><strong>Test case</strong></cell>
+          <cell><strong>Path/purpose</strong></cell>
+          <cell><strong>Inputs</strong></cell>
+          <cell><strong>Expected output</strong></cell>
+          <cell><strong>Pass/Fail</strong></cell>
+        </row>
+        <row>
+          <cell>1</cell>
+          <cell>Path 1 (True): typical valid input</cell>
+          <cell>
+            <p>Total: 10,</p>
+            <p>Successful: 7</p>
+          </cell>
+          <cell>70.0%</cell>
+          <cell>Pass</cell>
+        </row>
+        <row>
+          <cell>2</cell>
+          <cell>Path 1 (True): boundary test (smallest positive total)</cell>
+          <cell>
+            <p>Total: 1,</p>
+            <p>Successful: 1</p>
+          </cell>
+          <cell>100.0%</cell>
+          <cell>Pass</cell>
+        </row>
+        <row>
+          <cell>3</cell>
+          <cell>Path 2 (False): Boundary test (exact zero divisor)</cell>
+          <cell>
+            <p>Total: 0,</p>
+            <p>Successful: 0</p>
+          </cell>
+          <cell>No output; program ends without crashing</cell>
+          <cell>Pass</cell>
+        </row>
+        <row>
+          <cell>4</cell>
+          <cell>Path 2 (False): Negative boundary / invalid value</cell>
+          <cell>
+            <p>Total: -1,</p>
+            <p>Successful: 0</p>
+          </cell>
+          <cell>No output; program ends without crashing</cell>
+          <cell>Pass</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      Notice how deliberate this table is:
+    </p>
+
+    <ul>
+      <li>
+        <p>Tests 1 and 2 verify Path 1 (the calculation branch) using both a representative value and the minimum boundary value.</p>
+      </li>
+      <li>
+        <p>Tests 3 and 4 verify Path 2 (the skip branch) using the exact critical boundary (0) and a negative number just below the boundary.</p>
+      </li>
+      <li>
+        <p>With just four test cases, we have achieved 100% branch coverage and verified the critical boundary, confirming that our program calculates percentages accurately and safely avoids dividing by zero.</p>
+      </li>
+    </ul>
+  </subsection>
+</section>

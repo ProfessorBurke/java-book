@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-3-8-assertions" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Writing Defensive Code with Assertions</title>
+
+  
+  <introduction>
+    <p>
+      Throughout this chapter, you have used selection statements (<c>if</c>, <c>if-else</c>, and <c>switch</c>) to control the flow of your programs based on runtime conditions<mdash />such as validating user input or choosing an alternative algorithm. However, programmers also need a mechanism to test their own assumptions about how the code executes.
+    </p>
+
+    <p>
+      When writing complex branching logic, you will often find yourself thinking: <q>At this point in the program, variable x must be positive,</q> or <q>The program should never reach this default branch.</q> Java provides a dedicated construct called an <term>assertion</term> to document and automatically verify these internal assumptions during development.
+    </p>
+
+    <p>
+      Assertions are not a mechanism for changing the flow of control of your program, like selection statements. They are statements that are used only during development (not in production code) to flag programming errors caused by incorrect assumptions.
+    </p>
+
+    <!-- ============================================================ -->
+    <!-- 3.8.1 What Is an assertion?                                  -->
+  </introduction>
+
+
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-3-8-1-what-is-an-assertion">
+    <title>What Is an Assertion?</title>
+
+    <p>
+      An assertion is a statement containing a Boolean expression that the programmer believes must be <c>true</c> at that specific point in execution:
+    </p>
+
+    <ul>
+      <li>
+        <p>If the expression evaluates to <c>true</c>, the program assumes that its internal state is healthy and continues executing normally without interruption.</p>
+      </li>
+      <li>
+        <p>If the expression evaluates to <c>false</c>, the assertion has detected an internal bug. Java immediately halts the program and throws an <c>AssertionError</c>, preventing corrupted data or unexpected calculations from propagating further, and giving the programmer the opportunity to examine the assumption and why it failed.</p>
+      </li>
+    </ul>
+
+    <p>
+      Assertions are fundamentally different from regular <c>if</c> statements:
+    </p>
+
+    <ul>
+      <li>
+        <p><c>if</c> statements handle expected runtime variations, such as invalid user input, missing files, or network delays<mdash />and allow the program to recover or prompt the user to try again.</p>
+      </li>
+      <li>
+        <p><c>assert</c> statements catch internal programmer bugs: situations that should logically never happen if the algorithm is implemented correctly.</p>
+      </li>
+    </ul>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 3.8.2 Syntax of the assert Statement                         -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-3-8-2-syntax-assert">
+    <title>Syntax of the <c>assert</c> Statement</title>
+
+    <p>
+      Java provides two forms of the <c>assert</c> statement:
+    </p>
+
+    <ol>
+      <li>
+        <p><strong>Basic Form</strong></p>
+        <program language="java"><![CDATA[assert booleanExpression;]]></program>
+        <p>If <c>booleanExpression</c> evaluates to <c>false</c>, Java throws an <c>AssertionError</c> with no additional message.</p>
+      </li>
+      <li>
+        <p><strong>Detailed Form (Recommended)</strong></p>
+        <program language="java"><![CDATA[assert booleanExpression : expressionWithMessage;]]></program>
+        <p>If <c>booleanExpression</c> evaluates to <c>false</c>, Java evaluates <c>expressionWithMessage</c> (typically a <c>String</c> or a variable) and includes its value in the resulting error message. This makes tracking down why an assumption failed much easier.</p>
+      </li>
+    </ol>
+
+    <p>
+      We had the following series <c>if</c> statement in <xref ref="listing-grading-series" />:
+    </p>
+
+    <program language="java"><![CDATA[if (postTestScore < 60) {
+    letterGrade = 'F';
+} else if (postTestScore < 70) {
+    letterGrade = 'D';
+} else if (postTestScore < 80) {
+    letterGrade = 'C';
+} else if (postTestScore < 90) {
+    letterGrade = 'B';
+} else {
+    letterGrade = 'A';
+}]]></program>
+
+    <p>
+      In this code, we are making the assumption that <c>postTestScore</c> is a value between 0 and 100, otherwise we’d be awarding F grades to values below 0 and A grades to values above 100.
+    </p>
+
+    <p>
+      We can add assertions to the code so that the program will throw an error if our assumptions are incorrect:
+    </p>
+
+    <program language="java"><![CDATA[if (postTestScore < 60) {
+    assert postTestScore >= 0 : "Invalid negative score";
+    letterGrade = 'F';
+} else if (postTestScore < 70) {
+    letterGrade = 'D';
+} else if (postTestScore < 80) {
+    letterGrade = 'C';
+} else if (postTestScore < 90) {
+    letterGrade = 'B';
+} else {
+    assert postTestScore <= 100 : "Invalid score above 100";
+    letterGrade = 'A';
+}]]></program>
+
+    <p>
+      This program documents (and checks) our assumptions that the scores are within the range of 0 to 100 inclusive.
+    </p>
+
+    <p>
+      We could also assert the entire range <c>0 &lt;= postTestScore &amp;&amp; postTestScore &lt;= 100</c> before entering the decision structure entirely.
+    </p>
+
+    <p>
+      One note about our example: we are not validating input with our assertions. If the user is entering the value for <c>postTestScore</c>, we should validate that it’s between 0 and 100 with an <c>if</c> statement and then proceed accordingly if it is not (bypass processing altogether, or as we’ll learn in the next chapter, allow the user to try again).
+    </p>
+
+    <p>
+      If the score is not entered by the user, but is calculated in the code, the assertion can catch a calculation error.
+    </p>
+
+    <p>
+      The assertion is documenting and checking a precondition that is necessary for this code to function correctly.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 3.8.3 When to Use (and When Not to Use) Assertions           -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-3-8-3-when-to-use-assertions">
+    <title>When to Use (and When Not to Use) Assertions</title>
+
+    <p>
+      To write reliable, maintainable code, it is essential to distinguish between appropriate and inappropriate uses of assertions:
+    </p>
+
+    <paragraphs>
+      <title>Appropriate Uses</title>
+      <ul>
+        <li><p>Verifying that variables satisfy the relationships you expect.</p></li>
+        <li><p>Placing an assertion at a location the flow of control should never reach (for instance, the <c>default</c> case of a <c>switch</c> when all valid possibilities are handled).</p></li>
+      </ul>
+    </paragraphs>
+
+    <paragraphs>
+      <title>Inappropriate Uses</title>
+      <ul>
+        <li>
+          <p><strong>Never use assertions for user input validation:</strong> Users frequently enter unexpected data. That data must be checked with <c>if</c> statements so the application can handle it gracefully.</p>
+        </li>
+        <li>
+          <p><strong>Never write assertions that cause side effects:</strong> The expression inside an assertion should never alter the state of the program. For example:</p>
+          <program language="java"><![CDATA[// DANGEROUS: If assertions are disabled, count is never incremented!
+assert (count++ < MAX_CAPACITY);]]></program>
+          <p>If assertions are turned off, the increment <c>count++</c> never executes, altering the behavior of your program between testing and deployment.</p>
+        </li>
+      </ul>
+    </paragraphs>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 3.8.4 Enabling and Disabling Assertions                      -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-3-8-4-enabling-disabling-assertions">
+    <title>Enabling and Disabling Assertions</title>
+
+    <p>
+      By default, Java disables assertions at runtime. Because of this default behavior, code with assertions will run without checking them unless you explicitly tell the Java Virtual Machine (JVM) to turn them on.
+    </p>
+
+    <p>
+      When executing a compiled class from the terminal:
+    </p>
+
+    <p>
+      To enable assertions, pass the <c>-ea</c> (or <c>-enableassertions</c>) flag:
+    </p>
+
+    <console prompt="$ ">
+      <input>java -ea MyProgram</input>
+    </console>
+
+    <p>
+      To disable assertions: pass the <c>-da</c> (or <c>-disableassertions</c>) flag:
+    </p>
+
+    <console prompt="$ ">
+      <input>java -da MyProgram</input>
+    </console>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 3.8.5 Enabling and Disabling Assertions in Eclipse           -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-3-8-5-assertions-in-eclipse">
+    <title>Enabling and Disabling Assertions in Eclipse</title>
+
+    <p>
+      Because assertions are inactive by default, you must configure Eclipse to pass the <c>-ea</c> argument to the JVM when running your project.
+    </p>
+
+    <p>
+      To enable assertions for a specific class/run configuration:
+    </p>
+
+    <ol>
+      <li>
+        <p>Open the Java class containing your <c>main</c> method in the Eclipse editor.</p>
+      </li>
+      <li>
+        <p>Go to the menu bar and select <menuchoice><guimenu>Run</guimenu><guimenuitem>Run Configurations...</guimenuitem></menuchoice> (or right-click the code editor, select <menuchoice><guimenu>Run As</guimenu><guimenuitem>Run Configurations...</guimenuitem></menuchoice>).</p>
+      </li>
+      <li>
+        <p>In the left sidebar, expand <term>Java Application</term> and click on your application's run configuration.</p>
+      </li>
+      <li>
+        <p>Select the <term>(x)= Arguments</term> tab in the main panel.</p>
+      </li>
+      <li>
+        <p>In the <term>VM arguments:</term> text area (the lower text box, not Program arguments), type: <kbd>-ea</kbd></p>
+      </li>
+      <li>
+        <p>Click <term>Apply</term>, and then click <term>Run</term>.</p>
+      </li>
+    </ol>
+
+    <p>
+      Any <c>assert</c> statements in your program will now execute and trigger <c>AssertionError</c> if their conditions evaluate to <c>false</c>.
+    </p>
+
+    <p>
+      To disable assertions:
+    </p>
+
+    <ol>
+      <li>
+        <p>Return to <menuchoice><guimenu>Run</guimenu><guimenuitem>Run Configurations...</guimenuitem></menuchoice> and select your configuration.</p>
+      </li>
+      <li>
+        <p>Go to the <term>(x)= Arguments</term> tab.</p>
+      </li>
+      <li>
+        <p>Simply delete the <c>-ea</c> argument from the <term>VM arguments:</term> field (since assertions are disabled by default in the JVM), or explicitly set <c>-da</c>.</p>
+      </li>
+      <li>
+        <p>Click <term>Apply</term> and <term>Run</term>.</p>
+      </li>
+    </ol>
+
+    <p>
+      If you want Eclipse to automatically enable assertions for all Java programs you run locally:
+    </p>
+
+    <ol>
+      <li>
+        <p>Go to <menuchoice><guimenu>Window</guimenu><guimenuitem>Preferences</guimenuitem></menuchoice> (on macOS, <menuchoice><guimenu>Eclipse</guimenu><guimenuitem>Settings...</guimenuitem></menuchoice>).</p>
+      </li>
+      <li>
+        <p>Expand <term>Java</term> in the left menu and select <term>Installed JREs</term>.</p>
+      </li>
+      <li>
+        <p>Select your active JDK/JRE from the list and click <term>Edit...</term>.</p>
+      </li>
+      <li>
+        <p>In the <term>Default VM arguments:</term> field, enter <kbd>-ea</kbd>.</p>
+      </li>
+      <li>
+        <p>Click <term>Finish</term>, then <term>Apply and Close</term>.</p>
+      </li>
+    </ol>
+
+    <p>
+      All future Java executions in that workspace will run with assertions enabled by default.
+    </p>
+  </subsection>
+</section>

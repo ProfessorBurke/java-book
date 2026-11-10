@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<!--******************************************-->
+<!--*  Authored with PreTeXt                 *-->
+<!--*  pretextbook.org                       *-->
+<!--*  Theme: default-modern                 *-->
+<!--*  Palette:                              *-->
+<!--******************************************-->
+
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body class="ignore-math">
+<figure class="listing figure-like"><figcaption><span class="type">Listing</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">5.20<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span>A solution to the die-rolling game problem<div class="autopermalink" aria-hidden="true" data-description="Listing 5.20: A solution to the die-rolling game problem"><a tabindex="-1" href="#listing-dice-game-solution" title="Copy heading and permalink for Listing 5.20: A solution to the die-rolling game problem" aria-label="Copy heading and permalink for Listing 5.20: A solution to the die-rolling game problem">🔗</a></div></figcaption><div class="listing__contents"><div class="code-box"><pre class="program clipboardable"><code class="language-java">/**
+ * Plays a dice game against the user in which dice are rolled until a threshold is
+ * reached (a win) or passed (a loss).
+ */
+public class DiceGame {
+
+    /**
+     * Plays the dice-rolling game by repeatedly rolling the dice for the player and
+     * computer until either wins or loses.
+     *
+     * @param args Not used.
+     */
+    public static void main(String[] args) {
+
+        final int THRESHOLD = 15;    // The threshold that ends the game.
+        final int SIDES = 6;         // The number of sides on the die.
+
+        int playerTotal = 0;         // The player's die total.
+        int computerTotal = 0;       // The computer's die total.
+        boolean gameOver = false;    // Set to true when a player wins or loses.
+        int roll;                    // The value of the current roll.
+
+        // Print the instructions.
+        System.out.println("Try to reach " + THRESHOLD + " without going over.");
+        System.out.println("Good luck!
+");
+
+        // Play rounds until the game is over.
+        while (!gameOver) {
+            // Give the user a turn and determine if they won or busted.
+            roll = rollDie(SIDES);
+            System.out.println("You rolled " + roll + ".");
+            playerTotal += roll;
+            gameOver = isGameOver(playerTotal, THRESHOLD);
+
+            // If the game isn't over, give the computer a turn;
+            // determine if they won or busted.
+            if (!gameOver) {
+                roll = rollDie(SIDES);
+                System.out.println("The computer rolled " + roll + ".");
+                computerTotal += roll;
+                gameOver = isGameOver(computerTotal, THRESHOLD);
+            }
+
+            // Show the current scores for both players.
+            System.out.println("Your score          ---&gt; " + playerTotal + ".");
+            System.out.println("The computer's score ---&gt; " + computerTotal + ".
+");
+
+        } // while
+
+        // The game is over; announce the winner or loser.
+        displayOutcome(playerTotal, computerTotal, THRESHOLD);
+    }
+
+    /**
+     * Simulates the roll of a single die by randomly generating a
+     * value between 1 and numSides.
+     *
+     * Precondition:  numSides &gt;= 1
+     * Postcondition: Returns a value between 1 and numSides.
+     *
+     * @param numSides  The number of sides of the die.
+     * @return          A randomly generated value between 1 and numSides.
+     */
+    public static int rollDie(int numSides) {
+        assert numSides &gt; 0 : "rollDie called with d" + numSides;
+        int dieRoll = (int)(Math.random() * numSides) + 1;
+        assert 1 &lt;= dieRoll &amp;&amp; dieRoll &lt;= numSides : 
+              "Randomly generated value out of range";
+        return dieRoll;
+    }
+
+    /**
+     * Determines whether a player's score has ended the game by reaching
+     * or exceeding the winning threshold.
+     *
+     * Precondition:  total &gt;= 0 &amp;&amp; threshold &gt; 0
+     * Postcondition: Returns true if total &gt;= threshold; false otherwise.
+     *
+     * @param total     the player's current total score
+     * @param threshold the target score required to win
+     * @return          true if the score meets or exceeds the threshold; false otherwise
+     */
+    public static boolean isGameOver(int total, int threshold) {
+        assert total &gt;= 0 &amp;&amp; threshold &gt; 0 : 
+               "Invalid score or threshold: " + total + ", " + threshold;
+        return total &gt;= threshold;
+    }
+
+    /**
+     * Displays the final game outcome, announcing whether the player or 
+     * the computer won (by matching the threshold) or busted (by exceeding it).
+     *
+     * Precondition:  playerScore &gt;= 0 &amp;&amp; computerScore &gt;= 0 &amp;&amp; threshold &gt; 0,
+     *                and at least one player's score must be &gt;= threshold.
+     * Postcondition: Displays a win announcement if a score equals threshold,
+     *                or a bust announcement if a score exceeds threshold.
+     *
+     * @param playerScore   the player's final total score
+     * @param computerScore the computer's final total score
+     * @param threshold     the target score required to win
+     */
+    public static void displayOutcome(int playerScore, int computerScore, int threshold) {
+        assert playerScore &gt;= 0 &amp;&amp; computerScore &gt;= 0 &amp;&amp; threshold &gt; 0 : 
+            "Invalid score or threshold values: " + playerScore 
+            + ", " + computerScore + ", " + threshold;
+        assert (playerScore &gt;= threshold || computerScore &gt;= threshold) : 
+            "displayOutcome called before any player reached the threshold";
+
+        System.out.println();
+        if (playerScore == threshold) {
+            System.out.println("---&gt; That's a win for you! &lt;---");
+        } else if (playerScore &gt; threshold) {
+            System.out.println("---&gt; That's a bust for you! &lt;---");
+        } else if (computerScore == threshold) {
+            System.out.println("---&gt; That's a win for the computer! &lt;---");
+        } else {
+            System.out.println("---&gt; That's a bust for the computer! &lt;---");
+        }
+    }
+}
+</code></pre></div></div>
+</figure><span class="incontext"><a class="internal" href="sec-5-13-putting-it-together.html#listing-dice-game-solution">In Context</a></span>
+</body>
+</html>

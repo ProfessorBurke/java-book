@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-5-7-boolean-methods" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Boolean (Predicate) Methods</title>
+
+  <introduction>
+    <p>
+      Just as value-returning methods can calculate numbers or format text, they can also answer yes-or-no questions about our data by returning a <c>boolean</c> value of <c>true</c> or <c>false</c>.
+    </p>
+
+    <p>
+      A method that evaluates to a <c>boolean</c> result is called a <term>predicate method</term>. We’ve dedicated a section of this textbook to predicate methods because Boolean logic and control structures are new to most learners, so predicate methods are also new and sometimes unintuitive. There are also a few pitfalls and Java idioms you’ll want to know!
+    </p>
+  </introduction>
+
+  <!-- ============================================================ -->
+  <!-- 5.7.1 Where predicate methods are used                       -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-7-1-where-predicate-methods-used">
+    <title>Where Predicate Methods Are Used</title>
+
+    <p>
+      You’ve already used some predicate methods in your programming, for example, from Listing 4.10:
+    </p>
+
+    <program language="java">
+<![CDATA[if (!cityFile.exists()) {
+    System.out.println("The file was not found.");
+} else {
+    fileScanner = new Scanner(cityFile);
+    while (fileScanner.hasNext()) {
+        // Read and process a record
+    } // while
+}]]>
+    </program>
+
+    <p>
+      In this code we use two predicate methods<mdash />the <c>File.exists()</c> method in the condition for the <c>if</c> statement, and the <c>Scanner.hasNext()</c> method in the loop entry condition. Boolean logic is used to control execution flow in a program, so we often write predicate methods to be used as the condition to an <c>if</c> or <c>while</c> statement.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 5.7.2 Writing predicate methods                             -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-7-2-writing-predicate-methods">
+    <title>Writing Predicate Methods</title>
+
+    <p>
+      Predicate methods have a <c>boolean</c> return type in the method header, and the return statement returns a boolean expression, such as a <c>boolean</c> variable or a logical expression. In Section 5.2 we proposed an <c>isValidAqi</c> method, which takes an AQI reading as a parameter (input), and returns <c>true</c> if the AQI is within the valid range of <m>0</m><ndash /><m>500</m>, and <c>false</c> otherwise. Here’s an implementation of <c>isValidAqi</c>:
+    </p>
+
+    <program language="java">
+<![CDATA[public static boolean isValidAqi(int reading) {
+    return 0 <= reading && reading <= 500;
+}]]>
+    </program>
+
+    <p>
+      In this method, first, you can see that the return type in the method header is <c>boolean</c>. The method returns the result of a boolean expression, <c>0 &lt;= reading &amp;&amp; reading &lt;= 500</c>. This is perfectly correct<mdash />if the reading is within the valid range, the expression evaluates to <c>true</c>, and so <c>true</c> is returned. If it’s not in the valid range, the expression evaluates to <c>false</c>, and <c>false</c> is returned.
+    </p>
+
+    <p>
+      We might call this method from <c>main</c> within an <c>if</c> statement:
+    </p>
+
+    <program language="java">
+<![CDATA[if (isValidAqi(aqi)) {
+    guidance = getGuidance(aqi); 
+} else {
+    System.out.println("Invalid reading.");
+}]]>
+    </program>
+
+    <p>
+      Notice the condition after the <c>if</c> statement:
+    </p>
+
+    <pre>isValidAqi(aqi)</pre>
+
+    <p>
+      This can feel incomplete when you’ve become accustomed to writing boolean expressions that contain relational and logical operators. Like a <c>boolean</c> variable, a predicate method is a complete boolean expression!
+    </p>
+
+    <p>
+      Avoid the temptation to write <c>if (isValidAqi(aqi) == true)</c>. This is, first, redundant: it’s like saying <q>if it is true that the AQI is valid</q> instead of <q>if the AQI is valid.</q> But, more importantly, it’s a bad habit that can lead to difficult-to-find programming errors. Even experienced programmers sometimes accidentally write an assignment operator <c>=</c> when they mean to test for equality <c>==</c>. If you are in the habit of testing if predicate methods and boolean variables are equal to <c>true</c> or <c>false</c>, you might accidentally write an assignment statement. This will be flagged by the compiler for a predicate method, but Java (and many other languages) will allow it for a variable, resulting in code that assigns the value and tests it in the same line.
+    </p>
+
+    <p>
+      Our method contains relatively simple logic<mdash />should we have an entire method dedicated to this task? Use the following rules of thumb when deciding whether or not to write a predicate method:
+    </p>
+
+    <ul>
+      <li>
+        <p>
+          <strong>Definitely write a method if a condition is too complicated:</strong> If a condition requires multiple compound checks (such as a complex password validation), encapsulating it in a method keeps your control structures clean.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>Definitely write a method if it is used from multiple places:</strong> If you are validating input to prevent code injection attacks or malformed data, write that validation once in a predicate method and call it everywhere input is received.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>Consider writing a method if it improves code clarity:</strong> If you believe <c>if (isValidAqi(aqi))</c> is easier to read and maintain than <c>if (0 &lt;= reading &amp;&amp; reading &lt;= 500)</c>, write the method. A well-named method documents the purpose of the condition and makes code self-documenting.
+        </p>
+      </li>
+    </ul>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 5.7.3 Naming predicate methods                              -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-7-3-naming-predicate-methods">
+    <title>Naming Predicate Methods</title>
+
+    <p>
+      You will notice that the predicate methods we’ve seen<mdash />the <c>File.exists()</c> method, the <c>Scanner.hasNext()</c> method, the <c>String.equals()</c> method, and the <c>isValidAqi()</c> method in this section<mdash />read naturally when paired with an <c>if</c> or <c>while</c>. They still begin with verbs, but conscious choices were made to favor reading them in context.
+    </p>
+
+    <p>
+      Because you will almost always be using a predicate method in a control structure, consider how the code will read where the method is being used. Consider <c>isValidAqi</c>: it could also have been named <c>validateAqi</c>, which accurately conveys what the method is doing. But it doesn’t read as naturally after <c>if</c> or <c>while</c>:
+    </p>
+
+    <pre>if (validateAqi(aqi))  // Reads like a command</pre>
+    <p>versus</p>
+    <pre>if (isValidAqi(aqi))   // Reads like a true/false question</pre>
+
+    <p>
+      When you’re considering predicate method names, start with a verb, but then test the name in the context of an <c>if</c> or a <c>while</c>. Choose the name that’s accurate, starts with a verb, and reads naturally in context. These are some of the common verbs used for predicate method names in Java:
+    </p>
+
+    <ul>
+      <li><p><c>is...</c> for state or properties (<c>isValid</c>, <c>isEmpty</c>, <c>isEven</c>)</p></li>
+      <li><p><c>has...</c> for possession or availability (<c>hasNext</c>, <c>hasPermission</c>)</p></li>
+      <li><p><c>can...</c> for capability or permission (<c>canRead</c>, <c>canWrite</c>)</p></li>
+      <li><p><c>contains...</c> for inclusion (<c>containsPoint</c>, <c>containsDigit</c>)</p></li>
+    </ul>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 5.7.4 Predicate methods and input validation loops          -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-7-4-input-validation-loops">
+    <title>Predicate Methods and Input Validation Loops</title>
+
+    <p>
+      One natural use of a predicate method is an input validation loop. Suppose we are going to prompt the user for an AQI reading until they provide a reading in the valid range. We can use our <c>isValidAqi</c> method:
+    </p>
+
+    <program language="java">
+<![CDATA[System.out.print("Please enter the AQI: ");
+int aqi = stdin.nextInt();
+while (!isValidAqi(aqi)) {
+    System.out.print("Please enter a value between 0 and 500: ");
+    aqi = stdin.nextInt();
+}]]>
+    </program>
+
+    <p>
+      Recall that when we write the condition for an input validation loop, we want the condition to evaluate to <c>true</c> for <em>invalid</em> input. If we have written a predicate method to validate input, and that predicate method returns <c>true</c> for valid input, we must complement the method call with the logical NOT (<c>!</c>) operator. Therefore the loop header is <c>while (!isValidAqi(aqi))</c>.
+    </p>
+
+    <p>
+      We saw this previously in <xref ref="sec-3-6-comparing-strings" /> with <c>!answer.equals("yes")</c>. The <c>!</c> operator is the natural way to complement a predicate method call.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 5.7.5 Flags in predicate methods                            -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-7-5-flags-predicate-methods">
+    <title>Flags in Predicate Methods</title>
+
+    <p>
+      Beginners are often tempted to write a solution for <c>isValidAqi</c> like this:
+    </p>
+
+    <program language="java">
+<![CDATA[boolean valid;
+if (reading >= 0 && reading <= 500) {
+    valid = true;
+} else {
+    valid = false;
+}
+return valid;]]>
+    </program>
+
+    <p>
+      This code uses an <c>if</c> statement to set a variable to the literal result of a boolean expression, then returns the value in the variable. Because <c>reading &gt;= 0 &amp;&amp; reading &lt;= 500</c> is already a boolean expression, returning it directly achieves the exact same result in a single, elegant line.
+    </p>
+
+    <p>
+      There are situations where a flag variable is necessary, however. When a condition must be evaluated across multiple independent criteria, a flag is an appropriate choice. With this pattern, choose a default value for the flag, check the potential disqualifying conditions, and flip the flag if one exists.
+    </p>
+
+    <p>
+      For example, here is a predicate method that checks password criteria using a flag (using the <c>String</c> method <c>contains()</c>, which checks whether a sequence of characters appears in the text):
+    </p>
+
+    <program language="java">
+<![CDATA[public static boolean isValidPassword(String password) {
+    boolean isValid = true;
+
+    // Rule 1: Must be at least 8 characters
+    if (password.length() < 8) {
+        isValid = false;
+    }
+
+    // Rule 2: Must not contain spaces
+    if (password.contains(" ")) { 
+        isValid = false;
+    }
+
+    // (Additional rules can disqualify the password here...)
+
+    return isValid;
+}]]>
+    </program>
+
+    <p>
+      In this method, the flag is called <c>isValid</c> and is initially set to <c>true</c>. The code then checks the conditions that would invalidate the proposed password and flips the flag to <c>false</c> if any of those conditions are met.
+    </p>
+
+    <p>
+      In Chapter 4 (Table 4.1), we introduced Sajaniemi’s variable roles. Here, <c>isValid</c> serves as a <term>one-way flag</term>: it begins in an initial default state (<c>true</c>) and can only ever flip in one direction (<c>false</c>). Once tripped by a failed validation rule, a one-way flag must remain in its tripped state for the remainder of the method.
+    </p>
+
+    <p>
+      Importantly, we do not use <c>if-else</c> statements! The flag begins in a default state and is only flipped to the opposite state if one of the criteria warrants it. Imagine if this code were written with <c>if-else</c> conditions:
+    </p>
+
+    <program language="java">
+<![CDATA[// DANGEROUS LOGIC ERROR: The second check wipes out the first!
+if (password.length() < 8) {
+    isValid = false;
+} else {
+    isValid = true;
+}
+
+if (password.contains(" ")) {
+    isValid = false;
+} else {
+    isValid = true; // Resurrects a 4-character password!
+}]]>
+    </program>
+
+    <p>
+      Suppose we have a password candidate that’s less than eight characters but contains no spaces (e.g., <c>"abcd"</c>). The first condition would evaluate to <c>true</c>, and <c>isValid</c> would be set to <c>false</c>. The password is not a valid candidate. The next condition would be <c>false</c>, however, and so the <c>else</c> block would execute and set the flag right back to <c>true</c>! The flag would end up reflecting only the outcome of the very last test, completely ignoring earlier rule failures.
+    </p>
+  </subsection>
+
+</section>

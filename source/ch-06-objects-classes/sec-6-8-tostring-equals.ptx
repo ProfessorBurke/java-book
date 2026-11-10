@@ -2,21 +2,26 @@
 <section xml:id="sec-6-8-tostring-equals">
   <title>Printing and Comparing Objects: toString and equals</title>
 
-  <p>
-    One of the defining benefits of object-oriented design is <em>extensibility</em>: the 
-    ability to add functionality to an existing system without modifying the original code. 
-    Object-oriented languages provide extensibility primarily through a mechanism called 
-    <em>inheritance</em>, which we will explore in detail in a future chapter. We can gain 
-    an immediate glimpse of the benefits of inheritance now, however, by adding methods to 
-    our classes that allow us to print, compare, and concatenate our objects naturally.
-  </p>
+  
+  <introduction>
+    <p>
+      One of the defining benefits of object-oriented design is <em>extensibility</em>: the 
+      ability to add functionality to an existing system without modifying the original code. 
+      Object-oriented languages provide extensibility primarily through a mechanism called 
+      <em>inheritance</em>, which we will explore in detail in a future chapter. We can gain 
+      an immediate glimpse of the benefits of inheritance now, however, by adding methods to 
+      our classes that allow us to print, compare, and concatenate our objects naturally.
+    </p>
 
-  <p>
-    All classes in Java are children of a universal parent class called <c>Object</c>. The 
-    <c>Object</c> class provides default behaviors that all Java classes automatically 
-    inherit. Let's examine two of those foundational behaviors: object comparison and 
-    converting an object to a <c>String</c>.
-  </p>
+    <p>
+      All classes in Java are children of a universal parent class called <c>Object</c>. The 
+      <c>Object</c> class provides default behaviors that all Java classes automatically 
+      inherit. Let's examine two of those foundational behaviors: object comparison and 
+      converting an object to a <c>String</c>.
+    </p>
+  </introduction>
+
+
 
   <subsection xml:id="subsec-6-8-1-object-comparison">
     <title>Object Comparison</title>
@@ -28,12 +33,10 @@
       heap after this code executes:
     </p>
 
-    <program language="java">
-      <code>
+    <program language="java" line-numbers="yes">
 Point p1 = new Point(3.0, 4.0);
 Point p2 = p1;
 Point p3 = new Point(p1);
-      </code>
     </program>
 
     <p>
@@ -124,8 +127,7 @@ Point p3 = new Point(p1);
 
     <listing xml:id="listing-point-equals">
       <caption>An <c>equals</c> method for the <c>Point</c> class</caption>
-      <program language="java">
-        <code>
+      <program language="java" line-numbers="yes">
     /**
      * Indicates whether some other object is "equal to" this Point.
      * Two points are considered equal if they are the exact same instance,
@@ -153,7 +155,6 @@ Point p3 = new Point(p1);
         }
         return equal;
     }
-        </code>
       </program>
     </listing>
 
@@ -207,12 +208,10 @@ Point p3 = new Point(p1);
       <c>==</c>. For example, in <c>Rectangle.equals</c>:
     </p>
 
-    <program language="java">
-      <code>
+    <program language="java" line-numbers="yes">
 equal = (Double.compare(this.width, other.width) == 0)
         &amp;&amp; (Double.compare(this.height, other.height) == 0)
         &amp;&amp; (this.topLeft.equals(other.topLeft));
-      </code>
     </program>
   </subsection>
 
@@ -244,10 +243,8 @@ Point@1dbd16a6
       a <c>String</c> using the <c>+</c> operator:
     </p>
 
-    <program language="java">
-      <code>
+    <program language="java" line-numbers="yes">
 System.out.println("The value of p1 is: " + p1);
-      </code>
     </program>
 
     <p>
@@ -267,10 +264,8 @@ The value of p1 is: Point@1dbd16a6
       The method header is always:
     </p>
 
-    <program language="java">
-      <code>
+    <program language="java" line-numbers="yes">
 public String toString()
-      </code>
     </program>
 
     <p>
@@ -279,8 +274,7 @@ public String toString()
 
     <listing xml:id="listing-point-tostring">
       <caption>The <c>toString</c> method for the <c>Point</c> class</caption>
-      <program language="java">
-        <code>
+      <program language="java" line-numbers="yes">
     /**
      * Returns a string representation of this Point in (x, y) coordinate format.
      *
@@ -294,7 +288,6 @@ public String toString()
     public String toString() {
         return "(" + this.x + ", " + this.y + ")";
     }
-        </code>
       </program>
     </listing>
 
@@ -315,8 +308,7 @@ The value of p1 is: (3.0, 4.0)
 
     <listing xml:id="listing-rectangle-tostring">
       <caption>The <c>toString</c> method for the <c>Rectangle</c> class</caption>
-      <program language="java">
-        <code>
+      <program language="java" line-numbers="yes">
     /**
      * Returns a string representation of this Rectangle, including its topLeft
      * corner coordinates, width, and height.
@@ -333,7 +325,6 @@ The value of p1 is: (3.0, 4.0)
                + ", width=" + this.width 
                + ", height=" + this.height + "]";
     }
-        </code>
       </program>
     </listing>
 

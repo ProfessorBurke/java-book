@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<!--******************************************-->
+<!--*  Authored with PreTeXt                 *-->
+<!--*  pretextbook.org                       *-->
+<!--*  Theme: default-modern                 *-->
+<!--*  Palette:                              *-->
+<!--******************************************-->
+
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body class="ignore-math">
+<figure class="table table-like"><figcaption><span class="type">Table</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">4.12<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span>Tracing the nested loop<div class="autopermalink" aria-hidden="true" data-description="Table 4.12: Tracing the nested loop"><a tabindex="-1" href="#table-tracing-nested-loop" title="Copy heading and permalink for Table 4.12: Tracing the nested loop" aria-label="Copy heading and permalink for Table 4.12: Tracing the nested loop">🔗</a></div></figcaption><div class="tabular-box natural-width"><table class="tabular">
+<tr class="header-horizontal">
+<th scope="col" class="l m b1 r1 l1 t1 lines">Step</th>
+<th scope="col" class="l m b1 r1 l0 t1 lines">Outer Variable (<code class="code-inline tex2jax_ignore">row</code>)</th>
+<th scope="col" class="l m b1 r1 l0 t1 lines">Inner Variable (<code class="code-inline tex2jax_ignore">col</code>)</th>
+<th scope="col" class="l m b1 r1 l0 t1 lines">Output Printed</th>
+<th scope="col" class="l m b1 r1 l0 t1 lines">What Just Happened?</th>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">1</td>
+<td class="l m b1 r1 l0 t0 lines">0 (Pass 1)</td>
+<td class="l m b1 r1 l0 t0 lines">0</td>
+<td class="l m b1 r1 l0 t0 lines"><code class="code-inline tex2jax_ignore">0, 0</code></td>
+<td class="l m b1 r1 l0 t0 lines">Outer loop starts; inner loop initialized to 0</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">2</td>
+<td class="l m b1 r1 l0 t0 lines">0</td>
+<td class="l m b1 r1 l0 t0 lines">1</td>
+<td class="l m b1 r1 l0 t0 lines"><code class="code-inline tex2jax_ignore">0, 1</code></td>
+<td class="l m b1 r1 l0 t0 lines">Inner loop increments</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">3</td>
+<td class="l m b1 r1 l0 t0 lines">0</td>
+<td class="l m b1 r1 l0 t0 lines">2</td>
+<td class="l m b1 r1 l0 t0 lines"><code class="code-inline tex2jax_ignore">0, 2</code></td>
+<td class="l m b1 r1 l0 t0 lines">Inner loop increments</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">4</td>
+<td class="l m b1 r1 l0 t0 lines">0</td>
+<td class="l m b1 r1 l0 t0 lines">3</td>
+<td class="l m b1 r1 l0 t0 lines"><code class="code-inline tex2jax_ignore">0, 3</code></td>
+<td class="l m b1 r1 l0 t0 lines">Inner loop reaches its limit</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">5</td>
+<td class="l m b1 r1 l0 t0 lines">0</td>
+<td class="l m b1 r1 l0 t0 lines">4</td>
+<td class="l m b1 r1 l0 t0 lines"><em class="emphasis">(none)</em></td>
+<td class="l m b1 r1 l0 t0 lines">Inner condition <code class="code-inline tex2jax_ignore">col &lt; 4</code> is <code class="code-inline tex2jax_ignore">false</code>; inner loop terminates</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">6</td>
+<td class="l m b1 r1 l0 t0 lines">1 (Pass 2)</td>
+<td class="l m b1 r1 l0 t0 lines">0</td>
+<td class="l m b1 r1 l0 t0 lines"><code class="code-inline tex2jax_ignore">1, 0</code></td>
+<td class="l m b1 r1 l0 t0 lines">Outer loop increments to 1; inner loop restarts at 0</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">7</td>
+<td class="l m b1 r1 l0 t0 lines">1</td>
+<td class="l m b1 r1 l0 t0 lines">1</td>
+<td class="l m b1 r1 l0 t0 lines"><code class="code-inline tex2jax_ignore">1, 1</code></td>
+<td class="l m b1 r1 l0 t0 lines">Inner loop runs its full cycle again</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">8</td>
+<td class="l m b1 r1 l0 t0 lines">1</td>
+<td class="l m b1 r1 l0 t0 lines">2</td>
+<td class="l m b1 r1 l0 t0 lines"><code class="code-inline tex2jax_ignore">1, 2</code></td>
+<td class="l m b1 r1 l0 t0 lines">Inner loop increments</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">9</td>
+<td class="l m b1 r1 l0 t0 lines">1</td>
+<td class="l m b1 r1 l0 t0 lines">3</td>
+<td class="l m b1 r1 l0 t0 lines"><code class="code-inline tex2jax_ignore">1, 3</code></td>
+<td class="l m b1 r1 l0 t0 lines">Inner loop finishes second full cycle</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">10</td>
+<td class="l m b1 r1 l0 t0 lines">2 (Pass 3)</td>
+<td class="l m b1 r1 l0 t0 lines">0</td>
+<td class="l m b1 r1 l0 t0 lines"><code class="code-inline tex2jax_ignore">2, 0</code></td>
+<td class="l m b1 r1 l0 t0 lines">Outer loop increments to 2; inner loop restarts at 0</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">11</td>
+<td class="l m b1 r1 l0 t0 lines">2</td>
+<td class="l m b1 r1 l0 t0 lines">1</td>
+<td class="l m b1 r1 l0 t0 lines"><code class="code-inline tex2jax_ignore">2, 1</code></td>
+<td class="l m b1 r1 l0 t0 lines">Inner loop increments</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">12</td>
+<td class="l m b1 r1 l0 t0 lines">2</td>
+<td class="l m b1 r1 l0 t0 lines">2</td>
+<td class="l m b1 r1 l0 t0 lines"><code class="code-inline tex2jax_ignore">2, 2</code></td>
+<td class="l m b1 r1 l0 t0 lines">Inner loop increments</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">13</td>
+<td class="l m b1 r1 l0 t0 lines">2</td>
+<td class="l m b1 r1 l0 t0 lines">3</td>
+<td class="l m b1 r1 l0 t0 lines"><code class="code-inline tex2jax_ignore">2, 3</code></td>
+<td class="l m b1 r1 l0 t0 lines">Final execution</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">14</td>
+<td class="l m b1 r1 l0 t0 lines">3</td>
+<td class="l m b1 r1 l0 t0 lines">—</td>
+<td class="l m b1 r1 l0 t0 lines"><em class="emphasis">(none)</em></td>
+<td class="l m b1 r1 l0 t0 lines">Outer condition <code class="code-inline tex2jax_ignore">row &lt; 3</code> is <code class="code-inline tex2jax_ignore">false</code>; nested structure ends</td>
+</tr>
+</table></div>
+</figure><span class="incontext"><a class="internal" href="sec-4-6-nested-loops.html#table-tracing-nested-loop">In Context</a></span>
+</body>
+</html>

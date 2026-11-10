@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xml:id="ch-01-computing-foundation" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Foundations</title>
+
+  <xi:include href="sec-1-1-overview.ptx" />
+  <xi:include href="sec-1-2-hardware-cycle.ptx" />
+  <xi:include href="sec-1-3-jvm.ptx" />
+  <xi:include href="sec-1-4-memory-management.ptx" />
+  <xi:include href="sec-1-5-programming-environments.ptx" />
+</chapter>

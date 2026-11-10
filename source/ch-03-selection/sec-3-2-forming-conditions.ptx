@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-3-2-forming-conditions" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title><c>if</c> Statements, Relational Operators, and Boolean Expressions</title>
+
+  
+  <introduction>
+    <p>
+      As just noted, our drone search and rescue program (<xref ref="listing-drone-search" />) prints negative coordinates for certain combinations of inputs. In the last chapter we wrote a precondition<mdash />a condition that must be true for a block of code to execute correctly. However, we had no way to enforce that precondition and stop the program from processing bad inputs.
+    </p>
+
+    <!-- ============================================================ -->
+    <!-- 3.2.1 if Statements, Compound Statements, and Block Statements -->
+  </introduction>
+
+
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-3-2-1-if-statements-blocks">
+    <title><c>if</c> Statements, Compound Statements, and Block Statements</title>
+
+    <p>
+      We can solve this problem with a selection statement (often called an <c>if</c> statement<mdash />because, in most languages, these statements (including Java) begin with the keyword <c>if</c>). A selection statement tells Java to execute code only under conditions that we specify.
+    </p>
+
+    <p>
+      We’ll begin by validating a single input. Suppose we are prompting the user for two values so we can compute a percentage, such as the percentage of successful freethrow attempts. We’ll ask the user for the total number of freethrows (<c>totalFreethrows</c>) and the number of successful attempts (<c>successfulFreethrows</c>). To calculate the percentage of successful freethrows, we calculate:
+    </p>
+
+    <md>\text{percentSuccess} = \frac{\text{successfulFreethrows}}{\text{totalFreethrows}} \times 100.0</md>
+
+    <p>
+      (Remembering, of course, to cast at least one of the variables to a <c>double</c> to avoid an integer division, which would result in 0!) We will enforce a precondition that <c>totalFreethrows</c> cannot be 0. (If it is, Java will throw a divide-by-zero <c>ArithmeticException</c>.) Note that we could also write preconditions that both numbers must be non-negative and that <c>successfulFreethrows</c> must be less than or equal to <c>totalFreethrows</c>, but we’ll focus on only one precondition for now.
+    </p>
+
+    <p>
+      <xref ref="listing-percent-success" /> is a short program that obtains the values for total attempts and successful attempts from the user, then tests the precondition that the total attempts is greater than zero before calculating the percentage of successful attempts and displaying the result to the console. (Note we can simply test that it’s not zero, but since only a positive value makes sense, we’ll test for greater than zero.) See if you can make sense of it before you read the explanation that follows. Selection statements mimic natural language, so they are often easy to read.
+    </p>
+
+    <listing xml:id="listing-percent-success">
+      <title><c>PercentSuccess.java</c></title>
+      <program language="java" line-numbers="yes"><![CDATA[import java.util.Scanner;
+
+/**
+ * Calculates the percentage of successful freethrows,
+ * given total freethrows and successful freethrows,
+ * obtained from the user.
+ */
+public class PercentSuccess {
+
+    public static void main(String[] args) {
+
+        // For obtaining inputs.
+        Scanner stdin;
+        // User inputs.
+        int totalFreethrows, successfulFreethrows;
+        // Calculated: percentage of successful freethrows.
+        double percentSuccess;
+
+        // Obtain the total and successful freethrows from the user.
+        stdin = new Scanner(System.in);
+        System.out.print("Enter the total number of freethrows: ");
+        totalFreethrows = stdin.nextInt();
+        System.out.print("Enter the number of successful freethrows: ");
+        successfulFreethrows = stdin.nextInt();
+        stdin.close();
+
+        // Calculate and display the percentage of successful freethrows 
+        // only if totalFreethrows is greater than zero.
+        if (totalFreethrows > 0) {
+            percentSuccess = (double)successfulFreethrows / totalFreethrows;
+            percentSuccess *= 100.0;
+            System.out.print("The percentage of successful freethrows is ");
+            System.out.printf("%.1f%%.%n", percentSuccess);
+        }
+    }
+}]]></program>
+    </listing>
+
+    <p>
+      Most of <xref ref="listing-percent-success" /> contains familiar statements, but on line 28 we have:
+    </p>
+
+    <program language="java"><![CDATA[if (totalFreethrows > 0) {]]></program>
+
+    <p>
+      This is the first line of the selection statement, beginning with the keyword <c>if</c> and followed by a condition in parentheses. (The parentheses are required.) The condition is a Boolean expression: an expression that evaluates to <c>true</c> or <c>false</c>. After the condition, we open a block with a curly brace. All of the code between the curly brace and the closing curly brace on line 33 is part of the <c>if</c> statement.
+    </p>
+
+    <p>
+      We don’t know what value the user will enter when prompted for the total number of freethrows. That value is unknown until the program is executing and the user has entered the value on line 21. We have written the <c>if</c> statement to prevent the program from crashing if the user has entered a zero.
+    </p>
+
+    <p>
+      How does the <c>if</c> statement solve the problem? By altering the flow of control.
+    </p>
+
+    <ul>
+      <li>
+        <p>If the user enters a positive value, the condition <c>totalFreethrows &gt; 0</c> will evaluate to <c>true</c>, and the statement following the condition executes.</p>
+      </li>
+      <li>
+        <p>If the user enters a non-positive value, the condition <c>totalFreethrows &gt; 0</c> will evaluate to <c>false</c>, and the statement following the condition is skipped.</p>
+      </li>
+      <li>
+        <p>Whether the statement executes or is skipped, execution then resumes after the <c>if</c> statement. In <xref ref="listing-percent-success" />, the <c>if</c> statement is the final statement in the program, so no lines execute after it either executes or is skipped<mdash />the program ends.</p>
+      </li>
+    </ul>
+
+    <p>
+      An <c>if</c> statement is a compound statement<mdash />a statement that is composed of other programming statements. By default, an <c>if</c> statement controls only the single statement that immediately follows its condition. However, we often need a decision to trigger multiple actions, as in our freethrow calculation where we must calculate the percentage and print the results.
+    </p>
+
+    <p>
+      To execute multiple statements under a single condition, we group them into a block statement (often referred to simply as a block). A block begins with an opening curly brace <c>{</c> and ends with a matching closing curly brace <c>}</c>. To the Java compiler, the entire block counts as a single statement.
+    </p>
+
+    <p>
+      It is good practice to always enclose the statements following an <c>if</c> in curly braces, even if you have only one statement that will be conditionally executed. It is also convention to indent the statements that are conditionally executed. This makes it clear which statements will execute when the condition is true.
+    </p>
+
+    <p>
+      Without the curly braces, only line 29 would be governed by the <c>if</c> statement. Lines 30 through 32 would execute sequentially every time the program ran, regardless of whether <c>totalFreethrows &gt; 0</c> was <c>true</c> or <c>false</c><mdash />a subtle logic error that could lead to dividing by zero or displaying misleading output.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 3.2.2 Writing boolean Expressions with Relational/Equality   -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-3-2-2-relational-equality-operators">
+    <title>Writing <c>boolean</c> Expressions with the Relational and Equality Operators</title>
+
+    <p>
+      Let’s focus on the expression in parentheses: <c>totalFreethrows &gt; 0</c>. This is a Boolean expression<mdash />an expression that evaluates to a <c>boolean</c> result (<c>true</c> or <c>false</c>). The expression in parentheses following the keyword <c>if</c> must be a Boolean expression. The expression on line 28 consists of a variable, <c>totalFreethrows</c>, the greater-than operator <c>&gt;</c>, and the literal <c>0</c>. It evaluates to <c>true</c> when the value stored in <c>totalFreethrows</c> is greater than 0 (e.g. 1, 2, 3, etc.), and it evaluates to <c>false</c> when the value stored in <c>totalFreethrows</c> is not greater than 0 (e.g. 0, -1, -2, etc.). There are six relational and equality operators that you can use to compare expressions, summarized below in <xref ref="table-relational-equality-operators" />.
+    </p>
+
+    <table xml:id="table-relational-equality-operators">
+      <title>The relational and equality operators</title>
+      <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+        <col width="12%"/>
+        <col width="22%"/>
+        <col width="26%"/>
+        <col width="22%"/>
+        <col width="18%"/>
+        <row header="yes">
+          <cell><strong>Operator</strong></cell>
+          <cell><strong>Name</strong></cell>
+          <cell><strong>Example</strong></cell>
+          <cell><strong>Description</strong></cell>
+          <cell><strong>Operand types allowed</strong></cell>
+        </row>
+        <row>
+          <cell><c>&lt;</c></cell>
+          <cell>Less than</cell>
+          <cell><c>finish - start &lt; 10</c></cell>
+          <cell>Evaluates to <c>true</c> when the expression on the left is less than the expression on the right.</cell>
+          <cell><c>byte</c>, <c>short</c>, <c>int</c>, <c>long</c>, <c>float</c>, <c>double</c>, <c>char</c></cell>
+        </row>
+        <row>
+          <cell><c>&gt;</c></cell>
+          <cell>Greater than</cell>
+          <cell><c>hour &gt; timeEnd</c></cell>
+          <cell>Evaluates to <c>true</c> when the expression on the left is greater than the expression on the right.</cell>
+          <cell><c>byte</c>, <c>short</c>, <c>int</c>, <c>long</c>, <c>float</c>, <c>double</c>, <c>char</c></cell>
+        </row>
+        <row>
+          <cell><c>&lt;=</c></cell>
+          <cell>Less than or equal to</cell>
+          <cell><c>value &lt;= 100.0</c></cell>
+          <cell>Evaluates to <c>true</c> when the expression on the left is less than the expression on the right or when the two expressions are equal.</cell>
+          <cell><c>byte</c>, <c>short</c>, <c>int</c>, <c>long</c>, <c>float</c>, <c>double</c>, <c>char</c></cell>
+        </row>
+        <row>
+          <cell><c>&gt;=</c></cell>
+          <cell>Greater than or equal to</cell>
+          <cell><c>Character.toUpperCase(ch) &gt;= 'A'</c></cell>
+          <cell>Evaluates to <c>true</c> when the expression on the left is greater than the expression on the right or when the two expressions are equal.</cell>
+          <cell><c>byte</c>, <c>short</c>, <c>int</c>, <c>long</c>, <c>float</c>, <c>double</c>, <c>char</c></cell>
+        </row>
+        <row>
+          <cell><c>==</c></cell>
+          <cell>Equal to</cell>
+          <cell><c>year % 4 == 0</c></cell>
+          <cell>Evaluates to <c>true</c> when the expressions on the left and right are equal.</cell>
+          <cell><c>byte</c>, <c>short</c>, <c>int</c>, <c>long</c>, <c>float</c>, <c>double</c>, <c>char</c>, <c>boolean</c>, objects</cell>
+        </row>
+        <row>
+          <cell><c>!=</c></cell>
+          <cell>Not equal to</cell>
+          <cell><c>value != 0</c></cell>
+          <cell>Evaluates to <c>true</c> when the expressions on the left and right are not equal.</cell>
+          <cell><c>byte</c>, <c>short</c>, <c>int</c>, <c>long</c>, <c>float</c>, <c>double</c>, <c>char</c>, <c>boolean</c>, objects</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      The operations in <xref ref="table-relational-equality-operators" /> should be familiar, but some of the operators are written differently from how they’re written in math.
+    </p>
+
+    <p>
+      In Java, the <c>&lt;=</c>, <c>&gt;=</c>, <c>==</c>, and <c>!=</c> operators are all made up of two symbols that must appear in the order shown and may not contain a space between them. These combinations of symbols are the only way you can directly test for these relationships.
+    </p>
+
+    <p>
+      The equality operator is particularly difficult for many programmers to get used to, because in math we use a single equals sign to indicate equality. In Java (and many other languages, such as JavaScript, C++, and Python), we’re already using the single equals sign for assignment, so we use the double equals sign to test for equality. It is very common for programmers to accidentally type a single equals sign when they mean to test for equality, so be mindful not to make this common mistake in your <c>if</c> statements or you will generate some very difficult-to-find bugs!
+    </p>
+
+    <p>
+      It is also worth noting that we place expressions to the left and right of each of these operators. An expression can be as simple as a literal value, or it can be a variable, an arithmetic expression, a method call, or more complicated combinations of operations. You can see examples of different kinds of expressions as operands to these operators in <xref ref="table-relational-equality-operators" />.
+    </p>
+
+    <p>
+      The relational operators (<c>&lt;</c>, <c>&lt;=</c>, <c>&gt;</c>, <c>&gt;=</c>) require numeric operands. If the operands have different numeric types<mdash />including characters, which Java stores as numeric Unicode values<mdash />Java automatically promotes them to a common type (typically <c>int</c> or larger) before comparing them. The equality operators (<c>==</c> and <c>!=</c>) follow these same numeric rules but can also be used to compare two <c>boolean</c> values or two object references.
+    </p>
+
+    <p>
+      Comparing object references is tricky<mdash />we will cover why and how to achieve the result you want in section 3.6.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 3.2.3 Order of Operations                                    -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-3-2-3-order-of-operations">
+    <title>Order of Operations</title>
+
+    <p>
+      You probably intuitively knew, when you read the expressions in <xref ref="table-relational-equality-operators" /> that included a mix of arithmetic and comparison, that the arithmetic must be calculated before the comparison can take place. When we add the relational and equality operators to our order-of-operations table, they do have a lower precedence than all of the arithmetic operators. However, we need to know, in Java, what their precedence is relative to each other and what their associativity is. <xref ref="table-precedence-relational-equality" /> is an updated version of <xref ref="table-precedence-rules" /> that now includes the relational and equality operators. The new rows are highlighted in bold.
+    </p>
+
+    <table xml:id="table-precedence-relational-equality">
+      <title>Operator precedence including relational and equality operators (new rows in bold)</title>
+      <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+        <col width="22%"/>
+        <col width="26%"/>
+        <col width="18%"/>
+        <col width="34%"/>
+        <row header="yes">
+          <cell><strong>Category</strong></cell>
+          <cell><strong>Operators / Syntax</strong></cell>
+          <cell><strong>Associativity</strong></cell>
+          <cell><strong>Description</strong></cell>
+        </row>
+        <row>
+          <cell>Primary / grouping</cell>
+          <cell>
+            <p><c>()</c></p>
+            <p><c>method()</c></p>
+          </cell>
+          <cell>Left-to-right</cell>
+          <cell>Parentheses (grouping), method calls, and member access (e.g. <c>Math.PI</c>)</cell>
+        </row>
+        <row>
+          <cell>Postfix</cell>
+          <cell><c>expr++</c> <c>expr--</c></cell>
+          <cell>Left-to-right</cell>
+          <cell>Post-increment and post-decrement</cell>
+        </row>
+        <row>
+          <cell>Prefix / Unary</cell>
+          <cell>
+            <p><c>++expr</c> <c>--expr</c></p>
+            <p><c>+expr</c> <c>-expr</c></p>
+          </cell>
+          <cell>Right-to-left</cell>
+          <cell>Pre-increment/decrement, Unary plus and minus</cell>
+        </row>
+        <row>
+          <cell>Multiplicative</cell>
+          <cell><c>*</c> <c>/</c> <c>%</c></cell>
+          <cell>Left-to-right</cell>
+          <cell>Multiplication, division, mod</cell>
+        </row>
+        <row>
+          <cell>Additive</cell>
+          <cell><c>+</c> <c>-</c></cell>
+          <cell>Left-to-right</cell>
+          <cell>Addition and subtraction</cell>
+        </row>
+        <row bottom="medium" top="medium">
+          <cell><strong>Relational (new)</strong></cell>
+          <cell><strong><c>&lt;</c> <c>&lt;=</c> <c>&gt;</c> <c>&gt;=</c></strong></cell>
+          <cell><strong>Left-to-right</strong></cell>
+          <cell><strong>Less than, less than or equal to, greater than, greater than or equal to</strong></cell>
+        </row>
+        <row bottom="medium" top="medium">
+          <cell><strong>Equality (new)</strong></cell>
+          <cell><strong><c>==</c> <c>!=</c></strong></cell>
+          <cell><strong>Left-to-right</strong></cell>
+          <cell><strong>Equal to, not equal to</strong></cell>
+        </row>
+        <row>
+          <cell>Assignment</cell>
+          <cell><c>=</c> <c>+=</c> <c>-=</c> <c>*=</c> <c>/=</c> <c>%=</c></cell>
+          <cell>Right-to-left</cell>
+          <cell>Assignment and compound assignment</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      Notice that the relational operators have a higher precedence than the equality operators! That means if we have an expression that includes both:
+    </p>
+
+    <program language="java"><![CDATA[player1Score >= 100 != player2Score >= 100]]></program>
+
+    <p>
+      In this expression, we have a greater than or equals operator <c>&gt;=</c>, then a not equals operator <c>!=</c>, and then a greater than or equals operator <c>&gt;=</c>. We might be tempted to read them strictly left to right, but because <c>&gt;=</c> has a higher precedence than <c>!=</c>, the comparisons happen before the equality check. Java will evaluate both of the <c>&gt;=</c> expressions, and then the <c>!=</c> expression.
+    </p>
+
+    <p>
+      Imagine <c>player1Score</c> is 100 and <c>player2Score</c> is 50. The expression will evaluate as follows:
+    </p>
+
+    <ol>
+      <li>
+        <p>Substitute variable values:</p>
+        <p><c>100 &gt;= 100 != 50 &gt;= 100</c></p>
+      </li>
+      <li>
+        <p>Evaluate the relational operators first (higher precedence):</p>
+        <ul>
+          <li><p>The left side evaluates: <c>100 &gt;= 100</c> becomes <c>true</c>.</p></li>
+          <li><p>The right side evaluates: <c>50 &gt;= 100</c> becomes <c>false</c>.</p></li>
+          <li><p>The expression simplifies to: <c>true != false</c>.</p></li>
+        </ul>
+      </li>
+      <li>
+        <p>Evaluate the equality operator last (lower precedence):</p>
+        <p><c>true != false</c> evaluates to <c>true</c>.</p>
+      </li>
+    </ol>
+
+    <p>
+      Notice what would have happened if Java evaluated strictly from left to right without precedence: after resolving the first <c>&gt;=</c> to <c>true</c>, Java would have attempted to evaluate <c>true != 50</c>. Because you cannot compare a <c>boolean</c> to an integer, the program would fail to compile! The higher precedence of relational operators ensures both sub-expressions resolve into <c>true</c> or <c>false</c> before <c>!=</c> ever attempts to compare them.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 3.2.4 Comparing Floating-Point Values                        -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-3-2-4-comparing-floats">
+    <title>Comparing Floating-Point Values</title>
+
+    <p>
+      Now that you have seen how the equality operators (<c>==</c> and <c>!=</c>) work with integers and characters, it is tempting to use them with floating-point types (<c>double</c> and <c>float</c>). However, doing so is one of the most notorious sources of logic bugs in programming.
+    </p>
+
+    <p>
+      Consider this seemingly straightforward calculation:
+    </p>
+
+    <program language="java"><![CDATA[double a = 0.1 + 0.2;
+double b = 0.3;
+
+if (a == b) {
+    System.out.println("They are equal!");
+}]]></program>
+
+    <p>
+      If you run this code, it prints nothing! If you print the value of <c>a</c> directly, you will see why:
+    </p>
+
+    <program language="java"><![CDATA[System.out.println(a); // Prints 0.30000000000000004]]></program>
+
+    <p>
+      This discrepancy relates to the pitfalls of finite binary representations discussed in <xref ref="subsec-2-5-6-pitfalls-binary" />. In binary, numbers like 0.1 and 0.2 are repeating fractions<mdash />just like 1/3 is in base 10. Because a computer’s memory cannot store an infinite sequence of bits, it must truncate or round the number to the nearest binary value that fits within 64 bits (for a <c>double</c>) or 32 bits (for a <c>float</c>).
+    </p>
+
+    <p>
+      When you add 0.1 and 0.2, the tiny rounding errors in each number accumulate, producing 0.30000000000000004. When Java evaluates <c>a == b</c>, it compares their exact binary representations bit-by-bit. Because they differ by an infinitesimal fraction in the 17th decimal place, <c>==</c> evaluates to <c>false</c>.
+    </p>
+
+    <p>
+      Instead of asking whether two floating-point numbers are identically equal down to the last binary bit, we ask whether they are close enough that any remaining difference is just rounding noise.
+    </p>
+
+    <p>
+      To do this, we calculate the difference between the two numbers, take the absolute value of that difference (using <c>Math.abs()</c>), and check if it is smaller than an acceptable tolerance threshold:
+    </p>
+
+    <md>|a - b| &lt; \epsilon</md>
+
+    <p>
+      In Java, this threshold is traditionally called epsilon (often denoted by the Greek letter <m>\epsilon</m>, used by mathematicians to represent a tiny positive quantity):
+    </p>
+
+    <program language="java"><![CDATA[final double EPSILON = 0.00001; // Our threshold for "close enough"
+
+double a = 0.1 + 0.2;
+double b = 0.3;
+
+if (Math.abs(a - b) < EPSILON) {
+    System.out.println("They are equal within our threshold!");
+}]]></program>
+
+    <p>
+      <c>Math.abs(a - b)</c> calculates the distance between <c>a</c> and <c>b</c> on a number line regardless of which value is larger. If that distance is smaller than 0.00001, the condition evaluates to <c>true</c>.
+    </p>
+
+    <p>
+      At this stage in your programming journey, choosing an epsilon comes down to the precision demands of the problem you are solving:
+    </p>
+
+    <ul>
+      <li>
+        <p>For general classroom problems (grades, percentages, physics calculations): A constant tolerance like 0.00001 (<m>10^{-5}</m>) or 0.000001 (<m>10^{-6}</m>, often written in scientific notation as 1E-6) is a reliable rule of thumb. It is large enough to absorb cumulative binary rounding errors, but small enough that it will not accidentally treat noticeably different numbers as equal.</p>
+      </li>
+      <li>
+        <p>Match the problem's units: Think about how much variance matters in the real world:</p>
+        <p>If you are checking financial calculations with dollars and cents, you might care about values within a tenth of a cent:</p>
+        <program language="java"><![CDATA[final double EPSILON = 0.001;]]></program>
+        <p>If you are calculating whether a game character or drone has reached target coordinates (x,y), a millimeter-scale threshold is often plenty:</p>
+        <program language="java"><![CDATA[final double EPSILON = 0.0001;]]></program>
+      </li>
+    </ul>
+
+    <p>
+      While using <c>==</c> and <c>!=</c> with floating-point numbers is risky, the relational operators (<c>&lt;</c>, <c>&lt;=</c>, <c>&gt;</c>, <c>&gt;=</c>) are generally safe to use when you are checking broad thresholds:
+    </p>
+
+    <program language="java"><![CDATA[if (speed > 65.0) { ... }
+if (temperature <= 32.0) { ... }]]></program>
+
+    <p>
+      However, if your program depends on behavior right at the boundary<mdash />for example, if a vehicle must trigger an alert precisely at 65.0 mph<mdash />remember that floating-point math might calculate 65.00000000000001. In strict boundary situations, combining relational checks with an epsilon window provides the most predictable results.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 3.2.5 Boolean Expressions and Variables                      -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-3-2-5-boolean-variables-flags">
+    <title>Boolean Expressions and Variables</title>
+
+    <p>
+      Just as you can assign the value of a numeric expression to a numeric variable, you can assign the value of a boolean expression to a boolean variable. A Boolean variable is useful because it captures program state that you may need to access later on during program execution. You will use a Boolean variable to alter the flow of control. Boolean variables are often called flags because they flag a condition the program needs to pay attention to. <xref ref="listing-soil-recommendations" /> is a gardening program that obtains soil pH from the user and then flags high and low values so it can make recommendations for amendments.
+    </p>
+
+    <listing xml:id="listing-soil-recommendations">
+      <title><c>SoilRecommendations.java</c></title>
+      <program language="java" line-numbers="yes"><![CDATA[import java.util.Scanner;
+
+public class SoilRecommendations {
+
+    public static void main(String[] args) {
+
+        Scanner stdin;                     // For obtaining user input.
+        double phLevel;                    // User input -- soil pH level.
+        boolean lowPh = false;              // Flag for a low pH level.
+        boolean highPh = false;             // Flag for a high pH level.
+
+        // Obtain the pH level from the user.
+        stdin = new Scanner(System.in);
+        System.out.print("Please enter the soil's pH level: ");
+        phLevel = stdin.nextDouble();
+        stdin.close();
+
+        // Set flags for low and high pH based on user input.
+        if (phLevel > 7.5) {
+            highPh = true;
+        } 
+        if (phLevel < 6.0) {
+            lowPh = true;
+        }
+
+        // Make recommendations based on flag values.
+        if (lowPh) {
+            System.out.println("Your pH is low; add lime to the soil.");
+        }
+        if (highPh) {
+            System.out.println("Your pH is high; add elemental sulfur.");
+        }
+    }
+}]]></program>
+    </listing>
+
+    <p>
+      On lines 9 and 10 of <xref ref="listing-soil-recommendations" />, we declare boolean variables <c>highPh</c> and <c>lowPh</c>, and we give them initial values of <c>false</c>. We assign a boolean expression to a boolean variable, and a literal boolean (<c>true</c> or <c>false</c>) is the simplest boolean expression.
+    </p>
+
+    <p>
+      On line 19, we test if the soil’s pH, as entered by the user, is greater than 7.5, and if it is, the conditional code on line 20 executes and we assign the value <c>true</c> to <c>highPh</c>. There is a similar <c>if</c> statement on lines 22-24 to set the <c>lowPh</c> variable.
+    </p>
+
+    <p>
+      On line 27, we have a boolean expression following an <c>if</c><mdash /><c>lowPh</c>. A boolean variable is a boolean expression and it evaluates to the value stored in the variable. Here, <c>lowPh</c> will evaluate to either <c>true</c> or <c>false</c>, depending on whether the condition on line 22 was true and line 23 executed (or not). If it’s true, then the condition evaluates to <c>true</c> and line 28 will execute, printing a message to the user about amending the soil. We have similar code to test <c>highPh</c> and print a message on lines 30-32.
+    </p>
+
+    <p>
+      <xref ref="listing-soil-recommendations" /> would be simpler and shorter without Boolean variables. Our example is a little contrived so we can focus on the mechanics of setting and using a Boolean variable. In most programs that use flags, one or more of the following will be true:
+    </p>
+
+    <ul>
+      <li><p>The flag is used in multiple places in the code.</p></li>
+      <li><p>The flag’s value is (potentially) changed in multiple places as the program executes.</p></li>
+      <li><p>Setting the flag and using the flag are separated by code that might change the original conditions.</p></li>
+    </ul>
+
+    <p>
+      We won’t always use an <c>if</c> statement to set a Boolean variable. Consider the following replacement for lines 19-24:
+    </p>
+
+    <program language="java"><![CDATA[highPh = phLevel > 7.5;
+lowPh = phLevel < 6.0;]]></program>
+
+    <p>
+      It is often surprising to see the result of an expression with a relational operator assigned to a Boolean variable at first! But this code is equivalent to assigning the result of an arithmetic expression to a numeric variable. If <c>phLevel &gt; 7.5</c> evaluates to <c>true</c>, then <c>true</c> will be stored in <c>highPh</c>, and if it evaluates to <c>false</c>, then <c>false</c> will be stored in <c>highPh</c>. The same for <c>lowPh</c>. With this code, we don’t need to give <c>highPh</c> and <c>lowPh</c> initial values of <c>false</c><mdash />this code will always give them a value<mdash />either <c>false</c> or <c>true</c>, depending on the value in <c>phLevel</c>.
+    </p>
+  </subsection>
+</section>

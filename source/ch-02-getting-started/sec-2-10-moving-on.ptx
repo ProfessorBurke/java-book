@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-2-10-moving-on" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Moving On!</title>
+
+  <p>
+    Congratulations!
+  </p>
+
+  <p>
+    In this chapter, you have learned the entire foundation of procedural Java programming:
+  </p>
+
+  <ul>
+    <li>
+      <p>How Java applications are structured into classes and methods.</p>
+    </li>
+    <li>
+      <p>How data is stored in memory using primitive types, variables, and constants.</p>
+    </li>
+    <li>
+      <p>How to evaluate mathematical expressions with arithmetic operators and the <c>Math</c> library while avoiding finite binary pitfalls.</p>
+    </li>
+    <li>
+      <p>How text objects behave in the heap, and why strings are immutable.</p>
+    </li>
+    <li>
+      <p>How to format output using <c>print</c>, <c>println</c>, and <c>printf</c>.</p>
+    </li>
+    <li>
+      <p>How to gather interactive keyboard input with <c>Scanner</c>.</p>
+    </li>
+    <li>
+      <p>How to apply a structured, five-step engineering process to solve complete problems and verify them with tests and the debugger.</p>
+    </li>
+  </ul>
+
+  <p>
+    You are now fully equipped to tackle the programming exercises at the end of this chapter. Work through the steps: explore the problem on paper, design your algorithm, prepare your test cases, build incrementally, verify your results, and take pride in your new and hard-earned abilities!
+  </p>
+</section>

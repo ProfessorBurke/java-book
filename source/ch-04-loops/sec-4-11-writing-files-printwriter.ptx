@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-4-11-writing-files-printwriter" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Writing Text Files with <c>PrintWriter</c></title>
+
+  <introduction>
+    <p>
+      Reading data from files allows our programs to ingest large datasets, but the real power of computing comes when we complete the cycle: reading input, processing it in a loop, and writing new output files to disk.
+    </p>
+
+    <p>
+      Whether you are saving user settings, writing a summary report, or generating a webpage, Java makes writing text files remarkably familiar.
+    </p>
+  </introduction>
+
+  <!-- ============================================================ -->
+  <!-- 4.11.1 The PrintWriter class                                 -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-11-1-printwriter-class">
+    <title>The <c>PrintWriter</c> Class</title>
+
+    <p>
+      In the <c>java.io</c> package, Java provides the <c>PrintWriter</c> class for writing human-readable text to files.
+    </p>
+
+    <p>
+      The beauty of <c>PrintWriter</c> is that you already know how to use it! <c>PrintWriter</c> provides the exact same output methods you have been using with <c>System.out</c> since Chapter 2:
+    </p>
+
+    <ul>
+      <li><p><c>print()</c>: Writes text without advancing to a new line.</p></li>
+      <li><p><c>println()</c>: Writes text followed by a newline.</p></li>
+      <li><p><c>printf()</c>: Formats numbers, strings, and aligned columns using format specifiers like <c>%.2f</c> and <c>%-15s</c>.</p></li>
+    </ul>
+
+    <p>
+      To create a <c>PrintWriter</c>, pass a <c>File</c> object (or simply the destination filename as a <c>String</c>) to its constructor:
+    </p>
+
+    <program language="java"><![CDATA[import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+ 
+public class WriteDemo {
+    public static void main(String[] args) throws FileNotFoundException {
+        File outputFile = new File("summary.txt");
+        PrintWriter writer = new PrintWriter(outputFile);
+ 
+        writer.println("=== AQI Report ===");
+        writer.printf("Average AQI: %.2f%n", 75.92307692307692);
+ 
+        writer.close(); // CRUCIAL!
+    }
+}]]></program>
+
+    <p>
+      Just like <c>new Scanner(File)</c>, the <c>new PrintWriter(File)</c> constructor checks whether the file can be created and requires you to declare <c>throws FileNotFoundException</c> on your <c>main</c> method header.
+    </p>
+
+    <p>
+      When you create a <c>PrintWriter</c> this way, Java will create the file if it does not exist. However, if the file already exists in your working directory, Java will erase its contents and overwrite it from scratch.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 4.11.2 The absolute necessity of close()                     -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-11-2-necessity-of-close">
+    <title>The Absolute Necessity of <c>close()</c></title>
+
+    <p>
+      When we read from a file using <c>Scanner</c>, forgetting to call <c>close()</c> is sloppy, but the program will generally still function.
+    </p>
+
+    <p>
+      When writing with a <c>PrintWriter</c>, however, failing to call <c>close()</c> is fatal.
+    </p>
+
+    <p>
+      To maximize performance, Java does not send every character individually to your physical hard drive or SSD the instant you call <c>println()</c>. Instead, Java accumulates your text in a temporary memory buffer in RAM. When you call <c>writer.close()</c>, Java:
+    </p>
+
+    <ol>
+      <li><p><strong>Flushes the buffer:</strong> Forces all remaining text out of RAM and writes it permanently to the disk.</p></li>
+      <li><p><strong>Releases the operating system lock:</strong> Informs the operating system that the file is complete and safe for other programs to open.</p></li>
+    </ol>
+
+    <p>
+      If your program terminates without calling <c>writer.close()</c>, the text waiting in the buffer is simply discarded, leaving you with a completely blank, 0-byte file on your hard drive! Always make sure closing your writer is the final step in your file-writing code.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 4.11.3 A complete example: Generating the interactive AQI map-->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-11-3-example-generating-aqi-map">
+    <title>A Complete Example: Generating the Interactive AQI Map</title>
+
+    <p>
+      Now let's bring together everything from this section and the last<mdash />reading records with <c>Scanner</c>, loop repetition, and writing output with <c>PrintWriter</c><mdash />to generate an interactive, full-color Air Quality Index map of the United States.
+    </p>
+
+    <p>
+      Our program will:
+    </p>
+
+    <ol>
+      <li><p>Read city coordinates and AQI values from <c>aqi_data.txt</c>.</p></li>
+      <li><p>Write a complete, standalone <c>aqi_map.html</c> file using the free, open-source Leaflet.js mapping library.</p></li>
+      <li><p>Color-code each city marker using official EPA air quality standards.</p></li>
+    </ol>
+
+    <p>
+      <xref ref="listing-aqi-map-generator" /> contains the complete solution. Do not be concerned by its length<mdash />much of the code is simply statements that print mark-up to the HTML file.
+    </p>
+
+    <listing xml:id="listing-aqi-map-generator">
+      <title><c>AqiMapGenerator.java</c></title>
+      <program language="java" line-numbers="yes"><![CDATA[import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+ 
+/**
+ * Reads air quality monitoring data from a text file and writes
+ * a complete, interactive HTML map using Leaflet.js and Esri basemaps.
+ */
+public class AqiMapGenerator {
+ 
+    public static void main(String[] args) throws FileNotFoundException {
+           
+        File inputFile;      // The file with city data.
+        File outputFile;     // The HTML map output.
+        Scanner fileScanner;  // For reading city data.
+        PrintWriter htmlWriter;      // For writing HTML file.
+        String name;                // City name.
+        double latitude, longitude;  // City location.
+        int aqi;                    // City air quality.
+        String color, status;        // For writing to HTML.
+        int count = 0;              // Counts the number of records.
+ 
+        // Creates the input and output files.
+        inputFile = new File("aqi_data.txt");
+        outputFile = new File("aqi_map.html");
+ 
+        // Verifies the data file exists before proceeding.
+        if (!inputFile.exists()) {
+            System.out.println("Error: Could not locate " + inputFile.getName());
+        } else {
+ 
+            fileScanner = new Scanner(inputFile);
+            htmlWriter = new PrintWriter(outputFile);
+   
+            // 1. Write the HTML header and Leaflet.js setup
+            htmlWriter.println("<!DOCTYPE html>");
+            htmlWriter.println("<html>");
+            htmlWriter.println("<head>");
+            htmlWriter.println("    <title>US Air Quality Map</title>");
+            htmlWriter.println("    <meta charset=\"UTF-8\">");
+            htmlWriter.println("    <link rel=\"stylesheet\" href=\"https://unpkg.com/leaflet@1.9.4/dist/leaflet.css\" />");
+            htmlWriter.println("    <script src=\"https://unpkg.com/leaflet@1.9.4/dist/leaflet.js\"></script>");
+            htmlWriter.println("    <style>");
+            htmlWriter.println("        body { margin: 0; padding: 0; font-family: sans-serif; }");
+            htmlWriter.println("        #map { height: 100vh; width: 100vw; }");
+            htmlWriter.println("    </style>");
+            htmlWriter.println("</head>");
+            htmlWriter.println("<body>");
+            htmlWriter.println("    <div id=\"map\"></div>");
+            htmlWriter.println("    <script>");
+   
+            // Center map over the contiguous US (zoom level 4)
+            htmlWriter.println("        var map = L.map('map').setView([39.8283, -98.5795], 4);");
+   
+            // Use Esri Light Gray basemap (requires no API key; works on local files)
+            htmlWriter.println("        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {");
+            htmlWriter.println("            attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',");
+            htmlWriter.println("            maxZoom: 16");
+            htmlWriter.println("        }).addTo(map);");
+   
+            // 2. Loop through the file, reading one city record per cycle
+            while (fileScanner.hasNext()) {
+                name = fileScanner.nextLine();
+                latitude = Double.parseDouble(fileScanner.nextLine());
+                longitude = Double.parseDouble(fileScanner.nextLine());
+                aqi = Integer.parseInt(fileScanner.nextLine());
+   
+                // Determines the official EPA color and category
+                if (aqi <= 50) {
+                    color = "#00e400"; // Green
+                    status = "Good";
+                } else if (aqi <= 100) {
+                    color = "#ffff00"; // Yellow
+                    status = "Moderate";
+                } else if (aqi <= 150) {
+                    color = "#ff7e00"; // Orange
+                    status = "Unhealthy for Sensitive Groups";
+                } else if (aqi <= 200) {
+                    color = "#ff0000"; // Red
+                    status = "Unhealthy";
+                } else if (aqi <= 300) {
+                    color = "#8f3f97"; // Purple
+                    status = "Very Unhealthy";
+                } else {
+                    color = "#7e0023"; // Maroon
+                    status = "Hazardous";
+                }
+   
+                // Writes a circle marker with an interactive popup for this city
+                htmlWriter.printf("        L.circle([%.4f, %.4f], {%n", latitude, longitude);
+                htmlWriter.printf("            color: '%s',%n", color);
+                htmlWriter.printf("            fillColor: '%s',%n", color);
+                htmlWriter.printf("            fillOpacity: 0.6,%n");
+                htmlWriter.printf("            radius: 50000%n");
+                htmlWriter.printf("        }).addTo(map).bindPopup('<b>%s</b><br>AQI: %d (%s)');%n", name, aqi, status);
+   
+                count++;
+            } // while (data in file)
+   
+            // 3. Closes the JavaScript and HTML tags
+            htmlWriter.println("    </script>");
+            htmlWriter.println("</body>");
+            htmlWriter.println("</html>");
+   
+            // 4. Closes both file streams
+            fileScanner.close();
+            htmlWriter.close(); // Flushes all data to disk!
+   
+            System.out.printf("Success! Processed %d stations and generated 'aqi_map.html'.%n", count);
+            System.out.println("Double-click 'aqi_map.html' in your project folder to view the map.");
+        } // else (input file exists)
+    } // main
+} // class]]></program>
+    </listing>
+
+    <p>
+      Run <c>AqiMapGenerator</c> in Eclipse. The console prints:
+    </p>
+
+    <console>
+      <output>Success! Processed 13 stations and generated 'aqi_map.html'.
+Double-click 'aqi_map.html' in your project folder to view the map.</output>
+    </console>
+
+    <p>
+      Now, navigate to your Eclipse project folder on your computer and double-click <c>aqi_map.html</c>.
+    </p>
+
+    <figure xml:id="figure-aqi-map">
+      <title>The AQI map</title>
+      <image source="figures/figure_4_3.jpg" width="85%">
+        <shortdescription>Full-screen interactive Leaflet map of the United States with color-coded circles showing air quality levels across cities.</shortdescription>
+        <description>
+          <p>
+            Interactive web browser map of the United States generated by <c>AqiMapGenerator</c>. Cities across the country are plotted with circular markers color-coded according to the EPA Air Quality Index scale (green for Good, yellow for Moderate, orange for Unhealthy for Sensitive Groups, red for Unhealthy, purple for Very Unhealthy, and maroon for Hazardous). A popup over a city displays its name, numeric AQI, and qualitative status category.
+          </p>
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      Your default web browser opens to a full-screen, interactive, drag-and-zoom map of the United States:
+    </p>
+
+    <ul>
+      <li><p>Cities with clean air appear as translucent green bubbles.</p></li>
+      <li><p>Cities with moderate or unhealthy air appear in yellow, orange, and red.</p></li>
+      <li><p>Clicking any circle pops up an information box displaying the city name, exact AQI value, and health category.</p></li>
+    </ul>
+
+    <p>
+      Let’s take a tour of how our Java program assembled this interactive file. On lines 25 and 26, the program creates two <c>File</c> objects: one for the input file (<c>aqi_data.txt</c>), and one for the output file (<c>aqi_map.html</c>). The input file has the same structure as the files read in <xref ref="listing-aqi-file-reader" /> and <xref ref="listing-aqi-file-reader-alt" />, with each record consisting of a name, latitude, longitude, and AQI on separate lines.
+    </p>
+
+    <p>
+      After confirming that the input file exists, we create a <c>Scanner</c> to read from the input file and a <c>PrintWriter</c> to write to the output file.
+    </p>
+
+    <p>
+      Lines 37–60 write the HTML header and the initial setup code for the map. Don’t worry if you have never seen HTML or JavaScript before<mdash />the Java compiler doesn't understand web code either! To Java, these are simply ordinary text strings being written to a file. It is your web browser that interprets that text to draw the map canvas.
+    </p>
+
+    <p>
+      Line 63 is where the core data processing begins, following the exact pattern we used in <xref ref="listing-aqi-file-reader" /> and <xref ref="listing-aqi-file-reader-alt" />. On lines 64–67, our loop reads one complete city record from the input file.
+    </p>
+
+    <p>
+      We then evaluate the AQI value using an <c>if-else if</c> ladder to select the appropriate color code and descriptive health status.
+    </p>
+
+    <p>
+      Once those variables are set, lines 91-96 use <c>printf</c> to inject our Java variables (<c>latitude</c>, <c>longitude</c>, <c>color</c>, <c>name</c>, and <c>aqi</c>) directly into a JavaScript circle command. For every city record in our text file, Java writes one custom circle marker to the webpage.
+    </p>
+
+    <p>
+      After the loop processes the final record, a few closing tags are written to complete the HTML file, and both file streams are closed.
+    </p>
+
+    <p>
+      Now you can see how powerful file processing can be: using only basic loops, variables, and standard Java file I/O, you have built a program that transforms raw text records into a real-world, interactive data visualization dashboard!
+    </p>
+  </subsection>
+</section>

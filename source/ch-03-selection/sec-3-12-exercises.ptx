@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exercises xml:id="sec-3-12-exercises" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Programming Projects</title>
+
+  <introduction>
+    <p>
+      The following programming projects require you to design, implement, and verify complete Java programs in your local integrated development environment (IDE), such as Eclipse. Each project reinforces the core decision-making concepts covered in this chapter: single <c>if</c> guard conditions, two-way <c>if-else</c> alternatives, multi-way <c>if-else if</c> series, discrete <c>switch</c> statements, the inline conditional operator (<c>?:</c>), defensive <c>assert</c> statements, and structured boundary test planning.
+    </p>
+  </introduction>
+
+  <!-- ============================================================ -->
+  <!-- Project 1: Dough Scaler with Hydration Advisor (Enhanced)    -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-dough-scaler-enhanced">
+    <title>Dough Scaler with Hydration Advisor (Enhanced)</title>
+    <statement>
+      <p>
+        In Chapter 2, you calculated baker’s percentages for a fixed sourdough recipe. Professional bakers also adjust their dough handling techniques based on hydration (the percentage of water relative to flour). Higher hydration yields a lighter, more open crumb, but makes the dough much stickier and harder to handle.
+      </p>
+      <p>
+        Write a program that prompts the baker for their desired total dough weight in grams and their desired hydration percentage (e.g., 65.0% to 85.0%).
+      </p>
+      <p>
+        <ol>
+          <li>
+            <p><strong>Input Validation:</strong> Validate that the total dough weight is between 250.0 g and 10,000.0 g inclusive, and that hydration is between 50.0% and 100.0% inclusive. If either is invalid, display <q>Invalid batch parameters.</q> and terminate.</p>
+          </li>
+          <li>
+            <p><strong>Ingredient Calculation:</strong> Standard sourdough uses 2.0% salt and 1.5% yeast relative to flour (100%). Using the total baker’s percentage:</p>
+            <md>\text{Flour Weight} = \frac{\text{Total Batch Weight}}{1.0 + (\text{Hydration} / 100.0) + 0.02 + 0.015}</md>
+            <p>calculate the required weights of flour, water, salt, and yeast.</p>
+          </li>
+          <li>
+            <p><strong>Multi-Way Advisory (<c>if-else if-else</c>):</strong></p>
+            <ul>
+              <li><p>Hydration <m>\le 65.0\%</m>: <q>Handling: Stiff dough; easy to knead and shape by hand.</q></p></li>
+              <li><p>Hydration <m>&gt; 65.0\%</m> and <m>\le 75.0\%</m>: <q>Handling: Standard artisan dough; use light dusting flour and bench scraper.</q></p></li>
+              <li><p>Hydration <m>&gt; 75.0\%</m>: <q>Handling: High-hydration dough; wet dough requiring stretch-and-fold techniques.</q></p></li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Ternary Operator (<c>?:</c>):</strong> Display whether a 40-minute autolyse (flour/water rest) is recommended: recommend it if hydration is above 72.0%, otherwise mark it <q>Optional</q>.</p>
+          </li>
+        </ol>
+      </p>
+      <p>
+        <strong>Testing Requirement:</strong> Before writing code, design a test plan table with at least 6 test cases covering invalid boundaries, the hydration thresholds (65.0% and 75.0%), and representative values.
+      </p>
+      <p>
+        Here is an example of the program running:
+      </p>
+      <console>
+        <input prompt="Enter desired total dough weight (grams): ">1500.0</input>
+        <input prompt="Enter desired hydration percentage (50-100%): ">78.0</input>
+        <output>
+============================================================
+INGREDIENT                 PERCENT    WEIGHT (g)
+============================================================
+Bread Flour                 100.0%        826.4
+Water (Hydration)            78.0%        644.6
+Fine Sea Salt                 2.0%         16.5
+Instant Yeast                 1.5%         12.4
+============================================================
+Total Batch Weight:                      1500.0 g
+Technique Advisory:
+High-hydration dough; wet dough requiring stretch-and-fold techniques.
+Autolyse Rest: Recommended (40 mins)</output>
+      </console>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 2: Tabletop RPG Character Generator & Feat Qualifier -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-rpg-character-enhanced">
+    <title>Tabletop RPG Character Generator &amp; Feat Qualifier</title>
+    <statement>
+      <p>
+        In Chapter 2, you calculated a tabletop character's ability modifier and carrying capacity from their raw Strength score. In this enhanced version, character attributes determine starting equipment and qualification for specialized combat feats.
+      </p>
+      <p>
+        Write a program that prompts the player for their character's codename, a single-character class code, and their raw Strength score (1–20).
+      </p>
+      <p>
+        <ol>
+          <li>
+            <p><strong>Input Validation (<c>if-else</c>):</strong> Verify that the Strength score is within the legal range of 1 to 20 inclusive. If invalid, display <q>Invalid ability score.</q> and exit.</p>
+          </li>
+          <li>
+            <p><strong>Class Selection (<c>switch</c>):</strong> Use a <c>switch</c> statement on the class code character (supporting uppercase and lowercase) to assign the character's primary combat role and starting hit points (HP):</p>
+            <ul>
+              <li><p><c>'F'</c> or <c>'f'</c>: Fighter (12 base HP)</p></li>
+              <li><p><c>'R'</c> or <c>'r'</c>: Rogue (8 base HP)</p></li>
+              <li><p><c>'W'</c> or <c>'w'</c>: Wizard (6 base HP)</p></li>
+              <li><p><c>'C'</c> or <c>'c'</c>: Cleric (10 base HP)</p></li>
+              <li><p><c>default</c>: Display <q>Unknown class code; defaulting to Adventurer.</q> with 8 base HP.</p></li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Feat Qualification (nested <c>if</c> or compound condition):</strong> If the character’s Strength is 13 or higher, check their class: Fighters and Clerics qualify for the <q>Heavy Armor Master</q> feat; Rogues qualify for <q>Athletic Prowess</q>; Wizards receive <q>No specialized feat available.</q></p>
+          </li>
+          <li>
+            <p><strong>Ternary Operator (<c>?:</c>):</strong> Format the ability modifier (<m>(\text{score} - 10) / 2</m>) so positive numbers and zero display with a leading plus sign (e.g., +3 or +0) and negative numbers display normally (e.g., -2).</p>
+          </li>
+        </ol>
+      </p>
+      <p>
+        <strong>Testing Requirement:</strong> Construct a test plan table exercising valid and invalid class codes, the Strength threshold boundary at 13, and positive/negative ability modifiers.
+      </p>
+      <p>
+        Here is an example of the program running:
+      </p>
+      <console>
+        <input prompt="Enter character codename: ">Valeros</input>
+        <input prompt="Enter class code (F=Fighter, R=Rogue, W=Wizard, C=Cleric): ">F</input>
+        <input prompt="Enter Strength score (1-20): ">16</input>
+        <output>
+----------------------------------------
+CHARACTER SUMMARY: VALEROS
+Role              : Fighter
+Base Hit Points   : 12 HP
+Strength Score    : 16
+Ability Modifier  : +3
+Feat Qualified    : Heavy Armor Master
+----------------------------------------</output>
+      </console>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 3: DIY Home Estimator with Budget & Tiered Delivery  -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-diy-estimator-enhanced">
+    <title>DIY Home Estimator with Budget &amp; Tiered Delivery</title>
+    <statement>
+      <p>
+        In Chapter 2, you calculated flooring tiles and paint cans for a rectangular room. Retail supply warehouses offer contractor discount tiers based on order size and waive delivery fees for larger orders.
+      </p>
+      <p>
+        Write a program that prompts for the room’s length, width, and ceiling height in feet (all positive doubles).
+      </p>
+      <p>
+        <ol>
+          <li>
+            <p><strong>Input Validation (<c>if</c> guard):</strong> If any dimension is non-positive (<m>\le 0</m>), display an error message and terminate.</p>
+          </li>
+          <li>
+            <p><strong>Quantity Calculations:</strong> Calculate tile boxes (15 sq ft per box, $1.10 per sq ft / $16.50 per box) and 1-gallon paint cans (350 sq ft per can for 2 coats, $45.00 per can), rounding both up using <c>Math.ceil()</c>. Calculate the materials subtotal.</p>
+          </li>
+          <li>
+            <p><strong>Multi-Way Discount (<c>if-else if-else</c>):</strong></p>
+            <ul>
+              <li><p>Subtotal <m>&lt; \$300.00</m>: 0% discount</p></li>
+              <li><p>Subtotal <m>\$300.00</m> to <m>\$600.00</m>: 5% contractor discount</p></li>
+              <li><p>Subtotal <m>\ge \$600.00</m>: 10% volume discount</p></li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Ternary Delivery Fee (<c>?:</c>):</strong> If the discounted total is $400.00 or more, delivery is free ($0.00). Otherwise, standard delivery is $35.00. Use the ternary operator to choose between free delivery or the standard fee, and use it to print singular/plural units (e.g., <q>1 box</q> vs. <q>5 boxes</q>, <q>1 can</q> vs. <q>3 cans</q>).</p>
+          </li>
+        </ol>
+      </p>
+      <p>
+        <strong>Testing Requirement:</strong> Build a test plan table testing non-positive dimension guards, discount boundary thresholds ($300 and $600), and the delivery fee threshold ($400).
+      </p>
+      <p>
+        Here is an example of the program running:
+      </p>
+      <console>
+        <input prompt="Enter room length (feet) : ">18.0</input>
+        <input prompt="Enter room width (feet)  : ">14.0</input>
+        <input prompt="Enter ceiling height (ft): ">10.0</input>
+        <output>
+=== Renovation Invoice &amp; Materials ===
+Flooring Needed     : 17 boxes ($280.50)
+Paint Needed        : 3 cans ($135.00)
+----------------------------------------
+Materials Subtotal  : $415.50
+Discount Applied    : 5.0% (-$20.78)
+Delivery Fee        : $0.00 (Free over $400)
+----------------------------------------
+Final Total         : $394.72</output>
+      </console>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 4: Solar Shadow & Panel Roof Feasibility             -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-solar-shadow-enhanced">
+    <title>Solar Shadow &amp; Panel Roof Feasibility</title>
+    <statement>
+      <p>
+        In Chapter 2, you computed shadow lengths and panel capture efficiency across three sun elevations. In site planning, an installation must be checked to ensure morning and afternoon shadows do not exceed the available roof setback.
+      </p>
+      <p>
+        Write a program that prompts for the obstruction height in meters and the available roof setback distance in meters.
+      </p>
+      <p>
+        <ol>
+          <li>
+            <p><strong>Input Validation (<c>if-else</c>):</strong> Validate that both the obstruction height and available setback are positive numbers. If not, print an error and exit.</p>
+          </li>
+          <li>
+            <p><strong>Mid-Morning Shadow (25.0° Sun Elevation):</strong> Using <m>\text{Shadow} = \frac{\text{height}}{\tan(\text{radians})}</m>, compute the shadow cast at 25.0° elevation.</p>
+          </li>
+          <li>
+            <p><strong>Capture Efficiency Multi-Way (<c>if-else if-else</c>):</strong></p>
+            <ul>
+              <li><p>Solar Noon efficiency <m>\ge 80.0\%</m>: <q>Excellent solar potential.</q></p></li>
+              <li><p>Solar Noon efficiency <m>60.0\%</m> to <m>80.0\%</m>: <q>Moderate solar potential; seasonal variation expected.</q></p></li>
+              <li><p>Solar Noon efficiency <m>&lt; 60.0\%</m>: <q>Low solar potential; installation not recommended.</q></p></li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Setback Clearance Check &amp; Ternary Status (<c>?:</c>):</strong> Compare the 25.0° shadow length against the available setback. If the shadow exceeds the setback, display an obstruction warning. Use the ternary operator to output a one-line summary flag: <c>isClear ? "APPROVED" : "REVISE PLACEMENT"</c>.</p>
+          </li>
+        </ol>
+      </p>
+      <p>
+        <strong>Testing Requirement:</strong> Design a test plan with boundary tests for setback clearance (shadow exactly equal to setback, just under, and just over).
+      </p>
+      <p>
+        Here is an example of the program running:
+      </p>
+      <console>
+        <input prompt="Enter obstruction height (meters): ">4.0</input>
+        <input prompt="Enter available roof setback (meters): ">10.0</input>
+        <output>
+=== Solar Feasibility Report ===
+Mid-Morning Shadow (25.0°): 8.58 meters
+Available Roof Setback   : 10.00 meters
+Noon Solar Capture       : 90.6% (Solar Noon at 65.0°)
+Efficiency Rating        : Excellent solar potential.
+Setback Clearance        : Clear (Shadow fits within setback)
+Site Status              : APPROVED</output>
+      </console>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 5: Distance to the Earth’s Horizon & Visibility      -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-earth-horizon-enhanced">
+    <title>Distance to the Earth’s Horizon &amp; Visibility Advisory</title>
+    <statement>
+      <p>
+        In Chapter 2, you calculated the geometric distance to the horizon from fixed viewing heights. In marine and aviation navigation, visibility is influenced by atmospheric conditions and platform heights.
+      </p>
+      <p>
+        Write a program that presents the user with a menu of viewing platforms or allows entering a custom height.
+      </p>
+      <p>
+        <ol>
+          <li>
+            <p><strong>Platform Selection (<c>switch</c>):</strong> Prompt the user with a numeric menu:</p>
+            <ul>
+              <li><p>1: Beach Walker (6.0 ft)</p></li>
+              <li><p>2: Lighthouse Gallery (120.0 ft)</p></li>
+              <li><p>3: Skyscraper Deck (1,250.0 ft)</p></li>
+              <li><p>4: Cruising Jet (35,000.0 ft)</p></li>
+              <li><p>5: Custom Height</p></li>
+              <li><p><c>default</c>: Display <q>Invalid platform choice.</q> and terminate.</p></li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Nested Validation for Custom Height:</strong> If the user selects 5, prompt for their custom height in feet. Use a nested <c>if</c> to verify the height is between 1.0 ft and 100,000.0 ft.</p>
+          </li>
+          <li>
+            <p><strong>Horizon Distance Calculation:</strong> Calculate the geometric horizon distance using Earth’s radius <m>R = 20{,}908{,}800\text{ ft}</m>:</p>
+            <md>\text{Statute Miles} = \frac{\sqrt{2Rh + h^2}}{5280}, \quad \text{Nautical Miles} = \frac{\sqrt{2Rh + h^2}}{6076.12}</md>
+          </li>
+          <li>
+            <p><strong>Multi-Way Maritime Horizon Classification (<c>if-else if-else</c>):</strong></p>
+            <ul>
+              <li><p>Horizon <m>&lt; 5.0\text{ nm}</m>: <q>Close horizon; limited radar/visual range.</q></p></li>
+              <li><p>Horizon <m>5.0\text{ nm}</m> to <m>25.0\text{ nm}</m>: <q>Standard coastal horizon.</q></p></li>
+              <li><p>Horizon <m>&gt; 25.0\text{ nm}</m>: <q>Extended long-range horizon.</q></p></li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Ternary Distance Indicator (<c>?:</c>):</strong> Use the ternary operator to display whether the platform offers trans-horizon visibility beyond 20 miles (<q>Yes</q> or <q>No</q>).</p>
+          </li>
+        </ol>
+      </p>
+      <p>
+        <strong>Testing Requirement:</strong> Create a test plan table verifying each menu option (1–5, plus an invalid choice like 6), custom height boundary conditions, and the 5.0 and 25.0 nautical mile thresholds.
+      </p>
+      <p>
+        Here is an example of the program running:
+      </p>
+      <console>
+        <output>Select viewing platform:
+1. Beach Walker (6 ft)
+2. Lighthouse (120 ft)
+3. Skyscraper Deck (1,250 ft)
+4. Cruising Jet (35,000 ft)
+5. Custom Height</output>
+        <input prompt="Choice (1-5): ">2</input>
+        <output>
+=== Horizon Analysis ===
+Platform Height      : 120.0 ft
+Horizon Distance     : 13.42 statute miles
+Nautical Distance    : 11.66 nautical miles
+Maritime Range       : Standard coastal horizon.
+Beyond 20 Miles?     : No</output>
+      </console>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 6: Exoplanet Orbit & Habitable Zone Classifier       -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-exoplanet-orbit-enhanced">
+    <title>Exoplanet Orbit &amp; Habitable Zone Classifier</title>
+    <statement>
+      <p>
+        In Chapter 2, you calculated the orbital period of an exoplanet using Kepler's Third Law (<m>T = \sqrt{a^3 / M}</m>, where <m>a</m> is distance in AU and <m>M</m> is host star mass relative to our Sun).
+      </p>
+      <p>
+        Write a program that evaluates whether an exoplanet resides in its star’s Circumstellar Habitable Zone (the region where liquid surface water could exist).
+      </p>
+      <p>
+        <ol>
+          <li>
+            <p><strong>Input Validation (<c>if-else</c>):</strong> Prompt for the star’s mass (<m>M</m>) and the planet’s semi-major axis (<m>a</m>). If either is non-positive (<m>\le 0</m>), display <q>Stellar parameters must be positive.</q> and exit.</p>
+          </li>
+          <li>
+            <p><strong>Habitable Zone Calculation:</strong> The habitable zone boundaries scale with the square root of stellar luminosity (approximated for main-sequence stars as <m>L \approx M^{3.5}</m>):</p>
+            <ul>
+              <li><p>Inner Boundary (<m>r_{\text{inner}}</m>): <m>0.95 \times \sqrt{M^{3.5}}\text{ AU}</m></p></li>
+              <li><p>Outer Boundary (<m>r_{\text{outer}}</m>): <m>1.40 \times \sqrt{M^{3.5}}\text{ AU}</m></p></li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Multi-Way Habitability Classification (<c>if-else if-else</c>):</strong></p>
+            <ul>
+              <li><p><m>a &lt; r_{\text{inner}}</m>: <q>Inner Zone: Too hot; volatile boil-off and runaway greenhouse effect.</q></p></li>
+              <li><p><m>r_{\text{inner}} \le a \le r_{\text{outer}}</m>: <q>Habitable Zone: Candidate for liquid surface water!</q></p></li>
+              <li><p><m>a &gt; r_{\text{outer}}</m>: <q>Outer Zone: Too cold; global glaciation and frozen surface.</q></p></li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Ternary Comparison with Earth (<c>?:</c>):</strong> Compute the planet's year in Earth days (<m>\text{periodDays} = T \times 365.25</m>). Use the ternary operator to output whether the exoplanet's year is longer or shorter than Earth's: <c>periodDays &gt;= 365.25 ? "Longer than Earth year" : "Shorter than Earth year"</c>.</p>
+          </li>
+        </ol>
+      </p>
+      <p>
+        <strong>Testing Requirement:</strong> Build a test plan table for a Sun-like star (<m>M=1.0</m>) testing the exact inner boundary (0.95 AU), outer boundary (1.40 AU), and representative points inside and outside the zone.
+      </p>
+      <p>
+        Here is an example of the program running:
+      </p>
+      <console>
+        <input prompt="Enter host star mass (solar masses): ">1.0</input>
+        <input prompt="Enter exoplanet orbital distance (AU): ">1.0</input>
+        <output>
+=== Exoplanetary Orbit &amp; Climate Analysis ===
+Orbital Period      : 1.00 Earth years (365.3 days)
+Habitable Zone      : 0.95 AU to 1.40 AU
+Climate Evaluation  : Habitable Zone: Candidate for liquid surface water!
+Year Comparison     : Longer than Earth year</output>
+      </console>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 7: Pilot’s Cloud Base & FAA Flight Category          -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-cloud-base-enhanced">
+    <title>Pilot’s Cloud Base &amp; FAA Flight Category</title>
+    <statement>
+      <p>
+        In Chapter 2, you estimated the dew point and cloud base altitude using surface temperature and relative humidity. In aviation, cloud base height determines whether pilots may fly under visual rules or must rely strictly on instruments.
+      </p>
+      <p>
+        Write a program that prompts for the surface temperature in Fahrenheit and the relative humidity percentage (0–100%).
+      </p>
+      <p>
+        <ol>
+          <li>
+            <p><strong>Input Validation (<c>if</c> guard):</strong> Verify humidity is between 0.0% and 100.0% inclusive, and surface temperature is between <m>-40.0^\circ\text{F}</m> and <m>130.0^\circ\text{F}</m>. If invalid, print <q>Weather inputs out of physical bounds.</q> and exit.</p>
+          </li>
+          <li>
+            <p><strong>Calculations:</strong> Compute the estimated dew point (<m>T_d = T - \left(\frac{100 - RH}{5}\right) \times 1.8</m>), the temperature–dew point spread (<m>\text{Spread} = T - T_d</m>), and cloud base altitude:</p>
+            <md>\text{Cloud Base (feet AGL)} = \left(\frac{\text{Spread}}{4.4}\right) \times 1000</md>
+          </li>
+          <li>
+            <p><strong>FAA Flight Rules Category (<c>if-else if-else</c>):</strong></p>
+            <ul>
+              <li><p>Cloud Base <m>\ge 3{,}000\text{ ft}</m>: <q>VFR (Visual Flight Rules): Normal visual flight permitted.</q></p></li>
+              <li><p>Cloud Base <m>1{,}000\text{ ft}</m> to <m>3{,}000\text{ ft}</m>: <q>MVFR (Marginal VFR): Caution; low ceiling.</q></p></li>
+              <li><p>Cloud Base <m>&lt; 1{,}000\text{ ft}</m>: <q>IFR (Instrument Flight Rules): Ceiling below 1,000 ft; instrument rating required.</q></p></li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Ternary Ground Fog / Frost Warning (<c>?:</c>):</strong> If the spread (<m>T - T_d</m>) is <m>4.0^\circ\text{F}</m> or less, set an advisory string to <q>WARNING: High fog/mist probability.</q> otherwise set it to <q>Normal visibility.</q> using the ternary operator.</p>
+          </li>
+        </ol>
+      </p>
+      <p>
+        <strong>Testing Requirement:</strong> Design a test plan table testing the flight category boundaries at exactly 1,000 ft and 3,000 ft, along with the fog alert threshold (<m>4.0^\circ\text{F}</m> spread).
+      </p>
+      <p>
+        Here is an example of the program running:
+      </p>
+      <console>
+        <input prompt="Enter surface temperature (deg F): ">68.0</input>
+        <input prompt="Enter relative humidity (0-100%): ">88.0</input>
+        <output>
+=== Pre-Flight Weather &amp; Ceiling Analysis ===
+Estimated Dew Point : 63.7°F
+Temp / Dewpoint Gap : 4.3°F
+Estimated Cloud Base: 982 feet AGL
+Flight Category     : IFR (Instrument Flight Rules): Ceiling below 1,000 ft; instrument rating required.
+Ground Visibility   : Normal visibility.</output>
+      </console>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 8: Thunderstorm Distance & 30/30 Lightning Safety    -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-thunderstorm-enhanced">
+    <title>Thunderstorm Distance &amp; 30/30 Lightning Safety Warning</title>
+    <statement>
+      <p>
+        In Chapter 2, you calculated the distance of a lightning strike based on the air temperature in Celsius and the number of seconds until thunder is heard. The National Weather Service promotes the 30/30 Rule: seek shelter immediately if the flash-to-bang time indicates lightning is within 6 miles.
+      </p>
+      <p>
+        Write a program that prompts the user for the ambient air temperature in Celsius and the elapsed time in seconds between seeing lightning and hearing thunder.
+      </p>
+      <p>
+        <ol>
+          <li>
+            <p><strong>Input Validation (<c>if-else</c>):</strong> Check that the air temperature is between <m>-50.0^\circ\text{C}</m> and <m>60.0^\circ\text{C}</m> inclusive, and that seconds is non-negative (<m>\text{seconds} \ge 0</m>). If invalid, display <q>Invalid sensor inputs.</q> and exit.</p>
+          </li>
+          <li>
+            <p><strong>Calculations:</strong> Compute speed of sound (<m>v = 331.3 \times \sqrt{1 + T / 273.15}\text{ m/s}</m>), distance in meters (<m>d = v \times \text{seconds}</m>), and distance in miles (<m>d / 1609.34</m>).</p>
+          </li>
+          <li>
+            <p><strong>Internal State Assertion (<c>assert</c>):</strong> Insert an assertion verifying that the calculated speed of sound is positive (<c>assert soundSpeed &gt; 0 : "Calculated non-positive sound speed";</c>).</p>
+          </li>
+          <li>
+            <p><strong>Multi-Way Safety Zone (<c>if-else if-else</c>):</strong></p>
+            <ul>
+              <li><p>Distance <m>\le 1.0\text{ mile}</m>: <q>IMMINENT DANGER: Strike is within 1 mile! Seek fully enclosed indoor shelter immediately.</q></p></li>
+              <li><p>Distance <m>&gt; 1.0\text{ mile}</m> and <m>\le 6.0\text{ miles}</m>: <q>WARNING: Strike is within 6 miles (30/30 rule). Suspend outdoor activities.</q></p></li>
+              <li><p>Distance <m>&gt; 6.0\text{ miles}</m>: <q>ADVISORY: Distant storm; monitor weather closely.</q></p></li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Ternary Singular/Plural Formatting (<c>?:</c>):</strong> Display the elapsed seconds using the ternary operator so 1.0 second prints as <q>1.0 second</q> while other values print as <q>X.X seconds</q>.</p>
+          </li>
+        </ol>
+      </p>
+      <p>
+        <strong>Testing Requirement:</strong> Create a test plan table with test cases verifying the 1.0-mile boundary, the 6.0-mile boundary, zero seconds (an immediate strike), and negative inputs.
+      </p>
+      <p>
+        Here is an example of the program running:
+      </p>
+      <console>
+        <input prompt="Enter air temperature (Celsius): ">22.0</input>
+        <input prompt="Enter seconds between flash and thunder: ">4.5</input>
+        <output>
+=== Thunderstorm Proximity &amp; Safety Report ===
+Speed of Sound      : 344.6 m/s
+Observed Delay      : 4.5 seconds
+Strike Distance     : 1,550.8 meters (0.96 miles)
+Safety Status       : IMMINENT DANGER: Strike is within 1 mile! Seek fully enclosed indoor shelter immediately.</output>
+      </console>
+    </statement>
+  </exercise>
+</exercises>

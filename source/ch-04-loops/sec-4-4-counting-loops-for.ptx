@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-4-4-counting-loops-for" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Counting Loops: <c>for</c></title>
+
+  <introduction>
+    <p>
+      The loops that we’ve learned so far<mdash /><c>while</c> and <c>do-while</c><mdash />are conditional loops. They execute while a condition is <c>true</c>. Conditional loops are very powerful: in fact, you can solve any computational repetition problem using just a <c>while</c> loop.
+    </p>
+
+    <p>
+      However, a conditional loop requires at least three lines of code, scattered throughout the program: an initializer before the loop, the test in the header, and an updater somewhere within the loop body. A complex and lengthy loop can include more than one initializer and updater. This can make reading, understanding, and modifying conditional loops difficult.
+    </p>
+
+    <p>
+      Most programming languages therefore provide a specialized loop structure for counting: the <c>for</c> loop (named after the keyword <c>for</c>). Programmers use a <c>for</c> loop whenever they know in advance how many times an action should repeat. By consolidating all three control elements<mdash />initialize, test, and update<mdash />into a single header line, the <c>for</c> loop makes counting loops much safer to write and easier to read.
+    </p>
+  </introduction>
+
+  <!-- ============================================================ -->
+  <!-- 4.4.1 for loop syntax and control flow                       -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-4-1-for-syntax-control-flow">
+    <title><c>for</c> Loop Syntax and Control Flow</title>
+
+    <p>
+      Let’s consider a version of the loop from <xref ref="listing-countdown" /> that counts from 0 to 4 (rather than counting down from 5 to 1):
+    </p>
+
+    <program language="java"><![CDATA[seconds = 0;
+while (seconds < 5) {
+    System.out.println(seconds + "...");
+    seconds++;
+}]]></program>
+
+    <p>
+      In this loop, we initialize <c>seconds</c> to 0, we test that <c>seconds</c> is less than 5 in the loop header, and we increment <c>seconds</c> inside the loop body. The variable <c>seconds</c> is a stepper, as we identified in <xref ref="subsec-4-3-1-stepper-role" />: it takes on a predictable sequence of values. In this version of the program, it takes on the values 0, 1, 2, 3, 4, 5. (Note that although 5 is never printed, <c>seconds</c> is incremented to 5 on the last time the loop body executes. The test in the header is then <c>false</c> and the loop is never re-entered.)
+    </p>
+
+    <p>
+      A loop that is controlled by a stepper is an excellent candidate for a counting loop. Here is the same code, rewritten as a <c>for</c> loop:
+    </p>
+
+    <program language="java"><![CDATA[for (seconds = 0; seconds < 5; seconds++) {
+    System.out.println(seconds + "...");
+}]]></program>
+
+    <p>
+      Notice that the initializer, test, and updater are all on the first line of the loop! There is no need to hunt for the initializer in the code before the loop or the updater in the loop body. A person reading a <c>for</c> loop can see all of the loop control information at the top of the loop.
+    </p>
+
+    <p>
+      Let’s break down the syntax. A <c>for</c> loop consists of the keyword <c>for</c>, followed by the loop control information in parentheses, followed by the loop body<mdash />as with an <c>if</c> statement and a <c>while</c> loop, this can be a single statement but is more commonly a block statement enclosed in curly braces.
+    </p>
+
+    <p>
+      The loop control information consists of the initializer, test, and updater separated by semicolons. In our example, this is the exact same code from the <c>while</c> loop, simply collected into the <c>for</c> loop header and separated by semicolons.
+    </p>
+
+    <p>
+      When the <c>for</c> loop header is reached sequentially (from the line of code above the loop):
+    </p>
+
+    <ol>
+      <li>
+        <p><strong>The initializer executes.</strong> This executes only once when the loop is reached sequentially from the line above.</p>
+      </li>
+      <li>
+        <p><strong>The test executes.</strong> If it’s <c>false</c>, the loop terminates.</p>
+      </li>
+      <li>
+        <p><strong>If the test was <c>true</c>, the loop body executes.</strong></p>
+      </li>
+      <li>
+        <p><strong>Control returns to the loop header, where the updater executes.</strong></p>
+      </li>
+      <li>
+        <p><strong>Return to Step 2 (the test),</strong> and continue following these steps until the test is <c>false</c>.</p>
+      </li>
+    </ol>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 4.4.2 Converting between while and for                       -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-4-2-converting-while-for">
+    <title>Converting Between <c>while</c> and <c>for</c></title>
+
+    <p>
+      A <c>for</c> loop is equivalent to a <c>while</c> loop that has an initializer immediately before the loop header and an updater that is the last statement in the loop. The examples in <xref ref="table-equivalent-for-while" /> show three equivalent <c>for</c> and <c>while</c> loops, side-by-side.
+    </p>
+
+    <table xml:id="table-equivalent-for-while">
+      <title>Equivalent <c>for</c> and <c>while</c> loops</title>
+      <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+        <col width="50%"/>
+        <col width="50%"/>
+        <row header="yes">
+          <cell><strong><c>while</c> loop</strong></cell>
+          <cell><strong><c>for</c> loop</strong></cell>
+        </row>
+        <row>
+          <cell>
+            <program language="java"><![CDATA[seconds = 5;
+while (seconds > 0) {
+    System.out.println(seconds + "...");
+    seconds--;
+}]]></program>
+          </cell>
+          <cell>
+            <program language="java"><![CDATA[for (seconds = 5; seconds > 0; seconds--) {
+    System.out.println(seconds + "...");
+}]]></program>
+          </cell>
+        </row>
+        <row>
+          <cell>
+            <program language="java"><![CDATA[int i = 0;
+while (i < 10) {
+    System.out.println("Hello world!");
+    i += 1;
+}]]></program>
+          </cell>
+          <cell>
+            <program language="java"><![CDATA[for (int i = 0; i < 10; i += 1) {
+    System.out.println("Hello world!");
+}]]></program>
+          </cell>
+        </row>
+        <row>
+          <cell>
+            <program language="java"><![CDATA[int powerOfTwo = 1;
+while (powerOfTwo <= 16) {
+    System.out.println(powerOfTwo);
+    powerOfTwo *= 2;
+}]]></program>
+          </cell>
+          <cell>
+            <program language="java"><![CDATA[for (int powerOfTwo = 1; powerOfTwo <= 16; powerOfTwo *= 2) {
+    System.out.println(powerOfTwo);
+}]]></program>
+          </cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      In these loops, you can see that the updater can be more than a simple increment (it can be a decrement, an augmented assignment, a multiplication, or any other statement that modifies the value of the loop control variable). You can also declare the loop control variable in the <c>for</c> loop header. When you do, the variable has scope only for the header and body of the <c>for</c> loop.
+    </p>
+
+    <p>
+      You can also see that converting a <c>while</c> loop to a <c>for</c> loop is very straightforward when the <c>while</c> loop is controlled by stepper, and has a single initializer immediately before the loop header and a single updater at the end of the loop. If your <c>while</c> loop is structured differently, it may not be worth converting it to a <c>for</c>, because it might require significant modifications to the code.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 4.4.3 Anatomy of the for Loop Header                         -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-4-3-anatomy-for-header">
+    <title>Anatomy of the <c>for</c> Loop Header</title>
+
+    <p>
+      The <c>for</c> loop header consists of three sections separated by semicolons:
+    </p>
+
+    <program language="java"><![CDATA[for (initialization; condition; update) {
+    // Loop body
+}]]></program>
+
+    <p>
+      While most <c>for</c> loops manage a single counting variable, Java’s header syntax is remarkably flexible:
+    </p>
+
+    <p>
+      You can initialize and update more than one variable in the header by separating them with commas. Semicolons still separate the three main sections, while commas separate multiple actions within Section 1 or Section 3:
+    </p>
+
+    <program language="java"><![CDATA[// Two variables moving in opposite directions:
+for (int i = 0, j = 10; i < j; i++, j--) {
+    System.out.println("i = " + i + ", j = " + j);
+}]]></program>
+
+    <p>
+      If you declare variables in Section 1, they must all be of the same data type (e.g., <c>int i = 0, j = 10</c>). You cannot declare an <c>int</c> and a <c>double</c> in the same <c>for</c> header.
+    </p>
+
+    <p>
+      All three parts of the header are technically optional, though the semicolons must remain:
+    </p>
+
+    <ul>
+      <li>
+        <p><strong>Omitting the Initializer:</strong> If a variable is already initialized before the loop, you can leave Section 1 blank:</p>
+        <program language="java"><![CDATA[int i = 0;
+for (; i < 10; i++) { ... }]]></program>
+      </li>
+      <li>
+        <p><strong>Omitting the Update:</strong> If the update happens inside the body, Section 3 can be blank (though in that case, a <c>while</c> loop is usually more appropriate).</p>
+      </li>
+      <li>
+        <p><strong>The Infinite Loop:</strong> Leaving all three sections blank produces a loop that never terminates:</p>
+        <program language="java"><![CDATA[for (;;) {
+    // Runs forever unless a break or return occurs inside
+}]]></program>
+      </li>
+    </ul>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 4.4.4 Designing for Loops                                    -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-4-4-designing-for-loops">
+    <title>Designing <c>for</c> Loops</title>
+
+    <p>
+      When designing a <c>for</c> loop, following a few standard engineering conventions will prevent bugs and make your code easy to maintain.
+    </p>
+
+    <paragraphs>
+      <title>Guideline #1: Never Modify the Loop Control Variable Inside the Body</title>
+      <p>
+        The primary virtue of a <c>for</c> loop is that its entire repetition logic is visible at a glance in the header. Modifying the loop control variable inside the body defeats this purpose:
+      </p>
+
+      <program language="java"><![CDATA[// BAD PRACTICE: Modifying the counter inside the body
+for (int i = 0; i < 10; i++) {
+    System.out.println(i);
+    i += 2; // Confusing! The header says i++, but the body leaps ahead.
+}]]></program>
+
+      <p>
+        If your loop needs to skip values or jump unpredictably based on calculations inside the body, use a <c>while</c> loop instead. Reserve the <c>for</c> loop for predictable progressions.
+      </p>
+    </paragraphs>
+
+    <paragraphs>
+      <title>Guideline #2: Beware the Off-by-One Error: <c>&lt;</c> vs. <c>&lt;=</c></title>
+      <p>
+        The most notorious bug in loop design is the off-by-one error<mdash />executing a loop one time too many or one time too few.
+      </p>
+
+      <p>
+        To repeat an action <m>N</m> times, there are two common patterns:
+      </p>
+
+      <ul>
+        <li>
+          <p><strong>The 0-Based Standard (Idiomatic Java<mdash />what programmers expect to see):</strong></p>
+          <program language="java"><![CDATA[for (int i = 0; i < N; i++) // Runs exactly N times (0 through N - 1)]]></program>
+        </li>
+        <li>
+          <p><strong>The 1-Based Alternative:</strong></p>
+          <program language="java"><![CDATA[for (int i = 1; i <= N; i++) // Runs exactly N times (1 through N)]]></program>
+        </li>
+      </ul>
+
+      <p>
+        Mixing these patterns<mdash />such as starting at 0 and using <c>&lt;=</c><mdash />causes the loop to run <m>N + 1</m> times:
+      </p>
+
+      <program language="java"><![CDATA[// BUG: Runs 11 times (0 through 10), not 10!
+for (int i = 0; i <= 10; i++)]]></program>
+
+      <p>
+        In Java, always prefer the 0-based pattern (<c>i = 0; i &lt; N; i++</c>). As you will see in Chapter 5 with strings and Chapter 6 with arrays, indexing in Java always starts at 0 and stops just before length (<m>\text{length} - 1</m>). Developing the habit of writing <c>i = 0; i &lt; N</c> now will pay dividends later.
+      </p>
+    </paragraphs>
+
+    <paragraphs>
+      <title>Guideline #3: When counting down, reverse the operator</title>
+      <p>
+        When counting down, beginners often forget that reversing the direction of the stepper requires reversing the relational operator:
+      </p>
+
+      <ul>
+        <li><p>Counting up uses less-than: <c>i = 0; i &lt; 5; i++</c></p></li>
+        <li><p>Counting down uses greater-than: <c>i = 5; i &gt; 0; i--</c></p></li>
+      </ul>
+
+      <p>
+        Writing <c>for (int i = 5; i &lt; 0; i--)</c> is a common mistake: because <c>5 &lt; 0</c> is <c>false</c> immediately, the loop never runs at all. Drawing your loop control variable on a number line can sometimes help you get the direction of the test correct.
+      </p>
+    </paragraphs>
+
+    <paragraphs>
+      <title>Guideline #4: Never Use Floating-Point Numbers as Loop Counters</title>
+      <p>
+        In Section 2.4.5, we learned that binary cannot represent many decimal fractions (like 0.1) exactly. Because of tiny roundoff discrepancies, you should never use a <c>float</c> or <c>double</c> to control a loop:
+      </p>
+
+      <program language="java"><![CDATA[// DANGEROUS: Do not use floating-point loop counters!
+for (double x = 0.0; x <= 1.0; x += 0.1) {
+    System.out.println(x);
+}]]></program>
+
+      <p>
+        Because of binary precision limits, <c>x</c> might end up as <c>0.9999999999999999</c> instead of <c>1.0</c> after repeated additions, causing the loop to run one more (or one fewer) time than you intended. Worse, if you write your loop condition as <c>x != 1.0</c> hoping to stop when <c>x</c> reaches 1, <c>x</c> will skip right past 1.0, meaning <c>x != 1.0</c> remains <c>true</c> forever and your program enters an infinite loop!
+      </p>
+
+      <p>
+        The solution is to always control the loop with an integer, and compute the floating-point value inside the body:
+      </p>
+
+      <program language="java"><![CDATA[for (int step = 0; step <= 10; step++) {
+    double x = step * 0.1; // Safe and predictable!
+    System.out.println(x);
+}]]></program>
+    </paragraphs>
+  </subsection>
+</section>

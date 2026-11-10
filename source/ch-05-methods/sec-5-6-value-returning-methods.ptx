@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-5-6-value-returning-methods" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Value-Returning Methods</title>
+
+  <introduction>
+    <p>
+      Many of the methods that you have used from the Java libraries evaluate to a value, for example <c>Math.sqrt()</c>, <c>Double.parseDouble()</c>, and the <c>Scanner</c> <c>next</c> methods. You typically put these method calls on the right side of an assignment operation, as arguments to other method calls, or you use them in a more complex expression.
+    </p>
+  </introduction>
+
+  <!-- ============================================================ -->
+  <!-- 5.6.1 Anatomy of a value-returning method                    -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-6-1-anatomy-value-returning-method">
+    <title>Anatomy of a Value-Returning Method</title>
+
+    <p>
+      It is very common for the methods we write as part of our programs to return values as well. <xref ref="listing-aq-summary-method" /> is a new version of Listing 3.7 in which we’ve factored the code that produces an air quality recommendation into a value-returning method.
+    </p>
+
+    <listing xml:id="listing-aq-summary-method">
+      <caption>AqSummaryMethod.java</caption>
+      <program language="java">
+<![CDATA[import java.util.Scanner;
+
+/**
+ * Displays one of three air quality messages given a valid AQI in the range of 0-500,
+ * or displays an error message if the AQI is outside the valid range.
+ */
+public class AqSummaryMethod {
+
+    public static void main(String[] args) {
+
+        Scanner stdin;         // To obtain the AQI
+        int aqi;               // Air Quality Index (from user)
+        String recommendation; // Based on AQI categories.
+
+        // Obtain the AQI from the user.
+        stdin = new Scanner(System.in);
+        System.out.print("Please enter the AQI: ");
+        aqi = stdin.nextInt();
+        stdin.close();
+
+        // Validate that the AQI falls between 0 and 500 inclusive. 
+        // If not, print a message.
+        if (aqi < 0 || aqi > 500) {
+            System.out.println("Invalid reading.");
+        } else {
+            // Print a summary of AQI with recommendations.
+            recommendation = getRecommendation(aqi);
+            System.out.println(recommendation);
+        } // else (valid input)
+    } // main
+
+    public static String getRecommendation(int aqi) {
+        String recommendation;
+        if (aqi <= 50) {
+            recommendation = "Healthy air quality; ";
+            recommendation += "safe to engage in outdoor activities.";
+        } else if (aqi <= 150) {
+            recommendation = "Moderate air quality; ";
+            recommendation += "sensitive groups limit outdoor activities.";
+        } else {
+            recommendation = "Unhealthy air quality; ";
+            recommendation += "limit outdoor activities.";
+        }
+        return recommendation;
+    } // getRecommendation
+} // class]]>
+      </program>
+    </listing>
+
+    <p>
+      The <c>getRecommendation</c> method is defined on lines 32<ndash />44. There are two important differences from the methods that we’ve written so far:
+    </p>
+
+    <ol>
+      <li>
+        <p>
+          In place of <c>void</c> in the method header, we have <c>String</c>. <c>String</c> is the type of value that is returned by this method.
+        </p>
+      </li>
+      <li>
+        <p>
+          Within the method (on line 44), we have a <term>return statement</term>: the keyword <c>return</c> followed by an expression of type <c>String</c>. The expression we put after <c>return</c> must match the type of the method as declared in the method header (or be assignment-compatible through a widening conversion, such as returning an <c>int</c> value from a method declared with a <c>double</c> return type).
+        </p>
+      </li>
+    </ol>
+
+    <p>
+      Let’s see how this works, first, from the perspective of the <c>main</c> method. The <c>main</c> method obtains an AQI reading from the user on line 18, checks that it’s within the valid range of <m>0</m><ndash /><m>500</m> on line 23, and if it is, it invokes <c>getRecommendation</c>, passing in the AQI reading. <c>getRecommendation</c> sends back a <c>String</c> recommendation, which the <c>main</c> method stores in the variable <c>recommendation</c> and then prints.
+    </p>
+
+    <p>
+      This is just like using any value-returning method. <c>getRecommendation</c> evaluates to a <c>String</c>, so we can place a call to <c>getRecommendation</c> anywhere we can place a <c>String</c>. In fact, lines 27 and 28 could be compressed into one statement in which we pass the <c>String</c> result of <c>getRecommendation</c> directly to the <c>println</c> statement:
+    </p>
+
+    <program language="java">
+<![CDATA[System.out.println(getRecommendation(aqi));]]>
+    </program>
+
+    <p>
+      Now let’s examine how <c>getRecommendation</c> functions when it is called. Within <c>getRecommendation</c>, we have the parameter variable <c>aqi</c>, which will be initialized to the value passed in: the value of the variable <c>aqi</c> that is local to <c>main</c>. <c>getRecommendation</c> then uses an <c>if-else if</c> statement to store a value in the variable <c>recommendation</c>, which is local to the <c>getRecommendation</c> method. Execution then reaches the return statement on line 44:
+    </p>
+
+    <program language="java">
+<![CDATA[return recommendation;]]>
+    </program>
+
+    <p>
+      This statement does two things:
+    </p>
+
+    <ol>
+      <li>
+        <p>It ends execution of method <c>getRecommendation</c>. Control immediately returns to where the method was called, on line 27.</p>
+      </li>
+      <li>
+        <p>It places the return value (the value stored in the local variable <c>recommendation</c>) in a location in memory where it can immediately be handed back to <c>main</c> when <c>getRecommendation</c>’s frame is popped from the call stack.</p>
+      </li>
+    </ol>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 5.6.2 Designing and writing methods                          -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-6-2-designing-writing-methods">
+    <title>Designing and Writing Methods</title>
+
+    <introduction>
+      <p>
+        At the start of the chapter, we described a method as a black box, composed of the interface: what data goes in (parameters) and what result comes out (the return value), and the implementation: the internal statements that carry out the work. We’ve now seen that the mechanism for output is the return statement.
+      </p>
+    </introduction>
+
+    <!-- 5.6.2.1 Give each method a single purpose -->
+    <subsubsection xml:id="subsubsec-5-6-2-1-single-purpose">
+      <title>Give Each Method a Single Purpose</title>
+
+      <p>
+        When you break a program into methods, you should be able to state what each method does in a single, simple sentence. Keeping your methods focused on a single purpose will make your programs easier to write, test, and debug.
+      </p>
+
+      <p>
+        In our AQI example, we proposed three methods, all helper methods to <c>main</c>: <c>isValidAqi</c>, <c>getGuidance</c>, and <c>formatTableRow</c>. Each has a single purpose with a single output.
+      </p>
+
+      <p>
+        Suppose we had proposed <c>validateAqiAndGetGuidance</c>? Then we have a method with two jobs<mdash />validating the AQI reading and producing the guidance text. What happens if the AQI is invalid<mdash />how does <c>main</c> know? If we want <c>main</c> to be able to respond to an invalid AQI, we must come up with a solution such as either returning a guidance <c>String</c> or returning <c>"invalid"</c> from the method. The return value now does double-duty: it’s either a message that AQI was invalid or it’s air quality guidance. If we break that functionality into two methods, each method produces one meaningful result, and we can make the choice in the main program not to get guidance for a bad AQI.
+      </p>
+    </subsubsection>
+
+    <!-- 5.6.2.2 Put return last -->
+    <subsubsection xml:id="subsubsec-5-6-2-2-put-return-last">
+      <title>Put <c>return</c> Last</title>
+
+      <p>
+        In this chapter we recommend writing methods with only one return statement, as the last statement in the method. There are several reasons for this recommendation.
+      </p>
+
+      <p>
+        Beginning programmers sometimes put code after a return statement that can never be reached. Method execution ends at a return statement. You can still write code after a return statement, but if it immediately follows a return statement, it can never be reached:
+      </p>
+
+      <program language="java">
+<![CDATA[return total;
+System.out.println("The total is " + total + "."); // ERROR! Unreachable code]]>
+      </program>
+
+      <p>
+        In this example, the print statement will never execute, because the method ends at the return statement. The compiler will flag this with an <q>Unreachable code</q> error. If you get in the habit of designing your methods with the return statement at the end, you won’t have to refactor for this mistake.
+      </p>
+
+      <p>
+        However, return statements can also be embedded within control structures, such as <c>while</c> loops and selection statements. Multiple returns can be part of a correct solution, but still make code difficult to read. If they’re deeply embedded, a person scanning through the code might miss the return statement and believe code is executing that isn’t reached because of a conditional return.
+      </p>
+    </subsubsection>
+
+    <!-- 5.6.2.3 Beware the uninitialized variable -->
+    <subsubsection xml:id="subsubsec-5-6-2-3-uninitialized-variable">
+      <title>Beware the Uninitialized Variable</title>
+
+      <p>
+        There are more insidious bugs possible. Take a look at this method:
+      </p>
+
+      <program language="java">
+<![CDATA[public static char getGrade(double average) {
+    char result;
+    if (average > 90) {
+        result = 'A';
+    } else if (average < 90 && average > 80) {
+        result = 'B';
+    } else if (average < 80 && average > 70) {
+        result = 'C';
+    } else if (average < 70 && average > 60) {
+        result = 'D';
+    } else if (average < 60) {
+        result = 'F';
+    }
+    return result;
+}]]>
+      </program>
+
+      <p>
+        At first glance, this might appear to work correctly. But the compiler flags this with the error <q>The local variable result may not have been initialized.</q> It is tempting to <q>initialize</q> <c>result</c> by giving it a value where it’s declared. Changing the final <c>else if</c> to an <c>else</c> also quiets the compiler. But neither of these solutions solves the internal logic error. (Did you spot it? What grade is assigned if the average is exactly 60, 70, 80, or 90?)
+      </p>
+
+      <p>
+        If you are conditionally assigning a value to be returned and you get this error, make sure your logic is correct. If it is, and you still have the error, you still may need to add an <c>else</c> to an <c>if-else if</c> statement, as the compiler is smart enough to recognize that without an <c>else</c>, all cases may not be handled, but not smart enough to check through all of the logic and confirm that they are. Or you can give the variable a default initial value. Just make sure your solution makes sense for the problem you’re solving!
+      </p>
+    </subsubsection>
+
+    <!-- 5.6.2.4 Return an expression -->
+    <subsubsection xml:id="subsubsec-5-6-2-4-return-expression">
+      <title>Return an Expression</title>
+
+      <p>
+        A value-returning method doesn’t have to return a variable. It can return any expression of the correct data type. An expression, remember, can be as simple as a literal value, a variable, or it can be composed of a combination of literals, variables, method calls, and operations.
+      </p>
+
+      <p>
+        For example, we might write the <c>formatTableRow</c> method as:
+      </p>
+
+      <program language="java">
+<![CDATA[public static String formatTableRow(String name, int aqi, String guidance) {
+    return String.format("%-20s%-5d%s", name, aqi, guidance);
+}]]>
+      </program>
+
+      <p>
+        Here the result of the <c>String.format</c> method, a <c>String</c>, is being returned directly from the <c>formatTableRow</c> method. We could also store the result of <c>String.format</c> in a <c>String</c> variable and then return that <c>String</c>. The advantage to returning a variable from a method is you can examine it when you run your program in the debugger. Many programmers, however, will take the shortcut of returning an expression from a method.
+      </p>
+    </subsubsection>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 5.6.3 Effectively using value-returning methods              -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-6-3-using-value-returning-methods">
+    <title>Effectively Using Value-Returning Methods</title>
+
+    <p>
+      When a value-returning method finishes executing, its call expression evaluates to a single value of its declared return type. Because a method call is an expression, you are not limited to storing its result in a variable on its own dedicated line. You can place a method call anywhere an expression of that data type is legally permitted.
+    </p>
+
+    <p>
+      Combining method calls directly within larger expressions is called <term>expression composition</term>. We can compose method calls in three primary ways:
+    </p>
+
+    <paragraphs>
+      <title>1. Inside Arithmetic Expressions</title>
+      <p>
+        If a method returns a numeric type (<c>int</c> or <c>double</c>), that method call can participate in arithmetic formulas alongside literals, variables, and operators.
+      </p>
+      <p>
+        For example, imagine two helper methods: <c>calculateSubtotal</c>, which takes a quantity and an item price and returns a <c>double</c>, and <c>calculateShipping</c>, which takes a package weight and returns a <c>double</c>. Rather than creating three separate lines of code with intermediate variables, you can calculate the final order total in a single statement:
+      </p>
+      <program language="java">
+<![CDATA[double finalTotal = calculateSubtotal(itemCount, unitPrice) + calculateShipping(weight);]]>
+      </program>
+      <p>
+        When Java evaluates this assignment statement, it executes <c>calculateSubtotal</c> to obtain its numeric result, executes <c>calculateShipping</c> to obtain its numeric result, adds the two <c>double</c> values together, and stores the sum in <c>finalTotal</c>.
+      </p>
+    </paragraphs>
+
+    <paragraphs>
+      <title>2. Inside String Concatenation Expressions</title>
+      <p>
+        Because our <c>getRecommendation</c> method returns a <c>String</c> object, we can concatenate its result directly with other text using the <c>+</c> operator:
+      </p>
+      <program language="java">
+<![CDATA[String summary = "Report for " + cityName + ": " + getRecommendation(aqi);]]>
+      </program>
+      <p>
+        Java calls <c>getRecommendation(aqi)</c>, waits for the resulting string (such as <c>"Healthy air quality; safe to engage in outdoor activities."</c>), and glues the three pieces together into one coherent sentence.
+      </p>
+    </paragraphs>
+
+    <paragraphs>
+      <title>3. As Arguments to Other Methods (Nesting Calls)</title>
+      <p>
+        You can pass the result of one method call directly as an argument into another method. We saw this earlier when we bypassed the local <c>recommendation</c> variable and passed <c>getRecommendation</c> straight into <c>println</c>:
+      </p>
+      <program language="java">
+<![CDATA[System.out.println(getRecommendation(aqi));]]>
+      </program>
+      <p>
+        We can also chain calls to the built-in string methods we learned in Chapter 2. Because <c>getRecommendation(aqi)</c> evaluates to a <c>String</c>, you can immediately invoke string methods on that result:
+      </p>
+      <program language="java">
+<![CDATA[// Convert the resulting recommendation to all uppercase letters:
+System.out.println(getRecommendation(aqi).toUpperCase());
+
+// Measure the character length of the returned message:
+int messageLength = getRecommendation(aqi).length();]]>
+      </program>
+    </paragraphs>
+
+    <paragraphs>
+      <title>Intermediate Variables vs. Direct Composition</title>
+      <p>
+        Should you always compose your method calls into compact expressions? Not necessarily.
+      </p>
+      <p>
+        Direct composition eliminates the clutter of temporary variables when a value is only needed once. However, breaking an operation into separate steps with well-named intermediate variables makes complex logic easier to read and allows you to inspect each intermediate calculation when stepping through your code in an IDE debugger. A good rule of thumb is to compose method calls when the resulting statement remains short and easy to read, but introduce an intermediate variable whenever a line of code becomes dense or difficult to follow.
+      </p>
+    </paragraphs>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 5.6.4 Common Pitfall: The Ignored Return Value               -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-6-4-ignored-return-value">
+    <title>Common Pitfall: The Ignored Return Value</title>
+
+    <p>
+      Because you spent the earlier sections of this chapter writing <c>void</c> methods, you grew accustomed to calling methods as standalone statements:
+    </p>
+
+    <program language="java">
+<![CDATA[greetUser("Maya", true); // Correct for a void method]]>
+    </program>
+
+    <p>
+      A common mistake when transitioning to value-returning methods is invoking the method as an isolated statement and forgetting to capture what it sends back:
+    </p>
+
+    <program language="java">
+<![CDATA[// LOGIC ERROR: The result is computed, but immediately discarded!
+getRecommendation(aqi);]]>
+    </program>
+
+    <p>
+      This code compiles without any errors. Java permits a method call followed by a semicolon to stand as an executable statement. When this line runs, the JVM dutifully pushes a stack frame for <c>getRecommendation</c>, executes the <c>if-else</c> ladder, evaluates the return expression, and pops the stack frame.
+    </p>
+
+    <p>
+      However, because the calling code never assigned that result to a variable, passed it into another method, or used it in an expression, the returned value simply vanishes into thin air. The variable <c>aqi</c> is not modified, no text appears on the console, and the computer immediately proceeds to the next line as if nothing happened.
+    </p>
+
+    <p>
+      You saw this exact behavior in Chapter 2 when manipulating text. Because <c>String</c> objects are immutable, calling:
+    </p>
+
+    <program language="java">
+<![CDATA[cityName.toUpperCase(); // Bug: cityName remains unchanged!]]>
+    </program>
+
+    <p>
+      does not alter <c>cityName</c>. It returns a new, capitalized <c>String</c> that is instantly lost unless you store or print it.
+    </p>
+
+    <p>
+      Whenever you call a method that has a return type other than <c>void</c>, ask yourself: <q>Where is this result going?</q> If you are not storing it in a variable, including it in a calculation, or passing it directly into another method, calling the method is almost certainly a bug.
+    </p>
+  </subsection>
+
+</section>

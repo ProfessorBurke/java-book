@@ -230,7 +230,7 @@
         <li>
           <p>
             <c>calculateFlooringCost(wastePercent)</c> asserts <c>wastePercent &gt;= 0.0</c> and computes:
-            <me>\text{area} \times \left(1.0 + \frac{\text{wastePercent}}{100.0}\right) \times \text{flooringUnitCost}</me>
+            <md>\text{area} \times \left(1.0 + \frac{\text{wastePercent}}{100.0}\right) \times \text{flooringUnitCost}</md>
           </p>
         </li>
       </ul>
@@ -253,7 +253,7 @@
         cast by rooftop obstructions (such as chimneys, HVAC units, or parapets). The shadow
         length cast by an obstruction of height <m>h</m> when the sun is at elevation angle
         <m>\theta</m> is given by trigonometry:
-        <me>L = \frac{h}{\tan(\theta)}</me>
+        <md>L = \frac{h}{\tan(\theta)}</md>
       </p>
       <p>
         Design and implement a class named <c>RoofObstruction</c> to calculate minimum solar
@@ -331,11 +331,11 @@
         drops below the horizon depends on the observer's eye height above sea level. Accounting
         for standard atmospheric refraction, the geometric distance to the horizon in nautical
         miles is modeled by:
-        <me>d \approx 1.17 \times \sqrt{h}</me>
+        <md>d \approx 1.17 \times \sqrt{h}</md>
         where <m>h</m> is the height of eye in feet. When observing a raised target (such as a
         lighthouse lantern of height <m>H</m>), the maximum distance of geographical visibility
         is the sum of the observer's horizon distance and the target's horizon distance:
-        <me>D_{\text{max}} = 1.17 \times \sqrt{h} + 1.17 \times \sqrt{H}</me>
+        <md>D_{\text{max}} = 1.17 \times \sqrt{h} + 1.17 \times \sqrt{H}</md>
       </p>
       <p>
         Design and implement a class named <c>MaritimeHorizon</c>.
@@ -404,10 +404,10 @@
         orbits. By Kepler's Third Law, a planet's orbital period <m>T</m> (in Earth years)
         around a host star of mass <m>M</m> (in solar masses <m>M_\odot</m>) at semi-major axis
         <m>a</m> (in Astronomical Units, AU) is:
-        <me>T = \sqrt{\frac{a^3}{M}}</me>
+        <md>T = \sqrt{\frac{a^3}{M}}</md>
         A star's circumstellar habitable zone (the range of orbital distances where liquid water
         can exist) scales with the star's bolometric luminosity <m>L</m> (relative to our Sun):
-        <me>r_{\text{inner}} \approx \sqrt{\frac{L}{1.1}}, \quad r_{\text{outer}} \approx \sqrt{\frac{L}{0.53}}</me>
+        <md>r_{\text{inner}} \approx \sqrt{\frac{L}{1.1}}, \quad r_{\text{outer}} \approx \sqrt{\frac{L}{0.53}}</md>
       </p>
       <p>
         Design and implement two collaborating classes: <c>Star</c> and <c>Exoplanet</c>.
@@ -507,7 +507,7 @@
         conditions meet FAA flight rules: Visual Flight Rules (VFR), Marginal VFR (MVFR), or
         Instrument Flight Rules (IFR). In addition, pilots must calculate the crosswind component
         relative to the active runway heading:
-        <me>V_{\text{cross}} = V_{\text{wind}} \times |\sin(\alpha_{\text{wind}} - \alpha_{\text{runway}})|</me>
+        <md>V_{\text{cross}} = V_{\text{wind}} \times |\sin(\alpha_{\text{wind}} - \alpha_{\text{runway}})|</md>
       </p>
       <p>
         Design and implement two classes: an immutable <c>WeatherObservation</c> and an analytical
@@ -576,12 +576,12 @@
         <li>
           <p>
             <c>determineFlightCategory()</c> returns:
-            <ul>
-              <li><p><c>"VFR"</c> if ceiling <m>\ge 3000</m> ft and visibility <m>\ge 5.0</m> miles.</p></li>
-              <li><p><c>"MVFR"</c> if ceiling is 1000–2999 ft or visibility is 3.0–4.9 miles.</p></li>
-              <li><p><c>"IFR"</c> if ceiling is &lt; 1000 ft or visibility is &lt; 3.0 miles.</p></li>
-            </ul>
           </p>
+          <ul>
+            <li><p><c>"VFR"</c> if ceiling &gt;= 3000 ft and visibility &gt;= 5.0 miles.</p></li>
+            <li><p><c>"MVFR"</c> if ceiling is 1000–2999 ft or visibility is 3.0–4.9 miles.</p></li>
+            <li><p><c>"IFR"</c> if ceiling is &lt; 1000 ft or visibility is &lt; 3.0 miles.</p></li>
+          </ul>
         </li>
         <li>
           <p>
@@ -616,7 +616,7 @@
         <li><p>Category 2 Hurricane: 83–95 knots</p></li>
         <li><p>Category 3 Major Hurricane: 96–112 knots</p></li>
         <li><p>Category 4 Major Hurricane: 113–136 knots</p></li>
-        <li><p>Category 5 Major Hurricane: <m>\ge 137</m> knots</p></li>
+        <li><p>Category 5 Major Hurricane: &gt;= 137 knots</p></li>
       </ul>
       <p>
         Design and implement a stateful tracker class named <c>StormTracker</c>.

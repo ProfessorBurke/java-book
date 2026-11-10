@@ -2,24 +2,29 @@
 <section xml:id="sec-6-10-unit-testing">
   <title>Unit Testing Classes: The Arrange–Act–Assert Pattern</title>
 
-  <p>
-    In Chapter 5, we wrote unit tests for static methods. Testing static methods was 
-    relatively straightforward and stateless: you fed arguments into a function and 
-    checked whether the return value matched an expected output.
-  </p>
+  
+  <introduction>
+    <p>
+      In Chapter 5, we wrote unit tests for static methods. Testing static methods was 
+      relatively straightforward and stateless: you fed arguments into a function and 
+      checked whether the return value matched an expected output.
+    </p>
 
-  <p>
-    Classes, however, are <em>stateful</em>. An object's methods interact with private 
-    fields residing in the heap, and a method's behavior depends directly on what happened 
-    to that object earlier in execution. When we test an object, we are not just testing a 
-    single mathematical calculation<mdash/>we are testing state transitions and verifying 
-    that class invariants hold across mutations.
-  </p>
+    <p>
+      Classes, however, are <em>stateful</em>. An object's methods interact with private 
+      fields residing in the heap, and a method's behavior depends directly on what happened 
+      to that object earlier in execution. When we test an object, we are not just testing a 
+      single mathematical calculation<mdash/>we are testing state transitions and verifying 
+      that class invariants hold across mutations.
+    </p>
 
-  <p>
-    To bring discipline and clarity to testing stateful classes, professional software 
-    engineers use the industry-standard Arrange<ndash/>Act<ndash/>Assert (AAA) pattern.
-  </p>
+    <p>
+      To bring discipline and clarity to testing stateful classes, professional software 
+      engineers use the industry-standard Arrange<ndash/>Act<ndash/>Assert (AAA) pattern.
+    </p>
+  </introduction>
+
+
 
   <subsection xml:id="subsec-6-10-1-aaa-pattern">
     <title>The Arrange–Act–Assert (AAA) Pattern</title>
@@ -85,8 +90,7 @@
 
     <listing xml:id="listing-rectangle-tester">
       <caption>Testing a stateful method with Arrange<ndash/>Act<ndash/>Assert</caption>
-      <program interactive="activecode" language="java">
-        <code>
+      <program language="java" line-numbers="yes">
 /**
  * A unit test demonstrating the Arrange–Act–Assert pattern
  * and invariant verification on a stateful Rectangle object.
@@ -122,7 +126,6 @@ public class RectangleTester {
         System.out.println("All assertions passed! Rectangle successfully moved: " + rect);
     }
 }
-        </code>
       </program>
     </listing>
 

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xml:id="ch-03-selection" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Selection Statements</title>
+
+  <xi:include href="sec-3-1-overview.ptx" />
+  <xi:include href="sec-3-2-forming-conditions.ptx" />
+  <xi:include href="sec-3-3-two-way-decisions.ptx" />
+  <xi:include href="sec-3-4-multi-way-branching.ptx" />
+  <xi:include href="sec-3-5-compound-conditions.ptx" /> 
+  <xi:include href="sec-3-6-comparing-strings.ptx" /> 
+  <xi:include href="sec-3-7-specialized-branching.ptx" /> 
+  <xi:include href="sec-3-8-assertions.ptx" /> 
+  <xi:include href="sec-3-9-design-verification.ptx" /> 
+  <xi:include href="sec-3-10-putting-it-together.ptx" /> 
+  <xi:include href="sec-3-11-moving-on.ptx" /> 
+  <xi:include href="sec-3-12-exercises.ptx" /> 
+</chapter>

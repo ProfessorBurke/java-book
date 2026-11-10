@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-4-1-overview" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Chapter Overview</title>
+
+  <p>
+    In the previous chapter, you learned how to select which code executes next using selection statements (often called branching). You wrote Boolean expressions that resolve to either <c>true</c> or <c>false</c> using the relational and logical operators for primitive types and comparison methods for reference types like <c>String</c>. You learned how to evaluate the trade-offs between different branching structures such as <c>if-else</c> chains, nested conditions, and <c>switch</c> statements and how to design comprehensive test cases to verify every path through a program with selection statements.
+  </p>
+
+  <p>
+    Selection statements allow us to choose which code executes based on program state<mdash />the values in variables. This gives us a great deal of control over our programs<mdash />allowing us to guard against invalid inputs and respond dynamically to variations in data. However, our programs are still fundamentally locked into a single top-to-bottom pass. We can skip code or select from several options to execute, but we can’t go back and do something again.
+  </p>
+
+  <p>
+    That’s where loops come in! Loops, or more formally repetition statements, allow us to repeat code (any code): either a fixed number of times, or until some condition is met, such as the user giving us a non-zero value to divide by, the end of a turn in a game, or the user choosing quit from a menu. In this chapter we’ll learn to write several different kinds of loops, including counting, pre-test conditional, and post-test conditional.
+  </p>
+
+  <p>
+    We’ll also learn how to read from and write to a text file. Up to this point, our programs have suffered from amnesia: the moment a program ends, all of its data vanishes, and every test run requires typing numbers into the console by hand. With file processing, your programs graduate to the real world. You will learn to read massive datasets from text files in seconds, process thousands of records automatically, and save your results to disk so they can be opened in spreadsheets, shared, or preserved forever.
+  </p>
+
+  <paragraphs>
+    <title>Roadmap for Chapter 4</title>
+    <ul>
+      <li>
+        <p>
+          <xref ref="sec-4-2-conditional-loops" /> Conditional loops: while and do-while<mdash />Writing conditional loops that execute as long as a Boolean expression remains true, contrasting pre-test loops (<c>while</c>) with post-test loops (<c>do-while</c>) that are guaranteed to execute at least once.
+        </p>
+      </li>
+
+      <li>
+        <p>
+          <xref ref="sec-4-3-variable-roles" /> Common loop variable roles: Steppers, gatherers, and holders<mdash />Deconstructing how variables behave inside loops, distinguishing between a stepper (counter), a gatherer (running accumulator), a most-recent holder (input buffer), and a most-wanted holder (finding minimums and maximums).
+        </p>
+      </li>
+
+      <li>
+        <p>
+          <xref ref="sec-4-4-counting-loops-for" /> Counting loops: for<mdash />Constructing compact, counter-controlled loops, mastering the three-part header (initialization, condition, and update), understanding local loop variable scope, and converting between <c>for</c> and <c>while</c>.
+        </p>
+      </li>
+
+      <li>
+        <p>
+          <xref ref="sec-4-5-sentinel-loops" /> Sentinel-controlled loops &amp; loop interruption<mdash />Processing indefinite streams of data until a special stopping value (a sentinel) is encountered, applying the primed-loop pattern, and understanding <c>break</c> and <c>continue</c> and why to avoid them.
+        </p>
+      </li>
+
+      <li>
+        <p>
+          <xref ref="sec-4-6-nested-loops" /> Nested loops<mdash />Managing multi-dimensional repetition, tracing inner and outer loop execution grids, and generating tabular reports and geometric coordinate matrices.
+        </p>
+      </li>
+
+      <li>
+        <p>
+          <xref ref="sec-4-7-designing-loops" /> Designing loops: Finding the patterns<mdash />A systematic problem-solving strategy for analyzing problems, identifying what stays constant versus what varies across iterations, and assembling the initialization, body, and termination conditions.
+        </p>
+      </li>
+
+      <li>
+        <p>
+          <xref ref="sec-4-8-loop-invariants" /> Verifying loop state: Invariants and assertions<mdash />Using assertions to document loop postconditions, verifying that counters and accumulators satisfy expected boundaries upon loop exit, and reasoning about what must be true before and after each iteration.
+        </p>
+      </li>
+
+      <li>
+        <p>
+          <xref ref="sec-4-9-loop-errors-testing" /> Common loop errors and designing test cases<mdash />Diagnosing infinite loops, avoiding off-by-one errors (<c>&lt;</c> vs. <c>&lt;=</c>), and designing test plan tables specifically for loops (testing zero iterations, one iteration, multiple iterations, and boundary conditions).
+        </p>
+      </li>
+
+      <li>
+        <p>
+          <xref ref="sec-4-10-reading-files-scanner" /> Reading text files with Scanner<mdash />Connecting <c>Scanner</c> to a disk file instead of the keyboard, reading data token-by-token and line-by-line with <c>hasNextLine()</c>, and using <c>Integer.parseInt()</c> and <c>Double.parseDouble()</c> to parse incoming text data.
+        </p>
+      </li>
+
+      <li>
+        <p>
+          <xref ref="sec-4-11-writing-files-printwriter" /> Writing text files with PrintWriter<mdash />Creating new text files on disk, formatting file output using familiar <c>print</c>, <c>println</c>, and <c>printf</c> methods, managing file resources safely, and ensuring output buffers are flushed to disk with <c>.close()</c>.
+        </p>
+      </li>
+    </ul>
+  </paragraphs>
+
+  <p>
+    Once you’ve mastered the concepts in this chapter, you’ll recognize when a problem requires a loop. You’ll be able to choose the most appropriate repetition structure, find the patterns that include repetition and variation, and write the loop with confidence. You’ll be able to open, read and process, or write to text files. And you’ll have the tools for writing correct loops and implementing thorough testing plans. Let’s get started.
+  </p>
+</section>

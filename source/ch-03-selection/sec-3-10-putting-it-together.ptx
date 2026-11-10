@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-3-10-putting-it-together" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Putting It All Together</title>
+
+  
+  <introduction>
+    <p>
+      You now have all the tools you need to solve problems that make decisions based on values entered by the user or values calculated during processing. Let’s work through an example problem and then you can try some of the exercises at the end of the chapter.
+    </p>
+
+    <!-- ============================================================ -->
+    <!-- 3.10.1 The problem                                           -->
+  </introduction>
+
+
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-3-10-1-the-problem">
+    <title>The Problem</title>
+
+    <sidebyside widths="60% 36%" margins="auto" valign="middle">
+      <p>
+        The Environmental Protection Agency (EPA) uses an Air Quality Index (AQI) scale of 0 to 500 to report pollutant levels.
+      </p>
+      <stack>
+        <image source="figures/air_quality_sf.png">
+          <shortdescription>Air quality in San Francisco.</shortdescription>
+        </image>
+      </stack>
+    </sidebyside>
+
+    <p>
+      AQI readings fall into six categories defined by ranges:
+    </p>
+
+    <ul>
+      <li><p>Healthy: 0–50</p></li>
+      <li><p>Moderate: 51–100</p></li>
+      <li><p>Unhealthy for sensitive groups: 101–150</p></li>
+      <li><p>Unhealthy: 151–200</p></li>
+      <li><p>Very Unhealthy: 201–300</p></li>
+      <li><p>Hazardous: 301–500</p></li>
+    </ul>
+
+    <p>
+      Prompt the user for the current AQI reading. Validate that the reading is within the range of 0–500, and if not, display <q>Invalid reading.</q> and do no further processing. If the reading is within the valid range of 0–500, print one of the following messages (we’ve consolidated the output to three categories to keep our solution focused):
+    </p>
+
+    <ul>
+      <li><p>0–50: <q>Healthy air quality; safe to engage in outdoor activities.</q></p></li>
+      <li><p>51–150: <q>Moderate air quality; sensitive groups should limit outdoor activities.</q></p></li>
+      <li><p>151–500: <q>Unhealthy air quality; limit outdoor activities.</q></p></li>
+    </ul>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 3.10.2 Deconstruct the problem                               -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-3-10-2-deconstruct-problem">
+    <title>Deconstruct the Problem</title>
+
+    <p>
+      For this problem, there is one input. What data type is it? Although not explicitly stated, the ranges given differ by integer values (e.g. healthy ends at 50 and moderate begins at 51), so the value entered will be an integer. There are no calculations that we must do to produce a result<mdash />we must validate the input and then put it into the correct bucket based on the range of values in each bucket. The bucket ranges are clearly stated, as are the text messages the program should produce for each value.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 3.10.3 Design the algorithm                                  -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-3-10-3-design-algorithm">
+    <title>Design the Algorithm (Choose Appropriate Selection Structures)</title>
+
+    <p>
+      This program requires two selection structures: one for validating the input and either proceeding with good input or aborting the program with bad input, and one for bucketing the input and displaying the appropriate message.
+    </p>
+
+    <p>
+      When we have two mutually exclusive paths where one or the other must execute, we should use an <c>if-else</c> statement. This describes our input validation. One path is the error message (if we receive an input that is below 0 or above 500), and the other is the rest of the program<mdash />bucketing the input and displaying the appropriate result.
+    </p>
+
+    <p>
+      When there are three or more mutually exclusive paths based on ranges, as we have in the bucketing operation, we should choose an <c>if-else if</c> structure. Notice that a <c>switch</c> statement would not work here, because we’re not comparing our input to specific values, rather, we’re testing that it falls within a range of values.
+    </p>
+
+    <p>
+      <xref ref="figure-flowchart-aqi-solution" /> is a flowchart showing the algorithm for our program with our two selection statement choices.
+    </p>
+
+    <figure xml:id="figure-flowchart-aqi-solution">
+      <title>Flowchart showing the algorithm for the AQI program</title>
+      <image source="figures/figure_3_11.png" width="85%">
+        <shortdescription>Algorithm flowchart for AQI program testing input validity and branching into three air quality classification messages.</shortdescription>
+        <description>
+          <p>
+            Flowchart illustrating the complete AQI evaluation algorithm. Execution begins at Start and reads the AQI input. An initial decision tests whether <c>aqi &lt; 0 || aqi &gt; 500</c>. If True, it displays <q>Invalid reading.</q> and routes directly to End. If False, it proceeds into a series of decisions: testing <c>aqi &lt;= 50</c> to display the healthy air message, then <c>aqi &lt;= 150</c> to display the moderate air message, and defaulting to the unhealthy air message. All branches merge cleanly into End.
+          </p>
+        </description>
+      </image>
+    </figure>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 3.10.4 Create the testing table                              -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-3-10-4-create-testing-table">
+    <title>Create the Testing Table</title>
+
+    <p>
+      To test this program, we should design test cases for each path through the program. Our first decision point<mdash />the input validation<mdash />gives us two paths. When false, the rest of the program is bypassed. When true, we reach our second decision point, and there are three options there. We therefore have four paths through the program, which we can label by the truth value of the first decision followed by the bucket for the second (when true): false, true-healthy, true-moderate, true-unhealthy.
+    </p>
+
+    <p>
+      For each of our paths, we should test boundaries, or edge cases. Therefore we will have eight tests. <xref ref="table-test-plan-aqi" /> is the test plan for our program.
+    </p>
+
+    <table xml:id="table-test-plan-aqi">
+      <title>Test plan for the AQI problem</title>
+      <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+        <col width="12%"/>
+        <col width="34%"/>
+        <col width="12%"/>
+        <col width="42%"/>
+        <row header="yes">
+          <cell><strong>Test case</strong></cell>
+          <cell><strong>Path/purpose</strong></cell>
+          <cell><strong>Input</strong></cell>
+          <cell><strong>Expected output</strong></cell>
+        </row>
+        <row>
+          <cell>1</cell>
+          <cell>False<mdash />lower bound</cell>
+          <cell>-1</cell>
+          <cell><q>Invalid reading.</q></cell>
+        </row>
+        <row>
+          <cell>2</cell>
+          <cell>False<mdash />upper bound</cell>
+          <cell>501</cell>
+          <cell><q>Invalid reading.</q></cell>
+        </row>
+        <row>
+          <cell>3</cell>
+          <cell>True<mdash />healthy<mdash />lower bound</cell>
+          <cell>0</cell>
+          <cell><q>Healthy air quality; safe to engage in outdoor activities.</q></cell>
+        </row>
+        <row>
+          <cell>4</cell>
+          <cell>True<mdash />healthy<mdash />upper bound</cell>
+          <cell>50</cell>
+          <cell><q>Healthy air quality; safe to engage in outdoor activities.</q></cell>
+        </row>
+        <row>
+          <cell>5</cell>
+          <cell>True<mdash />moderate<mdash />lower bound</cell>
+          <cell>51</cell>
+          <cell><q>Moderate air quality; sensitive groups should limit outdoor activities.</q></cell>
+        </row>
+        <row>
+          <cell>6</cell>
+          <cell>True<mdash />moderate<mdash />upper bound</cell>
+          <cell>150</cell>
+          <cell><q>Moderate air quality; sensitive groups should limit outdoor activities.</q></cell>
+        </row>
+        <row>
+          <cell>7</cell>
+          <cell>True<mdash />unhealthy<mdash />lower bound</cell>
+          <cell>151</cell>
+          <cell><q>Unhealthy air quality; limit outdoor activities.</q></cell>
+        </row>
+        <row>
+          <cell>8</cell>
+          <cell>True<mdash />unhealthy<mdash />upper bound</cell>
+          <cell>500</cell>
+          <cell><q>Unhealthy air quality; limit outdoor activities.</q></cell>
+        </row>
+      </tabular>
+    </table>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 3.10.5 Implement (and test) the solution                     -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-3-10-5-implement-solution">
+    <title>Implement (and Test) the Solution</title>
+
+    <p>
+      We have a flowchart of the decision structures in our program and a thorough set of test cases, so we can begin programming. Here are some suggestions for how to approach coding this program incrementally:
+    </p>
+
+    <ul>
+      <li>
+        <p>Write code to obtain the input. Write the input validation code. If the input is valid, print a message. Execute three test cases<mdash />invalid lower boundary, invalid upper boundary, and valid. Verify that the correct message is printed for each input. Once that is working, remove the message for valid input and write the bucketing code, printing the appropriate message for each bucket. Run all test cases.</p>
+      </li>
+      <li>
+        <p>Write code to obtain the input. Assume you will be getting valid input, and write the bucketing code, printing the appropriate message for each bucket. Run the test cases for the upper and lower boundaries of each bucket and confirm that the program gives the correct output. Now wrap this code in the input validation code, and run all test cases.</p>
+      </li>
+      <li>
+        <p>Code both structures, but with minimal output for each, and run all test cases. This strategy makes more sense if you have complicated processing for each bucket<mdash />printing a message will tell you that execution has reached the correct branch, even if you haven’t written any processing code yet. Here, because each branch is simply a print statement, it would mean coding the whole program at once. Generally this isn’t a good idea for a beginning programmer because it can be hard to track down which code is causing bugs.</p>
+      </li>
+    </ul>
+
+    <p>
+      <xref ref="listing-air-quality-summary" /> is a solution to this problem that adheres to our flowchart, is well-documented, follows Java naming and whitespace conventions, and is easy to read:
+    </p>
+
+    <listing xml:id="listing-air-quality-summary">
+      <title><c>AirQualitySummary.java</c></title>
+      <program language="java" line-numbers="yes"><![CDATA[import java.util.Scanner;
+ 
+/**
+ * Displays one of three air quality messages given a valid AQI in the range of 0-500,
+ * or displays an error message if the AQI is outside the valid range.
+ */
+public class AirQualitySummary {
+ 
+    public static void main(String[] args) {
+        
+        Scanner stdin;       // To obtain the AQI
+        int aqi;             // Air Quality Index (from user)
+        
+        // Obtain the AQI from the user.
+        stdin = new Scanner(System.in);
+        System.out.print("Please enter the AQI: ");
+        aqi = stdin.nextInt();
+        stdin.close();
+        
+        // Validate that the AQI falls between 0 and 500 inclusive. 
+        // If not, print a message.
+        if (aqi < 0 || aqi > 500) {
+            System.out.println("Invalid reading.");
+        } else {
+            // Precondition: AQI within the range 0-500 inclusive.
+            assert (aqi >= 0 && aqi <= 500) : "AQI outside valid range";
+            // The AQI is within the valid range.
+            // Print a summary of AQI with recommendations.
+            if (aqi <= 50) {
+                System.out.print("Healthy air quality; safe to ");
+                System.out.println("engage in outdoor activities.");
+            } else if (aqi <= 150) {
+                System.out.print("Moderate air quality; sensitive ");
+                System.out.print("groups should limit outdoor ");
+                System.out.println("activities.");
+            } else {
+                System.out.print("Unhealthy air quality; limit ");
+                System.out.println("outdoor activities.");
+ 
+            } // series if testing aqi
+        } // else (valid input)
+    } // main
+} // class]]></program>
+    </listing>
+
+    <p>
+      In <xref ref="listing-air-quality-summary" />, line 22 checks for invalid input (<c>aqi &lt; 0 || aqi &gt; 500</c>) rather than valid input. This pattern<mdash />often called a guard condition<mdash />keeps error-handling code close to the test. Because the invalid response is only a single print statement, the entire error path is resolved in lines 22–24. If we had tested for valid input first, the error-handling <c>else</c> block would be pushed all the way down to the bottom of the program (line 41), forcing a reader to scroll through the entire bucketing structure just to see what happens when bad input is entered.
+    </p>
+
+    <p>
+      On line 26, we assert that the AQI is within the valid range:
+    </p>
+
+    <program language="java"><![CDATA[assert (aqi >= 0 && aqi <= 500) : "AQI outside valid range";]]></program>
+
+    <p>
+      You might be thinking, <q>Didn't line 22 already ensure the input is valid before reaching line 24?</q> Yes, but line 22 tested the inverse condition (<c>aqi &lt; 0 || aqi &gt; 500</c>). During development, humans frequently make mistakes when inverting compound Boolean logic (De Morgan’s Laws). Placing an assertion at the entrance of the <c>else</c> block documents our expectation and acts as an internal verification checkpoint. Furthermore, if you or another developer later insert additional calculations between the validation check and the bucketing logic, this assertion guarantees that no intervening code accidentally corrupted the value of <c>aqi</c>.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 3.10.6 Visualizing branch execution with code coverage       -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-3-10-6-code-coverage">
+    <title>Visualizing Branch Execution with Eclipse Code Coverage</title>
+
+    <p>
+      When testing your program against <xref ref="table-test-plan-aqi" />, Eclipse provides a powerful tool called Code Coverage to visualize which branches your tests actually executed.
+    </p>
+
+    <p>
+      Instead of running your program normally, run it by selecting <menuchoice><guimenu>Coverage As</guimenu><guimenuitem>Java Application</guimenuitem></menuchoice> (or clicking the Coverage button on the Eclipse toolbar). Eclipse will color-code the background of your statements in the editor:
+    </p>
+
+    <ul>
+      <li><p><strong>Green:</strong> Indicates statements and branches that were executed during the run.</p></li>
+      <li><p><strong>Red:</strong> Indicates code that was completely bypassed.</p></li>
+      <li><p><strong>Yellow:</strong> Indicates a decision point that was only partially exercised (for instance, the <c>if</c> condition evaluated to <c>true</c>, but you have not yet run a test case where it evaluated to <c>false</c>).</p></li>
+    </ul>
+
+    <p>
+      When you run Test Case 1 (<c>aqi = -1</c>), lines 23–24 will illuminate in green, while the entire <c>else</c> block will remain red. After you have run all cases in the test plan, you can confirm that every branch of the program executed by merging sessions. Open the Coverage View. The Coverage View may have automatically opened in the same part of the window as the Console View, but if not, go to <menuchoice><guimenu>Window</guimenu><guimenuitem>Show View</guimenuitem><guimenuitem>Other...</guimenuitem><guimenuitem>Java</guimenuitem><guimenuitem>Coverage</guimenuitem></menuchoice>. You will then see some icons in the top right of the view. Click the Merge Sessions icon (mouse over the icons to find it<mdash />it looks like two database cylinders, one over the other). You will be able to choose the executions you want to merge, and click OK. You should now see all branches as green, except the assertion (since the assertion never failed).
+    </p>
+
+    <figure xml:id="figure-code-coverage-test-case-1">
+      <title>Code Coverage after Test Case 1</title>
+      <image source="figures/figure_3_12.png" width="85%">
+        <shortdescription>Eclipse code coverage highlighting lines 23-24 in green for an invalid input test case, while the else block is highlighted in red.</shortdescription>
+        <description>
+          <p>
+            Screenshot of the Eclipse code editor demonstrating code coverage for Test Case 1 (<c>aqi = -1</c>). Lines 23–24 in the <c>if</c> block are highlighted in green, showing they were executed. The entire <c>else</c> block (lines 24–41) is highlighted in red, indicating bypassed code.
+          </p>
+        </description>
+      </image>
+    </figure>
+  </subsection>
+</section>

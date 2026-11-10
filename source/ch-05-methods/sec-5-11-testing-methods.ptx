@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-5-11-testing-methods" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Testing Methods</title>
+
+  <introduction>
+    <p>
+      Up to this point in your programming journey, most of your testing has been <term>system-level testing</term> (also called whole-program or end-to-end testing). You ran your program from start to finish, manually typed inputs into the console or modified input files, and visually checked whether the final output matched your expectations. While running the entire program is essential, relying on it as your only testing strategy quickly breaks down as software grows. If a program with seven different helper methods produces the wrong answer, a system-level test only tells you that something went wrong<mdash />it does not tell you which method failed, what line caused the bug, or why.
+    </p>
+
+    <p>
+      In professional software engineering, testing is organized into three levels, commonly represented as a pyramid:
+    </p>
+
+    <ul>
+      <li>
+        <p><strong>Unit Testing:</strong> Testing the smallest individual, isolated pieces of code to verify that each one fulfills its specific contract independently. In this chapter, our units are individual methods.</p>
+      </li>
+      <li>
+        <p><strong>Integration Testing:</strong> Testing how multiple methods, classes, or components interact to ensure that they work together correctly.</p>
+      </li>
+      <li>
+        <p><strong>System Testing:</strong> Testing the complete, assembled application against its requirements to ensure that the application works as a whole.</p>
+      </li>
+    </ul>
+
+    <p>
+      Unit testing forms the broad, sturdy foundation of this pyramid. Just as a civil engineer inspects individual steel beams and concrete blocks for flaws before assembling a bridge, a programmer tests individual methods in isolation before connecting them in <c>main</c>. By building automated test drivers that feed sample arguments into a single method and verify the returned results against our test plans, we can catch defects early, isolate bugs instantly, and gain confidence that the fundamental building blocks of our program are solid.
+    </p>
+  </introduction>
+
+  <!-- ============================================================ -->
+  <!-- 5.11.1 Verifying pre- and postconditions with assertions     -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-11-1-assertions-pre-postconditions">
+    <title>Verifying Pre- and Postconditions with Assert Statements</title>
+
+    <introduction>
+      <p>
+        Before we test our methods from the outside, let's explore how we can use the tools we already have to add internal verification checks inside our method bodies.
+      </p>
+    </introduction>
+
+    <!-- 5.11.1.1 Writing precondition assertions -->
+    <subsubsection xml:id="subsubsec-5-11-1-1-precondition-assertions">
+      <title>Writing Precondition Assertions</title>
+
+      <p>
+        In Listing 5.3, we wrote the <c>getRecommendation</c> method, which returns a message based on the AQI reading passed in as a parameter:
+      </p>
+
+      <program language="java">
+<![CDATA[public static String getRecommendation(int aqi) {
+    String recommendation;
+    if (aqi <= 50) {
+        recommendation = "Healthy air quality; ";
+        recommendation += "safe to engage in outdoor activities.";
+    } else if (aqi <= 150) {
+        recommendation = "Moderate air quality; ";
+        recommendation += "sensitive groups limit outdoor activities.";
+    } else {
+        recommendation = "Unhealthy air quality; ";
+        recommendation += "limit outdoor activities.";
+    } 
+    return recommendation;
+} // getRecommendation]]>
+      </program>
+
+      <p>
+        If you imagine running the code on different inputs, you will discover that this method will report <q>Healthy air quality</q> for invalid values below 0, and it will report <q>Unhealthy air quality</q> for invalid values above 500. It doesn’t flag invalid values because Listing 5.3 checks that the value is within the valid range before invoking <c>getRecommendation</c>.
+      </p>
+
+      <p>
+        It is therefore a <term>precondition</term> of <c>getRecommendation</c> that the <c>aqi</c> value passed in is between 0 and 500, inclusive. If the precondition is met, then the method contract guarantees the <term>postcondition</term> will be met. Here, we can write a postcondition that <c>getRecommendation</c> returns one of three specific messages for each of the ranges (0<ndash />50, 51<ndash />150, 151<ndash />500). This will facilitate testing the method.
+      </p>
+
+      <p>
+        Let’s express the preconditions and postconditions in the Javadoc for the method:
+      </p>
+
+      <program language="java">
+<![CDATA[/**
+ * Generates an air quality health recommendation message corresponding 
+ * to an Air Quality Index (AQI) reading.
+ *
+ * Precondition: 0 <= aqi && aqi <= 500
+ *
+ * Postcondition: Returns one of three specific guidance strings 
+ * corresponding to the EPA category:
+ *   - 0 <= aqi <= 50: 
+ *     "Healthy air quality; safe to engage in outdoor activities."
+ *   - 51 <= aqi <= 150: 
+ *     "Moderate air quality; sensitive groups limit outdoor activities."
+ *   - 151 <= aqi <= 500: 
+ *     "Unhealthy air quality; limit outdoor activities."
+ *
+ * @param aqi the Air Quality Index reading, between 0 and 500 inclusive
+ * @return the health recommendation message matching the AQI category
+ */]]>
+      </program>
+
+      <p>
+        We can write assertions at the start of a method to check that the preconditions are met. As we noted in Section 3.8, <c>assert</c> statements are written to catch internal programmer bugs. The preconditions of a method are a natural candidate for writing an assertion. If we write <c>assert</c> statements for our preconditions and leave asserts enabled (<c>-ea</c>) throughout all testing phases, we can be reasonably certain that our method is not being called with arguments that violate the method contract.
+      </p>
+
+      <p>
+        At the start of <c>getRecommendation</c>, immediately after the method header, we write:
+      </p>
+
+      <program language="java">
+<![CDATA[assert 0 <= aqi && aqi <= 500 : "Bad AQI value passed: " + aqi;]]>
+      </program>
+
+      <p>
+        This will throw an <c>AssertionError</c> with the message <c>"Bad AQI value passed: " + aqi</c> any time <c>getRecommendation</c> is called with an invalid AQI.
+      </p>
+    </subsubsection>
+
+    <!-- 5.11.1.2 Writing postcondition assertions -->
+    <subsubsection xml:id="subsubsec-5-11-1-2-postcondition-assertions">
+      <title>Writing Postcondition Assertions</title>
+
+      <p>
+        Writing postcondition assertions can be a little trickier than writing assertions for preconditions. For our <c>getRecommendation</c> method, for us to assert that the postcondition is exactly correct for the input value, we would be duplicating the method’s code. If we made a mistake with the method’s logic, there’s a very good chance we’d repeat the mistake with the postcondition assertion, making it worthless.
+      </p>
+
+      <p>
+        It therefore makes more sense to check that <c>getRecommendation</c> produces the correct output through testing. We can write a postcondition assertion to verify that it’s returning a value and not a <c>null</c> (undefined) or empty string result:
+      </p>
+
+      <program language="java">
+<![CDATA[assert recommendation != null && !recommendation.isEmpty() : "Returned empty recommendation";]]>
+      </program>
+
+      <p>
+        Follow these guidelines when writing postcondition assertions:
+      </p>
+
+      <ul>
+        <li>
+          <p><strong>Verify properties that are simpler to check than to compute:</strong> Take advantage of asymmetric problems where confirming the answer requires much less effort than calculating it. For example, sorting an array requires a complex algorithm, but verifying that the final elements are in ascending order requires only a single, simple loop.</p>
+        </li>
+        <li>
+          <p><strong>Check basic sanity and boundary invariants:</strong> Confirm that return values comply with fundamental physical or mathematical realities. Check that returned objects are not <c>null</c>, text is not empty, account balances are non-negative, or probabilities remain strictly between <m>0.0</m> and <m>1.0</m>.</p>
+        </li>
+        <li>
+          <p><strong>Avoid duplicating the algorithm:</strong> Do not write an assertion that simply re-implements the method's internal calculation or branching logic. If testing the postcondition requires writing the same <c>if-else</c> chain as the method body, omit the in-method assertion and verify the method using external unit tests instead.</p>
+        </li>
+        <li>
+          <p><strong>Ensure assertions have no side effects:</strong> Never write an assertion that alters a variable's value or changes program state (such as <c>assert count++ &gt; 0</c>). Because assertions can be disabled at runtime, code inside an <c>assert</c> expression must be strictly read-only so the program behaves identically whether assertions are enabled or turned off.</p>
+        </li>
+      </ul>
+
+      <p>
+        When a method's postcondition is too detailed to verify safely with an internal assertion (as with the three distinct category strings of <c>getRecommendation</c>), we verify it from the outside using unit testing.
+      </p>
+    </subsubsection>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 5.11.2 Unit-testing methods                                  -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-11-2-unit-testing-methods">
+    <title>Unit-Testing Methods</title>
+
+    <introduction>
+      <p>
+        A unit test for a method evaluates a single, isolated method to verify that it behaves correctly across a variety of inputs. Rather than launching the entire application, a unit test isolates the method under test, supplies controlled arguments, and checks whether the returned result matches the method's postcondition specification.
+      </p>
+
+      <p>
+        To unit-test a method effectively, we follow a two-step process: we design a structured test plan table, and then we translate that table into an executable test driver.
+      </p>
+    </introduction>
+
+    <!-- 5.11.2.1 Designing the Unit Test Plan -->
+    <subsubsection xml:id="subsubsec-5-11-2-1-unit-test-plan">
+      <title>Designing the Unit Test Plan</title>
+
+      <p>
+        Just as we did when designing test plans in Chapters 3 and 4, we group inputs into distinct categories that produce the same outcome (known in software engineering as <term>equivalence classes</term>), making sure to test both typical values and the boundary conditions at the edges of each range.
+      </p>
+
+      <p>
+        For our <c>getRecommendation(int aqi)</c> method, the precondition is <m>0 \le 	ext{aqi} \le 500</m>. The postcondition defines three distinct output categories, yielding six critical boundary values (0, 50, 51, 150, 151, and 500) alongside interior nominal values, as outlined in <xref ref="table-test-plan-get-recommendation" />.
+      </p>
+
+      <table xml:id="table-test-plan-get-recommendation">
+        <title>Test plan for unit testing <c>getRecommendation</c></title>
+        <tabular>
+          <col width="10%" />
+          <col width="12%" />
+          <col width="33%" />
+          <col width="45%" />
+          <row header="yes" bottom="medium">
+            <cell>Test Case</cell>
+            <cell>Input (<c>aqi</c>)</cell>
+            <cell>Category / Test Purpose</cell>
+            <cell>Expected Return Value</cell>
+          </row>
+          <row top="small">
+            <cell>1</cell>
+            <cell>0</cell>
+            <cell>Lower boundary of Healthy</cell>
+            <cell><q>Healthy air quality; safe to engage in outdoor activities.</q></cell>
+          </row>
+          <row top="small">
+            <cell>2</cell>
+            <cell>25</cell>
+            <cell>Interior value of Healthy</cell>
+            <cell><q>Healthy air quality; safe to engage in outdoor activities.</q></cell>
+          </row>
+          <row top="small">
+            <cell>3</cell>
+            <cell>50</cell>
+            <cell>Upper boundary of Healthy</cell>
+            <cell><q>Healthy air quality; safe to engage in outdoor activities.</q></cell>
+          </row>
+          <row top="small">
+            <cell>4</cell>
+            <cell>51</cell>
+            <cell>Lower boundary of Moderate</cell>
+            <cell><q>Moderate air quality; sensitive groups limit outdoor activities.</q></cell>
+          </row>
+          <row top="small">
+            <cell>5</cell>
+            <cell>100</cell>
+            <cell>Interior value of Moderate</cell>
+            <cell><q>Moderate air quality; sensitive groups limit outdoor activities.</q></cell>
+          </row>
+          <row top="small">
+            <cell>6</cell>
+            <cell>150</cell>
+            <cell>Upper boundary of Moderate</cell>
+            <cell><q>Moderate air quality; sensitive groups limit outdoor activities.</q></cell>
+          </row>
+          <row top="small">
+            <cell>7</cell>
+            <cell>151</cell>
+            <cell>Lower boundary of Unhealthy</cell>
+            <cell><q>Unhealthy air quality; limit outdoor activities.</q></cell>
+          </row>
+          <row top="small">
+            <cell>8</cell>
+            <cell>300</cell>
+            <cell>Interior value of Unhealthy</cell>
+            <cell><q>Unhealthy air quality; limit outdoor activities.</q></cell>
+          </row>
+          <row top="small">
+            <cell>9</cell>
+            <cell>500</cell>
+            <cell>Upper boundary of Unhealthy</cell>
+            <cell><q>Unhealthy air quality; limit outdoor activities.</q></cell>
+          </row>
+        </tabular>
+      </table>
+    </subsubsection>
+
+    <!-- 5.11.2.2 Implementing a Self-Checking Test Driver -->
+    <subsubsection xml:id="subsubsec-5-11-2-2-self-checking-test-driver">
+      <title>Implementing a Self-Checking Test Driver</title>
+
+      <p>
+        A <term>test driver</term> is a dedicated program written specifically to execute another method and verify its results.
+      </p>
+
+      <p>
+        Beginning programmers often write test drivers that simply print results to the screen, forcing the programmer to visually scan lines of text to spot errors. A much more professional approach is to write a <term>self-checking test driver</term>: code that compares the actual returned value against the expected value automatically, reporting a summary of passes and failures.
+      </p>
+
+      <p>
+        <xref ref="listing-test-aqi-recommendation" /> shows a complete self-checking test driver for our <c>getRecommendation</c> method:
+      </p>
+
+      <listing xml:id="listing-test-aqi-recommendation">
+        <caption>TestAqiRecommendation.java</caption>
+        <program language="java">
+<![CDATA[public class TestAqiRecommendation {
+
+    public static void main(String[] args) {
+        System.out.println("Running unit tests for getRecommendation...
+");
+
+        int failures = 0;
+
+        // Category 1: Healthy (0 - 50)
+        failures += runTest(0, "Healthy air quality; safe to engage in outdoor activities.");
+        failures += runTest(25, "Healthy air quality; safe to engage in outdoor activities.");
+        failures += runTest(50, "Healthy air quality; safe to engage in outdoor activities.");
+
+        // Category 2: Moderate (51 - 150)
+        failures += runTest(51, "Moderate air quality; sensitive groups limit outdoor activities.");
+        failures += runTest(100, "Moderate air quality; sensitive groups limit outdoor activities.");
+        failures += runTest(150, "Moderate air quality; sensitive groups limit outdoor activities.");
+
+        // Category 3: Unhealthy (151 - 500)
+        failures += runTest(151, "Unhealthy air quality; limit outdoor activities.");
+        failures += runTest(300, "Unhealthy air quality; limit outdoor activities.");
+        failures += runTest(500, "Unhealthy air quality; limit outdoor activities.");
+
+        // Summary report
+        System.out.println();
+        if (failures == 0) {
+            System.out.println("ALL TESTS PASSED.");
+        } else {
+            System.out.println("TEST RUN FAILED: " + failures + " error(s) detected.");
+        }
+    } // main
+
+    /**
+     * Executes a single test case, comparing the actual result 
+     * with the expected output.
+     *
+     * @param aqi      the test argument passed to getRecommendation
+     * @param expected the promised postcondition output string
+     * @return 0 if the test passed, or 1 if the test failed
+     */
+    public static int runTest(int aqi, String expected) {
+        String actual = AqSummaryMethod.getRecommendation(aqi);
+
+        if (actual.equals(expected)) {
+            System.out.println("PASS: AQI " + aqi);
+            return 0;
+        } else {
+            System.out.println("FAIL: AQI " + aqi);
+            System.out.println("   Expected: "" + expected + """);
+            System.out.println("   Actual:   "" + actual + """);
+            return 1;
+        }
+    } // runTest
+}]]>
+        </program>
+      </listing>
+
+      <p>
+        Notice the engineering benefits of this design:
+      </p>
+
+      <ul>
+        <li>
+          <p><strong>Automation:</strong> We do not have to type inputs into the console or guess whether the output is correct. We run the class, and it immediately reports <c>ALL TESTS PASSED</c> or flags the exact input that failed.</p>
+        </li>
+        <li>
+          <p><strong>Regression Testing:</strong> If we later refactor <c>getRecommendation</c><mdash />for instance, to optimize its string operations or clean up its branching<mdash />we can re-run this test driver to guarantee that our changes did not inadvertently break existing behavior.</p>
+        </li>
+        <li>
+          <p><strong>Decomposition Applied to Testing:</strong> The test driver itself is decomposed, using a helper method (<c>runTest</c>) that handles the invocation, comparison, and reporting.</p>
+        </li>
+      </ul>
+    </subsubsection>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 5.11.3 Integration and System Testing                        -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-11-3-integration-system-testing">
+    <title>Integration and System Testing</title>
+
+    <introduction>
+      <p>
+        Once individual methods pass their unit tests, we begin assembling them into larger workflows. Moving up the testing pyramid requires shifting our focus from isolated logic to the interactions between components.
+      </p>
+    </introduction>
+
+    <!-- 5.11.3.1 Integration Testing: Verifying the Handoffs -->
+    <subsubsection xml:id="subsubsec-5-11-3-1-integration-testing">
+      <title>Integration Testing: Verifying the Handoffs</title>
+
+      <p>
+        Integration testing verifies that independent methods communicate properly when wired together. Even when two methods pass their respective unit tests with flying colors, defects can emerge at the interface between them:
+      </p>
+
+      <ul>
+        <li><p>Method A may calculate an angle in degrees, while Method B expects that angle in radians.</p></li>
+        <li><p>A validation loop in <c>main</c> may permit an input value of 501, which violates the precondition of a downstream helper method.</p></li>
+        <li><p>A method may return <c>null</c> or an error code of <c>-1</c>, which the calling method fails to handle before using it in a calculation.</p></li>
+      </ul>
+
+      <p>
+        This is where the precondition assertions we wrote in <xref ref="subsec-5-11-1-assertions-pre-postconditions" /> act as indispensable safety tripwires. During integration testing, running with assertions enabled (<c>-ea</c>) ensures that if <c>main</c> mistakenly forwards bad data to a helper method, the JVM halts execution immediately at the method boundary. Instead of wondering why a calculation produced garbage three steps later, the assertion failure message pinpoints the exact point where the contract was breached.
+      </p>
+    </subsubsection>
+
+    <!-- 5.11.3.2 System Testing: The Full Application -->
+    <subsubsection xml:id="subsubsec-5-11-3-2-system-testing">
+      <title>System Testing: The Full Application</title>
+
+      <p>
+        System testing evaluates the entire, fully assembled software application against the system requirements. At this level, you are no longer testing individual methods or internal boundaries; you are testing complete scenarios, often involving a human end-user:
+      </p>
+
+      <ul>
+        <li><p>Does the program start and display the welcome banner?</p></li>
+        <li><p>If the user enters invalid characters or out-of-range numbers at the prompt, does the input loop catch the mistake and allow them to re-enter data gracefully without crashing?</p></li>
+        <li><p>If the program reads an external file, does it properly detect and handle a missing file or corrupted input lines?</p></li>
+        <li><p>Does the final formatted report match the real-world client requirements?</p></li>
+      </ul>
+
+      <p>
+        Combining all three levels of testing gives you high confidence in your code: unit testing checks that each method satisfies its contract, integration testing catches defects at the boundaries between components, and system testing ensures that the completed program behaves as expected.
+      </p>
+    </subsubsection>
+  </subsection>
+
+</section>

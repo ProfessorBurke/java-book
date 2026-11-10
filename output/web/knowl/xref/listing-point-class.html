@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<!--******************************************-->
+<!--*  Authored with PreTeXt                 *-->
+<!--*  pretextbook.org                       *-->
+<!--*  Theme: default-modern                 *-->
+<!--*  Palette:                              *-->
+<!--******************************************-->
+
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body class="ignore-math">
+<figure class="listing figure-like"><figcaption><span class="type">Listing</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">6.1<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span>The <code class="code-inline tex2jax_ignore">Point</code> class definition<div class="autopermalink" aria-hidden="true" data-description="Listing 6.1: The Point class definition"><a tabindex="-1" href="#listing-point-class" title="Copy heading and permalink for Listing 6.1: The Point class definition" aria-label="Copy heading and permalink for Listing 6.1: The Point class definition">🔗</a></div></figcaption><div class="listing__contents"><div class="code-box"><pre class="program clipboardable line-numbers"><code class="language-java">public class Point {
+    
+    private double x;
+    private double y;
+    
+    public Point(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
+    
+    public double distanceFromOrigin() {
+        return Math.sqrt((this.x * this.x) + (this.y * this.y));
+    }
+    
+    public void translate(double dx, double dy) {
+        this.x += dx;
+        this.y += dy;
+    }
+    
+    public double getX() {
+        return this.x;
+    }
+    
+    public double getY() {
+        return this.y;
+    }
+}
+</code></pre></div></div>
+</figure><span class="incontext"><a class="internal" href="sec-6-3-structure.html#listing-point-class">In Context</a></span>
+</body>
+</html>

@@ -1,0 +1,15 @@
+INFO    : Since no target was supplied, we will use "web".
+
+INFO    : Building target web
+INFO    : XSL conversion of D:\CCRI\__Java book rewrite\cs1-java-textbook\source\main.ptx by C:\Users\Maggie\.ptx\2.56.2\core\xsl\utilities\pretext-enhanced-source.xsl
+ERROR   : Error loading file:///D:/CCRI/__Java%20book%20rewrite/cs1-java-textbook/source/ch-06-objects-classes/sec-6-12-exercises.ptx: Premature end of data in tag p line 214, line 214, column 39 (file:///D:/CCRI/__Java%20book%20rewrite/cs1-java-textbook/source/ch-06-objects-classes/sec-6-12-exercises.ptx, line 214)
+ERROR   : Error assembling source file: Premature end of data in tag p line 214, line 214, column 39 (file:///D:/CCRI/__Java%20book%20rewrite/cs1-java-textbook/source/ch-06-objects-classes/sec-6-12-exercises.ptx, line 214)
+FATAL   : XML syntax for source file is invalid
+INFO    : ------------------------
+exit    : Failed to build without errors.  Exiting...
+INFO    : 
+----------------------------------------------------
+INFO    : While running pretext, the following errors occurred:
+
+INFO    : (see log messages above or in the 'logs' folder for more information)
+INFO    : ----------------------------------------------------

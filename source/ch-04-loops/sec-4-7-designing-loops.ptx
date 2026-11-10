@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-4-7-designing-loops" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Designing Loops: Finding the Patterns</title>
+
+  <introduction>
+    <p>
+      By this point in the chapter, you have learned the syntax for Java’s three loop structures (<c>while</c>, <c>do-while</c>, and <c>for</c>), explored how variables take on specific behavioral roles, and examined how loops can be nested.
+    </p>
+
+    <p>
+      However, when sitting in front of a blank editor screen trying to solve a new programming problem, beginners often feel stuck on the design:
+    </p>
+
+    <ul>
+      <li><p>Which loop should I use?</p></li>
+      <li><p>What belongs inside the loop body, and what belongs outside?</p></li>
+      <li><p>How do I write a condition that stops at the exact right moment?</p></li>
+    </ul>
+
+    <p>
+      Writing loops is not an exercise in guesswork. Experienced programmers do not invent loops from scratch each time; instead, they recognize standard repetition patterns and apply proven design strategies.
+    </p>
+  </introduction>
+
+  <!-- ============================================================ -->
+  <!-- 4.7.1 The Core Decision: Which Loop Structure Fits?          -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-7-1-core-decision">
+    <title>The Core Decision: Which Loop Structure Fits?</title>
+
+    <p>
+      Before writing a single line of code, look at the nature of the repetition required by your problem. Java provides three loop structures, each tailored to a specific category of repetition, outlined in <xref ref="table-categorizing-loop-use" />:
+    </p>
+
+    <table xml:id="table-categorizing-loop-use">
+      <title>Categorizing loop use by type</title>
+      <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+        <col width="18%"/>
+        <col width="22%"/>
+        <col width="30%"/>
+        <col width="30%"/>
+        <row header="yes">
+          <cell><strong>Loop Structure</strong></cell>
+          <cell><strong>Category</strong></cell>
+          <cell><strong>When to Use It</strong></cell>
+          <cell><strong>Typical Scenario</strong></cell>
+        </row>
+        <row>
+          <cell><c>for</c> loop</cell>
+          <cell>
+            <p>Definite Iteration</p>
+            <p><em>(Known count)</em></p>
+          </cell>
+          <cell>When you know in advance how many times the action must repeat, or when iterating across a fixed range of values.</cell>
+          <cell>Repeating an action 10 times; counting from 1 to <m>N</m>; stepping through a string or array.</cell>
+        </row>
+        <row>
+          <cell><c>while</c> loop</cell>
+          <cell>
+            <p>Indefinite Iteration</p>
+            <p><em>(Event-driven)</em></p>
+          </cell>
+          <cell>When repetition depends on an external condition or event, and you cannot predict how many iterations will be required. May run zero times.</cell>
+          <cell>Reading user input until a sentinel appears; searching for a target; repeating while an account balance remains positive.</cell>
+        </row>
+        <row>
+          <cell><c>do-while</c> loop</cell>
+          <cell>At-Least-Once Iteration</cell>
+          <cell>When the loop body must execute at least once before the condition can even be evaluated.</cell>
+          <cell>Displaying a menu; validating user input (prompting once, then repeating if the input is invalid).</cell>
+        </row>
+      </tabular>
+    </table>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 4.7.2 Deconstructing the Repetition: Three Questions         -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-7-2-deconstructing-repetition">
+    <title>Deconstructing the Repetition: Three Essential Questions</title>
+
+    <p>
+      Once you have identified the appropriate loop structure, analyze the problem by answering three foundational questions:
+    </p>
+
+    <paragraphs>
+      <title>1. What stays the same? (The loop body)</title>
+      <p>
+        Identify the repeated action that does not change from one cycle to the next. This becomes the code inside your loop body: prompting for a number, performing a calculation, or displaying a formatted line of output.
+      </p>
+    </paragraphs>
+
+    <paragraphs>
+      <title>2. What changes? (The state &amp; variable roles)</title>
+      <p>
+        Identify which pieces of information must update from one cycle to the next, and assign each variable a specific role (from <xref ref="sec-4-3-variable-roles" />):
+      </p>
+
+      <ul>
+        <li><p>Do you need a stepper to count iterations?</p></li>
+        <li><p>Do you need a gatherer to accumulate a running total?</p></li>
+        <li><p>Do you need a most-recent holder to store the latest value read from the console?</p></li>
+        <li><p>Do you need a most-wanted holder to track the largest or smallest value encountered so far?</p></li>
+      </ul>
+
+      <p>
+        Assigning roles to your variables before writing code clarifies where they should be declared, how they should be initialized, and where their values should update.
+      </p>
+    </paragraphs>
+
+    <paragraphs>
+      <title>3. When must it stop? (The inversion trick)</title>
+      <p>
+        Human beings naturally describe tasks in terms of when they stop, for example:
+      </p>
+
+      <ul>
+        <li><p><q>Stop when the user enters -1.</q></p></li>
+        <li><p><q>Stop when the balance reaches zero.</q></p></li>
+        <li><p><q>Stop when the guess equals the secret number.</q></p></li>
+      </ul>
+
+      <p>
+        However, Java loop headers are framed in terms of when to continue. A <c>while</c> loop continues while the condition is <c>true</c>.
+      </p>
+
+      <p>
+        To write an accurate loop condition, state your natural stopping condition, and then invert it using logical operators to find your continuation condition. <xref ref="table-stopping-vs-continuation" /> contains some examples:
+      </p>
+
+      <table xml:id="table-stopping-vs-continuation">
+        <title>Natural stopping condition versus Java continuation condition</title>
+        <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+          <col width="50%"/>
+          <col width="50%"/>
+          <row header="yes">
+            <cell><strong>Natural Goal (When to STOP)</strong></cell>
+            <cell><strong>Java Header Test (When to CONTINUE)</strong></cell>
+          </row>
+          <row>
+            <cell>Stop when <c>score == -1</c></cell>
+            <cell><c>while (score != -1)</c></cell>
+          </row>
+          <row>
+            <cell>Stop when <c>balance &lt;= 0</c></cell>
+            <cell><c>while (balance &gt; 0)</c></cell>
+          </row>
+          <row>
+            <cell>Stop when <c>guess == secret</c></cell>
+            <cell><c>while (guess != secret)</c></cell>
+          </row>
+          <row>
+            <cell>Stop when <c>input &gt;= 1 &amp;&amp; input &lt;= 10</c></cell>
+            <cell><c>while (input &lt; 1 || input &gt; 10)</c></cell>
+          </row>
+        </tabular>
+      </table>
+
+      <p>
+        Note that the inversion trick can also help you convert a <c>while (true)</c> infinite loop with a <c>break</c> condition into a <q>loop that doesn’t lie</q> by placing the stopping condition in the loop header.
+      </p>
+    </paragraphs>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 4.7.3 The Five Standard Loop Patterns                        -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-7-3-five-standard-loop-patterns">
+    <title>The Five Standard Loop Patterns</title>
+
+    <p>
+      Nearly all loops written in introductory computer science fit into one of five standard archetypes. Recognizing which archetype your problem requires provides an immediate structural blueprint.
+    </p>
+
+    <paragraphs>
+      <title>Pattern 1: The Counter / Range Walker</title>
+      <ul>
+        <li><p><strong>Purpose:</strong> Advance a stepper through a known, predictable sequence of numbers.</p></li>
+        <li><p><strong>Best Choice:</strong> <c>for</c> loop.</p></li>
+      </ul>
+      <p><strong>Blueprint:</strong></p>
+      <program language="java"><![CDATA[for (int i = start; i < end; i += step) {
+    // Work that depends on the current value of i
+}]]></program>
+    </paragraphs>
+
+    <paragraphs>
+      <title>Pattern 2: The Accumulator / Running Total</title>
+      <ul>
+        <li><p><strong>Purpose:</strong> Combine multiple data values into a single summary result (such as a sum, product, or concatenated string).</p></li>
+        <li><p><strong>Key Rule:</strong> Initialize the gatherer variable before the loop using the appropriate identity element (0 for addition, 1 for multiplication, <c>""</c> for text).</p></li>
+      </ul>
+      <p><strong>Blueprint:</strong></p>
+      <program language="java"><![CDATA[int total = 0; // Gatherer initialized with identity element
+ 
+for (int i = 1; i <= count; i++) {
+    int value = /* obtain next value */;
+    total += value; // Accumulate into the gatherer
+}]]></program>
+    </paragraphs>
+
+    <paragraphs>
+      <title>Pattern 3: The Sentinel Stream Processor</title>
+      <ul>
+        <li><p><strong>Purpose:</strong> Process an unknown quantity of input values until a specific stopping value is encountered.</p></li>
+        <li><p><strong>Key Rule:</strong> Apply the primed-loop pattern (read once before the loop and read again at the very bottom of the loop body).</p></li>
+      </ul>
+      <p><strong>Blueprint:</strong></p>
+      <program language="java"><![CDATA[// 1. Prime the pump
+System.out.print("Enter value (sentinel to stop): ");
+int value = stdin.nextInt();
+ 
+// 2. Test
+while (value != SENTINEL) {
+    // 3. Process valid value
+    total += value;
+ 
+    // 4. Updating read at the bottom
+    System.out.print("Enter value (sentinel to stop): ");
+    value = stdin.nextInt();
+}]]></program>
+    </paragraphs>
+
+    <paragraphs>
+      <title>Pattern 4: The Most-Wanted Finder (Min / Max)</title>
+      <ul>
+        <li><p><strong>Purpose:</strong> Inspect a series of values and identify the one that best satisfies an extreme criteria (largest number, lowest temperature, longest word).</p></li>
+        <li><p><strong>Key Rule:</strong> Seed the most-wanted holder with the first actual data value rather than an arbitrary starting constant.</p></li>
+      </ul>
+      <p><strong>Blueprint:</strong></p>
+      <program language="java"><![CDATA[// Seed with the first actual data point
+int largest = stdin.nextInt();
+ 
+while (/* more data remains */) {
+    int nextValue = stdin.nextInt();
+    if (nextValue > largest) {
+        largest = nextValue; // New best fit found.
+    }
+}]]></program>
+    </paragraphs>
+
+    <paragraphs>
+      <title>Pattern 5: The Input Validator</title>
+      <ul>
+        <li><p><strong>Purpose:</strong> Intercept user input and refuse to proceed until the user enters data that satisfies specific constraints.</p></li>
+        <li><p><strong>Best Choice:</strong> <c>do-while</c> loop (or a <c>while</c> loop that traps bad input).</p></li>
+      </ul>
+      <p><strong>Blueprint:</strong></p>
+      <program language="java"><![CDATA[int number;
+do {
+    System.out.print("Enter a positive number: ");
+    number = stdin.nextInt();
+    if (number <= 0) {
+        System.out.println("Invalid entry. Number must be greater than zero.");
+    }
+} while (number <= 0); // Repeat while the input is invalid]]></program>
+    </paragraphs>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 4.7.4 Verification: The three-point check                    -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-7-4-verification-three-point-check">
+    <title>Verification: The Three-Point Check</title>
+
+    <p>
+      Once you have drafted a loop on paper, you can verify that it will execute properly and terminate on time by performing a three-point check:
+    </p>
+
+    <ol>
+      <li>
+        <p><strong>The Starting Point (Iteration 1):</strong> Mentally trace the very first iteration. Are the variables initialized to the correct starting values? Does the loop condition evaluate to <c>true</c> on the first pass? Does the body produce the correct initial result?</p>
+      </li>
+      <li>
+        <p><strong>The Progression (A Middle Step):</strong> Trace an arbitrary middle step. Does the update statement actually advance the loop state closer to the termination condition? If the variable never moves toward the stopping threshold, your program will enter an infinite loop.</p>
+      </li>
+      <li>
+        <p><strong>The Termination Point (Final Step):</strong> Trace the final iteration and the stopping point. Does the loop stop at the exact value intended, or is there an off-by-one error? What is the final value stored in the loop control variable after the loop terminates?</p>
+      </li>
+    </ol>
+
+    <p>
+      By classifying your problem into one of the standard loop archetypes, establishing your variables’ roles, and verifying the three boundary points, you can design reliable, readable loops for any problem with confidence.
+    </p>
+  </subsection>
+</section>

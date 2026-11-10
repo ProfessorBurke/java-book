@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<!--******************************************-->
+<!--*  Authored with PreTeXt                 *-->
+<!--*  pretextbook.org                       *-->
+<!--*  Theme: default-modern                 *-->
+<!--*  Palette:                              *-->
+<!--******************************************-->
+
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body class="ignore-math">
+<figure class="listing figure-like"><figcaption><span class="type">Listing</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">6.7<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><code class="code-inline tex2jax_ignore">ElectricVehicleDemo</code> creates two objects and invokes methods on them<div class="autopermalink" aria-hidden="true" data-description="Listing 6.7: ElectricVehicleDemo creates two objects and invokes methods on them"><a tabindex="-1" href="#listing-ev-demo" title="Copy heading and permalink for Listing 6.7: ElectricVehicleDemo creates two objects and invokes methods on them" aria-label="Copy heading and permalink for Listing 6.7: ElectricVehicleDemo creates two objects and invokes methods on them">🔗</a></div></figcaption><div class="listing__contents"><div class="code-box"><pre class="program clipboardable line-numbers"><code class="language-java">public class ElectricVehicleDemo {
+    
+    public static void main(String[] args) {
+        // Declares two electric vehicle variables.
+        ElectricVehicle commuter, cruiser;
+        
+        // Instantiates the ElectricVehicle objects.
+        commuter = new ElectricVehicle("Chevy Bolt EV", 65.0, 4.0);
+        cruiser = new ElectricVehicle("Hyundai Ioniq 5", 77.4, 3.9);
+
+        // Displays the estimated range for each.
+        System.out.printf("%s range: %.1f miles %n", commuter.getModel(), 
+                          commuter.getEstimatedRange());
+        System.out.printf("%s range: %.1f miles %n", cruiser.getModel(), 
+                          cruiser.getEstimatedRange());
+
+        // Drives both vehicles.
+        System.out.println("--- Driving ---");
+        commuter.drive(100.0);
+        cruiser.drive(280.0); 
+
+        // Charges the cruiser and displays its range.
+        System.out.printf("%s range: %.1f miles %n", cruiser.getModel(), 
+                          cruiser.getEstimatedRange());
+        System.out.println("--- Charging ---");
+        cruiser.charge(40.0);
+        System.out.printf("%s range: %.1f miles %n", cruiser.getModel(), 
+                          cruiser.getEstimatedRange());
+    }
+}
+</code></pre></div></div>
+</figure><span class="incontext"><a class="internal" href="sec-6-4-defining-class.html#listing-ev-demo">In Context</a></span>
+</body>
+</html>

@@ -2,27 +2,37 @@
 <section xml:id="sec-6-7-memory-model">
   <title>Objects in Memory: The Stack and the Heap</title>
 
-  <p>
-    It is well worth our time now to review the fundamentals of Java memory management, 
-    discuss how other languages solve the same problems, and learn the causes of and 
-    solutions to several common memory-related bugs. A robust understanding of how a Java 
-    program operates behind the scenes will pay dividends: you will write correct code 
-    from the start and avoid spending hours chasing memory-related crashes and semantic 
-    errors.
-  </p>
+  
+  <introduction>
+    <p>
+      It is well worth our time now to review the fundamentals of Java memory management, 
+      discuss how other languages solve the same problems, and learn the causes of and 
+      solutions to several common memory-related bugs. A robust understanding of how a Java 
+      program operates behind the scenes will pay dividends: you will write correct code 
+      from the start and avoid spending hours chasing memory-related crashes and semantic 
+      errors.
+    </p>
+  </introduction>
+
+
 
   <subsection xml:id="subsec-6-7-1-memory-areas">
     <title>Memory: Stack, Heap, and Static Area</title>
 
-    <p>
-      In Section 1.4, we gave an overview of four areas of memory that a running program 
-      maintains: the code segment, the static segment, the stack, and the heap. Your program's 
-      data is stored in the last three: the static segment, the stack, and the heap. It is 
-      critical to understand where a piece of data resides so that you know how to compare, 
-      copy, and modify it correctly. If you try to compare objects using the equality 
-      operators (<c>==</c> and <c>!=</c>), or if you accidentally declare an instance 
-      variable <c>static</c>, your program will behave unpredictably.
-    </p>
+    
+    <introduction>
+      <p>
+        In Section 1.4, we gave an overview of four areas of memory that a running program 
+        maintains: the code segment, the static segment, the stack, and the heap. Your program's 
+        data is stored in the last three: the static segment, the stack, and the heap. It is 
+        critical to understand where a piece of data resides so that you know how to compare, 
+        copy, and modify it correctly. If you try to compare objects using the equality 
+        operators (<c>==</c> and <c>!=</c>), or if you accidentally declare an instance 
+        variable <c>static</c>, your program will behave unpredictably.
+      </p>
+    </introduction>
+
+
 
     <subsubsection xml:id="subsubsec-6-7-1-1-the-stack">
       <title>The Stack</title>
@@ -53,15 +63,13 @@
         argument <c>p1</c>, after creating <c>p1</c> and <c>p2</c>:
       </p>
 
-      <program language="java">
-        <code>
+      <program language="java" line-numbers="yes">
     public static void memoryExample(Point parameterPoint) {
         Point localPoint;
         double x = parameterPoint.getX();
         double y = parameterPoint.getY();
         localPoint = new Point(x, y);
     }
-        </code>
       </program>
 
       <p>
@@ -181,17 +189,22 @@
   <subsection xml:id="subsec-6-7-2-dereferencing">
     <title>Reference Variables and Implicit Dereferencing</title>
 
-    <p>
-      Throughout this chapter, we have drawn arrows in our memory diagrams connecting reference 
-      variables on the call stack to objects on the heap. But what is an arrow in physical 
-      computer hardware?
-    </p>
+    
+    <introduction>
+      <p>
+        Throughout this chapter, we have drawn arrows in our memory diagrams connecting reference 
+        variables on the call stack to objects on the heap. But what is an arrow in physical 
+        computer hardware?
+      </p>
 
-    <p>
-      To understand how Java manipulates objects<mdash/>and to prepare you for the explicit 
-      pointer syntax you will encounter in languages like C and C++<mdash/>we need to examine 
-      what an address actually is and what happens when you use the dot operator (<c>.</c>).
-    </p>
+      <p>
+        To understand how Java manipulates objects<mdash/>and to prepare you for the explicit 
+        pointer syntax you will encounter in languages like C and C++<mdash/>we need to examine 
+        what an address actually is and what happens when you use the dot operator (<c>.</c>).
+      </p>
+    </introduction>
+
+
 
     <subsubsection xml:id="subsubsec-6-7-2-1-what-address-is">
       <title>What a Memory Address Really Is</title>
@@ -207,10 +220,8 @@
         When you write:
       </p>
 
-      <program language="java">
-        <code>
+      <program language="java" line-numbers="yes">
 Point p1 = new Point(3.0, 4.0);
-        </code>
       </program>
 
       <p>
@@ -354,10 +365,8 @@ Point p1 = new Point(3.0, 4.0);
         to make the language safer and easier to learn. In Java, writing:
       </p>
 
-      <program language="java">
-        <code>
+      <program language="java" line-numbers="yes">
 p1.getX();
-        </code>
       </program>
 
       <p>
@@ -365,9 +374,7 @@ p1.getX();
       </p>
 
       <program language="c++">
-        <code>
 p1-&gt;getX();
-        </code>
       </program>
 
       <p>
@@ -391,8 +398,7 @@ p1-&gt;getX();
 
     <listing xml:id="listing-rectangle-class">
       <caption>The <c>Rectangle</c> class</caption>
-      <program language="java">
-        <code>
+      <program language="java" line-numbers="yes">
 /**
  * Represents a two-dimensional rectangle defined by an anchor Point 
  * at its top-left corner, a width, and a height.
@@ -460,7 +466,6 @@ public class Rectangle {
         return this.topLeft;
     }
 }
-        </code>
       </program>
     </listing>
 
@@ -474,10 +479,8 @@ public class Rectangle {
       calculation directly to the composed <c>Point</c>:
     </p>
 
-    <program language="java">
-      <code>
+    <program language="java" line-numbers="yes">
 return this.topLeft.distanceFromOrigin();
-      </code>
     </program>
 
     <p>
@@ -487,8 +490,7 @@ return this.topLeft.distanceFromOrigin();
 
     <listing xml:id="listing-rectangle-demo">
       <caption>The <c>RectangleDemo</c> class</caption>
-      <program interactive="activecode" language="java">
-        <code>
+      <program language="java" line-numbers="yes">
 public class RectangleDemo {
     public static void main(String[] args) {
         // Creates a Rectangle and prints its distance from the origin.
@@ -500,7 +502,6 @@ public class RectangleDemo {
         System.out.println(rect1.distanceFromOrigin());
     }
 }
-        </code>
       </program>
     </listing>
 
@@ -569,13 +570,11 @@ public class RectangleDemo {
       the reference is not <c>null</c> before dereferencing it:
     </p>
 
-    <program language="java">
-      <code>
+    <program language="java" line-numbers="yes">
 // Safe defensive check before dereferencing:
 if (this.middleName != null) {
     System.out.println("Middle initial: " + this.middleName.charAt(0));
 }
-      </code>
     </program>
 
     <p>
@@ -589,14 +588,12 @@ if (this.middleName != null) {
       constructor:
     </p>
 
-    <program language="java">
-      <code>
+    <program language="java" line-numbers="yes">
     // Buggy constructor: forgot to initialize topLeft!
     public Rectangle(double width, double height) {
         this.width = width;
         this.height = height;
     }
-      </code>
     </program>
 
     <p>
@@ -647,12 +644,10 @@ Exception in thread "main" java.lang.NullPointerException: Cannot invoke "Point.
         In Section 6.7.1.1, we saw a method that accepted a <c>Point</c> object as a parameter:
       </p>
 
-      <program language="java">
-        <code>
+      <program language="java" line-numbers="yes">
     public static void memoryExample(Point parameterPoint) {
         ...
     }
-        </code>
       </program>
 
       <p>
@@ -675,8 +670,7 @@ Exception in thread "main" java.lang.NullPointerException: Cannot invoke "Point.
         Suppose we add the following <c>reflectPoint</c> method to <c>PointDemo.java</c>:
       </p>
 
-      <program language="java">
-        <code>
+      <program language="java" line-numbers="yes">
     /**
      * Reflects the point across the y axis.
      * Precondition: p != null
@@ -688,19 +682,16 @@ Exception in thread "main" java.lang.NullPointerException: Cannot invoke "Point.
         assert p != null : "A nonexistent point cannot be reflected.";
         p.translate(-2 * p.getX(), 0);
     }
-        </code>
       </program>
 
       <p>
         And suppose we invoke <c>reflectPoint(p1)</c> in <c>main</c>:
       </p>
 
-      <program language="java">
-        <code>
+      <program language="java" line-numbers="yes">
 Point p1 = new Point(3.0, 4.0);
 Point p2 = new Point(5.0, 12.0);
 reflectPoint(p1);
-        </code>
       </program>
 
       <p>
@@ -733,15 +724,13 @@ reflectPoint(p1);
         create a new reflected object rather than mutating the existing one:
       </p>
 
-      <program language="java">
-        <code>
+      <program language="java" line-numbers="yes">
 public static void badReflectPoint(Point p) {
     // Reassigns the LOCAL parameter p to a new heap object;
     // does NOT change p1 in main!
     assert p != null : "A nonexistent point cannot be reflected.";
     p = new Point(-p.getX(), p.getY());
 }
-        </code>
       </program>
 
       <p>
@@ -785,14 +774,12 @@ public static void badReflectPoint(Point p) {
         When working with primitive types, copying duplicates the raw value:
       </p>
 
-      <program language="java">
-        <code>
+      <program language="java" line-numbers="yes">
 int score1 = 100;
 int score2 = score1; // Copies the integer 100 into score2
 
 score2 = 85;         // Overwrites score2 with 85
 System.out.println(score1); // Still prints 100
-        </code>
       </program>
 
       <p>
@@ -801,11 +788,9 @@ System.out.println(score1); // Still prints 100
         the value stored in a reference variable is a memory address:
       </p>
 
-      <program language="java">
-        <code>
+      <program language="java" line-numbers="yes">
 Point p1 = new Point(3.0, 4.0);
 Point p3 = p1; // Copies the address stored in p1 into p3
-        </code>
       </program>
 
       <p>
@@ -833,13 +818,11 @@ Point p3 = p1; // Copies the address stored in p1 into p3
         called through either alias modifies the shared object:
       </p>
 
-      <program language="java">
-        <code>
+      <program language="java" line-numbers="yes">
 p3.translate(1.0, 2.0); // Shifts the object at 0x100 by (1.0, 2.0)
 
 System.out.println(p3.getX()); // Prints 4.0
 System.out.println(p1.getX()); // Prints 4.0!
-        </code>
       </program>
 
       <p>
@@ -849,15 +832,13 @@ System.out.println(p1.getX()); // Prints 4.0!
         data stored inside the heap objects:
       </p>
 
-      <program language="java">
-        <code>
+      <program language="java" line-numbers="yes">
 Point p1 = new Point(3.0, 4.0);
 Point p2 = new Point(3.0, 4.0);
 Point p3 = p1;
 
 System.out.println(p1 == p3); // true  (both hold address 0x100; they are aliases)
 System.out.println(p1 == p2); // false (0x100 != 0x200; they are distinct objects!)
-        </code>
       </program>
 
       <p>
@@ -871,18 +852,23 @@ System.out.println(p1 == p2); // false (0x100 != 0x200; they are distinct object
   <subsection xml:id="subsec-6-7-5-copy-constructors">
     <title>True Object Duplication: The Copy Constructor</title>
 
-    <p>
-      If the assignment operator cannot duplicate an object, how do we create an independent 
-      copy of data in the heap?
-    </p>
+    
+    <introduction>
+      <p>
+        If the assignment operator cannot duplicate an object, how do we create an independent 
+        copy of data in the heap?
+      </p>
 
-    <p>
-      Duplicating an object requires resolving critical design questions: should composed objects 
-      be shared (a <em>shallow copy</em>), or should new independent objects be allocated (a 
-      <em>deep copy</em>)? Because these decisions depend on the class design and invariants, 
-      Java places control in the hands of the class author through a specialized pattern: 
-      the <em>copy constructor</em>.
-    </p>
+      <p>
+        Duplicating an object requires resolving critical design questions: should composed objects 
+        be shared (a <em>shallow copy</em>), or should new independent objects be allocated (a 
+        <em>deep copy</em>)? Because these decisions depend on the class design and invariants, 
+        Java places control in the hands of the class author through a specialized pattern: 
+        the <em>copy constructor</em>.
+      </p>
+    </introduction>
+
+
 
     <subsubsection xml:id="subsubsec-6-7-5-1-copy-fundamentals">
       <title>Copy Constructor Fundamentals</title>
@@ -896,8 +882,7 @@ System.out.println(p1 == p2); // false (0x100 != 0x200; they are distinct object
         Let's add a copy constructor to the <c>Point</c> class:
       </p>
 
-      <program language="java">
-        <code>
+      <program language="java" line-numbers="yes">
     /**
      * Constructs a new Point with the same coordinates as an existing Point.
      *
@@ -909,7 +894,6 @@ System.out.println(p1 == p2); // false (0x100 != 0x200; they are distinct object
         assert toCopy != null : "Cannot copy a null Point";
         this(toCopy.x, toCopy.y);
     }
-        </code>
       </program>
 
       <p>
@@ -923,12 +907,10 @@ System.out.println(p1 == p2); // false (0x100 != 0x200; they are distinct object
         Code in <c>main</c> that invokes the copy constructor:
       </p>
 
-      <program language="java">
-        <code>
+      <program language="java" line-numbers="yes">
 Point p1 = new Point(3.0, 4.0);
 Point p2 = new Point(5.0, 12.0);
 Point p3 = new Point(p1);
-        </code>
       </program>
 
       <p>
@@ -957,8 +939,7 @@ Point p3 = new Point(p1);
         simply copies field values directly, we make a <em>shallow copy</em>:
       </p>
 
-      <program language="java">
-        <code>
+      <program language="java" line-numbers="yes">
     // Shallow copy constructor: copies references!
     public Rectangle(Rectangle toCopy) {
         assert toCopy != null : "Cannot copy a null Rectangle.";
@@ -966,7 +947,6 @@ Point p3 = new Point(p1);
         this.width = toCopy.width;
         this.height = toCopy.height;
     }
-        </code>
       </program>
 
       <p>
@@ -994,8 +974,7 @@ Point p3 = new Point(p1);
         both primitive and reference fields are completely independent:
       </p>
 
-      <program language="java">
-        <code>
+      <program language="java" line-numbers="yes">
     /**
      * Constructs a new Rectangle that is a deep copy of the parameter.
      *
@@ -1013,7 +992,6 @@ Point p3 = new Point(p1);
             "Cannot copy a null Rectangle or a Rectangle with a null Point.";
         this(toCopy.topLeft.getX(), toCopy.topLeft.getY(), toCopy.width, toCopy.height);
     }
-        </code>
       </program>
 
       <p>
@@ -1038,12 +1016,17 @@ Point p3 = new Point(p1);
   <subsection xml:id="subsec-6-7-6-garbage-collection">
     <title>Object Lifetime and Automatic Garbage Collection</title>
 
-    <p>
-      When a local variable goes out of scope on the stack, its lifetime ends immediately and 
-      its memory is reclaimed by the CPU. But heap memory does not have a scope tied to curly 
-      braces (<c>{ }</c>). An object on the heap can outlive the method that instantiated it<mdash/>as 
-      long as some variable somewhere in the program still holds its address.
-    </p>
+    
+    <introduction>
+      <p>
+        When a local variable goes out of scope on the stack, its lifetime ends immediately and 
+        its memory is reclaimed by the CPU. But heap memory does not have a scope tied to curly 
+        braces (<c>{ }</c>). An object on the heap can outlive the method that instantiated it<mdash/>as 
+        long as some variable somewhere in the program still holds its address.
+      </p>
+    </introduction>
+
+
 
     <subsubsection xml:id="subsubsec-6-7-6-1-reachability">
       <title>The Definition of <q>Unreachable</q></title>
@@ -1082,11 +1065,9 @@ Point p3 = new Point(p1);
       </p>
 
       <program language="c++">
-        <code>
 // In C++: Manual memory management
 Point* ptr = new Point(3.0, 4.0); // Programmer manually allocates
 delete ptr;                       // Programmer must remember to manually free!
-        </code>
       </program>
 
       <p>

@@ -1,0 +1,13 @@
+INFO    : Building target web
+INFO    : XSL conversion of D:\CCRI\__Java book rewrite\cs1-java-textbook\source\main.ptx by C:\Users\Maggie\.ptx\2.56.2\core\xsl\utilities\pretext-enhanced-source.xsl
+ERROR   : Error loading file:///D:/CCRI/__Java%20book%20rewrite/cs1-java-textbook/source/ch-05-methods/sec-5-13-moving-on.ptx: Error reading file 'file:///D:/CCRI/__Java%20book%20rewrite/cs1-java-textbook/source/ch-05-methods/sec-5-13-moving-on.ptx': failed to load external entity "file:///D:/CCRI/__Java%20book%20rewrite/cs1-java-textbook/source/ch-05-methods/sec-5-13-moving-on.ptx"
+ERROR   : Error assembling source file: Error reading file 'file:///D:/CCRI/__Java%20book%20rewrite/cs1-java-textbook/source/ch-05-methods/sec-5-13-moving-on.ptx': failed to load external entity "file:///D:/CCRI/__Java%20book%20rewrite/cs1-java-textbook/source/ch-05-methods/sec-5-13-moving-on.ptx"
+FATAL   : XML syntax for source file is invalid
+INFO    : ------------------------
+exit    : Failed to build without errors.  Exiting...
+INFO    : 
+----------------------------------------------------
+INFO    : While running pretext, the following errors occurred:
+
+INFO    : (see log messages above or in the 'logs' folder for more information)
+INFO    : ----------------------------------------------------

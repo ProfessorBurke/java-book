@@ -1,8 +1,24 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <pretext xmlns:xi="http://www.w3.org/2001/XInclude">
-  <book xml:id="cs1-java">
-    <title>Java for Everyone</title>
 
+  <docinfo>
+   <directories external="../assets" />
+    <defaults>
+      <programs linenumbers="yes" />
+    </defaults>
+  </docinfo>
+  
+
+  <book xml:id="cs1-java">
+    <title>Java for Computer Science</title>
+    <subtitle>Core Principles and Practice</subtitle>
+    <xi:include href="frontmatter.ptx" />
+	<xi:include href="ch-01-overview/ch-computing-foundation.ptx" />
+	<xi:include href="ch-02-getting-started/ch-getting-started.ptx" />
+	<xi:include href="ch-03-selection/ch-selection.ptx" />
+	<xi:include href="ch-04-loops/ch-loops.ptx" />
+	<xi:include href="ch-05-methods/ch-methods.ptx" />
     <xi:include href="ch-06-objects-classes/ch-objects-classes.ptx" />
   </book>
+
 </pretext>

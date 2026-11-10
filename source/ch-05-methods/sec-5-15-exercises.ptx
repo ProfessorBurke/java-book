@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exercises xml:id="sec-5-15-exercises" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Programming Projects</title>
+
+  <introduction>
+    <p>
+      The following programming projects require you to design, implement, and verify complete modular Java programs in your local integrated development environment (IDE), such as Eclipse. Each project reinforces the modular engineering principles explored in this chapter: functional decomposition (top-down design and bottom-up implementation), clear procedural abstraction boundaries, formal Javadoc contracts (<c>@param</c>, <c>@return</c>, and <c>@throws</c>), defensive precondition/postcondition assertions, value-returning and predicate methods, and automated self-checking unit test drivers.
+    </p>
+  </introduction>
+
+  <!-- ============================================================ -->
+  <!-- Project 1: Dough Scaler with Recipe & Hydration Helpers     -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-dough-scaler5">
+    <title>Dough Scaler with Recipe &amp; Hydration Helpers</title>
+    <statement>
+      <p>
+        Commercial bakeries scale recipes using <q>baker’s percentages</q> and classify dough handling based on its hydration ratio (the weight of water relative to the weight of flour).
+      </p>
+      <p>
+        Write a modular program that prompts the baker for their desired total batch weight in grams (a positive <c>double</c>) and their desired hydration percentage (e.g., <c>72.0</c> for 72.0%). Assume standard sourdough proportions for salt (2.0%) and yeast (1.5%).
+      </p>
+      <p>
+        <strong>Program Requirements:</strong>
+        <ol>
+          <li>
+            <p><strong>Helper Method 1 (<c>calculateFlour</c>):</strong></p>
+            <program language="java">
+<![CDATA[public static double calculateFlour(double batchWeight, double hydrationRate, 
+                                   double saltRate, double yeastRate)]]>
+            </program>
+            <p>
+              Calculates and returns the required flour weight in grams using the baker's percentage formula:
+            </p>
+            <md>\text{Flour Weight} = \frac{\text{batchWeight}}{1.0 + (\text{hydrationRate} / 100.0) + (\text{saltRate} / 100.0) + (\text{yeastRate} / 100.0)}</md>
+            <p>
+              <em>Precondition:</em> All four parameters must be strictly positive (<m>&gt; 0.0</m>). Enforce with an assertion.
+            </p>
+          </li>
+          <li>
+            <p><strong>Helper Method 2 (<c>getDoughCategory</c>):</strong></p>
+            <program language="java">
+<![CDATA[public static String getDoughCategory(double hydrationRate)]]>
+            </program>
+            <p>
+              Returns <q>Stiff / Bagel</q> if <m>\text{hydrationRate} &lt; 65.0</m>, <q>Standard Artisan</q> if <m>65.0 \le \text{hydrationRate} \le 75.0</m>, or <q>Wet / Ciabatta</q> if <m>\text{hydrationRate} &gt; 75.0</m>.
+            </p>
+            <p>
+              <em>Precondition:</em> <m>\text{hydrationRate} &gt; 0.0</m>.
+            </p>
+          </li>
+          <li>
+            <p><strong>Testing Suite Requirement:</strong> Write a self-checking test driver class (<c>TestDoughCategory</c>) that tests <c>getDoughCategory</c>. Construct a test plan table targeting the two critical boundaries (65.0% and 75.0%) alongside interior nominal values, verifying that the method returns the exact expected category strings without crashing.</p>
+          </li>
+        </ol>
+      </p>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 2: Tabletop RPG Modifier & Feat Qualifier            -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-rpg-modifier5">
+    <title>Tabletop RPG Modifier &amp; Feat Qualifier</title>
+    <statement>
+      <p>
+        In tabletop role-playing games (like Dungeons &amp; Dragons), core ability scores govern gameplay mechanics through derived modifiers and prerequisite checks for specialized character feats.
+      </p>
+      <p>
+        Write a program that prompts the player for their character’s ability score (an <c>int</c> between 1 and 30) and their current character level (an <c>int</c> between 1 and 20).
+      </p>
+      <p>
+        <strong>Program Requirements:</strong>
+        <ol>
+          <li>
+            <p><strong>Helper Method 1 (<c>calculateModifier</c>):</strong></p>
+            <program language="java">
+<![CDATA[public static int calculateModifier(int abilityScore)]]>
+            </program>
+            <p>
+              Calculates and returns the ability modifier using the official D&amp;D floor formula:
+            </p>
+            <md>\text{modifier} = \left\lfloor \frac{\text{abilityScore} - 10}{2} \right\rfloor</md>
+            <p>
+              (Hint: Remember from Chapter 4 that Java’s integer division truncates toward zero rather than <m>-\infty</m>; use <c>Math.floorDiv(abilityScore - 10, 2)</c> to ensure an odd score of 9 correctly yields <m>-1</m> rather than <m>0</m>).
+            </p>
+            <p>
+              <em>Precondition:</em> <c>abilityScore &gt;= 1 &amp;&amp; abilityScore &lt;= 30</c>.
+            </p>
+          </li>
+          <li>
+            <p><strong>Helper Method 2 (<c>isFeatEligible</c>):</strong></p>
+            <program language="java">
+<![CDATA[public static boolean isFeatEligible(int abilityScore, int characterLevel)]]>
+            </program>
+            <p>
+              A predicate method returning <c>true</c> if the character meets the prerequisites for an advanced combat feat (<c>abilityScore &gt;= 13 &amp;&amp; characterLevel &gt;= 4</c>), and <c>false</c> otherwise.
+            </p>
+          </li>
+          <li>
+            <p><strong>Testing Suite Requirement:</strong> Write a self-checking test driver class (<c>TestAbilityModifier</c>) for <c>calculateModifier</c>. Design a test plan table testing the odd/even boundary pairs around zero (9, 10, 11), the absolute minimum (1), the standard maximum (20), and the epic maximum (30).</p>
+          </li>
+        </ol>
+      </p>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 3: DIY Home Renovation Estimator                    -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-renovation-estimator5">
+    <title>DIY Home Renovation Estimator</title>
+    <statement>
+      <p>
+        Write a program that prompts for a room's length, width, and ceiling height in feet (positive <c>double</c> values). It will calculate materials for rectangular rooms using dedicated subroutines to avoid purchasing partial packages.
+      </p>
+      <p>
+        <strong>Program Requirements:</strong>
+        <ol>
+          <li>
+            <p><strong>Helper Method 1 (<c>calculateTileBoxes</c>):</strong></p>
+            <program language="java">
+<![CDATA[public static int calculateTileBoxes(double length, double width, double sqFtPerBox)]]>
+            </program>
+            <p>
+              Computes floor area (<m>\text{area} = \text{length} \times \text{width}</m>) and returns the whole number of tile boxes required, rounded up using <c>Math.ceil()</c>.
+            </p>
+            <p>
+              <em>Precondition:</em> <c>length &gt; 0 &amp;&amp; width &gt; 0 &amp;&amp; sqFtPerBox &gt; 0</c>.
+            </p>
+          </li>
+          <li>
+            <p><strong>Helper Method 2 (<c>calculatePaintCans</c>):</strong></p>
+            <program language="java">
+<![CDATA[public static int calculatePaintCans(double length, double width, double height, int coats)]]>
+            </program>
+            <p>
+              Calculates gross wall area (<m>\text{grossArea} = 2 \times (\text{length} + \text{width}) \times \text{height}</m>), deducts 51.0 square feet for unpainted openings (one door and two windows), multiplies by the number of coats, and returns the whole number of one-gallon cans needed (covering 350 sq ft per can), rounded up with <c>Math.ceil()</c>.
+            </p>
+            <p>
+              <em>Precondition:</em> All dimensions must be positive, <m>\text{coats} \ge 1</m>, and gross wall area must exceed 51.0 sq ft.
+            </p>
+          </li>
+          <li>
+            <p><strong>Testing Suite Requirement:</strong> Write a self-checking test driver class (<c>TestTileEstimator</c>) for <c>calculateTileBoxes</c>. Construct a test plan table that includes exact box boundaries (e.g., an area of exactly 150 sq ft for 15 sq ft/box needing exactly 10 boxes) and fractional boundaries (e.g., 150.1 sq ft needing 11 boxes).</p>
+          </li>
+        </ol>
+      </p>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 4: Solar Shadow & Setback Safety Validator           -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-solar-shadow5">
+    <title>Solar Shadow &amp; Setback Safety Validator</title>
+    <statement>
+      <p>
+        Solar engineers evaluate roof obstructions to confirm that shadows cast at low sun elevations do not spill over the available roof setback boundaries.
+      </p>
+      <p>
+        Write a program that prompts the user for the obstruction height in meters and the available roof setback distance in meters.
+      </p>
+      <p>
+        <strong>Program Requirements:</strong>
+        <ol>
+          <li>
+            <p><strong>Helper Method 1 (<c>calculateShadowLength</c>):</strong></p>
+            <program language="java">
+<![CDATA[public static double calculateShadowLength(double obstructionHeight, double sunElevationDegrees)]]>
+            </program>
+            <p>
+              Calculates and returns the horizontal shadow length in meters using:
+            </p>
+            <md>\text{shadowLength} = \frac{\text{obstructionHeight}}{\tan(\text{sunElevationDegrees} \times \pi / 180.0)}</md>
+            <p>
+              <em>Precondition:</em> <c>obstructionHeight &gt; 0.0 &amp;&amp; sunElevationDegrees &gt; 0.0 &amp;&amp; sunElevationDegrees &lt; 90.0</c>.
+            </p>
+          </li>
+          <li>
+            <p><strong>Helper Method 2 (<c>isSetbackSafe</c>):</strong></p>
+            <program language="java">
+<![CDATA[public static boolean isSetbackSafe(double obstructionHeight, double setbackDistance, 
+                                   double sunElevationDegrees)]]>
+            </program>
+            <p>
+              A predicate method that invokes <c>calculateShadowLength</c> and returns <c>true</c> if the shadow length is less than or equal to <c>setbackDistance</c>, and <c>false</c> if it exceeds the setback.
+            </p>
+          </li>
+          <li>
+            <p><strong>Testing Suite Requirement:</strong> Write a self-checking test driver class (<c>TestSetbackSafety</c>) for <c>isSetbackSafe</c>. Build a test plan table testing critical sun angles (25.0° mid-morning and 65.0° noon), an exact tie where shadow length equals setback distance, and cases where the shadow spills over the roof edge.</p>
+          </li>
+        </ol>
+      </p>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 5: Maritime Horizon Distance & Range Classifier     -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-maritime-horizon5">
+    <title>Maritime Horizon Distance &amp; Range Classifier</title>
+    <statement>
+      <p>
+        Lookouts and navigators rely on the geometric distance to the horizon to evaluate whether approaching vessels or obstacles fall within visible maritime range.
+      </p>
+      <p>
+        Write a program that prompts for the observer's eye height in feet (a non-negative <c>double</c>).
+      </p>
+      <p>
+        <strong>Program Requirements:</strong>
+        <ol>
+          <li>
+            <p><strong>Helper Method 1 (<c>calculateHorizonDistance</c>):</strong></p>
+            <program language="java">
+<![CDATA[public static double calculateHorizonDistance(double eyeHeightFeet)]]>
+            </program>
+            <p>
+              Calculates and returns the distance to the geometric horizon in statute miles using:
+            </p>
+            <md>d = \sqrt{2 R h + h^2}</md>
+            <p>
+              where Earth's radius <m>R = 3{,}959.0\text{ statute miles}</m> and <m>h = \text{eyeHeightFeet} / 5{,}280.0\text{ miles}</m>.
+            </p>
+            <p>
+              <em>Precondition:</em> <c>eyeHeightFeet &gt;= 0.0</c>.
+            </p>
+          </li>
+          <li>
+            <p><strong>Helper Method 2 (<c>toNauticalMiles</c>):</strong></p>
+            <program language="java">
+<![CDATA[public static double toNauticalMiles(double statuteMiles)]]>
+            </program>
+            <p>
+              Converts and returns distance in international nautical miles, where <m>1\text{ nautical mile} = 1.15078\text{ statute miles}</m> (<m>\text{nauticalMiles} = \text{statuteMiles} / 1.15078</m>).
+            </p>
+          </li>
+          <li>
+            <p><strong>Testing Suite Requirement:</strong> Write a self-checking test driver class (<c>TestHorizonDistance</c>) for <c>calculateHorizonDistance</c>. Design a test plan table with the sea-level boundary (0.0 feet returning 0.0 miles), a beach walker (6.0 feet), a lighthouse beacon (120.0 feet), and a cruising jet (35,000.0 feet).</p>
+          </li>
+        </ol>
+      </p>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 6: Exoplanet Orbital Period & Habitable Zone        -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-exoplanet-habitable5">
+    <title>Exoplanet Orbital Period &amp; Habitable Zone Classifier</title>
+    <statement>
+      <p>
+        Astrophysicists use Kepler’s Third Law to calculate an exoplanet’s orbital period and compare its orbital distance against its host star's luminosity to determine if it sits in the liquid-water <q>Goldilocks</q> zone.
+      </p>
+      <p>
+        Write a program that prompts the user for an exoplanet's orbital distance in Astronomical Units (AU, where Earth = 1.0) and its host star's mass relative to our Sun (where Sun = 1.0).
+      </p>
+      <p>
+        <strong>Program Requirements:</strong>
+        <ol>
+          <li>
+            <p><strong>Helper Method 1 (<c>calculateOrbitalPeriod</c>):</strong></p>
+            <program language="java">
+<![CDATA[public static double calculateOrbitalPeriod(double orbitalDistanceAU, double starMassSolar)]]>
+            </program>
+            <p>
+              Calculates and returns the exoplanet's orbital period in Earth years using Kepler's Third Law:
+            </p>
+            <md>P = \sqrt{\frac{\text{orbitalDistanceAU}^3}{\text{starMassSolar}}}</md>
+            <p>
+              <em>Precondition:</em> <c>orbitalDistanceAU &gt; 0.0 &amp;&amp; starMassSolar &gt; 0.0</c>.
+            </p>
+          </li>
+          <li>
+            <p><strong>Helper Method 2 (<c>getZoneClassification</c>):</strong></p>
+            <program language="java">
+<![CDATA[public static String getZoneClassification(double orbitalDistanceAU, double starLuminositySolar)]]>
+            </program>
+            <p>
+              Computes the habitable boundaries (<m>\text{inner} = 0.95 \times \sqrt{L}</m> and <m>\text{outer} = 1.37 \times \sqrt{L}</m>). Returns <q>Too Hot</q> if <m>\text{orbitalDistanceAU} &lt; \text{inner}</m>, <q>Habitable (Goldilocks)</q> if <m>\text{inner} \le \text{orbitalDistanceAU} \le \text{outer}</m>, or <q>Too Cold</q> if <m>\text{orbitalDistanceAU} &gt; \text{outer}</m>.
+            </p>
+          </li>
+          <li>
+            <p><strong>Testing Suite Requirement:</strong> Write a self-checking test driver class (<c>TestHabitableZone</c>) for <c>getZoneClassification</c>. Assume a solar-twin star (<m>L = 1.0</m>) and build a test plan table testing the exact inner boundary (0.95 AU), the exact outer boundary (1.37 AU), an interior habitable distance (1.0 AU), and out-of-bounds values (0.5 AU and 2.0 AU).</p>
+          </li>
+        </ol>
+      </p>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 7: Aviation Cloud Base & Flight Category Advisor    -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-aviation-cloud-base5">
+    <title>Aviation Cloud Base &amp; Flight Category Advisor</title>
+    <statement>
+      <p>
+        General aviation pilots calculate the Cloud Base Altitude (the Lifted Condensation Level) to determine whether flight operations must follow Visual Flight Rules (VFR) or Instrument Flight Rules (IFR).
+      </p>
+      <p>
+        Write a program that prompts the pilot for the ground surface temperature in Fahrenheit and the relative humidity as a percentage (0 to 100).
+      </p>
+      <p>
+        <strong>Program Requirements:</strong>
+        <ol>
+          <li>
+            <p><strong>Helper Method 1 (<c>calculateDewPoint</c>):</strong></p>
+            <program language="java">
+<![CDATA[public static double calculateDewPoint(double tempFahrenheit, double relativeHumidity)]]>
+            </program>
+            <p>
+              Estimates and returns the dew point temperature in Fahrenheit using:
+            </p>
+            <md>\text{dewPointFahrenheit} = \text{tempFahrenheit} - \left(\frac{100.0 - \text{relativeHumidity}}{5.0}\right) \times \frac{9.0}{5.0}</md>
+            <p>
+              <em>Precondition:</em> <c>relativeHumidity &gt;= 0.0 &amp;&amp; relativeHumidity &lt;= 100.0</c>.
+            </p>
+          </li>
+          <li>
+            <p><strong>Helper Method 2 (<c>calculateCloudBase</c>):</strong></p>
+            <program language="java">
+<![CDATA[public static double calculateCloudBase(double tempFahrenheit, double dewPointFahrenheit)]]>
+            </program>
+            <p>
+              Calculates and returns the estimated cloud base altitude in feet above ground level:
+            </p>
+            <md>\text{cloudBaseFeet} = \left(\frac{\text{tempFahrenheit} - \text{dewPointFahrenheit}}{4.4}\right) \times 1{,}000.0</md>
+            <p>
+              <em>Precondition:</em> <c>tempFahrenheit &gt;= dewPointFahrenheit</c>.
+            </p>
+          </li>
+          <li>
+            <p><strong>Testing Suite Requirement:</strong> Write a self-checking test driver class (<c>TestCloudBase</c>) for <c>calculateCloudBase</c>. Design a test plan table verifying the surface saturation boundary (<m>\text{tempFahrenheit} == \text{dewPointFahrenheit}</m>, yielding a cloud base of 0.0 feet / ground fog), small temperature spreads, and standard nominal conditions.</p>
+          </li>
+        </ol>
+      </p>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 8: Thunderstorm Distance & 30/30 Safety Evaluator    -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-thunderstorm-safety5">
+    <title>Thunderstorm Distance &amp; 30/30 Safety Evaluator</title>
+    <statement>
+      <p>
+        The National Weather Service recommends the <q>30/30 Rule</q>: seek protective shelter immediately if the flash-to-bang time between lightning and thunder indicates the storm is within 6.0 miles.
+      </p>
+      <p>
+        Write a program that prompts the user for the ambient temperature in Celsius and the elapsed time in seconds between seeing lightning and hearing thunder.
+      </p>
+      <p>
+        <strong>Program Requirements:</strong>
+        <ol>
+          <li>
+            <p><strong>Helper Method 1 (<c>calculateDistanceMiles</c>):</strong></p>
+            <program language="java">
+<![CDATA[public static double calculateDistanceMiles(double tempCelsius, double elapsedSeconds)]]>
+            </program>
+            <p>
+              Calculates the speed of sound in dry air:
+            </p>
+            <md>v = 331.3 \times \sqrt{1.0 + \frac{\text{tempCelsius}}{273.15}}\text{ m/s}</md>
+            <p>
+              Multiplies by <c>elapsedSeconds</c> to determine total meters, and returns distance converted to statute miles (<m>\text{distanceMiles} = \text{meters} / 1{,}609.344</m>).
+            </p>
+            <p>
+              <em>Precondition:</em> <c>tempCelsius &gt;= -273.15 &amp;&amp; elapsedSeconds &gt;= 0.0</c>.
+            </p>
+          </li>
+          <li>
+            <p><strong>Helper Method 2 (<c>getSafetyAdvisory</c>):</strong></p>
+            <program language="java">
+<![CDATA[public static String getSafetyAdvisory(double distanceMiles)]]>
+            </program>
+            <p>
+              Returns <q>DANGER: Immediate Strike Risk</q> if <m>\text{distanceMiles} \le 1.0</m>, <q>WARNING: Seek Shelter Immediately</q> if <m>1.0 &lt; \text{distanceMiles} \le 6.0</m>, or <q>ADVISORY: Distant Storm; Monitor Conditions</q> if <m>\text{distanceMiles} &gt; 6.0</m>.
+            </p>
+          </li>
+          <li>
+            <p><strong>Testing Suite Requirement:</strong> Write a self-checking test driver class (<c>TestLightningSafety</c>) for <c>getSafetyAdvisory</c>. Construct a test plan table that tests the immediate strike boundary (0.0 miles), the critical 1.0-mile boundary, the 30/30 safety boundary (6.0 miles), and distant storm values (10.0 miles).</p>
+          </li>
+        </ol>
+      </p>
+    </statement>
+  </exercise>
+
+</exercises>

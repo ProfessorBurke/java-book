@@ -1,0 +1,139 @@
+PreTeXt project found in `D:\CCRI\__Java book rewrite\cs1-java-textbook`.
+Building target web
+XSL conversion of D:\CCRI\__Java book rewrite\cs1-java-textbook\source\main.ptx by C:\Users\Maggie\.ptx\2.56.2\core\xsl\utilities\pretext-enhanced-source.xsl
+messages from the log for XSL processing (prefaced with a *):
+[33mwarning: [0m* PTX:DEPRECATE: (2026-07-30) the external directory is a property of your source, and is now declared with a "directories/@external" attribute within "docinfo".  The publication file entry "source/directories/@external" is honored meanwhile, but please relocate it.
+successful application of C:\Users\Maggie\.ptx\2.56.2\core\xsl\utilities\pretext-enhanced-source.xsl
+discovering source file's directory name: D:\CCRI\__Java book rewrite\cs1-java-textbook\source
+[33mwarning: [0m(2026-07-30) the external directory is a property of your source, and is now declared with a "directories/@external" attribute within "docinfo". The publisher file entry "source/directories/@external" is honored meanwhile, but please relocate it.
+verifying and expanding input directory: D:\CCRI\__Java book rewrite\cs1-java-textbook\source\../assets
+input directory expanded to absolute path: D:\CCRI\__Java book rewrite\cs1-java-textbook\assets
+Generating any needed assets.
+Finished generating assets.
+
+Preparing to build into D:\CCRI\__Java book rewrite\cs1-java-textbook\output\web.
+[33mwarning: [0mNode.js must be installed to build CSS files.  Please install node.js and npm.
+[33mwarning: [0m Will try to use prebuilt CSS files instead.
+[33mwarning: [0mCannot find npm.  Will try to use prebuilt CSS files instead.
+[33mwarning: [0mUnable to install npm packages to build css files.  Non-default CSS themes require node.js and npm to be installed.  See https://pretextbook.org/doc/guide/html/node-and-npm.html
+
+discovering source file's directory name: D:\CCRI\__Java book rewrite\cs1-java-textbook\source
+[33mwarning: [0m(2026-07-30) the external directory is a property of your source, and is now declared with a "directories/@external" attribute within "docinfo". The publisher file entry "source/directories/@external" is honored meanwhile, but please relocate it.
+verifying and expanding input directory: D:\CCRI\__Java book rewrite\cs1-java-textbook\source\../assets
+input directory expanded to absolute path: D:\CCRI\__Java book rewrite\cs1-java-textbook\assets
+discovering source file's directory name: D:\CCRI\__Java book rewrite\cs1-java-textbook\source
+XSL conversion of D:\CCRI\__Java book rewrite\cs1-java-textbook\source\main.ptx by C:\Users\Maggie\.ptx\2.56.2\core\xsl\utilities\report-publisher-variables.xsl
+messages from the log for XSL processing (prefaced with a *):
+[33mwarning: [0m* PTX:DEPRECATE: (2026-07-30) the external directory is a property of your source, and is now declared with a "directories/@external" attribute within "docinfo".  The publication file entry "source/directories/@external" is honored meanwhile, but please relocate it.
+successful application of C:\Users\Maggie\.ptx\2.56.2\core\xsl\utilities\report-publisher-variables.xsl
+Downloading rs services file from https://runestone.academy/cdn/runestone/latest/webpack_static_imports.xml.
+Runestone Services via online CDN query: version 8.4.0
+Downloading Runestone Services, version 8.4.0
+Extracting Runestone Services from archive file
+Node.js not available. Relying on prebuilt default-modern.
+Using prebuilt CSS theme: default-modern with options: {'options': {'primary-color': '#195684', 'secondary-color': '#932c1c'}, 'contrast-checks': {'primary-color': '#fff', 'secondary-color': '#fff', 'primary-color-dark': '#23241f'}}
+converting D:\CCRI\__Java book rewrite\cs1-java-textbook\source\main.ptx to HTML in C:\Users\Maggie\AppData\Local\Temp\ptx-ap26db5r
+XSL conversion of D:\CCRI\__Java book rewrite\cs1-java-textbook\source\main.ptx by C:\Users\Maggie\.ptx\2.56.2\core\xsl\pretext-html.xsl
+messages from the log for XSL processing (prefaced with a *):
+[33mwarning: [0m* PTX:DEPRECATE: (2026-07-30) the external directory is a property of your source, and is now declared with a "directories/@external" attribute within "docinfo".  The publication file entry "source/directories/@external" is honored meanwhile, but please relocate it.
+[33mwarning: [0m* PTX:WARNING: In a section containing subsections, any content that is not inside a subsection needs to be inside an <introduction> and/or  <conclusion>.
+*              located at: pretext/book/chapter/section
+*              located within: "sec-2-4-variables-types" (xml:id), "Data: Variables, Literals, and Types" (title)
+[33mwarning: [0m* PTX:WARNING: In a section containing subsections, any content that is not inside a subsection needs to be inside an <introduction> and/or  <conclusion>.
+*              located at: pretext/book/chapter/section
+*              located within: "sec-2-5-arithmetic" (xml:id), "Arithmetic" (title)
+[33mwarning: [0m* PTX:WARNING: In a section containing subsections, any content that is not inside a subsection needs to be inside an <introduction> and/or  <conclusion>.
+*              located at: pretext/book/chapter/section
+*              located within: "sec-2-6-strings" (xml:id), "Manipulating Text: Working with Strings" (title)
+[33mwarning: [0m* PTX:WARNING: In a section containing subsections, any content that is not inside a subsection needs to be inside an <introduction> and/or  <conclusion>.
+*              located at: pretext/book/chapter/section
+*              located within: "sec-2-7-output-system-out" (xml:id), "Output: Displaying Text with System.out" (title)
+[33mwarning: [0m* PTX:WARNING: In a section containing subsections, any content that is not inside a subsection needs to be inside an <introduction> and/or  <conclusion>.
+*              located at: pretext/book/chapter/section
+*              located within: "sec-2-8-input-scanner" (xml:id), "Input: Reading from the Console" (title)
+[33mwarning: [0m* PTX:WARNING: In a section containing subsections, any content that is not inside a subsection needs to be inside an <introduction> and/or  <conclusion>.
+*              located at: pretext/book/chapter/section
+*              located within: "sec-2-9-case-study-drone" (xml:id), "Putting It All Together: Writing an Input-Processing-Output Program" (title)
+[33mwarning: [0m* PTX:WARNING: In a section containing subsections, any content that is not inside a subsection needs to be inside an <introduction> and/or  <conclusion>.
+*              located at: pretext/book/chapter/section
+*              located within: "sec-6-4-defining-class" (xml:id), "Defining a Class: State and Behavior" (title)
+[33mwarning: [0m* PTX:WARNING: In a section containing subsections, any content that is not inside a subsection needs to be inside an <introduction> and/or  <conclusion>.
+*              located at: pretext/book/chapter/section
+*              located within: "sec-6-6-overloading" (xml:id), "Overloading Methods and Constructors" (title)
+[33mwarning: [0m* PTX:WARNING: In a section containing subsections, any content that is not inside a subsection needs to be inside an <introduction> and/or  <conclusion>.
+*              located at: pretext/book/chapter/section
+*              located within: "sec-6-7-memory-model" (xml:id), "Objects in Memory: The Stack and the Heap" (title)
+[33mwarning: [0m* PTX:WARNING: In a section containing subsections, any content that is not inside a subsection needs to be inside an <introduction> and/or  <conclusion>.
+*              located at: pretext/book/chapter/section
+*              located within: "sec-6-8-tostring-equals" (xml:id), "Printing and Comparing Objects: toString and equals" (title)
+[33mwarning: [0m* PTX:WARNING: In a section containing subsections, any content that is not inside a subsection needs to be inside an <introduction> and/or  <conclusion>.
+*              located at: pretext/book/chapter/section
+*              located within: "sec-6-9-javadoc" (xml:id), "Documenting Classes with Javadoc" (title)
+[33mwarning: [0m* PTX:WARNING: In a section containing subsections, any content that is not inside a subsection needs to be inside an <introduction> and/or  <conclusion>.
+*              located at: pretext/book/chapter/section
+*              located within: "sec-6-10-unit-testing" (xml:id), "Unit Testing Classes: The Arrange–Act–Assert Pattern" (title)
+[33mwarning: [0m* PTX:WARNING: In a subsection containing subsubsections, any content that is not inside a subsubsection needs to be inside an <introduction> and/or  <conclusion>.
+*              located at: pretext/book/chapter/section/subsection
+*              located within: "subsec-2-4-1-primitive-types" (xml:id), "Java’s Primitive Types" (title)
+[33mwarning: [0m* PTX:WARNING: In a subsection containing subsubsections, any content that is not inside a subsubsection needs to be inside an <introduction> and/or  <conclusion>.
+*              located at: pretext/book/chapter/section/subsection
+*              located within: "subsec-2-4-2-variables-assignments" (xml:id), "Variables and Assignment Statements" (title)
+[33mwarning: [0m* PTX:WARNING: In a subsection containing subsubsections, any content that is not inside a subsubsection needs to be inside an <introduction> and/or  <conclusion>.
+*              located at: pretext/book/chapter/section/subsection
+*              located within: "subsec-2-5-6-pitfalls-binary" (xml:id), "Pitfalls of Finite Binary Representation" (title)
+[33mwarning: [0m* PTX:WARNING: In a subsection containing subsubsections, any content that is not inside a subsubsection needs to be inside an <introduction> and/or  <conclusion>.
+*              located at: pretext/book/chapter/section/subsection
+*              located within: "subsec-2-6-3-syntactic-sugar" (xml:id), "Java's VIP Treatment: Syntactic Sugar for Strings" (title)
+[33mwarning: [0m* PTX:WARNING: In a subsection containing subsubsections, any content that is not inside a subsubsection needs to be inside an <introduction> and/or  <conclusion>.
+*              located at: pretext/book/chapter/section/subsection
+*              located within: "subsec-2-6-4-string-methods" (xml:id), "String Methods" (title)
+[33mwarning: [0m* PTX:WARNING: In a subsection containing subsubsections, any content that is not inside a subsubsection needs to be inside an <introduction> and/or  <conclusion>.
+*              located at: pretext/book/chapter/section/subsection
+*              located within: "subsec-2-7-2-formatted-output" (xml:id), "Formatted Output with System.out.printf" (title)
+[33mwarning: [0m* PTX:WARNING: In a subsection containing subsubsections, any content that is not inside a subsubsection needs to be inside an <introduction> and/or  <conclusion>.
+*              located at: pretext/book/chapter/section/subsection
+*              located within: "subsec-6-5-3-constants-counters" (xml:id), "Constants and Class Counters" (title)
+[33mwarning: [0m* PTX:WARNING: In a subsection containing subsubsections, any content that is not inside a subsubsection needs to be inside an <introduction> and/or  <conclusion>.
+*              located at: pretext/book/chapter/section/subsection
+*              located within: "subsec-6-5-4-static-barrier" (xml:id), "The Static Barrier: Why Static Methods Cannot Access Instance Fields" (title)
+[33mwarning: [0m* PTX:WARNING: In a subsection containing subsubsections, any content that is not inside a subsubsection needs to be inside an <introduction> and/or  <conclusion>.
+*              located at: pretext/book/chapter/section/subsection
+*              located within: "subsec-6-7-1-memory-areas" (xml:id), "Memory: Stack, Heap, and Static Area" (title)
+[33mwarning: [0m* PTX:WARNING: In a subsection containing subsubsections, any content that is not inside a subsubsection needs to be inside an <introduction> and/or  <conclusion>.
+*              located at: pretext/book/chapter/section/subsection
+*              located within: "subsec-6-7-2-dereferencing" (xml:id), "Reference Variables and Implicit Dereferencing" (title)
+[33mwarning: [0m* PTX:WARNING: In a subsection containing subsubsections, any content that is not inside a subsubsection needs to be inside an <introduction> and/or  <conclusion>.
+*              located at: pretext/book/chapter/section/subsection
+*              located within: "subsec-6-7-5-copy-constructors" (xml:id), "True Object Duplication: The Copy Constructor" (title)
+[33mwarning: [0m* PTX:WARNING: In a subsection containing subsubsections, any content that is not inside a subsubsection needs to be inside an <introduction> and/or  <conclusion>.
+*              located at: pretext/book/chapter/section/subsection
+*              located within: "subsec-6-7-6-garbage-collection" (xml:id), "Object Lifetime and Automatic Garbage Collection" (title)
+[33mwarning: [0m* PTX:WARNING: In a subsection containing subsubsections, any content that is not inside a subsubsection needs to be inside an <introduction> and/or  <conclusion>.
+*              located at: pretext/book/chapter/section/subsection
+*              located within: "subsec-6-9-4-documenting-fields" (xml:id), "Documenting Fields: Constants, Counters, and Instance State" (title)
+[33mwarning: [0m* PTX:WARNING:   a <tabular> has at least one paragraph (<p>) inside a <cell>, yet there are no <col> elements with a @width attribute.  Default widths will be supplied.
+*              located at: pretext/book/chapter/section/subsection/table/tabular
+*              located within: "table-electric-vehicle-class-diagram" (xml:id), "Class diagram for ElectricVehicle" (title)
+[33mwarning: [0m* PTX:WARNING:   a <tabular> has at least one paragraph (<p>) inside a <cell>, yet there are no <col> elements with a @width attribute.  Default widths will be supplied.
+*              located at: pretext/book/chapter/section/subsection/sidebyside/tabular
+*              located within: "subsec-6-4-3-fields-constructors" (xml:id), "Fields and Constructors" (title)
+[33mwarning: [0m* PTX:WARNING:   a <tabular> has at least one paragraph (<p>) inside a <cell>, yet there are no <col> elements with a @width attribute.  Default widths will be supplied.
+*              located at: pretext/book/chapter/section/subsection/sidebyside/tabular
+*              located within: "subsec-6-4-3-fields-constructors" (xml:id), "Fields and Constructors" (title)
+[33mwarning: [0m* PTX:WARNING:   a <tabular> has at least one paragraph (<p>) inside a <cell>, yet there are no <col> elements with a @width attribute.  Default widths will be supplied.
+*              located at: pretext/book/chapter/section/subsection/sidebyside/tabular
+*              located within: "subsec-6-4-3-fields-constructors" (xml:id), "Fields and Constructors" (title)
+[33mwarning: [0m* PTX:WARNING:   a <tabular> has at least one paragraph (<p>) inside a <cell>, yet there are no <col> elements with a @width attribute.  Default widths will be supplied.
+*              located at: pretext/book/chapter/section/subsection/sidebyside/tabular
+*              located within: "subsec-6-4-3-fields-constructors" (xml:id), "Fields and Constructors" (title)
+* PTX:INFO:   checking all deprecated elements.
+successful application of C:\Users\Maggie\.ptx\2.56.2\core\xsl\pretext-html.xsl
+Removing temporary directory C:\Users\Maggie\AppData\Local\Temp\ptx-ap26db5r
+Removing temporary directory C:\Users\Maggie\AppData\Local\Temp\ptx-0bv2csc0
+
+Finished build for target web. Run `pretext view web` to see the results.
+
+
+Success!  Built requested target(s) without errors.
+
+

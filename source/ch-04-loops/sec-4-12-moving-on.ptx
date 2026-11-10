@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-4-12-moving-on" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Moving On!</title>
+
+  <p>
+    Congratulations! In this chapter, you expanded on your Java programming foundation with the following critical skills:
+  </p>
+
+  <ul>
+    <li>
+      <p>Choosing and implementing the appropriate loop structure (<c>while</c>, <c>do-while</c>, or <c>for</c>) based on whether your problem requires definite, indefinite, or at-least-once iteration.</p>
+    </li>
+    <li>
+      <p>Assigning functional roles to variables<mdash />such as steppers, gatherers, most-recent holders, and most-wanted holders<mdash />to manage changing state clearly and predictably across iterations.</p>
+    </li>
+    <li>
+      <p>Applying the primed-loop pattern to process indefinite data streams safely, ensuring sentinel stopping values never leak into your calculations.</p>
+    </li>
+    <li>
+      <p>Coordinating nested loops to generate multi-dimensional grids, geometric coordinate matrices, and formatted row-and-column tables.</p>
+    </li>
+    <li>
+      <p>Reasoning about loop correctness by identifying preconditions, loop invariants, and postconditions, and enforcing critical boundaries with assertions.</p>
+    </li>
+    <li>
+      <p>Designing comprehensive loop test plans that evaluate critical iteration milestones (zero, one, multiple, and boundary cycles) while preventing infinite loops and off-by-one errors.</p>
+    </li>
+    <li>
+      <p>Reading and writing text files using <c>Scanner</c> and <c>PrintWriter</c>, linking your programs to persistent storage and generating real-world data deliverables like interactive maps.</p>
+    </li>
+  </ul>
+
+  <p>
+    You are now fully equipped to tackle the programming exercises at the end of this chapter. Work through the steps: explore the problem on paper, design your algorithm by matching it to a standard loop archetype, assign concrete roles to your variables, build a test plan table targeting boundary iterations, implement the solution incrementally, and use Eclipse's debugger to inspect your variables in memory whenever you need to diagnose unexpected behavior.
+  </p>
+</section>

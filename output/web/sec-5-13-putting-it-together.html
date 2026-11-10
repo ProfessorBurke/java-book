@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<html lang="en-US" dir="ltr">
+<!--******************************************-->
+<!--*  Authored with PreTeXt                 *-->
+<!--*  pretextbook.org                       *-->
+<!--*  Theme: default-modern                 *-->
+<!--*  Palette:                              *-->
+<!--******************************************-->
+<head xmlns:og="http://ogp.me/ns#" xmlns:book="https://ogp.me/ns/book#">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Putting It All Together: A Complete Case Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="_static/pretext/fonts/material-symbols-outlined.css">
+<link href="_static/pretext/css/theme.css" rel="stylesheet" type="text/css">
+<style>
+@counter-style ptx-marker-1 { system: extends lower-alpha; prefix: ''; suffix: ') '; }
+</style>
+<script type="module">import { startMathJax } from './_static/pretext/js/dist/mathjax_startup.js';
+startMathJax({
+hasWebworkReps: false,
+hasSage: false,
+isReact: false,
+htmlPresentation: false,
+lang: "en-US",
+});
+</script><script defer data-pretext-mathjax="true" onerror="this.dataset.loadFailed = 'true';" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script><meta name="Keywords" content="Authored in PreTeXt">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:type" content="book">
+<meta name="twitter:title" content="Java for Computer Science">
+<meta property="og:title" content="Java for Computer Science">
+<meta property="book:title" content="Java for Computer Science">
+<meta name="twitter:description" content="Core Principles and Practice">
+<meta property="og:description" content="Core Principles and Practice">
+<meta name="twitter:card" content="summary">
+<script src="_static/pretext/js/jquery.min.js"></script><script src="_static/pretext/js/dist/pretext-core.js?v=2.56"></script><script src="_static/pretext/js/dist/pretext-read-aloud.js?v=2.56"></script><!--** eBookCongig is necessary to configure interactive       **-->
+<!--** Runestone components to run locally in reader's browser **-->
+<!--** No external communication:                              **-->
+<!--**     log level is 0, Runestone Services are disabled     **-->
+<script type="text/javascript">
+eBookConfig = {};
+eBookConfig.useRunestoneServices = false;
+eBookConfig.host = 'http://127.0.0.1:8000';
+eBookConfig.course = 'PTX_Course_Title_Here';
+eBookConfig.basecourse = 'PTX_Base_Course';
+eBookConfig.isLoggedIn = false;
+eBookConfig.email = '';
+eBookConfig.isInstructor = false;
+eBookConfig.logLevel = 0;
+eBookConfig.username = '';
+eBookConfig.readings = null;
+eBookConfig.activities = null;
+eBookConfig.downloadsEnabled = false;
+eBookConfig.allow_pairs = false;
+eBookConfig.enableScratchAC = false;
+eBookConfig.build_info = "";
+eBookConfig.python3 = null;
+eBookConfig.runestone_version = '8.4.0';
+eBookConfig.jobehost = '';
+eBookConfig.proxyuri_runs = '';
+eBookConfig.proxyuri_files = '';
+eBookConfig.enable_chatcodes =  false;
+</script>
+<!--*** Runestone Services ***-->
+<script src="_static/prefix-runtime.7e2ee203f2ecd6c8.bundle.js"></script><script src="_static/prefix-23.7d27cb317c36911a.bundle.js"></script><script src="_static/prefix-runestone.35a40fea06647cf2.bundle.js"></script><link rel="stylesheet" type="text/css" href="_static/prefix-runestone.7062ede5334282a6.css">
+<script src="_static/pretext/js/dist/lti_iframe_resizer.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/components/prism-core.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/autoloader/prism-autoloader.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.js" integrity="sha512-dubtf8xMHSQlExGRQ5R7toxHLgSDZ0K7AunqPWHXmJQ8XyVIG19S1T95gBxlAeGOK02P4Da2RTnQz0Za0H0ebQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/line-highlight/prism-line-highlight.min.js" integrity="sha512-93uCmm0q+qO5Lb1huDqr7tywS8A2TFA+1/WHvyiWaK6/pvsFl6USnILagntBx8JnVbQH5s3n0vQZY6xNthNfKA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.9/lunr.min.js" integrity="sha512-4xUl/d6D6THrAnXAwGajXkoWaeMNwEKK4iNfq5DotEbLPAfk6FSxSP3ydNxqDgCw1c/0Z1Jg6L8h2j+++9BZmg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="lunr-pretext-search-index.js" async=""></script><script src="_static/pretext/js/dist/pretext_search.js"></script><!--knowl.js code controls Sage Cells within knowls--><script>sagecellEvalName='Evaluate (Sage)';
+</script>
+</head>
+<body class="pretext book ignore-math">
+<a class="assistive" href="#ptx-content">Skip to main content</a><header id="ptx-masthead" class="ptx-masthead" role="banner"><div class="ptx-banner"><div class="title-container">
+<div class="heading ptx-banner-heading"><a href="cs1-java.html"><span class="title">Java for Computer Science</span> <span class="subtitle">Core Principles and Practice</span></a></div>
+<p class="byline">Maggie Burke</p>
+</div></div></header><nav id="ptx-navbar" class="ptx-navbar navbar"><div class="ptx-navbar-contents">
+<button id="ptx-toc-toggle" type="button" aria-controls="ptx-sidebar" class="toc-toggle button" title="Contents"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5d2;</span><span class="name">Contents</span></button><div class="ptx-search-box">
+<div class="ptx-search-widget"><button id="ptx-search-button" type="button" class="ptx-search-button button" title="Search Book"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe8b6;</span><span class="name">Search Book</span></button></div>
+<dialog id="ptx-search-dialog" class="ptx-dialog ptx-search-dialog"><div class="ptx-search-dialog-controls">
+<input aria-label="Search term" id="ptx-search-terms" class="ptx-search-terms" type="text" name="terms" placeholder="Search terms"><button aria-label="Close" id="ptx-search-close" class="ptx-search-close"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cd;</span></button>
+</div>
+<div id="ptx-search-status" class="ptx-search-status" aria-live="polite" aria-atomic="true"></div>
+<h2 class="heading ptx-search-results-heading">Search Results: </h2>
+<div id="ptx-search-empty" class="ptx-search-empty"><span>No results.</span></div>
+<ol id="ptx-search-results" class="ptx-search-results"></ol></dialog>
+</div>
+<span class="nav-other-controls"><button id="ptx-read-aloud-button" class="ptx-read-aloud-button button" title="Read aloud" aria-expanded="false"><span class="icon material-symbols-outlined" aria-hidden="true">&#xf1bc;</span><span class="name">Read aloud</span></button><div id="ptx-read-aloud-player" class="ptx-read-aloud-player" hidden="hidden" role="group" aria-label="Read aloud">
+<button id="ptx-read-aloud-prev" class="button" title="Previous sentence"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe045;</span></button><button id="ptx-read-aloud-toggle" class="ptx-read-aloud-toggle button" title="Play"><span class="ptx-read-aloud-icon-play"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe037;</span></span><span class="ptx-read-aloud-icon-pause"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe034;</span></span></button><button id="ptx-read-aloud-next" class="button" title="Next sentence"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe044;</span></button><a id="ptx-read-aloud-continue" class="ptx-read-aloud-continue button" hidden="hidden">Continue<span class="icon material-symbols-outlined" aria-hidden="true">&#xe037;</span></a><button id="ptx-read-aloud-settings-button" class="ptx-read-aloud-settings-button button" title="Reading settings"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe429;</span></button>
+</div>
+<dialog class="ptx-dialog ptx-read-aloud-settings-popup" id="ptx-read-aloud-settings-popup"><div class="ptx-readability-options-popup-controls">
+<h2 class="heading">Read aloud settings</h2>
+<button class="ptx-read-aloud-settings-close-button button" id="ptx-read-aloud-settings-close-button" title="Close"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cd;</span></button>
+</div>
+<div class="ptx-readability-options-group">
+<label for="ptx-read-aloud-voice"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe91f;</span><span>Voice</span></label><select id="ptx-read-aloud-voice"></select><label class="ptx-readability-slider-label" for="ptx-read-aloud-rate"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe9e4;</span><span>Reading speed</span><output id="ptx-read-aloud-rate-value" for="ptx-read-aloud-rate">1×</output></label><input type="range" id="ptx-read-aloud-rate" min="0.5" max="2" step="0.1" value="1"><label for="ptx-read-aloud-asides"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5d7;</span><span>Collapsed content</span></label><select id="ptx-read-aloud-asides"><option value="skip">Announce, do not read</option>
+<option value="read">Read automatically</option></select><label for="ptx-read-aloud-autoscroll"><input type="checkbox" id="ptx-read-aloud-autoscroll" checked><span>Follow along (auto-scroll)</span></label><label for="ptx-read-aloud-autocontinue"><input type="checkbox" id="ptx-read-aloud-autocontinue"><span>Continue to the next page automatically</span></label>
+</div></dialog><button id="ptx-readability-options-button" class="ptx-readability-options-button button" title="Readability settings"><span class="icon material-symbols-outlined" aria-hidden="true">&#xf6f1;</span><span class="name">Readability settings</span></button><dialog class="ptx-dialog ptx-readability-options-popup" id="ptx-readability-options-popup"><div class="ptx-readability-options-popup-controls">
+<h2 class="heading">Readability settings</h2>
+<button class="ptx-readability-options-close-button button" id="ptx-readability-options-close-button" title="Close"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cd;</span></button>
+</div>
+<div class="ptx-readability-options-group">
+<label class="ptx-readability-slider-label" for="ptx-readability-line-height"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe240;</span><span>Line height</span><output id="ptx-readability-line-height-value" for="ptx-readability-line-height">1.35</output></label><input type="range" id="ptx-readability-line-height" min="1.10" max="3" step="0.05" value="1.35">
+</div>
+<div class="ptx-readability-options-group">
+<label class="ptx-readability-slider-label" for="ptx-readability-font-size"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe245;</span><span>Content font size</span><output id="ptx-readability-font-size-value" for="ptx-readability-font-size">100%</output></label><input type="range" id="ptx-readability-font-size" min="0.8" max="1.5" step="0.05" value="1">
+</div>
+<fieldset class="ptx-readability-options-group ptx-readability-options-group-theme">
+<legend>Theme</legend>
+<label for="ptx-readability-theme-system"><input type="radio" name="ptx-readability-theme" id="ptx-readability-theme-system" value="system"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe1ab;</span><span>System</span></label><label for="ptx-readability-theme-light"><input type="radio" name="ptx-readability-theme" id="ptx-readability-theme-light" value="light"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe518;</span><span>Light</span></label><label for="ptx-readability-theme-dark"><input type="radio" name="ptx-readability-theme" id="ptx-readability-theme-dark" value="dark"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe51c;</span><span>Dark</span></label>
+</fieldset>
+<fieldset class="ptx-readability-options-group">
+<legend>Assistive technologies</legend>
+<label for="ptx-readability-accessible-permalinks"><input type="checkbox" id="ptx-readability-accessible-permalinks"><span>🔗</span><span>Expose permalinks</span></label>
+</fieldset>
+<div class="ptx-readability-options-group"><button type="button" class="ptx-readability-reset-button button" id="ptx-readability-reset-button"><span class="icon material-symbols-outlined" aria-hidden="true">&#xf053;</span><span class="name">Reset All</span></button></div></dialog></span><span class="treebuttons"><a class="previous-button button" href="sec-5-12-debugging-methods.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="up-button button" href="ch-05-methods.html" title="Up"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Up</span></a><a class="next-button button" href="sec-5-14-moving-on.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a></span>
+</div></nav><div id="latex-macros" class="hidden-content process-math" style="display:none"><span class="process-math">\(
+\newcommand{\lt}{&lt;}
+\newcommand{\gt}{&gt;}
+\newcommand{\amp}{&amp;}
+\definecolor{fillinmathshade}{gray}{0.9}
+\newcommand{\fillinmath}[1]{\mathchoice{\colorbox{fillinmathshade}{$\displaystyle     \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\textstyle        \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\scriptstyle      \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\scriptscriptstyle\phantom{\,#1\,}$}}}
+\)</span></div>
+<div class="ptx-page">
+<div id="ptx-sidebar" role="complementary" class="ptx-sidebar"><nav id="ptx-toc" tabindex="-1" aria-label="Contents" class="ptx-toc depth2 focused" data-preexpanded-levels="0" data-max-levels="2"><ul class="structural toc-item-list contains-active">
+<li class="toc-item toc-frontmatter">
+<div class="toc-title-box"><a href="frontmatter.html" class="internal"><span class="title">Front Matter</span></a></div>
+<ul id="ptx-toc-group-frontmatter" class="structural toc-item-list">
+<li class="toc-item toc-colophon"><div class="toc-title-box"><a href="front-colophon.html" class="internal"><span class="title">Colophon</span></a></div></li>
+<li class="toc-item toc-acknowledgement"><div class="toc-title-box"><a href="acknowledgement.html" class="internal"><span class="title">Acknowledgements</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-chapter">
+<div class="toc-title-box"><a href="ch-01-computing-foundation.html" class="internal"><span class="codenumber">1</span> <span class="title">Foundations</span></a></div>
+<ul id="ptx-toc-group-ch-01-computing-foundation" class="structural toc-item-list">
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-1-1-overview.html" class="internal"><span class="codenumber">1.1</span> <span class="title">Chapter Overview</span></a></div>
+<ul id="ptx-toc-group-sec-1-1-overview" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-1-1-overview.html#subsec-1-1-1-demystifying-machine" class="internal"><span class="codenumber">1.1.1</span> <span class="title">Demystifying the Machine: Hardware &amp; the Fetch-and-Execute Cycle</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-1-1-overview.html#subsec-1-1-2-java-solution-jvm" class="internal"><span class="codenumber">1.1.2</span> <span class="title">The Java Solution: Bytecode and the Java Virtual Machine (JVM)</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-1-1-overview.html#subsec-1-1-3-setting-up-workshop" class="internal"><span class="codenumber">1.1.3</span> <span class="title">Setting Up Your Workshop: The JDK, the Command Line, and Eclipse</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-1-2-hardware-cycle.html" class="internal"><span class="codenumber">1.2</span> <span class="title">Computer Organization and the Fetch and Execute Cycle</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-1-3-jvm.html" class="internal"><span class="codenumber">1.3</span> <span class="title">The Java Virtual Machine</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-1-4-memory-management.html" class="internal"><span class="codenumber">1.4</span> <span class="title">Memory Management</span></a></div></li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-1-5-programming-environments.html" class="internal"><span class="codenumber">1.5</span> <span class="title">Programming Environments</span></a></div>
+<ul id="ptx-toc-group-sec-1-5-programming-environments" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-1-5-programming-environments.html#subsec-1-5-1-getting-jdk" class="internal"><span class="codenumber">1.5.1</span> <span class="title">Getting a JDK</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-1-5-programming-environments.html#subsec-1-5-2-command-line" class="internal"><span class="codenumber">1.5.2</span> <span class="title">Java from the Command Line</span></a></div></li>
+<li class="toc-item toc-subsection">
+<div class="toc-title-box"><a href="sec-1-5-programming-environments.html#subsec-1-5-3-eclipse" class="internal"><span class="codenumber">1.5.3</span> <span class="title">Java in Eclipse</span></a></div>
+<ul id="ptx-toc-group-subsec-1-5-3-eclipse" class="structural toc-item-list">
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-1-5-programming-environments.html#subsubsec-1-5-3-1-installing-eclipse" class="internal"><span class="codenumber">1.5.3.1</span> <span class="title">Installing Eclipse</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-1-5-programming-environments.html#subsubsec-1-5-3-2-running-eclipse" class="internal"><span class="codenumber">1.5.3.2</span> <span class="title">Running Eclipse</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-1-5-programming-environments.html#subsubsec-1-5-3-3-hello-world-eclipse" class="internal"><span class="codenumber">1.5.3.3</span> <span class="title">Writing Hello, world in Eclipse</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-1-5-programming-environments.html#subsubsec-1-5-3-4-file-management-eclipse" class="internal"><span class="codenumber">1.5.3.4</span> <span class="title">File Management with Eclipse</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-1-5-programming-environments.html#subsec-1-5-4-jshell" class="internal"><span class="codenumber">1.5.4</span> <span class="title">Interactive Java with JShell</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-item toc-chapter">
+<div class="toc-title-box"><a href="ch-02-getting-started.html" class="internal"><span class="codenumber">2</span> <span class="title">Getting Started with Java</span></a></div>
+<ul id="ptx-toc-group-ch-02-getting-started" class="structural toc-item-list">
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-2-1-overview.html" class="internal"><span class="codenumber">2.1</span> <span class="title">Chapter Overview</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-2-2-app-overview.html" class="internal"><span class="codenumber">2.2</span> <span class="title">Java Application Overview</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-2-3-class-structure.html" class="internal"><span class="codenumber">2.3</span> <span class="title">Class Structure</span></a></div></li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-2-4-variables-types.html" class="internal"><span class="codenumber">2.4</span> <span class="title">Data: Variables, Literals, and Types</span></a></div>
+<ul id="ptx-toc-group-sec-2-4-variables-types" class="structural toc-item-list">
+<li class="toc-item toc-subsection">
+<div class="toc-title-box"><a href="sec-2-4-variables-types.html#subsec-2-4-1-primitive-types" class="internal"><span class="codenumber">2.4.1</span> <span class="title">Java’s Primitive Types</span></a></div>
+<ul id="ptx-toc-group-subsec-2-4-1-primitive-types" class="structural toc-item-list">
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-2-4-variables-types.html#subsubsec-2-4-1-1-integer-primitives" class="internal"><span class="codenumber">2.4.1.1</span> <span class="title">Integer Primitives</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-2-4-variables-types.html#subsubsec-2-4-1-2-floating-point-primitives" class="internal"><span class="codenumber">2.4.1.2</span> <span class="title">Floating-Point Primitives</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-2-4-variables-types.html#subsubsec-2-4-1-3-char-boolean-primitives" class="internal"><span class="codenumber">2.4.1.3</span> <span class="title">The char and boolean Primitives</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-subsection">
+<div class="toc-title-box"><a href="sec-2-4-variables-types.html#subsec-2-4-2-variables-assignments" class="internal"><span class="codenumber">2.4.2</span> <span class="title">Variables and Assignment Statements</span></a></div>
+<ul id="ptx-toc-group-subsec-2-4-2-variables-assignments" class="structural toc-item-list">
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-2-4-variables-types.html#subsubsec-2-4-2-1-declaring-variables" class="internal"><span class="codenumber">2.4.2.1</span> <span class="title">Declaring Variables and Giving Them Values</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-2-4-variables-types.html#subsubsec-2-4-2-2-where-variables-live" class="internal"><span class="codenumber">2.4.2.2</span> <span class="title">Where Variables Live in Memory</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-2-4-variables-types.html#subsubsec-2-4-2-3-constants" class="internal"><span class="codenumber">2.4.2.3</span> <span class="title">Constants (Using the final Keyword)</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-2-5-arithmetic.html" class="internal"><span class="codenumber">2.5</span> <span class="title">Arithmetic</span></a></div>
+<ul id="ptx-toc-group-sec-2-5-arithmetic" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-2-5-arithmetic.html#subsec-2-5-1-arithmetic-operators" class="internal"><span class="codenumber">2.5.1</span> <span class="title">Arithmetic Operators</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-2-5-arithmetic.html#subsec-2-5-2-string-concatenation" class="internal"><span class="codenumber">2.5.2</span> <span class="title">String Conversion and Concatenation</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-2-5-arithmetic.html#subsec-2-5-3-compound-assignments" class="internal"><span class="codenumber">2.5.3</span> <span class="title">Compound Assignments, Increment, and Decrement</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-2-5-arithmetic.html#subsec-2-5-4-math-class" class="internal"><span class="codenumber">2.5.4</span> <span class="title">The Math Class</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-2-5-arithmetic.html#subsec-2-5-5-precedence-rules" class="internal"><span class="codenumber">2.5.5</span> <span class="title">Precedence Rules</span></a></div></li>
+<li class="toc-item toc-subsection">
+<div class="toc-title-box"><a href="sec-2-5-arithmetic.html#subsec-2-5-6-pitfalls-binary" class="internal"><span class="codenumber">2.5.6</span> <span class="title">Pitfalls of Finite Binary Representation</span></a></div>
+<ul id="ptx-toc-group-subsec-2-5-6-pitfalls-binary" class="structural toc-item-list">
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-2-5-arithmetic.html#subsubsec-2-5-6-1-integer-overflow" class="internal"><span class="codenumber">2.5.6.1</span> <span class="title">Integer Overflow and the “Odometer” Effect</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-2-5-arithmetic.html#subsubsec-2-5-6-2-inexact-decimals" class="internal"><span class="codenumber">2.5.6.2</span> <span class="title">Inexact Decimals in Base 2</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-2-5-arithmetic.html#subsubsec-2-5-6-3-finite-precision-absorption" class="internal"><span class="codenumber">2.5.6.3</span> <span class="title">Finite Precision and “Lost” Operands (Absorption)</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-2-5-arithmetic.html#subsubsec-2-5-6-4-division-by-zero" class="internal"><span class="codenumber">2.5.6.4</span> <span class="title">Division by Zero: Integers vs. Floating-Point</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-2-6-strings.html" class="internal"><span class="codenumber">2.6</span> <span class="title">Manipulating Text: Working with Strings</span></a></div>
+<ul id="ptx-toc-group-sec-2-6-strings" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-2-6-strings.html#subsec-2-6-1-what-is-a-string" class="internal"><span class="codenumber">2.6.1</span> <span class="title">What is a String?</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-2-6-strings.html#subsec-2-6-2-primitives-vs-objects" class="internal"><span class="codenumber">2.6.2</span> <span class="title">Primitives vs. Objects: The Memory Picture</span></a></div></li>
+<li class="toc-item toc-subsection">
+<div class="toc-title-box"><a href="sec-2-6-strings.html#subsec-2-6-3-syntactic-sugar" class="internal"><span class="codenumber">2.6.3</span> <span class="title">Java’s VIP Treatment: Syntactic Sugar for Strings</span></a></div>
+<ul id="ptx-toc-group-subsec-2-6-3-syntactic-sugar" class="structural toc-item-list">
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-2-6-strings.html#subsubsec-2-6-3-1-string-literals" class="internal"><span class="codenumber">2.6.3.1</span> <span class="title">String Literals</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-2-6-strings.html#subsubsec-2-6-3-2-concatenation-operator" class="internal"><span class="codenumber">2.6.3.2</span> <span class="title">The Concatenation Operator (<code class="code-inline tex2jax_ignore">+</code>)</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-2-6-strings.html#subsubsec-2-6-3-3-mixed-type-concatenation" class="internal"><span class="codenumber">2.6.3.3</span> <span class="title">Mixed-Type Concatenation</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-subsection">
+<div class="toc-title-box"><a href="sec-2-6-strings.html#subsec-2-6-4-string-methods" class="internal"><span class="codenumber">2.6.4</span> <span class="title">String Methods</span></a></div>
+<ul id="ptx-toc-group-subsec-2-6-4-string-methods" class="structural toc-item-list">
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-2-6-strings.html#subsubsec-2-6-4-1-length" class="internal"><span class="codenumber">2.6.4.1</span> <span class="title">Finding Length with <code class="code-inline tex2jax_ignore">length()</code></span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-2-6-strings.html#subsubsec-2-6-4-2-charat" class="internal"><span class="codenumber">2.6.4.2</span> <span class="title">Accessing Individual Characters with <code class="code-inline tex2jax_ignore">charAt(index)</code></span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-2-6-strings.html#subsubsec-2-6-4-3-substring" class="internal"><span class="codenumber">2.6.4.3</span> <span class="title">Extracting Slices with <code class="code-inline tex2jax_ignore">substring()</code></span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-2-6-strings.html#subsubsec-2-6-4-4-case-conversion" class="internal"><span class="codenumber">2.6.4.4</span> <span class="title">Changing Case: <code class="code-inline tex2jax_ignore">toUpperCase</code> and <code class="code-inline tex2jax_ignore">toLowerCase</code></span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-2-6-strings.html#subsec-2-6-5-immutability" class="internal"><span class="codenumber">2.6.5</span> <span class="title">Immutability: Strings Never Change</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-2-7-output-system-out.html" class="internal"><span class="codenumber">2.7</span> <span class="title">Output: Displaying Text with <code class="code-inline tex2jax_ignore">System.out</code></span></a></div>
+<ul id="ptx-toc-group-sec-2-7-output-system-out" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-2-7-output-system-out.html#subsec-2-7-1-unformatted-output" class="internal"><span class="codenumber">2.7.1</span> <span class="title">Unformatted Output with <code class="code-inline tex2jax_ignore">System.out.print</code> and <code class="code-inline tex2jax_ignore">System.out.println</code></span></a></div></li>
+<li class="toc-item toc-subsection">
+<div class="toc-title-box"><a href="sec-2-7-output-system-out.html#subsec-2-7-2-formatted-output" class="internal"><span class="codenumber">2.7.2</span> <span class="title">Formatted Output with <code class="code-inline tex2jax_ignore">System.out.printf</code></span></a></div>
+<ul id="ptx-toc-group-subsec-2-7-2-formatted-output" class="structural toc-item-list">
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-2-7-output-system-out.html#subsubsec-2-7-2-1-string-interpolation" class="internal"><span class="codenumber">2.7.2.1</span> <span class="title">String Interpolation with <code class="code-inline tex2jax_ignore">printf</code></span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-2-7-output-system-out.html#subsubsec-2-7-2-2-decimal-precision" class="internal"><span class="codenumber">2.7.2.2</span> <span class="title">Controlling Decimal Precision</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-2-7-output-system-out.html#subsubsec-2-7-2-3-columns-alignment" class="internal"><span class="codenumber">2.7.2.3</span> <span class="title">Formatting Columns and Alignment</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-2-7-output-system-out.html#subsec-2-7-3-building-strings-format" class="internal"><span class="codenumber">2.7.3</span> <span class="title">Building Strings with <code class="code-inline tex2jax_ignore">String.format</code></span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-2-8-input-scanner.html" class="internal"><span class="codenumber">2.8</span> <span class="title">Input: Reading from the Console</span></a></div>
+<ul id="ptx-toc-group-sec-2-8-input-scanner" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-2-8-input-scanner.html#subsec-2-8-1-what-is-a-scanner" class="internal"><span class="codenumber">2.8.1</span> <span class="title">What is a Scanner?</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-2-8-input-scanner.html#subsec-2-8-2-prompting-reading-tokens" class="internal"><span class="codenumber">2.8.2</span> <span class="title">Prompting and Reading Tokens</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-2-8-input-scanner.html#subsec-2-8-3-reading-lines-nextline" class="internal"><span class="codenumber">2.8.3</span> <span class="title">Reading Entire Lines with <code class="code-inline tex2jax_ignore">nextLine()</code></span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-2-8-input-scanner.html#subsec-2-8-4-leftover-newline-pitfall" class="internal"><span class="codenumber">2.8.4</span> <span class="title">The “Leftover Newline” Pitfall</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-2-9-case-study-drone.html" class="internal"><span class="codenumber">2.9</span> <span class="title">Putting It All Together: Writing an Input-Processing-Output Program</span></a></div>
+<ul id="ptx-toc-group-sec-2-9-case-study-drone" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-2-9-case-study-drone.html#subsec-2-9-1-the-problem" class="internal"><span class="codenumber">2.9.1</span> <span class="title">The Problem</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-2-9-case-study-drone.html#subsec-2-9-2-solution-process" class="internal"><span class="codenumber">2.9.2</span> <span class="title">Solution Process</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-2-9-case-study-drone.html#subsec-2-9-3-deconstruct" class="internal"><span class="codenumber">2.9.3</span> <span class="title">Deconstruct the Drone Search and Rescue Problem</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-2-9-case-study-drone.html#subsec-2-9-4-design-algorithm" class="internal"><span class="codenumber">2.9.4</span> <span class="title">Design the Algorithm</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-2-9-case-study-drone.html#subsec-2-9-5-establish-test-cases" class="internal"><span class="codenumber">2.9.5</span> <span class="title">Establish Test Cases</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-2-9-case-study-drone.html#subsec-2-9-6-implement-solution" class="internal"><span class="codenumber">2.9.6</span> <span class="title">Implement the Solution in Java</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-2-9-case-study-drone.html#subsec-2-9-7-verify-refine" class="internal"><span class="codenumber">2.9.7</span> <span class="title">Verify and Refine</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-2-10-moving-on.html" class="internal"><span class="codenumber">2.10</span> <span class="title">Moving On!</span></a></div></li>
+<li class="toc-item toc-exercises"><div class="toc-title-box"><a href="sec-2-11-exercises.html" class="internal"><span class="codenumber">2.11</span> <span class="title">Programming Projects</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-chapter">
+<div class="toc-title-box"><a href="ch-03-selection.html" class="internal"><span class="codenumber">3</span> <span class="title">Selection Statements</span></a></div>
+<ul id="ptx-toc-group-ch-03-selection" class="structural toc-item-list">
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-3-1-overview.html" class="internal"><span class="codenumber">3.1</span> <span class="title">Chapter Overview</span></a></div></li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-3-2-forming-conditions.html" class="internal"><span class="codenumber">3.2</span> <span class="title"><code class="code-inline tex2jax_ignore">if</code> Statements, Relational Operators, and Boolean Expressions</span></a></div>
+<ul id="ptx-toc-group-sec-3-2-forming-conditions" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-2-forming-conditions.html#subsec-3-2-1-if-statements-blocks" class="internal"><span class="codenumber">3.2.1</span> <span class="title"><code class="code-inline tex2jax_ignore">if</code> Statements, Compound Statements, and Block Statements</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-2-forming-conditions.html#subsec-3-2-2-relational-equality-operators" class="internal"><span class="codenumber">3.2.2</span> <span class="title">Writing <code class="code-inline tex2jax_ignore">boolean</code> Expressions with the Relational and Equality Operators</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-2-forming-conditions.html#subsec-3-2-3-order-of-operations" class="internal"><span class="codenumber">3.2.3</span> <span class="title">Order of Operations</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-2-forming-conditions.html#subsec-3-2-4-comparing-floats" class="internal"><span class="codenumber">3.2.4</span> <span class="title">Comparing Floating-Point Values</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-2-forming-conditions.html#subsec-3-2-5-boolean-variables-flags" class="internal"><span class="codenumber">3.2.5</span> <span class="title">Boolean Expressions and Variables</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-3-3-two-way-decisions.html" class="internal"><span class="codenumber">3.3</span> <span class="title">Two-Way Decisions: <code class="code-inline tex2jax_ignore">if-else</code> and Complements</span></a></div>
+<ul id="ptx-toc-group-sec-3-3-two-way-decisions" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-3-two-way-decisions.html#subsec-3-3-1-pairing-if-else" class="internal"><span class="codenumber">3.3.1</span> <span class="title">Pairing <code class="code-inline tex2jax_ignore">if</code> with <code class="code-inline tex2jax_ignore">else</code></span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-3-two-way-decisions.html#subsec-3-3-2-logical-complements" class="internal"><span class="codenumber">3.3.2</span> <span class="title">Logical Complements</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-3-4-multi-way-branching.html" class="internal"><span class="codenumber">3.4</span> <span class="title">Multi-Way Branching (Series and Nested <code class="code-inline tex2jax_ignore">if</code> Statements)</span></a></div>
+<ul id="ptx-toc-group-sec-3-4-multi-way-branching" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-4-multi-way-branching.html#subsec-3-4-1-series-if" class="internal"><span class="codenumber">3.4.1</span> <span class="title">Series <code class="code-inline tex2jax_ignore">if</code> Statements</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-4-multi-way-branching.html#subsec-3-4-2-nested-if" class="internal"><span class="codenumber">3.4.2</span> <span class="title">Nested <code class="code-inline tex2jax_ignore">if</code> Statements</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-4-multi-way-branching.html#subsec-3-4-3-separate-if" class="internal"><span class="codenumber">3.4.3</span> <span class="title">Separate <code class="code-inline tex2jax_ignore">if</code> Statements</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-3-5-compound-conditions.html" class="internal"><span class="codenumber">3.5</span> <span class="title">Compound Conditions: Logical Operators &amp; De Morgan’s Laws</span></a></div>
+<ul id="ptx-toc-group-sec-3-5-compound-conditions" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-5-compound-conditions.html#subsec-3-5-1-logical-and-or" class="internal"><span class="codenumber">3.5.1</span> <span class="title">Logical and <code class="code-inline tex2jax_ignore">&amp;&amp;</code> and or <code class="code-inline tex2jax_ignore">||</code></span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-5-compound-conditions.html#subsec-3-5-2-testing-ranges" class="internal"><span class="codenumber">3.5.2</span> <span class="title">Testing Ranges</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-5-compound-conditions.html#subsec-3-5-3-logical-not" class="internal"><span class="codenumber">3.5.3</span> <span class="title">Logical not (<code class="code-inline tex2jax_ignore">!</code>)</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-5-compound-conditions.html#subsec-3-5-4-operator-precedence" class="internal"><span class="codenumber">3.5.4</span> <span class="title">Logical Operator Precedence</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-5-compound-conditions.html#subsec-3-5-5-short-circuit" class="internal"><span class="codenumber">3.5.5</span> <span class="title">Short-Circuit Evaluation</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-5-compound-conditions.html#subsec-3-5-6-de-morgans-laws" class="internal"><span class="codenumber">3.5.6</span> <span class="title">Complementing Logical Conditions with De Morgan’s Laws</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-3-6-comparing-strings.html" class="internal"><span class="codenumber">3.6</span> <span class="title">Comparing Strings and Other Objects</span></a></div>
+<ul id="ptx-toc-group-sec-3-6-comparing-strings" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-6-comparing-strings.html#subsec-3-6-1-equality-and-the-stack" class="internal"><span class="codenumber">3.6.1</span> <span class="title">Equality and the Stack</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-6-comparing-strings.html#subsec-3-6-2-how-to-compare-strings" class="internal"><span class="codenumber">3.6.2</span> <span class="title">How to Compare <code class="code-inline tex2jax_ignore">String</code> Variables</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-6-comparing-strings.html#subsec-3-6-3-ordering-strings" class="internal"><span class="codenumber">3.6.3</span> <span class="title">Ordering <code class="code-inline tex2jax_ignore">String</code> Variables</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-6-comparing-strings.html#subsec-3-6-4-why-equality-operator-seems-to-work" class="internal"><span class="codenumber">3.6.4</span> <span class="title">Warning! Why <code class="code-inline tex2jax_ignore">==</code> Sometimes Seems to Work</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-6-comparing-strings.html#subsec-3-6-5-another-use-for-not" class="internal"><span class="codenumber">3.6.5</span> <span class="title">Another Use for not (<code class="code-inline tex2jax_ignore">!</code>)</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-3-7-specialized-branching.html" class="internal"><span class="codenumber">3.7</span> <span class="title">Specialized Branching: The <code class="code-inline tex2jax_ignore">switch</code> Statement and Conditional Operator</span></a></div>
+<ul id="ptx-toc-group-sec-3-7-specialized-branching" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-7-specialized-branching.html#subsec-3-7-1-switch-statement" class="internal"><span class="codenumber">3.7.1</span> <span class="title">The <code class="code-inline tex2jax_ignore">switch</code> Statement</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-7-specialized-branching.html#subsec-3-7-2-conditional-operator" class="internal"><span class="codenumber">3.7.2</span> <span class="title">The Conditional Operator <code class="code-inline tex2jax_ignore">?:</code></span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-3-8-assertions.html" class="internal"><span class="codenumber">3.8</span> <span class="title">Writing Defensive Code with Assertions</span></a></div>
+<ul id="ptx-toc-group-sec-3-8-assertions" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-8-assertions.html#subsec-3-8-1-what-is-an-assertion" class="internal"><span class="codenumber">3.8.1</span> <span class="title">What Is an Assertion?</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-8-assertions.html#subsec-3-8-2-syntax-assert" class="internal"><span class="codenumber">3.8.2</span> <span class="title">Syntax of the <code class="code-inline tex2jax_ignore">assert</code> Statement</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-8-assertions.html#subsec-3-8-3-when-to-use-assertions" class="internal"><span class="codenumber">3.8.3</span> <span class="title">When to Use (and When Not to Use) Assertions</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-8-assertions.html#subsec-3-8-4-enabling-disabling-assertions" class="internal"><span class="codenumber">3.8.4</span> <span class="title">Enabling and Disabling Assertions</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-8-assertions.html#subsec-3-8-5-assertions-in-eclipse" class="internal"><span class="codenumber">3.8.5</span> <span class="title">Enabling and Disabling Assertions in Eclipse</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-3-9-design-verification.html" class="internal"><span class="codenumber">3.9</span> <span class="title">Design and Verification: Choosing Constructs and Testing Branches</span></a></div>
+<ul id="ptx-toc-group-sec-3-9-design-verification" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-9-design-verification.html#subsec-3-9-1-choosing-best-structure" class="internal"><span class="codenumber">3.9.1</span> <span class="title">Choosing the Best Selection Structure</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-9-design-verification.html#subsec-3-9-2-tracing-execution-paths" class="internal"><span class="codenumber">3.9.2</span> <span class="title">Tracing Execution Paths in a Selection Structure</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-9-design-verification.html#subsec-3-9-3-branch-coverage-boundaries" class="internal"><span class="codenumber">3.9.3</span> <span class="title">Designing Test Cases: Branch Coverage and Boundaries</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-9-design-verification.html#subsec-3-9-4-building-test-plan-table" class="internal"><span class="codenumber">3.9.4</span> <span class="title">Building a Test Plan Table</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-3-10-putting-it-together.html" class="internal"><span class="codenumber">3.10</span> <span class="title">Putting It All Together</span></a></div>
+<ul id="ptx-toc-group-sec-3-10-putting-it-together" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-10-putting-it-together.html#subsec-3-10-1-the-problem" class="internal"><span class="codenumber">3.10.1</span> <span class="title">The Problem</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-10-putting-it-together.html#subsec-3-10-2-deconstruct-problem" class="internal"><span class="codenumber">3.10.2</span> <span class="title">Deconstruct the Problem</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-10-putting-it-together.html#subsec-3-10-3-design-algorithm" class="internal"><span class="codenumber">3.10.3</span> <span class="title">Design the Algorithm (Choose Appropriate Selection Structures)</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-10-putting-it-together.html#subsec-3-10-4-create-testing-table" class="internal"><span class="codenumber">3.10.4</span> <span class="title">Create the Testing Table</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-10-putting-it-together.html#subsec-3-10-5-implement-solution" class="internal"><span class="codenumber">3.10.5</span> <span class="title">Implement (and Test) the Solution</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-10-putting-it-together.html#subsec-3-10-6-code-coverage" class="internal"><span class="codenumber">3.10.6</span> <span class="title">Visualizing Branch Execution with Eclipse Code Coverage</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-3-11-moving-on.html" class="internal"><span class="codenumber">3.11</span> <span class="title">Moving On!</span></a></div></li>
+<li class="toc-item toc-exercises"><div class="toc-title-box"><a href="sec-3-12-exercises.html" class="internal"><span class="codenumber">3.12</span> <span class="title">Programming Projects</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-chapter">
+<div class="toc-title-box"><a href="ch-04-loops.html" class="internal"><span class="codenumber">4</span> <span class="title">Repetition Statements and File Processing</span></a></div>
+<ul id="ptx-toc-group-ch-04-loops" class="structural toc-item-list">
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-4-1-overview.html" class="internal"><span class="codenumber">4.1</span> <span class="title">Chapter Overview</span></a></div></li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-4-2-conditional-loops.html" class="internal"><span class="codenumber">4.2</span> <span class="title">Conditional Loops: <code class="code-inline tex2jax_ignore">while</code> and <code class="code-inline tex2jax_ignore">do-while</code></span></a></div>
+<ul id="ptx-toc-group-sec-4-2-conditional-loops" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-2-conditional-loops.html#subsec-4-2-1-constructing-a-loop" class="internal"><span class="codenumber">4.2.1</span> <span class="title">Constructing a Loop</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-2-conditional-loops.html#subsec-4-2-2-common-loop-errors" class="internal"><span class="codenumber">4.2.2</span> <span class="title">Common Loop Errors</span></a></div></li>
+<li class="toc-item toc-subsection">
+<div class="toc-title-box"><a href="sec-4-2-conditional-loops.html#subsec-4-2-3-post-test-loops" class="internal"><span class="codenumber">4.2.3</span> <span class="title">Post-Test Loops: The <code class="code-inline tex2jax_ignore">do-while</code> Statement</span></a></div>
+<ul id="ptx-toc-group-subsec-4-2-3-post-test-loops" class="structural toc-item-list">
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-4-2-conditional-loops.html#subsubsec-4-2-3-1-comparing-while-do-while" class="internal"><span class="codenumber">4.2.3.1</span> <span class="title">Comparing <code class="code-inline tex2jax_ignore">while</code> and <code class="code-inline tex2jax_ignore">do-while</code> to Validate Input</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-4-2-conditional-loops.html#subsubsec-4-2-3-2-block-level-scope" class="internal"><span class="codenumber">4.2.3.2</span> <span class="title">Block-Level Scope</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-4-3-variable-roles.html" class="internal"><span class="codenumber">4.3</span> <span class="title">Common Loop Variable Roles: Steppers, Gatherers, and Holders</span></a></div>
+<ul id="ptx-toc-group-sec-4-3-variable-roles" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-3-variable-roles.html#subsec-4-3-1-stepper-role" class="internal"><span class="codenumber">4.3.1</span> <span class="title">The Stepper Role</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-3-variable-roles.html#subsec-4-3-2-most-recent-holder" class="internal"><span class="codenumber">4.3.2</span> <span class="title">The Most Recent Holder Role</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-3-variable-roles.html#subsec-4-3-3-gatherer-role" class="internal"><span class="codenumber">4.3.3</span> <span class="title">The Gatherer Role</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-3-variable-roles.html#subsec-4-3-4-most-wanted-holder" class="internal"><span class="codenumber">4.3.4</span> <span class="title">The Most-Wanted Holder Role</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-3-variable-roles.html#subsec-4-3-5-other-variable-roles" class="internal"><span class="codenumber">4.3.5</span> <span class="title">Other Variable Roles</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-4-4-counting-loops-for.html" class="internal"><span class="codenumber">4.4</span> <span class="title">Counting Loops: <code class="code-inline tex2jax_ignore">for</code></span></a></div>
+<ul id="ptx-toc-group-sec-4-4-counting-loops-for" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-4-counting-loops-for.html#subsec-4-4-1-for-syntax-control-flow" class="internal"><span class="codenumber">4.4.1</span> <span class="title"><code class="code-inline tex2jax_ignore">for</code> Loop Syntax and Control Flow</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-4-counting-loops-for.html#subsec-4-4-2-converting-while-for" class="internal"><span class="codenumber">4.4.2</span> <span class="title">Converting Between <code class="code-inline tex2jax_ignore">while</code> and <code class="code-inline tex2jax_ignore">for</code></span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-4-counting-loops-for.html#subsec-4-4-3-anatomy-for-header" class="internal"><span class="codenumber">4.4.3</span> <span class="title">Anatomy of the <code class="code-inline tex2jax_ignore">for</code> Loop Header</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-4-counting-loops-for.html#subsec-4-4-4-designing-for-loops" class="internal"><span class="codenumber">4.4.4</span> <span class="title">Designing <code class="code-inline tex2jax_ignore">for</code> Loops</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-4-5-sentinel-loops.html" class="internal"><span class="codenumber">4.5</span> <span class="title">Sentinel-Controlled Loops</span></a></div>
+<ul id="ptx-toc-group-sec-4-5-sentinel-loops" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-5-sentinel-loops.html#subsec-4-5-1-what-is-sentinel-value" class="internal"><span class="codenumber">4.5.1</span> <span class="title">What Is a Sentinel Value?</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-5-sentinel-loops.html#subsec-4-5-2-primed-loop-pattern" class="internal"><span class="codenumber">4.5.2</span> <span class="title">The Primed-Loop Pattern</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-5-sentinel-loops.html#subsec-4-5-3-why-header-should-not-lie" class="internal"><span class="codenumber">4.5.3</span> <span class="title">Why the Header Should Not Lie (<code class="code-inline tex2jax_ignore">break</code> and <code class="code-inline tex2jax_ignore">continue</code>)</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-5-sentinel-loops.html#subsec-4-5-4-example-handling-edge-case" class="internal"><span class="codenumber">4.5.4</span> <span class="title">Example: Handling the Edge Case</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-4-6-nested-loops.html" class="internal"><span class="codenumber">4.6</span> <span class="title">Nested Loops</span></a></div>
+<ul id="ptx-toc-group-sec-4-6-nested-loops" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-6-nested-loops.html#subsec-4-6-1-mechanics-nested-loops" class="internal"><span class="codenumber">4.6.1</span> <span class="title">The Mechanics of Nested Loops</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-6-nested-loops.html#subsec-4-6-2-tracing-execution-grid" class="internal"><span class="codenumber">4.6.2</span> <span class="title">Tracing the Execution Grid</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-6-nested-loops.html#subsec-4-6-3-producing-tabular-reports" class="internal"><span class="codenumber">4.6.3</span> <span class="title">Producing Tabular Reports (Rows and Columns)</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-6-nested-loops.html#subsec-4-6-4-generating-coordinate-matrices" class="internal"><span class="codenumber">4.6.4</span> <span class="title">Generating Coordinate Matrices</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-6-nested-loops.html#subsec-4-6-5-common-traps-nested-loops" class="internal"><span class="codenumber">4.6.5</span> <span class="title">Common Traps in Nested Loops</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-4-7-designing-loops.html" class="internal"><span class="codenumber">4.7</span> <span class="title">Designing Loops: Finding the Patterns</span></a></div>
+<ul id="ptx-toc-group-sec-4-7-designing-loops" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-7-designing-loops.html#subsec-4-7-1-core-decision" class="internal"><span class="codenumber">4.7.1</span> <span class="title">The Core Decision: Which Loop Structure Fits?</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-7-designing-loops.html#subsec-4-7-2-deconstructing-repetition" class="internal"><span class="codenumber">4.7.2</span> <span class="title">Deconstructing the Repetition: Three Essential Questions</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-7-designing-loops.html#subsec-4-7-3-five-standard-loop-patterns" class="internal"><span class="codenumber">4.7.3</span> <span class="title">The Five Standard Loop Patterns</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-7-designing-loops.html#subsec-4-7-4-verification-three-point-check" class="internal"><span class="codenumber">4.7.4</span> <span class="title">Verification: The Three-Point Check</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-4-8-loop-invariants.html" class="internal"><span class="codenumber">4.8</span> <span class="title">Verifying Loop State: Invariants and Assertions</span></a></div>
+<ul id="ptx-toc-group-sec-4-8-loop-invariants" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-8-loop-invariants.html#subsec-4-8-1-contract-of-a-loop" class="internal"><span class="codenumber">4.8.1</span> <span class="title">The Contract of a Loop: Preconditions, Postconditions, and Invariants</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-8-loop-invariants.html#subsec-4-8-2-verifying-counters-accumulators" class="internal"><span class="codenumber">4.8.2</span> <span class="title">Verifying Counters and Accumulators Upon Loop Exit</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-8-loop-invariants.html#subsec-4-8-3-example-factorial-assertions" class="internal"><span class="codenumber">4.8.3</span> <span class="title">A Complete Example: Factorial with Assertions</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-4-9-loop-errors-testing.html" class="internal"><span class="codenumber">4.9</span> <span class="title">Common Loop Errors and Designing Test Cases</span></a></div>
+<ul id="ptx-toc-group-sec-4-9-loop-errors-testing" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-9-loop-errors-testing.html#subsec-4-9-1-branch-to-loop-coverage" class="internal"><span class="codenumber">4.9.1</span> <span class="title">From Branch Coverage to Loop Coverage</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-9-loop-errors-testing.html#subsec-4-9-2-diagnosing-escaping-infinite-loops" class="internal"><span class="codenumber">4.9.2</span> <span class="title">Diagnosing and Escaping Infinite Loops</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-9-loop-errors-testing.html#subsec-4-9-3-preventing-off-by-one-errors" class="internal"><span class="codenumber">4.9.3</span> <span class="title">Preventing Off-by-One Errors (<code class="code-inline tex2jax_ignore">&lt;</code> vs. <code class="code-inline tex2jax_ignore">&lt;=</code>)</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-9-loop-errors-testing.html#subsec-4-9-4-designing-loop-test-plan" class="internal"><span class="codenumber">4.9.4</span> <span class="title">Designing a Loop Test Plan Table</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-9-loop-errors-testing.html#subsec-4-9-5-checklist-loop-verification" class="internal"><span class="codenumber">4.9.5</span> <span class="title">Summary Checklist for Loop Verification</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-4-10-reading-files-scanner.html" class="internal"><span class="codenumber">4.10</span> <span class="title">Reading Text Files with <code class="code-inline tex2jax_ignore">Scanner</code></span></a></div>
+<ul id="ptx-toc-group-sec-4-10-reading-files-scanner" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-10-reading-files-scanner.html#subsec-4-10-1-file-class" class="internal"><span class="codenumber">4.10.1</span> <span class="title">The <code class="code-inline tex2jax_ignore">File</code> Class</span></a></div></li>
+<li class="toc-item toc-subsection">
+<div class="toc-title-box"><a href="sec-4-10-reading-files-scanner.html#subsec-4-10-2-creating-file-reading-scanner" class="internal"><span class="codenumber">4.10.2</span> <span class="title">Creating a File-Reading <code class="code-inline tex2jax_ignore">Scanner</code></span></a></div>
+<ul id="ptx-toc-group-subsec-4-10-2-creating-file-reading-scanner" class="structural toc-item-list">
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-4-10-reading-files-scanner.html#subsubsec-4-10-2-1-checked-vs-unchecked" class="internal"><span class="codenumber">4.10.2.1</span> <span class="title">Checked Versus Unchecked Exceptions</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-4-10-reading-files-scanner.html#subsubsec-4-10-2-2-throwing-checked-exceptions" class="internal"><span class="codenumber">4.10.2.2</span> <span class="title">Throwing Checked Exceptions</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-4-10-reading-files-scanner.html#subsubsec-4-10-2-3-whos-throwing-exceptions" class="internal"><span class="codenumber">4.10.2.3</span> <span class="title">Who’s Throwing the Exceptions</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-10-reading-files-scanner.html#subsec-4-10-3-reading-tokens-lines" class="internal"><span class="codenumber">4.10.3</span> <span class="title">Reading Tokens and Lines from the File</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-10-reading-files-scanner.html#subsec-4-10-4-reading-loop-mixing-tokens-lines" class="internal"><span class="codenumber">4.10.4</span> <span class="title">Reading from a File in a Loop Mixing Tokens and Lines</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-10-reading-files-scanner.html#subsec-4-10-5-reading-lines-converting" class="internal"><span class="codenumber">4.10.5</span> <span class="title">Reading from a File in a Loop Reading Lines and Converting</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-10-reading-files-scanner.html#subsec-4-10-6-variable-roles-files" class="internal"><span class="codenumber">4.10.6</span> <span class="title">Variable Roles and Files</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-4-11-writing-files-printwriter.html" class="internal"><span class="codenumber">4.11</span> <span class="title">Writing Text Files with <code class="code-inline tex2jax_ignore">PrintWriter</code></span></a></div>
+<ul id="ptx-toc-group-sec-4-11-writing-files-printwriter" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-11-writing-files-printwriter.html#subsec-4-11-1-printwriter-class" class="internal"><span class="codenumber">4.11.1</span> <span class="title">The <code class="code-inline tex2jax_ignore">PrintWriter</code> Class</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-11-writing-files-printwriter.html#subsec-4-11-2-necessity-of-close" class="internal"><span class="codenumber">4.11.2</span> <span class="title">The Absolute Necessity of <code class="code-inline tex2jax_ignore">close()</code></span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-11-writing-files-printwriter.html#subsec-4-11-3-example-generating-aqi-map" class="internal"><span class="codenumber">4.11.3</span> <span class="title">A Complete Example: Generating the Interactive AQI Map</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-4-12-moving-on.html" class="internal"><span class="codenumber">4.12</span> <span class="title">Moving On!</span></a></div></li>
+<li class="toc-item toc-exercises"><div class="toc-title-box"><a href="sec-4-13-exercises.html" class="internal"><span class="codenumber">4.13</span> <span class="title">Programming Projects</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-chapter contains-active">
+<div class="toc-title-box"><a href="ch-05-methods.html" class="internal"><span class="codenumber">5</span> <span class="title">Methods and Functional Decomposition</span></a></div>
+<ul class="structural toc-item-list contains-active" id="ptx-toc-group-ch-05-methods">
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-5-1-overview.html" class="internal"><span class="codenumber">5.1</span> <span class="title">Methods and Functional Decomposition</span></a></div></li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-5-2-procedural-abstraction.html" class="internal"><span class="codenumber">5.2</span> <span class="title">Procedural Abstraction and Functional Decomposition</span></a></div>
+<ul id="ptx-toc-group-sec-5-2-procedural-abstraction" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-2-procedural-abstraction.html#subsec-5-2-1-procedural-abstraction" class="internal"><span class="codenumber">5.2.1</span> <span class="title">Procedural Abstraction</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-2-procedural-abstraction.html#subsec-5-2-2-functional-decomposition" class="internal"><span class="codenumber">5.2.2</span> <span class="title">Functional Decomposition</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-2-procedural-abstraction.html#subsec-5-2-3-structure-charts" class="internal"><span class="codenumber">5.2.3</span> <span class="title">Modeling Design with Structure Charts</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-2-procedural-abstraction.html#subsec-5-2-4-implementation-strategies" class="internal"><span class="codenumber">5.2.4</span> <span class="title">Implementation Strategies</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-5-3-anatomy-static-method.html" class="internal"><span class="codenumber">5.3</span> <span class="title">Anatomy of a Static Method</span></a></div>
+<ul id="ptx-toc-group-sec-5-3-anatomy-static-method" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-3-anatomy-static-method.html#subsec-5-3-1-defining-method" class="internal"><span class="codenumber">5.3.1</span> <span class="title">Defining a Method</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-3-anatomy-static-method.html#subsec-5-3-2-invoking-method" class="internal"><span class="codenumber">5.3.2</span> <span class="title">Invoking a Method</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-3-anatomy-static-method.html#subsec-5-3-3-local-variables-method-body" class="internal"><span class="codenumber">5.3.3</span> <span class="title">Local Variables in a Method Body</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-5-4-parameters-arguments.html" class="internal"><span class="codenumber">5.4</span> <span class="title">Passing Information: Parameters and Arguments</span></a></div>
+<ul id="ptx-toc-group-sec-5-4-parameters-arguments" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-4-parameters-arguments.html#subsec-5-4-1-formal-parameters" class="internal"><span class="codenumber">5.4.1</span> <span class="title">Defining a Method with Formal Parameters</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-4-parameters-arguments.html#subsec-5-4-2-argument-expressions" class="internal"><span class="codenumber">5.4.2</span> <span class="title">Invoking a Method with Argument Expressions</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-5-5-call-stack.html" class="internal"><span class="codenumber">5.5</span> <span class="title">Memory in Action: The Call Stack</span></a></div>
+<ul id="ptx-toc-group-sec-5-5-call-stack" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-5-call-stack.html#subsec-5-5-1-stack-lifo" class="internal"><span class="codenumber">5.5.1</span> <span class="title">The Stack: A Last-In, First-Out (LIFO) Structure</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-5-call-stack.html#subsec-5-5-2-anatomy-stack-frame" class="internal"><span class="codenumber">5.5.2</span> <span class="title">Anatomy of a Stack Frame</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-5-call-stack.html#subsec-5-5-3-tracing-method-call" class="internal"><span class="codenumber">5.5.3</span> <span class="title">Tracing a Method Call on the Stack</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-5-call-stack.html#subsec-5-5-4-scope-vs-lifetime" class="internal"><span class="codenumber">5.5.4</span> <span class="title">Scope vs. Lifetime</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-5-call-stack.html#subsec-5-5-5-pass-by-value-memory" class="internal"><span class="codenumber">5.5.5</span> <span class="title">Pass-by-Value Grounded in Memory</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-5-call-stack.html#subsec-5-5-6-stack-overflow" class="internal"><span class="codenumber">5.5.6</span> <span class="title">A Glimpse at Stack Overflow</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-5-6-value-returning-methods.html" class="internal"><span class="codenumber">5.6</span> <span class="title">Value-Returning Methods</span></a></div>
+<ul id="ptx-toc-group-sec-5-6-value-returning-methods" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-6-value-returning-methods.html#subsec-5-6-1-anatomy-value-returning-method" class="internal"><span class="codenumber">5.6.1</span> <span class="title">Anatomy of a Value-Returning Method</span></a></div></li>
+<li class="toc-item toc-subsection">
+<div class="toc-title-box"><a href="sec-5-6-value-returning-methods.html#subsec-5-6-2-designing-writing-methods" class="internal"><span class="codenumber">5.6.2</span> <span class="title">Designing and Writing Methods</span></a></div>
+<ul id="ptx-toc-group-subsec-5-6-2-designing-writing-methods" class="structural toc-item-list">
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-5-6-value-returning-methods.html#subsubsec-5-6-2-1-single-purpose" class="internal"><span class="codenumber">5.6.2.1</span> <span class="title">Give Each Method a Single Purpose</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-5-6-value-returning-methods.html#subsubsec-5-6-2-2-put-return-last" class="internal"><span class="codenumber">5.6.2.2</span> <span class="title">Put <code class="code-inline tex2jax_ignore">return</code> Last</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-5-6-value-returning-methods.html#subsubsec-5-6-2-3-uninitialized-variable" class="internal"><span class="codenumber">5.6.2.3</span> <span class="title">Beware the Uninitialized Variable</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-5-6-value-returning-methods.html#subsubsec-5-6-2-4-return-expression" class="internal"><span class="codenumber">5.6.2.4</span> <span class="title">Return an Expression</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-6-value-returning-methods.html#subsec-5-6-3-using-value-returning-methods" class="internal"><span class="codenumber">5.6.3</span> <span class="title">Effectively Using Value-Returning Methods</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-6-value-returning-methods.html#subsec-5-6-4-ignored-return-value" class="internal"><span class="codenumber">5.6.4</span> <span class="title">Common Pitfall: The Ignored Return Value</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-5-7-boolean-methods.html" class="internal"><span class="codenumber">5.7</span> <span class="title">Boolean (Predicate) Methods</span></a></div>
+<ul id="ptx-toc-group-sec-5-7-boolean-methods" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-7-boolean-methods.html#subsec-5-7-1-where-predicate-methods-used" class="internal"><span class="codenumber">5.7.1</span> <span class="title">Where Predicate Methods Are Used</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-7-boolean-methods.html#subsec-5-7-2-writing-predicate-methods" class="internal"><span class="codenumber">5.7.2</span> <span class="title">Writing Predicate Methods</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-7-boolean-methods.html#subsec-5-7-3-naming-predicate-methods" class="internal"><span class="codenumber">5.7.3</span> <span class="title">Naming Predicate Methods</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-7-boolean-methods.html#subsec-5-7-4-input-validation-loops" class="internal"><span class="codenumber">5.7.4</span> <span class="title">Predicate Methods and Input Validation Loops</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-7-boolean-methods.html#subsec-5-7-5-flags-predicate-methods" class="internal"><span class="codenumber">5.7.5</span> <span class="title">Flags in Predicate Methods</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-5-8-scope-lifetime.html" class="internal"><span class="codenumber">5.8</span> <span class="title">Variable Scope and Lifetime</span></a></div>
+<ul id="ptx-toc-group-sec-5-8-scope-lifetime" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-8-scope-lifetime.html#subsec-5-8-1-scope-spatial-boundary" class="internal"><span class="codenumber">5.8.1</span> <span class="title">Scope: The Spatial Boundary</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-8-scope-lifetime.html#subsec-5-8-2-nested-blocks" class="internal"><span class="codenumber">5.8.2</span> <span class="title">Block Scope and Nested Blocks</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-8-scope-lifetime.html#subsec-5-8-3-lifetime-temporal-boundary" class="internal"><span class="codenumber">5.8.3</span> <span class="title">Lifetime: The Temporal Boundary</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-8-scope-lifetime.html#subsec-5-8-4-disjoint-scopes-shadowing" class="internal"><span class="codenumber">5.8.4</span> <span class="title">Disjoint Scopes vs. Shadowing</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-8-scope-lifetime.html#subsec-5-8-5-architectural-value-scope-isolation" class="internal"><span class="codenumber">5.8.5</span> <span class="title">The Architectural Value of Scope Isolation</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-5-9-method-overloading.html" class="internal"><span class="codenumber">5.9</span> <span class="title">Method Overloading</span></a></div>
+<ul id="ptx-toc-group-sec-5-9-method-overloading" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-9-method-overloading.html#subsec-5-9-1-method-signature" class="internal"><span class="codenumber">5.9.1</span> <span class="title">Method Signature</span></a></div></li>
+<li class="toc-item toc-subsection">
+<div class="toc-title-box"><a href="sec-5-9-method-overloading.html#subsec-5-9-2-writing-overloaded-methods" class="internal"><span class="codenumber">5.9.2</span> <span class="title">Writing an Overloaded Method</span></a></div>
+<ul id="ptx-toc-group-subsec-5-9-2-writing-overloaded-methods" class="structural toc-item-list">
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-5-9-method-overloading.html#subsubsec-5-9-2-1-different-data" class="internal"><span class="codenumber">5.9.2.1</span> <span class="title">Methods That Operate on Different Data</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-5-9-method-overloading.html#subsubsec-5-9-2-2-method-delegation" class="internal"><span class="codenumber">5.9.2.2</span> <span class="title">Method Delegation</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-9-method-overloading.html#subsec-5-9-3-resolving-overloaded-calls" class="internal"><span class="codenumber">5.9.3</span> <span class="title">How Java Resolves Overloaded Method Calls</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-5-10-javadoc.html" class="internal"><span class="codenumber">5.10</span> <span class="title">Documenting Methods with Javadoc Comments</span></a></div>
+<ul id="ptx-toc-group-sec-5-10-javadoc" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-10-javadoc.html#subsec-5-10-1-procedural-abstraction-contract" class="internal"><span class="codenumber">5.10.1</span> <span class="title">Procedural Abstraction and the Method Contract</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-10-javadoc.html#subsec-5-10-2-anatomy-javadoc-comment" class="internal"><span class="codenumber">5.10.2</span> <span class="title">Anatomy of a Javadoc Comment</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-10-javadoc.html#subsec-5-10-3-example-getmonthdays" class="internal"><span class="codenumber">5.10.3</span> <span class="title">A Complete Example: Documenting <code class="code-inline tex2jax_ignore">getMonthDays</code></span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-10-javadoc.html#subsec-5-10-4-eclipse-support-javadoc" class="internal"><span class="codenumber">5.10.4</span> <span class="title">Eclipse Support for Javadoc</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-10-javadoc.html#subsec-5-10-5-guidelines-documentation" class="internal"><span class="codenumber">5.10.5</span> <span class="title">Guidelines for Professional Method Documentation</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-5-11-testing-methods.html" class="internal"><span class="codenumber">5.11</span> <span class="title">Testing Methods</span></a></div>
+<ul id="ptx-toc-group-sec-5-11-testing-methods" class="structural toc-item-list">
+<li class="toc-item toc-subsection">
+<div class="toc-title-box"><a href="sec-5-11-testing-methods.html#subsec-5-11-1-assertions-pre-postconditions" class="internal"><span class="codenumber">5.11.1</span> <span class="title">Verifying Pre- and Postconditions with Assert Statements</span></a></div>
+<ul id="ptx-toc-group-subsec-5-11-1-assertions-pre-postconditions" class="structural toc-item-list">
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-5-11-testing-methods.html#subsubsec-5-11-1-1-precondition-assertions" class="internal"><span class="codenumber">5.11.1.1</span> <span class="title">Writing Precondition Assertions</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-5-11-testing-methods.html#subsubsec-5-11-1-2-postcondition-assertions" class="internal"><span class="codenumber">5.11.1.2</span> <span class="title">Writing Postcondition Assertions</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-subsection">
+<div class="toc-title-box"><a href="sec-5-11-testing-methods.html#subsec-5-11-2-unit-testing-methods" class="internal"><span class="codenumber">5.11.2</span> <span class="title">Unit-Testing Methods</span></a></div>
+<ul id="ptx-toc-group-subsec-5-11-2-unit-testing-methods" class="structural toc-item-list">
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-5-11-testing-methods.html#subsubsec-5-11-2-1-unit-test-plan" class="internal"><span class="codenumber">5.11.2.1</span> <span class="title">Designing the Unit Test Plan</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-5-11-testing-methods.html#subsubsec-5-11-2-2-self-checking-test-driver" class="internal"><span class="codenumber">5.11.2.2</span> <span class="title">Implementing a Self-Checking Test Driver</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-subsection">
+<div class="toc-title-box"><a href="sec-5-11-testing-methods.html#subsec-5-11-3-integration-system-testing" class="internal"><span class="codenumber">5.11.3</span> <span class="title">Integration and System Testing</span></a></div>
+<ul id="ptx-toc-group-subsec-5-11-3-integration-system-testing" class="structural toc-item-list">
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-5-11-testing-methods.html#subsubsec-5-11-3-1-integration-testing" class="internal"><span class="codenumber">5.11.3.1</span> <span class="title">Integration Testing: Verifying the Handoffs</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-5-11-testing-methods.html#subsubsec-5-11-3-2-system-testing" class="internal"><span class="codenumber">5.11.3.2</span> <span class="title">System Testing: The Full Application</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-5-12-debugging-methods.html" class="internal"><span class="codenumber">5.12</span> <span class="title">Debugging Methods</span></a></div>
+<ul id="ptx-toc-group-sec-5-12-debugging-methods" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-12-debugging-methods.html#subsec-5-12-1-step-over-vs-into" class="internal"><span class="codenumber">5.12.1</span> <span class="title">Step Over vs. Step Into: Opening the Black Box</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-12-debugging-methods.html#subsec-5-12-2-stack-frames-debug-view" class="internal"><span class="codenumber">5.12.2</span> <span class="title">Visualizing Stack Frames in the Debug View</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-12-debugging-methods.html#subsec-5-12-3-stepping-out-step-return" class="internal"><span class="codenumber">5.12.3</span> <span class="title">Stepping Out: Using Step Return</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-12-debugging-methods.html#subsec-5-12-4-accidental-step-into" class="internal"><span class="codenumber">5.12.4</span> <span class="title">The “Accidental Step Into” Trap (And How to Escape It)</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-12-debugging-methods.html#subsec-5-12-5-summary-stepping-controls" class="internal"><span class="codenumber">5.12.5</span> <span class="title">Summary of Debugger Stepping Controls</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section contains-active">
+<div class="toc-title-box"><a href="sec-5-13-putting-it-together.html" class="internal"><span class="codenumber">5.13</span> <span class="title">Putting It All Together: A Complete Case Study</span></a></div>
+<ul class="structural toc-item-list active" id="ptx-toc-group-sec-5-13-putting-it-together">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-13-putting-it-together.html#subsec-5-13-1-dice-game-problem" class="internal"><span class="codenumber">5.13.1</span> <span class="title">The Problem</span></a></div></li>
+<li class="toc-item toc-subsection">
+<div class="toc-title-box"><a href="sec-5-13-putting-it-together.html#subsec-5-13-2-decomposing-dice-game" class="internal"><span class="codenumber">5.13.2</span> <span class="title">Decomposing the Problem</span></a></div>
+<ul id="ptx-toc-group-subsec-5-13-2-decomposing-dice-game" class="structural toc-item-list">
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-5-13-putting-it-together.html#subsubsec-5-13-2-1-separating-announcements" class="internal"><span class="codenumber">5.13.2.1</span> <span class="title">Separating Announcing a Win or Loss from Determining if the Game is Over</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-5-13-putting-it-together.html#subsubsec-5-13-2-2-general-rolldie" class="internal"><span class="codenumber">5.13.2.2</span> <span class="title">Writing a General <code class="code-inline tex2jax_ignore">rollDie</code> Method Rather than Two Separate Methods</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-5-13-putting-it-together.html#subsubsec-5-13-2-3-hiding-low-level-details" class="internal"><span class="codenumber">5.13.2.3</span> <span class="title">Hiding Low-Level Details</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-5-13-putting-it-together.html#subsubsec-5-13-2-4-avoiding-unnecessary-wrappers" class="internal"><span class="codenumber">5.13.2.4</span> <span class="title">Knowing When Not to Decompose: Avoiding Unnecessary Wrappers</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-subsection">
+<div class="toc-title-box"><a href="sec-5-13-putting-it-together.html#subsec-5-13-3-method-contracts-testing" class="internal"><span class="codenumber">5.13.3</span> <span class="title">Write Method Contracts and the Testing Plan</span></a></div>
+<ul id="ptx-toc-group-subsec-5-13-3-method-contracts-testing" class="structural toc-item-list">
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-5-13-putting-it-together.html#subsubsec-5-13-3-1-writing-method-contract" class="internal"><span class="codenumber">5.13.3.1</span> <span class="title">Writing a Method Contract</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-5-13-putting-it-together.html#subsubsec-5-13-3-2-method-testing-plan" class="internal"><span class="codenumber">5.13.3.2</span> <span class="title">Writing a Method’s Testing Plan</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-5-13-putting-it-together.html#subsec-5-13-4-implementing-dice-game" class="internal"><span class="codenumber">5.13.4</span> <span class="title">Implementing the Solution</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-5-14-moving-on.html" class="internal"><span class="codenumber">5.14</span> <span class="title">Moving On!</span></a></div></li>
+<li class="toc-item toc-exercises"><div class="toc-title-box"><a href="sec-5-15-exercises.html" class="internal"><span class="codenumber">5.15</span> <span class="title">Programming Projects</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-chapter">
+<div class="toc-title-box"><a href="ch-objects-classes.html" class="internal"><span class="codenumber">6</span> <span class="title">Objects and Classes</span></a></div>
+<ul id="ptx-toc-group-ch-objects-classes" class="structural toc-item-list">
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-6-1-overview.html" class="internal"><span class="codenumber">6.1</span> <span class="title">Chapter Overview</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-6-2-oop-intro.html" class="internal"><span class="codenumber">6.2</span> <span class="title">What is Object-Oriented Programming?</span></a></div></li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-6-3-structure.html" class="internal"><span class="codenumber">6.3</span> <span class="title">Structure of an Object-Oriented Solution</span></a></div>
+<ul id="ptx-toc-group-sec-6-3-structure" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-6-3-structure.html#subsec-6-3-1-class-definition" class="internal"><span class="codenumber">6.3.1</span> <span class="title">A Class Definition</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-6-3-structure.html#subsec-6-3-2-main-using-point" class="internal"><span class="codenumber">6.3.2</span> <span class="title">A <code class="code-inline tex2jax_ignore">main</code> Method That Uses <code class="code-inline tex2jax_ignore">Point</code></span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-6-3-structure.html#subsec-6-3-3-how-they-work-together" class="internal"><span class="codenumber">6.3.3</span> <span class="title">How They Work Together</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-6-4-defining-class.html" class="internal"><span class="codenumber">6.4</span> <span class="title">Defining a Class: State and Behavior</span></a></div>
+<ul id="ptx-toc-group-sec-6-4-defining-class" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-6-4-defining-class.html#subsec-6-4-1-class-diagrams" class="internal"><span class="codenumber">6.4.1</span> <span class="title">Class Diagrams</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-6-4-defining-class.html#subsec-6-4-2-encapsulation-state" class="internal"><span class="codenumber">6.4.2</span> <span class="title">Encapsulation and Object State</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-6-4-defining-class.html#subsec-6-4-3-fields-constructors" class="internal"><span class="codenumber">6.4.3</span> <span class="title">Fields and Constructors</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-6-5-static-instance.html" class="internal"><span class="codenumber">6.5</span> <span class="title">Static vs. Instance Members</span></a></div>
+<ul id="ptx-toc-group-sec-6-5-static-instance" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-6-5-static-instance.html#subsec-6-5-1-methods" class="internal"><span class="codenumber">6.5.1</span> <span class="title">Instance Methods vs. Static Methods</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-6-5-static-instance.html#subsec-6-5-2-variables" class="internal"><span class="codenumber">6.5.2</span> <span class="title">Instance Variables vs. Static Variables</span></a></div></li>
+<li class="toc-item toc-subsection">
+<div class="toc-title-box"><a href="sec-6-5-static-instance.html#subsec-6-5-3-constants-counters" class="internal"><span class="codenumber">6.5.3</span> <span class="title">Constants and Class Counters</span></a></div>
+<ul id="ptx-toc-group-subsec-6-5-3-constants-counters" class="structural toc-item-list">
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-6-5-static-instance.html#subsubsec-6-5-3-1-constants" class="internal"><span class="codenumber">6.5.3.1</span> <span class="title">Static Constants</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-6-5-static-instance.html#subsubsec-6-5-3-2-counters" class="internal"><span class="codenumber">6.5.3.2</span> <span class="title">Static Object Counters</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-subsection">
+<div class="toc-title-box"><a href="sec-6-5-static-instance.html#subsec-6-5-4-static-barrier" class="internal"><span class="codenumber">6.5.4</span> <span class="title">The Static Barrier: Why Static Methods Cannot Access Instance Fields</span></a></div>
+<ul id="ptx-toc-group-subsec-6-5-4-static-barrier" class="structural toc-item-list">
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-6-5-static-instance.html#subsubsec-6-5-4-1-which-object" class="internal"><span class="codenumber">6.5.4.1</span> <span class="title">Which Object Would <code class="code-inline tex2jax_ignore">this</code> Be?</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-6-5-static-instance.html#subsubsec-6-5-4-2-static-using-objects" class="internal"><span class="codenumber">6.5.4.2</span> <span class="title">A Static Method Can Use an Object</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-6-6-overloading.html" class="internal"><span class="codenumber">6.6</span> <span class="title">Overloading Methods and Constructors</span></a></div>
+<ul id="ptx-toc-group-sec-6-6-overloading" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-6-6-overloading.html#subsec-6-6-1-default-constructor" class="internal"><span class="codenumber">6.6.1</span> <span class="title">The Default Constructor</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-6-6-overloading.html#subsec-6-6-2-overloading-constructors" class="internal"><span class="codenumber">6.6.2</span> <span class="title">Overloading Constructors</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-6-6-overloading.html#subsec-6-6-3-overloading-instance-methods" class="internal"><span class="codenumber">6.6.3</span> <span class="title">Overloading Instance Methods</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-6-7-memory-model.html" class="internal"><span class="codenumber">6.7</span> <span class="title">Objects in Memory: The Stack and the Heap</span></a></div>
+<ul id="ptx-toc-group-sec-6-7-memory-model" class="structural toc-item-list">
+<li class="toc-item toc-subsection">
+<div class="toc-title-box"><a href="sec-6-7-memory-model.html#subsec-6-7-1-memory-areas" class="internal"><span class="codenumber">6.7.1</span> <span class="title">Memory: Stack, Heap, and Static Area</span></a></div>
+<ul id="ptx-toc-group-subsec-6-7-1-memory-areas" class="structural toc-item-list">
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-6-7-memory-model.html#subsubsec-6-7-1-1-the-stack" class="internal"><span class="codenumber">6.7.1.1</span> <span class="title">The Stack</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-6-7-memory-model.html#subsubsec-6-7-1-2-the-heap" class="internal"><span class="codenumber">6.7.1.2</span> <span class="title">The Heap</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-6-7-memory-model.html#subsubsec-6-7-1-3-static-segment" class="internal"><span class="codenumber">6.7.1.3</span> <span class="title">The Static Segment</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-subsection">
+<div class="toc-title-box"><a href="sec-6-7-memory-model.html#subsec-6-7-2-dereferencing" class="internal"><span class="codenumber">6.7.2</span> <span class="title">Reference Variables and Implicit Dereferencing</span></a></div>
+<ul id="ptx-toc-group-subsec-6-7-2-dereferencing" class="structural toc-item-list">
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-6-7-memory-model.html#subsubsec-6-7-2-1-what-address-is" class="internal"><span class="codenumber">6.7.2.1</span> <span class="title">What a Memory Address Really Is</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-6-7-memory-model.html#subsubsec-6-7-2-2-meaning-dereferencing" class="internal"><span class="codenumber">6.7.2.2</span> <span class="title">The Meaning of “Dereferencing”</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-6-7-memory-model.html#subsubsec-6-7-2-3-cpp-pointers" class="internal"><span class="codenumber">6.7.2.3</span> <span class="title">The C and C++ Connection: Explicit Pointers</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-6-7-memory-model.html#subsubsec-6-7-2-4-java-pointers" class="internal"><span class="codenumber">6.7.2.4</span> <span class="title">Java References Are Pointers with Automatic Dereferencing</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-6-7-memory-model.html#subsec-6-7-3-null-pointer" class="internal"><span class="codenumber">6.7.3</span> <span class="title">The <code class="code-inline tex2jax_ignore">null</code> Reference and <code class="code-inline tex2jax_ignore">NullPointerException</code></span></a></div></li>
+<li class="toc-item toc-subsection">
+<div class="toc-title-box"><a href="sec-6-7-memory-model.html#subsec-6-7-4-aliasing" class="internal"><span class="codenumber">6.7.4</span> <span class="title">Object Aliasing: Assignment (<code class="code-inline tex2jax_ignore">=</code>) and Method Arguments</span></a></div>
+<ul id="ptx-toc-group-subsec-6-7-4-aliasing" class="structural toc-item-list">
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-6-7-memory-model.html#subsubsec-6-7-4-1-pass-by-value-objects" class="internal"><span class="codenumber">6.7.4.1</span> <span class="title">What Pass-by-Value Means with Objects</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-6-7-memory-model.html#subsubsec-6-7-4-2-aliasing-assignment" class="internal"><span class="codenumber">6.7.4.2</span> <span class="title">Object Aliasing Through the Assignment Operator</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-subsection">
+<div class="toc-title-box"><a href="sec-6-7-memory-model.html#subsec-6-7-5-copy-constructors" class="internal"><span class="codenumber">6.7.5</span> <span class="title">True Object Duplication: The Copy Constructor</span></a></div>
+<ul id="ptx-toc-group-subsec-6-7-5-copy-constructors" class="structural toc-item-list">
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-6-7-memory-model.html#subsubsec-6-7-5-1-copy-fundamentals" class="internal"><span class="codenumber">6.7.5.1</span> <span class="title">Copy Constructor Fundamentals</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-6-7-memory-model.html#subsubsec-6-7-5-2-deep-vs-shallow" class="internal"><span class="codenumber">6.7.5.2</span> <span class="title">Shallow vs. Deep Copying</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-subsection">
+<div class="toc-title-box"><a href="sec-6-7-memory-model.html#subsec-6-7-6-garbage-collection" class="internal"><span class="codenumber">6.7.6</span> <span class="title">Object Lifetime and Automatic Garbage Collection</span></a></div>
+<ul id="ptx-toc-group-subsec-6-7-6-garbage-collection" class="structural toc-item-list">
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-6-7-memory-model.html#subsubsec-6-7-6-1-reachability" class="internal"><span class="codenumber">6.7.6.1</span> <span class="title">The Definition of “Unreachable”</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-6-7-memory-model.html#subsubsec-6-7-6-2-garbage-collector" class="internal"><span class="codenumber">6.7.6.2</span> <span class="title">The Garbage Collector: The JVM’s Automated Cleanup Crew</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-6-8-tostring-equals.html" class="internal"><span class="codenumber">6.8</span> <span class="title">Printing and Comparing Objects: toString and equals</span></a></div>
+<ul id="ptx-toc-group-sec-6-8-tostring-equals" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-6-8-tostring-equals.html#subsec-6-8-1-object-comparison" class="internal"><span class="codenumber">6.8.1</span> <span class="title">Object Comparison</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-6-8-tostring-equals.html#subsec-6-8-2-overriding-tostring" class="internal"><span class="codenumber">6.8.2</span> <span class="title">Overriding <code class="code-inline tex2jax_ignore">toString</code></span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-6-9-javadoc.html" class="internal"><span class="codenumber">6.9</span> <span class="title">Documenting Classes with Javadoc</span></a></div>
+<ul id="ptx-toc-group-sec-6-9-javadoc" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-6-9-javadoc.html#subsec-6-9-1-class-level-comment" class="internal"><span class="codenumber">6.9.1</span> <span class="title">The Class-Level Comment and Class Invariants</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-6-9-javadoc.html#subsec-6-9-2-preserving-information-hiding" class="internal"><span class="codenumber">6.9.2</span> <span class="title">Preserving Information Hiding in Documentation</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-6-9-javadoc.html#subsec-6-9-3-constructors-methods-state" class="internal"><span class="codenumber">6.9.3</span> <span class="title">Documenting Constructors and Method State Interactions</span></a></div></li>
+<li class="toc-item toc-subsection">
+<div class="toc-title-box"><a href="sec-6-9-javadoc.html#subsec-6-9-4-documenting-fields" class="internal"><span class="codenumber">6.9.4</span> <span class="title">Documenting Fields: Constants, Counters, and Instance State</span></a></div>
+<ul id="ptx-toc-group-subsec-6-9-4-documenting-fields" class="structural toc-item-list">
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-6-9-javadoc.html#subsubsec-6-9-4-1-public-constants" class="internal"><span class="codenumber">6.9.4.1</span> <span class="title">Documenting Public Static Final Fields (Constants)</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-6-9-javadoc.html#subsubsec-6-9-4-2-private-static-counters" class="internal"><span class="codenumber">6.9.4.2</span> <span class="title">Documenting Private Static Fields (Counters and Shared State)</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-6-9-javadoc.html#subsubsec-6-9-4-3-private-instance-fields" class="internal"><span class="codenumber">6.9.4.3</span> <span class="title">Documenting Private Instance Fields</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-6-10-unit-testing.html" class="internal"><span class="codenumber">6.10</span> <span class="title">Unit Testing Classes: The Arrange–Act–Assert Pattern</span></a></div>
+<ul id="ptx-toc-group-sec-6-10-unit-testing" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-6-10-unit-testing.html#subsec-6-10-1-aaa-pattern" class="internal"><span class="codenumber">6.10.1</span> <span class="title">The Arrange–Act–Assert (AAA) Pattern</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-6-10-unit-testing.html#subsec-6-10-2-writing-test-driver" class="internal"><span class="codenumber">6.10.2</span> <span class="title">Writing a Stateful Unit Test Driver</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-6-11-case-study.html" class="internal"><span class="codenumber">6.11</span> <span class="title">Case Study: A Community Kitchen Bakery Tracker</span></a></div>
+<ul id="ptx-toc-group-sec-6-11-case-study" class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-6-11-case-study.html#subsec-case-study-domain-model" class="internal"><span class="codenumber">6.11.1</span> <span class="title">Domain Modeling and CRC Cards</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-6-11-case-study.html#subsec-case-study-class-specifications" class="internal"><span class="codenumber">6.11.2</span> <span class="title">UML Class Specifications</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-6-11-case-study.html#subsec-case-study-state-machine" class="internal"><span class="codenumber">6.11.3</span> <span class="title">State-Transition Modeling</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-6-11-case-study.html#subsec-case-study-step1-stubs" class="internal"><span class="codenumber">6.11.4</span> <span class="title">Step 1: Outlines and Class Invariants</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-6-11-case-study.html#subsec-case-study-step2-testing" class="internal"><span class="codenumber">6.11.5</span> <span class="title">Step 2: Test-Driven Verification</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-6-11-case-study.html#subsec-case-study-step3-implementation" class="internal"><span class="codenumber">6.11.6</span> <span class="title">Step 3: Complete Class Implementations</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-6-11-case-study.html#subsec-case-study-step4-simulation" class="internal"><span class="codenumber">6.11.7</span> <span class="title">Step 4: Putting It All Together: The Production Simulation</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-6-12-moving-on.html" class="internal"><span class="codenumber">6.12</span> <span class="title">Moving On!</span></a></div></li>
+<li class="toc-item toc-exercises"><div class="toc-title-box"><a href="sec-6-12-exercises.html" class="internal"><span class="codenumber">6.13</span> <span class="title">Programming Projects</span></a></div></li>
+</ul>
+</li>
+</ul></nav></div>
+<main class="ptx-main"><div id="ptx-content" class="ptx-content">
+<section class="section" id="sec-5-13-putting-it-together">
+<h1 class="heading hide-type">
+<span class="type">Section</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">5.13</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Putting It All Together: A Complete Case Study</span>
+</h1>
+<section class="introduction" id="sec-5-13-putting-it-together-2">
+<div class="sidebyside">
+<div class="sbsrow" style="margin-left:1.25%;margin-right:1.25%;grid-template-columns:71.7948717948718% 25.6410256410256%;column-gap:2.5%;">
+<div class="sbspanel sbspanel--middle middle" style="">
+<div class="para" id="sec-5-13-putting-it-together-2-1-1">You now have all the tools you need to solve problems by decomposing them into sub-tasks implemented with methods. Let’s work through an example problem and then you can try some of the exercises at the end of the chapter.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#sec-5-13-putting-it-together-2-1-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</div>
+<div class="sbspanel sbspanel--middle middle" style=""><div class="image-box"><img src="external/figures/dice.jpg" class="contained" alt="Two six-sided dice showing pips."></div></div>
+</div>
+</div></section>
+<section class="subsection" id="subsec-5-13-1-dice-game-problem">
+<h2 class="heading hide-type">
+<span class="type">Subsection</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">5.13.1</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">The Problem</span>
+</h2>
+<div class="para" id="subsec-5-13-1-dice-game-problem-2">Design a game for one user to play against the computer. The game will simulate the roll of a six-sided die. In the game, the players are trying to reach a threshold value by totaling die rolls. The game is over when one player reaches the threshold value (wins) or goes over the threshold (loses).<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-5-13-1-dice-game-problem-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="subsec-5-13-1-dice-game-problem-3">The players take turns rolling the die. The value of the die is added to their total. The game is over when one of the following occurs:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-5-13-1-dice-game-problem-3" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<ul class="disc" id="subsec-5-13-1-dice-game-problem-4">
+<li id="subsec-5-13-1-dice-game-problem-4-1">
+<div class="para" id="subsec-5-13-1-dice-game-problem-4-1-1">One player’s total equals the threshold (a win).<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-5-13-1-dice-game-problem-4-1-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" aria-hidden="true" data-description="Item"><a tabindex="-1" href="#subsec-5-13-1-dice-game-problem-4-1" title="Copy heading and permalink for Item" aria-label="Copy heading and permalink for Item">🔗</a></div>
+</li>
+<li id="subsec-5-13-1-dice-game-problem-4-2">
+<div class="para" id="subsec-5-13-1-dice-game-problem-4-2-1">One player’s total exceeds the threshold (a loss, called a bust).<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-5-13-1-dice-game-problem-4-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" aria-hidden="true" data-description="Item"><a tabindex="-1" href="#subsec-5-13-1-dice-game-problem-4-2" title="Copy heading and permalink for Item" aria-label="Copy heading and permalink for Item">🔗</a></div>
+</li>
+</ul>
+<div class="para" id="subsec-5-13-1-dice-game-problem-5">The game will proceed in rounds. Each round, the die will be rolled for the user and added to their total. The program will report the die roll. The program will print a message if the user has won or busted. If they haven’t, the die will be rolled for the computer and the roll will be reported. The program will print a message if the computer has won or busted. Both total scores will be reported, and if nobody has won or busted, the program proceeds to the next round.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-5-13-1-dice-game-problem-5" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="subsec-5-13-1-dice-game-problem-6">Note that you can enhance this game by giving both players the chance to hold—to stop rolling. This adds one more ending condition to the game: both players have chosen to hold. We will implement the simpler version of the game.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-5-13-1-dice-game-problem-6" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" aria-hidden="true" data-description="Subsection 5.13.1: The Problem"><a tabindex="-1" href="#subsec-5-13-1-dice-game-problem" title="Copy heading and permalink for Subsection 5.13.1: The Problem" aria-label="Copy heading and permalink for Subsection 5.13.1: The Problem">🔗</a></div>
+</section>
+<section class="subsection" id="subsec-5-13-2-decomposing-dice-game">
+<h2 class="heading hide-type">
+<span class="type">Subsection</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">5.13.2</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Decomposing the Problem</span>
+</h2>
+<section class="introduction" id="subsec-5-13-2-decomposing-dice-game-2">
+<div class="para" id="subsec-5-13-2-decomposing-dice-game-2-1">To begin, we look for subtasks within the problem. While there are many ways to break a problem apart, we evaluate our proposed decomposition using the following criteria:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-5-13-2-decomposing-dice-game-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<ul class="disc" id="subsec-5-13-2-decomposing-dice-game-2-2">
+<li id="subsec-5-13-2-decomposing-dice-game-2-2-1">
+<div class="para" id="subsec-5-13-2-decomposing-dice-game-2-2-1-1">Single Responsibility: Each subtask focuses on one specific job that can be described in a simple sentence.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-5-13-2-decomposing-dice-game-2-2-1-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" aria-hidden="true" data-description="Item"><a tabindex="-1" href="#subsec-5-13-2-decomposing-dice-game-2-2-1" title="Copy heading and permalink for Item" aria-label="Copy heading and permalink for Item">🔗</a></div>
+</li>
+<li id="subsec-5-13-2-decomposing-dice-game-2-2-2">
+<div class="para" id="subsec-5-13-2-decomposing-dice-game-2-2-2-1">Reusability: The subtask eliminates duplicated code by packaging operations that occur multiple times (such as taking a turn for either the player or the computer).<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-5-13-2-decomposing-dice-game-2-2-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" aria-hidden="true" data-description="Item"><a tabindex="-1" href="#subsec-5-13-2-decomposing-dice-game-2-2-2" title="Copy heading and permalink for Item" aria-label="Copy heading and permalink for Item">🔗</a></div>
+</li>
+<li id="subsec-5-13-2-decomposing-dice-game-2-2-3">
+<div class="para" id="subsec-5-13-2-decomposing-dice-game-2-2-3-1">Information Hiding: The subtask hides low-level details or complex formulas so the higher-level program remains easy to read.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-5-13-2-decomposing-dice-game-2-2-3-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" aria-hidden="true" data-description="Item"><a tabindex="-1" href="#subsec-5-13-2-decomposing-dice-game-2-2-3" title="Copy heading and permalink for Item" aria-label="Copy heading and permalink for Item">🔗</a></div>
+</li>
+<li id="subsec-5-13-2-decomposing-dice-game-2-2-4">
+<div class="para" id="subsec-5-13-2-decomposing-dice-game-2-2-4-1">Well-Defined Contract: We can clearly define the subtask’s interface: its inputs (parameters), its output (return value), and its pre- and postconditions.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-5-13-2-decomposing-dice-game-2-2-4-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" aria-hidden="true" data-description="Item"><a tabindex="-1" href="#subsec-5-13-2-decomposing-dice-game-2-2-4" title="Copy heading and permalink for Item" aria-label="Copy heading and permalink for Item">🔗</a></div>
+</li>
+<li id="subsec-5-13-2-decomposing-dice-game-2-2-5">
+<div class="para" id="subsec-5-13-2-decomposing-dice-game-2-2-5-1">No Reinventing the Wheel: The task is not already handled directly by an existing Java library method (such as <code class="code-inline tex2jax_ignore">System.out.println</code> or <code class="code-inline tex2jax_ignore">Math.max</code>).<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-5-13-2-decomposing-dice-game-2-2-5-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" aria-hidden="true" data-description="Item"><a tabindex="-1" href="#subsec-5-13-2-decomposing-dice-game-2-2-5" title="Copy heading and permalink for Item" aria-label="Copy heading and permalink for Item">🔗</a></div>
+</li>
+</ul>
+<div class="para" id="subsec-5-13-2-decomposing-dice-game-2-3">Using these criteria, we will break the problem down into a <code class="code-inline tex2jax_ignore">main</code> method and helper methods. <a href="sec-5-13-putting-it-together.html#figure-structure-chart-dice-game" class="xref" data-knowl="./knowl/xref/figure-structure-chart-dice-game.html" data-reveal-label="Reveal" data-close-label="Close" title="Figure 5.17: Structure Chart for the DiceGame Program">Figure 5.17</a> is a structure chart depicting the program structure, including the data that will flow between these methods.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-5-13-2-decomposing-dice-game-2-3" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<figure class="figure figure-like" id="figure-structure-chart-dice-game"><div class="image-box" style="width: 95%; margin-left: 2.5%; margin-right: 2.5%;">
+<img src="external/figures/figure_5_7.png" class="contained" alt="Structure chart showing main calling rollDie, isGameOver, and displayOutcome with arguments and return values."><details class="image-description" aria-live="polite"><summary title="details"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe88e;</span></summary><div id="figure-structure-chart-dice-game-3-description" style="width: 84.21%; margin-left: 7.89%;">
+<div class="para" id="figure-structure-chart-dice-game-3-2-1">A hierarchical structure chart for DiceGame. The main method sits at the top as the caller. Three downward invocation arrows connect to subordinate helper methods: rollDie on the left, isGameOver in the center, and displayOutcome on the right. Data flow arrows annotate the connections: numSides (int) flows down to rollDie and dieRoll (int) flows up; total and threshold flow down to isGameOver and gameOver (boolean) flows up; and playerScore, computerScore, and threshold flow down to displayOutcome.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#figure-structure-chart-dice-game-3-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</div></details>
+</div>
+<figcaption><span class="type">Figure</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">5.17<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span>Functional decomposition of <code class="code-inline tex2jax_ignore">main</code> into helper methods <code class="code-inline tex2jax_ignore">rollDie</code>, <code class="code-inline tex2jax_ignore">isGameOver</code>, and <code class="code-inline tex2jax_ignore">displayOutcome</code>, showing data flows.<div class="autopermalink" aria-hidden="true" data-description="Figure 5.17: Structure Chart for the DiceGame Program"><a tabindex="-1" href="#figure-structure-chart-dice-game" title="Copy heading and permalink for Figure 5.17: Structure Chart for the DiceGame Program" aria-label="Copy heading and permalink for Figure 5.17: Structure Chart for the DiceGame Program">🔗</a></div></figcaption>
+</figure>
+<div class="para" id="subsec-5-13-2-decomposing-dice-game-2-5">From the structure chart, you can see that <code class="code-inline tex2jax_ignore">main</code> calls <code class="code-inline tex2jax_ignore">rollDie</code>, <code class="code-inline tex2jax_ignore">isGameOver</code>, and <code class="code-inline tex2jax_ignore">displayOutcome</code>. The algorithm within <code class="code-inline tex2jax_ignore">main</code> (including where the methods are called) is:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-5-13-2-decomposing-dice-game-2-5" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<pre class="code-block tex2jax_ignore clipboardable">Print a welcome message
+While the game isn't over:
+    Take the user's turn (rollDie)
+    If the user didn't win or bust (isGameOver)
+        Take the computer's turn (rollDie)
+        Check if the computer won or busted (isGameOver)
+    Print the scores 
+Announce the winner or loser (displayOutcome)
+</pre>
+<div class="para" id="subsec-5-13-2-decomposing-dice-game-2-7">Let’s look at some of the design decisions made here and how they meet our evaluation criteria.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-5-13-2-decomposing-dice-game-2-7" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div></section>
+<section class="subsubsection" id="subsubsec-5-13-2-1-separating-announcements">
+<h3 class="heading hide-type">
+<span class="type">Subsubsection</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">5.13.2.1</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Separating Announcing a Win or Loss from Determining if the Game is Over</span>
+</h3>
+<div class="para" id="subsubsec-5-13-2-1-separating-announcements-2">The <code class="code-inline tex2jax_ignore">isGameOver</code> method is given a score and the threshold, and it determines if there’s a win or a bust. It could also print messages for these two states, either generically (e.g. “That’s a bust!”), or if another parameter is passed identifying the player, it could provide a message like <code class="code-inline tex2jax_ignore">displayOutcome</code> (“That’s a win for you!” or “That’s a win for the computer!”). However, if we designed <code class="code-inline tex2jax_ignore">isGameOver</code> to perform these two tasks, then we would be violating our Single Responsibility principle.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-5-13-2-1-separating-announcements-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="subsubsec-5-13-2-1-separating-announcements-3">Separating the functionality into two separate methods gives each method a clear and simple contract with the rest of the program, making the method easier to write and test. It also makes the program easier to expand and modify. If we planned to enhance the game to allow the user or computer to hold at a particular total, we would need to modify <code class="code-inline tex2jax_ignore">isGameOver</code> to consider this third condition (both players holding), and we would need to modify <code class="code-inline tex2jax_ignore">displayOutcome</code> to look for a new win condition—both scores at or below the threshold and one score higher than the other. There is also now the potential for a tie. It will be much easier to make these modifications without the complexity of having to make both sets of changes in one method.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-5-13-2-1-separating-announcements-3" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" aria-hidden="true" data-description="Subsubsection 5.13.2.1: Separating Announcing a Win or Loss from Determining if the Game is Over"><a tabindex="-1" href="#subsubsec-5-13-2-1-separating-announcements" title="Copy heading and permalink for Subsubsection 5.13.2.1: Separating Announcing a Win or Loss from Determining if the Game is Over" aria-label="Copy heading and permalink for Subsubsection 5.13.2.1: Separating Announcing a Win or Loss from Determining if the Game is Over">🔗</a></div>
+</section>
+<section class="subsubsection" id="subsubsec-5-13-2-2-general-rolldie">
+<h3 class="heading hide-type">
+<span class="type">Subsubsection</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">5.13.2.2</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Writing a General <code class="code-inline tex2jax_ignore">rollDie</code> Method Rather than Two Separate Methods</span>
+</h3>
+<div class="para" id="subsubsec-5-13-2-2-general-rolldie-2">In the game, both the user and the computer roll the die, so it might be tempting to design two separate <code class="code-inline tex2jax_ignore">rollDie</code> methods—one for the user and one for the computer. But if you were to implement both methods, you’d quickly discover that the methods are identical. Therefore only one method is needed, and can be called twice.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-5-13-2-2-general-rolldie-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="subsubsec-5-13-2-2-general-rolldie-3">Sometimes there is code or functionality that is not quite identical. In those cases, you can factor the code into a single method. Any differences between the methods are added as parameters to specialize the method functionality.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-5-13-2-2-general-rolldie-3" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" aria-hidden="true" data-description="Subsubsection 5.13.2.2: Writing a General rollDie Method Rather than Two Separate Methods"><a tabindex="-1" href="#subsubsec-5-13-2-2-general-rolldie" title="Copy heading and permalink for Subsubsection 5.13.2.2: Writing a General rollDie Method Rather than Two Separate Methods" aria-label="Copy heading and permalink for Subsubsection 5.13.2.2: Writing a General rollDie Method Rather than Two Separate Methods">🔗</a></div>
+</section>
+<section class="subsubsection" id="subsubsec-5-13-2-3-hiding-low-level-details">
+<h3 class="heading hide-type">
+<span class="type">Subsubsection</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">5.13.2.3</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Hiding Low-Level Details</span>
+</h3>
+<div class="para" id="subsubsec-5-13-2-3-hiding-low-level-details-2">It might be tempting in <code class="code-inline tex2jax_ignore">main</code> to generate the die roll directly inside it using a single line of arithmetic:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-5-13-2-3-hiding-low-level-details-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="code-box"><pre class="program clipboardable"><code class="language-java">int roll = (int)(Math.random() * numSides) + 1;
+</code></pre></div>
+<div class="para" id="subsubsec-5-13-2-3-hiding-low-level-details-4">Why did we bother extracting this single line of code into its own helper method, <code class="code-inline tex2jax_ignore">rollDie</code>?<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-5-13-2-3-hiding-low-level-details-4" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="subsubsec-5-13-2-3-hiding-low-level-details-5">We did so to practice information hiding. Even though the code is short, scaling a pseudo-random floating-point number into an integer range requires non-trivial mechanics: multiplying by <code class="code-inline tex2jax_ignore">numSides</code>, applying operator precedence, casting to an integer, and shifting the result by one. Placing that expression inside <code class="code-inline tex2jax_ignore">main</code> forces anyone reading the turn logic to mentally unpack that mathematical formula.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-5-13-2-3-hiding-low-level-details-5" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="subsubsec-5-13-2-3-hiding-low-level-details-6">Extracting that calculation into <code class="code-inline tex2jax_ignore">rollDie(numSides)</code> offers three major software engineering benefits:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-5-13-2-3-hiding-low-level-details-6" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<ul class="disc" id="subsubsec-5-13-2-3-hiding-low-level-details-7">
+<li id="subsubsec-5-13-2-3-hiding-low-level-details-7-1">
+<div class="para" id="subsubsec-5-13-2-3-hiding-low-level-details-7-1-1">Intent-Revealing Code: The method call <code class="code-inline tex2jax_ignore">rollDie(numSides)</code> immediately communicates what is happening in plain English, allowing <code class="code-inline tex2jax_ignore">main</code> to stay focused on high-level turn progression rather than math mechanics.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-5-13-2-3-hiding-low-level-details-7-1-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" aria-hidden="true" data-description="Item"><a tabindex="-1" href="#subsubsec-5-13-2-3-hiding-low-level-details-7-1" title="Copy heading and permalink for Item" aria-label="Copy heading and permalink for Item">🔗</a></div>
+</li>
+<li id="subsubsec-5-13-2-3-hiding-low-level-details-7-2">
+<div class="para" id="subsubsec-5-13-2-3-hiding-low-level-details-7-2-1">Isolated Verification: We can equip <code class="code-inline tex2jax_ignore">rollDie</code> with its own precondition assertion (<code class="code-inline tex2jax_ignore">assert numSides &gt; 0</code>) and postcondition assertion (<code class="code-inline tex2jax_ignore">assert 1 &lt;= dieRoll &amp;&amp; dieRoll &lt;= numSides</code>) to guarantee that the random number generation is strictly bounded before the rest of the game uses it.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-5-13-2-3-hiding-low-level-details-7-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" aria-hidden="true" data-description="Item"><a tabindex="-1" href="#subsubsec-5-13-2-3-hiding-low-level-details-7-2" title="Copy heading and permalink for Item" aria-label="Copy heading and permalink for Item">🔗</a></div>
+</li>
+<li id="subsubsec-5-13-2-3-hiding-low-level-details-7-3">
+<div class="para" id="subsubsec-5-13-2-3-hiding-low-level-details-7-3-1">Flexibility for Future Change: If we later decide to simulate rolling physical dice using a seeded <code class="code-inline tex2jax_ignore">java.util.Random</code> generator or an external hardware sensor, we only have to modify the body of <code class="code-inline tex2jax_ignore">rollDie</code>. The calling method, <code class="code-inline tex2jax_ignore">main</code>, remains completely unchanged.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-5-13-2-3-hiding-low-level-details-7-3-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" aria-hidden="true" data-description="Item"><a tabindex="-1" href="#subsubsec-5-13-2-3-hiding-low-level-details-7-3" title="Copy heading and permalink for Item" aria-label="Copy heading and permalink for Item">🔗</a></div>
+</li>
+</ul>
+<div class="autopermalink" aria-hidden="true" data-description="Subsubsection 5.13.2.3: Hiding Low-Level Details"><a tabindex="-1" href="#subsubsec-5-13-2-3-hiding-low-level-details" title="Copy heading and permalink for Subsubsection 5.13.2.3: Hiding Low-Level Details" aria-label="Copy heading and permalink for Subsubsection 5.13.2.3: Hiding Low-Level Details">🔗</a></div>
+</section>
+<section class="subsubsection" id="subsubsec-5-13-2-4-avoiding-unnecessary-wrappers">
+<h3 class="heading hide-type">
+<span class="type">Subsubsection</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">5.13.2.4</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Knowing When Not to Decompose: Avoiding Unnecessary Wrappers</span>
+</h3>
+<div class="para" id="subsubsec-5-13-2-4-avoiding-unnecessary-wrappers-2">Our final evaluation criterion is ensuring that we do not reinvent the wheel. Just as important as knowing when to create a method is knowing when to leave code in <code class="code-inline tex2jax_ignore">main</code>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-5-13-2-4-avoiding-unnecessary-wrappers-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="subsubsec-5-13-2-4-avoiding-unnecessary-wrappers-3">In our game, we need to print a two-line welcome banner at the start, and we need to display the current scores at the end of each round:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-5-13-2-4-avoiding-unnecessary-wrappers-3" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="code-box"><pre class="program clipboardable"><code class="language-java">System.out.println("Your score          ---&gt; " + playerTotal + ".");
+System.out.println("The computer's score ---&gt; " + computerTotal + ".
+");
+</code></pre></div>
+<div class="para" id="subsubsec-5-13-2-4-avoiding-unnecessary-wrappers-5">We could have created a <code class="code-inline tex2jax_ignore">printGreeting()</code> method and a <code class="code-inline tex2jax_ignore">showScores()</code> method. However, doing so would add visual clutter without providing any real abstraction. Neither task involves calculations, neither hides complex decisions, and neither requires parameterized customization.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-5-13-2-4-avoiding-unnecessary-wrappers-5" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="subsubsec-5-13-2-4-avoiding-unnecessary-wrappers-6">Standard output statements using <code class="code-inline tex2jax_ignore">System.out.println</code> are already simple, standard library tools. Wrapping a couple of straightforward print statements inside a custom helper method creates an unnecessary layer of indirection—it forces someone reading your program to jump down to a helper method body just to see a basic print call.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-5-13-2-4-avoiding-unnecessary-wrappers-6" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="subsubsec-5-13-2-4-avoiding-unnecessary-wrappers-7">Good software design is about balance: decompose code when it eliminates duplication, separates distinct responsibilities, or clarifies complex algorithms, but leave straightforward sequential statements right where they occur.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-5-13-2-4-avoiding-unnecessary-wrappers-7" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" aria-hidden="true" data-description="Subsubsection 5.13.2.4: Knowing When Not to Decompose: Avoiding Unnecessary Wrappers"><a tabindex="-1" href="#subsubsec-5-13-2-4-avoiding-unnecessary-wrappers" title="Copy heading and permalink for Subsubsection 5.13.2.4: Knowing When Not to Decompose: Avoiding Unnecessary Wrappers" aria-label="Copy heading and permalink for Subsubsection 5.13.2.4: Knowing When Not to Decompose: Avoiding Unnecessary Wrappers">🔗</a></div>
+</section><div class="autopermalink" aria-hidden="true" data-description="Subsection 5.13.2: Decomposing the Problem"><a tabindex="-1" href="#subsec-5-13-2-decomposing-dice-game" title="Copy heading and permalink for Subsection 5.13.2: Decomposing the Problem" aria-label="Copy heading and permalink for Subsection 5.13.2: Decomposing the Problem">🔗</a></div>
+</section>
+<section class="subsection" id="subsec-5-13-3-method-contracts-testing">
+<h2 class="heading hide-type">
+<span class="type">Subsection</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">5.13.3</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Write Method Contracts and the Testing Plan</span>
+</h2>
+<section class="introduction" id="subsec-5-13-3-method-contracts-testing-2">
+<div class="para" id="subsec-5-13-3-method-contracts-testing-2-1">Before implementing the solution, we precisely specify each method’s contract: its inputs, outputs, preconditions, and postconditions. This facilitates building each method as a component that can be smoothly integrated into the final system. We should also design a testing plan for each method so we can unit test our methods before we integrate.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-5-13-3-method-contracts-testing-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div></section>
+<section class="subsubsection" id="subsubsec-5-13-3-1-writing-method-contract">
+<h3 class="heading hide-type">
+<span class="type">Subsubsection</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">5.13.3.1</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Writing a Method Contract</span>
+</h3>
+<div class="para" id="subsubsec-5-13-3-1-writing-method-contract-2">The contracts for each method in our program are documented in the Javadoc comment above each method in the solution (<a href="sec-5-13-putting-it-together.html#listing-dice-game-solution" class="xref" data-knowl="./knowl/xref/listing-dice-game-solution.html" data-reveal-label="Reveal" data-close-label="Close" title="Listing 5.20: A solution to the die-rolling game problem">Listing 5.20</a>), but we’ll discuss one method in detail: <code class="code-inline tex2jax_ignore">rollDie</code>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-5-13-3-1-writing-method-contract-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="subsubsec-5-13-3-1-writing-method-contract-3">From the structure chart, you can see that <code class="code-inline tex2jax_ignore">rollDie</code> takes one input: the number of sides of the die being rolled (an <code class="code-inline tex2jax_ignore">int</code>). It randomly generates and returns a roll between one and the number of sides (inclusive).<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-5-13-3-1-writing-method-contract-3" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="subsubsec-5-13-3-1-writing-method-contract-4">What is the contract between <code class="code-inline tex2jax_ignore">rollDie</code> and its calling method? As a precondition, we specify <code class="code-inline tex2jax_ignore">numSides &gt;= 1</code>. How did we determine that? First, from a domain perspective, a die represents a physical object—a die with zero or negative sides does not exist in reality. (We might argue that a die with one side, which would always roll a one, also doesn’t exist! We decided to allow it because the method can return a meaningful result with that input.) From an algorithmic perspective, our scaling formula <code class="code-inline tex2jax_ignore">(int)(Math.random() * numSides) + 1</code> mathematically assumes a positive scaling factor. Passing a negative number breaks the uniform distribution due to integer truncation.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-5-13-3-1-writing-method-contract-4" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="subsubsec-5-13-3-1-writing-method-contract-5">The precondition <code class="code-inline tex2jax_ignore">numSides &gt;= 1</code> protects both the integrity of our game’s rules and the mathematics of our random generation.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-5-13-3-1-writing-method-contract-5" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="subsubsec-5-13-3-1-writing-method-contract-6">Given that precondition, our postcondition is that the value returned will be between <span class="process-math">\(1\)</span> and <code class="code-inline tex2jax_ignore">numSides</code> inclusive.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-5-13-3-1-writing-method-contract-6" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="subsubsec-5-13-3-1-writing-method-contract-7">To check the precondition, we write an <code class="code-inline tex2jax_ignore">assert</code> statement before we generate the random roll value:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-5-13-3-1-writing-method-contract-7" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="code-box"><pre class="program clipboardable"><code class="language-java">assert numSides &gt; 0 : "rollDie called with d" + numSides;
+</code></pre></div>
+<div class="para" id="subsubsec-5-13-3-1-writing-method-contract-9">We can also check the postcondition at the end of the method:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-5-13-3-1-writing-method-contract-9" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="code-box"><pre class="program clipboardable"><code class="language-java">assert 1 &lt;= dieRoll &amp;&amp; dieRoll &lt;= numSides : "Randomly generated value out of range";
+</code></pre></div>
+<div class="para" id="subsubsec-5-13-3-1-writing-method-contract-11">This ensures that our algorithm is never generating a value outside of the expected range, which would indicate a problem with the method’s code.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-5-13-3-1-writing-method-contract-11" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" aria-hidden="true" data-description="Subsubsection 5.13.3.1: Writing a Method Contract"><a tabindex="-1" href="#subsubsec-5-13-3-1-writing-method-contract" title="Copy heading and permalink for Subsubsection 5.13.3.1: Writing a Method Contract" aria-label="Copy heading and permalink for Subsubsection 5.13.3.1: Writing a Method Contract">🔗</a></div>
+</section>
+<section class="subsubsection" id="subsubsec-5-13-3-2-method-testing-plan">
+<h3 class="heading hide-type">
+<span class="type">Subsubsection</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">5.13.3.2</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Writing a Method’s Testing Plan</span>
+</h3>
+<div class="para" id="subsubsec-5-13-3-2-method-testing-plan-2">To test <code class="code-inline tex2jax_ignore">rollDie</code>, we divide the input domain into two equivalence classes: an invalid partition (<code class="code-inline tex2jax_ignore">numSides &lt;= 0</code>) where the method’s precondition assertion should trip, and a valid partition (<code class="code-inline tex2jax_ignore">numSides &gt;= 1</code>) where the method should return a random integer between <span class="process-math">\(1\)</span> and <code class="code-inline tex2jax_ignore">numSides</code>. To trip the assertion, we can use the boundary value of <code class="code-inline tex2jax_ignore">0</code>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-5-13-3-2-method-testing-plan-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="subsubsec-5-13-3-2-method-testing-plan-3">For valid inputs, however, we cannot predict the exact value returned by any single call because the result is pseudo-random. So how do we test a method that generates a random number? We want to ensure two things:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-5-13-3-2-method-testing-plan-3" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<ol class="decimal" id="subsubsec-5-13-3-2-method-testing-plan-4">
+<li id="subsubsec-5-13-3-2-method-testing-plan-4-1">
+<div class="para" id="subsubsec-5-13-3-2-method-testing-plan-4-1-1">The method never generates a value outside of the postcondition range.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-5-13-3-2-method-testing-plan-4-1-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" aria-hidden="true" data-description="Item 1"><a tabindex="-1" href="#subsubsec-5-13-3-2-method-testing-plan-4-1" title="Copy heading and permalink for Item 1" aria-label="Copy heading and permalink for Item 1">🔗</a></div>
+</li>
+<li id="subsubsec-5-13-3-2-method-testing-plan-4-2">
+<div class="para" id="subsubsec-5-13-3-2-method-testing-plan-4-2-1">The method will generate all of the numbers within the range.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-5-13-3-2-method-testing-plan-4-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" aria-hidden="true" data-description="Item 2"><a tabindex="-1" href="#subsubsec-5-13-3-2-method-testing-plan-4-2" title="Copy heading and permalink for Item 2" aria-label="Copy heading and permalink for Item 2">🔗</a></div>
+</li>
+</ol>
+<div class="para" id="subsubsec-5-13-3-2-method-testing-plan-5">To ensure that both conditions are met, we can write a test method that invokes <code class="code-inline tex2jax_ignore">rollDie</code> in a loop with flags for each value in the expected range (e.g. 1–6 for a <code class="code-inline tex2jax_ignore">numSides</code> value of 6) and a check that no value is out of the range. If each value is seen at least once and no value is ever generated outside of the range, we know our postcondition is met. The loop must iterate enough times to ensure that each number has a high probability of being generated. For a range of 1–6, a loop that iterates 1,000 times is an excellent choice because the loop will run in less than a millisecond, and because there is a less than one-in-a-trillion chance that one of the six numbers won’t be generated if the code is correct. For a much larger <code class="code-inline tex2jax_ignore">numSides</code> value, such as 100, you should run the loop about 2,000<details class="ptx-footnote" aria-live="polite" id="subsubsec-5-13-3-2-method-testing-plan-5-6"><summary class="ptx-footnote__number" title="Footnote 5.13.1"><sup> 1 </sup></summary>
+<div class="ptx-footnote__contents" id="subsubsec-5-13-3-2-method-testing-plan-5-6">Technically, <span class="process-math">\(1{,}842\)</span> rolls for a one-in-a-million chance of failing on correct code.
+</div></details> times to achieve the same high probability.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-5-13-3-2-method-testing-plan-5" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="subsubsec-5-13-3-2-method-testing-plan-6">Now that we know how to test that the method is generating all of the values within a range (and only the values within a range), we should choose values for the range. A good typical value to test is 6. The lower bound is 1, so we should test that value. We might also test an input of 2, which is the lowest bound for which more than one value is generated. For an upper bound, we could test 20—a typical number of sides for a die in tabletop role-playing games, or we could choose to test 100 (another typical die size), but for 100, we should increase the number of iterations. The test plan for <code class="code-inline tex2jax_ignore">rollDie</code> is shown in <a href="sec-5-13-putting-it-together.html#table-test-plan-roll-die" class="xref" data-knowl="./knowl/xref/table-test-plan-roll-die.html" data-reveal-label="Reveal" data-close-label="Close" title="Table 5.18: Test plan for unit testing rollDie">Table 5.18</a>. A unit testing program for test case 4 is shown in <a href="sec-5-13-putting-it-together.html#listing-test-roll-die" class="xref" data-knowl="./knowl/xref/listing-test-roll-die.html" data-reveal-label="Reveal" data-close-label="Close" title="Listing 5.19: A unit test for rollDie with numSides = 6">Listing 5.19</a>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-5-13-3-2-method-testing-plan-6" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<figure class="table table-like" id="table-test-plan-roll-die"><figcaption><span class="type">Table</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">5.18<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span>Test plan for unit testing <code class="code-inline tex2jax_ignore">rollDie</code><div class="autopermalink" aria-hidden="true" data-description="Table 5.18: Test plan for unit testing rollDie"><a tabindex="-1" href="#table-test-plan-roll-die" title="Copy heading and permalink for Table 5.18: Test plan for unit testing rollDie" aria-label="Copy heading and permalink for Table 5.18: Test plan for unit testing rollDie">🔗</a></div></figcaption><div class="tabular-box natural-width"><table class="tabular">
+<tr class="header-horizontal">
+<th scope="col" class="l m b2 r0 l0 t0 lines">Test Case</th>
+<th scope="col" class="l m b2 r0 l0 t0 lines"><code class="code-inline tex2jax_ignore">numSides</code></th>
+<th scope="col" class="l m b2 r0 l0 t0 lines">Purpose / Equivalence Class</th>
+<th scope="col" class="l m b2 r0 l0 t0 lines">Expected Behavior</th>
+</tr>
+<tr>
+<td class="l m b0 r0 l0 t0 lines">1</td>
+<td class="l m b0 r0 l0 t0 lines">0</td>
+<td class="l m b0 r0 l0 t0 lines">Invalid boundary (below minimum)</td>
+<td class="l m b0 r0 l0 t0 lines">Precondition assert trips</td>
+</tr>
+<tr>
+<td class="l m b0 r0 l0 t0 lines">2</td>
+<td class="l m b0 r0 l0 t0 lines">1</td>
+<td class="l m b0 r0 l0 t0 lines">Valid lower boundary (degenerate die)</td>
+<td class="l m b0 r0 l0 t0 lines">Deterministic: always returns 1</td>
+</tr>
+<tr>
+<td class="l m b0 r0 l0 t0 lines">3</td>
+<td class="l m b0 r0 l0 t0 lines">2</td>
+<td class="l m b0 r0 l0 t0 lines">Minimal non-trivial die (coin flip)</td>
+<td class="l m b0 r0 l0 t0 lines">Returns {1, 2}; both appear</td>
+</tr>
+<tr>
+<td class="l m b0 r0 l0 t0 lines">4</td>
+<td class="l m b0 r0 l0 t0 lines">6</td>
+<td class="l m b0 r0 l0 t0 lines">Nominal game case (d6)</td>
+<td class="l m b0 r0 l0 t0 lines">Returns {1..6}; all appear in 1,000 rolls</td>
+</tr>
+<tr>
+<td class="l m b0 r0 l0 t0 lines">5</td>
+<td class="l m b0 r0 l0 t0 lines">20</td>
+<td class="l m b0 r0 l0 t0 lines">Realistic high bound (d20)</td>
+<td class="l m b0 r0 l0 t0 lines">Returns {1..20}; all appear in 1,000 rolls</td>
+</tr>
+</table></div>
+</figure>
+<figure class="listing figure-like" id="listing-test-roll-die"><figcaption><span class="type">Listing</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">5.19<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span>A unit test for rollDie with numSides = 6<div class="autopermalink" aria-hidden="true" data-description="Listing 5.19: A unit test for rollDie with numSides = 6"><a tabindex="-1" href="#listing-test-roll-die" title="Copy heading and permalink for Listing 5.19: A unit test for rollDie with numSides = 6" aria-label="Copy heading and permalink for Listing 5.19: A unit test for rollDie with numSides = 6">🔗</a></div></figcaption><div class="listing__contents"><div class="code-box"><pre class="program clipboardable"><code class="language-java">/**
+ * Unit test driver for DiceGame.rollDie(6).
+ * Verifies that a 6-sided die never generates out-of-bounds values
+ * and that all six faces are reachable over 1,000 rolls.
+ */
+public class TestRollDie {
+
+    public static void main(String[] args) {
+        System.out.println("Running unit test for rollDie(6)...
+");
+
+        final int SIDES = 6;
+        final int ROLLS = 1000;
+
+        boolean seen1 = false;
+        boolean seen2 = false;
+        boolean seen3 = false;
+        boolean seen4 = false;
+        boolean seen5 = false;
+        boolean seen6 = false;
+
+        int outOfBoundsCount = 0;
+
+        // Roll the die 1,000 times
+        for (int i = 0; i &lt; ROLLS; i++) {
+            int roll = DiceGame.rollDie(SIDES);
+
+            // 1. Boundary check: ensure no roll falls outside [1, 6]
+            if (roll &lt; 1 || roll &gt; SIDES) {
+                outOfBoundsCount++;
+                System.out.println("FAIL: Out-of-bounds roll generated: " + roll);
+            }
+
+            // 2. Reachability tracking: record which numbers appear
+            if (roll == 1) {
+                seen1 = true;
+            } else if (roll == 2) {
+                seen2 = true;
+            } else if (roll == 3) {
+                seen3 = true;
+            } else if (roll == 4) {
+                seen4 = true;
+            } else if (roll == 5) {
+                seen5 = true;
+            } else if (roll == 6) {
+                seen6 = true;
+            } // if
+        } // for
+
+        // Evaluate whether every face appeared at least once
+        boolean allFacesSeen = seen1 &amp;&amp; seen2 &amp;&amp; seen3 &amp;&amp; seen4 &amp;&amp; seen5 &amp;&amp; seen6;
+
+        // Display results breakdown
+        System.out.println("Results for " + ROLLS + " rolls of a d" + SIDES + ":");
+        System.out.println("  Face 1 appeared: " + seen1);
+        System.out.println("  Face 2 appeared: " + seen2);
+        System.out.println("  Face 3 appeared: " + seen3);
+        System.out.println("  Face 4 appeared: " + seen4);
+        System.out.println("  Face 5 appeared: " + seen5);
+        System.out.println("  Face 6 appeared: " + seen6);
+
+        // Final verdict
+        System.out.println();
+        if (outOfBoundsCount == 0 &amp;&amp; allFacesSeen) {
+            System.out.print("ALL TESTS PASSED: rollDie(6) is strictly bounded ");
+            System.out.println("and all faces are reachable.");
+        } else {
+            System.out.println("TEST RUN FAILED.");
+            if (outOfBoundsCount &gt; 0) {
+                System.out.println("  " + outOfBoundsCount + " roll(s) were out of bounds.");
+            }
+            if (!allFacesSeen) {
+                System.out.println("  One or more die faces were never rolled.");
+            }
+        }
+    }
+}
+</code></pre></div></div>
+</figure>
+<div class="para" id="subsubsec-5-13-3-2-method-testing-plan-9">The loop that is testing <code class="code-inline tex2jax_ignore">rollDie</code> is on lines 24–47. In this loop, the method is invoked. The first check, on line 28, tests that the result is within bounds. The series <code class="code-inline tex2jax_ignore">if</code> block from lines 34–45 then sets the one-way flags for each of the values that can be rolled. These flags start <code class="code-inline tex2jax_ignore">false</code> (the value has not been rolled), and are flipped to <code class="code-inline tex2jax_ignore">true</code> once the value is seen. They are one-way flags, meaning they’re never flipped back to <code class="code-inline tex2jax_ignore">false</code>. We are only concerned with recording whether each value is seen at least once. The rest of the code after the loop reports the results of the reachability tracking.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-5-13-3-2-method-testing-plan-9" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" aria-hidden="true" data-description="Subsubsection 5.13.3.2: Writing a Method’s Testing Plan"><a tabindex="-1" href="#subsubsec-5-13-3-2-method-testing-plan" title="Copy heading and permalink for Subsubsection 5.13.3.2: Writing a Method’s Testing Plan" aria-label="Copy heading and permalink for Subsubsection 5.13.3.2: Writing a Method’s Testing Plan">🔗</a></div>
+</section><div class="autopermalink" aria-hidden="true" data-description="Subsection 5.13.3: Write Method Contracts and the Testing Plan"><a tabindex="-1" href="#subsec-5-13-3-method-contracts-testing" title="Copy heading and permalink for Subsection 5.13.3: Write Method Contracts and the Testing Plan" aria-label="Copy heading and permalink for Subsection 5.13.3: Write Method Contracts and the Testing Plan">🔗</a></div>
+</section>
+<section class="subsection" id="subsec-5-13-4-implementing-dice-game">
+<h2 class="heading hide-type">
+<span class="type">Subsection</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">5.13.4</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Implementing the Solution</span>
+</h2>
+<div class="para" id="subsec-5-13-4-implementing-dice-game-2">Once each method’s contract and test plan are established, the methods can be individually implemented and unit-tested. In parallel, the <code class="code-inline tex2jax_ignore">DiceGame</code> class and its <code class="code-inline tex2jax_ignore">main</code> method can be written, using stubs in place of the helper methods until each one is ready for integration. On a professional software engineering team, different engineers might implement different helper methods simultaneously; shared method contracts ensure that all the components fit together seamlessly during integration.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-5-13-4-implementing-dice-game-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="subsec-5-13-4-implementing-dice-game-3">A <dfn class="terminology">method stub</dfn> consists of a complete method header followed by a minimal body: an empty block for a <code class="code-inline tex2jax_ignore">void</code> method, or a single statement returning a dummy value for a value-returning method. For example, a stub for <code class="code-inline tex2jax_ignore">rollDie</code> can be written as:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-5-13-4-implementing-dice-game-3" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="code-box"><pre class="program clipboardable"><code class="language-java">public static int rollDie(int numSides) {
+    return 1; // Temporary dummy return value
+}
+</code></pre></div>
+<div class="para" id="subsec-5-13-4-implementing-dice-game-5">Stubs allow <code class="code-inline tex2jax_ignore">main</code> to compile and execute immediately. In fact, if you pair this <code class="code-inline tex2jax_ignore">rollDie</code> stub with a basic <code class="code-inline tex2jax_ignore">isGameOver</code> stub and an empty <code class="code-inline tex2jax_ignore">displayOutcome</code> stub, you can run a complete, deterministic simulation of the game: both players will roll 1 on every turn, and the game loop will reliably terminate after exactly 15 rounds. This allows you to verify the overall control flow in <code class="code-inline tex2jax_ignore">main</code> before writing a single line of random number generation.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-5-13-4-implementing-dice-game-5" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="subsec-5-13-4-implementing-dice-game-6">Once each helper method is fully implemented and passes its unit tests, we swap out the stubs for the real methods. <a href="sec-5-13-putting-it-together.html#listing-dice-game-solution" class="xref" data-knowl="./knowl/xref/listing-dice-game-solution.html" data-reveal-label="Reveal" data-close-label="Close" title="Listing 5.20: A solution to the die-rolling game problem">Listing 5.20</a> displays the complete, fully integrated <code class="code-inline tex2jax_ignore">DiceGame</code> program.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-5-13-4-implementing-dice-game-6" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<figure class="listing figure-like" id="listing-dice-game-solution"><figcaption><span class="type">Listing</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">5.20<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span>A solution to the die-rolling game problem<div class="autopermalink" aria-hidden="true" data-description="Listing 5.20: A solution to the die-rolling game problem"><a tabindex="-1" href="#listing-dice-game-solution" title="Copy heading and permalink for Listing 5.20: A solution to the die-rolling game problem" aria-label="Copy heading and permalink for Listing 5.20: A solution to the die-rolling game problem">🔗</a></div></figcaption><div class="listing__contents"><div class="code-box"><pre class="program clipboardable"><code class="language-java">/**
+ * Plays a dice game against the user in which dice are rolled until a threshold is
+ * reached (a win) or passed (a loss).
+ */
+public class DiceGame {
+
+    /**
+     * Plays the dice-rolling game by repeatedly rolling the dice for the player and
+     * computer until either wins or loses.
+     *
+     * @param args Not used.
+     */
+    public static void main(String[] args) {
+
+        final int THRESHOLD = 15;    // The threshold that ends the game.
+        final int SIDES = 6;         // The number of sides on the die.
+
+        int playerTotal = 0;         // The player's die total.
+        int computerTotal = 0;       // The computer's die total.
+        boolean gameOver = false;    // Set to true when a player wins or loses.
+        int roll;                    // The value of the current roll.
+
+        // Print the instructions.
+        System.out.println("Try to reach " + THRESHOLD + " without going over.");
+        System.out.println("Good luck!
+");
+
+        // Play rounds until the game is over.
+        while (!gameOver) {
+            // Give the user a turn and determine if they won or busted.
+            roll = rollDie(SIDES);
+            System.out.println("You rolled " + roll + ".");
+            playerTotal += roll;
+            gameOver = isGameOver(playerTotal, THRESHOLD);
+
+            // If the game isn't over, give the computer a turn;
+            // determine if they won or busted.
+            if (!gameOver) {
+                roll = rollDie(SIDES);
+                System.out.println("The computer rolled " + roll + ".");
+                computerTotal += roll;
+                gameOver = isGameOver(computerTotal, THRESHOLD);
+            }
+
+            // Show the current scores for both players.
+            System.out.println("Your score          ---&gt; " + playerTotal + ".");
+            System.out.println("The computer's score ---&gt; " + computerTotal + ".
+");
+
+        } // while
+
+        // The game is over; announce the winner or loser.
+        displayOutcome(playerTotal, computerTotal, THRESHOLD);
+    }
+
+    /**
+     * Simulates the roll of a single die by randomly generating a
+     * value between 1 and numSides.
+     *
+     * Precondition:  numSides &gt;= 1
+     * Postcondition: Returns a value between 1 and numSides.
+     *
+     * @param numSides  The number of sides of the die.
+     * @return          A randomly generated value between 1 and numSides.
+     */
+    public static int rollDie(int numSides) {
+        assert numSides &gt; 0 : "rollDie called with d" + numSides;
+        int dieRoll = (int)(Math.random() * numSides) + 1;
+        assert 1 &lt;= dieRoll &amp;&amp; dieRoll &lt;= numSides : 
+              "Randomly generated value out of range";
+        return dieRoll;
+    }
+
+    /**
+     * Determines whether a player's score has ended the game by reaching
+     * or exceeding the winning threshold.
+     *
+     * Precondition:  total &gt;= 0 &amp;&amp; threshold &gt; 0
+     * Postcondition: Returns true if total &gt;= threshold; false otherwise.
+     *
+     * @param total     the player's current total score
+     * @param threshold the target score required to win
+     * @return          true if the score meets or exceeds the threshold; false otherwise
+     */
+    public static boolean isGameOver(int total, int threshold) {
+        assert total &gt;= 0 &amp;&amp; threshold &gt; 0 : 
+               "Invalid score or threshold: " + total + ", " + threshold;
+        return total &gt;= threshold;
+    }
+
+    /**
+     * Displays the final game outcome, announcing whether the player or 
+     * the computer won (by matching the threshold) or busted (by exceeding it).
+     *
+     * Precondition:  playerScore &gt;= 0 &amp;&amp; computerScore &gt;= 0 &amp;&amp; threshold &gt; 0,
+     *                and at least one player's score must be &gt;= threshold.
+     * Postcondition: Displays a win announcement if a score equals threshold,
+     *                or a bust announcement if a score exceeds threshold.
+     *
+     * @param playerScore   the player's final total score
+     * @param computerScore the computer's final total score
+     * @param threshold     the target score required to win
+     */
+    public static void displayOutcome(int playerScore, int computerScore, int threshold) {
+        assert playerScore &gt;= 0 &amp;&amp; computerScore &gt;= 0 &amp;&amp; threshold &gt; 0 : 
+            "Invalid score or threshold values: " + playerScore 
+            + ", " + computerScore + ", " + threshold;
+        assert (playerScore &gt;= threshold || computerScore &gt;= threshold) : 
+            "displayOutcome called before any player reached the threshold";
+
+        System.out.println();
+        if (playerScore == threshold) {
+            System.out.println("---&gt; That's a win for you! &lt;---");
+        } else if (playerScore &gt; threshold) {
+            System.out.println("---&gt; That's a bust for you! &lt;---");
+        } else if (computerScore == threshold) {
+            System.out.println("---&gt; That's a win for the computer! &lt;---");
+        } else {
+            System.out.println("---&gt; That's a bust for the computer! &lt;---");
+        }
+    }
+}
+</code></pre></div></div>
+</figure><div class="autopermalink" aria-hidden="true" data-description="Subsection 5.13.4: Implementing the Solution"><a tabindex="-1" href="#subsec-5-13-4-implementing-dice-game" title="Copy heading and permalink for Subsection 5.13.4: Implementing the Solution" aria-label="Copy heading and permalink for Subsection 5.13.4: Implementing the Solution">🔗</a></div>
+</section><div class="autopermalink" aria-hidden="true" data-description="Section 5.13: Putting It All Together: A Complete Case Study"><a tabindex="-1" href="#sec-5-13-putting-it-together" title="Copy heading and permalink for Section 5.13: Putting It All Together: A Complete Case Study" aria-label="Copy heading and permalink for Section 5.13: Putting It All Together: A Complete Case Study">🔗</a></div>
+</section>
+</div>
+<div id="ptx-content-footer" class="ptx-content-footer">
+<a class="previous-button button" href="sec-5-12-debugging-methods.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Top</span></a><a class="next-button button" href="sec-5-14-moving-on.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a>
+</div></main>
+</div>
+<div id="ptx-page-footer" class="ptx-page-footer">
+<a class="pretext-link" href="https://pretextbook.org" title="PreTeXt"><div class="logo"><svg xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="338 3000 8772 6866" role="img"><title>PreTeXt logo</title><g style="stroke-width:.025in; stroke:currentColor; fill:none"><polyline points="472,3590 472,9732 " style="stroke-width:174; stroke-linejoin:miter; stroke-linecap:round; "></polyline><path style="stroke-width:126;stroke-linecap:butt;" d="M 4724,9448 A 4660 4660  0  0  1  8598  9259"></path><path style="stroke-width:174;stroke-linecap:butt;" d="M 4488,9685 A 4228 4228  0  0  0   472  9732"></path><path style="stroke-width:126;stroke-linecap:butt;" d="M 4724,3590 A 4241 4241  0  0  1  8598  3496"></path><path style="stroke-width:126;stroke-linecap:round;" d="M 850,3496  A 4241 4241  0  0  1  4724  3590"></path><path style="stroke-width:126;stroke-linecap:round;" d="M 850,9259  A 4507 4507  0  0  1  4724  9448"></path><polyline points="5385,4299 4062,8125" style="stroke-width:300; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="8598,3496 8598,9259" style="stroke-width:126; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="850,3496 850,9259" style="stroke-width:126; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="4960,9685 4488,9685" style="stroke-width:174; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="3070,4582 1889,6141 3070,7700" style="stroke-width:300; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="6418,4582 7600,6141 6418,7700" style="stroke-width:300; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="8976,3590 8976,9732" style="stroke-width:174; stroke-linejoin:miter; stroke-linecap:round;"></polyline><path style="stroke-width:174;stroke-linecap:butt;" d="M 4960,9685 A 4228 4228  0  0  1  8976  9732"></path></g></svg></div></a><a class="runestone-link" href="https://runestone.academy" title="Runestone Academy"><img class="logo" alt="Runestone Academy logo" src="data:image/png;base64,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"></a><a class="mathjax-link" href="https://www.mathjax.org" title="MathJax"><img class="logo" alt="MathJax logo" src="data:image/png;base64,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"></a>
+</div>
+</body>
+</html>

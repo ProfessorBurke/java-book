@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<!--******************************************-->
+<!--*  Authored with PreTeXt                 *-->
+<!--*  pretextbook.org                       *-->
+<!--*  Theme: default-modern                 *-->
+<!--*  Palette:                              *-->
+<!--******************************************-->
+
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body class="ignore-math">
+<figure class="table table-like"><figcaption><span class="type">Table</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">4.14<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span>Categorizing loop use by type<div class="autopermalink" aria-hidden="true" data-description="Table 4.14: Categorizing loop use by type"><a tabindex="-1" href="#table-categorizing-loop-use" title="Copy heading and permalink for Table 4.14: Categorizing loop use by type" aria-label="Copy heading and permalink for Table 4.14: Categorizing loop use by type">🔗</a></div></figcaption><div class="tabular-box natural-width"><table class="tabular">
+<tr class="header-horizontal">
+<th scope="col" class="l m b1 r1 l1 t1 lines">Loop Structure</th>
+<th scope="col" class="l m b1 r1 l0 t1 lines">Category</th>
+<th scope="col" class="l m b1 r1 l0 t1 lines">When to Use It</th>
+<th scope="col" class="l m b1 r1 l0 t1 lines">Typical Scenario</th>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">
+<code class="code-inline tex2jax_ignore">for</code> loop</td>
+<td class="l m b1 r1 l0 t0" style="max-width:132px;">
+<div class="para">Definite Iteration<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-categorizing-loop-use-2-6-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para">
+<em class="emphasis">(Known count)</em><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-categorizing-loop-use-2-6-2-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</td>
+<td class="l m b1 r1 l0 t0 lines">When you know in advance how many times the action must repeat, or when iterating across a fixed range of values.</td>
+<td class="l m b1 r1 l0 t0 lines">Repeating an action 10 times; counting from 1 to <span class="process-math">\(N\text{;}\)</span> stepping through a string or array.</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">
+<code class="code-inline tex2jax_ignore">while</code> loop</td>
+<td class="l m b1 r1 l0 t0" style="max-width:132px;">
+<div class="para">Indefinite Iteration<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-categorizing-loop-use-2-7-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para">
+<em class="emphasis">(Event-driven)</em><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-categorizing-loop-use-2-7-2-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</td>
+<td class="l m b1 r1 l0 t0 lines">When repetition depends on an external condition or event, and you cannot predict how many iterations will be required. May run zero times.</td>
+<td class="l m b1 r1 l0 t0 lines">Reading user input until a sentinel appears; searching for a target; repeating while an account balance remains positive.</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">
+<code class="code-inline tex2jax_ignore">do-while</code> loop</td>
+<td class="l m b1 r1 l0 t0 lines">At-Least-Once Iteration</td>
+<td class="l m b1 r1 l0 t0 lines">When the loop body must execute at least once before the condition can even be evaluated.</td>
+<td class="l m b1 r1 l0 t0 lines">Displaying a menu; validating user input (prompting once, then repeating if the input is invalid).</td>
+</tr>
+</table></div>
+</figure><span class="incontext"><a class="internal" href="sec-4-7-designing-loops.html#table-categorizing-loop-use">In Context</a></span>
+</body>
+</html>

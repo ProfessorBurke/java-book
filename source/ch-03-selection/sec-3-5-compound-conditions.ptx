@@ -1,0 +1,586 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-3-5-compound-conditions" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Compound Conditions: Logical Operators &amp; De Morgan’s Laws</title>
+
+  
+  <introduction>
+    <p>
+      Sometimes we would like to test multiple conditions at once. For example, our precondition from <xref ref="listing-drone-search" /> is that both <c>x &gt;= radius</c> and <c>y &gt;= radius</c>. So far we haven’t seen a way to test two conditions in the same expression. Fortunately, Java (like most programming languages) has operators that allow us to logically combine Boolean expressions in two different ways: <c>&amp;&amp;</c> (logical and) and <c>||</c> (logical or) to build compound logical expressions.
+    </p>
+
+    <!-- ============================================================ -->
+    <!-- 3.5.1 Logical and && and or ||                               -->
+  </introduction>
+
+
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-3-5-1-logical-and-or">
+    <title>Logical and <c>&amp;&amp;</c> and or <c>||</c></title>
+
+    <p>
+      Let’s look at how to enforce the precondition from <xref ref="listing-drone-search" />. If we’ve obtained values for <c>centerX</c>, <c>centerY</c>, and <c>radius</c>, we can test that both <c>centerX &gt;= radius</c> and <c>centerY &gt;= radius</c> by combining the relational expressions with the <c>&amp;&amp;</c> (logical and) operator:
+    </p>
+
+    <program language="java"><![CDATA[centerX >= radius && centerY >= radius]]></program>
+
+    <p>
+      A logical and expression consists of two boolean expressions joined by the <c>&amp;&amp;</c> operator. Each operand must be a complete boolean expression that evaluates to <c>true</c> or <c>false</c>. The two ampersand symbols that make up the operator must be written with no space between them. (Note that there is also a bitwise and operator which is a single ampersand <c>&amp;</c>. This is a different operator! Be very careful to use <c>&amp;&amp;</c> for logical and<mdash />Java will not flag bitwise and as a syntax error, and you could end up with a very difficult-to-find bug.)
+    </p>
+
+    <p>
+      When Java evaluates the expression, the boolean expressions on the left and right of the <c>&amp;&amp;</c> operator are evaluated (theoretically; in practice it’s a little more complicated, as you’ll see in <xref ref="subsec-3-5-5-short-circuit" />), and the entire expression will evaluate to <c>true</c> or <c>false</c> according to <xref ref="table-truth-table-and" /> (called a truth table).
+    </p>
+
+    <table xml:id="table-truth-table-and">
+      <title>Truth table for logical and <c>&amp;&amp;</c></title>
+      <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+        <col width="30%"/>
+        <col width="30%"/>
+        <col width="40%"/>
+        <row header="yes">
+          <cell><strong>Operand1</strong></cell>
+          <cell><strong>Operand2</strong></cell>
+          <cell><strong>Operand1 &amp;&amp; Operand2</strong></cell>
+        </row>
+        <row>
+          <cell><c>true</c></cell>
+          <cell><c>true</c></cell>
+          <cell><c>true</c></cell>
+        </row>
+        <row>
+          <cell><c>true</c></cell>
+          <cell><c>false</c></cell>
+          <cell><c>false</c></cell>
+        </row>
+        <row>
+          <cell><c>false</c></cell>
+          <cell><c>true</c></cell>
+          <cell><c>false</c></cell>
+        </row>
+        <row>
+          <cell><c>false</c></cell>
+          <cell><c>false</c></cell>
+          <cell><c>false</c></cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      In our code, <c>centerX &gt;= radius</c> is Operand1 and <c>centerY &gt;= radius</c> is Operand2. The truth table shows columns for the two operands to the <c>&amp;&amp;</c> operation with all possible values for each operand. (Because each can only evaluate to <c>true</c> or <c>false</c>, there are only four possible combinations.) The third column shows the value of the entire <c>&amp;&amp;</c> expression for each combination of operands.
+    </p>
+
+    <p>
+      A logical and expression works very much the way we use the word <q>and</q> in natural language<mdash />if both conditions are true, the whole expression is true. If either or both of the conditions are false, then the whole expression is false. Use <c>&amp;&amp;</c> when you want the condition to be true only if both operands are true.
+    </p>
+
+    <p>
+      We can incorporate our expression into <xref ref="listing-drone-search" /> to test our precondition. If it is true, we proceed with calculations and output. If it is false, we avoid calculating coordinates that take the drone out of its allowed area. The code might look like this:
+    </p>
+
+    <program language="java"><![CDATA[if (centerX >= radius && centerY >= radius) {
+    perimeter = Math.PI * 2 * radius;
+    // (the rest of the calculations)
+    System.out.printf("%-14s %11s", "Waypoint", "Angle (deg)");
+    // (the rest of the print statements)
+}]]></program>
+
+    <p>
+      All of the calculation and printing code from <xref ref="listing-drone-search" /> is controlled by the <c>if</c> statement. We calculate and display the results only if the inputs meet the preconditions.
+    </p>
+
+    <p>
+      We can put a logical and expression anywhere we can put a boolean expression, including as the condition following <c>if</c>, on the right of an assignment to a boolean variable, or as an argument to a method call that expects a boolean parameter.
+    </p>
+
+    <p>
+      A logical or expression has the same construction as logical and, except we use the <c>||</c> (or) operator. Again, it is two pipe symbols written together with no space between, and like bitwise and, there is a single pipe operator which is bitwise or, which is a different operation. Each operand to a logical or operator must be a boolean expression. <xref ref="table-truth-table-or" /> is a truth table for logical or:
+    </p>
+
+    <table xml:id="table-truth-table-or">
+      <title>Truth table for <c>||</c> (or)</title>
+      <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+        <col width="30%"/>
+        <col width="30%"/>
+        <col width="40%"/>
+        <row header="yes">
+          <cell><strong>Operand1</strong></cell>
+          <cell><strong>Operand2</strong></cell>
+          <cell><strong>Operand1 || Operand2</strong></cell>
+        </row>
+        <row>
+          <cell><c>true</c></cell>
+          <cell><c>true</c></cell>
+          <cell><c>true</c></cell>
+        </row>
+        <row>
+          <cell><c>true</c></cell>
+          <cell><c>false</c></cell>
+          <cell><c>true</c></cell>
+        </row>
+        <row>
+          <cell><c>false</c></cell>
+          <cell><c>true</c></cell>
+          <cell><c>true</c></cell>
+        </row>
+        <row>
+          <cell><c>false</c></cell>
+          <cell><c>false</c></cell>
+          <cell><c>false</c></cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      Note that <c>||</c> (or) evaluates to <c>true</c> if either or both of its operands are true. An <c>||</c> is false only when both operands are false.
+    </p>
+
+    <p>
+      In our soil-testing program, suppose we want to set a flag if the pH is off<mdash />either too high or too low. We can do this with a logical or:
+    </p>
+
+    <program language="java"><![CDATA[boolean phProblem = (phLevel > 7.5) || (phLevel < 6.0);]]></program>
+
+    <p>
+      The flag <c>phProblem</c> will be set if either of the conditions evaluates to <c>true</c><mdash />either pH greater than 7.5 or pH less than 6.0. (Note that in this case, it’s impossible for both conditions to evaluate to true at the same time<mdash />they are mutually exclusive. However, if we were testing two different variables, it could be possible for both to be true as well, in which case the entire expression evaluates to <c>true</c>.)
+    </p>
+
+    <p>
+      One caution with writing logical expressions: it’s tempting to write expressions that mirror our natural language, such as <c>phLevel &gt; 7.5 || &lt; 6.0</c>. In natural language, we might say <q>pH is greater than 7.5 or less than 6.0,</q> but we cannot translate that directly to a Java expression. Java will flag this as a syntax error (although there are other languages that will allow it, even though its meaning is not what we intend). We must have a complete Boolean expression on each side of the logical or operator. What we mean is that pH is greater than 7.5 or pH is less than 6.0, which we can translate directly to Java.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 3.5.2 Testing ranges                                         -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-3-5-2-testing-ranges">
+    <title>Testing Ranges</title>
+
+    <p>
+      Our code that sets the pH flag is an example of an out-of-range test: testing that a value falls outside of an expected range. A number line illustrates this clearly:
+    </p>
+
+    <figure xml:id="figure-number-line-out-of-range">
+      <title>Number line illustrating a <c>phLevel</c> that is too low or too high</title>
+      <image source="figures/figure_3_4.png" width="85%">
+        <shortdescription>Number line with open circles at 6.0 and 7.5 and rays extending outward, illustrating phLevel &lt; 6.0 or phLevel &gt; 7.5.</shortdescription>
+        <description>
+          <p>
+            A number line with values from 5.0 to 8.5. At 6.0, an open circle with a red arrow points left toward negative infinity, labeled <c>phLevel &lt; 6.0</c> (too acidic / low). At 7.5, an open circle with an orange arrow points right toward positive infinity, labeled <c>phLevel &gt; 7.5</c> (too alkaline / high). The region between 6.0 and 7.5 is excluded.
+          </p>
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      We use logical or to test whether a value falls outside of a range, because either the value is too low or it’s too high<mdash />it can’t simultaneously be both. We want to flag or act on the out-of-range value whether it is too low or it is too high.
+    </p>
+
+    <p>
+      We use logical and to test for a value in a range. Imagine the opposite test<mdash />a test for a soil pH that is within the expected range for our gardening scenario. On a number line, we would draw that as:
+    </p>
+
+    <figure xml:id="figure-number-line-within-range">
+      <title>Number line illustrating a <c>phLevel</c> within the expected range</title>
+      <image source="figures/figure_3_5.png" width="85%">
+        <shortdescription>Number line with closed circles at 6.0 and 7.5 and a shaded segment between them, showing (phLevel &gt;= 6.0) &amp;&amp; (phLevel &lt;= 7.5).</shortdescription>
+        <description>
+          <p>
+            A number line with values from 5.0 to 8.5. Solid green circles at boundary points 6.0 and 7.5 are connected by a thick green line segment, representing the closed interval [6.0, 7.5], labeled <c>(phLevel &gt;= 6.0) &amp;&amp; (phLevel &lt;= 7.5)</c> (healthy soil range).
+          </p>
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      We write this expression as:
+    </p>
+
+    <program language="java"><![CDATA[(phLevel >= 6.0) && (phLevel <= 7.5)]]></program>
+
+    <p>
+      We use logical and to test if a value falls within a range because our test must be true only if the value is both higher than the low end of the range and lower than the high end of the range.
+    </p>
+
+    <p>
+      In math (and some programming languages), you can write a within-range test without logical and, e.g. <m>6.0 \le \text{phLevel} \le 7.5</m>. Java will flag this as a syntax error, because the first expression (<c>6.0 &lt;= phLevel</c>) will evaluate to <c>true</c> or <c>false</c>, making the rest of the expression either <c>true &lt;= 7.5</c> or <c>false &lt;= 7.5</c>. In Java, the relational operators do not work on Boolean operands, so this is an error. You must use logical and to create a within-range test.
+    </p>
+
+    <p>
+      Note that we choose <c>&lt;</c> or <c>&gt;</c> if we are excluding an endpoint, and we choose <c>&lt;=</c> and <c>&gt;=</c> if we are including an endpoint. In this example, the endpoints are included in the expected range for healthy soil and excluded in the test for unhealthy soil. Whether endpoints are included or excluded from a test depends on the test and has nothing to do with whether we’re testing for a value inside or outside of a range.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 3.5.3 Logical not !                                          -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-3-5-3-logical-not">
+    <title>Logical not (<c>!</c>)</title>
+
+    <p>
+      Java has one more logical operator: logical not (<c>!</c>). Logical not is a unary operator, meaning it has one operand: a boolean expression. Logical not negates the logical expression, as shown in <xref ref="table-truth-table-not" />:
+    </p>
+
+    <table xml:id="table-truth-table-not">
+      <title>Truth table for <c>!</c> (not)</title>
+      <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+        <col width="50%"/>
+        <col width="50%"/>
+        <row header="yes">
+          <cell><strong>Operand</strong></cell>
+          <cell><strong>!Operand</strong></cell>
+        </row>
+        <row>
+          <cell><c>true</c></cell>
+          <cell><c>false</c></cell>
+        </row>
+        <row>
+          <cell><c>false</c></cell>
+          <cell><c>true</c></cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      Logical not operates on the expression immediately after it. For example, if we have a boolean flag <c>lowPh</c> and we want to print a message to the user if their soil does not have low pH, we might write the following code:
+    </p>
+
+    <program language="java"><![CDATA[if (!lowPh) {
+    System.out.println("Your soil’s pH is not too low. ");
+}]]></program>
+
+    <p>
+      In Java, you can negate any Boolean expression but take care not to write expressions that are overly confusing. For example, can you easily tell when the following expression will evaluate to <c>true</c>?
+    </p>
+
+    <program language="java"><![CDATA[!((phLevel >= 6.0) && (phLevel <= 7.5))]]></program>
+
+    <p>
+      Is it the same as this one?
+    </p>
+
+    <program language="java"><![CDATA[!(phLevel >= 6.0) && (phLevel <= 7.5)]]></program>
+
+    <p>
+      The answer is no<mdash />they mean completely different things. In the first expression, the <c>!</c> applies to the entire compound condition inside the outer parentheses. In the second, the <c>!</c> applies only to the first comparison.
+    </p>
+
+    <p>
+      Why does <c>!</c> bind so tightly to the first comparison instead of waiting for the <c>&amp;&amp;</c>? The reason comes down to operator precedence, which we will examine in the next section. In <xref ref="subsec-3-5-6-de-morgans-laws" />, you’ll learn how to simplify expressions like these. Simpler logic is easier to read and less prone to error.
+    </p>
+
+    <p>
+      A good rule of thumb for the logical not operator is to use it primarily to negate a single boolean variable, and to write a direct, simplified relational expression whenever you are comparing values (e.g., prefer <c>x != y</c> over <c>!(x == y)</c>, and <c>x &gt;= y</c> over <c>!(x &lt; y)</c>).
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 3.5.4 Logical operator precedence                            -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-3-5-4-operator-precedence">
+    <title>Logical Operator Precedence</title>
+
+    <p>
+      <xref ref="table-operator-precedence-logical" /> is our operator precedence table with <c>&amp;&amp;</c>, <c>||</c>, and <c>!</c> added. The new and changed rows are highlighted in bold.
+    </p>
+
+    <table xml:id="table-operator-precedence-logical">
+      <title>Operator precedence including logical operators (new and updated rows in bold)</title>
+      <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+        <col width="22%"/>
+        <col width="26%"/>
+        <col width="18%"/>
+        <col width="34%"/>
+        <row header="yes">
+          <cell><strong>Category</strong></cell>
+          <cell><strong>Operators / Syntax</strong></cell>
+          <cell><strong>Associativity</strong></cell>
+          <cell><strong>Description</strong></cell>
+        </row>
+        <row>
+          <cell>Primary / grouping</cell>
+          <cell>
+            <p><c>()</c></p>
+            <p><c>method()</c></p>
+          </cell>
+          <cell>Left-to-right</cell>
+          <cell>Parentheses (grouping), method calls, and member access (e.g. <c>Math.PI</c>)</cell>
+        </row>
+        <row>
+          <cell>Postfix</cell>
+          <cell><c>expr++</c> <c>expr--</c></cell>
+          <cell>Left-to-right</cell>
+          <cell>Post-increment and post-decrement</cell>
+        </row>
+        <row bottom="medium" top="medium">
+          <cell><strong>Prefix / Unary (updated)</strong></cell>
+          <cell>
+            <p><strong><c>++expr</c> <c>--expr</c></strong></p>
+            <p><strong><c>+expr</c> <c>-expr</c></strong></p>
+            <p><strong><c>!</c></strong></p>
+          </cell>
+          <cell><strong>Right-to-left</strong></cell>
+          <cell>
+            <p><strong>Pre-increment/decrement</strong></p>
+            <p><strong>Unary plus and minus</strong></p>
+            <p><strong>Logical not</strong></p>
+          </cell>
+        </row>
+        <row>
+          <cell>Multiplicative</cell>
+          <cell><c>*</c> <c>/</c> <c>%</c></cell>
+          <cell>Left-to-right</cell>
+          <cell>Multiplication, division, mod</cell>
+        </row>
+        <row>
+          <cell>Additive</cell>
+          <cell><c>+</c> <c>-</c></cell>
+          <cell>Left-to-right</cell>
+          <cell>Addition and subtraction</cell>
+        </row>
+        <row>
+          <cell>Relational</cell>
+          <cell><c>&lt;</c> <c>&lt;=</c> <c>&gt;</c> <c>&gt;=</c></cell>
+          <cell>Left-to-right</cell>
+          <cell>Less than, less than or equal to, greater than, greater than or equal to</cell>
+        </row>
+        <row>
+          <cell>Equality</cell>
+          <cell><c>==</c> <c>!=</c></cell>
+          <cell>Left-to-right</cell>
+          <cell>Equal to, not equal to</cell>
+        </row>
+        <row bottom="medium" top="medium">
+          <cell><strong>Logical and (new)</strong></cell>
+          <cell><strong><c>&amp;&amp;</c></strong></cell>
+          <cell><strong>Left-to-right</strong></cell>
+          <cell><strong>Logical and</strong></cell>
+        </row>
+        <row bottom="medium" top="medium">
+          <cell><strong>Logical or (new)</strong></cell>
+          <cell><strong><c>||</c></strong></cell>
+          <cell><strong>Left-to-right</strong></cell>
+          <cell><strong>Logical or</strong></cell>
+        </row>
+        <row>
+          <cell>Assignment</cell>
+          <cell><c>=</c> <c>+=</c> <c>-=</c> <c>*=</c> <c>/=</c> <c>%=</c></cell>
+          <cell>Right-to-left</cell>
+          <cell>Assignment and compound assignment</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      Notice, first, that the logical not operator sits very high in the precedence table, alongside prefix and unary operators. Remember that precedence and associativity govern where Java places invisible parentheses before evaluation begins. Logical not will always be grouped with its operand before relational or binary logical operators take effect.
+    </p>
+
+    <p>
+      In our expression from the previous section:
+    </p>
+
+    <program language="java"><![CDATA[!(phLevel >= 6.0) && (phLevel <= 7.5)]]></program>
+
+    <p>
+      Because <c>!</c> has higher precedence than <c>&amp;&amp;</c>, the <c>!</c> binds tightly to <c>(phLevel &gt;= 6.0)</c>. It negates that comparison first, and only then does Java evaluate the <c>&amp;&amp;</c> between the two sides.
+    </p>
+
+    <p>
+      Notice also that <c>&amp;&amp;</c> has higher precedence than <c>||</c>. This means that when both appear in an expression without explicit parentheses:
+    </p>
+
+    <program language="java"><![CDATA[boolean badPh = phLevel < 6.0 || phLevel > 7.5 && phLevel != -1;]]></program>
+
+    <p>
+      Java groups the <c>&amp;&amp;</c> first, placing invisible parentheses like this:
+    </p>
+
+    <program language="java"><![CDATA[phLevel < 6.0 || (phLevel > 7.5 && phLevel != -1)]]></program>
+
+    <p>
+      Imagine that a pH reading of -1 indicates a sensor error. We want <c>badPh</c> to be <c>true</c> only if we have a valid test that measured an unhealthy pH<mdash />never if the test itself was invalid.
+    </p>
+
+    <p>
+      Because of Java's grouping, watch what happens when we substitute -1:
+    </p>
+
+    <program language="java"><![CDATA[phLevel < 6.0 || (phLevel > 7.5 && phLevel != -1)
+-1 < 6.0 || (-1 > 7.5 && -1 != -1)
+true || (false && false)
+true || false
+true]]></program>
+
+    <p>
+      The programmer intended for the expression to evaluate to <c>false</c> when <c>phLevel</c> is -1, but because of operator precedence, the condition <c>-1 &lt; 6.0</c> sits on its own and the check for -1 is grouped with a high pH. The <c>-1 &lt; 6.0</c> condition evaluates to <c>true</c>, making the entire expression <c>true</c>.
+    </p>
+
+    <p>
+      Even worse, this expression compiles without error and behaves correctly for three out of four input categories (normal pH, high pH, and typical low pH). The bug remains completely silent until that -1 edge case occurs!
+    </p>
+
+    <p>
+      To ensure the <c>||</c> is evaluated as a combined unit, we must override the default precedence by adding explicit parentheses:
+    </p>
+
+    <program language="java"><![CDATA[(phLevel < 6.0 || phLevel > 7.5) && phLevel != -1]]></program>
+
+    <p>
+      Enclosing expressions in parentheses is always best practice. It eliminates ambiguity, guarantees that Java groups your logic as intended, and ensures that anyone reading your code understands your purpose without having to consult a precedence table. Enclosing expressions in parentheses is always a good idea to make code more readable, even if you’re only clarifying the grouping order that already exists.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 3.5.5 Short-Circuit Evaluation                               -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-3-5-5-short-circuit">
+    <title>Short-Circuit Evaluation</title>
+
+    <p>
+      When Java evaluates a compound Boolean expression joined by <c>&amp;&amp;</c> or <c>||</c>, it does not always evaluate both operands. Instead, it stops evaluating as soon as the final truth value of the entire expression is guaranteed. This behavior is called <term>short-circuit evaluation</term>.
+    </p>
+
+    <p>
+      To understand why this is possible, look again at the truth tables for <c>&amp;&amp;</c> and <c>||</c> (<xref ref="table-truth-table-and" /> and <xref ref="table-truth-table-or" />) and ask, before you read on, when can you predict the outcome of the expression by looking at the first operand?
+    </p>
+
+    <ul>
+      <li>
+        <p>
+          <strong>For <c>&amp;&amp;</c>:</strong> If the left operand evaluates to <c>false</c>, the entire expression must be <c>false</c>, regardless of what the right operand produces (<c>false &amp;&amp; anything</c> is always <c>false</c>). Java stops immediately and skips evaluating the right operand.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>For <c>||</c>:</strong> If the left operand evaluates to <c>true</c>, the entire expression must be <c>true</c>, regardless of what the right operand produces (<c>true || anything</c> is always <c>true</c>). Java stops immediately and skips evaluating the right operand.
+        </p>
+      </li>
+    </ul>
+
+    <p>
+      When the left operand cannot decide the outcome, Java evaluates the right operand:
+    </p>
+
+    <program language="java"><![CDATA[// If count is 0, the left side (count > 0) is false.
+// Java short-circuits: it never evaluates the right side!
+// If count is not 0, the right side is evaluated.
+if (count > 0 && total / count > 10) { ... }]]></program>
+
+    <p>
+      Short-circuiting saves a few fractions of a second in computation time, but it also gives programmers the ability to prevent run-time errors with properly written compound expressions.
+    </p>
+
+    <p>
+      In <xref ref="subsec-3-2-1-if-statements-blocks" />, we saw that calculating freethrow percentages when <c>totalFreethrows</c> is 0 crashes the program with an <c>ArithmeticException</c> (division by zero). With short-circuit evaluation, we can write a guard condition directly inside our Boolean expression:
+    </p>
+
+    <program language="java"><![CDATA[if (totalFreethrows > 0 && (double)successfulFreethrows / totalFreethrows >= 0.70) {
+    System.out.println("Qualifies as an accurate shooter!");
+}]]></program>
+
+    <p>
+      Notice the order of the operations:
+    </p>
+
+    <ol>
+      <li>
+        <p>Java tests the guard on the left: <c>totalFreethrows &gt; 0</c>.</p>
+      </li>
+      <li>
+        <p>If <c>totalFreethrows</c> is 0, that test evaluates to <c>false</c>.</p>
+      </li>
+      <li>
+        <p>Because the operator is <c>&amp;&amp;</c>, Java short-circuits. It never attempts the division on the right side!</p>
+      </li>
+      <li>
+        <p>The program safely skips the entire <c>if</c> block without crashing.</p>
+      </li>
+    </ol>
+
+    <p>
+      If you had placed the division on the left side, or if Java did not short-circuit, the program would crash whenever <c>totalFreethrows</c> was zero.
+    </p>
+
+    <p>
+      This is also why using <c>&amp;</c> and <c>|</c> instead of <c>&amp;&amp;</c> and <c>||</c> is so dangerous: the single ampersand and pipe operators do not short-circuit. If you wrote <c>totalFreethrows &gt; 0 &amp; ...</c>, Java would evaluate both sides every single time, crashing your program when the <c>totalFreethrows</c> variable contained 0.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 3.5.6 Complementing Logical Conditions with De Morgan’s Laws -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-3-5-6-de-morgans-laws">
+    <title>Complementing Logical Conditions with De Morgan’s Laws</title>
+
+    <p>
+      Back in <xref ref="subsec-3-5-3-logical-not" />, we posed a puzzling question: can you easily tell when this negated compound expression will evaluate to <c>true</c>?
+    </p>
+
+    <program language="java"><![CDATA[!((phLevel >= 6.0) && (phLevel <= 7.5))]]></program>
+
+    <p>
+      Reading negated code is mentally taxing. Trying to reason about <q>not both greater than or equal to 6.0 and less than or equal to 7.5</q> forces your brain to juggle double negatives.
+    </p>
+
+    <p>
+      Fortunately, a 19th-century mathematician named Augustus De Morgan formulated two logical equivalence rules<mdash />known as De Morgan’s Laws<mdash />that allow us to simplify negated compound expressions into readable, maintainable code.
+    </p>
+
+    <p>
+      De Morgan’s laws describe how to distribute a <c>!</c> across a parenthesized <c>&amp;&amp;</c> or <c>||</c> expression:
+    </p>
+
+    <program language="java"><![CDATA[!(A && B) -> !A || !B
+!(A || B) -> !A && !B]]></program>
+
+    <p>
+      Simply put, complement each operand and switch a logical and to a logical or, and vice-versa.
+    </p>
+
+    <p>
+      You can think of the negation of a logical and as the or of the negations. Saying <q>It is not true that both A and B occurred</q> means <q>Either A did not occur, or B did not occur, or they both did not occur.</q> Another way to phrase that is, <q>at least one of A and B did not occur.</q>
+    </p>
+
+    <p>
+      Think of the negation of a logical or as the and of the negations. Saying <q>It is not true that either A or B occurred</q> means <q>Neither A nor B occurred.</q>
+    </p>
+
+    <p>
+      Let’s apply De Morgan’s laws to simplify our awkward expression from earlier:
+    </p>
+
+    <program language="java"><![CDATA[!((phLevel >= 6.0) && (phLevel <= 7.5))]]></program>
+
+    <p>
+      Because the original expression used <c>&amp;&amp;</c>, we flip <c>&amp;&amp;</c> to <c>||</c> and negate both sides:
+    </p>
+
+    <program language="java"><![CDATA[!(phLevel >= 6.0) || !(phLevel <= 7.5)]]></program>
+
+    <p>
+      Replace each negated relational operator with its complement (from <xref ref="table-relational-complements" />) and remove the not operators:
+    </p>
+
+    <program language="java"><![CDATA[phLevel < 6.0 || phLevel > 7.5]]></program>
+
+    <p>
+      Look at the result: it is the exact out-of-range expression we wrote in <xref ref="subsec-3-5-2-testing-ranges" />!
+    </p>
+
+    <p>
+      This makes intuitive sense:
+    </p>
+
+    <ul>
+      <li>
+        <p>The original condition, <c>(phLevel &gt;= 6.0 &amp;&amp; phLevel &lt;= 7.5)</c>, defined soil that was inside the healthy range.</p>
+      </li>
+      <li>
+        <p>Its complement, <c>phLevel &lt; 6.0 || phLevel &gt; 7.5</c>, defines soil that is outside the healthy range.</p>
+      </li>
+    </ul>
+
+    <p>
+      Whenever you find yourself writing an <c>!</c> outside a parenthesized condition, use De Morgan’s laws to push the negation inside and simplify each comparison. Your code will be significantly easier to read, test, and maintain.
+    </p>
+  </subsection>
+</section>

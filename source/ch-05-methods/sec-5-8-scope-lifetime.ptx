@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-5-8-scope-lifetime" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Variable Scope and Lifetime</title>
+
+  <introduction>
+    <p>
+      When beginning programmers first start breaking programs into methods, they often encounter a frustrating compiler error: a variable declared in <c>main</c> is suddenly reported as <q>cannot be resolved</q> when they attempt to use it inside a helper method, or a variable created inside a helper method is completely invisible to <c>main</c>.
+    </p>
+
+    <p>
+      To understand why this happens<mdash />and why this separation is one of the greatest safeguards in software engineering<mdash />we must examine two related but fundamentally different concepts: <term>variable scope</term> and <term>variable lifetime</term>.
+    </p>
+  </introduction>
+
+  <!-- ============================================================ -->
+  <!-- 5.8.1 Scope: The Spatial Boundary                           -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-8-1-scope-spatial-boundary">
+    <title>Scope: The Spatial Boundary</title>
+
+    <p>
+      A variable’s <term>scope</term> is the region of source code text where the variable’s identifier (its name) is recognized by the compiler and can legally be accessed.
+    </p>
+
+    <p>
+      Scope is a spatial, compile-time concept. It is entirely about where a variable’s name is written in your Java source code file. If you attempt to reference a variable name outside its scope, the compiler refuses to build your program, reporting an error such as <q>cannot find symbol</q> or <q>variable not defined</q>.
+    </p>
+
+    <p>
+      In Java, all parameters and local variables possess <term>block scope</term>:
+    </p>
+
+    <ul>
+      <li>
+        <p>A block begins at an opening curly brace <c>{</c> and ends at the corresponding closing curly brace <c>}</c>.</p>
+      </li>
+      <li>
+        <p>A local variable's scope begins at the exact point of its declaration and extends down to the closing curly brace of the block in which it was declared.</p>
+      </li>
+    </ul>
+
+    <p>
+      Once the closing curly brace of that block is reached, the variable's scope ends.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 5.8.2 Block Scope and Nested Blocks                         -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-8-2-nested-blocks">
+    <title>Block Scope and Nested Blocks</title>
+
+    <p>
+      Blocks can be nested inside other blocks. You have seen this pattern continuously since Chapter 3: an <c>if</c> statement introduces a block inside a method body, and a <c>while</c> or <c>for</c> loop introduces another block inside that <c>if</c> statement.
+    </p>
+
+    <p>
+      Java governs nested scopes with two simple rules:
+    </p>
+
+    <ol>
+      <li>
+        <p><strong>Inner blocks can see outward:</strong> Code inside an inner block has full access to any variables declared in surrounding, enclosing outer blocks.</p>
+      </li>
+      <li>
+        <p><strong>Outer blocks cannot see inward:</strong> Code in an outer block cannot see or access variables declared inside nested inner blocks.</p>
+      </li>
+    </ol>
+
+    <p>
+      <xref ref="listing-limits-block-scope" /> illustrates how nested block scope operates:
+    </p>
+
+    <listing xml:id="listing-limits-block-scope">
+      <caption>The limits of block scope</caption>
+      <program language="java">
+<![CDATA[public static void evaluateScore(int rawScore) {
+    // rawScore is in scope throughout the entire method body
+
+    if (rawScore >= 90) {
+        // bonus is declared inside this if block
+        int bonus = 5;
+        int finalScore = rawScore + bonus; // Legal: rawScore is visible here
+        System.out.println("Final score: " + finalScore);
+    } // bonus and finalScore leave scope here
+
+    // COMPILER ERROR: bonus and finalScore do not exist in this outer block!
+    System.out.println("Bonus was: " + bonus); 
+}]]>
+      </program>
+    </listing>
+
+    <p>
+      In <xref ref="listing-limits-block-scope" />, the variables <c>bonus</c> and <c>finalScore</c> are confined entirely to the block of the <c>if</c> statement. As soon as the closing curly brace <c>}</c> on line 9 is reached, their scope terminates. Any attempt to use <c>bonus</c> on line 12 is a compile-time error.
+    </p>
+
+    <p>
+      Similarly, a loop counter declared in the header of a standard <c>for</c> loop, such as <c>for (int i = 0; i &lt; 10; i++)</c>, has scope restricted strictly to the loop header and body. When the loop terminates, <c>i</c> vanishes from scope.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 5.8.3 Lifetime: The Temporal Boundary                       -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-8-3-lifetime-temporal-boundary">
+    <title>Lifetime: The Temporal Boundary</title>
+
+    <p>
+      While scope defines <em>where</em> in the text a name is visible to the compiler, lifetime defines <em>when</em> during execution memory is allocated for that variable.
+    </p>
+
+    <p>
+      Lifetime is a temporal, runtime concept:
+    </p>
+
+    <ul>
+      <li>
+        <p>A local variable’s lifetime begins when a method executes. Its memory is allocated on the call stack when method execution begins.</p>
+      </li>
+      <li>
+        <p>A local variable’s lifetime ends when its enclosing method finishes and its stack frame is popped from the call stack.</p>
+      </li>
+    </ul>
+
+    <p>
+      In <xref ref="sec-5-5-call-stack" />, we traced the call stack and uncovered an interesting paradox: a variable can be alive in memory, yet temporarily out of scope.
+    </p>
+
+    <p>
+      Consider what happens when <c>main</c> calls <c>getRecommendation(aqi)</c>:
+    </p>
+
+    <ol>
+      <li>
+        <p>The variable <c>aqi</c> in <c>main</c> is sitting in <c>main</c>'s stack frame in physical RAM. It is alive.</p>
+      </li>
+      <li>
+        <p>However, execution has jumped inside <c>getRecommendation</c>. Because <c>getRecommendation</c> is in a completely different method block, <c>main</c>’s local variables are out of scope. Code inside <c>getRecommendation</c> cannot see or manipulate <c>main</c>'s variables directly.</p>
+      </li>
+      <li>
+        <p>Once <c>getRecommendation</c> returns, control returns to <c>main</c>. <c>main</c>'s variables return to scope, remaining alive until <c>main</c> itself finishes.</p>
+      </li>
+    </ol>
+
+    <figure xml:id="figure-alive-out-of-scope">
+      <title>Call Stack: Alive but Out of Scope</title>
+      <caption>While <c>getRecommendation()</c> executes, <c>main()</c>'s variables remain allocated in memory on the call stack (alive), but are inaccessible across the method scope boundary (out of scope).</caption>
+      <image source="figures/figure_5_6.png" width="85%">
+        <shortdescription>Call stack diagram contrasting active in-scope getRecommendation frame with suspended alive-but-out-of-scope main frame across a scope firewall.</shortdescription>
+        <description>
+          <p>
+            A call stack diagram illustrating the distinction between scope and lifetime. The active getRecommendation frame is at the top with aqi and recommendation in scope. Below a red dashed scope boundary, the main frame is suspended with stdin and aqi. Explanatory cards on the right clarify that main's variables remain alive in physical RAM on the stack, but are temporarily out of scope and invisible to the currently executing helper method.
+          </p>
+        </description>
+      </image>
+    </figure>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 5.8.4 Disjoint Scopes vs. Shadowing                         -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-8-4-disjoint-scopes-shadowing">
+    <title>Disjoint Scopes vs. Shadowing</title>
+
+    <p>
+      Because scope is defined by blocks, two separate methods represent <term>disjoint</term> (non-overlapping) scopes. This means that different methods can use the exact same variable names without any conflict whatsoever:
+    </p>
+
+    <program language="java">
+<![CDATA[public static void main(String[] args) {
+    int total = 100;
+    printSummary();
+    System.out.println("In main, total is: " + total); // Prints 100
+}
+
+public static void printSummary() {
+    int total = 0; // This total is separate from total in main.
+    System.out.println("In helper, total is: " + total); // Prints 0
+}]]>
+    </program>
+
+    <p>
+      To the compiler, the <c>total</c> declared in <c>main</c> and the <c>total</c> declared in <c>printSummary</c> are two entirely distinct entities that happen to share the same identifier. At runtime, they occupy two different memory slots in two separate stack frames.
+    </p>
+
+    <p>
+      What happens if you try to reuse a variable name inside a nested block within the same method?
+    </p>
+
+    <p>
+      In some programming languages (notably C and C++), you are permitted to declare a variable in an inner block with the same name as a variable in an outer block. When this happens, the inner variable <term>shadows</term> (masks) the outer variable, temporarily hiding the outer one from view.
+    </p>
+
+    <p>
+      Java’s designers considered local variable shadowing to be a major source of accidental, hard-to-find logic bugs. Consequently, Java strictly forbids declaring a local variable with the same name as another local variable or parameter in an enclosing block:
+    </p>
+
+    <program language="java">
+<![CDATA[public static void calculate(int limit) {
+    int count = 0;
+
+    if (limit > 10) {
+        // COMPILER ERROR: Variable 'count' is already defined in method calculate(int)
+        int count = 5; 
+
+        // COMPILER ERROR: Variable 'limit' is already defined in method calculate(int)
+        int limit = 20; 
+    }
+}]]>
+    </program>
+
+    <p>
+      If you attempt to compile this code, Java immediately rejects it. Within any single method, every parameter and local variable name must remain unique throughout its scope. (Note: Java does allow a method parameter or local variable to share a name with an instance field of an object, which we will examine when we study Object-Oriented Programming in Chapter 6).
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 5.8.5 The Architectural Value of Scope Isolation             -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-8-5-architectural-value-scope-isolation">
+    <title>The Architectural Value of Scope Isolation</title>
+
+    <p>
+      Beginning programmers sometimes view scope boundaries as an inconvenience. They wonder why methods can’t see each others’ variables so they don’t have to be passed as parameters.
+    </p>
+
+    <p>
+      In early computing, languages often allowed <q>global</q> variables that any subroutine could read or overwrite at any time. Software engineers quickly discovered that global access leads to catastrophic design problems:
+    </p>
+
+    <ol>
+      <li>
+        <p>
+          <strong>Accidental Side Effects:</strong> If twenty different methods can all modify a shared variable named <c>index</c> or <c>total</c>, a bug in method A can corrupt data in method B without warning. Tracking down which method caused the corruption becomes an exhausting debugging nightmare.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>Cognitive Overload:</strong> When reading or modifying a helper method, you should not need to keep track of fifty variables declared in <c>main</c>. Scope boundaries act as a mental firewall: you only need to understand the variables declared inside the method you are currently reading.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>True Modularity and Reuse:</strong> Because <c>isValidAqi(int aqi)</c> relies strictly on its parameter, you can copy that method out of this program and paste it into a web application, an Android app, or an automated weather sensor script. It will run anywhere without requiring <c>main</c> to have specific variables set up.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>Preventing Name Collisions:</strong> In a large program with dozens of methods, you would quickly run out of meaningful identifiers if every variable had to be unique. Local scope prevents <q>namespace pollution,</q> allowing you to freely use short, natural names (such as <c>i</c> for a loop counter, <c>line</c> for an input string, or <c>total</c> for an accumulator) across many different methods without any risk of conflict.
+        </p>
+      </li>
+    </ol>
+
+    <p>
+      By restricting variables strictly to the block where they are needed, Java protects your code from unintended interference and makes your methods truly independent, reusable components.
+    </p>
+  </subsection>
+
+</section>

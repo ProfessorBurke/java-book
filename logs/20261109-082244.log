@@ -1,0 +1,216 @@
+INFO    : Building target web
+INFO    : XSL conversion of D:\CCRI\__Java book rewrite\cs1-java-textbook\source\main.ptx by C:\Users\Maggie\.ptx\2.56.2\core\xsl\utilities\pretext-enhanced-source.xsl
+INFO    : messages from the log for XSL processing (prefaced with a *):
+WARNING : * PTX:DEPRECATE: (2026-07-30) the external directory is a property of your source, and is now declared with a "directories/@external" attribute within "docinfo".  The publication file entry "source/directories/@external" is honored meanwhile, but please relocate it.
+INFO    : successful application of C:\Users\Maggie\.ptx\2.56.2\core\xsl\utilities\pretext-enhanced-source.xsl
+INFO    : discovering source file's directory name: D:\CCRI\__Java book rewrite\cs1-java-textbook\source
+WARNING : (2026-07-30) the external directory is a property of your source, and is now declared with a "directories/@external" attribute within "docinfo". The publisher file entry "source/directories/@external" is honored meanwhile, but please relocate it.
+INFO    : verifying and expanding input directory: D:\CCRI\__Java book rewrite\cs1-java-textbook\source\../assets
+INFO    : input directory expanded to absolute path: D:\CCRI\__Java book rewrite\cs1-java-textbook\assets
+INFO    : Generating any needed assets.
+INFO    : Finished generating assets.
+
+INFO    : Preparing to build into D:\CCRI\__Java book rewrite\cs1-java-textbook\output\web.
+WARNING : Node.js must be installed to build CSS files.  Please install node.js and npm.
+ Will try to use prebuilt CSS files instead.
+WARNING : Cannot find npm.  Will try to use prebuilt CSS files instead.
+WARNING : Unable to install npm packages to build css files.  Non-default CSS themes require node.js and npm to be installed.  See https://pretextbook.org/doc/guide/html/node-and-npm.html
+WARNING : 
+INFO    : discovering source file's directory name: D:\CCRI\__Java book rewrite\cs1-java-textbook\source
+WARNING : (2026-07-30) the external directory is a property of your source, and is now declared with a "directories/@external" attribute within "docinfo". The publisher file entry "source/directories/@external" is honored meanwhile, but please relocate it.
+INFO    : verifying and expanding input directory: D:\CCRI\__Java book rewrite\cs1-java-textbook\source\../assets
+INFO    : input directory expanded to absolute path: D:\CCRI\__Java book rewrite\cs1-java-textbook\assets
+INFO    : discovering source file's directory name: D:\CCRI\__Java book rewrite\cs1-java-textbook\source
+INFO    : XSL conversion of D:\CCRI\__Java book rewrite\cs1-java-textbook\source\main.ptx by C:\Users\Maggie\.ptx\2.56.2\core\xsl\utilities\report-publisher-variables.xsl
+INFO    : messages from the log for XSL processing (prefaced with a *):
+WARNING : * PTX:DEPRECATE: (2026-07-30) the external directory is a property of your source, and is now declared with a "directories/@external" attribute within "docinfo".  The publication file entry "source/directories/@external" is honored meanwhile, but please relocate it.
+INFO    : successful application of C:\Users\Maggie\.ptx\2.56.2\core\xsl\utilities\report-publisher-variables.xsl
+INFO    : Downloading rs services file from https://runestone.academy/cdn/runestone/latest/webpack_static_imports.xml.
+INFO    : Runestone Services via online CDN query: version 8.4.0
+INFO    : Downloading Runestone Services, version 8.4.0
+INFO    : Extracting Runestone Services from archive file
+INFO    : Node.js not available. Relying on prebuilt default-modern.
+INFO    : Using prebuilt CSS theme: default-modern with options: {'options': {'primary-color': '#195684', 'secondary-color': '#932c1c'}, 'contrast-checks': {'primary-color': '#fff', 'secondary-color': '#fff', 'primary-color-dark': '#23241f'}}
+INFO    : converting D:\CCRI\__Java book rewrite\cs1-java-textbook\source\main.ptx to HTML in C:\Users\Maggie\AppData\Local\Temp\ptx-2h44avhp
+INFO    : XSL conversion of D:\CCRI\__Java book rewrite\cs1-java-textbook\source\main.ptx by C:\Users\Maggie\.ptx\2.56.2\core\xsl\pretext-html.xsl
+INFO    : messages from the log for XSL processing (prefaced with a *):
+WARNING : * PTX:DEPRECATE: (2026-07-30) the external directory is a property of your source, and is now declared with a "directories/@external" attribute within "docinfo".  The publication file entry "source/directories/@external" is honored meanwhile, but please relocate it.
+WARNING : * PTX:WARNING: In a section containing subsections, any content that is not inside a subsection needs to be inside an <introduction> and/or  <conclusion>.
+INFO    : *              located at: pretext/book/chapter/section
+INFO    : *              located within: "sec-2-4-variables-types" (xml:id), "Data: Variables, Literals, and Types" (title)
+WARNING : * PTX:WARNING: In a section containing subsections, any content that is not inside a subsection needs to be inside an <introduction> and/or  <conclusion>.
+INFO    : *              located at: pretext/book/chapter/section
+INFO    : *              located within: "sec-2-5-arithmetic" (xml:id), "Arithmetic" (title)
+WARNING : * PTX:WARNING: In a section containing subsections, any content that is not inside a subsection needs to be inside an <introduction> and/or  <conclusion>.
+INFO    : *              located at: pretext/book/chapter/section
+INFO    : *              located within: "sec-2-6-strings" (xml:id), "Manipulating Text: Working with Strings" (title)
+WARNING : * PTX:WARNING: In a section containing subsections, any content that is not inside a subsection needs to be inside an <introduction> and/or  <conclusion>.
+INFO    : *              located at: pretext/book/chapter/section
+INFO    : *              located within: "sec-2-7-output-system-out" (xml:id), "Output: Displaying Text with System.out" (title)
+WARNING : * PTX:WARNING: In a section containing subsections, any content that is not inside a subsection needs to be inside an <introduction> and/or  <conclusion>.
+INFO    : *              located at: pretext/book/chapter/section
+INFO    : *              located within: "sec-2-8-input-scanner" (xml:id), "Input: Reading from the Console" (title)
+WARNING : * PTX:WARNING: In a section containing subsections, any content that is not inside a subsection needs to be inside an <introduction> and/or  <conclusion>.
+INFO    : *              located at: pretext/book/chapter/section
+INFO    : *              located within: "sec-2-9-case-study-drone" (xml:id), "Putting It All Together: Writing an Input-Processing-Output Program" (title)
+WARNING : * PTX:WARNING: In a section containing subsections, any content that is not inside a subsection needs to be inside an <introduction> and/or  <conclusion>.
+INFO    : *              located at: pretext/book/chapter/section
+INFO    : *              located within: "sec-6-4-defining-class" (xml:id), "Defining a Class: State and Behavior" (title)
+WARNING : * PTX:WARNING: In a section containing subsections, any content that is not inside a subsection needs to be inside an <introduction> and/or  <conclusion>.
+INFO    : *              located at: pretext/book/chapter/section
+INFO    : *              located within: "sec-6-6-overloading" (xml:id), "Overloading Methods and Constructors" (title)
+WARNING : * PTX:WARNING: In a section containing subsections, any content that is not inside a subsection needs to be inside an <introduction> and/or  <conclusion>.
+INFO    : *              located at: pretext/book/chapter/section
+INFO    : *              located within: "sec-6-7-memory-model" (xml:id), "Objects in Memory: The Stack and the Heap" (title)
+WARNING : * PTX:WARNING: In a section containing subsections, any content that is not inside a subsection needs to be inside an <introduction> and/or  <conclusion>.
+INFO    : *              located at: pretext/book/chapter/section
+INFO    : *              located within: "sec-6-8-tostring-equals" (xml:id), "Printing and Comparing Objects: toString and equals" (title)
+WARNING : * PTX:WARNING: In a section containing subsections, any content that is not inside a subsection needs to be inside an <introduction> and/or  <conclusion>.
+INFO    : *              located at: pretext/book/chapter/section
+INFO    : *              located within: "sec-6-9-javadoc" (xml:id), "Documenting Classes with Javadoc" (title)
+WARNING : * PTX:WARNING: In a section containing subsections, any content that is not inside a subsection needs to be inside an <introduction> and/or  <conclusion>.
+INFO    : *              located at: pretext/book/chapter/section
+INFO    : *              located within: "sec-6-10-unit-testing" (xml:id), "Unit Testing Classes: The Arrange–Act–Assert Pattern" (title)
+WARNING : * PTX:WARNING: In a subsection containing subsubsections, any content that is not inside a subsubsection needs to be inside an <introduction> and/or  <conclusion>.
+INFO    : *              located at: pretext/book/chapter/section/subsection
+INFO    : *              located within: "subsec-2-4-1-primitive-types" (xml:id), "Java’s Primitive Types" (title)
+WARNING : * PTX:WARNING: In a subsection containing subsubsections, any content that is not inside a subsubsection needs to be inside an <introduction> and/or  <conclusion>.
+INFO    : *              located at: pretext/book/chapter/section/subsection
+INFO    : *              located within: "subsec-2-4-2-variables-assignments" (xml:id), "Variables and Assignment Statements" (title)
+WARNING : * PTX:WARNING: In a subsection containing subsubsections, any content that is not inside a subsubsection needs to be inside an <introduction> and/or  <conclusion>.
+INFO    : *              located at: pretext/book/chapter/section/subsection
+INFO    : *              located within: "subsec-2-5-6-pitfalls-binary" (xml:id), "Pitfalls of Finite Binary Representation" (title)
+WARNING : * PTX:WARNING: In a subsection containing subsubsections, any content that is not inside a subsubsection needs to be inside an <introduction> and/or  <conclusion>.
+INFO    : *              located at: pretext/book/chapter/section/subsection
+INFO    : *              located within: "subsec-2-6-3-syntactic-sugar" (xml:id), "Java's VIP Treatment: Syntactic Sugar for Strings" (title)
+WARNING : * PTX:WARNING: In a subsection containing subsubsections, any content that is not inside a subsubsection needs to be inside an <introduction> and/or  <conclusion>.
+INFO    : *              located at: pretext/book/chapter/section/subsection
+INFO    : *              located within: "subsec-2-6-4-string-methods" (xml:id), "String Methods" (title)
+WARNING : * PTX:WARNING: In a subsection containing subsubsections, any content that is not inside a subsubsection needs to be inside an <introduction> and/or  <conclusion>.
+INFO    : *              located at: pretext/book/chapter/section/subsection
+INFO    : *              located within: "subsec-2-7-2-formatted-output" (xml:id), "Formatted Output with System.out.printf" (title)
+WARNING : * PTX:WARNING: In a subsection containing subsubsections, any content that is not inside a subsubsection needs to be inside an <introduction> and/or  <conclusion>.
+INFO    : *              located at: pretext/book/chapter/section/subsection
+INFO    : *              located within: "subsec-6-5-3-constants-counters" (xml:id), "Constants and Class Counters" (title)
+WARNING : * PTX:WARNING: In a subsection containing subsubsections, any content that is not inside a subsubsection needs to be inside an <introduction> and/or  <conclusion>.
+INFO    : *              located at: pretext/book/chapter/section/subsection
+INFO    : *              located within: "subsec-6-5-4-static-barrier" (xml:id), "The Static Barrier: Why Static Methods Cannot Access Instance Fields" (title)
+WARNING : * PTX:WARNING: In a subsection containing subsubsections, any content that is not inside a subsubsection needs to be inside an <introduction> and/or  <conclusion>.
+INFO    : *              located at: pretext/book/chapter/section/subsection
+INFO    : *              located within: "subsec-6-7-1-memory-areas" (xml:id), "Memory: Stack, Heap, and Static Area" (title)
+WARNING : * PTX:WARNING: In a subsection containing subsubsections, any content that is not inside a subsubsection needs to be inside an <introduction> and/or  <conclusion>.
+INFO    : *              located at: pretext/book/chapter/section/subsection
+INFO    : *              located within: "subsec-6-7-2-dereferencing" (xml:id), "Reference Variables and Implicit Dereferencing" (title)
+WARNING : * PTX:WARNING: In a subsection containing subsubsections, any content that is not inside a subsubsection needs to be inside an <introduction> and/or  <conclusion>.
+INFO    : *              located at: pretext/book/chapter/section/subsection
+INFO    : *              located within: "subsec-6-7-5-copy-constructors" (xml:id), "True Object Duplication: The Copy Constructor" (title)
+WARNING : * PTX:WARNING: In a subsection containing subsubsections, any content that is not inside a subsubsection needs to be inside an <introduction> and/or  <conclusion>.
+INFO    : *              located at: pretext/book/chapter/section/subsection
+INFO    : *              located within: "subsec-6-7-6-garbage-collection" (xml:id), "Object Lifetime and Automatic Garbage Collection" (title)
+WARNING : * PTX:WARNING: In a subsection containing subsubsections, any content that is not inside a subsubsection needs to be inside an <introduction> and/or  <conclusion>.
+INFO    : *              located at: pretext/book/chapter/section/subsection
+INFO    : *              located within: "subsec-6-9-4-documenting-fields" (xml:id), "Documenting Fields: Constants, Counters, and Instance State" (title)
+WARNING : * PTX:WARNING:   a <tabular> has at least one paragraph (<p>) inside a <cell>, yet there are no <col> elements with a @width attribute.  Default widths will be supplied.
+INFO    : *              located at: pretext/book/chapter/section/subsection/table/tabular
+INFO    : *              located within: "table-electric-vehicle-class-diagram" (xml:id), "Class diagram for ElectricVehicle" (title)
+WARNING : * PTX:WARNING:   a <tabular> has at least one paragraph (<p>) inside a <cell>, yet there are no <col> elements with a @width attribute.  Default widths will be supplied.
+INFO    : *              located at: pretext/book/chapter/section/subsection/sidebyside/tabular
+INFO    : *              located within: "subsec-6-4-3-fields-constructors" (xml:id), "Fields and Constructors" (title)
+WARNING : * PTX:WARNING:   a <tabular> has at least one paragraph (<p>) inside a <cell>, yet there are no <col> elements with a @width attribute.  Default widths will be supplied.
+INFO    : *              located at: pretext/book/chapter/section/subsection/sidebyside/tabular
+INFO    : *              located within: "subsec-6-4-3-fields-constructors" (xml:id), "Fields and Constructors" (title)
+WARNING : * PTX:WARNING:   a <tabular> has at least one paragraph (<p>) inside a <cell>, yet there are no <col> elements with a @width attribute.  Default widths will be supplied.
+INFO    : *              located at: pretext/book/chapter/section/subsection/sidebyside/tabular
+INFO    : *              located within: "subsec-6-4-3-fields-constructors" (xml:id), "Fields and Constructors" (title)
+WARNING : * PTX:WARNING:   a <tabular> has at least one paragraph (<p>) inside a <cell>, yet there are no <col> elements with a @width attribute.  Default widths will be supplied.
+INFO    : *              located at: pretext/book/chapter/section/subsection/sidebyside/tabular
+INFO    : *              located within: "subsec-6-4-3-fields-constructors" (xml:id), "Fields and Constructors" (title)
+INFO    : * PTX:INFO:   checking all deprecated elements.
+WARNING : * PTX:DEPRECATE: (2016-05-23) <br> can no longer be used to create multiline output; you may use <line> elements in select situations (5 times)
+INFO    : *              located at: pretext/book/chapter/section/introduction/ol/li/p/br
+INFO    : *              located within: "sec-1-5-programming-environments" (xml:id), "Programming Environments" (title)
+INFO    : *              located at: pretext/book/chapter/section/introduction/ol/li/p/br
+INFO    : *              located within: "sec-1-5-programming-environments" (xml:id), "Programming Environments" (title)
+INFO    : *              located at: pretext/book/chapter/section/introduction/ol/li/p/br
+INFO    : *              located within: "sec-1-5-programming-environments" (xml:id), "Programming Environments" (title)
+INFO    : *              located at: pretext/book/chapter/section/subsection/p/br
+INFO    : *              located within: "subsec-2-9-4-design-algorithm" (xml:id), "Design the Algorithm" (title)
+INFO    : *              located at: pretext/book/chapter/section/subsection/p/br
+INFO    : *              located within: "subsec-2-9-4-design-algorithm" (xml:id), "Design the Algorithm" (title)
+INFO    : * --------------
+WARNING : * PTX:DEPRECATE: (2023-08-28) the "prompt" element of a "console" has been deprecated.  In its place, an "input" can have a @prompt attribute, or you can place a session-wide (not document-wide) @prompt attribute on the "console" element.  Until then, we will try to honor your intent. (23 times)
+INFO    : *              located at: pretext/book/chapter/section/console/prompt
+INFO    : *              located within: "sec-2-2-app-overview" (xml:id), "Java Application Overview" (title)
+INFO    : *              located at: pretext/book/chapter/section/console/prompt
+INFO    : *              located within: "sec-2-2-app-overview" (xml:id), "Java Application Overview" (title)
+INFO    : *              located at: pretext/book/chapter/section/console/prompt
+INFO    : *              located within: "sec-2-2-app-overview" (xml:id), "Java Application Overview" (title)
+INFO    : *              located at: pretext/book/chapter/section/subsection/subsubsection/console/prompt
+INFO    : *              located within: "subsubsec-2-5-6-2-inexact-decimals" (xml:id), "Inexact Decimals in Base 2" (title)
+INFO    : *              located at: pretext/book/chapter/section/subsection/console/prompt
+INFO    : *              located within: "subsec-2-9-1-the-problem" (xml:id), "The Problem" (title)
+INFO    : *              located at: pretext/book/chapter/section/subsection/console/prompt
+INFO    : *              located within: "subsec-2-9-1-the-problem" (xml:id), "The Problem" (title)
+INFO    : *              located at: pretext/book/chapter/section/subsection/console/prompt
+INFO    : *              located within: "subsec-2-9-1-the-problem" (xml:id), "The Problem" (title)
+INFO    : *              located at: pretext/book/chapter/exercises/exercise/statement/console/prompt
+INFO    : *              located within: "project-dough-scaler" (xml:id), "Dough Scaler" (title)
+INFO    : *              located at: pretext/book/chapter/exercises/exercise/statement/console/prompt
+INFO    : *              located within: "project-rpg-character" (xml:id), "Tabletop RPG Character Generator" (title)
+INFO    : *              located at: pretext/book/chapter/exercises/exercise/statement/console/prompt
+INFO    : *              located within: "project-rpg-character" (xml:id), "Tabletop RPG Character Generator" (title)
+INFO    : *              located at: pretext/book/chapter/exercises/exercise/statement/console/prompt
+INFO    : *              located within: "project-rpg-character" (xml:id), "Tabletop RPG Character Generator" (title)
+INFO    : *              located at: pretext/book/chapter/exercises/exercise/statement/console/prompt
+INFO    : *              located within: "project-diy-estimator" (xml:id), "DIY Estimator" (title)
+INFO    : *              located at: pretext/book/chapter/exercises/exercise/statement/console/prompt
+INFO    : *              located within: "project-diy-estimator" (xml:id), "DIY Estimator" (title)
+INFO    : *              located at: pretext/book/chapter/exercises/exercise/statement/console/prompt
+INFO    : *              located within: "project-diy-estimator" (xml:id), "DIY Estimator" (title)
+INFO    : *              located at: pretext/book/chapter/exercises/exercise/statement/console/prompt
+INFO    : *              located within: "project-solar-shadow" (xml:id), "Solar Shadow and Solar Panel Performance" (title)
+INFO    : *              located at: pretext/book/chapter/exercises/exercise/statement/console/prompt
+INFO    : *              located within: "project-earth-horizon" (xml:id), "Distance to the Earth’s Horizon" (title)
+INFO    : *              located at: pretext/book/chapter/exercises/exercise/statement/console/prompt
+INFO    : *              located within: "project-exoplanet-orbit" (xml:id), "Exoplanet Orbit and Speed Calculator" (title)
+INFO    : *              located at: pretext/book/chapter/exercises/exercise/statement/console/prompt
+INFO    : *              located within: "project-exoplanet-orbit" (xml:id), "Exoplanet Orbit and Speed Calculator" (title)
+INFO    : *              located at: pretext/book/chapter/exercises/exercise/statement/console/prompt
+INFO    : *              located within: "project-exoplanet-orbit" (xml:id), "Exoplanet Orbit and Speed Calculator" (title)
+INFO    : *              located at: pretext/book/chapter/exercises/exercise/statement/console/prompt
+INFO    : *              located within: "project-cloud-base-estimator" (xml:id), "Pilot’s Cloud Base and Dew Point Estimator" (title)
+INFO    : *              located at: pretext/book/chapter/exercises/exercise/statement/console/prompt
+INFO    : *              located within: "project-cloud-base-estimator" (xml:id), "Pilot’s Cloud Base and Dew Point Estimator" (title)
+INFO    : *              located at: pretext/book/chapter/exercises/exercise/statement/console/prompt
+INFO    : *              located within: "project-thunderstorm-distance" (xml:id), "Thunderstorm Distance and Speed of Sound" (title)
+INFO    : *              located at: pretext/book/chapter/exercises/exercise/statement/console/prompt
+INFO    : *              located within: "project-thunderstorm-distance" (xml:id), "Thunderstorm Distance and Speed of Sound" (title)
+INFO    : * --------------
+WARNING : * PTX:DEPRECATE: (2026-05-11) the "me" and "men" elements have been deprecated.  The replacement is an "md" with no "mrow" children, and numbering is controlled by the "@number" attribute, or a global setting in "docinfo". (15 times)
+INFO    : *              located at: pretext/book/chapter/section/subsection/subsubsection/me
+INFO    : *              located within: "subsubsec-2-5-6-2-inexact-decimals" (xml:id), "Inexact Decimals in Base 2" (title)
+INFO    : *              located at: pretext/book/chapter/exercises/exercise/statement/me
+INFO    : *              located within: "project-dough-scaler" (xml:id), "Dough Scaler" (title)
+INFO    : *              located at: pretext/book/chapter/exercises/exercise/statement/me
+INFO    : *              located within: "project-rpg-character" (xml:id), "Tabletop RPG Character Generator" (title)
+INFO    : *              located at: pretext/book/chapter/exercises/exercise/statement/me
+INFO    : *              located within: "project-exoplanet-orbit" (xml:id), "Exoplanet Orbit and Speed Calculator" (title)
+INFO    : *              located at: pretext/book/chapter/exercises/exercise/statement/p/ol/li/me
+INFO    : *              located within: "project-exoplanet-orbit" (xml:id), "Exoplanet Orbit and Speed Calculator" (title)
+INFO    : *              located at: pretext/book/chapter/exercises/exercise/statement/p/ol/li/me
+INFO    : *              located within: "project-cloud-base-estimator" (xml:id), "Pilot’s Cloud Base and Dew Point Estimator" (title)
+INFO    : *              located at: pretext/book/chapter/exercises/exercise/statement/p/ol/li/me
+INFO    : *              located within: "project-cloud-base-estimator" (xml:id), "Pilot’s Cloud Base and Dew Point Estimator" (title)
+INFO    : *              located at: pretext/book/chapter/exercises/exercise/statement/me
+INFO    : *              located within: "project-thunderstorm-distance" (xml:id), "Thunderstorm Distance and Speed of Sound" (title)
+INFO    : * --------------
+INFO    : successful application of C:\Users\Maggie\.ptx\2.56.2\core\xsl\pretext-html.xsl
+INFO    : Removing temporary directory C:\Users\Maggie\AppData\Local\Temp\ptx-2h44avhp
+INFO    : Removing temporary directory C:\Users\Maggie\AppData\Local\Temp\ptx-p5_ievp6
+INFO    : 
+Finished build for target web. Run `pretext view web` to see the results.
+
+INFO    : 
+Success!  Built requested target(s) without errors.
+
+INFO    : 

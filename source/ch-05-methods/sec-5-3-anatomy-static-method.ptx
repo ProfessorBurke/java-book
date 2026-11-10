@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-5-3-anatomy-static-method" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Anatomy of a Static Method</title>
+
+  <introduction>
+    <p>
+      Now that we have explored the architectural benefits of decomposing problems into smaller tasks, let’s look at Java’s method syntax. Methods are always declared inside the body of a class<mdash />just as we have declared <c>main</c> from the very beginning.
+    </p>
+  </introduction>
+
+  <!-- ============================================================ -->
+  <!-- 5.3.1 Defining a method                                      -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-3-1-defining-method">
+    <title>Defining a Method</title>
+
+    <p>
+      A method declaration consists of a <term>method header</term> followed by a <term>method body</term> enclosed in curly braces:
+    </p>
+
+    <program language="java">
+<![CDATA[public static void greetUser() {
+    System.out.println("Hello, user!");
+}]]>
+    </program>
+
+    <p>
+      This method header begins with two modifiers (<c>public static</c>), followed by the return type (<c>void</c>), the method name (<c>greetUser</c>), and a pair of parentheses <c>()</c>. The method body consists of Java statements enclosed in curly braces and indented four spaces.
+    </p>
+
+    <p>
+      This code defines a method called <c>greetUser</c> that displays <q>Hello, user!</q> in the console when invoked. Importantly, a method definition does not execute the code. A definition merely associates a block of statements with an identifier (a name) so that Java knows what instructions to run whenever that method name is called.
+    </p>
+
+    <p>
+      Let's break down each component of the method header:
+    </p>
+
+    <ol>
+      <li>
+        <p>
+          <strong>The Modifiers (<c>public static</c>):</strong> In this chapter, all our helper methods will begin with the modifiers <c>public static</c>:
+        </p>
+        <ul>
+          <li>
+            <p>
+              <c>public</c> (Visibility / Access Modifier): Controls which parts of a program may invoke this method. A <c>public</c> method can be called from within any class. Other modifiers include <c>private</c> and <c>protected</c>. (If you omit <c>public</c>, the method defaults to <q>package-private</q> access). We will explore access control in Chapter 6.
+            </p>
+          </li>
+          <li>
+            <p>
+              <c>static</c>: Means the method belongs to the class itself, allowing it to be called directly without creating an instance (object) of that class. Because program execution begins inside the static method <c>main</c>, any helper method <c>main</c> calls directly within the same class must also be declared <c>static</c>.
+            </p>
+            <p>
+              You have already used both static and instance methods throughout this book:
+            </p>
+            <ul>
+              <li>
+                <p><strong>Static Methods:</strong> All methods in the <c>Math</c> library (<c>Math.sqrt()</c>, <c>Math.sin()</c>, <c>Math.abs()</c>), as well as <c>Integer.parseInt()</c> and <c>Double.parseDouble()</c>, are static. You do not create an object with <c>new Math()</c>; you call them directly on the class itself.</p>
+              </li>
+              <li>
+                <p><strong>Instance Methods:</strong> Methods on <c>Scanner</c> (<c>nextInt()</c>, <c>nextLine()</c>) and <c>File</c> (<c>exists()</c>) are instance methods. You must first create an actual object instance using <c>new</c> before calling methods on that instance.</p>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p>
+          <strong>The Return Type (<c>void</c>):</strong> The return type specifies what kind of value the method hands back to the caller when it finishes. If a method performs an action without producing a value, its return type is <c>void</c>. In this section, we focus on <c>void</c> methods; we will explore value-returning methods in <xref ref="sec-5-6-value-returning-methods" />.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>The Method Name and Conventions:</strong> Method names follow the same rules as variable names: they may contain letters, digits, underscores, and dollar signs, but cannot begin with a digit. By convention, method names use camelCase (starting with a lowercase letter and capitalizing each subsequent word).
+        </p>
+        <p>
+          Because a method represents an action<mdash />it does something<mdash />the convention is to name a method with a verb or verb phrase, such as:
+        </p>
+        <ul>
+          <li><p><c>calculateAverage</c></p></li>
+          <li><p><c>printReport</c></p></li>
+          <li><p><c>validateInput</c></p></li>
+        </ul>
+      </li>
+      <li>
+        <p>
+          <strong>The Parameter Parentheses <c>()</c>:</strong> Parentheses are required after the method name. In <xref ref="sec-5-4-parameters-arguments" />, we will use these parentheses to declare parameters<mdash />inputs that the caller passes into the method. Even if a method requires zero inputs (as with <c>greetUser()</c>), the parentheses must still be present in the header.
+        </p>
+      </li>
+    </ol>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 5.3.2 Invoking a method                                      -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-3-2-invoking-method">
+    <title>Invoking a Method</title>
+
+    <p>
+      To invoke (call) a method, write the method’s name followed by parentheses and a semicolon. <xref ref="listing-basic-method-demo" /> demonstrates a complete program where <c>main</c> invokes <c>greetUser()</c>.
+    </p>
+
+    <listing xml:id="listing-basic-method-demo">
+      <caption>BasicMethodDemo.java</caption>
+      <program language="java">
+<![CDATA[public class BasicMethodDemo {
+
+    public static void main(String[] args) {
+        System.out.println("Starting in main...");
+        greetUser(); // Method call!
+        System.out.println("Back in main!");
+    }
+
+    public static void greetUser() {
+        System.out.println("Hello, user!");
+    }
+}]]>
+      </program>
+    </listing>
+
+    <p>
+      When we run this code, we see in the console:
+    </p>
+
+    <console>
+      <output>Starting in main...
+Hello, user!
+Back in main!</output>
+    </console>
+
+    <p>
+      Look at the order of execution in <xref ref="listing-basic-method-demo" />:
+    </p>
+
+    <ol>
+      <li>
+        <p>Execution begins at the top of <c>main</c> on line 4, printing <c>"Starting in main..."</c>.</p>
+      </li>
+      <li>
+        <p>On line 5, Java encounters the method call <c>greetUser()</c>. Execution temporarily pauses inside <c>main</c>, and control jumps to line 9 (the header of <c>greetUser</c>).</p>
+      </li>
+      <li>
+        <p>Line 10 executes, printing <c>"Hello, user!"</c>.</p>
+      </li>
+      <li>
+        <p>Execution hits the closing curly brace of <c>greetUser()</c> on line 11. Because this is a <c>void</c> method, hitting the closing brace causes control to return immediately to the caller.</p>
+      </li>
+      <li>
+        <p>Control resumes inside <c>main</c> on line 6<mdash />the very next statement following the method call<mdash />printing <c>"Back in main!"</c>.</p>
+      </li>
+    </ol>
+
+    <p>
+      In languages like C and C++, functions historically had to be declared in a file before they were called. In Java, the compiler makes multiple passes over your code, meaning methods can be declared in any order within a class. In this textbook, we follow standard software engineering practice by placing <c>main</c> at the top like a newspaper headline, followed by subordinate helper methods below in descending order of abstraction.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 5.3.3 Local variables in a method body                       -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-5-3-3-local-variables-method-body">
+    <title>Local Variables in a Method Body</title>
+
+    <p>
+      A method body can contain far more than <c>System.out.println</c> statements. Just like <c>main</c>, any helper method can declare variables to store intermediate results, perform calculations, or manage decisions.
+    </p>
+
+    <p>
+      Variables declared inside the body of a method are called <term>local variables</term>. In fact, every variable you created in Chapters 2, 3, and 4<mdash />from calculation variables in Chapter 2 to loop counters and sentinel flags in Chapter 4<mdash />was a local variable declared inside the body of <c>main</c>.
+    </p>
+
+    <p>
+      Suppose we expand our <c>greetUser</c> method to use a local variable:
+    </p>
+
+    <program language="java">
+<![CDATA[public static void greetUser() {
+    String greeting = "Hello, user! Welcome back.";
+    System.out.println(greeting);
+}]]>
+    </program>
+
+    <p>
+      Two key rules govern local variables:
+    </p>
+
+    <ol>
+      <li>
+        <p>
+          <strong>They must be initialized before use:</strong> Java enforces <term>definite assignment</term>: the compiler will refuse to compile your program if you attempt to read the value of a local variable before assigning it a value.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>They are completely private to their method:</strong> A local variable exists only inside the method that declared it. Code inside <c>main</c> cannot read or modify the <c>greeting</c> variable declared in <c>greetUser()</c>, and <c>greetUser()</c> cannot read or modify variables declared inside <c>main</c>.
+        </p>
+      </li>
+    </ol>
+
+    <p>
+      Because local variables are private to their own method, different methods can use the same variable names without conflict. You could declare a variable named <c>count</c> inside <c>main</c> and another variable named <c>count</c> inside <c>greetUser()</c>. To Java, these are two entirely separate storage locations that happen to share a name, like two people in different towns who share the same street address.
+    </p>
+
+    <p>
+      In the next section, we will see how a method receives data from other parts of the program using a special kind of variable: the parameter.
+    </p>
+  </subsection>
+
+</section>

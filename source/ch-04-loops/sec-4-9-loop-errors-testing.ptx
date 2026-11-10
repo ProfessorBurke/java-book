@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-4-9-loop-errors-testing" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Common Loop Errors and Designing Test Cases</title>
+
+  <introduction>
+    <p>
+      In <xref ref="sec-3-9-design-verification" />, you learned how to test branching code using branch coverage: designing a test suite to ensure that every <c>if</c>, <c>else-if</c>, and <c>else</c> block executes at least once. With selection statements, testing is relatively straightforward because a program has a finite, countable number of paths through the code.
+    </p>
+
+    <p>
+      Loops, however, introduce a completely new dimension: repetition. A loop does not merely choose a path; it can execute that path zero, one, two, or a million times.
+    </p>
+
+    <p>
+      Because you cannot test every possible number of iterations, testing loops requires a specialized approach. In this section, we will examine the two most notorious loop bugs<mdash />infinite loops and off-by-one errors<mdash />and learn how to construct a comprehensive loop test plan table based on iteration boundaries.
+    </p>
+  </introduction>
+
+  <!-- ============================================================ -->
+  <!-- 4.9.1 From branch coverage to loop coverage                  -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-9-1-branch-to-loop-coverage">
+    <title>From Branch Coverage to Loop Coverage</title>
+
+    <p>
+      In Chapter 3, you designed test cases to verify that your Boolean conditions selected the correct branch. With loops, our goal shifts to <term>loop boundary coverage</term>.
+    </p>
+
+    <p>
+      Decades of software engineering research have shown that when loops fail, they almost always fail at the extreme edges of their repetition count. Therefore, a robust test suite for any loop must test four specific iteration milestones:
+    </p>
+
+    <p>
+      <c>[ 0 Iterations ]  ---&gt;  [ 1 Iteration ]  ---&gt;  [ Typical Iterations ]  ---&gt;  [ Maximum Boundary ]</c>
+    </p>
+
+    <ol>
+      <li>
+        <p><strong>Zero Iterations (Bypassing the Loop):</strong> Does the program behave correctly if the loop body never runs at all? For a sentinel loop, this means typing the sentinel value on the very first prompt. For a counting loop, this means testing a range where the start value already exceeds the end value. (Recall from <xref ref="subsec-4-5-4-example-handling-edge-case" /> that running zero iterations is where division-by-zero crashes often lurk!).</p>
+      </li>
+      <li>
+        <p><strong>One Iteration:</strong> Does the program handle a single piece of data properly? This tests entering the loop once, executing the body, updating the state, and immediately exiting without repeating.</p>
+      </li>
+      <li>
+        <p><strong>Typical Iterations (Multiple Cycles):</strong> Does the loop successfully accumulate values, advance steppers, and terminate correctly when processing two or more items? This represents normal, everyday operation.</p>
+      </li>
+      <li>
+        <p><strong>Maximum Boundary Iterations:</strong> If the problem specifies an upper limit (such as our drone's maximum search radius of 2,000 meters, or a maximum class size of 100 students), does the loop stop at the exact ceiling without crashing or overflowing?</p>
+      </li>
+    </ol>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 4.9.2 Diagnosing and escaping infinite loops                 -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-9-2-diagnosing-escaping-infinite-loops">
+    <title>Diagnosing and Escaping Infinite Loops</title>
+
+    <p>
+      An <term>infinite loop</term> occurs when a loop’s continuation condition remains <c>true</c> forever.
+    </p>
+
+    <p>
+      When an infinite loop occurs, the symptoms depend on what is inside the loop body:
+    </p>
+
+    <ul>
+      <li><p>If the body contains a print statement, the console scrolls endlessly at blinding speed with runaway text.</p></li>
+      <li><p>If the body does not contain output, the program appears to <q>hang</q> or freeze, refusing to accept input while your computer’s cooling fans spin up as the CPU works at 100% capacity.</p></li>
+    </ul>
+
+    <p>
+      Nearly every accidental infinite loop can be traced to one of three mistakes:
+    </p>
+
+    <paragraphs>
+      <title>1. The missing or misplaced update</title>
+      <p>
+        The most common cause is simply forgetting to write the update statement, or placing it in the wrong block:
+      </p>
+
+      <program language="java"><![CDATA[// BUG: Forgot to increment 'count'!
+int count = 1;
+while (count <= 10) {
+    System.out.println(count);
+    // count++; is missing! count is 1 forever.
+}]]></program>
+    </paragraphs>
+
+    <paragraphs>
+      <title>2. Updating in the wrong direction</title>
+      <p>
+        A stepper must always move toward the termination boundary, not away from it:
+      </p>
+
+      <program language="java"><![CDATA[// BUG: count decreases, getting further away from 10!
+int count = 1;
+while (count <= 10) {
+    System.out.println(count);
+    count--; // Decrements toward negative infinity!
+}]]></program>
+    </paragraphs>
+
+    <paragraphs>
+      <title>3. Overshooting an Exact Equality Test</title>
+      <p>
+        As we saw in <xref ref="subsec-4-4-4-designing-for-loops" />, testing for exact inequality (<c>!=</c>) is dangerous when stepping by values other than one, or when using floating-point numbers:
+      </p>
+
+      <program language="java"><![CDATA[// BUG: i leaps over 10 (1, 3, 5, 7, 9, 11...), so i != 10 is ALWAYS true!
+for (int i = 1; i != 10; i += 2) {
+    System.out.println(i);
+}]]></program>
+
+      <p>
+        Always use directional relational operators (<c>&lt;</c>, <c>&lt;=</c>, <c>&gt;</c>, <c>&gt;=</c>) rather than equality operators (<c>!=</c>, <c>==</c>) for loop boundaries.
+      </p>
+
+      <p>
+        If your program gets stuck in an infinite loop while testing in Eclipse, do not panic:
+      </p>
+
+      <ol>
+        <li><p>Look at the top-right corner of the Console view at the bottom of your screen.</p></li>
+        <li><p>Click the bright red square button (<term>Terminate</term>).</p></li>
+        <li><p>The red square will turn gray, indicating that Eclipse has forcibly halted the runaway Java process.</p></li>
+      </ol>
+    </paragraphs>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 4.9.3 Preventing off-by-one errors (< vs. <=)                -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-9-3-preventing-off-by-one-errors">
+    <title>Preventing Off-by-One Errors (<c>&lt;</c> vs. <c>&lt;=</c>)</title>
+
+    <p>
+      The second most common category of loop bugs is the <term>off-by-one error</term><mdash />executing a loop one time too many or one time too few.
+    </p>
+
+    <p>
+      In computer science, this is often called the <term>fencepost error</term>: if you need to build a straight fence that is 100 feet long with posts spaced every 10 feet, how many fenceposts do you need? Beginners naturally divide 100 by 10 and answer <q>10.</q> But the correct answer is 11<mdash />you need a post at the start, a post at the end, and nine posts in between!
+    </p>
+
+    <p>
+      In Java, off-by-one errors almost always stem from mixing up <c>&lt;</c> and <c>&lt;=</c>. For example, writing a loop control variable that begins at 0 but uses <c>&lt;=</c> for the condition (e.g. <c>i &lt;= n</c>) results in the loop executing <m>n + 1</m> times. Writing a loop control variable that begins at 1 but uses <c>&lt;</c> for the condition (e.g. <c>i &lt; n</c>) results in the loop executing <m>n - 1</m> times.
+    </p>
+
+    <p>
+      To spot off-by-one errors immediately, test your code using a tiny input where <m>n = 0</m> or <m>n = 1</m>. It is difficult to notice whether a loop runs 99 times or 100 times, but you will instantly notice if an action expected to happen once happens twice!
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 4.9.4 Designing a loop test plan table                       -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-9-4-designing-loop-test-plan">
+    <title>Designing a Loop Test Plan Table</title>
+
+    <p>
+      In <xref ref="subsec-3-9-4-building-test-plan-table" />, we built test plan tables to ensure full branch coverage for <c>if-else</c> statements. Now, we expand that structure to include loop boundary coverage.
+    </p>
+
+    <p>
+      Before running your code, construct a Test Plan Table containing:
+    </p>
+
+    <ul>
+      <li><p><strong>Test Case Number:</strong> An identifying index.</p></li>
+      <li><p><strong>Test Category / Purpose:</strong> Indicating whether the test targets zero iterations, one iteration, multiple iterations, or a boundary.</p></li>
+      <li><p><strong>Inputs:</strong> The specific values to enter at the prompts.</p></li>
+      <li><p><strong>Expected Output:</strong> The exact mathematical results calculated by hand before running the program.</p></li>
+      <li><p><strong>Actual Output &amp; Pass/Fail:</strong> Recorded during testing.</p></li>
+    </ul>
+
+    <p>
+      Recall our <c>ScoreAverager</c> program from <xref ref="listing-score-averager" />, which prompts for integer test scores (0 to 100) and uses <c>-1</c> as a sentinel. <xref ref="table-loop-test-plan-score-averager" /> shows how a professional software engineer tests that loop:
+    </p>
+
+    <table xml:id="table-loop-test-plan-score-averager">
+      <title>Loop test plan for <c>ScoreAverager</c></title>
+      <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+        <col width="10%"/>
+        <col width="30%"/>
+        <col width="18%"/>
+        <col width="30%"/>
+        <col width="12%"/>
+        <row header="yes">
+          <cell><strong>Test Case</strong></cell>
+          <cell><strong>Category / Purpose</strong></cell>
+          <cell><strong>Input Stream</strong></cell>
+          <cell><strong>Expected Output</strong></cell>
+          <cell><strong>Pass / Fail</strong></cell>
+        </row>
+        <row>
+          <cell>1</cell>
+          <cell>
+            <p>Zero Iterations</p>
+            <p><em>(Bypass / Immediate Sentinel: verifies no division by zero)</em></p>
+          </cell>
+          <cell>-1</cell>
+          <cell><q>No scores were entered.</q></cell>
+          <cell>Pass</cell>
+        </row>
+        <row>
+          <cell>2</cell>
+          <cell>
+            <p>One Iteration</p>
+            <p><em>(Single Item and verifies sentinel is not added to sum)</em></p>
+          </cell>
+          <cell>85, -1</cell>
+          <cell>
+            <p>Number of scores entered: 1</p>
+            <p>Average score           : 85.00</p>
+          </cell>
+          <cell>Pass</cell>
+        </row>
+        <row>
+          <cell>3</cell>
+          <cell>
+            <p>Multiple Iterations</p>
+            <p><em>(Typical / Nominal Case)</em></p>
+          </cell>
+          <cell>80, 90, 100, -1</cell>
+          <cell>
+            <p>Number of scores entered: 3</p>
+            <p>Average score           : 90.00</p>
+          </cell>
+          <cell>Pass</cell>
+        </row>
+        <row>
+          <cell>4</cell>
+          <cell>
+            <p>Lower Data Boundary</p>
+            <p><em>(Lowest Valid Score)</em></p>
+          </cell>
+          <cell>0, 0, -1</cell>
+          <cell>
+            <p>Number of scores entered: 2</p>
+            <p>Average score           : 0.00</p>
+          </cell>
+          <cell>Pass</cell>
+        </row>
+        <row>
+          <cell>5</cell>
+          <cell>
+            <p>Upper Data Boundary</p>
+            <p><em>(Highest Valid Score)</em></p>
+          </cell>
+          <cell>100, 100, -1</cell>
+          <cell>
+            <p>Number of scores entered: 2</p>
+            <p>Average score           : 100.00</p>
+          </cell>
+          <cell>Pass</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      Notice how systematically this table probes the loop:
+    </p>
+
+    <ul>
+      <li><p>Test 1 checks the critical zero-iteration edge case.</p></li>
+      <li><p>Test 2 ensures a single score calculates correctly (and we can also easily validate on this test that the sentinel value wasn’t added to the gatherer).</p></li>
+      <li><p>Test 3 verifies general accumulation.</p></li>
+      <li><p>Tests 4 and 5 verify the extreme boundaries (0 and 100).</p></li>
+    </ul>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 4.9.5 Summary Checklist for Loop Verification                -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-9-5-checklist-loop-verification">
+    <title>Summary Checklist for Loop Verification</title>
+
+    <p>
+      Before declaring any loop complete, run through this five-point verification checklist:
+    </p>
+
+    <ul>
+      <li><p><strong>Initial State:</strong> Are all steppers and gatherers initialized to their correct starting values before the loop begins?</p></li>
+      <li><p><strong>Progress Guarantee:</strong> Does every iteration execute an update statement that moves the variables closer to the termination condition?</p></li>
+      <li><p><strong>Direction Check:</strong> Does the condition use the correct directional operator (<c>&lt;</c> vs. <c>&gt;</c>) matching the direction of the stepper?</p></li>
+      <li><p><strong>Boundary Inclusion:</strong> Does the loop use <c>&lt;</c> vs. <c>&lt;=</c> properly to avoid off-by-one fencepost errors?</p></li>
+      <li><p><strong>Zero-Iteration Safety:</strong> What happens if the loop body executes zero times? Are your post-loop calculations protected against uninitialized variables or division by zero?</p></li>
+    </ul>
+  </subsection>
+</section>

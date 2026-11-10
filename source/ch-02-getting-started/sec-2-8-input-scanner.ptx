@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-2-8-input-scanner" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Input: Reading from the Console</title>
+
+  
+  <introduction>
+    <p>
+      To write truly dynamic software that fulfills the full Input-Processing-Output (IPO) design pattern, programs must be able to interact with the outside world. In this section, you will learn how to read data typed by a user at the keyboard using Java’s standard <c>Scanner</c> class.
+    </p>
+
+    <!-- ============================================================ -->
+    <!-- 2.8.1 What is a Scanner?                                     -->
+  </introduction>
+
+
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-2-8-1-what-is-a-scanner">
+    <title>What is a Scanner?</title>
+
+    <p>
+      When you press keys on your keyboard, the operating system delivers that input to your program as a raw stream of bytes. Java makes this stream accessible through the predefined object <c>System.in</c> (the standard input stream). Just as <c>System.out</c> represents the standard destination for output (the console screen), <c>System.in</c> represents the standard source for input (the keyboard).
+    </p>
+
+    <p>
+      However, raw bytes are difficult to work with directly. If a user types the characters '4', '2', and presses Enter, your program receives three separate character codes, not the integer number 42. This is where a <c>Scanner</c> comes in. A <c>Scanner</c> is a utility object that wraps around an input stream, inspects the incoming characters, and automatically translates them into primitive types (<c>int</c>, <c>double</c>, etc.) or text.
+    </p>
+
+    <p>
+      Because <c>Scanner</c> is a class in Java's standard utility library, using it requires two steps:
+    </p>
+
+    <ol>
+      <li>
+        <p>Import the class at the very top of your source file:</p>
+        <program language="java"><![CDATA[import java.util.Scanner;]]></program>
+      </li>
+      <li>
+        <p>Create the <c>Scanner</c> object inside your method using the <c>new</c> keyword, passing <c>System.in</c> as the source to read from:</p>
+        <program language="java"><![CDATA[Scanner stdin = new Scanner(System.in);]]></program>
+      </li>
+    </ol>
+
+    <p>
+      In future chapters, you will see that <c>Scanner</c> can read from sources other than the keyboard<mdash />such as reading data from a text file on your hard drive by passing a <c>File</c> object instead of <c>System.in</c>.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 2.8.2 Prompting and Reading Tokens                           -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-2-8-2-prompting-reading-tokens">
+    <title>Prompting and Reading Tokens</title>
+
+    <p>
+      Before asking the user to type something, you should always display a prompt<mdash />a message explaining what input the program expects. Display one prompt for each piece of input you want to collect.
+    </p>
+
+    <p>
+      Prompts are almost always displayed using <c>System.out.print()</c> rather than <c>println()</c> so that the cursor rests immediately after the prompt, allowing the user to type their answer directly on the same line.
+    </p>
+
+    <p>
+      Each time your program gathers input, you will follow a standard two-line pattern: first the prompt, then a statement that uses the <c>Scanner</c> to read the value from the input stream. The <c>Scanner</c> method call will usually sit on the right-hand side of an assignment operator (<c>=</c>), storing the user's input directly into a variable.
+    </p>
+
+    <p>
+      Here is one example of how this pattern appeared in <xref ref="listing-mulch-calculator" />:
+    </p>
+
+    <program language="java"><![CDATA[System.out.print("Enter the length of the area in feet: ");
+length = stdin.nextDouble();]]></program>
+
+    <p>
+      The <c>Scanner</c> class divides incoming input into individual chunks called tokens. By default, tokens are separated by whitespace (spaces, tabs, and newlines).
+    </p>
+
+    <p>
+      When you call a token-reading method like <c>nextInt()</c> or <c>nextDouble()</c>, the <c>Scanner</c>:
+    </p>
+
+    <ol>
+      <li>
+        <p>Skips past any leading whitespace.</p>
+      </li>
+      <li>
+        <p>Reads the characters that make up the number until it hits the next whitespace character.</p>
+      </li>
+      <li>
+        <p>Converts those characters into the requested numeric type and returns the value.</p>
+      </li>
+    </ol>
+
+    <p>
+      <xref ref="table-scanner-token-methods" /> shows selected <c>Scanner</c> token-reading methods.
+    </p>
+
+    <table xml:id="table-scanner-token-methods">
+      <title>Scanner token-reading methods</title>
+      <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+        <col width="22%"/>
+        <col width="33%"/>
+        <col width="20%"/>
+        <col width="25%"/>
+        <row header="yes">
+          <cell><strong>Method</strong></cell>
+          <cell><strong>What it reads</strong></cell>
+          <cell><strong>Example input</strong></cell>
+          <cell><strong>Return value (type)</strong></cell>
+        </row>
+        <row>
+          <cell><c>nextInt()</c></cell>
+          <cell>Next integer token.</cell>
+          <cell>42</cell>
+          <cell><c>42</c> (<c>int</c>)</cell>
+        </row>
+        <row>
+          <cell><c>nextDouble()</c></cell>
+          <cell>Next floating-point token.</cell>
+          <cell>3.14</cell>
+          <cell><c>3.14</c> (<c>double</c>)</cell>
+        </row>
+        <row>
+          <cell><c>next()</c></cell>
+          <cell>Next token.</cell>
+          <cell>Ada</cell>
+          <cell><c>"Ada"</c> (<c>String</c>)</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      Java also provides methods for other primitive types, such as <c>nextLong()</c> and <c>nextBoolean()</c>. You can experiment with these in JShell<mdash />import the <c>Scanner</c> and create a new <c>Scanner</c> object, and then you can use it to read input from the command line by writing calls to <c>nextInt()</c>, <c>nextDouble()</c>, etc. JShell will show you what the call evaluates to (returns).
+    </p>
+
+    <p>
+      If <c>nextInt()</c> or <c>nextDouble()</c> encounters input that cannot be parsed into the requested type (for example, if the user types <c>"twenty"</c> when <c>nextInt()</c> is waiting for digits), Java immediately halts with an <c>InputMismatchException</c>. In later chapters, we will learn how to validate user input to prevent this crash.
+    </p>
+
+    <p>
+      You might reasonably expect <c>Scanner</c> to provide a <c>nextChar()</c> method alongside <c>nextInt()</c>, <c>nextDouble()</c>, and <c>nextBoolean()</c>. Surprisingly, no <c>nextChar()</c> method exists in Java. Because <c>Scanner</c> is designed to parse words and numbers separated by whitespace, it does not treat individual characters as distinct tokens. When you need to read a single <c>char</c> from the user (such as a menu option or a 'Y'/'N' response), the standard Java approach is to read the response as a one-word <c>String</c> using <c>next()</c>, and then immediately extract its first character using <c>charAt(0)</c>:
+    </p>
+
+    <program language="java"><![CDATA[System.out.print("Do you wish to continue? (Y/N): ");
+char choice = keyboard.next().charAt(0);]]></program>
+
+    <p>
+      Here, <c>keyboard.next()</c> reads the user's input as a token (for example, <c>"Yes"</c>). Because <c>next()</c> evaluates to a <c>String</c>, we can call the <c>charAt(0)</c> method directly on that result without needing to store the intermediate string in a separate variable. The <c>.charAt(0)</c> call plucks the first character ('Y') at index 0 and stores it in your <c>char</c> variable. Connecting method calls together like this is known as method chaining.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 2.8.3 Reading Entire Lines with nextLine()                   -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-2-8-3-reading-lines-nextline">
+    <title>Reading Entire Lines with <c>nextLine()</c></title>
+
+    <p>
+      You will notice, if you practice with the <c>next()</c> method, that it only reads until the next whitespace character. This works fine for single-word responses, but won’t work if you need to read text that might include a space (such as a name, address, or phrase). If you want to read an entire line of text<mdash />including spaces<mdash />you must use <c>nextLine()</c>.
+    </p>
+
+    <p>
+      The <c>nextLine()</c> method reads every character starting from the scanner's current position all the way up to the next newline character (created when the user presses Enter). It returns the text as a <c>String</c> and discards the newline character:
+    </p>
+
+    <program language="java"><![CDATA[System.out.print("Enter your street address: ");
+String address = keyboard.nextLine(); // Reads "123 Main Street"]]></program>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 2.8.4 The "Leftover Newline" Pitfall                         -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-2-8-4-leftover-newline-pitfall">
+    <title>The <q>Leftover Newline</q> Pitfall</title>
+
+    <p>
+      When mixing numeric input methods (<c>nextInt()</c>, <c>nextDouble()</c>) with line-reading (<c>nextLine()</c>), almost every beginner runs into a frustrating bug.
+    </p>
+
+    <p>
+      Consider this seemingly innocent code:
+    </p>
+
+    <program language="java"><![CDATA[System.out.print("Enter your age: ");
+int age = keyboard.nextInt();
+
+System.out.print("Enter your favorite color: ");
+String color = keyboard.nextLine(); // BUG: This appears to get skipped!
+
+System.out.println("Age: " + age + ", Color: " + color);]]></program>
+
+    <p>
+      If you run this, the program prints the prompt for your favorite color but never lets you type anything<mdash />it immediately prints the output with an empty color!
+    </p>
+
+    <console>
+      <output>Enter your age: 20
+Enter your favorite color: Age: 20, Color: </output>
+    </console>
+
+    <p>
+      To understand this bug, look at what enters the input buffer when you type 20 and press the Enter key:
+    </p>
+
+    <figure xml:id="figure-scanner-buffer-input">
+      <title>The input buffer after typing 20 and enter</title>
+      <image source="figures/figure_2_7.png" width="60%">
+        <shortdescription>Keyboard buffer showing characters '2', '0', and '\n' with an arrow pointing to '\n' as the Enter key.</shortdescription>
+        <description>
+          <p>
+            Diagram showing the state of the keyboard input buffer after a user enters 20 and presses Enter. Three sequential character cells contain <c>'2'</c>, <c>'0'</c>, and <c>'\n'</c>. An arrow beneath <c>'\n'</c> indicates that the newline character was generated by pressing the Enter key.
+          </p>
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      The <c>Scanner</c> advances its cursor along as it reads tokens from the buffer in response to token-reading methods. You call <c>keyboard.nextInt()</c>. <c>nextInt()</c> reads the digits '2' and '0', converts them to the integer 20, and stops. Crucially, <c>nextInt()</c> leaves the newline character (<c>'\n'</c>) sitting in the buffer, resulting in:
+    </p>
+
+    <figure xml:id="figure-scanner-buffer-after-nextint">
+      <title>The input buffer after <c>nextInt()</c></title>
+      <image source="figures/figure_2_8.png" width="65%">
+        <shortdescription>Buffer showing '2' and '0' consumed, a red cursor bar, and the unread '\n' remaining in the buffer.</shortdescription>
+        <description>
+          <p>
+            Diagram showing the keyboard buffer after <c>keyboard.nextInt()</c> executes. The characters <c>'2'</c> and <c>'0'</c> are shaded and marked with a bracket as consumed. A prominent red vertical cursor bar sits immediately after <c>'0'</c> and before <c>'\n'</c>, with an arrow indicating <q>Scanner cursor sits here</q>, showing that the trailing newline remains unread in the buffer.
+          </p>
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      Next, you call <c>keyboard.nextLine()</c>. Remember how <c>nextLine()</c> works: it reads everything from the current cursor position until it hits a <c>'\n'</c>. Because the cursor is sitting directly in front of the leftover <c>'\n'</c>, <c>nextLine()</c> sees it immediately, consumes it, and returns an empty string (<c>""</c>)<mdash />the text before the newline. It never waits for you to type anything because it already found a newline.
+    </p>
+
+    <p>
+      The solution is to <q>consume</q> the newline. Whenever you read a number with <c>nextInt()</c> or <c>nextDouble()</c> and need to read text with <c>nextLine()</c> afterward, you must manually consume the leftover newline character by calling <c>nextLine()</c> once with no assignment:
+    </p>
+
+    <program language="java"><![CDATA[System.out.print("Enter your age: ");
+int age = keyboard.nextInt();
+
+// Clear the buffer: consume the leftover '\n' from pressing Enter
+keyboard.nextLine();
+
+System.out.print("Enter your favorite color: ");
+String color = keyboard.nextLine(); // Now waits properly for user input!
+
+System.out.println("Age: " + age + ", Color: " + color);]]></program>
+
+    <p>
+      This is one of the most common sources of errors for new Java programmers using the <c>Scanner</c>. You can memorize the pattern (consume a newline after reading a number), but ideally you should understand the difference between token-reading methods and <c>nextLine()</c>. If you do, writing correct code will come naturally.
+    </p>
+  </subsection>
+</section>

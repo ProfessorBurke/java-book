@@ -1,0 +1,64 @@
+INFO    : Building target web
+INFO    : XSL conversion of D:\CCRI\__Java book rewrite\cs1-java-textbook\source\main.ptx by C:\Users\Maggie\.ptx\2.56.2\core\xsl\utilities\pretext-enhanced-source.xsl
+INFO    : successful application of C:\Users\Maggie\.ptx\2.56.2\core\xsl\utilities\pretext-enhanced-source.xsl
+INFO    : discovering source file's directory name: D:\CCRI\__Java book rewrite\cs1-java-textbook\source
+INFO    : verifying and expanding input directory: D:\CCRI\__Java book rewrite\cs1-java-textbook\source\../assets
+INFO    : input directory expanded to absolute path: D:\CCRI\__Java book rewrite\cs1-java-textbook\assets
+INFO    : Generating any needed assets.
+INFO    : Finished generating assets.
+
+INFO    : Preparing to build into D:\CCRI\__Java book rewrite\cs1-java-textbook\output\web.
+WARNING : Node.js must be installed to build CSS files.  Please install node.js and npm.
+ Will try to use prebuilt CSS files instead.
+WARNING : Cannot find npm.  Will try to use prebuilt CSS files instead.
+WARNING : Unable to install npm packages to build css files.  Non-default CSS themes require node.js and npm to be installed.  See https://pretextbook.org/doc/guide/html/node-and-npm.html
+WARNING : 
+INFO    : discovering source file's directory name: D:\CCRI\__Java book rewrite\cs1-java-textbook\source
+INFO    : verifying and expanding input directory: D:\CCRI\__Java book rewrite\cs1-java-textbook\source\../assets
+INFO    : input directory expanded to absolute path: D:\CCRI\__Java book rewrite\cs1-java-textbook\assets
+INFO    : discovering source file's directory name: D:\CCRI\__Java book rewrite\cs1-java-textbook\source
+INFO    : XSL conversion of D:\CCRI\__Java book rewrite\cs1-java-textbook\source\main.ptx by C:\Users\Maggie\.ptx\2.56.2\core\xsl\utilities\report-publisher-variables.xsl
+INFO    : successful application of C:\Users\Maggie\.ptx\2.56.2\core\xsl\utilities\report-publisher-variables.xsl
+INFO    : Downloading rs services file from https://runestone.academy/cdn/runestone/latest/webpack_static_imports.xml.
+INFO    : Runestone Services via online CDN query: version 8.4.0
+INFO    : Downloading Runestone Services, version 8.4.0
+INFO    : Extracting Runestone Services from archive file
+INFO    : Node.js not available. Relying on prebuilt default-modern.
+INFO    : Using prebuilt CSS theme: default-modern with options: {'options': {'primary-color': '#195684', 'secondary-color': '#932c1c'}, 'contrast-checks': {'primary-color': '#fff', 'secondary-color': '#fff', 'primary-color-dark': '#23241f'}}
+INFO    : converting D:\CCRI\__Java book rewrite\cs1-java-textbook\source\main.ptx to HTML in C:\Users\Maggie\AppData\Local\Temp\ptx-op8_wlcc
+INFO    : XSL conversion of D:\CCRI\__Java book rewrite\cs1-java-textbook\source\main.ptx by C:\Users\Maggie\.ptx\2.56.2\core\xsl\pretext-html.xsl
+INFO    : messages from the log for XSL processing (prefaced with a *):
+ERROR   : * PTX:ERROR: the @xml:id value "project-dough-scaler" should be unique, but is authored multiple times.
+INFO    : *            Results will be unpredictable, and likely incorrect.  Information on the locations follows:
+INFO    : *              located at: pretext/book/chapter/exercises/exercise
+INFO    : *              located within: "project-dough-scaler" (xml:id), "Dough Scaler" (title)
+INFO    : *              located at: pretext/book/chapter/exercises/exercise
+INFO    : *              located within: "project-dough-scaler" (xml:id), "Dough Scaler with Recipe & Hydration Helpers" (title)
+ERROR   : * PTX:ERROR: the @xml:id value "project-maritime-horizon" should be unique, but is authored multiple times.
+INFO    : *            Results will be unpredictable, and likely incorrect.  Information on the locations follows:
+INFO    : *              located at: pretext/book/chapter/exercises/exercise
+INFO    : *              located within: "project-maritime-horizon" (xml:id), "Maritime Horizon Distance & Range Classifier" (title)
+INFO    : *              located at: pretext/book/chapter/exercises/exercise
+INFO    : *              located within: "project-maritime-horizon" (xml:id), "Maritime Horizon and Lighthouse Range Calculator" (title)
+ERROR   : * PTX:ERROR: the @xml:id value "project-solar-shadow" should be unique, but is authored multiple times.
+INFO    : *            Results will be unpredictable, and likely incorrect.  Information on the locations follows:
+INFO    : *              located at: pretext/book/chapter/exercises/exercise
+INFO    : *              located within: "project-solar-shadow" (xml:id), "Solar Shadow and Solar Panel Performance" (title)
+INFO    : *              located at: pretext/book/chapter/exercises/exercise
+INFO    : *              located within: "project-solar-shadow" (xml:id), "Solar Shadow & Setback Safety Validator" (title)
+INFO    : * PTX:INFO:   checking all deprecated elements.
+INFO    : successful application of C:\Users\Maggie\.ptx\2.56.2\core\xsl\pretext-html.xsl
+INFO    : Removing temporary directory C:\Users\Maggie\AppData\Local\Temp\ptx-op8_wlcc
+INFO    : Removing temporary directory C:\Users\Maggie\AppData\Local\Temp\ptx-4p3ci3n8
+INFO    : 
+Finished build for target web. Run `pretext view web` to see the results.
+
+FATAL   : There were errors during the build.  See above.
+INFO    : ------------------------
+exit    : Failed to build without errors.  Exiting...
+INFO    : 
+----------------------------------------------------
+INFO    : While running pretext, the following errors occurred:
+
+INFO    : (see log messages above or in the 'logs' folder for more information)
+INFO    : ----------------------------------------------------

@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-4-5-sentinel-loops" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Sentinel-Controlled Loops</title>
+
+  <introduction>
+    <p>
+      In <xref ref="sec-4-4-counting-loops-for" />, we examined counting loops<mdash />loops where the exact number of iterations is known before the loop begins. Often, however, a program must process an indefinite stream of data, where neither the programmer nor the computer knows in advance how many values the user will enter.
+    </p>
+
+    <p>
+      For example, imagine writing a program that calculates the average score on an exam for a classroom of students. One class might have 18 students, while another has 120. Prompting the instructor to count their papers and type the total number of exams before entering grades is tedious and prone to human error.
+    </p>
+
+    <p>
+      Instead, we want the computer to repeatedly prompt for scores until the user explicitly signals that they are finished. To do this, we use a <term>sentinel-controlled loop</term>.
+    </p>
+  </introduction>
+
+  <!-- ============================================================ -->
+  <!-- 4.5.1 What Is a Sentinel Value?                              -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-5-1-what-is-sentinel-value">
+    <title>What Is a Sentinel Value?</title>
+
+    <p>
+      A <term>sentinel value</term> (or simply a <term>sentinel</term>) is a predefined input value used to signal the end of data entry. It acts as an unmistakable <q>stop sign</q> to terminate the loop.
+    </p>
+
+    <p>
+      To work effectively, a sentinel must be an invalid or out-of-bounds data value<mdash />something that could never be mistaken for legitimate data:
+    </p>
+
+    <ul>
+      <li><p>If entering exam scores (0 to 100), a negative number like <c>-1</c> makes an ideal sentinel.</p></li>
+      <li><p>If entering positive account balances or prices, <c>-1.0</c> or <c>0.0</c> works well.</p></li>
+      <li><p>If entering names or addresses, a blank line or a keyword like <c>"quit"</c> or <c>"done"</c> can serve as the sentinel.</p></li>
+    </ul>
+
+    <p>
+      Never choose a sentinel value that could naturally appear in the data. While <c>-1</c> works well for exam scores, it would be a disastrous choice for a program tracking daily winter temperatures, where <c>-1°</c> is a completely valid measurement! For temperature data, you would need an impossible sentinel like <c>-999</c>.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 4.5.2 The Primed-Loop Pattern                                -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-5-2-primed-loop-pattern">
+    <title>The Primed-Loop Pattern</title>
+
+    <p>
+      A sentinel loop has the following structure:
+    </p>
+
+    <ol>
+      <li><p><strong>Priming read:</strong> Prompt and read the first value before the loop header.</p></li>
+      <li><p><strong>Test:</strong> The loop condition checks whether that value is the sentinel.</p></li>
+      <li><p><strong>Process:</strong> Inside the loop body, process the valid value.</p></li>
+      <li><p><strong>Updating read:</strong> At the very bottom of the loop body, prompt and read the next value.</p></li>
+    </ol>
+
+    <p>
+      <xref ref="listing-sentinel-score-processor" /> is a sentinel-controlled loop that reads scores until the user enters <c>-1</c>:
+    </p>
+
+    <listing xml:id="listing-sentinel-score-processor">
+      <title><c>SentinelScoreProcessor.java</c></title>
+      <program language="java" line-numbers="yes"><![CDATA[import java.util.Scanner;
+ 
+/**
+ * Obtains and totals as many scores as the user enters.
+ */
+public class SentinelScoreProcessor {
+ 
+    public static void main(String[] args) {
+        
+        Scanner stdin;  // For obtaining scores.
+        int total = 0;  // A gatherer.
+        int score;      // A most-recent holder.
+        
+        // 1. Priming read: read the first score.
+        stdin = new Scanner(System.in);
+        System.out.print("Enter score (-1 to stop): ");
+        score = stdin.nextInt(); 
+        
+        // 2. Test: only enter the loop if the value is NOT the sentinel
+        while (score != -1) {
+            // 3. Process the valid value
+            total += score;
+            
+            // 4. Updating read.
+            System.out.print("Enter score (-1 to stop): ");
+            score = stdin.nextInt();
+        }
+        stdin.close();
+        
+        System.out.println("Total score: " + total);
+    }
+}]]></program>
+    </listing>
+
+    <p>
+      Notice the key insight in <xref ref="listing-sentinel-score-processor" />: the test <c>score != -1</c> always immediately follows the act of reading a value:
+    </p>
+
+    <ul>
+      <li><p>In the priming read, the score is entered on line 17 and the test immediately follows on line 20.</p></li>
+      <li><p>In the updating read, the score is entered on line 26 and the test immediately follows when control returns to the top of the loop.</p></li>
+    </ul>
+
+    <p>
+      Because processing occurs at the top of the loop body<mdash />immediately after a successful test<mdash />a sentinel value is never accidentally processed.
+    </p>
+
+    <p>
+      We can trace the loop<mdash />step through the code by hand<mdash />with a couple of well-chosen values to confirm that it will always total all user-entered scores and will never process the sentinel:
+    </p>
+
+    <ul>
+      <li><p><strong>Normal Run:</strong> If the user enters 85 at the priming read, the condition <c>85 != -1</c> is <c>true</c>. Inside the body, 85 is added to <c>total</c>, making it 85. Then line 26 reads the next value (say, 92). Control loops back to the header; <c>92 != -1</c> is <c>true</c>, so 92 is added to <c>total</c> (now 187). Next, line 26 reads <c>-1</c>. Control loops back to the header; the test <c>-1 != -1</c> is <c>false</c>, so the loop body is skipped entirely. The sentinel <c>-1</c> is never added to <c>total</c>.</p></li>
+      <li><p><strong>Immediate Sentinel Run:</strong> If the user enters <c>-1</c> on the very first prompt, the condition <c>score != -1</c> evaluates to <c>false</c> immediately. The loop body never executes, leaving <c>total</c> safely at 0.</p></li>
+    </ul>
+
+    <p>
+      Notice how the variable roles from <xref ref="sec-4-3-variable-roles" /> fit together here: <c>total</c> acts as a gatherer, while <c>score</c> acts as a most-recent holder that is updated at the bottom of each cycle.
+    </p>
+
+    <p>
+      In a sentinel-controlled loop, the most-recent holder also serves as the loop control variable. It has a dual identity: it holds either legitimate data or the signal to stop. That dual role is precisely why we must be vigilant about placing the test immediately after every read, ensuring we never process the variable when it is holding control information rather than data.
+    </p>
+
+    <p>
+      Beginning programmers often look at the primed-loop pattern and ask: Why do we need two separate read statements? Wouldn't it be simpler to just write the read statement once at the very top of the loop body?
+    </p>
+
+    <p>
+      Let’s take a look at what happens when you try to take that shortcut:
+    </p>
+
+    <program language="java"><![CDATA[// DANGEROUS: The Sentinel-Leak Bug!
+int score = 0;
+int total = 0;
+ 
+while (score != -1) {
+    System.out.print("Enter score (-1 to stop): ");
+    score = stdin.nextInt();
+    total += score; // BUG! When the user enters -1, it gets added to the total!
+}]]></program>
+
+    <p>
+      Look closely at what happens when the user finishes entering scores and types <c>-1</c>:
+    </p>
+
+    <ol>
+      <li><p><c>stdin.nextInt()</c> reads <c>-1</c> into <c>score</c>.</p></li>
+      <li><p>Execution advances immediately to <c>total += score;</c>.</p></li>
+      <li><p>The sentinel value (<c>-1</c>) is added directly into your sum!</p></li>
+      <li><p>Only then does execution circle back to the header, where <c>score != -1</c> evaluates to <c>false</c> and terminates the loop.</p></li>
+    </ol>
+
+    <p>
+      This is the classic sentinel-leak bug: the sentinel value contaminates your calculations. Furthermore, you were forced to assign an arbitrary dummy value (<c>score = 0</c>) before the loop just to trick the loop into running the first time.
+    </p>
+
+    <p>
+      Another common beginner mistake is a hybrid of the two styles: writing a priming read before the loop, but then placing the updating read at the top of the loop body instead of the bottom:
+    </p>
+
+    <program language="java"><![CDATA[score = stdin.nextInt();     // 1. Priming read
+while (score != -1) {
+    score = stdin.nextInt(); // 2. BUG: Immediately overwrites the first score!
+    total += score;
+}]]></program>
+
+    <p>
+      In this flawed pattern, whatever value was read during the priming read gets immediately overwritten by the second read before it is ever added to <c>total</c>, meaning the user's very first input is permanently lost!
+    </p>
+
+    <p>
+      If you follow the standard primed-loop pattern<mdash />reading once before the loop, processing at the top of the loop body, and reading again at the very bottom<mdash />your sentinel loops will always process every piece of real data and will never accidentally process the sentinel.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 4.5.3 Why the header should not lie (break and continue)     -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-5-3-why-header-should-not-lie">
+    <title>Why the Header Should Not Lie (<c>break</c> and <c>continue</c>)</title>
+
+    <p>
+      As you read other programmers’ code, vibe code with AI, or browse online documentation, you will inevitably encounter two statements used to alter loop execution: <c>break</c> and <c>continue</c>.
+    </p>
+
+    <ul>
+      <li><p><c>break</c> immediately halts the entire loop and jumps execution to the first statement following the loop’s closing curly brace.</p></li>
+      <li><p><c>continue</c> abandons the remainder of the current iteration and jumps straight to the next cycle (re-evaluating the test in a <c>while</c> loop, or running the updater in a <c>for</c> loop).</p></li>
+    </ul>
+
+    <p>
+      At first glance, these statements seem like convenient shortcuts. If you are searching for a value or checking input, writing an <c>if</c> statement with a <c>break</c> lets you bail out on the spot without adjusting your loop control variable.
+    </p>
+
+    <p>
+      However, many computer scientists and experienced software engineers strongly discourage using <c>break</c> and <c>continue</c> inside loops. Here is why.
+    </p>
+
+    <p>
+      One software engineering principle is that code should be self-documenting. A well-written loop adheres to what computer scientists call the <term>Single-Entry, Single-Exit (SESE)</term> principle:
+    </p>
+
+    <ol>
+      <li><p>You enter the loop at the top.</p></li>
+      <li><p>The loop repeats according to the condition declared in the header.</p></li>
+      <li><p>You exit the loop only when that header condition evaluates to <c>false</c>.</p></li>
+    </ol>
+
+    <p>
+      When you adhere to this principle, anyone reading your code can look at the header:
+    </p>
+
+    <program language="java"><![CDATA[while (score != -1)]]></program>
+
+    <p>
+      and immediately understand the entire lifetime of the loop: this loop processes valid scores and stops when the user types <c>-1</c>.
+    </p>
+
+    <p>
+      The moment you insert a <c>break</c> or <c>continue</c> deep inside the loop body, the loop header becomes a lie. A programmer can no longer trust the condition at the top of the loop; they must read every single line of the body to hunt for hidden exits, secret stopping conditions, or skipped steps. As loops grow longer, these mid-loop jumps turn structure into tangled <q>spaghetti code</q> that is notoriously difficult to debug and modify.
+    </p>
+
+    <p>
+      The danger of jumping out of loops is not theoretical. It was the direct cause of one of the most catastrophic software failures in telecommunications history.
+    </p>
+
+    <p>
+      On January 15, 1990, AT&amp;T’s long-distance telephone network collapsed across the entire United States. Over the course of nine hours, approximately 75 million phone calls failed, airport flight reservation systems ground to a halt, and businesses suffered tens of millions of dollars in losses.
+    </p>
+
+    <p>
+      The culprit was not an act of sabotage or a hardware explosion. It was a single, misplaced <c>break</c> statement inside a loop.
+    </p>
+
+    <p>
+      AT&amp;T engineers had updated the C code running on their computerized telephone switches. The code contained an <c>if</c> statement buried inside a <c>switch</c> statement, which was itself nested inside a loop. A programmer wrote a <c>break</c> intending to exit from the conditional check. However, in C (as in Java), the <c>break</c> statement didn't exit the <c>if</c><mdash />it broke out of the surrounding control structure prematurely.
+    </p>
+
+    <p>
+      That single unintended jump bypassed critical recovery code, sent corrupted routing data to a neighboring switch, and caused that switch to crash. When the neighboring switch rebooted, it triggered the exact same bug in the next switch, causing a domino-like cascade of failures across 114 switching centers nationwide.
+    </p>
+
+    <p>
+      As you write loops, strive to design them so that the loop header tells the whole truth. Use the primed-loop pattern for sentinel inputs, use proper Boolean logic in your header conditions, and let the loop terminate naturally through its declared test. Writing disciplined loops with a single clear exit point takes slightly more thought upfront, but it produces reliable, readable software that will never leave you<mdash />or your teammates<mdash />hunting for hidden exits.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 4.5.4 Example: handling the edge case                        -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-5-4-example-handling-edge-case">
+    <title>Example: Handling the Edge Case</title>
+
+    <p>
+      Here is the code from <xref ref="listing-sentinel-score-processor" />, enhanced to calculate the average of an arbitrary number of scores entered in a sentinel loop. This program demonstrates how to handle the critical edge case where the user enters the sentinel on the very first prompt:
+    </p>
+
+    <listing xml:id="listing-score-averager">
+      <title><c>ScoreAverager.java</c></title>
+      <program language="java" line-numbers="yes"><![CDATA[import java.util.Scanner;
+ 
+/**
+ * Obtains and averages as many scores as the user enters.
+ */
+public class ScoreAverager {
+ 
+    public static void main(String[] args) {
+        
+        Scanner stdin;  // For obtaining scores.
+        int total = 0;  // A gatherer.
+        int score;      // A most-recent holder.
+        int count = 0;  // The number of scores entered.
+        double average; // The average of the scores.
+        
+        stdin = new Scanner(System.in);
+        System.out.print("Enter score (-1 to stop): ");
+        score = stdin.nextInt(); 
+        
+        // Total and count the scores.
+        while (score != -1) {
+            total += score;
+            count++;
+            System.out.print("Enter score (-1 to stop): ");
+            score = stdin.nextInt();
+        }
+        stdin.close();
+        
+        // Give the average if any scores were entered.
+        if (count > 0) {
+            average = (double) total / count;
+            System.out.println("Number of scores entered: " + count);
+            System.out.printf("Average score           : %.2f%n", average);
+        } else {
+            System.out.println("No scores were entered.");
+        }
+    }
+}]]></program>
+    </listing>
+
+    <paragraphs>
+      <title>Sample Run 1: Normal Execution</title>
+      <console>
+        <input prompt="Enter an exam score (-1 to finish): ">88</input>
+        <input prompt="Enter an exam score (-1 to finish): ">94</input>
+        <input prompt="Enter an exam score (-1 to finish): ">76</input>
+        <input prompt="Enter an exam score (-1 to finish): ">-1</input>
+        <output>
+Number of scores entered: 3
+Class average           : 86.00</output>
+      </console>
+    </paragraphs>
+
+    <paragraphs>
+      <title>Sample Run 2: The Immediate-Sentinel Edge Case</title>
+      <console>
+        <input prompt="Enter an exam score (-1 to finish): ">-1</input>
+        <output>
+No scores were entered.</output>
+      </console>
+    </paragraphs>
+
+    <p>
+      Notice the guard on line 30: <c>if (count &gt; 0)</c>. If the user immediately types <c>-1</c>, <c>count</c> remains 0. Without that check, evaluating <c>(double)total / count</c> would attempt floating-point division by zero, yielding a <c>NaN</c> result. Always consider what happens when a sentinel loop processes zero items.
+    </p>
+  </subsection>
+</section>

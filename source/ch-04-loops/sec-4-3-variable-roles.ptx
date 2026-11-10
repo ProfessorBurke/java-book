@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-4-3-variable-roles" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Common Loop Variable Roles: Steppers, Gatherers, and Holders</title>
+
+  <introduction>
+    <p>
+      The purpose of a loop is often to guide one or more variables through well-defined changes. For example, in <xref ref="listing-guess-the-number" />, the <c>userGuess</c> variable is given a new user-entered value each time the loop body executes, until it has the same value as <c>magicNumber</c>. In <xref ref="listing-countdown" />, the <c>seconds</c> variable is decremented by one each time through the loop until it reaches zero. In each example, the loop code is the same, but the value in a variable changes according to a specific pattern, each time the loop body executes.
+    </p>
+
+    <p>
+      There are distinct patterns of variable change during loop execution that are used to solve common classes of problems. This classification of variables into functional roles was developed by Finnish computer science education researcher Jorma Sajaniemi in 2002. Research demonstrates that understanding a variable’s behavioral role helps novice programmers design loops. So let’s look at some variable roles!
+    </p>
+  </introduction>
+
+  <!-- ============================================================ -->
+  <!-- 4.3.1 The stepper role                                       -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-3-1-stepper-role">
+    <title>The Stepper Role</title>
+
+    <p>
+      In <xref ref="listing-countdown" />, the variable <c>seconds</c> takes on a predictable sequence of values as the loop executes: 5 4 3 2 1 0. If the loop did not stop when <c>seconds</c> was equal to 0, you could predict the next five values: -1 -2 -3 -4 -5. If it had been initialized to 10 rather than 5, you could predict the new first five values: 10 9 8 7 6. Each time through the loop, <c>seconds</c> is decremented by 1.
+    </p>
+
+    <p>
+      A variable that takes on a predictable sequence of values through each iteration of a loop is in a <term>stepper</term> role. This can be a simple increment or decrement, or it can be a more complicated sequence, such as a Fibonacci sequence (0, 1, 1, 2, 3, 5, 8, 13 …), powers of a number (1, 2, 4, 8, 16 …), or successive approximations of <m>\pi</m> (4.0, 2.666, 3.466, 2.895, 3.339 …).
+    </p>
+
+    <p>
+      The key to needing a stepper is that you have some quantity that will change predictably for each iteration of the loop. In the code, the stepper will be mathematically modified in the loop body. For example, here is a loop that displays the first five powers of two:
+    </p>
+
+    <program language="java"><![CDATA[int exponent = 0;
+while (exponent < 5) {
+    System.out.println((int)Math.pow(2, exponent));
+    exponent++;
+}]]></program>
+
+    <p>
+      In this loop, the variable <c>exponent</c> is a stepper that is incremented by one each time the loop executes, taking on the next exponent that we can pass to the <c>Math.pow()</c> method with 2 as the base. (There are other ways to write this loop that also require steppers<mdash />how would you solve it?)
+    </p>
+
+    <p>
+      Sometimes steppers are part of the problem being solved, as with <xref ref="listing-countdown" />, in which <c>seconds</c> is the next number in the countdown, and in the powers of two code above, in which the stepper is the exponent used to calculate the next power of two. But often a stepper is used to simply drive a loop: to make it execute a specific number of times. In the following code, a stepper drives a loop that prints a message ten times. The stepper isn’t related to the problem<mdash />it only exists to ensure something happens a specific number of times. Steppers that function only to drive a loop are often named <c>i</c>, <c>j</c>, <c>k</c>, etc.
+    </p>
+
+    <program language="java"><![CDATA[int i = 0;
+while (i < 10) {
+    System.out.println("Hello, world!");
+    i++;
+}]]></program>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 4.3.2 The most recent holder role                            -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-3-2-most-recent-holder">
+    <title>The Most Recent Holder Role</title>
+
+    <p>
+      In <xref ref="listing-guess-the-number" />, the variable <c>userGuess</c> holds the user’s input. Each time the value doesn’t match <c>magicNumber</c>, the loop body executes and the user enters another guess. The user’s old guess is replaced with their new guess in <c>userGuess</c>. The variable <c>userGuess</c> always holds the value most recently entered by the user.
+    </p>
+
+    <p>
+      This is a very common role for a variable<mdash />often in a loop we’re obtaining a new value from the user, a file, a sensor, or some other source. A <term>most recent holder</term> variable holds the next value in an input stream so it can be processed. Once the value has been processed, the loop executes again and the most-recent holder value is replaced with the next value in the stream.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 4.3.3 The gatherer role                                      -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-3-3-gatherer-role">
+    <title>The Gatherer Role</title>
+
+    <p>
+      Suppose we want to total those values we’re reading in the input stream? We’ll need a variable to do that in a <term>gatherer</term> or <term>accumulator</term> role. <xref ref="listing-gatherer-demo" /> obtains five values from the user and adds them together using a gatherer:
+    </p>
+
+    <listing xml:id="listing-gatherer-demo">
+      <title><c>GathererDemo.java</c></title>
+      <program language="java" line-numbers="yes"><![CDATA[import java.util.Scanner;
+ 
+/**
+ * Totals five values entered by the user in a loop.
+ */
+public class GathererDemo {
+ 
+    public static void main(String[] args) {
+        
+        Scanner stdin;       // To obtain values from the user.
+        int userValue;       // A most-recent holder.
+        int total = 0;       // A gatherer.
+        int i;               // A stepper, for controlling the loop.
+        
+        // Obtains five values from the user and totals them.
+        stdin = new Scanner(System.in);
+        i = 0;
+        while (i < 5) {
+            // Obtains the value.
+            System.out.print("Enter a value: ");
+            userValue = stdin.nextInt();
+            // Adds the value into the total.
+            total += userValue;
+            // Updates the loop control variable.
+            i++;
+        } // while
+        stdin.close();
+        
+        // Displays the total to the user.
+        System.out.println("The total is " + total + ".");
+    }
+}]]></program>
+    </listing>
+
+    <p>
+      The gatherer variable in <xref ref="listing-gatherer-demo" /> is <c>total</c>. Each time through the loop on line 23, we add the value in <c>userValue</c>, the most recent holder, to the value in <c>total</c>. Thus <c>total</c> gathers the user-entered values into itself.
+    </p>
+
+    <p>
+      Notice also that we must initialize <c>total</c> before the loop header so that we have a starting value to add to inside the loop. In <xref ref="listing-gatherer-demo" />, we initialize <c>total</c> when we declare it on line 12.
+    </p>
+
+    <p>
+      The correct initial value depends on the kind of accumulation being performed. Generally, you should initialize a gatherer with the mathematical identity element for that operation<mdash />the value that leaves other values unchanged:
+    </p>
+
+    <ul>
+      <li>
+        <p><strong>For addition:</strong> The identity element is 0 (since <m>x + 0 = x</m>). Initializing a sum to 0 ensures the result reflects only the values entered by the user.</p>
+      </li>
+      <li>
+        <p><strong>For multiplication:</strong> The identity element is 1 (since <m>x \times 1 = x</m>). If you were calculating a factorial (such as <m>5! = 5 \times 4 \times 3 \times 2 \times 1</m>), initializing with 0 would wipe out the entire calculation, so you must start with 1.</p>
+      </li>
+      <li>
+        <p><strong>For text concatenation:</strong> The identity element for a <c>String</c> gatherer is the empty string, <c>""</c> (since <c>"" + text</c> leaves the text unchanged).</p>
+      </li>
+    </ul>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 4.3.4 The most-wanted holder role                            -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-3-4-most-wanted-holder">
+    <title>The Most-Wanted Holder Role</title>
+
+    <p>
+      Often we are looking for a value that is a best fit for some property of interest, such as the smallest number, the longest word, or the letter that is alphabetically earliest. Once again, a variable can help us solve this problem, by storing the best fit so far as we process values in a loop. We call a variable in this role a <term>most-wanted holder</term>.
+    </p>
+
+    <p>
+      <xref ref="listing-most-wanted-demo" /> obtains five integers from the user and finds the largest value entered:
+    </p>
+
+    <listing xml:id="listing-most-wanted-demo">
+      <title><c>MostWantedDemo.java</c></title>
+      <program language="java" line-numbers="yes"><![CDATA[import java.util.Scanner;
+ 
+/**
+ * Finds the largest of five values entered by the user.
+ */
+public class MostWantedDemo {
+ 
+    public static void main(String[] args) {
+        
+        Scanner stdin;       // To obtain values from the user.
+        int userValue;                     // A most-recent holder.
+        int largest = Integer.MIN_VALUE;    // A most-wanted holder.
+        int i;               // A stepper, for controlling the loop.
+        
+        // Obtains five values from the user and finds the largest.
+        stdin = new Scanner(System.in);
+        i = 0;
+        while (i < 5) {
+            // Obtains the value.
+            System.out.print("Enter a value: ");
+            userValue = stdin.nextInt();
+            // If this value is the largest so far,
+            // store it in largest.
+            if (userValue > largest) {
+                largest = userValue;
+            }
+            // Updates the loop control variable.
+            i++;
+        } // while
+        stdin.close();
+        
+        // Displays the largest value to the user.
+        System.out.println("Largest value entered: " + largest);
+    }
+}]]></program>
+    </listing>
+
+    <p>
+      Our most-wanted holder is <c>largest</c>. Within the loop, on lines 24-26 we compare the value in the most-wanted holder to the value in the most-recent holder (the value we are processing in this execution of the loop). If the most-recent holder value is larger, we put that value in the most-wanted holder. This ensures that <c>largest</c> will always hold the largest value we’ve encountered so far as we process values one at a time in the loop.
+    </p>
+
+    <p>
+      Beginning programmers often have difficulty initializing a most-wanted holder variable. Consider the first iteration of the loop. We want the first value the user enters to be the largest value so far, so we want it to be stored in <c>largest</c>. We therefore must initialize <c>largest</c> so the test on line 24 is always <c>true</c> the first time through the loop. We do that by initializing <c>largest</c> to the smallest possible integer<mdash /><c>Integer.MIN_VALUE</c>. Any integer entered by the user will be larger than the value in <c>largest</c>. (The user could enter <c>Integer.MIN_VALUE</c> as their first integer and the test would be <c>false</c>, but <c>largest</c> is already holding that value, so our code still works correctly.)
+    </p>
+
+    <p>
+      Another strategy for initializing <c>largest</c> is to have the user enter a value before the loop and store it in <c>largest</c> and then obtain the next four values in the loop. This ensures that the value in <c>largest</c> is always a user-entered value:
+    </p>
+
+    <program language="java"><![CDATA[System.out.print("Enter a value: ");
+largest = stdin.nextInt();         
+i = 0;
+while (i < 4) {
+    System.out.print("Enter a value: ");
+    userValue = stdin.nextInt();
+    // If this value is the largest so far,
+    // store it in largest.
+    if (userValue > largest) {
+        largest = userValue;
+    }
+    // Updates the loop control variable.
+    i++;
+} // while]]></program>
+
+    <p>
+      This strategy works for any property we want to track<mdash />such as the largest number, smallest measurement, or longest word<mdash />because we seed the most-wanted holder with the first real piece of input, and then compare every subsequent value against it.
+    </p>
+
+    <p>
+      In addition to working with any comparison, this approach completely avoids the trap of guessing a <q>safe</q> artificial starting value. While choosing an initial sentinel value like <c>Integer.MIN_VALUE</c> is possible with integers, it becomes notoriously error-prone with other types. For example, if you were looking for the shortest word in a series of inputs, initializing your variable to <c>""</c> (the empty string) would fail completely, because no word entered by the user could ever be shorter than zero characters! By using the first actual value from the input stream as your baseline, your code is always guaranteed to work cleanly across all data types, including <c>double</c>, <c>char</c>, and <c>String</c>.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 4.3.5 Other variable roles                                   -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-4-3-5-other-variable-roles">
+    <title>Other Variable Roles</title>
+
+    <p>
+      Sajaniemi identified six additional variable roles, described in <xref ref="table-additional-variable-roles" />. The final two are for algorithms processing collection types, which we will learn in chapter 6, so don’t worry too much about them right now! If you are having difficulty solving a looping problem, refer to this table and ask if the solution requires a variable in one or more of these roles.
+    </p>
+
+    <table xml:id="table-additional-variable-roles">
+      <title>Additional variable roles</title>
+      <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+        <col width="16%"/>
+        <col width="28%"/>
+        <col width="26%"/>
+        <col width="30%"/>
+        <row header="yes">
+          <cell><strong>Role name</strong></cell>
+          <cell><strong>Description &amp; purpose</strong></cell>
+          <cell><strong>How its value changes</strong></cell>
+          <cell><strong>Java example</strong></cell>
+        </row>
+        <row>
+          <cell>Fixed value</cell>
+          <cell>Represents a quantity that does not change after its initial assignment.</cell>
+          <cell>Set once (by literal, input, or calculation) and remains constant throughout its scope.</cell>
+          <cell>
+            <p><c>final double PI = 3.14159;</c></p>
+            <p><c>int targetNumber = (int)(Math.random() * 10) + 1;</c></p>
+          </cell>
+        </row>
+        <row>
+          <cell>Follower</cell>
+          <cell>Tracks the <q>previous</q> value of another variable, always trailing it by one step.</cell>
+          <cell>Updated immediately before or after the tracked variable moves to a new value.</cell>
+          <cell>
+            <p>Tracking consecutive duplicates or change over time:</p>
+            <p><c>int previousGuess = userGuess;</c></p>
+            <p><c>userGuess = stdin.nextInt();</c></p>
+          </cell>
+        </row>
+        <row>
+          <cell>One-way flag</cell>
+          <cell>A <c>boolean</c> variable that records whether a specific state or event has occurred.</cell>
+          <cell>Starts with an initial state (usually <c>false</c>) and changes at most once (to <c>true</c>), never reverting back.</cell>
+          <cell>
+            <p>In search or prime-checking loops:</p>
+            <program language="java"><![CDATA[boolean found = false;
+if (guess == magicNumber) {
+    found = true;
+}]]></program>
+          </cell>
+        </row>
+        <row>
+          <cell>Temporary</cell>
+          <cell>Holds a value for a very short duration, usually across just two or three lines of code.</cell>
+          <cell>Assigned immediately before it is used and discarded immediately afterward.</cell>
+          <cell>
+            <p>Classic 3-line variable swap:</p>
+            <program language="java"><![CDATA[int temp = a;
+a = b;
+b = temp;]]></program>
+          </cell>
+        </row>
+        <row>
+          <cell>
+            <p>Walker</p>
+            <p><em>(Revisit after Chapter 6)</em></p>
+          </cell>
+          <cell>Moves through a data structure (such as an array), but its movements depend on the structure’s contents rather than a fixed step.</cell>
+          <cell>Successive values depend on the data structure being traversed.</cell>
+          <cell>
+            <p>Jumping through a <c>String</c> from one delimiter to the next:</p>
+            <program language="java"><![CDATA[int index = text.indexOf(' ');
+while (index != -1) { 
+    // Process word... 
+    index = text.indexOf(' ', index + 1);
+}]]></program>
+          </cell>
+        </row>
+        <row>
+          <cell>
+            <p>Organizer</p>
+            <p><em>(Revisit after Chapter 6)</em></p>
+          </cell>
+          <cell>A composite collection (like an array) whose elements are rearranged or sorted.</cell>
+          <cell>The variable’s identity doesn’t change, but its internal elements are reordered.</cell>
+          <cell>
+            <p>Imagine <c>int[] numbers = {5, 2, 8, 1};</c> is reordered in place as the loop executes.</p>
+          </cell>
+        </row>
+      </tabular>
+    </table>
+  </subsection>
+</section>

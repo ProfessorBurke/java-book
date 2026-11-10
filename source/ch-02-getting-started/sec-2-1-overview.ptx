@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-2-1-overview" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Chapter Overview</title>
+
+  <p>
+    With your development environment set up and an initial understanding of how
+    computers execute instructions and store data in memory, it’s time to get
+    programming! As you read through this chapter, keep both JShell and Eclipse open so
+    you can code along with the examples. The most effective way to learn programming is
+    by doing it, so ask questions, devise experiments, and try different variations on
+    the provided code. You don’t have to accept anything this book tells you on faith. A
+    programming language operates in a completely deterministic, predictable way, making
+    JShell and Eclipse the ideal sandboxes for testing ideas until each concept is fully
+    clear in your mind.
+  </p>
+
+  <p>
+    This chapter focuses on getting comfortable with Java by writing programs that follow
+    the classic Input <m>\rightarrow</m> Processing <m>\rightarrow</m> Output (IPO)
+    pattern. Nearly every practical computer program follows this fundamental structure.
+  </p>
+
+  <ol>
+    <li>
+      <p>
+        <strong>Input:</strong> Gathering data from the outside world. In this chapter,
+        your programs will read numbers and text entered by the user at the keyboard using
+        Java’s standard <c>Scanner</c> class.
+      </p>
+    </li>
+    <li>
+      <p>
+        <strong>Processing:</strong> Manipulating and transforming that data in memory.
+        This involves storing values in named memory locations called variables,
+        performing calculations with arithmetic operators, and working with both
+        fundamental building-blocks (primitive types, such as integers and floating-point
+        numbers) and text (called <q>strings</q> in programming).
+      </p>
+    </li>
+    <li>
+      <p>
+        <strong>Output:</strong> Sending results back to the user. You will display
+        formatted messages, calculations, and prompts to the console using Java's
+        standard output tools (<c>System.out.print</c>, <c>System.out.println</c>, and
+        <c>System.out.printf</c>).
+      </p>
+    </li>
+  </ol>
+
+  <p>
+    Understanding the IPO cycle provides an immediate framework for designing programs.
+    Before writing a single line of code, train yourself to ask three basic questions:
+    What data must go into the program? What calculations or operations must take place?
+    What results must come out?
+  </p>
+
+  <p>
+    To make these concepts stick, we will ground our explanations in enough hardware and
+    memory specifics to demystify what is happening inside the computer. Rather than
+    asking you to memorize programming rules without understanding them, we will look
+    briefly behind the scenes at how values are organized in memory (the stack versus the
+    heap) and how finite binary representations affect mathematical calculations. When
+    you understand the physical reality of how the machine works, programming ceases to
+    be an exercise in memorization, and common pitfalls—such as integer overflow or
+    floating-point rounding discrepancies—become logical and easy to avoid.
+  </p>
+
+  <p>
+    Alongside the language mechanics, we will also begin introducing core software
+    engineering practices. Writing code that simply compiles and runs is only the
+    baseline; professional developers write code that is well structured, readable, and
+    easy to maintain. Throughout this chapter, you will learn standard Java conventions,
+    including choosing descriptive variable names, applying standard capitalization rules
+    like camelCase, and writing helpful comments to document your code's intent.
+  </p>
+
+  <paragraphs xml:id="pars-2-1-roadmap">
+    <title>Roadmap for Chapter 2</title>
+
+    <ul>
+      <li>
+        <p>
+          <xref ref="sec-2-2-app-overview" /> 
+          Java application overview<mdash /> An overview of a
+          complete, runnable Java application, examining classes, methods, and
+          statements.
+        </p>
+      </li>
+      <li>
+        <p>
+          <xref ref="sec-2-3-class-structure" /> 
+          Class structure<mdash /> How a Java program is put
+          together.
+        </p>
+      </li>
+      <li>
+        <p>
+          <xref ref="sec-2-4-variables-types" /> 
+          Data: variables, literals, and types<mdash />Exploring the
+          distinction between statements and expressions, declaring variables, working
+          with primitive types, and looking at how Java manages memory.
+        </p>
+      </li>
+      <li>
+        <p>
+           <xref ref="sec-2-5-arithmetic" /> 
+          Arithmetic<mdash />Performing calculations, using the
+          built-in <c>Math</c> library, understanding operator precedence, and avoiding
+          finite binary pitfalls.
+        </p>
+      </li>
+      <li>
+        <p>
+          <xref ref="sec-2-6-strings" /> 
+          Manipulating text: Working with strings<mdash />
+          Understanding what a <c>String</c> is, exploring how objects differ from
+          primitives in memory, navigating immutability, using escape sequences, and
+          applying common <c>String</c> methods.
+        </p>
+      </li>
+      <li>
+        <p>
+          <xref ref="sec-2-7-output-system-out" /> 
+          Output<mdash /> Working with console output, moving from
+          simple unformatted text to aligned tables and formatted numbers.
+        </p>
+      </li>
+      <li>
+        <p>
+          <xref ref="sec-2-8-input-scanner" /> 
+          Input: Reading from the console<mdash />Using the
+          <c>Scanner</c> class to read interactive user input from the console, completing
+          the full Input–Processing–Output cycle.
+        </p>
+      </li>
+    </ul>
+  </paragraphs>
+
+  <p>
+    After you’ve mastered the concepts in this chapter, you’ll be writing your own Java
+    programs that obtain user input and process it to produce formatted results, and you
+    will have the foundational knowledge of Java memory management and binary
+    representations to move forward with confidence.
+  </p>
+</section>

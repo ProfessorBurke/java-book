@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<!--******************************************-->
+<!--*  Authored with PreTeXt                 *-->
+<!--*  pretextbook.org                       *-->
+<!--*  Theme: default-modern                 *-->
+<!--*  Palette:                              *-->
+<!--******************************************-->
+
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body class="ignore-math">
+<figure class="listing figure-like"><figcaption><span class="type">Listing</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">5.4<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span>CallStackDemo.java<div class="autopermalink" aria-hidden="true" data-description="Listing 5.4: CallStackDemo.java"><a tabindex="-1" href="#listing-call-stack-demo" title="Copy heading and permalink for Listing 5.4: CallStackDemo.java" aria-label="Copy heading and permalink for Listing 5.4: CallStackDemo.java">🔗</a></div></figcaption><div class="listing__contents"><div class="code-box"><pre class="program clipboardable"><code class="language-java">public class CallStackDemo {
+
+    public static void main(String[] args) {
+        int currentScore = 85;
+        applyBonus(currentScore);
+        System.out.println("Back in main, score: " + currentScore);
+    }
+
+    public static void applyBonus(int score) {
+        int bonus = 10;
+        score = score + bonus;
+        System.out.println("Inside applyBonus, score: " + score);
+    }
+}
+</code></pre></div></div>
+</figure><span class="incontext"><a class="internal" href="sec-5-5-call-stack.html#listing-call-stack-demo">In Context</a></span>
+</body>
+</html>

@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-2-7-output-system-out" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Output: Displaying Text with <c>System.out</c></title>
+
+  
+  <introduction>
+    <p>
+      Every interactive program needs a way to communicate with the user. In Java, console output is handled through a built-in object named <c>System.out</c>. <c>System.out</c> represents the standard output stream. In modern development environments like Eclipse, this stream is routed directly to the Console view at the bottom of your screen. If you run your program from a command line or terminal, <c>System.out</c> displays directly in that terminal window.
+    </p>
+
+    <p>
+      The <c>System.out</c> object provides three primary methods for displaying information:
+    </p>
+
+    <ul>
+      <li>
+        <p><c>System.out.print()</c>: Displays text without advancing to a new line.</p>
+      </li>
+      <li>
+        <p><c>System.out.println()</c>: Displays text and immediately advances to the next line.</p>
+      </li>
+      <li>
+        <p><c>System.out.printf()</c>: Displays text formatted with precision alignment, decimal places, and columns.</p>
+      </li>
+    </ul>
+
+    <!-- ============================================================ -->
+    <!-- 2.7.1 Unformatted Output                                     -->
+  </introduction>
+
+
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-2-7-1-unformatted-output">
+    <title>Unformatted Output with <c>System.out.print</c> and <c>System.out.println</c></title>
+
+    <p>
+      If you are observant, you may have noticed two slightly different output statements in <xref ref="listing-mulch-calculator" />. On lines 21, 24, and 27, there are <c>System.out.print</c> statements, while on line 37 there’s a <c>System.out.println</c> (read that as <q>print line</q>) statement. Both commands perform output, but they behave differently once the text is displayed.
+    </p>
+
+    <ul>
+      <li>
+        <p><c>System.out.print</c> sends text to the console and leaves the cursor (the blinking insertion point) on the same line, immediately following the last character printed.</p>
+      </li>
+      <li>
+        <p><c>System.out.println</c> sends text to the console and then immediately drops the cursor down to the beginning of the next line.</p>
+      </li>
+      <li>
+        <p>Calling <c>System.out.println();</c> with nothing inside the parentheses simply advances to the next line, creating a blank line on the console.</p>
+      </li>
+    </ul>
+
+    <p>
+      When you write <c>System.out.println("Hello world");</c> you are calling (or invoking) the <c>println</c> method. For now, you can think of <c>System.out</c> as Java's built-in name for your computer's console screen. The information inside the parentheses is called an argument<mdash />it is the specific data you are passing to the method to be printed.
+    </p>
+
+    <p>
+      Choosing between <c>print</c> and <c>println</c> is a programming or user experience decision. In <xref ref="listing-mulch-calculator" />, lines 21, 24, and 27 are user prompts<mdash />messages that tell the user what data the program is waiting for. Notice that we used <c>System.out.print</c> for the prompts, e.g. <c>System.out.print("Enter the length of the area in feet: ");</c>. Because <c>print</c> does not advance to a new line, the cursor rests immediately after the colon and space. When the user types their number, it appears on the same line as the question. This is comfortable for the user, because it is how command-line systems work.
+    </p>
+
+    <p>
+      If we had used <c>println</c> instead, which appends a newline character after the arguments, the cursor would have dropped down, and the user’s input would appear awkwardly on the line below the prompt. (Try changing one of the prompts from <c>print</c> to <c>println</c>, run the program, and observe the result.) In contrast, on line 37, we used <c>println</c> because the calculation was finished, and we wanted the final message to stand on its own complete line.
+    </p>
+
+    <p>
+      In <xref ref="listing-projectile-calculator" />, we also used a combination of <c>System.out.print</c> and <c>System.out.println</c> statements to spread a single line of output over several lines of the program. It is a Java convention to keep lines of code below either 80 or 132 characters. This prevents the necessity of horizontal scrolling when reading a line, and if code is printed, longer lines might wrap around, making them very difficult to follow.
+    </p>
+
+    <p>
+      If you have a <c>System.out.println</c> statement that’s going to extend over multiple lines, you can break it up by printing some of the output with <c>System.out.print</c>, and then finishing with <c>System.out.println</c>. When printed, the text will appear together on one line.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 2.7.2 Formatted Output with System.out.printf                -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-2-7-2-formatted-output">
+    <title>Formatted Output with <c>System.out.printf</c></title>
+
+    
+    <introduction>
+      <p>
+        The print statements in <xref ref="listing-mulch-calculator" /> and <xref ref="listing-projectile-calculator" /> use the <c>+</c> operator to join text with a variable, for example, from <xref ref="listing-mulch-calculator" />:
+      </p>
+
+      <program language="java"><![CDATA[System.out.println("Total mulch needed: " + cubicYards + " cubic yards.");]]></program>
+
+      <p>
+        This can result in output that either contains more decimals than users want to read, or is shown in scientific notation, if the value is large or small enough. For example:
+      </p>
+
+      <console>
+        <output>Total mulch needed: 1.8518518518518519 cubic yards.
+  Peak Height         : 2.106610877142E10 meters</output>
+      </console>
+
+      <p>
+        While accurate, the results are distracting or could be misread, if a user (understandably) didn’t notice the E. To control how numbers and text look on screen, Java provides formatted output.
+      </p>
+
+      <!-- 2.7.2.1 String Interpolation with printf -->
+    </introduction>
+
+
+    <subsubsection xml:id="subsubsec-2-7-2-1-string-interpolation">
+      <title>String Interpolation with <c>printf</c></title>
+
+      <p>
+        The f in <c>printf</c> stands for formatted. Instead of gluing together strings and numbers with the <c>+</c> operator, <c>printf</c> allows you to define a string <q>template</q> containing placeholders, followed by the values to plug into those placeholders:
+      </p>
+
+      <program language="java"><![CDATA[double cubicYards = 1.85185185;
+// Using printf to format to two decimal places:
+System.out.printf("Total mulch needed: %.2f cubic yards.%n", cubicYards);]]></program>
+
+      <p>
+        This produces the following output:
+      </p>
+
+      <console>
+        <output>Total mulch needed: 1.85 cubic yards.</output>
+      </console>
+
+      <p>
+        Let’s break that <c>printf</c> statement down. A call to <c>printf</c> always has at least two parts, separated by commas:
+      </p>
+
+      <program language="java"><![CDATA[System.out.printf(formatString, value1, value2, ...);]]></program>
+
+      <p>
+        Inside the format string, special markers called format specifiers begin with a percent sign (<c>%</c>). Each specifier acts as a placeholder for one of the expressions (<q>values to insert</q>) that follows. <xref ref="table-format-specifiers" /> shows the more common format specifiers.
+      </p>
+
+      <table xml:id="table-format-specifiers">
+        <title>Format specifiers</title>
+        <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+          <col width="15%"/>
+          <col width="20%"/>
+          <col width="30%"/>
+          <col width="35%"/>
+          <row header="yes">
+            <cell><strong>Specifier</strong></cell>
+            <cell><strong>Data Type</strong></cell>
+            <cell><strong>Description</strong></cell>
+            <cell><strong>Example / Output</strong></cell>
+          </row>
+          <row>
+            <cell><c>%d</c></cell>
+            <cell><c>int</c>, <c>long</c></cell>
+            <cell>(d)ecimal integer</cell>
+            <cell>
+              <p><c>System.out.printf("%d", 42);</c></p>
+              <p><m>\to</m> <c>42</c></p>
+            </cell>
+          </row>
+          <row>
+            <cell><c>%f</c></cell>
+            <cell><c>double</c>, <c>float</c></cell>
+            <cell>(f)loating-point number</cell>
+            <cell>
+              <p><c>System.out.printf("%.2f", 3.14159);</c></p>
+              <p><m>\to</m> <c>3.14</c></p>
+            </cell>
+          </row>
+          <row>
+            <cell><c>%s</c></cell>
+            <cell><c>String</c></cell>
+            <cell>(s)tring of text</cell>
+            <cell>
+              <p><c>System.out.printf("%s", "Alice");</c></p>
+              <p><m>\to</m> <c>Alice</c></p>
+            </cell>
+          </row>
+          <row>
+            <cell><c>%n</c></cell>
+            <cell>None</cell>
+            <cell>Platform-independent (n)ewline</cell>
+            <cell>Moves the cursor to the next line.</cell>
+          </row>
+        </tabular>
+      </table>
+
+      <p>
+        You can embed multiple format specifiers in a single format string. When you do, the values are substituted in the exact order they appear, and their types must match the specifiers:
+      </p>
+
+      <program language="java"><![CDATA[System.out.printf("%s's favorite numbers are %d and %f.%n", "Alice", 42, 3.14);]]></program>
+
+      <p>
+        Importantly, unlike regular assignments or arithmetic expressions, Java does not perform automatic widening conversions inside <c>printf</c>. The type matching for numeric specifiers is strict:
+      </p>
+
+      <ul>
+        <li>
+          <p>A <c>%d</c> specifier requires an integer (<c>int</c> or <c>long</c>).</p>
+        </li>
+        <li>
+          <p>A <c>%f</c> specifier requires a floating-point number (<c>float</c> or <c>double</c>).</p>
+        </li>
+      </ul>
+
+      <p>
+        If the types do not match<mdash />for example, if you accidentally pass an integer to <c>%f</c> or a decimal number to <c>%d</c><mdash />the program will crash at runtime with an <c>IllegalFormatConversionException</c>. If you have an integer variable and specifically want to display it as a decimal using <c>%f</c>, you must explicitly cast it first, e.g. <c>(double)count</c>.
+      </p>
+
+      <p>
+        The only major exception to this strictness is <c>%s</c>. Because every value in Java can be converted into text, you can pass integers, decimals, booleans, or strings to a <c>%s</c> specifier without causing an error.
+      </p>
+
+      <p>
+        Unlike <c>println</c>, <c>printf</c> does not automatically advance to a new line at the end of its output. To add a newline, use <c>%n</c> inside the format string. While <c>\n</c> works on many systems, <c>%n</c> is preferred in <c>printf</c> because it automatically outputs the correct line-ending character for the operating system your program is running on (Windows uses <c>\r\n</c>, while macOS and Linux use <c>\n</c>).
+      </p>
+    </subsubsection>
+
+    <!-- 2.7.2.2 Controlling Decimal Precision -->
+    <subsubsection xml:id="subsubsec-2-7-2-2-decimal-precision">
+      <title>Controlling Decimal Precision</title>
+
+      <p>
+        To control how many digits appear after the decimal point, place a period and a number between <c>%</c> and <c>f</c>:
+      </p>
+
+      <program language="java"><![CDATA[double price = 19.9954;
+System.out.printf("%.1f%n", price); // 20.0 (rounded to 1 decimal place)
+System.out.printf("%.2f%n", price); // 20.00 (rounded to 2 decimal places)
+System.out.printf("%.3f%n", price); // 19.995 (rounded to 3 decimal places)]]></program>
+
+      <p>
+        Notice that <c>printf</c> automatically rounds the displayed number to fit the requested precision (it does not alter the actual value in the variable).
+      </p>
+    </subsubsection>
+
+    <!-- 2.7.2.3 Formatting Columns and Alignment -->
+    <subsubsection xml:id="subsubsec-2-7-2-3-columns-alignment">
+      <title>Formatting Columns and Alignment</title>
+
+      <p>
+        <c>printf</c> is ideal for printing neat, aligned tables of data. You achieve columns by specifying a field width<mdash />the minimum number of character spaces the output should occupy. Any characters left over after the value is inserted into the string are padded with spaces.
+      </p>
+
+      <program language="java"><![CDATA[System.out.printf("%-10s %20s %n", "Leah", "she / her / hers");
+System.out.printf("%-10s %20s %n", "Cheese", "he / him / his");
+System.out.printf("%-10s %20s%n", "Fin", "they / them / theirs");]]></program>
+
+      <p>
+        This prints:
+      </p>
+
+      <console>
+        <output>Leah           she / her / hers
+Cheese           he / him / his
+Fin        they / them / theirs</output>
+      </console>
+
+      <p>
+        Values can be left- or right-aligned within a field (column). In the example above, the initial strings are left-aligned in the left column. This is specified with a negative field width (<c>%-10s</c>). The values in the right column are right-aligned, specified with a positive field width (<c>%20s</c>). You can add field width and alignment to any format specifier. If you’re formatting a floating-point value and you want to include both decimal precision and field width, include field width first, for example <c>%20.2f</c>.
+      </p>
+    </subsubsection>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 2.7.3 Building Strings with String.format                    -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-2-7-3-building-strings-format">
+    <title>Building Strings with <c>String.format</c></title>
+
+    <p>
+      Sometimes you want the precision formatting of <c>printf</c>, but you don't want to print the text to the console right away. For example, you might want to save the formatted text in a variable, write it to a file later, or display it in a graphical pop-up window.
+    </p>
+
+    <p>
+      For this, Java provides <c>String.format()</c>. It accepts the same format specifiers as <c>printf</c>, but instead of printing to the screen, it builds and returns a new <c>String</c>:
+    </p>
+
+    <program language="java"><![CDATA[double temperature = 21.847; // degrees Celsius 
+String message = String.format("Current temperature: %.1f°C", temperature); 
+// message is: "Current temperature: 21.8°C"]]></program>
+
+    <p>
+      Think of <c>System.out.printf(...)</c> as a shortcut for:
+    </p>
+
+    <program language="java"><![CDATA[System.out.print(String.format(...));]]></program>
+
+    <p>
+      Whenever you need formatted text, you have a choice: use <c>printf</c> if you want to display it immediately on the console, or use <c>String.format()</c> if you need to hold onto the formatted text as a <c>String</c> variable.
+    </p>
+  </subsection>
+</section>

@@ -1,39 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- This frontmatter division will contain all content before the -->
-<!-- first chapter. Fill in and comment/uncomment to see how this -->
-<!-- works. -->
-
-<frontmatter xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="frontmatter">
+<frontmatter xml:id="frontmatter" xmlns:xi="http://www.w3.org/2001/XInclude">
   <bibinfo>
-  
     <author>
-      <personname>You</personname>
-      <department>Your department</department>
-      <institution>Your institution</institution>
+      <personname>Maggie Burke</personname>
+      <department>Department of Computer Science &amp; Cybersecurity</department>
+      <institution>Community College of Rhode Island</institution>
+      <email>mburke1@ccri.edu</email>
     </author>
     <date>
       <today />
     </date>
-
     <website>
-      <url href="https://pretextbook.org">My Website</url>
+      <url href="https://professorburke.github.io/java-book/" visual="professorburke.github.io/java-book/">Java for Computer Science: Core Principles and Practice</url>
     </website>
-
     <copyright>
-      <year>2020<ndash />2024</year>
-      <holder>You</holder>
-      <shortlicense> This work is licensed under the Creative Commons Attribution-ShareAlike 4.0 International License. To view a copy of this license, visit <url href="http://creativecommons.org/licenses/by-sa/4.0/" visual="creativecommons.org/licenses/by-sa/4.0"> CreativeCommons.org</url>
+      <year>2026</year>
+      <holder>Maggie Burke</holder>
+      <minilicense>CC BY-NC-SA 4.0</minilicense>
+      <shortlicense>
+        This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy of this license, visit <url href="https://creativecommons.org/licenses/by-nc-sa/4.0/" visual="creativecommons.org/licenses/by-nc-sa/4.0/">CreativeCommons.org</url>.
       </shortlicense>
     </copyright>
-  
   </bibinfo>
 
   <titlepage>
-    <titlepage-items/>
+    <titlepage-items />
   </titlepage>
 
   <colophon xml:id="front-colophon">
-    <colophon-items/>
+    <colophon-items />
   </colophon>
-</frontmatter>
 
+<acknowledgement xml:id="acknowledgement">
+    <title>Acknowledgements</title>
+
+    <p>
+      This textbook was made possible through the generous support of the 
+      Community College of Rhode Island, which granted a sabbatical leave 
+      providing the dedicated time needed to reimagine and author this 
+      open-access curriculum for our introductory computer science students. 
+      I am deeply grateful to the sabbatical review committee, 
+	  my chairperson and colleagues in the Department of Computer 
+      Science &amp; Cybersecurity, and my colleagues across CCRI for their encouragement, 
+      insightful discussions, and shared commitment to accessible computer 
+      science education.
+    </p>
+
+    <p>
+      Special thanks go to the many generations of CCRI students whose curiosity, 
+      thoughtful questions, and honest feedback in the classroom have continually 
+      shaped how these programming concepts are explained, visualized, and scaffolded.
+	  You inspire me daily with your drive and resilience, and it is an honor to teach and learn alongside you.
+    </p>
+
+    <paragraphs>
+      <title>Note on AI-Assisted Authoring</title>
+      <p>
+        In the development of this textbook, generative artificial intelligence 
+        tools were used collaboratively as an authoring assistant, research partner, 
+        and for technical production. Generative tools assisted with structuring 
+        exercises, drafting some initial scenario narratives, critiquing the author's narratives,
+		generating PreTeXt XML mark-up, 
+        and rendering call stack memory models and structure charts. 
+        All pedagogy, curricular sequencing, code examples, technical explanations, 
+        and solutions were designed, directed, verified, and edited by the author, 
+        who retains sole responsibility for the content and educational integrity of 
+        this work.
+      </p>
+    </paragraphs>
+  </acknowledgement>
+
+</frontmatter>

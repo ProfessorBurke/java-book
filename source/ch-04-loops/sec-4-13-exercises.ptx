@@ -1,0 +1,646 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exercises xml:id="sec-4-13-exercises" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Programming Projects</title>
+
+  <introduction>
+    <p>
+      The following programming projects require you to design, implement, and verify complete Java programs in your local integrated development environment (IDE), such as Eclipse. Each project reinforces the repetitive and file-processing patterns explored in this chapter: definite counting loops (<c>for</c>), indefinite event-driven loops (<c>while</c>), post-test validation loops (<c>do-while</c>), structured variable roles (steppers, gatherers, most-recent holders, most-wanted holders, and followers), formal assertion contracts, and robust file I/O with <c>Scanner</c> and <c>PrintWriter</c>.
+    </p>
+  </introduction>
+
+  <!-- ============================================================ -->
+  <!-- Project 1: Multi-Batch Bakery Production Log & Dough Scaler  -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-multi-batch-bakery">
+    <title>Multi-Batch Bakery Production Log &amp; Dough Scaler</title>
+    <statement>
+      <p>
+        In Chapter 3, you validated batch parameters and provided handling advice for a single batch of artisan sourdough. In commercial bakeries, however, bakers schedule an entire morning's production run consisting of multiple dough batches of varying weights and hydration levels.
+      </p>
+      <p>
+        Write a program that processes an entire production schedule, either entered interactively using a sentinel-controlled loop or read from a text file named <c>baking_schedule.txt</c>.
+      </p>
+      <p>
+        <strong>Program Requirements:</strong>
+        <ol>
+          <li>
+            <p><strong>Input Options:</strong> Allow the user to process batches in a loop. For each batch, the program reads the dough name (a <c>String</c>), the desired total dough weight in grams (a <c>double</c>), and the target hydration percentage (a <c>double</c>, e.g., 65.0% to 82.0%). If reading interactively, use a batch name of <c>"DONE"</c> (or a weight of <c>-1</c>) as the sentinel to terminate data entry.</p>
+          </li>
+          <li>
+            <p><strong>Input Validation:</strong> Use a validation loop (<c>do-while</c> or <c>while</c>) for interactive input to ensure batch weights are between <m>250.0\text{ g}</m> and <m>10{,}000.0\text{ g}</m> inclusive, and hydration is between <m>50.0\%</m> and <m>100.0\%</m> inclusive.</p>
+          </li>
+          <li>
+            <p><strong>Ingredient Calculations:</strong> Standard sourdough uses 2.0% salt and 1.5% yeast relative to flour (100%). For each batch, calculate:</p>
+            <md>\text{Flour Weight} = \frac{\text{Batch Weight}}{1.0 + (\text{Hydration} / 100.0) + 0.02 + 0.015}, \quad \text{Water Weight} = \text{Flour Weight} \times \left(\frac{\text{Hydration}}{100.0}\right)</md>
+          </li>
+          <li>
+            <p><strong>Loop Variable Roles:</strong></p>
+            <ul>
+              <li><p><strong>Stepper:</strong> Count the total number of batches scheduled (<c>batchCount</c>).</p></li>
+              <li><p><strong>Gatherers:</strong> Accumulate the grand total weight of flour (<c>totalFlour</c>), water (<c>totalWater</c>), and total dough mixed (<c>totalDough</c>).</p></li>
+              <li><p><strong>Most-Wanted Holder:</strong> Track the batch with the highest hydration level (<c>maxHydration</c>) and its associated name (<c>maxHydrationName</c>).</p></li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Assertions &amp; Verification:</strong> Document the loop invariant and use an assertion to verify that <c>totalDough</c> upon loop exit matches the sum of total flour, water, salt, and yeast within an acceptable floating-point tolerance (<m>0.1\text{ g}</m>).</p>
+          </li>
+          <li>
+            <p><strong>File Output:</strong> Using <c>PrintWriter</c>, generate an itemized production report saved to <c>daily_bake_report.txt</c> formatted with aligned columns.</p>
+          </li>
+        </ol>
+      </p>
+      <p>
+        <strong>Testing Requirement:</strong> Construct a loop test plan table that tests:
+        <ol>
+          <li><p>Zero batches (immediate sentinel entered on first prompt).</p></li>
+          <li><p>Exactly one batch.</p></li>
+          <li><p>Multiple typical batches.</p></li>
+          <li><p>Boundary hydration values (<m>50.0\%</m> and <m>100.0\%</m>).</p></li>
+        </ol>
+      </p>
+      <p>
+        Here is an example of the program running:
+      </p>
+      <console>
+        <output>=== Artisan Bakery Production Planner ===</output>
+        <input prompt="Enter batch name (or 'DONE' to finish): ">Country Loaf</input>
+        <input prompt="Enter total dough weight (g): ">3000.0</input>
+        <input prompt="Enter hydration percentage (50-100%): ">75.0</input>
+        <output> </output>
+        <input prompt="Enter batch name (or 'DONE' to finish): ">Baguettes</input>
+        <input prompt="Enter total dough weight (g): ">1800.0</input>
+        <input prompt="Enter hydration percentage (50-100%): ">66.0</input>
+        <output> </output>
+        <input prompt="Enter batch name (or 'DONE' to finish): ">Ciabatta</input>
+        <input prompt="Enter total dough weight (g): ">2400.0</input>
+        <input prompt="Enter hydration percentage (50-100%): ">82.0</input>
+        <output> </output>
+        <input prompt="Enter batch name (or 'DONE' to finish): ">DONE</input>
+        <output>
+============================================================
+BAKERY PRODUCTION SUMMARY (3 Batches)
+============================================================
+Total Dough Mixed    :    7,200.0 g
+Total Flour Required :    4,136.2 g
+Total Water Required :    3,063.8 g
+Highest Hydration    :    82.0% (Ciabatta)
+Average Batch Size   :    2,400.0 g
+============================================================
+Report successfully saved to 'daily_bake_report.txt'.</output>
+      </console>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 2: Tabletop RPG Party Roster & Encumbrance Audit     -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-rpg-party-roster">
+    <title>Tabletop RPG Party Roster &amp; Encumbrance Audit</title>
+    <statement>
+      <p>
+        In Chapter 3, you calculated ability modifiers and evaluated feat qualifications for an individual character. When managing a gaming campaign, a game master must evaluate an entire adventuring party to calculate group encumbrance, identify party extremes, and determine average resilience.
+      </p>
+      <p>
+        Write a program that audits an adventuring party by reading character records from a text file named <c>party_roster.txt</c> or through an interactive sentinel loop.
+      </p>
+      <p>
+        <strong>Data Format (<c>party_roster.txt</c>):</strong> Each character record occupies four consecutive lines:
+        <ol>
+          <li><p>Character name (<c>String</c>)</p></li>
+          <li><p>Character class (<c>String</c>)</p></li>
+          <li><p>Strength score (<c>int</c>, 3 to 20)</p></li>
+          <li><p>Constitution score (<c>int</c>, 3 to 20)</p></li>
+        </ol>
+      </p>
+      <p>
+        <strong>Program Requirements:</strong>
+        <ol>
+          <li>
+            <p><strong>File Input:</strong> Open and read <c>party_roster.txt</c> using <c>while (fileScanner.hasNext())</c>. Use <c>nextLine()</c> for names and classes, and parse the scores. Guard the newline transition using the pattern from <xref ref="subsec-4-10-4-reading-loop-mixing-tokens-lines" />.</p>
+          </li>
+          <li>
+            <p><strong>Processing:</strong> For each character, compute their Strength modifier using integer division (<m>\lfloor (\text{Strength} - 10) / 2 \rfloor</m>), their carrying capacity (<m>\text{Strength} \times 15\text{ lbs}</m>), and their starting hit points (<m>\text{Base HP} + \lfloor (\text{Constitution} - 10) / 2 \rfloor</m>, where Fighter = 12, Paladin/Cleric = 10, Rogue = 8, Wizard = 6).</p>
+          </li>
+          <li>
+            <p><strong>Variable Roles:</strong></p>
+            <ul>
+              <li><p><strong>Stepper:</strong> Count the total party members (<c>partySize</c>).</p></li>
+              <li><p><strong>Gatherer:</strong> Accumulate total party carrying capacity (<c>totalCapacity</c>).</p></li>
+              <li><p><strong>Most-Wanted Holders:</strong> Track both the strongest hero (<c>maxStrength</c>, <c>strongestName</c>) and the character with the lowest hit points (<c>minHp</c>, <c>mostVulnerableName</c>).</p></li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>One-Way Flag:</strong> A boolean flag (<c>hasHeavyLifter</c>) that starts <c>false</c> and flips to <c>true</c> if any single character has a Strength score of 18 or higher.</p>
+          </li>
+          <li>
+            <p><strong>Output:</strong> Display a formatted roster table on the console with right-aligned numbers and left-aligned names, followed by party statistics.</p>
+          </li>
+        </ol>
+      </p>
+      <p>
+        <strong>Testing Requirement:</strong> Design a test plan verifying:
+        <ol>
+          <li><p>An empty roster file (zero iterations).</p></li>
+          <li><p>A single-character party.</p></li>
+          <li><p>A party with negative and positive ability modifiers.</p></li>
+          <li><p>Tied attribute scores.</p></li>
+        </ol>
+      </p>
+      <p>
+        Here is an example of the program running:
+      </p>
+      <console>
+        <output>PARTY ROSTER AUDIT (party_roster.txt)
+----------------------------------------------------------------------
+NAME                CLASS          STR (MOD)   CARRY CAP   HIT POINTS
+----------------------------------------------------------------------
+Garrett             Rogue           14 (+2)      210 lbs        11
+Valeria             Paladin         18 (+4)      270 lbs        14
+Bram                Fighter         16 (+3)      240 lbs        13
+Elira               Wizard           8 (-1)      120 lbs         9
+----------------------------------------------------------------------
+Total Party Members   : 4
+Combined Carrying Cap : 840 lbs
+Average Party Health  : 11.75 HP
+Strongest Adventurer  : Valeria (Strength 18)
+Most Vulnerable       : Elira (9 HP)
+Heavy Lifter Present? : Yes</output>
+      </console>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 3: Multi-Room Contractor Bid & Materials Invoice     -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-contractor-bid-invoice">
+    <title>Multi-Room Contractor Bid &amp; Materials Invoice Generator</title>
+    <statement>
+      <p>
+        In Chapter 3, you calculated tile boxes and paint cans for a single room, applying warehouse volume discounts. In home renovation, contractors prepare bids for multi-room projects, totaling materials across all rooms and generating an itemized invoice.
+      </p>
+      <p>
+        Write a program that processes dimensions for an arbitrary number of rooms, either entered by the user or read from <c>rooms.txt</c>.
+      </p>
+      <p>
+        <strong>Program Requirements:</strong>
+        <ol>
+          <li>
+            <p><strong>Input Loop:</strong> Prompt the user for the room name (e.g., <c>"Kitchen"</c>), or <c>"done"</c> to finish. If valid, prompt for length, width, and ceiling height in feet (positive <c>double</c> values), along with the count of doors and windows (<c>int</c> values).</p>
+          </li>
+          <li>
+            <p><strong>Input Validation:</strong> Use a <c>do-while</c> loop for each dimension to enforce that length, width, and height are strictly greater than zero, re-prompting if invalid data is entered.</p>
+          </li>
+          <li>
+            <p><strong>Room Calculations:</strong></p>
+            <ul>
+              <li><p>Floor Area: <m>\text{length} \times \text{width}</m>. Floor tiles cover <m>15\text{ sq ft}</m> per box at $16.50 per box. Use <c>Math.ceil()</c> to calculate whole boxes.</p></li>
+              <li><p>Net Wall Area: <m>2 \times (\text{length} + \text{width}) \times \text{height} - (\text{doors} \times 21 + \text{windows} \times 15)</m>.</p></li>
+              <li><p>Paint Cans: Two coats of paint require 1-gallon cans (<m>350\text{ sq ft}</m> per can for 2 coats) at $45.00 per can. Use <c>Math.ceil()</c> to calculate whole cans.</p></li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Loop Roles:</strong></p>
+            <ul>
+              <li><p><strong>Stepper:</strong> Count total rooms (<c>roomCount</c>).</p></li>
+              <li><p><strong>Gatherers:</strong> Accumulate total tile boxes, total paint cans, total floor area, and grand material cost.</p></li>
+              <li><p><strong>Most-Wanted Holder:</strong> Identify the room requiring the largest surface area of paint.</p></li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>File Output:</strong> Write the itemized estimate to <c>contractor_bid.txt</c> using <c>PrintWriter</c>, including a tiered contractor discount (10% off materials if grand subtotal exceeds $1,000.00).</p>
+          </li>
+        </ol>
+      </p>
+      <p>
+        <strong>Testing Requirement:</strong> Create a test plan covering zero rooms, a single room, a multi-room project qualifying for the discount, and boundary inputs (0 doors/windows).
+      </p>
+      <p>
+        Here is an example of the program running:
+      </p>
+      <console>
+        <input prompt="Enter room name (or 'done' to stop): ">Kitchen</input>
+        <input prompt="Enter length (ft): ">14.0</input>
+        <input prompt="Enter width (ft): ">12.0</input>
+        <input prompt="Enter ceiling height (ft): ">9.0</input>
+        <input prompt="Enter doors: ">2</input>
+        <input prompt="Enter windows: ">1</input>
+        <output> </output>
+        <input prompt="Enter room name (or 'done' to stop): ">Master Bedroom</input>
+        <input prompt="Enter length (ft): ">18.0</input>
+        <input prompt="Enter width (ft): ">15.0</input>
+        <input prompt="Enter ceiling height (ft): ">10.0</input>
+        <input prompt="Enter doors: ">2</input>
+        <input prompt="Enter windows: ">3</input>
+        <output> </output>
+        <input prompt="Enter room name (or 'done' to stop): ">done</input>
+        <output>
+============================================================
+PROJECT BID SUMMARY (2 Rooms Processed)
+============================================================
+Total Floor Area Covered :   438.00 sq ft
+Total Tile Boxes Ordered :        30 boxes  ($495.00)
+Total Paint Cans Ordered :         6 cans   ($270.00)
+Largest Painted Room     : Master Bedroom
+Materials Subtotal       :  $765.00
+Contractor Discount      :    $0.00 (Orders over $1,000 get 10%)
+Final Project Estimate   :  $765.00
+============================================================
+Invoice saved to 'contractor_bid.txt'.</output>
+      </console>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 4: Solar Farm Diurnal Tracking & Shading Array       -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-solar-farm-tracking">
+    <title>Solar Farm Diurnal Tracking &amp; Shading Array Matrix</title>
+    <statement>
+      <p>
+        In Chapter 3, you evaluated the feasibility of a single solar panel installation based on obstruction height and sun elevation angle. When designing a utility-scale solar farm, engineers simulate sun angles from sunrise to sunset to calculate diurnal energy capture and determine the minimum row spacing needed to prevent panels from casting shadows on neighboring rows.
+      </p>
+      <p>
+        Write a program that simulates a daily solar sweep using a counting loop and optionally generates an inter-row shading matrix using nested loops.
+      </p>
+      <p>
+        <strong>Program Requirements:</strong>
+        <ol>
+          <li>
+            <p><strong>Input Parameters:</strong> Prompt the user for the solar panel array height in meters (e.g., <m>2.5\text{ m}</m>) and the angle step interval in degrees (e.g., step by <m>15.0^\circ</m>).</p>
+          </li>
+          <li>
+            <p><strong>Diurnal Sweep Loop (<c>for</c> loop):</strong> Simulate sun elevation angles from sunrise (<m>15.0^\circ</m>) to solar noon (<m>60.0^\circ</m>) and back down to sunset (<m>15.0^\circ</m>):</p>
+            <ul>
+              <li><p>Shadow length: <m>\text{Shadow} = \frac{\text{height}}{\tan(\text{radians})}</m></p></li>
+              <li><p>Optimal panel tilt: <m>90.0^\circ - \text{angle}</m></p></li>
+              <li><p>Flat capture efficiency: <m>\sin(\text{radians}) \times 100\%</m></p></li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Nested Loop Feature (Row Spacing Matrix):</strong> Using a nested loop, print an array clearance matrix showing the shadow lengths cast by panels of heights <m>1.5\text{ m}</m>, <m>2.0\text{ m}</m>, <m>2.5\text{ m}</m>, and <m>3.0\text{ m}</m> (outer loop rows) across sun elevation angles of <m>15^\circ</m>, <m>30^\circ</m>, <m>45^\circ</m>, and <m>60^\circ</m> (inner loop columns).</p>
+          </li>
+          <li>
+            <p><strong>Variable Roles:</strong></p>
+            <ul>
+              <li><p><strong>Stepper:</strong> Sun elevation angle (<c>angle</c>).</p></li>
+              <li><p><strong>Gatherer:</strong> Total cumulative daylight efficiency units.</p></li>
+              <li><p><strong>Most-Wanted Holder:</strong> Peak efficiency hour/angle.</p></li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>File Output:</strong> Export the hourly tracking table to a comma-separated values file named <c>solar_tracking.csv</c>.</p>
+          </li>
+        </ol>
+      </p>
+      <p>
+        <strong>Testing Requirement:</strong> Verify loop execution for angle steps dividing evenly into ranges, boundary checks at <m>15.0^\circ</m> and <m>60.0^\circ</m>, and test matrix row/column alignment.
+      </p>
+      <p>
+        Here is an example of the program running:
+      </p>
+      <console>
+        <output>=== Solar Array Diurnal Simulation ===</output>
+        <input prompt="Enter panel height (meters): ">2.5</input>
+        <input prompt="Enter simulation angle step (degrees): ">15.0</input>
+        <output>
+------------------------------------------------------------
+SUN ANGLE     SHADOW (m)    PANEL TILT    EFFICIENCY
+------------------------------------------------------------
+  15.0°           9.33          75.0°         25.88%
+  30.0°           4.33          60.0°         50.00%
+  45.0°           2.50          45.0°         70.71%
+  60.0°           1.44          30.0°         86.60%
+  45.0°           2.50          45.0°         70.71%
+  30.0°           4.33          60.0°         50.00%
+  15.0°           9.33          75.0°         25.88%
+------------------------------------------------------------
+Peak Solar Capture    : 86.60% (at 60.0° elevation)
+Worst Shadow Clearance: 9.33 m (at 15.0° elevation)
+ 
+--- Inter-Row Clearance Matrix (Shadow Length in Meters) ---
+Height \ Angle     15°       30°       45°      60°
+------------------------------------------------------------
+1.5 m             5.60      2.60      1.50     0.87
+2.0 m             7.46      3.46      2.00     1.15
+2.5 m             9.33      4.33      2.50     1.44
+3.0 m            11.20      5.20      3.00     1.73</output>
+      </console>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 5: Coastal Lookout Network & Earth Horizon Table     -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-coastal-lookout-network">
+    <title>Coastal Lookout Network &amp; Earth Horizon Range Table</title>
+    <statement>
+      <p>
+        In Chapter 3, you presented a menu allowing a user to calculate the distance to the horizon from a single observation platform. In maritime coastal monitoring, radar installations and lighthouse keepers require comprehensive horizon range tables that step systematically through observation elevations.
+      </p>
+      <p>
+        Write a program that generates a horizon distance reference table across a range of viewing elevations, and then audits an arbitrary list of coastal watchtowers read from <c>watchtowers.txt</c>.
+      </p>
+      <p>
+        <strong>Program Requirements:</strong>
+        <ol>
+          <li>
+            <p><strong>Part 1: Systematic Range Table (<c>for</c> loop):</strong> Prompt the user for a starting elevation in feet, an ending elevation in feet, and an elevation step size (e.g., from <m>100.0\text{ ft}</m> to <m>300.0\text{ ft}</m> by steps of <m>50.0\text{ ft}</m>).</p>
+            <ul>
+              <li><p>Validate using a <c>while</c> loop that <m>h_{\text{start}} &gt; 0</m>, <m>h_{\text{end}} \ge h_{\text{start}}</m>, and <m>\text{step} &gt; 0</m>.</p></li>
+              <li>
+                <p>For each elevation <m>h</m>, compute geometric horizon distance using Earth radius <m>R = 20{,}908{,}800\text{ ft}</m>:</p>
+                <md>\text{Statute Miles} = \frac{\sqrt{2Rh + h^2}}{5280}, \quad \text{Nautical Miles} = \frac{\sqrt{2Rh + h^2}}{6076.12}, \quad \text{Kilometers} = \text{Statute Miles} \times 1.60934</md>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Part 2: Watchtower File Audit (<c>while</c> loop):</strong> Read an unknown number of station records from <c>watchtowers.txt</c> (Tower name on line 1, height in feet on line 2).</p>
+            <ul>
+              <li><p>Use a stepper to count towers, a most-wanted holder to find the tower with the farthest visible range, and a one-way flag to record whether any tower can see beyond 30 nautical miles (<m>\text{nauticalMiles} &gt; 30.0</m>).</p></li>
+              <li><p>Assertion: Inside the loop, assert that the calculated distance is strictly positive (<c>assert distanceMiles &gt; 0;</c>).</p></li>
+            </ul>
+          </li>
+        </ol>
+      </p>
+      <p>
+        <strong>Testing Requirement:</strong> Test the elevation table with zero range (<m>h_{\text{start}} = h_{\text{end}}</m>), small steps, and verify that watchtower file reading handles a 0-record empty file safely without crashing.
+      </p>
+      <p>
+        Here is an example of the program running:
+      </p>
+      <console>
+        <output>=== Coastal Horizon Range Generator ===</output>
+        <input prompt="Enter start height (ft): ">100.0</input>
+        <input prompt="Enter end height (ft) : ">300.0</input>
+        <input prompt="Enter step size (ft)  : ">50.0</input>
+        <output>
+------------------------------------------------------------
+HEIGHT (ft)     HORIZON (miles)      HORIZON (km)      NAUTICAL
+------------------------------------------------------------
+   100.00             12.25              19.71            10.64
+   150.00             15.00              24.14            13.03
+   200.00             17.32              27.87            15.05
+   250.00             19.36              31.16            16.82
+   300.00             21.21              34.13            18.43
+------------------------------------------------------------
+ 
+Reading coastal watchtowers from 'watchtowers.txt'...
+Audited 5 stations.
+Farthest Reach Tower : Cape Point Lookout (38.42 statute miles)
+Beyond 30 NM Horizon : True</output>
+      </console>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 6: Multi-Exoplanet Solar System Survey & Census      -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-exoplanet-system-survey">
+    <title>Multi-Exoplanet Solar System Survey &amp; Planetary Audit</title>
+    <statement>
+      <p>
+        In Chapter 3, you evaluated whether an individual exoplanet orbited within its host star's Goldilocks (habitable) zone. In modern astrophysics, surveys like NASA's Kepler and TESS discover entire star systems containing multiple planets.
+      </p>
+      <p>
+        Write a program that audits an entire planetary system by reading records from <c>exoplanets.txt</c> or through an interactive sentinel loop, generating a planetary census.
+      </p>
+      <p>
+        <strong>Data Format (<c>exoplanets.txt</c>):</strong> Each planet record consists of three lines:
+        <ol>
+          <li><p>Planet name (<c>String</c>)</p></li>
+          <li><p>Semi-major axis distance in AU (<c>double</c>, Astronomical Units)</p></li>
+          <li><p>Planet radius relative to Earth (<c>double</c>, where Earth = 1.0)</p></li>
+        </ol>
+      </p>
+      <p>
+        <strong>Program Requirements:</strong>
+        <ol>
+          <li>
+            <p><strong>Host Star Parameters:</strong> Prompt the user once before the loop for the host star's mass (<m>M</m>, in solar masses) and star luminosity (<m>L</m>, relative to our Sun).</p>
+          </li>
+          <li>
+            <p><strong>Loop Structure:</strong> Read planet records in a loop using <c>while (fileScanner.hasNext())</c>.</p>
+          </li>
+          <li>
+            <p><strong>Calculations:</strong></p>
+            <ul>
+              <li><p>Orbital Period: <m>T = \sqrt{a^3 / M}</m> Earth years (Kepler's Third Law).</p></li>
+              <li><p>Period in Earth Days: <m>\text{periodDays} = T \times 365.25</m>.</p></li>
+              <li><p>Habitable Zone Boundaries: <m>r_{\text{inner}} = 0.95 \times \sqrt{L}\text{ AU}</m>, <m>r_{\text{outer}} = 1.40 \times \sqrt{L}\text{ AU}</m>.</p></li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Loop Roles:</strong></p>
+            <ul>
+              <li><p><strong>Stepper:</strong> Count total planets in system (<c>planetCount</c>).</p></li>
+              <li><p><strong>Counter (Stepper):</strong> Count how many planets fall within the habitable zone (<c>habitableCount</c>).</p></li>
+              <li><p><strong>Most-Wanted Holders:</strong> Track the planet with the longest orbital period (<c>longestYearPlanet</c>, <c>maxPeriod</c>) and the planet closest in radius to Earth (<m>|\text{radius} - 1.0|</m> is minimal).</p></li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>File Output:</strong> Write an executive astronomical summary to <c>system_census.txt</c> using <c>PrintWriter</c>.</p>
+          </li>
+        </ol>
+      </p>
+      <p>
+        <strong>Testing Requirement:</strong> Design a test suite verifying an empty system file, a star system with no habitable planets, a system where all planets are habitable, and boundary cases right on the inner/outer habitable radii.
+      </p>
+      <p>
+        Here is an example of the program running:
+      </p>
+      <console>
+        <output>=== Exoplanetary System Survey ===</output>
+        <input prompt="Enter host star mass (solar masses): ">1.05</input>
+        <input prompt="Enter host star luminosity        : ">1.12</input>
+        <output>
+Reading planetary records from 'exoplanets.txt'...
+ 
+----------------------------------------------------------------------
+PLANET NAME        AXIS (AU)    PERIOD (days)    RADIUS   ZONE
+----------------------------------------------------------------------
+Kepler-Xb            0.08           8.1            1.40    Too Hot
+Kepler-Xc            0.45         106.3            0.95    Too Hot
+Kepler-Xd            1.02         362.4            1.12    HABITABLE
+Kepler-Xe            1.65         745.2            2.30    Too Cold
+----------------------------------------------------------------------
+Total Planets Surveyed : 4
+Habitable Candidates  : 1 (Kepler-Xd)
+Longest Orbital Year  : Kepler-Xe (745.2 days)
+Best Earth Size Match : Kepler-Xc (0.95x Earth radius)
+Report exported to 'system_census.txt'.</output>
+      </console>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 7: Regional Weather Station Network & FAA Monitor    -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-regional-weather-monitor">
+    <title>Regional Weather Station Network &amp; FAA Ceiling Monitor</title>
+    <statement>
+      <p>
+        In Chapter 3, you calculated the cloud base for an individual airport and classified it under FAA flight categories (VFR, MVFR, IFR, LIFR). In regional air traffic management, flight dispatchers monitor weather streams from dozens of automated surface stations across an entire state to identify hazardous flying conditions.
+      </p>
+      <p>
+        Write a program that processes weather records across a regional airport network by reading <c>weather_stations.txt</c>.
+      </p>
+      <p>
+        <strong>Data Format (<c>weather_stations.txt</c>):</strong> Each airport station record contains four lines:
+        <ol>
+          <li><p>Station identifier callsign (<c>String</c>, e.g., <c>"KORH"</c>)</p></li>
+          <li><p>Airport name (<c>String</c>, e.g., <c>"Worcester Regional"</c>)</p></li>
+          <li><p>Surface temperature in Fahrenheit (<c>double</c>)</p></li>
+          <li><p>Relative humidity percentage (<c>double</c>, 0.0 to 100.0)</p></li>
+        </ol>
+      </p>
+      <p>
+        <strong>Program Requirements:</strong>
+        <ol>
+          <li>
+            <p><strong>Loop &amp; Reading:</strong> Read records using <c>while (scanner.hasNext())</c>. Use <c>nextLine()</c> for the callsign and airport name, and parse the numbers on lines 3 and 4.</p>
+            <ul>
+              <li><p>Dew Point: <m>T_d = T - \left(\frac{100 - RH}{5}\right) \times 1.8</m></p></li>
+              <li><p>Cloud Base: <m>\text{Cloud Base} = \left(\frac{T - T_d}{4.4}\right) \times 1000\text{ ft AGL}</m></p></li>
+              <li>
+                <p>FAA Flight Category:</p>
+                <ul>
+                  <li><p>LIFR (Low Instrument Flight Rules): Ceiling <m>&lt; 500\text{ ft}</m></p></li>
+                  <li><p>IFR (Instrument Flight Rules): Ceiling <m>500\text{ ft}</m> to <m>&lt; 1{,}000\text{ ft}</m></p></li>
+                  <li><p>MVFR (Marginal Visual Flight Rules): Ceiling <m>1{,}000\text{ ft}</m> to <m>\le 3{,}000\text{ ft}</m></p></li>
+                  <li><p>VFR (Visual Flight Rules): Ceiling <m>&gt; 3{,}000\text{ ft}</m></p></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Loop Roles:</strong></p>
+            <ul>
+              <li><p><strong>Stepper:</strong> Total stations surveyed (<c>totalStations</c>).</p></li>
+              <li><p><strong>Counters (Steppers):</strong> Tally count of stations in VFR vs. instrument conditions (IFR/LIFR).</p></li>
+              <li><p><strong>Gatherer:</strong> Total cumulative temperature across all stations to calculate the regional average.</p></li>
+              <li><p><strong>Most-Wanted Holder:</strong> Identify the station with the lowest cloud base (<c>lowestCeilingStation</c>, <c>minCeilingFt</c>).</p></li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Interactive Alert / File Output:</strong> Display the formatted network status table and write a safety alert to <c>flight_hazards.txt</c> if any station is in LIFR conditions.</p>
+          </li>
+        </ol>
+      </p>
+      <p>
+        <strong>Testing Requirement:</strong> Test with an empty file (zero iterations), a single station, and a test file where every station has 100.0% humidity (0 ft ceiling boundary).
+      </p>
+      <p>
+        Here is an example of the program running:
+      </p>
+      <console>
+        <output>=== FAA Regional Flight Weather Monitor ===
+Reading station data from 'weather_stations.txt'...
+ 
+---------------------------------------------------------------------------
+STATION  AIRPORT NAME              TEMP     DEWPT    CEILING    CATEGORY
+---------------------------------------------------------------------------
+KBOS     Boston Logan              68.0°F   59.0°F   2,045 ft   MVFR
+KORH     Worcester Regional        62.0°F   60.2°F     409 ft   LIFR
+KPVD     Providence Green          66.0°F   55.2°F   2,454 ft   MVFR
+KBDL     Bradley International     70.0°F   52.0°F   4,090 ft   VFR
+---------------------------------------------------------------------------
+Total Stations Monitored : 4
+Regional Mean Temperature: 66.5°F
+Stations in VFR / MVFR   : 3
+Instrument Hazards (IFR) : 1
+Most Hazardous Ceiling   : KORH (409 ft AGL - LIFR)
+Hazard alert exported to 'flight_hazards.txt'.</output>
+      </console>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 8: Thunderstorm Front & Trajectory Tracker          -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-thunderstorm-trajectory">
+    <title>Severe Thunderstorm Front Proximity &amp; Trajectory Tracker</title>
+    <statement>
+      <p>
+        In Chapter 3, you computed the distance to a single lightning strike and issued a 30/30 safety warning. In meteorology and wilderness safety, knowing whether a lightning storm is approaching or moving away is critical. By monitoring consecutive lightning strikes over time, a program can track the storm's velocity and determine whether safety conditions are deteriorating.
+      </p>
+      <p>
+        Write a program that tracks a sequence of lightning strikes recorded during an active storm, using the primed-loop pattern or reading <c>lightning_strikes.txt</c>.
+      </p>
+      <p>
+        <strong>Program Requirements:</strong>
+        <ol>
+          <li>
+            <p><strong>Ambient Conditions:</strong> Prompt the user once for the ambient air temperature in Celsius (used to calculate the temperature-corrected speed of sound: <m>v = 331.3 \times \sqrt{1 + T / 273.15}\text{ m/s}</m>).</p>
+          </li>
+          <li>
+            <p><strong>Strike Sequence Loop:</strong> Prompt for the flash-to-bang time in seconds for consecutive strikes. Use a sentinel value of <c>-1.0</c> to signal that the storm has passed or monitoring has ceased.</p>
+            <ul>
+              <li><p>Distance in meters: <m>\text{distanceMeters} = v \times \text{seconds}</m></p></li>
+              <li><p>Distance in miles: <m>\text{distanceMiles} = \text{distanceMeters} / 1609.34</m></p></li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>The Follower Role (Tracking Approach vs. Retreat):</strong> Implement Sajaniemi's follower variable role! Maintain two distance variables: <c>currentDistance</c> (Most-Recent Holder) and <c>previousDistance</c> (Follower). After the first strike, compare the two on each iteration:</p>
+            <ul>
+              <li><p>If <c>currentDistance &lt; previousDistance</c>: Display <q>STORM IS APPROACHING!</q></p></li>
+              <li><p>If <c>currentDistance &gt; previousDistance</c>: Display <q>Storm is moving away.</q></p></li>
+              <li><p>If equal: Display <q>Storm is stationary.</q></p></li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Loop Roles:</strong></p>
+            <ul>
+              <li><p><strong>Stepper:</strong> Count total strikes observed (<c>strikeCount</c>).</p></li>
+              <li><p><strong>Follower:</strong> Previous strike distance (<c>previousDistance</c>).</p></li>
+              <li><p><strong>Most-Wanted Holder:</strong> Record closest strike distance (<c>closestStrikeMiles</c>).</p></li>
+              <li><p><strong>One-Way Flag:</strong> <c>boolean shelterRequired</c> that starts <c>false</c> and flips permanently to <c>true</c> the first time any strike occurs within 6.0 miles (the NWS 30/30 safety rule).</p></li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Post-Loop Verification:</strong> Assert that if <c>strikeCount &gt; 0</c>, <c>closestStrikeMiles</c> is strictly positive.</p>
+          </li>
+        </ol>
+      </p>
+      <p>
+        <strong>Testing Requirement:</strong> Construct a test plan table verifying:
+        <ol>
+          <li><p>Zero strikes (immediate -1 sentinel).</p></li>
+          <li><p>Exactly one strike (ensuring the follower does not trigger a false <q>approaching</q> warning before a second strike exists).</p></li>
+          <li><p>Monotonically approaching strikes.</p></li>
+          <li><p>Strikes moving away.</p></li>
+        </ol>
+      </p>
+      <p>
+        Here is an example of the program running:
+      </p>
+      <console>
+        <output>=== Severe Thunderstorm Proximity Tracker ===</output>
+        <input prompt="Enter ambient temperature (Celsius): ">22.0</input>
+        <output>Speed of sound calibrated: 344.3 m/s (770.2 mph)
+ </output>
+        <input prompt="Enter flash-to-bang seconds (-1 to finish): ">25.0</input>
+        <output>Strike 1: 5.35 miles away. [30/30 RULE: SEEK SHELTER IMMEDIATELY!]
+ </output>
+        <input prompt="Enter flash-to-bang seconds (-1 to finish): ">18.0</input>
+        <output>Strike 2: 3.85 miles away. [STORM IS APPROACHING!]
+ </output>
+        <input prompt="Enter flash-to-bang seconds (-1 to finish): ">12.0</input>
+        <output>Strike 3: 2.57 miles away. [STORM IS APPROACHING!]
+ </output>
+        <input prompt="Enter flash-to-bang seconds (-1 to finish): ">16.0</input>
+        <output>Strike 4: 3.42 miles away. [Storm is moving away.]
+ </output>
+        <input prompt="Enter flash-to-bang seconds (-1 to finish): ">-1.0</input>
+        <output>
+============================================================
+STORM MONITORING LOG SUMMARY
+============================================================
+Total Strikes Tracked : 4
+Closest Strike Range : 2.57 miles
+Safety Violation     : YES (Lightning struck within 6.0 miles)
+Final Status         : Storm retreating. Remain sheltered 30 min.
+============================================================</output>
+      </console>
+    </statement>
+  </exercise>
+</exercises>

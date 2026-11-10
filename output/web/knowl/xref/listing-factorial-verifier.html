@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<!--******************************************-->
+<!--*  Authored with PreTeXt                 *-->
+<!--*  pretextbook.org                       *-->
+<!--*  Theme: default-modern                 *-->
+<!--*  Palette:                              *-->
+<!--******************************************-->
+
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body class="ignore-math">
+<figure class="listing figure-like"><figcaption><span class="type">Listing</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">4.16<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><code class="code-inline tex2jax_ignore">FactorialVerifier.java</code><div class="autopermalink" aria-hidden="true" data-description="Listing 4.16: FactorialVerifier.java"><a tabindex="-1" href="#listing-factorial-verifier" title="Copy heading and permalink for Listing 4.16: FactorialVerifier.java" aria-label="Copy heading and permalink for Listing 4.16: FactorialVerifier.java">🔗</a></div></figcaption><div class="listing__contents"><div class="code-box"><pre class="program clipboardable line-numbers"><code class="language-java">import java.util.Scanner;
+ 
+/**
+ * Calculates the factorial of 0 &lt;= n &lt;= 12 obtained
+ * from the user.
+ */
+public class FactorialVerifier {
+ 
+    public static void main(String[] args) {
+        Scanner stdin;       // To obtain n.
+        int n;               // From the user; 0-12.
+        int product = 1;     // The factorial of n.
+        
+        // Obtains n from the user.
+        stdin = new Scanner(System.in);
+        System.out.print("Enter a non-negative integer (0 to 12): ");
+        n = stdin.nextInt();
+        stdin.close();
+ 
+        // 1. PRECONDITION: Factorial is only defined for non-negative numbers,
+        // and 13! exceeds the 32-bit capacity of an int.
+        assert n &gt;= 0 &amp;&amp; n &lt;= 12 : "Input out of valid bounds: " + n;
+ 
+        // 2. LOOP: Multiply numbers from 1 up to n
+        for (int factor = 1; factor &lt;= n; factor++) {
+            // LOOP INVARIANT: product contains the factorial of (factor - 1)
+            product *= factor;
+            // LOOP INVARIANT: checking for overflow... or is it?
+            assert product &gt; 0 : "Arithmetic overflow detected at factor " + factor;
+        }
+ 
+        // 3. POSTCONDITION: Factorial of any valid input is at least 1
+        assert product &gt;= 1 : "Invalid postcondition: factorial result must be &gt;= 1";
+        
+        // Displays the factorial.
+        System.out.printf("%d! = %,d%n", n, product);
+    }
+}
+</code></pre></div></div>
+</figure><span class="incontext"><a class="internal" href="sec-4-8-loop-invariants.html#listing-factorial-verifier">In Context</a></span>
+</body>
+</html>

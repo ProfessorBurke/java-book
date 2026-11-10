@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<!--******************************************-->
+<!--*  Authored with PreTeXt                 *-->
+<!--*  pretextbook.org                       *-->
+<!--*  Theme: default-modern                 *-->
+<!--*  Palette:                              *-->
+<!--******************************************-->
+
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body class="ignore-math">
+<figure class="table table-like"><figcaption><span class="type">Table</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">3.27<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span>Test plan for the AQI problem<div class="autopermalink" aria-hidden="true" data-description="Table 3.27: Test plan for the AQI problem"><a tabindex="-1" href="#table-test-plan-aqi" title="Copy heading and permalink for Table 3.27: Test plan for the AQI problem" aria-label="Copy heading and permalink for Table 3.27: Test plan for the AQI problem">🔗</a></div></figcaption><div class="tabular-box natural-width"><table class="tabular">
+<tr class="header-horizontal">
+<th scope="col" class="l m b1 r1 l1 t1 lines">Test case</th>
+<th scope="col" class="l m b1 r1 l0 t1 lines">Path/purpose</th>
+<th scope="col" class="l m b1 r1 l0 t1 lines">Input</th>
+<th scope="col" class="l m b1 r1 l0 t1 lines">Expected output</th>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">1</td>
+<td class="l m b1 r1 l0 t0 lines">False—lower bound</td>
+<td class="l m b1 r1 l0 t0 lines">-1</td>
+<td class="l m b1 r1 l0 t0 lines">“Invalid reading.”</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">2</td>
+<td class="l m b1 r1 l0 t0 lines">False—upper bound</td>
+<td class="l m b1 r1 l0 t0 lines">501</td>
+<td class="l m b1 r1 l0 t0 lines">“Invalid reading.”</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">3</td>
+<td class="l m b1 r1 l0 t0 lines">True—healthy—lower bound</td>
+<td class="l m b1 r1 l0 t0 lines">0</td>
+<td class="l m b1 r1 l0 t0 lines">“Healthy air quality; safe to engage in outdoor activities.”</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">4</td>
+<td class="l m b1 r1 l0 t0 lines">True—healthy—upper bound</td>
+<td class="l m b1 r1 l0 t0 lines">50</td>
+<td class="l m b1 r1 l0 t0 lines">“Healthy air quality; safe to engage in outdoor activities.”</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">5</td>
+<td class="l m b1 r1 l0 t0 lines">True—moderate—lower bound</td>
+<td class="l m b1 r1 l0 t0 lines">51</td>
+<td class="l m b1 r1 l0 t0 lines">“Moderate air quality; sensitive groups should limit outdoor activities.”</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">6</td>
+<td class="l m b1 r1 l0 t0 lines">True—moderate—upper bound</td>
+<td class="l m b1 r1 l0 t0 lines">150</td>
+<td class="l m b1 r1 l0 t0 lines">“Moderate air quality; sensitive groups should limit outdoor activities.”</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">7</td>
+<td class="l m b1 r1 l0 t0 lines">True—unhealthy—lower bound</td>
+<td class="l m b1 r1 l0 t0 lines">151</td>
+<td class="l m b1 r1 l0 t0 lines">“Unhealthy air quality; limit outdoor activities.”</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines">8</td>
+<td class="l m b1 r1 l0 t0 lines">True—unhealthy—upper bound</td>
+<td class="l m b1 r1 l0 t0 lines">500</td>
+<td class="l m b1 r1 l0 t0 lines">“Unhealthy air quality; limit outdoor activities.”</td>
+</tr>
+</table></div>
+</figure><span class="incontext"><a class="internal" href="sec-3-10-putting-it-together.html#table-test-plan-aqi">In Context</a></span>
+</body>
+</html>

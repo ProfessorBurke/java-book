@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-3-6-comparing-strings" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Comparing Strings and Other Objects</title>
+
+  
+  <introduction>
+    <p>
+      You will remember from <xref ref="sec-2-6-strings" /> that there are fundamental differences between the primitive types (<c>int</c>, <c>double</c>, <c>char</c>, etc.) and object types such as <c>String</c>. One of the key differences is how primitives and objects are stored in memory.
+    </p>
+
+    <!-- ============================================================ -->
+    <!-- 3.6.1 Equality and the stack                                 -->
+  </introduction>
+
+
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-3-6-1-equality-and-the-stack">
+    <title>Equality and the Stack</title>
+
+    <p>
+      Consider <xref ref="listing-grading-nested" />, in which we assigned a value to the <c>String</c> <c>result</c> based on values in the integer variables <c>preTestScore</c> and <c>postTestScore</c>:
+    </p>
+
+    <program language="java" line-numbers="yes"><![CDATA[// Construct the recommendation.
+if (postTestScore >= 70) {
+    result = "Pass.";
+} else  {
+    result = "Retake with ";
+    if (preTestScore < 60) {
+        result += "foundational intervention.";
+    } else {
+        result += "conceptual intervention.";
+    }
+}]]></program>
+
+    <p>
+      When the <c>main</c> method runs, space is reserved in the frame for <c>main</c> on the stack for all three variables. When <c>preTestScore</c> and <c>postTestScore</c> are assigned values, they are stored directly in the correct spaces on the call stack. When <c>result</c> is assigned a value, however, space is allocated in the heap, and the memory address of that space is stored in <c>result</c>’s location on the stack.
+    </p>
+
+    <figure xml:id="figure-stack-heap-string-result">
+      <title>Stack and heap memory for primitive variables and a <c>String</c> reference</title>
+      <image source="figures/figure_3_6.png" width="85%">
+        <shortdescription>Stack and heap diagram showing preTestScore and postTestScore storing numeric values on the stack, while result holds a memory address pointing to a String object in the heap.</shortdescription>
+        <description>
+          <p>
+            Diagram showing the call stack on the left and heap memory on the right. Inside the stack frame for <c>main</c>, primitive variables <c>preTestScore</c> (55) and <c>postTestScore</c> (82.0) store their values directly on the stack. Variable <c>result</c> stores a memory address (<c>0x4200</c>) with a reference arrow pointing to a <c>String</c> object holding the value <q>Pass.</q> in heap memory.
+          </p>
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      The equality operators (<c>==</c> and <c>!=</c>) compare the values stored in the variables on the stack. This means we are comparing the values of the variables for primitives, which is exactly what we want. But when we compare strings or other objects, we are comparing the memory addresses.
+    </p>
+
+    <p>
+      This can be useful<mdash />sometimes we want to know if two variables are referencing the exact same object in memory. However, when we compare two strings, we usually want to know if they are composed of the same characters in the same order. The equality operators cannot tell us if two <c>String</c> variables contain the same values. They can only tell us if they are referencing the exact same location in the heap.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 3.6.2 How to compare String variables                        -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-3-6-2-how-to-compare-strings">
+    <title>How to Compare <c>String</c> Variables</title>
+
+    <p>
+      In Java, to compare two <c>String</c> variables, use the boolean method <c>.equals()</c>. We invoke the method on one <c>String</c> variable, and pass the <c>String</c> we are comparing as an argument:
+    </p>
+
+    <program language="java"><![CDATA[System.out.print("Do you wish to continue? (yes or no): ");
+answer = stdin.nextLine();
+if (answer.equals("yes")) {
+    // Proceed...
+}]]></program>
+
+    <p>
+      In the code above, we invoke the <c>.equals</c> method on the <c>String</c> variable <c>answer</c>, passing in the literal <c>String</c> <c>"yes"</c> as an argument. Note that either <c>String</c><mdash />the one before the dot or the one passed as an argument<mdash />can be any <c>String</c> expression, including a <c>String</c> literal, variable, result of a concatenation, or result of a method that returns a <c>String</c>.
+    </p>
+
+    <p>
+      For example, if we want to accept the user’s answer regardless of case, we might write:
+    </p>
+
+    <program language="java"><![CDATA[if (answer.toUpperCase().equals("YES")) {]]></program>
+
+    <p>
+      In this example, we invoke the <c>toUpperCase</c> method on the <c>String</c> entered by the user. The result of this method is an uppercase version of the <c>String</c> entered by the user. We invoke the <c>equals</c> method on that result, passing in the literal <c>String</c> <c>"YES"</c> as an argument.
+    </p>
+
+    <p>
+      Java <c>String</c> objects have another solution for comparing <c>String</c> variables without considering case, and that’s the <c>.equalsIgnoreCase()</c> method. In our code example, we could write:
+    </p>
+
+    <program language="java"><![CDATA[if (answer.equalsIgnoreCase("yes")) {]]></program>
+
+    <p>
+      This test will ignore the case in the <c>String</c> before the dot and the <c>String</c> argument, evaluating to <c>true</c> for any upper- or lower-case combination of the letters 'Y', 'E', and 'S', in that order, such as <c>"YES"</c>, <c>"Yes"</c>, <c>"yes"</c>, <c>"yeS"</c>, etc.
+    </p>
+
+    <p>
+      The <c>equals</c> method is defined for all objects, but the default implementation is to perform a comparison with <c>==</c>. If you want to compare two objects in Java, check that the <c>equals</c> method has been defined in a meaningful way before proceeding.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 3.6.3 Ordering String variables                              -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-3-6-3-ordering-strings">
+    <title>Ordering <c>String</c> Variables</title>
+
+    <p>
+      The relational operators (<c>&lt;</c>, <c>&lt;=</c>, <c>&gt;</c>, <c>&gt;=</c>) cannot be used to compare objects, such as <c>String</c> variables. Attempting this will result in a compiler error. However, ordering text (think <q>alphabetic ordering</q>) is a common operation, so the Java <c>String</c> objects have <c>.compareTo()</c> and <c>.compareToIgnoreCase()</c> methods. But how are <c>String</c> objects compared? Java (and most other languages) compare strings by their lexicographic order, using the following algorithm:
+    </p>
+
+    <ul>
+      <li>
+        <p>Begin with index 0 (the first character) of both <c>String</c> objects and compare the Unicode values of the characters:</p>
+        <ul>
+          <li><p>If they’re different, the <c>String</c> with the smaller Unicode value is <q>less than</q> the other <c>String</c>.</p></li>
+          <li><p>If they’re the same, repeat with the character at the next index.</p></li>
+        </ul>
+      </li>
+      <li>
+        <p>If all of the characters are the same and you’ve reached the end of one <c>String</c>:</p>
+        <ul>
+          <li><p>If you’ve also reached the end of the other <c>String</c>, they are equal.</p></li>
+          <li><p>If the other <c>String</c> is longer, it’s <q>greater than</q> the shorter <c>String</c>.</p></li>
+        </ul>
+      </li>
+    </ul>
+
+    <p>
+      Note that strings are not compared by length unless they are the same up until one <c>String</c> ends (e.g. <c>"Yessirreebob"</c> is greater than <c>"Yes"</c> because they are identical up to the end of the <c>String</c> <c>"Yes"</c>). If you want to find the longer of two strings, use the <c>String</c> length method (e.g. <c>string1.length() &gt; string2.length()</c>).
+    </p>
+
+    <p>
+      The <c>compareTo</c> methods are not boolean methods<mdash />they return a numeric result. If the <c>String</c> before the dot is lexicographically before (<q>less than</q>) the <c>String</c> argument, they return a negative result. If the strings are equal, they return a 0 result, and if the <c>String</c> before the dot is lexicographically after (<q>greater than</q>) the <c>String</c> argument, they return a positive result (the actual value of the result depends on the strings being compared):
+    </p>
+
+    <program language="java"><![CDATA["a".compareTo("b")       // evaluates to -1
+"a".compareTo("a")       // evaluates to 0
+"zoo".compareTo("apple") // evaluates to 25]]></program>
+
+    <p>
+      It is important to note that uppercase and lowercase letters have different Unicode values. We might intuitively know that 'A' and 'a' (or Greek uppercase 'Ω' and lowercase 'ω') are different characters and are therefore not equal, but which is <q>less than</q> the other? In both Latin and Greek alphabets, uppercase letters come before lowercase letters in the Unicode table. Therefore, and perhaps surprisingly, <c>'Z' &lt; 'a'</c>, and thus <c>"Zebra".compareTo("aardvark")</c> evaluates to -7, indicating that <c>"Zebra"</c> is lexicographically first, or <q>less</q>!
+    </p>
+
+    <p>
+      The <c>compareToIgnoreCase</c> method returns similar results, but treats uppercase and lowercase letters as equivalent, allowing you to order text without case affecting the result (for example, treating 'a' and 'A' as having the same Unicode value). <c>"Zebra".compareToIgnoreCase("aardvark")</c> evaluates to 25, giving us the alphabetic ordering we expect.
+    </p>
+
+    <p>
+      We might use <c>compareToIgnoreCase</c> in an <c>if</c> statement to determine alphabetic order, as follows:
+    </p>
+
+    <program language="java"><![CDATA[if (lastName1.compareToIgnoreCase(lastName2) < 0) {
+    // processing lastName1 as alphabetically before lastName2
+} else if (lastName1.compareToIgnoreCase(lastName2) > 0) {
+    // processing lastName2 as alphabetically before lastName1
+} else {
+    // processing the names as the same
+}]]></program>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 3.6.4 Warning! Why == sometimes seems to work                -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-3-6-4-why-equality-operator-seems-to-work">
+    <title>Warning! Why <c>==</c> Sometimes Seems to Work</title>
+
+    <p>
+      If using <c>==</c> to compare strings is an error, why do so many beginners get away with it at first?
+    </p>
+
+    <p>
+      Consider this experiment:
+    </p>
+
+    <program language="java"><![CDATA[String word1 = "apple";
+String word2 = "apple";
+
+if (word1 == word2) {
+    System.out.println("They match!"); // This actually prints!
+}]]></program>
+
+    <p>
+      If you run this code, it prints <q>They match!</q>. Seeing this happen can lead you to conclude that the warnings about <c>==</c> are exaggerated and that <c>==</c> works for text after all.
+    </p>
+
+    <p>
+      However, this is an illusion created by a performance optimization inside the Java Virtual Machine.
+    </p>
+
+    <p>
+      Because text is so common in software, creating a brand new heap object every single time a program encounters a <c>String</c> literal would waste a massive amount of memory.
+    </p>
+
+    <p>
+      To conserve memory, Java maintains a special area in the heap called the String Constant Pool (often referred to simply as the String Pool).
+    </p>
+
+    <ol>
+      <li>
+        <p>When the code above is compiled, Java scans it for <c>String</c> literals (text directly enclosed in double quotes, like <c>"apple"</c>).</p>
+      </li>
+      <li>
+        <p>The first time Java encounters <c>"apple"</c>, it creates a single <c>String</c> object in the String Pool.</p>
+      </li>
+      <li>
+        <p>When Java encounters <c>"apple"</c> a second time on the next line, it does not create a new object. Instead, it reuses the existing object in the pool and assigns its memory address to <c>word2</c>.</p>
+      </li>
+    </ol>
+
+    <p>
+      Because <c>word1</c> and <c>word2</c> both store the memory address of that exact same object in the pool, their values on the stack (the addresses) are identical. When Java evaluates <c>word1 == word2</c>, the comparison evaluates to <c>true</c><mdash />not because their characters were compared, but because they happen to point to the exact same memory address!
+    </p>
+
+    <figure xml:id="figure-string-pool-shared-literal">
+      <title>String Pool reuse for identical string literals</title>
+      <image source="figures/figure_3_7.png" width="85%">
+        <shortdescription>Stack and heap diagram showing word1 and word2 pointing to the same shared "apple" object in the String Constant Pool.</shortdescription>
+        <description>
+          <p>
+            Diagram showing the call stack and heap memory. Variables <c>word1</c> and <c>word2</c> on the stack both store the identical memory address <c>0x5000</c>. Both reference arrows point to a single shared <c>String</c> object with value <q>apple</q> located in the String Constant Pool inside the heap. Evaluating <c>word1 == word2</c> yields <c>true</c> because both variables hold the address <c>0x5000</c>.
+          </p>
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      The String Pool applies only to compile-time literals. The moment strings are created dynamically while the program is running<mdash />such as reading text from a user with a <c>Scanner</c>, reading from a file, or concatenating variables<mdash />Java allocates a brand new object in regular heap memory, outside the pool.
+    </p>
+
+    <p>
+      Consider what happens when input comes from a user:
+    </p>
+
+    <program language="java"><![CDATA[Scanner stdin = new Scanner(System.in);
+String storedPassword = "secret";
+
+System.out.print("Enter password: ");
+String enteredPassword = stdin.nextLine(); // User types: secret
+
+if (enteredPassword == storedPassword) {
+    System.out.println("Access granted!");
+} else {
+    System.out.println("Access denied!");
+}]]></program>
+
+    <p>
+      Even if the user types secret with perfect spelling, this code will print:
+    </p>
+
+    <console>
+      <output>Access denied!</output>
+    </console>
+
+    <p>
+      Here is what memory looks like in that moment:
+    </p>
+
+    <figure xml:id="figure-string-pool-vs-regular-heap">
+      <title>String Pool object versus dynamic object in regular heap memory</title>
+      <image source="figures/figure_3_8.png" width="85%">
+        <shortdescription>Diagram showing storedPassword referencing the String Pool at 0x5000 while enteredPassword references regular heap memory at 0x9200.</shortdescription>
+        <description>
+          <p>
+            Diagram showing memory layout during user input comparison. On the stack, <c>storedPassword</c> contains address <c>0x5000</c>, pointing to a literal <c>String</c> object <q>secret</q> in the String Constant Pool. In contrast, <c>enteredPassword</c> contains address <c>0x9200</c>, pointing to a separate dynamic <c>String</c> object created by <c>stdin.nextLine()</c> in regular heap memory. Comparing <c>enteredPassword == storedPassword</c> evaluates to <c>false</c> because <c>0x9200 != 0x5000</c>, resulting in access being incorrectly denied.
+          </p>
+        </description>
+      </image>
+    </figure>
+
+    <ol>
+      <li>
+        <p><c>storedPassword</c> points to the <c>"secret"</c> object stored in the String Pool (<c>0x5000</c>).</p>
+      </li>
+      <li>
+        <p>When <c>stdin.nextLine()</c> reads the user's input, it creates an entirely new <c>String</c> object in regular heap memory (<c>0x9200</c>).</p>
+      </li>
+      <li>
+        <p>Even though both objects contain the exact same characters in the exact same order, <c>enteredPassword == storedPassword</c> compares the addresses <c>0x9200 == 0x5000</c>, which is <c>false</c>. The program incorrectly locks the user out!</p>
+      </li>
+    </ol>
+
+    <p>
+      You can see this same behavior without user input by explicitly using the <c>new</c> keyword to bypass the pool:
+    </p>
+
+    <program language="java"><![CDATA[String a = "hello";
+String b = new String("hello"); // Forces a new object outside the pool
+
+System.out.println(a == b);      // false (different addresses)
+System.out.println(a.equals(b)); // true (same characters)]]></program>
+
+    <p>
+      Because you cannot control how every string in a program was created<mdash />especially when data comes from user input, calculations, or external files<mdash />you must follow this rule without exception:
+    </p>
+
+    <ul>
+      <li>
+        <p>Never use <c>==</c> or <c>!=</c> to compare text.</p>
+      </li>
+      <li>
+        <p>Always use <c>.equals()</c> or <c>.equalsIgnoreCase()</c> to test for matching content.</p>
+      </li>
+    </ul>
+
+    <p>
+      The <c>equals</c> method does not care whether two strings share an address in the String Pool or live in separate regions of the heap; it travels to wherever the objects reside and compares their characters one by one.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 3.6.5 Another use for not !                                  -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-3-6-5-another-use-for-not">
+    <title>Another Use for not (<c>!</c>)</title>
+
+    <p>
+      In <xref ref="subsec-3-5-3-logical-not" /> (and again in <xref ref="subsec-3-5-6-de-morgans-laws" />), we cautioned against reflexively placing a <c>!</c> in front of expressions to complement them. Code is almost always easier to read when you use a direct complementary operator (such as writing <c>&lt;=</c> instead of <c>!( &gt; )</c>, or using De Morgan’s laws on compound expressions) rather than forcing the reader to untangle double negatives.
+    </p>
+
+    <p>
+      We noted that the main exception is a boolean variable, since there is no other operator available to invert a flag.
+    </p>
+
+    <p>
+      A second, equally important exception is a boolean method, such as <c>.equals()</c>. Because Java has no built-in <c>.notEquals()</c> method, testing that two strings do not match requires placing a <c>!</c> in front of the method call:
+    </p>
+
+    <program language="java"><![CDATA[if (!answer.equals("yes")) {
+    // process a non-yes answer
+}]]></program>
+
+    <p>
+      This principle applies to any method that returns a boolean, including <c>.equalsIgnoreCase()</c>, and many other query methods you will encounter throughout this book.
+    </p>
+  </subsection>
+</section>

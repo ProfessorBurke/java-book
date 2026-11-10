@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<!--******************************************-->
+<!--*  Authored with PreTeXt                 *-->
+<!--*  pretextbook.org                       *-->
+<!--*  Theme: default-modern                 *-->
+<!--*  Palette:                              *-->
+<!--******************************************-->
+
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body class="ignore-math">
+<figure class="listing figure-like"><figcaption><span class="type">Listing</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">3.1<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><code class="code-inline tex2jax_ignore">PercentSuccess.java</code><div class="autopermalink" aria-hidden="true" data-description="Listing 3.1: PercentSuccess.java"><a tabindex="-1" href="#listing-percent-success" title="Copy heading and permalink for Listing 3.1: PercentSuccess.java" aria-label="Copy heading and permalink for Listing 3.1: PercentSuccess.java">🔗</a></div></figcaption><div class="listing__contents"><div class="code-box"><pre class="program clipboardable line-numbers"><code class="language-java">import java.util.Scanner;
+
+/**
+ * Calculates the percentage of successful freethrows,
+ * given total freethrows and successful freethrows,
+ * obtained from the user.
+ */
+public class PercentSuccess {
+
+    public static void main(String[] args) {
+
+        // For obtaining inputs.
+        Scanner stdin;
+        // User inputs.
+        int totalFreethrows, successfulFreethrows;
+        // Calculated: percentage of successful freethrows.
+        double percentSuccess;
+
+        // Obtain the total and successful freethrows from the user.
+        stdin = new Scanner(System.in);
+        System.out.print("Enter the total number of freethrows: ");
+        totalFreethrows = stdin.nextInt();
+        System.out.print("Enter the number of successful freethrows: ");
+        successfulFreethrows = stdin.nextInt();
+        stdin.close();
+
+        // Calculate and display the percentage of successful freethrows 
+        // only if totalFreethrows is greater than zero.
+        if (totalFreethrows &gt; 0) {
+            percentSuccess = (double)successfulFreethrows / totalFreethrows;
+            percentSuccess *= 100.0;
+            System.out.print("The percentage of successful freethrows is ");
+            System.out.printf("%.1f%%.%n", percentSuccess);
+        }
+    }
+}
+</code></pre></div></div>
+</figure><span class="incontext"><a class="internal" href="sec-3-2-forming-conditions.html#listing-percent-success">In Context</a></span>
+</body>
+</html>

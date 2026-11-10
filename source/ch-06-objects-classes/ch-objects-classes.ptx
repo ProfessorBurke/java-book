@@ -32,104 +32,66 @@
     </p>
 
     <ul>
-      <li>
-        <p>
-          <xref ref="sec-6-2-oop-intro" text="title"/>: Exploring programming 
-          paradigms, contrasting procedural decomposition with object-oriented design, 
-          and understanding how encapsulation and information hiding protect data 
-          integrity.
-        </p>
-      </li>
+  <li>
+    <p>
+      <xref ref="sec-6-2-oop-intro" /> What is Object-Oriented Programming?<mdash />Exploring programming paradigms, contrasting procedural decomposition with object-oriented design, and understanding how encapsulation and information hiding protect data integrity.
+    </p>
+  </li>
 
-      <li>
-        <p>
-          <xref ref="sec-6-3-structure" text="title"/>: Exploring how object-oriented 
-          programs are organized across multiple files in an IDE, examining a minimal 
-          two-file example, and tracing how objects are constructed on the heap, how 
-          reference variables track them on the stack, and how accessor and mutator 
-          methods query and update their state.
-        </p>
-      </li>
+  <li>
+    <p>
+      <xref ref="sec-6-3-structure" /> Structure of an Object-Oriented Solution<mdash />Exploring how object-oriented programs are organized across multiple files in an IDE, examining a minimal two-file example, and tracing how objects are constructed on the heap, how reference variables track them on the stack, and how accessor and mutator methods query and update their state.
+    </p>
+  </li>
 
-      <li>
-        <p>
-          <xref ref="sec-6-4-defining-class" text="title"/>: 
-		  Writing a class blueprint 
-          by declaring <c>private</c> instance variables (fields) to hold state, 
-          implementing <c>public</c> constructors, accessors (getters), and mutators 
-          (setters) to define behavior, and visualizing classes with UML class and 
-          object diagrams.
-        </p>
-      </li>
+  <li>
+    <p>
+      <xref ref="sec-6-4-defining-class" /> Defining a Class: State and Behavior<mdash />Writing a class blueprint by declaring <c>private</c> instance variables (fields) to hold state, implementing <c>public</c> constructors, accessors (getters), and mutators (setters) to define behavior, and visualizing classes with UML class and object diagrams.
+    </p>
+  </li>
 
-      <li>
-        <p>
-          <xref ref="sec-6-5-static-instance" text="title"/>: Distinguishing between 
-          instance members tied to individual heap objects and <c>static</c> members 
-          shared across an entire class blueprint, declaring named constants 
-          (<c>public static final</c>), maintaining shared counters, and understanding 
-          when to use static utility methods versus instance methods.
-        </p>
-      </li>
+  <li>
+    <p>
+      <xref ref="sec-6-5-static-instance" /> Static vs. Instance Members<mdash />Distinguishing between instance members tied to individual heap objects and <c>static</c> members shared across an entire class blueprint, declaring named constants (<c>public static final</c>), maintaining shared counters, and understanding when to use static utility methods versus instance methods.
+    </p>
+  </li>
 
-      <li>
-        <p>
-          <xref ref="sec-6-6-overloading" text="title"/>: Overloading constructors and 
-          instance methods to provide flexible object initialization, writing default and 
-          argument constructors, using the <c>this</c> reference to resolve local 
-          variable shadowing, and chaining constructors with <c>this(...)</c> to 
-          eliminate redundant initialization logic.
-        </p>
-      </li>
+  <li>
+    <p>
+      <xref ref="sec-6-6-overloading" /> Overloading Methods and Constructors<mdash />Overloading constructors and instance methods to provide flexible object initialization, writing default and argument constructors, using the <c>this</c> reference to resolve local variable shadowing, and chaining constructors with <c>this(...)</c> to eliminate redundant initialization logic.
+    </p>
+  </li>
 
-      <li>
-        <p>
-          <xref ref="sec-6-7-memory-model" text="title"/>: Tracing how reference 
-          variables on the call stack point to objects on the heap, understanding reference 
-          aliasing (<c>=</c>), contrasting shallow copying with deep copying, passing 
-          object references as method arguments, defending against <c>null</c> references, 
-          and visualizing how Java's garbage collector reclaims unreachable memory.
-        </p>
-      </li>
+  <li>
+    <p>
+      <xref ref="sec-6-7-memory-model" /> Objects in Memory: The Stack and the Heap<mdash />Tracing how reference variables on the call stack point to objects on the heap, understanding reference aliasing (<c>=</c>), contrasting shallow copying with deep copying, passing object references as method arguments, defending against <c>null</c> references, and visualizing how Java's garbage collector reclaims unreachable memory.
+    </p>
+  </li>
 
-      <li>
-        <p>
-          <xref ref="sec-6-8-tostring-equals" text="title"/>: Tapping into Java's 
-          universal <c>Object</c> hierarchy to replace default memory-address output with 
-          custom <c>toString()</c> formatting and value-based <c>equals()</c> comparisons.
-        </p>
-      </li>
+  <li>
+    <p>
+      <xref ref="sec-6-8-tostring-equals" /> Printing and Comparing Objects: <c>toString</c> and <c>equals</c><mdash />Tapping into Java's universal <c>Object</c> hierarchy to replace default memory-address output with custom <c>toString()</c> formatting and value-based <c>equals()</c> comparisons.
+    </p>
+  </li>
 
-      <li>
-        <p>
-          <xref ref="sec-6-9-javadoc" text="title"/>: Authoring professional Javadoc 
-          documentation that adheres to information hiding, specifying <c>@param</c> and 
-          <c>@return</c> tags without leaking implementation details, and formally 
-          documenting class invariants in class-level header comments.
-        </p>
-      </li>
+  <li>
+    <p>
+      <xref ref="sec-6-9-javadoc" /> Documenting Classes with Javadoc<mdash />Authoring professional Javadoc documentation that adheres to information hiding, specifying <c>@param</c> and <c>@return</c> tags without leaking implementation details, and formally documenting class invariants in class-level header comments.
+    </p>
+  </li>
 
-      <li>
-        <p>
-          <xref ref="sec-6-10-unit-testing" text="title"/>: Testing stateful objects 
-          using the industry-standard Arrange<ndash/>Act<ndash/>Assert (AAA) pattern, 
-          validating state transitions, and enforcing method preconditions with Java 
-          assertions.
-        </p>
-      </li>
+  <li>
+    <p>
+      <xref ref="sec-6-10-unit-testing" /> Unit Testing Classes: The Arrange<ndash />Act<ndash />Assert Pattern<mdash />Testing stateful objects using the industry-standard Arrange<ndash />Act<ndash />Assert (AAA) pattern, validating state transitions, and enforcing method preconditions with Java assertions.
+    </p>
+  </li>
 
-      <li>
-        <p>
-          <xref ref="sec-6-11-case-study" text="title"/>: Applying object-oriented design 
-          to a multi-class system inspired by a shared-use community kitchen, using 
-          Class<ndash/>Responsibility<ndash/>Collaborator (CRC) cards to decompose 
-          responsibilities, modeling unidirectional composition (<q>has-a</q> 
-          relationships) between <c>RecipeBatch</c> and <c>Oven</c>, tracing lifecycle 
-          changes with a UML state-transition diagram, and walking through full 
-          implementation and verification.
-        </p>
-      </li>
-    </ul>
+  <li>
+    <p>
+      <xref ref="sec-6-11-case-study" /> Case Study: A Community Kitchen Bakery Tracker<mdash />Applying object-oriented design to a multi-class system inspired by a shared-use community kitchen, using Class<ndash />Responsibility<ndash />Collaborator (CRC) cards to decompose responsibilities, modeling unidirectional composition (<q>has-a</q> relationships) between <c>RecipeBatch</c> and <c>Oven</c>, tracing lifecycle changes with a UML state-transition diagram, and walking through full implementation and verification.
+    </p>
+  </li>
+</ul>
 
     <p>
       Once you master the concepts in this chapter, you will no longer be limited to 

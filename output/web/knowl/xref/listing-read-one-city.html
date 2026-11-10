@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<!--******************************************-->
+<!--*  Authored with PreTeXt                 *-->
+<!--*  pretextbook.org                       *-->
+<!--*  Theme: default-modern                 *-->
+<!--*  Palette:                              *-->
+<!--******************************************-->
+
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body class="ignore-math">
+<figure class="listing figure-like"><figcaption><span class="type">Listing</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">4.18<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><code class="code-inline tex2jax_ignore">ReadOneCity.java</code><div class="autopermalink" aria-hidden="true" data-description="Listing 4.18: ReadOneCity.java"><a tabindex="-1" href="#listing-read-one-city" title="Copy heading and permalink for Listing 4.18: ReadOneCity.java" aria-label="Copy heading and permalink for Listing 4.18: ReadOneCity.java">🔗</a></div></figcaption><div class="listing__contents"><div class="code-box"><pre class="program clipboardable line-numbers"><code class="language-java">import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+ 
+/**
+ * Reads AQI and location data for one city from a file.
+ */
+public class ReadOneCity {
+ 
+    public static void main(String[] args) throws FileNotFoundException {
+        
+        File cityFile;       // The file with city data.
+        Scanner fileScanner;  // For reading city data.
+        String name;               // City name.
+        double latitude, longitude;  // City location.
+        int aqi;                   // City air quality.
+        
+        // Reads the city data from the file.
+        cityFile = new File("one_aqi_city.txt");
+        if (!cityFile.exists()) {
+            System.out.println("The file was not found.");
+        } else {
+            // Read the city data from the file.
+            fileScanner = new Scanner(cityFile);
+            name = fileScanner.nextLine();
+            latitude = fileScanner.nextDouble();
+            longitude = fileScanner.nextDouble();
+            aqi = fileScanner.nextInt();
+            fileScanner.close();
+            
+            // Display the city data to the console.
+            System.out.printf("%-20s%s%n", "Name:", name);
+            System.out.printf("%-20s%f%n", "Latitude:", latitude);
+            System.out.printf("%-20s%f%n", "Longitude:", longitude);
+            System.out.printf("%-20s%d%n", "AQI:", aqi);
+        }
+    }
+}
+</code></pre></div></div>
+</figure><span class="incontext"><a class="internal" href="sec-4-10-reading-files-scanner.html#listing-read-one-city">In Context</a></span>
+</body>
+</html>
