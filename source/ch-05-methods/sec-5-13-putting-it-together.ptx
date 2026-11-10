@@ -2,14 +2,19 @@
 <section xml:id="sec-5-13-putting-it-together" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Putting It All Together: A Complete Case Study</title>
 
-  <introduction>
-    <sidebyside widths="70% 25%" valigns="middle middle">
+ <introduction>
+    <sidebyside widths="70% 25%" valigns="middle top">
       <p>
         You now have all the tools you need to solve problems by decomposing them into sub-tasks implemented with methods. Let’s work through an example problem and then you can try some of the exercises at the end of the chapter.
       </p>
-      <image source="figures/dice.jpg">
-        <shortdescription>Two six-sided dice showing pips.</shortdescription>
-      </image>
+      <stack>
+        <image source="figures/dice.jpg">
+          <shortdescription>Two six-sided dice showing pips.</shortdescription>
+        </image>
+        <p>
+          Two six-sided dice. <copyright /> Schlurcher, retrieved from <url href="https://commons.wikimedia.org/wiki/File:Spielw%C3%BCrfel.jpg" visual="commons.wikimedia.org/wiki/File:Spielw%C3%BCrfel.jpg">Wikimedia Commons</url>.
+        </p>
+      </stack>
     </sidebyside>
   </introduction>
 
