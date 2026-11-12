@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-7-1-overview" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Overview: Managing Collections of Data</title>
+
+  <p>
+    Up to this point, every variable you have created has been a <term>scalar variable</term><mdash />a named storage container designed to hold exactly one piece of information at a time. Each variable represents one discrete entity, such as an integer air quality reading, a floating point launch angle, or a single <c>Point</c> object.
+  </p>
+
+  <p>
+    Even when we wrote loops to process streams of data, including whole files, our variables could hold only one set of incoming values at a time. On the next iteration of the loop, those values were overwritten. We could accumulate totals and find best-fit values, but we couldn’t hold all of the data in memory simultaneously.
+  </p>
+
+  <p>
+    Many computational problems require continuous, simultaneous access to large collections of homogeneous data. For example:
+    <ul>
+      <li>
+        <p>
+          Reading 500 exam scores from a file, calculating the class average, and then printing a report of all individual scores that fell below that average.
+        </p>
+      </li>
+      <li>
+        <p>
+          Writing an air traffic management system tracking dozens of commercial flights, each with continuous altitude, speed, and heading updates.
+        </p>
+      </li>
+      <li>
+        <p>
+          Building a game board<mdash />such as Chess, Tic-Tac-Toe, or a grid of pixels in an image<mdash />that requires spatial, two-dimensional coordinates.
+        </p>
+      </li>
+    </ul>
+  </p>
+
+  <p>
+    It is possible, but not practical, to solve some of these problems using hundreds of separate variables or by repeatedly re-reading files on disk. But doing so either robs you of the ability to process data iteratively with loops or forces you to trade fast RAM for physical storage, which is orders of magnitude slower to access.
+  </p>
+
+  <p>
+    To solve this challenge, modern programming languages provide <term>data structures</term>: organized arrangements for storing and manipulating collections of related data under a single identifier. In this chapter, you will master Java’s foundational linear structure: the <term>array</term>. You will explore how to create, fill, and access one-dimensional arrays and multi-dimensional grids, learn how the data is allocated in the heap and the impact that has on our algorithms, and learn to safely track partially-filled datasets. You will also discover how Java’s dynamic <c>ArrayList</c> class and wrapper types eliminate the friction of fixed capacities and manual element shifting.
+  </p>
+
+  <p>
+    Organizing data into memory is only half the battle, however; software must also process that data efficiently. Along the way, you will revisit familiar variable roles to filter and aggregate collections, explore classic computer science algorithms for searching and sorting, and receive an intuitive introduction to computational complexity (Big-O notation) to evaluate how algorithms scale as datasets grow from dozens of items to millions.
+  </p>
+
+  <list xml:id="list-chapter-7-roadmap">
+    <title>Roadmap for Chapter 7</title>
+    <ul>
+      <li>
+        <p>
+          <strong>7.2 1D Array Fundamentals &amp; The Memory Model</strong><mdash />Declaration, instantiation, default values, zero-based indexing, counting loops, and the stack-heap reference layout.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>7.3 Array Algorithms &amp; Sajaniemi’s Variable Roles</strong><mdash />The enhanced <c>for-each</c> loop, accumulators, most-wanted holders, and adjacent element comparison.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>7.4 Arrays and Methods</strong><mdash />Passing array references into methods, reference mutation, and returning newly instantiated arrays.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>7.5 Parallel Arrays</strong><mdash />Synchronizing arrays of related data by index, coordinating parallel lookups, and managing alignment during updates.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>7.6 Partially Filled Arrays &amp; File Input</strong><mdash />Capacity vs. logical size, inserting elements, shifting elements on deletion, and reading file data.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>7.7 Dynamic Arrays: The <c>ArrayList</c> Class &amp; Wrapper Types</strong><mdash />Overcoming fixed capacity, generic collections, autoboxing/unboxing, and common <c>ArrayList</c> operations.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>7.8 Arrays of Objects</strong><mdash />Allocating arrays of reference types, the two-phase instantiation model, and object collection queries.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>7.9 Two-Dimensional Arrays</strong><mdash />Matrix structures, nested loops, row-major and column-major algorithms, and grid applications.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>7.10 Searching, Sorting, and Time Complexity</strong><mdash />Sequential search, binary search preconditions, selection sort mechanics, and an intuitive introduction to Big-O performance.
+        </p>
+      </li>
+    </ul>
+  </list>
+</section>

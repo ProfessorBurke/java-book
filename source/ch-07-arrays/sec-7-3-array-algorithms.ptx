@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-7-3-array-algorithms" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Array Algorithms &amp; Sajaniemi’s Variable Roles</title>
+
+  <!-- ============================================================ -->
+  <!-- 7.3.1 Variable Roles, Revisited                              -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-7-3-1-variable-roles-revisited">
+    <title>Variable Roles, Revisited</title>
+
+    <p>
+      In Section 4.3 we saw that there are several common loop types, and each takes one or more variables through a pattern of values as the loop executes. We classify the patterns as <term>variable roles</term>, based on Jorma Sajaniemi’s work. The roles we looked at in Chapter 4 are:
+      <ul>
+        <li>
+          <p>
+            <strong>Stepper:</strong> A variable that takes on a predictable sequence of values, for example, <c>0</c> to <c>9</c> in increments of <c>1</c>.
+          </p>
+        </li>
+        <li>
+          <p>
+            <strong>Most-Recent Holder:</strong> A variable that holds the next value in a stream of input, such as the next value entered at the console, or the next value read from a file. If we’re reading records of data, there will be a most-recent holder for each value in the record (e.g., city name, AQI reading, latitude, longitude).
+          </p>
+        </li>
+        <li>
+          <p>
+            <strong>Gatherer / Accumulator:</strong> A variable that accumulates value into itself each time through the loop. For example, we might total values by starting a gatherer variable at zero and adding the most-recent holder value to it each time through the loop.
+          </p>
+        </li>
+        <li>
+          <p>
+            <strong>Most-Wanted Holder:</strong> A variable that holds the best fit so far for a property we’re interested in, such as smallest number or longest name. Within the loop, we compare the current value of the most-wanted holder to the most-recent holder, and replace the most-wanted holder if the new value is a better fit. We must be sure to initialize the most-wanted holder to either the first value in the data stream or a value that will ensure it is replaced when we encounter the first value in the data stream (such as a very large number if we’re looking for the smallest number).
+          </p>
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      We’ve already seen that we can visit each element of an array in order by using a stepper-controlled loop that takes on the array index values, e.g., <c>0, 1, 2, 3, 4, 5,</c> and <c>6</c> for our <c>aqiReadings</c> array. A stepper could also visit in backwards order (<c>array.length - 1</c> to <c>0</c> in increments of <c>-1</c>), or it could visit only some of the values in the array, e.g., from a partition value through <c>length - 1</c>. We’ll see a use for that in an upcoming section on sorting algorithms. Our array algorithms will generally use a stepper to control the loop by taking on the array index values.
+    </p>
+
+    <p>
+      When we’re writing a loop that processes an array, the most-recent holder will be <c>arrayName[index]</c>, where <c>index</c> is the loop control variable. This is the value at the current index into the array.
+    </p>
+
+    <p>
+      We have seen both a most-recent holder and a gatherer used in <xref ref="listing-weekly-aqi-demo" />. The variable <c>totalAqi</c> is a gatherer. It is initialized to zero before the first loop, and then each time through the loop, we add the value in the most-recent holder<mdash /><c>aqiReadings[i]</c><mdash />to <c>totalAqi</c>. We’ve seen this algorithm and variable role before<mdash />the only new component is getting used to the most-recent holder being the next element in the array.
+    </p>
+
+    <p>
+      Note that when we’re calculating an average of values in an array, as long as the array is full, we can divide by the length of the array. We don’t need to count the number of elements in the input stream.
+    </p>
+
+    <p>
+      If we wanted to find the largest value in the array, for example, we would use a most-wanted holder:
+    </p>
+
+    <program language="java"><![CDATA[assert aqiReadings.length > 0 : "Cannot find largest in a zero-length array.";
+int highestAqi = aqiReadings[0];
+for (int i = 1; i < aqiReadings.length; i++) {
+    if (aqiReadings[i] > highestAqi) {
+        highestAqi = aqiReadings[i];
+    }
+}]]></program>
+
+    <p>
+      The pattern should be familiar! Note that we can initialize our most-wanted holder to the first value in the array (<c>highestAqi = aqiReadings[0];</c>), so long as the array has at least one value. (If we cannot make this assumption, then we should initialize it to a very small number, such as <c>Integer.MIN_VALUE</c>, but note that if the array is empty, we will end up with a bizarre <c>highestAqi</c> reading of <c>Integer.MIN_VALUE</c>.)
+    </p>
+
+    <p>
+      We then loop over the rest of the array<mdash />beginning at index <c>1</c>. Inside the loop, we compare the value in our most-wanted holder to the most-recent holder (<c>if (aqiReadings[i] &gt; highestAqi)</c>), and if the most-recent holder is a better fit (in this case larger), then we assign the most-recent holder to the most-wanted holder (<c>highestAqi = aqiReadings[i];</c>).
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 7.3.2 Enhanced for Loops                                     -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-7-3-2-enhanced-for-loops">
+    <title>Enhanced <c>for</c> Loops</title>
+
+    <p>
+      Because traversing every element of an array from start to finish is so common, Java provides a streamlined loop syntax designed specifically for visiting collections sequentially: the <term>enhanced <c>for</c> loop</term> (often called the <term><c>for-each</c> loop</term>).
+    </p>
+
+    <p>
+      Here is how we can print all the values in <c>aqiReadings</c> using an enhanced <c>for</c> loop:
+    </p>
+
+    <program language="java"><![CDATA[for (int reading : aqiReadings) {
+    System.out.println(reading);
+}]]></program>
+
+    <p>
+      Read the header aloud as: <q>For each <c>int reading</c> in <c>aqiReadings</c><ellipsis /></q>
+    </p>
+
+    <p>
+      The syntax is the keyword <c>for</c>, followed by parentheses, and then the loop body. Within the parentheses, we declare a variable that acts as a most-recent holder, followed by a colon, and then the array name. This variable will hold a copy of each element in the array, beginning with the element at index <c>0</c> for the first iteration of the loop, and then the element at index <c>1</c> for the second iteration of the loop, etc., through the last element for the last iteration of the loop.
+    </p>
+
+    <p>
+      The most-recent holder variable is of the same data type as the array elements. For our <c>aqiReadings</c> array, that data type is <c>int</c>. If we were iterating over an array declared as <c>boolean[]</c>, then the type would be <c>boolean</c>; if it were an array declared as <c>String[]</c>, it would be <c>String</c>, etc. It is not an index<mdash />it is an array element.
+    </p>
+
+    <p>
+      Unlike a traditional <c>for</c> loop (where <c>int i;</c> can be declared beforehand), an enhanced <c>for</c> loop always declares a fresh local variable with a scope strictly limited to the loop body.
+    </p>
+
+    <p>
+      Notice what is missing compared to a standard <c>for</c> loop: there is no index variable <c>i</c>, no <c>i &lt; aqiReadings.length</c> boundary check, and no <c>i++</c> updater. Java manages all of that automatically behind the scenes.
+    </p>
+
+    <p>
+      You cannot have an off-by-one error with an enhanced <c>for</c> loop. Because Java handles the starting and ending bounds internally, it is impossible to trigger an <c>ArrayIndexOutOfBoundsException</c>.
+    </p>
+
+    <p>
+      The enhanced <c>for</c> loop can also be easier to read. When you only need to inspect or total the values in an array, the enhanced <c>for</c> loop removes index clutter and lets you focus on the data itself. In this accumulator loop, the most-recent holder variable is <c>reading</c>:
+    </p>
+
+    <program language="java"><![CDATA[int totalAqi = 0;
+for (int reading : aqiReadings) {
+    totalAqi += reading;
+}]]></program>
+
+    <p>
+      The enhanced <c>for</c> loop is a specialized tool for read-only, sequential access. You should not use it when:
+      <ul>
+        <li>
+          <p>
+            <strong>You need to modify the array elements:</strong> The loop variable (<c>reading</c>) holds a copy of the element’s value, not a reference to the array location itself. Writing <c>reading = 0;</c> inside the loop only changes the local copy<mdash />the value inside <c>aqiReadings</c> remains completely untouched.
+          </p>
+        </li>
+        <li>
+          <p>
+            <strong>You need the index:</strong> Because there is no index variable <c>i</c>, you cannot coordinate with a parallel array like <c>dayNames[i]</c>, store a value in the array, or compare adjacent elements.
+          </p>
+        </li>
+        <li>
+          <p>
+            <strong>You need a non-standard traversal:</strong> An enhanced <c>for</c> loop always visits every element from index <c>0</c> to <c>length - 1</c>. It cannot traverse backward, skip elements, or stop early without extra work.
+          </p>
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      In short, use an enhanced <c>for</c> loop when you simply want to read every value from front to back; use a standard index-controlled <c>for</c> loop whenever you need to modify elements, know where an element is located, work with parallel arrays, or compare multiple positions.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 7.3.3 Comparing and Swapping Adjacent Elements               -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-7-3-3-comparing-swapping">
+    <title>Comparing and Swapping Adjacent Elements</title>
+
+    <introduction>
+      <p>
+        Many array algorithms require looking at two neighboring elements at the same time<mdash />for example, checking whether air quality improved from one day to the next, verifying whether an array is sorted, or rearranging elements into order.
+      </p>
+    </introduction>
+
+    <subsubsection xml:id="subsubsec-7-3-3-1-comparing-adjacent">
+      <title>Comparing Adjacent Elements</title>
+
+      <p>
+        Suppose we want to check whether the AQI readings in <c>aqiReadings</c> are strictly increasing (getting worse every single day). We can compare each element <c>aqiReadings[i]</c> with its right-hand neighbor <c>aqiReadings[i + 1]</c>, using a <term>one-way flag</term> (<c>isIncreasing</c>) initialized to <c>true</c>:
+      </p>
+
+      <program language="java"><![CDATA[boolean isIncreasing = true;
+for (int i = 0; i < aqiReadings.length - 1; i++) {
+    if (aqiReadings[i] >= aqiReadings[i + 1]) {
+        isIncreasing = false;
+    }
+}]]></program>
+
+      <p>
+        Look closely at the loop’s stopping condition: <c>i &lt; aqiReadings.length - 1</c>.
+      </p>
+
+      <p>
+        Why do we subtract <c>1</c> from the length here? Because inside the loop body, we access <c>aqiReadings[i + 1]</c>. For our 7-element array, the last valid index is <c>6</c>. If we allowed <c>i</c> to reach <c>6</c>, the expression <c>aqiReadings[i + 1]</c> would evaluate <c>aqiReadings[7]</c> and crash with an <c>ArrayIndexOutOfBoundsException</c>! Stopping at <c>i &lt; aqiReadings.length - 1</c> ensures that the final pair compared is <c>aqiReadings[5]</c> and <c>aqiReadings[6]</c>.
+      </p>
+
+      <p>
+        (Alternatively, you can start the loop at <c>i = 1</c> with <c>i &lt; aqiReadings.length</c> and compare <c>aqiReadings[i - 1]</c> with <c>aqiReadings[i]</c><mdash />both approaches compare every adjacent pair safely.)
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="subsubsec-7-3-3-2-swapping-elements">
+      <title>Swapping Two Elements</title>
+
+      <p>
+        When sorting or rearranging data, we often need to swap the values stored in two array locations, such as <c>aqiReadings[i]</c> and <c>aqiReadings[i + 1]</c>.
+      </p>
+
+      <p>
+        A common beginner mistake is trying to swap two variables directly in two lines:
+      </p>
+
+      <program language="java"><![CDATA[// BUG: Overwrites aqiReadings[i] before its value is saved!
+aqiReadings[i] = aqiReadings[i + 1];
+aqiReadings[i + 1] = aqiReadings[i];]]></program>
+
+      <p>
+        If <c>aqiReadings[i]</c> held <c>68</c> and <c>aqiReadings[i + 1]</c> held <c>45</c>, the first line copies <c>45</c> into <c>aqiReadings[i]</c><mdash />destroying <c>68</c> forever. The second line then copies <c>45</c> back into <c>aqiReadings[i + 1]</c>, leaving both slots holding <c>45</c>.
+      </p>
+
+      <p>
+        To swap two values safely, you must use a temporary variable (<c>temp</c>) of the same data type as the array elements. Think of swapping the liquids in two full glasses: you need a third empty glass to hold one liquid temporarily while you pour.
+      </p>
+
+      <program language="java"><![CDATA[// CORRECT: Three-step swap using a temporary variable
+int temp = aqiReadings[i];
+aqiReadings[i] = aqiReadings[i + 1];
+aqiReadings[i + 1] = temp;]]></program>
+
+      <p>
+        Tracing this step by step with <c>68</c> at index <c>i</c> and <c>45</c> at index <c>i + 1</c>:
+        <ol>
+          <li><p><c>temp</c> saves a copy of <c>68</c>.</p></li>
+          <li><p><c>aqiReadings[i]</c> is overwritten with <c>45</c>.</p></li>
+          <li><p><c>aqiReadings[i + 1]</c> receives the saved <c>68</c> from <c>temp</c>.</p></li>
+        </ol>
+      </p>
+
+      <p>
+        This three-line swap pattern is a fundamental building block that we will use repeatedly when we implement sorting algorithms later in this chapter.
+      </p>
+
+      <figure xml:id="figure-swap-two-elements">
+        <caption>Swapping two array elements.</caption>
+        <image source="figures/figure_7_3.png" width="95%">
+          <shortdescription>Three-step visual trace of swapping two adjacent elements in aqiReadings using a temporary variable temp.</shortdescription>
+          <description>
+            <p>
+              A three-panel diagram illustrating the three-step swap of adjacent elements in <c>aqiReadings</c> when <c>i = 0</c>. In Step 1 (<c>int temp = aqiReadings[i];</c>), a curved arrow copies <c>68</c> from index <c>0 (i)</c> of <c>aqiReadings</c> (<c>[68, 45, 112, 85, 38]</c>) into the <c>temp</c> box. In Step 2 (<c>aqiReadings[i] = aqiReadings[i + 1];</c>), a curved arrow copies <c>45</c> from index <c>1 (i+1)</c> into index <c>0 (i)</c>, leaving the array as <c>[45, 45, 112, 85, 38]</c> while <c>temp</c> still holds <c>68</c>. In Step 3 (<c>aqiReadings[i + 1] = temp;</c>), a curved arrow copies the saved <c>68</c> from <c>temp</c> into index <c>1 (i+1)</c>, completing the swap to <c>[45, 68, 112, 85, 38]</c>.
+            </p>
+          </description>
+        </image>
+      </figure>
+    </subsubsection>
+  </subsection>
+</section>

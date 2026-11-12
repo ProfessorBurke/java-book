@@ -19,6 +19,7 @@
 	<xi:include href="ch-04-loops/ch-loops.ptx" />
 	<xi:include href="ch-05-methods/ch-methods.ptx" />
     <xi:include href="ch-06-objects-classes/ch-objects-classes.ptx" />
+	<xi:include href="ch-07-arrays/ch-arrays.ptx" />
   </book>
 
 </pretext>

@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-7-2-array-fundamentals" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>1D Array Fundamentals &amp; The Memory Model</title>
+
+  <!-- ============================================================ -->
+  <!-- 7.2.1 The Problem: Remembering the Past                      -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-7-2-1-problem-remembering-past">
+    <title>The Problem: Remembering the Past</title>
+
+    <p>
+      In previous chapters, we developed several programs to monitor and report air quality using the Environmental Protection Agency’s Air Quality Index (AQI). In Chapter 4, we read city records sequentially from text files, and in Chapter 5, we wrote helper methods to classify health risks.
+    </p>
+
+    <p>
+      Now imagine you are asked to write a program that tracks daily air quality across a seven-day week in Providence, Rhode Island. The program should prompt the user for seven daily AQI readings, calculate and display the average weekly AQI, and then print a report listing every day with a reading higher than the weekly average.
+    </p>
+
+    <p>
+      Think about how you would implement this using only the scalar variables you’ve learned so far. If you use a single <c>int aqi</c> variable inside a counting loop that runs seven times, you can easily accumulate a running total and divide by <c>7</c> to compute the average:
+    </p>
+
+    <console>
+      <output>Day 0: 45
+Day 1: 68
+Day 2: 112
+Day 3: 85
+Day 4: 38
+Day 5: 142
+Day 6: 55
+Average AQI: 77.9</output>
+    </console>
+
+    <p>
+      Once the loop ends and you calculate the average, you hit an impassable wall: the earlier numbers are gone. On day 0, the variable <c>aqi</c> held 45; on day 1, it was overwritten by 68; by the time the loop finished on day 6, <c>aqi</c> held 55. To determine which days exceeded the average, you must compare every single day’s reading against that average. But you cannot calculate the average until you have seen all seven days, and you cannot check the individual days once they have been overwritten.
+    </p>
+
+    <p>
+      Declaring seven separate variables (<c>day0</c>, <c>day1</c>, <c>day2</c>, <c>day3</c>, <c>day4</c>, <c>day5</c>, <c>day6</c>) would allow you to retain the values, but at an architectural cost: you would have to write seven distinct <c>if</c> statements by hand. If the monitoring period expanded to a 30-day month or a 365-day year, your program would become thousands of lines of unmaintainable, repetitive code.
+    </p>
+
+    <p>
+      To solve this problem, we need a data structure that can store a collection of values under a single name and allow us to access each item dynamically using a loop. In Java, that foundational structure is the <term>array</term>.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 7.2.2 Declaring and Instantiating Arrays                     -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-7-2-2-declaring-instantiating">
+    <title>Declaring and Instantiating Arrays</title>
+
+    <p>
+      An <term>array</term> is an indexed sequence of elements that all share the same data type. Arrays have two fundamental characteristics:
+      <ol>
+        <li>
+          <p>
+            <strong>Homogeneous:</strong> Every element in the array must be of the exact same data type (all <c>int</c>, all <c>double</c>, all <c>String</c>, etc.). You cannot mix data types in the same array.
+          </p>
+        </li>
+        <li>
+          <p>
+            <strong>Fixed Size:</strong> Once an array is created, its capacity is permanently fixed. It cannot grow or shrink while your program runs.
+          </p>
+        </li>
+      </ol>
+    </p>
+
+    <p>
+      Because arrays in Java are objects, creating an array is a two-part process: <term>declaration</term> (naming the variable) and <term>instantiation</term> (allocating the memory). As with any object, you can do this in two lines of code or combine declaration and instantiation into one line.
+    </p>
+
+    <p>
+      To declare an array variable, state the data type of the elements, followed by a pair of square brackets <c>[]</c> and the variable name:
+    </p>
+
+    <program language="java"><![CDATA[int[] aqiReadings;]]></program>
+
+    <p>
+      This statement tells the compiler that the variable <c>aqiReadings</c> will refer to an array of integers of any length. At this point, no memory has been allocated for the actual numbers. The variable exists on the call stack as an uninitialized reference variable. Just like primitive local variables, Java will not allow you to read or use this variable until you assign a reference to it.
+    </p>
+
+    <p>
+      To actually allocate memory for the numbers, you use the <c>new</c> keyword, specifying the data type with the number of elements inside the brackets:
+    </p>
+
+    <program language="java"><![CDATA[aqiReadings = new int[7];]]></program>
+
+    <p>
+      The integer inside the brackets (<c>7</c>) is the array’s <term>length</term>. It tells Java to allocate enough memory on the heap to hold exactly seven integers. The assignment statement assigns the address of this memory to <c>aqiReadings</c>.
+    </p>
+
+    <p>
+      As with any object variable in Java, you can also declare and instantiate the array in a single statement:
+    </p>
+
+    <program language="java"><![CDATA[int[] aqiReadings = new int[7];]]></program>
+
+    <p>
+      Arrays can hold primitive or object data, and they can be of any size. Here are some examples of combined array declarations and instantiations for different data types and sizes:
+    </p>
+
+    <program language="java"><![CDATA[boolean[] flags = new boolean[3];
+char[] operators = new char[5];
+double[] rates = new double[100];
+String[] names = new String[25];
+Point[] points = new Point[50];]]></program>
+
+    <p>
+      Notice that when we name an array variable, we use a plural noun, because an array stores many values under one name (e.g., three flags, five operators, 100 rates). The size of an array is an integer expression. The simplest integer expression is a literal <c>int</c>, as in the examples we just saw, but the size can be any expression that evaluates to an <c>int</c>. Here are some additional array declarations that illustrate this:
+    </p>
+
+    <program language="java"><![CDATA[final int SIZE = 5;
+double[] numbers = new double[SIZE];
+double[] twiceNumbers = new double[2 * SIZE];]]></program>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 7.2.3 The Array Memory Model (Stack vs. Heap)                -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-7-2-3-memory-model">
+    <title>The Array Memory Model (Stack vs. Heap)</title>
+
+    <p>
+      To understand how arrays function in Java, it’s helpful to look under the hood at memory. Just like the objects you created in Chapter 6, arrays always live on the <term>heap</term>, while local reference variables live on the <term>call stack</term>.
+    </p>
+
+    <figure xml:id="figure-array-memory-model">
+      <caption>Memory representation immediately after <c>int[] aqiReadings = new int[7];</c>. The reference variable on the stack holds the address <c>0x4200</c>, pointing to a block of seven zero-initialized integer elements on the heap indexed from <c>0</c> through <c>6</c>.</caption>
+      <image source="figures/figure_7_1.png" width="95%">
+        <shortdescription>Stack and heap memory diagram showing aqiReadings on the stack pointing to a 7-element int array on the heap.</shortdescription>
+        <description>
+          <p>
+            A two-panel memory diagram illustrating the Call Stack on the left and the Heap on the right after executing <c>int[] aqiReadings = new int[7];</c>. Inside the <c>main</c> stack frame on the left, the local variable <c>args</c> sits at address <c>0x7FF8</c> and the reference variable <c>aqiReadings</c> sits at address <c>0x7FF0</c>, storing the heap memory address <c>0x4200</c>. A pointer arrow leads from <c>aqiReadings</c> to an object on the heap tagged <c>0x4200</c> and labeled <c>int[] object (length = 7)</c>. Inside this heap object are seven contiguous memory cells labeled with indices <c>[0]</c> through <c>[6]</c> above each cell, with every element default-initialized to <c>0</c>.
+          </p>
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      When the JVM executes <c>int[] aqiReadings = new int[7];</c>:
+      <ol>
+        <li>
+          <p>
+            It creates a local reference variable named <c>aqiReadings</c> inside <c>main</c>’s stack frame.
+          </p>
+        </li>
+        <li>
+          <p>
+            It requests a contiguous block of memory on the heap large enough to store seven 32-bit integers (4 bytes each for 7 integers = 28 bytes total) along with a small amount of housekeeping metadata (such as the array’s length).
+          </p>
+        </li>
+        <li>
+          <p>
+            It stores the starting memory address of that heap block (e.g., <c>0x4200</c>) inside the <c>aqiReadings</c> variable on the stack.
+          </p>
+        </li>
+        <li>
+          <p>
+            <strong>Default Initialization:</strong> Java guarantees that every element in a newly allocated array is automatically initialized to its type’s default value:
+            <ul>
+              <li><p>Numeric primitives (<c>int</c>, <c>double</c>, etc.) default to <c>0</c> or <c>0.0</c>.</p></li>
+              <li><p><c>boolean</c> elements default to <c>false</c>.</p></li>
+              <li><p>Reference types (<c>String</c>, custom objects) default to <c>null</c>.</p></li>
+            </ul>
+          </p>
+        </li>
+      </ol>
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 7.2.4 Indexing: Accessing and Modifying Elements             -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-7-2-4-indexing">
+    <title>Indexing: Accessing and Modifying Elements</title>
+
+    <p>
+      Individual elements within an array are accessed using <term>subscript notation</term>: the name of the array followed by an index enclosed in square brackets <c>[]</c>. The index must be an integer expression and is often a literal or variable, but can be any expression that evaluates to an integer.
+    </p>
+
+    <p>
+      In Java, indices always begin with <c>0</c>. The first element in the array is at index <c>0</c>, the second at index <c>1</c>, and, importantly, the last element is at index <c>length - 1</c>. For our 7-element <c>aqiReadings</c> array, the legal indices are <c>0, 1, 2, 3, 4, 5,</c> and <c>6</c>. To access the element or location at index <c>0</c>, we write <c>aqiReadings[0]</c>, and we read that as <q>aqiReadings sub zero.</q>
+    </p>
+
+    <p>
+      You use subscript notation on the left side of an assignment operator to store a value, and in expressions to retrieve a value:
+    </p>
+
+    <program language="java"><![CDATA[// Storing values into specific array slots
+aqiReadings[0] = 45;   // Sunday
+aqiReadings[1] = 68;   // Monday
+aqiReadings[2] = 112;  // Tuesday
+aqiReadings[3] = 85;   // Wednesday
+aqiReadings[4] = 38;   // Thursday
+aqiReadings[5] = 142;  // Friday
+aqiReadings[6] = 55;   // Saturday
+
+// Retrieving values from the array
+int tuesdayReading = aqiReadings[2];
+System.out.println("Tuesday AQI was: " + tuesdayReading); // Prints 112
+
+// Using array elements directly in calculations
+int difference = aqiReadings[5] - aqiReadings[4]; // 142 - 38 = 104]]></program>
+
+    <p>
+      To reason about arrays, we often represent them as a rectangle separated into contiguous boxes. The indices of the array are shown either above or below the boxes, and the array elements, or values, are shown within the boxes. Drawings like this can be very helpful when planning and walking through array algorithms.
+    </p>
+
+    <figure xml:id="figure-aqi-readings-populated">
+      <caption>The <c>aqiReadings</c> array after population. Each slot holds an integer reading accessible via its zero-based index.</caption>
+      <image source="figures/figure_7_2_with_syntax.png" width="95%">
+        <shortdescription>Abstract diagram of the 7-element aqiReadings array showing values 45, 68, 112, 85, 38, 142, 55 with indices 0 through 6.</shortdescription>
+        <description>
+          <p>
+            An abstract horizontal array diagram of <c>aqiReadings</c> consisting of seven contiguous rectangular cells. Above each cell is its Java subscript expression from <c>aqiReadings[0]</c> on the left to <c>aqiReadings[6]</c> on the right, with short vertical guide ticks connecting each expression to its cell. Inside the cells are the stored integer elements: <c>45</c>, <c>68</c>, <c>112</c>, <c>85</c>, <c>38</c>, <c>142</c>, and <c>55</c>. Directly beneath each cell is its corresponding zero-based index: <c>0</c>, <c>1</c>, <c>2</c>, <c>3</c>, <c>4</c>, <c>5</c>, and <c>6</c>.
+          </p>
+        </description>
+      </image>
+    </figure>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 7.2.5 Index, Element, and Location                           -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-7-2-5-index-element-location">
+    <title>Index, Element, and Location</title>
+
+    <introduction>
+      <p>
+        Array code might look confusing at first. In the examples above, we have used literal integers for our indices, but more often we will use an integer variable for an index, and sometimes a more complicated integer expression. So rather than <c>aqiReadings[0]</c> (a literal), we might see <c>aqiReadings[i]</c> (a variable), or <c>aqiReadings[i + 1]</c>, or <c>aqiReadings[i * 2]</c> (more complicated expressions). In the code, we are responsible for maintaining both the variable <c>i</c> and the values in the array.
+      </p>
+    </introduction>
+
+    <subsubsection xml:id="subsubsec-7-2-5-1-index">
+      <title>The Index</title>
+
+      <p>
+        The <term>index</term> is an address (or offset). It is an integer expression that evaluates to <c>0</c> through the array <c>length - 1</c>. (If it’s outside that range, there’s a fatal problem with the code.) Think of the index as part of the name of a variable. <c>aqiReadings</c>, for example, is an entire array. If we add an index in brackets, such as <c>aqiReadings[2]</c>, we have the name of one of the AQI reading variables in <c>aqiReadings</c> (e.g., <c>aqiReadings[2]</c> is the reading for Tuesday). We use an index to get at specific locations in the array, either to assign values to them, or to use them in expressions.
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="subsubsec-7-2-5-2-element">
+      <title>The Array Element</title>
+
+      <p>
+        If we have an expression that includes an array name sub index, e.g., <c>aqiReadings[2]</c>, then it refers to the value (or <term>element</term>) at that location. We can put the expression <c>arrayName[index]</c>, e.g., <c>aqiReadings[2]</c>, anywhere we put an expression of the array’s data type. Consider our prior examples, and how a variable in each array is used in an expression requiring a value of the array type:
+      </p>
+
+      <program language="java"><![CDATA[boolean[] flags = new boolean[3];
+// code to fill flags here ...
+if (flags[0]) { ... }
+while (number < 10 && !flags[1]) { ... }
+
+char[] operators = new char[5];
+// code to fill operators here ...
+System.out.print("1 " + operators[0] + " 1 = ");
+if (operators[2] == '+') { ... }
+
+double[] rates = new double[100];
+// code to fill rates here ...
+distance = rates[0] * time;
+if (rates[99] > 2.5) { ... }
+
+String[] names = new String[25];
+// code to fill names here ...
+System.out.println("Hello " + names[0]);
+char firstInitial = names[1].charAt(0);
+
+Point[] points = new Point[50];
+// code to fill points here ...
+if (points[0].equals(points[1])) { ... }
+double distance = points[1].distanceFromOrigin();]]></program>
+
+      <p>
+        Don’t worry if the syntax in the last two array examples (<c>String[] names</c> and <c>Point[] points</c>) is a little intimidating. We will go over arrays of objects in detail in an upcoming section. For now, focus on the idea that <c>arrayName[index]</c> is a variable of <c>arrayName</c>’s type, and you can put it anywhere you can put an expression of that type. Try mentally substituting in a simple variable name in each example, e.g., <c>if (rate &gt; 2.5)</c>, think about the data type of the simple variable, and then compare it to the array version.
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="subsubsec-7-2-5-3-location">
+      <title>The Array Location</title>
+
+      <p>
+        If we have an array name sub index on the left of an assignment statement, then <c>arrayName[index]</c> refers to the <term>location</term> in the array. The expression on the right will be assigned into that location in the array. The expression on the right must be of the same data type as our array. These assignment statements assign into our arrays:
+      </p>
+
+      <program language="java"><![CDATA[boolean[] flags = new boolean[3];
+flags[0] = true;
+flags[1] = age > 0 && age < 120;
+
+char[] operators = new char[5];
+operators[0] = '+';
+operators[1] = userInput.charAt(0);
+
+double[] rates = new double[100];
+rates[0] = .5;
+rates[1] = distance / time;
+
+String[] names = new String[25];
+names[0] = "Zohran";
+names[1] = stdin.nextLine();
+
+Point[] points = new Point[50];
+points[0] = new Point(0, 100);
+points[1] = new Point(points[0]);]]></program>
+
+      <p>
+        It might be a little easier to think about assigning into an array location! Compare the data type of the expressions on the right of each assignment with the data type of the array declarations above.
+      </p>
+    </subsubsection>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 7.2.6 Looping over Arrays                                    -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-7-2-6-looping-over-arrays">
+    <title>Looping Over Arrays</title>
+
+    <p>
+      Many array applications require visiting every element in the array in order. For example, when we initially fill the array, we might obtain a value from a file or from the console and store it in the next location in the array. To print all elements in an array, we will print each element starting at index <c>0</c> and proceeding through the elements sequentially until we reach the element at index <c>length - 1</c>. When we process the array values<mdash />for example, totaling all values or finding the largest<mdash />then we visit each element and perform our processing.
+    </p>
+
+    <p>
+      The name of an individual array location is formed by combining the array name and an index. We can therefore use a loop to visit each element, with the loop control variable taking on the index values. This pattern is a <term>stepper</term> pattern<mdash />the index begins at <c>0</c> and increments by <c>1</c> until it reaches <c>length - 1</c>. A natural choice for a stepper-controlled loop is a <c>for</c> loop.
+    </p>
+
+    <p>
+      For example, if we want to print each element in our <c>aqiReadings</c> array, we might write the following loop:
+    </p>
+
+    <program language="java"><![CDATA[for (int i = 0; i < 7; i++) {
+    System.out.println(aqiReadings[i]);
+}]]></program>
+
+    <p>
+      The loop control variable <c>i</c> allows us to construct the name of each variable in the array<mdash /><c>aqiReadings[0]</c>, <c>aqiReadings[1]</c>, <ellipsis />, <c>aqiReadings[6]</c><mdash />by iterating through the indices.
+    </p>
+
+    <p>
+      This loop is not ideal, though<mdash />it requires that we know the length of the array when we’re writing the code. It is better if we get the length of the array from the array itself<mdash />and we can! Every array in Java has a built-in public <c>final</c> (constant) field named <c>length</c> that stores the total number of elements the array can hold:
+    </p>
+
+    <program language="java"><![CDATA[System.out.println(aqiReadings.length); // Prints 7]]></program>
+
+    <p>
+      The standard idiom in Java for looping over an array is <c>i = 0; i &lt; array.length; i++</c>. Using the strictly less-than operator (<c>&lt;</c>) ensures the loop variable <c>i</c> runs from <c>0</c> through <c>array.length - 1</c> and stops before reaching <c>array.length</c>. Our printing loop therefore becomes:
+    </p>
+
+    <program language="java"><![CDATA[for (int i = 0; i < aqiReadings.length; i++) {
+    System.out.println(aqiReadings[i]);
+}]]></program>
+
+    <p>
+      Note also:
+      <ul>
+        <li>
+          <p>
+            The <c>length</c> field is the number of elements an array can hold. It doesn’t track how many elements the program has placed in the array. All elements will have an initial value (such as <c>0</c>, <c>0.0</c>, <c>false</c>, or <c>null</c>), but all elements might not have a program-assigned value.
+          </p>
+        </li>
+        <li>
+          <p>
+            Because the first index of an array is <c>0</c>, the index of the final element in any array is always the array <c>length - 1</c>, e.g., <c>aqiReadings.length - 1</c> is <c>6</c>, the index of the last element in a 7-element array.
+          </p>
+        </li>
+        <li>
+          <p>
+            One quirk of Java is that array <c>length</c> is a field, but <c>String</c> <c>length</c> is a method! We therefore must put parentheses when accessing the length of a <c>String</c> (e.g., <c>cityName.length()</c>), but not when accessing the length of an array (<c>aqiReadings.length</c>). Fortunately, Eclipse will quickly alert you if you mix them up.
+          </p>
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      Java is a memory-safe language. Unlike languages like C and C++, which permit programs to read or write arbitrary memory addresses outside an array’s boundaries, the Java Virtual Machine checks every array access at runtime.
+    </p>
+
+    <p>
+      If your code attempts to use an index that is negative, or an index that is greater than or equal to <c>array.length</c>, Java immediately halts execution and throws an <c>ArrayIndexOutOfBoundsException</c>:
+    </p>
+
+    <program language="java"><![CDATA[// Attempting to access an illegal index
+System.out.println(aqiReadings[7]); // RUNTIME ERROR!]]></program>
+
+    <console>
+      <output>Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: Index 7 out of bounds for length 7
+    at WeeklyAqiDemo.main(WeeklyAqiDemo.java:18)</output>
+    </console>
+
+    <p>
+      The most frequent cause of this exception is the classic off-by-one fencepost error in loop conditions:
+    </p>
+
+    <program language="java"><![CDATA[// BUG: Uses <= instead of <
+// When i reaches 7, the program crashes.
+for (int i = 0; i <= aqiReadings.length; i++) {
+    System.out.println(aqiReadings[i]);
+}]]></program>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 7.2.7 Array Initializer Lists (Array Literals)               -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-7-2-7-initializer-lists">
+    <title>Array Initializer Lists (Array Literals)</title>
+
+    <p>
+      When you already know the initial values that belong in an array at the time you write your code, Java provides a convenient shortcut called an <term>array initializer</term> (or array constant).
+    </p>
+
+    <p>
+      Instead of allocating an empty array with <c>new</c> and then typing seven separate assignment statements, you enclose a comma-separated list of values in curly braces <c>{ }</c>:
+    </p>
+
+    <program language="java"><![CDATA[int[] aqiReadings = {45, 68, 112, 85, 38, 142, 55};]]></program>
+
+    <p>
+      You must declare and initialize in the same statement when using an initializer list. When the compiler encounters this statement, it automatically:
+      <ol>
+        <li><p>Counts the items between the braces to determine the length (here, <c>7</c>).</p></li>
+        <li><p>Allocates a 7-element integer array on the heap.</p></li>
+        <li><p>Copies each value into its corresponding index (<c>0</c> through <c>6</c>).</p></li>
+        <li><p>Stores the heap reference in <c>aqiReadings</c>.</p></li>
+      </ol>
+    </p>
+
+    <p>
+      Use an initializer list (<c>{...}</c>) when you have a small, fixed set of known values upfront (such as days in months, card suits, or sample test data).
+    </p>
+
+    <p>
+      Use the <c>new</c> operator (<c>new int[size]</c>) when the size of the array is determined while the program runs (such as asking the user how many items to enter) or when elements will be populated later from a file or user input.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 7.2.8 Putting It Together: A Complete Example                -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-7-2-8-complete-example">
+    <title>Putting It Together: A Complete Example</title>
+
+    <p>
+      Now let’s write a complete, working Java program that solves our opening problem: storing a week of AQI data, computing the average, and reporting which days exceeded that average.
+    </p>
+
+    <listing xml:id="listing-weekly-aqi-demo">
+      <title><c>WeeklyAqiDemo.java</c></title>
+      <program language="java" line-numbers="yes"><![CDATA[/**
+ * Creates an array of weekly AQI readings, finds the average,
+ * and displays a report including days exceeding the average AQI.
+ */
+public class WeeklyAqiDemo {
+
+    public static void main(String[] args) {
+        // Daily AQI readings for Sunday (0) through Saturday (6)
+        int[] aqiReadings = {45, 68, 112, 85, 38, 142, 55};
+        String[] dayNames = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+
+        // Pass 1: Accumulate total to calculate the weekly average
+        int totalAqi = 0;
+        for (int i = 0; i < aqiReadings.length; i++) {
+            totalAqi += aqiReadings[i]; // Accumulator pattern
+        }
+        double averageAqi = (double) totalAqi / aqiReadings.length;
+
+        System.out.println("=== Weekly Air Quality Report ===");
+        System.out.printf("Average Weekly AQI: %.1f%n%n", averageAqi);
+
+        // Pass 2: Inspect elements to flag days that exceeded the average
+        System.out.println("Days Exceeding Average:");
+        for (int i = 0; i < aqiReadings.length; i++) {
+            if (aqiReadings[i] > averageAqi) {
+                System.out.printf("  Day %d (%s): %d%n",
+                                  i, dayNames[i], aqiReadings[i]);
+            } // if
+        } // for
+    } // main
+}]]></program>
+    </listing>
+
+    <p>
+      This program produces the following output:
+    </p>
+
+    <console>
+      <output>=== Weekly Air Quality Report ===
+Average Weekly AQI: 77.9
+
+Days Exceeding Average:
+  Day 2 (Tue): 112
+  Day 3 (Wed): 85
+  Day 5 (Fri): 142</output>
+    </console>
+
+    <p>
+      Note that there are two loops that process the AQI data. The first loop, on lines 14–16, accumulates the values in the array into a total. That total is then divided by the length of the array to calculate the average AQI reading for the week. We will review variable roles in array processing in an upcoming section.
+    </p>
+
+    <p>
+      With the average now calculated, we loop again over the array to find days with an AQI reading that exceeds the average. This loop prints a line of the report for each element of the array that is greater than the average.
+    </p>
+
+    <p>
+      Notice that we use a second array, <c>String[] dayNames</c>, to store the name of the equivalent day in the <c>aqiReadings</c> array. These arrays are linked by index. The value at index <c>0</c> in <c>dayNames</c> is <c>"Sun"</c>, and this corresponds to the Sunday reading in <c>aqiReadings</c>, also at index <c>0</c>. This is called a <term>parallel array</term>, and we will explore parallel arrays further in an upcoming section.
+    </p>
+  </subsection>
+</section>
