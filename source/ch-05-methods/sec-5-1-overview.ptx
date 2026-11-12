@@ -77,6 +77,7 @@
           <xref ref="sec-5-12-debugging-methods" /> Debugging Methods<mdash />Stepping into, over, and out of method calls in the Eclipse debugger to trace execution across the call stack, inspect local parameter scopes, and isolate bugs in modular code.
         </p>
       </li>
+	  </ul>
     </p>
 	</paragraphs>
 

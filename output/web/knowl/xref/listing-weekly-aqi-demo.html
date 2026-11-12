@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<!--******************************************-->
+<!--*  Authored with PreTeXt                 *-->
+<!--*  pretextbook.org                       *-->
+<!--*  Theme: default-modern                 *-->
+<!--*  Palette:                              *-->
+<!--******************************************-->
+
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body class="ignore-math">
+<figure class="listing figure-like"><figcaption><span class="type">Listing</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">7.3<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><code class="code-inline tex2jax_ignore">WeeklyAqiDemo.java</code><div class="autopermalink" aria-hidden="true" data-description="Listing 7.3: WeeklyAqiDemo.java"><a tabindex="-1" href="#listing-weekly-aqi-demo" title="Copy heading and permalink for Listing 7.3: WeeklyAqiDemo.java" aria-label="Copy heading and permalink for Listing 7.3: WeeklyAqiDemo.java">🔗</a></div></figcaption><div class="listing__contents"><div class="code-box"><pre class="program clipboardable line-numbers"><code class="language-java">/**
+ * Creates an array of weekly AQI readings, finds the average,
+ * and displays a report including days exceeding the average AQI.
+ */
+public class WeeklyAqiDemo {
+
+    public static void main(String[] args) {
+        // Daily AQI readings for Sunday (0) through Saturday (6)
+        int[] aqiReadings = {45, 68, 112, 85, 38, 142, 55};
+        String[] dayNames = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+
+        // Pass 1: Accumulate total to calculate the weekly average
+        int totalAqi = 0;
+        for (int i = 0; i &lt; aqiReadings.length; i++) {
+            totalAqi += aqiReadings[i]; // Accumulator pattern
+        }
+        double averageAqi = (double) totalAqi / aqiReadings.length;
+
+        System.out.println("=== Weekly Air Quality Report ===");
+        System.out.printf("Average Weekly AQI: %.1f%n%n", averageAqi);
+
+        // Pass 2: Inspect elements to flag days that exceeded the average
+        System.out.println("Days Exceeding Average:");
+        for (int i = 0; i &lt; aqiReadings.length; i++) {
+            if (aqiReadings[i] &gt; averageAqi) {
+                System.out.printf("  Day %d (%s): %d%n",
+                                  i, dayNames[i], aqiReadings[i]);
+            } // if
+        } // for
+    } // main
+}
+</code></pre></div></div>
+</figure><span class="incontext"><a class="internal" href="sec-7-2-array-fundamentals.html#listing-weekly-aqi-demo">In Context</a></span>
+</body>
+</html>
