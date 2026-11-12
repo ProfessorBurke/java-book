@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section xml:id="sec-7-2-array-fundamentals" xmlns:xi="http://www.w3.org/2001/XInclude">
-  <title>1D Array Fundamentals &amp; The Memory Model</title>
+  <title>Array Fundamentals &amp; The Memory Model</title>
 
   <!-- ============================================================ -->
   <!-- 7.2.1 The Problem: Remembering the Past                      -->

@@ -49,7 +49,7 @@
       <ul>
       <li>
         <p>
-          <strong>7.2 1D Array Fundamentals &amp; The Memory Model</strong><mdash />Declaration, instantiation, default values, zero-based indexing, counting loops, and the stack-heap reference layout.
+          <strong>7.2 Array Fundamentals &amp; The Memory Model</strong><mdash />Declaration, instantiation, default values, zero-based indexing, counting loops, and the stack-heap reference layout.
         </p>
       </li>
       <li>
