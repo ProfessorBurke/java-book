@@ -43,9 +43,10 @@
     Organizing data into memory is only half the battle, however; software must also process that data efficiently. Along the way, you will revisit familiar variable roles to filter and aggregate collections, explore classic computer science algorithms for searching and sorting, and receive an intuitive introduction to computational complexity (Big-O notation) to evaluate how algorithms scale as datasets grow from dozens of items to millions.
   </p>
 
-  <list xml:id="list-chapter-7-roadmap">
+  <paragraphs>
     <title>Roadmap for Chapter 7</title>
-    <ul>
+    <p>
+      <ul>
       <li>
         <p>
           <strong>7.2 1D Array Fundamentals &amp; The Memory Model</strong><mdash />Declaration, instantiation, default values, zero-based indexing, counting loops, and the stack-heap reference layout.
@@ -91,6 +92,7 @@
           <strong>7.10 Searching, Sorting, and Time Complexity</strong><mdash />Sequential search, binary search preconditions, selection sort mechanics, and an intuitive introduction to Big-O performance.
         </p>
       </li>
-    </ul>
-  </list>
+      </ul>
+    </p>
+  </paragraphs>
 </section>

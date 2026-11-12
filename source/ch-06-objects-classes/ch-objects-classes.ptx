@@ -27,9 +27,9 @@
       software components.
     </p>
 
-    <p>
-      <strong>Roadmap for Chapter 6</strong>
-    </p>
+    <paragraphs>
+      <title>Roadmap for Chapter 6</title>
+	  <p>
 
     <ul>
   <li>
@@ -92,6 +92,8 @@
     </p>
   </li>
 </ul>
+</p>
+</paragraphs>
 
     <p>
       Once you master the concepts in this chapter, you will no longer be limited to 

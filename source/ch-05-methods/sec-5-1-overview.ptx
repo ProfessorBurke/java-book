@@ -18,8 +18,9 @@
     We will also look under the hood at the call stack to see how Java allocates and reclaims memory as methods execute. Understanding these memory mechanics prevents subtle scope bugs and clarifies exactly how data flows across your application. Finally, we will cover professional documentation standards using Javadoc and demonstrate how to test individual methods in isolation.
   </p>
 
-  <list xml:id="list-chapter-5-roadmap">
+  <paragraphs>
     <title>Roadmap for Chapter 5</title>
+	<p>
     <ul>
       <li>
         <p>
@@ -76,8 +77,8 @@
           <xref ref="sec-5-12-debugging-methods" /> Debugging Methods<mdash />Stepping into, over, and out of method calls in the Eclipse debugger to trace execution across the call stack, inspect local parameter scopes, and isolate bugs in modular code.
         </p>
       </li>
-    </ul>
-  </list>
+    </p>
+	</paragraphs>
 
   <p>
     Once you master the concepts in this chapter, you will no longer write monolithic programs. You will be able to design modular, readable software composed of well-crafted methods, backed by a solid mental model of how data moves through memory. Let’s get started.
