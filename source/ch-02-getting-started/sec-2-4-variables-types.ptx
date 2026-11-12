@@ -410,7 +410,7 @@ area = length * width;]]></program>
       <!-- ============================================================ -->
       <figure xml:id="figure-stack-heap-memory">
         <title>Stack and heap in memory</title>
-        <image source="figure_2_2.png" width="85%">
+        <image source="figures/figure_2_2.png" width="85%">
           <shortdescription>Stack frame for main with primitive values and reference pointers to heap-allocated objects.</shortdescription>
           <description>
             <p>

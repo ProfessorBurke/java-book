@@ -67,7 +67,7 @@ public class MulchCalculator {
 
   <figure xml:id="figure-eclipse-syntax-error">
     <title>Eclipse flags a syntax error</title>
-    <image source="figure_2_1.png" width="85%">
+    <image source="figures/figure_2_1.png" width="85%">
       <shortdescription>Eclipse flags a syntax error with a red x and tooltip on missing semicolon.</shortdescription>
       <description>
         <p>
