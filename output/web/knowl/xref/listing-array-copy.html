@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<!--******************************************-->
+<!--*  Authored with PreTeXt                 *-->
+<!--*  pretextbook.org                       *-->
+<!--*  Theme: default-modern                 *-->
+<!--*  Palette:                              *-->
+<!--******************************************-->
+
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body class="ignore-math">
+<figure class="listing figure-like"><figcaption><span class="type">Listing</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">7.12<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span>Copying an array with <code class="code-inline tex2jax_ignore">Arrays.copyOf</code>. (<code class="code-inline tex2jax_ignore">ArrayCopy.java</code>)<div class="autopermalink" aria-hidden="true" data-description="Listing 7.12: Copying an array with Arrays.copyOf. (ArrayCopy.java)"><a tabindex="-1" href="#listing-array-copy" title="Copy heading and permalink for Listing 7.12: Copying an array with Arrays.copyOf. (ArrayCopy.java)" aria-label="Copy heading and permalink for Listing 7.12: Copying an array with Arrays.copyOf. (ArrayCopy.java)">🔗</a></div></figcaption><div class="listing__contents"><div class="code-box"><pre class="program clipboardable line-numbers"><code class="language-java">import java.util.Arrays;
+
+public class ArrayCopy {
+    public static void main(String[] args) {
+        // Creates an independent copy of the array in the heap.
+        int[] aqiReadings = {45, 68, 112, 85, 38, 142, 55};
+        int[] readingsCopy = Arrays.copyOf(aqiReadings, aqiReadings.length);
+
+        // Modifies only the copy; the original is unchanged.
+        readingsCopy[0] = 500;
+
+        // Shows that the original array still holds 45.
+        System.out.println(aqiReadings[0]);
+    }
+}
+</code></pre></div></div>
+</figure><span class="incontext"><a class="internal" href="sec-7-4-arrays-and-methods.html#listing-array-copy">In Context</a></span>
+</body>
+</html>

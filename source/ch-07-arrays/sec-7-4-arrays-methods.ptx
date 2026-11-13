@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-7-4-arrays-and-methods" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Arrays and Methods</title>
+
+  <!-- ============================================================ -->
+  <!-- 7.4.1 Arrays as parameters and arguments                     -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-7-4-1-arrays-parameters-arguments">
+    <title>Arrays as Parameters and Arguments</title>
+
+    <p>
+      Would it surprise you to learn that every program you’ve written so far has included a method with an array parameter? Let’s review its header:
+    </p>
+
+    <program language="java"><![CDATA[public static void main(String[] args)]]></program>
+
+    <p>
+      The <c>main</c> method takes a <c>String[]</c> parameter<mdash />an array of <c>String</c> arguments<mdash />which is conventionally named <c>args</c> (short for arguments), though you can name the parameter whatever you like.
+    </p>
+
+    <p>
+      Where do those arguments come from? When someone launches a Java program from a command-line terminal, they can type extra text after the program’s name to pass configuration details right at startup<mdash />for example, a file name to open or a city to look up:
+    </p>
+
+    <console>
+      <input>java WeeklyAqiDemo Providence 7</input>
+    </console>
+
+    <p>
+      The Java Virtual Machine automatically splits that extra text on spaces, packages each word into a <c>String</c> array, and passes that array into <c>main</c> as <c>args</c>. In the example above, <c>args.length</c> would be <c>2</c>, with <c>args[0]</c> holding <c>"Providence"</c> and <c>args[1]</c> holding <c>"7"</c>. (In Eclipse, you can supply these same values in <term>Run Configurations</term> under the <term>(x)= Arguments</term> tab, inside the <term>Program arguments</term> box<mdash />right above the <term>VM arguments</term> box where we added <c>-ea</c> for assertions.) If you launch a program without any startup arguments, as we have in all our programs so far, Java simply passes an empty, zero-length array. (Drop <c>System.out.println(args.length);</c> at the top of any <c>main</c> method and, unless you pass in arguments, your program will print <c>0</c> in the console.)
+    </p>
+
+    <p>
+      We accept an array parameter in a method header in the same way we accept a parameter of any other data type<mdash />we list the data type followed by the parameter name in the parameter list. The data type of an array is the same data type you used when declaring the array: the element data type followed by square brackets.
+    </p>
+
+    <p>
+      So, for example, if we want to write a method that takes an array of AQI readings and calculates and returns the average, we would write:
+    </p>
+
+    <program language="java"><![CDATA[/**
+ * Averages the readings in the array parameter.
+ *
+ * Precondition: readings != null && readings.length > 0
+ * Postcondition: returns the arithmetic mean of all elements
+ *                in readings as a double; readings is unchanged.
+ *
+ * @param readings An array of at least one integer reading.
+ * @return The average of the readings in the array.
+ */
+public static double averageReadings(int[] readings) {
+    assert readings != null && readings.length > 0 :
+        "readings must be non-null and non-empty.";
+    int total = 0;
+    for (int reading : readings) {
+        total += reading;
+    }
+    return (double) total / readings.length;
+}]]></program>
+
+    <p>
+      The array parameter is declared in the method header as <c>int[] readings</c>. This is an integer array with the local name <c>readings</c>. Just as we don’t specify a size when we declare an array, we don’t specify a size in the parameter list.
+    </p>
+
+    <p>
+      When we invoke the method, we pass an <c>int</c> array as an argument. Here is an example of a <c>main</c> method that invokes <c>averageReadings</c>:
+    </p>
+
+    <program language="java"><![CDATA[public static void main(String[] args) {
+    int[] weeklyReadings = {45, 68, 112, 85, 38, 142, 55};
+    double weeklyAverage = averageReadings(weeklyReadings);
+    System.out.println(weeklyAverage);
+}]]></program>
+
+    <p>
+      As with all method calls, the argument we pass must be an expression that evaluates to the correct type. We can’t pass an uninitialized variable name. The JVM will copy the value from the stack (a reference to the array in the heap) to the parameter variable <c>readings</c> within <c>averageReadings</c>. <xref ref="figure-array-param-memory" /> illustrates the stack and the heap when <c>averageReadings</c> is executing, following the call from <c>main</c>.
+    </p>
+
+    <figure xml:id="figure-array-param-memory">
+      <caption>Memory when <c>averageReadings</c> is invoked from <c>main</c>.</caption>
+      <image source="figures/figure_7_4.png" width="95%">
+        <shortdescription>Call stack and heap diagram showing main and averageReadings both referencing the same int[] array at 0x4200.</shortdescription>
+        <description>
+          <p>
+            A two-panel memory diagram illustrating the Call Stack on the left and the Heap on the right during execution of <c>averageReadings(weeklyReadings)</c>. On the Call Stack, the suspended <c>main()</c> frame sits at the bottom containing <c>args</c>, <c>weeklyReadings</c> holding address <c>0x4200</c>, and uninitialized <c>weeklyAverage</c>. Pushed above it is the active <c>averageReadings()</c> frame containing parameter <c>readings</c> holding a copy of address <c>0x4200</c> and uninitialized <c>total</c>. On the Heap, a single <c>int[] object (length = 7)</c> tagged <c>0x4200</c> holds the values <c>45, 68, 112, 85, 38, 142, 55</c> at indices <c>[0]</c> through <c>[6]</c>. Two pointer arrows<mdash />one from <c>readings</c> and one from <c>weeklyReadings</c><mdash />both point to the <c>0x4200</c> array object.
+          </p>
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      Just as with any object variable, because the method has a reference to the original array on the heap, it can change the values stored in the array. Side effects (or the lack of side effects) should be documented in the postconditions. However, reassigning the parameter variable itself inside the method (for example, <c>readings = new int[3];</c>) only updates the local copy on the stack and leaves <c>weeklyReadings</c> in <c>main</c> pointing to the original array.
+    </p>
+
+    <p>
+      The <c>readings</c> variable can reference any <c>int</c> array of any size (limited only by the precondition, not by the JVM). These are all valid calls to the <c>averageReadings</c> method:
+    </p>
+
+    <program language="java"><![CDATA[int[] weeklyReadings = {45, 68, 112, 85, 38, 142, 55};
+int[] oneReading = {14};
+int[] weekendReadings = {22, 40};
+double weeklyAverage = averageReadings(weeklyReadings);
+double averageOne = averageReadings(oneReading);
+double weekendAverage = averageReadings(weekendReadings);]]></program>
+
+    <p>
+      In each call, we are passing a different <c>int</c> array to the <c>averageReadings</c> method. Each time, the address of the array in the heap will be copied into the parameter variable <c>readings</c>. (Note that the call <c>averageReadings(null)</c> is syntactically valid, but the <c>averageReadings</c> method will throw an <c>AssertionError</c> if we pass a <c>null</c> reference. For some methods a <c>null</c> reference might be perfectly fine.) When we have an array or object parameter, we must pass either a reference to a matching object type or <c>null</c>.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 7.4.2 Returning arrays                                       -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-7-4-2-returning-arrays">
+    <title>Returning Arrays</title>
+
+    <p>
+      We can also return an array from a method. When we are returning an array, we put the array data type in the method header, after the visibility and <c>static</c> modifiers (if present). This method creates and returns an array of <c>boolean</c> flags:
+    </p>
+
+    <program language="java"><![CDATA[/**
+ * Returns an array of flags parallel to the parameter array
+ * of readings. A flag is true if the parallel reading is
+ * over the parameter average; false otherwise.
+ *
+ * Preconditions:  readings != null
+ * Postconditions: returns a new boolean array flags
+ *                 where flags.length == readings.length
+ *                 and flags[i] == (readings[i] > average)
+ *                 for all 0 <= i < readings.length;
+ *                 readings is unchanged.
+ *
+ * @param readings A non-null array of integers.
+ * @param average  A double; the average of the readings.
+ * @return         A parallel boolean array flags where
+ *                 flags[i] == readings[i] > average
+ */
+public static boolean[] getFlags(int[] readings, double average) {
+    assert readings != null : "Readings array cannot be null.";
+
+    // Creates an array of flags the same length as readings.
+    boolean[] flags = new boolean[readings.length];
+
+    // Flags each reading that is over the average.
+    for (int i = 0; i < readings.length; i++) {
+        flags[i] = readings[i] > average;
+    }
+
+    // Returns the flags array.
+    return flags;
+}]]></program>
+
+    <p>
+      In the method header, the return type is <c>boolean[]</c>. As with array parameter declarations (and other array variable declarations) we give the type only<mdash />no size. This method takes an array of integer AQI readings and a <c>double</c> average as parameters and returns a <c>boolean</c> array that is parallel to the parameter <c>readings</c>.
+    </p>
+
+    <p>
+      It iterates through the <c>readings</c> array and places <c>true</c> in the <c>boolean</c> array if the reading is over the average, and <c>false</c> otherwise. <xref ref="figure-parallel-flags" /> illustrates the parallel arrays once the <c>flags</c> array is filled.
+    </p>
+
+    <figure xml:id="figure-parallel-flags">
+      <caption>The parallel arrays <c>readings</c> and <c>flags</c> before <c>flags</c> is returned from method <c>getFlags</c>.</caption>
+      <image source="figures/figure_7_5.png" width="95%">
+        <shortdescription>Abstract diagram of parallel arrays readings and flags aligned by shared indices 0 through 6.</shortdescription>
+        <description>
+          <p>
+            An abstract diagram showing two 7-element arrays aligned vertically by their shared indices <c>0</c> through <c>6</c>. The top array, labeled <c>readings:</c>, holds the integer values <c>45, 68, 112, 85, 38, 142, 55</c>. Beneath it sit the index labels <c>0</c> through <c>6</c>. The bottom array, labeled <c>flags:</c>, holds the corresponding Boolean values <c>false, false, true, true, false, true, false</c>. The pairs at indices <c>2</c> (<c>112</c> / <c>true</c>), <c>3</c> (<c>85</c> / <c>true</c>), and <c>5</c> (<c>142</c> / <c>true</c>) are highlighted to show values exceeding the average.
+          </p>
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      The method returns the <c>boolean</c> array as its last line. As with any value-returning method, the method must always return a value of its declared return type. Here is a <c>main</c> method that invokes both the <c>averageReadings</c> and <c>getFlags</c> methods:
+    </p>
+
+    <program language="java"><![CDATA[public static void main(String[] args) {
+    int[] weeklyReadings = {45, 68, 112, 85, 38, 142, 55};
+    double weeklyAverage = averageReadings(weeklyReadings);
+    boolean[] daysOver = getFlags(weeklyReadings, weeklyAverage);
+
+    System.out.printf("Weekly Average AQI: %.1f%n", weeklyAverage);
+    System.out.println("Days Above Average:");
+    for (int i = 0; i < daysOver.length; i++) {
+        if (daysOver[i]) {
+            System.out.printf("  Day %d: %d%n", i, weeklyReadings[i]);
+        }
+    }
+}]]></program>
+
+    <p>
+      Notice that when we invoke <c>getFlags</c>, we assign the result to a variable of type <c>boolean[]</c>. The method itself allocates space for the array with <c>new</c>, fills the array, and then hands the reference back to the calling method. It is the responsibility of the calling method to have a variable to store that reference and to make the assignment (<c>boolean[] daysOver = getFlags(weeklyReadings, weeklyAverage);</c>).
+    </p>
+
+    <figure xml:id="figure-return-array-assigned">
+      <caption>The stack and the heap after <c>getFlags</c> returns and the result is assigned to <c>daysOver</c>.</caption>
+      <image source="figures/figure_7_6.png" width="95%">
+        <shortdescription>Stack and heap diagram showing main with weeklyReadings pointing to 0x4200 and daysOver pointing to 0x5800.</shortdescription>
+        <description>
+          <p>
+            A two-panel memory diagram of the Call Stack and Heap after <c>getFlags</c> returns and its reference is stored in <c>daysOver</c>. On the Call Stack, the active <c>main()</c> frame holds <c>args</c>, <c>weeklyReadings</c> (<c>0x4200</c>), <c>weeklyAverage</c> (<c>77.86</c>), and <c>daysOver</c> (<c>0x5800</c>). On the Heap, <c>weeklyReadings</c> points to the <c>int[] object (length = 7)</c> at <c>0x4200</c> containing <c>45, 68, 112, 85, 38, 142, 55</c>, and <c>daysOver</c> points to the newly returned <c>boolean[] object (length = 7)</c> at <c>0x5800</c> containing <c>false, false, true, true, false, true, false</c>.
+          </p>
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      If we do not assign the result to a variable, e.g., if we simply invoke <c>getFlags(weeklyReadings, weeklyAverage);</c> alone on a line and not to the right of an assignment, then the allocated array is orphaned and marked for garbage-collection.
+    </p>
+
+    <figure xml:id="figure-return-array-ignored">
+      <caption>The stack and the heap after <c>getFlags</c> returns, but the result is not assigned to a variable in <c>main</c>.</caption>
+      <image source="figures/figure_7_7.png" width="95%">
+        <shortdescription>Stack and heap diagram showing the returned boolean[] at 0x5800 abandoned on the heap when not assigned to a variable.</shortdescription>
+        <description>
+          <p>
+            A two-panel memory diagram showing what happens when <c>getFlags</c> is called without storing its return value. On the Call Stack, <c>main()</c> contains <c>args</c>, <c>weeklyReadings</c> (<c>0x4200</c>), and <c>weeklyAverage</c> (<c>77.86</c>), with no variable for the returned array. On the Heap, <c>weeklyReadings</c> points to the <c>int[]</c> object at <c>0x4200</c>, while the newly created <c>boolean[]</c> object at <c>0x5800</c> is outlined with a dashed red border and labeled as abandoned and eligible for garbage collection because nothing references it.
+          </p>
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      Do not be tempted to first allocate space on the heap for that array before invoking the method! If you allocate space for the array in <c>main</c>, like this:
+    </p>
+
+    <program language="java"><![CDATA[// Unnecessary allocation that gets immediately discarded!
+boolean[] daysOver = new boolean[weeklyReadings.length];
+daysOver = getFlags(weeklyReadings, weeklyAverage);]]></program>
+
+    <p>
+      Space for a <c>boolean</c> array will be allocated in the heap, with the reference assigned to <c>daysOver</c>. When <c>getFlags</c> is invoked, new space will be allocated in the heap within the method, and the address to that new space will be returned and assigned to <c>daysOver</c>. The original space assigned to <c>daysOver</c> is then marked for garbage collection, so it is never used.
+    </p>
+
+    <figure xml:id="figure-return-array-preallocated">
+      <caption>The stack and the heap if space for <c>daysOver</c> was allocated then immediately assigned to the result of <c>getFlags</c>.</caption>
+      <image source="figures/figure_7_8.png" width="95%">
+        <shortdescription>Stack and heap diagram showing an unnecessary pre-allocated boolean[] at 0x5100 abandoned when daysOver is reassigned to 0x5800.</shortdescription>
+        <description>
+          <p>
+            A two-panel memory diagram illustrating an unnecessary pre-allocation before calling <c>getFlags</c>. On the Call Stack, <c>main()</c> holds <c>weeklyReadings</c> (<c>0x4200</c>), <c>weeklyAverage</c> (<c>77.86</c>), and <c>daysOver</c> (<c>0x5800</c>). On the Heap, three array objects appear: the <c>int[]</c> at <c>0x4200</c> referenced by <c>weeklyReadings</c>; an abandoned <c>boolean[]</c> at <c>0x5100</c> filled with default <c>false</c> values in a dashed red border (unreferenced and eligible for garbage collection); and the populated <c>boolean[]</c> at <c>0x5800</c> returned by <c>getFlags</c> and referenced by <c>daysOver</c>.
+          </p>
+        </description>
+      </image>
+    </figure>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 7.4.3 Assigning references and copying arrays                -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-7-4-3-assigning-copying">
+    <title>Assigning References and Copying Arrays</title>
+
+    <p>
+      Because arrays are objects, all of the powers and pitfalls of object variables also apply to arrays. We’ve just seen two:
+      <ul>
+        <li>
+          <p>
+            When you pass an array to a method, you are passing a reference. The method could have a side effect of modifying the original array data.
+          </p>
+        </li>
+        <li>
+          <p>
+            If you create an array in a method and don’t return it, or return it but don’t assign the returned value to a variable, the data in the heap is orphaned and will be garbage-collected.
+          </p>
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      As with other object variables, when you assign an array to another array variable with an assignment operator, you are not copying the array; you are aliasing it. You now have two references to the same data in the heap. Both references can modify the array object in the heap. If it is modified by one, it’s modified for the other. Consider the following program:
+    </p>
+
+    <listing xml:id="listing-array-alias">
+      <title>Aliasing an array reference. (<c>ArrayAlias.java</c>)</title>
+      <program language="java" line-numbers="yes"><![CDATA[public class ArrayAlias {
+    public static void main(String[] args) {
+        // Creates two references to one array in the heap.
+        int[] aqiReadings = {45, 68, 112, 85, 38, 142, 55};
+        int[] readingsAlias = aqiReadings;
+
+        // Modifies the array for both references.
+        readingsAlias[0] = 500;
+
+        // Shows the modified value from the other reference.
+        System.out.println(aqiReadings[0]);
+    }
+}]]></program>
+    </listing>
+
+    <p>
+      In this program, the array <c>aqiReadings</c> is allocated on line 4. On line 5, we copy the value that is stored in <c>aqiReadings</c> (on the stack) into <c>readingsAlias</c>. The value is the address of the allocated array in the heap. On line 8, the value at index <c>0</c> is changed through one of the references<mdash /><c>readingsAlias</c><mdash />but since there is only one copy of the data, it is changed for both references. When the value at index <c>0</c> is printed on line 11 through the second reference<mdash /><c>aqiReadings</c><mdash />it prints <c>500</c>.
+    </p>
+
+    <figure xml:id="figure-array-aliasing">
+      <caption>Memory after an array is assigned using the assignment operator (<c>=</c>).</caption>
+      <image source="figures/figure_7_9.png" width="95%">
+        <shortdescription>Stack and heap diagram showing both aqiReadings and readingsAlias pointing to the same array with index 0 updated to 500.</shortdescription>
+        <description>
+          <p>
+            A two-panel memory diagram illustrating array aliasing after <c>readingsAlias[0] = 500;</c>. On the Call Stack, the active <c>main()</c> frame holds <c>args</c>, <c>aqiReadings</c> (<c>0x4200</c>), and <c>readingsAlias</c> (<c>0x4200</c>). Two pointer arrows from <c>aqiReadings</c> and <c>readingsAlias</c> converge on the single <c>int[] object (length = 7)</c> tagged <c>0x4200</c> on the Heap, whose elements are <c>500, 68, 112, 85, 38, 142, 55</c> with index <c>[0]</c> highlighted at <c>500</c>.
+          </p>
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      As with other objects, if you want to copy the data of an array, you need to make a deep copy. Unfortunately, there is no array copy constructor. To copy an array, if it is an array of primitive values, you can use the static <c>copyOf</c> method in the <c>Arrays</c> class. (For arrays of objects, <c>Arrays.copyOf</c> creates only a shallow copy of the references; we will revisit deep copying arrays of objects in an upcoming section.) <xref ref="listing-array-copy" /> is a version of <xref ref="listing-array-alias" /> that copies <c>aqiReadings</c>:
+    </p>
+
+    <listing xml:id="listing-array-copy">
+      <title>Copying an array with <c>Arrays.copyOf</c>. (<c>ArrayCopy.java</c>)</title>
+      <program language="java" line-numbers="yes"><![CDATA[import java.util.Arrays;
+
+public class ArrayCopy {
+    public static void main(String[] args) {
+        // Creates an independent copy of the array in the heap.
+        int[] aqiReadings = {45, 68, 112, 85, 38, 142, 55};
+        int[] readingsCopy = Arrays.copyOf(aqiReadings, aqiReadings.length);
+
+        // Modifies only the copy; the original is unchanged.
+        readingsCopy[0] = 500;
+
+        // Shows that the original array still holds 45.
+        System.out.println(aqiReadings[0]);
+    }
+}]]></program>
+    </listing>
+
+    <p>
+      When we run <xref ref="listing-array-copy" />, it prints <c>45</c><mdash />the original value in <c>aqiReadings</c>, untouched because we made a copy<mdash />not an alias<mdash />of the array.
+    </p>
+
+    <p>
+      In <xref ref="listing-array-copy" />, rather than using the assignment operator to alias an array, we’re invoking the <c>Arrays.copyOf</c> method after importing <c>java.util.Arrays</c>. The <c>copyOf</c> method takes two arguments: the array to be copied and the size of the new array. We are passing in <c>aqiReadings.length</c> for the size so we have an exact copy of <c>aqiReadings</c>. However, if we passed in a smaller size, we would have a truncated copy, and if we passed in a larger size, the end of the array would be padded with zeroes. (The padding value depends on the data type of the array.)
+    </p>
+  </subsection>
+</section>
