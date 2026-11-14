@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-7-5-parallel-arrays" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Parallel Arrays</title>
+
+  <introduction>
+    <p>
+      Parallel arrays are one way to coordinate related collections of data, for example:
+      <ul>
+        <li>
+          <p>
+            Datasets that are composed of many kinds of data, such as AQI reading (integer), city name (text), and latitude and longitude (floating point).
+          </p>
+        </li>
+        <li>
+          <p>
+            Labels and data, such as day name (text) and AQI reading for the day (integer).
+          </p>
+        </li>
+        <li>
+          <p>
+            Results of analysis or computation on a set of values, such as AQI reading (integer) and whether it’s above the average (boolean).
+          </p>
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      Parallel arrays are a foundational concept behind column-oriented data tables in data analytics, but are rarely used in an object-oriented language such as Java. We will briefly explore parallel arrays so you understand how to work with them and where processing algorithms commonly go wrong. In an upcoming section, we’ll see how arrays of objects offer a remedy for parallel array pitfalls. For some applications, such as a simple lookup table, a pair of parallel arrays is a straightforward approach.
+    </p>
+  </introduction>
+
+  <!-- ============================================================ -->
+  <!-- 7.5.1 Structure of parallel arrays                           -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-7-5-1-structure-parallel-arrays">
+    <title>Structure of Parallel Arrays</title>
+
+    <p>
+      In <xref ref="listing-weekly-aqi-demo" /> we saw an example of parallel arrays:
+    </p>
+
+    <program language="java"><![CDATA[int[] aqiReadings = {45, 68, 112, 85, 38, 142, 55};
+String[] dayNames = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};]]></program>
+
+    <p>
+      The list of integer AQI readings is stored in an <c>int</c> array called <c>aqiReadings</c>. The list of equivalent day names is stored in a <c>String</c> array called <c>dayNames</c>. Each array contains related data: the AQI reading for Sunday is stored at index <c>0</c> in <c>aqiReadings</c>, and the day name for Sunday is stored at index <c>0</c> in <c>dayNames</c>. In parallel arrays, related values are stored at the same index in different arrays.
+    </p>
+
+    <p>
+      <xref ref="figure-parallel-aqi-days" /> illustrates why we refer to these arrays as <q>parallel</q><mdash />if we align the arrays so they are parallel vertically, the related data items are positioned as if in columns.
+    </p>
+
+    <figure xml:id="figure-parallel-aqi-days">
+      <caption>The parallel arrays <c>aqiReadings</c> and <c>dayNames</c>, aligned to show related values in columns.</caption>
+      <image source="figures/figure_7_10.png" width="95%">
+        <shortdescription>Abstract diagram of parallel arrays aqiReadings and dayNames aligned by shared indices 0 through 6.</shortdescription>
+        <description>
+          <p>
+            An abstract diagram showing two 7-element arrays aligned horizontally by their shared indices <c>0</c> through <c>6</c>. The top array, labeled <c>aqiReadings:</c>, contains the integer values <c>45, 68, 112, 85, 38, 142, 55</c>. Centered between the two arrays are the index numbers <c>0</c> through <c>6</c>. The bottom array, labeled <c>dayNames:</c>, contains the corresponding day abbreviations <c>"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"</c> directly beneath their matching readings.
+          </p>
+        </description>
+      </image>
+    </figure>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 7.5.2 Parallel array algorithms                              -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-7-5-2-parallel-array-algorithms">
+    <title>Parallel Array Algorithms</title>
+
+    <p>
+      Elements in parallel arrays are tied together by their index, so algorithms that process parallel arrays by iterating over them, looking up values, or inserting values, for example, will maintain an index. Let’s look at one example<mdash />a loop that finds the largest value in the <c>aqiReadings</c> array and prints the day of the week (from the parallel <c>dayNames</c> array) with the largest AQI score.
+    </p>
+
+    <p>
+      Previously we had written a loop to find the largest AQI score in an array of scores, using a most-wanted holder variable to hold the score. If we’re working with parallel arrays, we must store the index of the highest value in the most-wanted holder variable<mdash />not the value itself. We can then easily access the value by indexing into the array. <xref ref="listing-report-highest" /> finds the largest value in the <c>aqiReadings</c> array and reports the value and the day by using a most-wanted holder that stores the index of the highest value found so far.
+    </p>
+
+    <listing xml:id="listing-report-highest">
+      <title>A most-wanted algorithm that finds the index of the highest value. (<c>ReportHighest.java</c>)</title>
+      <program language="java" line-numbers="yes"><![CDATA[/**
+ * Creates an array of weekly AQI readings and a parallel array
+ * of day names; finds and reports the highest value.
+ */
+public class ReportHighest {
+
+    public static void main(String[] args) {
+        // Daily AQI readings for Sunday (0) through Saturday (6)
+        int[] aqiReadings = {45, 68, 112, 85, 38, 142, 55};
+        String[] dayNames = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+
+        // Finds the index of the highest element.
+        int maxIndex = 0;
+        for (int i = 1; i < aqiReadings.length; i++) {
+            if (aqiReadings[i] > aqiReadings[maxIndex]) {
+                maxIndex = i;
+            }
+        }
+
+        // Displays the day with the highest AQI reading and the reading.
+        System.out.print("The highest reading was " + aqiReadings[maxIndex]);
+        System.out.println(", occurring on " + dayNames[maxIndex] + ".");
+
+    }
+}]]></program>
+    </listing>
+
+    <p>
+      This program prints:
+    </p>
+
+    <console>
+      <output>The highest reading was 142, occurring on Friday.</output>
+    </console>
+
+    <p>
+      Notice the pattern in the most-wanted code, found on lines 13–18. The most-wanted holder is named <c>maxIndex</c> to emphasize that it is holding the index of the maximum value and not the maximum value itself. It is initialized to <c>0</c><mdash />the index of the first element in the array.
+    </p>
+
+    <p>
+      We then loop from the index of the next element (<c>1</c>) through the length of the array, compare, and replace the value in <c>maxIndex</c> if we find a larger AQI reading. The comparison code uses <c>maxIndex</c> and the loop control variable <c>i</c> to index into the <c>aqiReadings</c> array: <c>if (aqiReadings[i] &gt; aqiReadings[maxIndex])</c>. We compare the element at index <c>i</c> (the most-recent holder) with the element at index <c>maxIndex</c> (the most-wanted holder). If the value we’re currently examining is larger, we replace the index (<c>maxIndex = i;</c>).
+    </p>
+
+    <p>
+      When we plan and walk through code that processes an array, we often use arrows pointing to array elements to represent index variables. <xref ref="figure-parallel-max-trace" /> illustrates our most-wanted program on line 15 of the fourth iteration of the loop: <c>maxIndex</c> is <c>2</c>, and <c>i</c> is <c>4</c> (remember <c>i</c> was <c>1</c> for our first iteration).
+    </p>
+
+    <figure xml:id="figure-parallel-max-trace">
+      <caption>Walking through the most-wanted holder loop over parallel arrays.</caption>
+      <image source="figures/figure_7_11.png" width="95%">
+        <shortdescription>Parallel arrays dayNames and aqiReadings with indices 0 to 6 on top and arrows maxIndex at 2 and i at 4 below.</shortdescription>
+        <description>
+          <p>
+            An abstract diagram of the parallel arrays <c>dayNames</c> and <c>aqiReadings</c> during the fourth iteration of the loop in <xref ref="listing-report-highest" />. The indices <c>0</c> through <c>6</c> appear across the top. Directly beneath the indices sits <c>dayNames</c> (<c>"Sunday"</c> through <c>"Saturday"</c>), and directly beneath that sits <c>aqiReadings</c> (<c>45, 68, 112, 85, 38, 142, 55</c>). Below the bottom array, an upward arrow labeled <c>maxIndex</c> points to index <c>2</c> (<c>"Tuesday"</c> / <c>112</c>), and an upward arrow labeled <c>i</c> points to index <c>4</c> (<c>"Thursday"</c> / <c>38</c>).
+          </p>
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      Once the loop is finished, <c>maxIndex</c> holds the index of the largest value in the array. When we display both the value and the day of the week on lines 21 and 22, we use <c>maxIndex</c> to index into both parallel arrays.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 7.5.3 Parallel array pitfalls                                -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-7-5-3-parallel-array-pitfalls">
+    <title>Parallel Array Pitfalls</title>
+
+    <p>
+      Because Java has no built-in mechanism to know that <c>aqiReadings</c> and <c>dayNames</c> belong together, the responsibility for keeping them synchronized rests entirely on you. That manual coordination creates three common traps:
+    </p>
+
+    <p>
+      <ol>
+        <li>
+          <p>
+            Silent Data Corruption During Updates (Out-of-Sync Arrays)
+          </p>
+          <p>
+            Suppose you decide to sort <c>aqiReadings</c> from lowest to highest so you can easily read off the cleanest and most polluted days. If you sort <c>aqiReadings</c> without applying the exact same swaps to <c>dayNames</c>, the arrays fall out of alignment:
+          </p>
+          <program language="java"><![CDATA[Arrays.sort(aqiReadings); // Sorts [38, 45, 55, 68, 85, 112, 142]]]></program>
+          <p>
+            Now <c>aqiReadings[0]</c> is <c>38</c>, while <c>dayNames[0]</c> is still <c>"Sunday"</c><mdash />even though <c>38</c> was actually Thursday’s reading! Java will not produce a compiler error or a runtime crash; your program will simply print false reports. The same silent corruption happens if you insert or delete an element in one array and forget to update every companion array at the exact same index.
+          </p>
+        </li>
+        <li>
+          <p>
+            Mismatched Array Lengths
+          </p>
+          <p>
+            Nothing stops a programmer from accidentally declaring <c>aqiReadings</c> with 7 elements and <c>dayNames</c> with 6 elements, or forgetting to add a corresponding entry to one of the initializer lists. When a loop runs up to <c>aqiReadings.length</c>, accessing <c>dayNames[i]</c> will crash with an <c>ArrayIndexOutOfBoundsException</c>, or, if <c>dayNames</c> is longer than <c>aqiReadings</c>, trailing entries will be silently ignored.
+          </p>
+        </li>
+        <li>
+          <p>
+            Cluttered Method Signatures
+          </p>
+          <p>
+            As a dataset grows, parallel arrays force you to pass every single array into every helper method. A method that prints a weather summary might require five or six separate array parameters (<c>cities</c>, <c>aqiReadings</c>, <c>latitudes</c>, <c>longitudes</c>, <c>dates</c>), making code tedious to write and easy to misalign when calling the method.
+          </p>
+        </li>
+      </ol>
+    </p>
+
+    <p>
+      For small, fixed lookup tables<mdash />like mapping month numbers to month names<mdash />parallel arrays are simple and effective. But whenever you need to sort, insert, delete, or pass complex records around a program, bundling related fields into a single class and creating an array of objects (which we will explore in an upcoming section) eliminates all three pitfalls.
+    </p>
+  </subsection>
+</section>

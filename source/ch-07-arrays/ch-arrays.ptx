@@ -6,9 +6,10 @@
   <xi:include href="sec-7-2-array-fundamentals.ptx" />
   <xi:include href="sec-7-3-array-algorithms.ptx" />
   <xi:include href="sec-7-4-arrays-methods.ptx" />
+  <xi:include href="sec-7-5-parallel-arrays.ptx" />
   <!--
   
-  <xi:include href="sec-5-5-call-stack.ptx" />
+  
   <xi:include href="sec-5-6-value-returning-methods.ptx" />
   <xi:include href="sec-5-7-boolean-methods.ptx" />
   <xi:include href="sec-5-8-scope-lifetime.ptx" />
