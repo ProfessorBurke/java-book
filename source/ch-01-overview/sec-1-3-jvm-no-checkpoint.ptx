@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-1-3-jvm" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>The Java Virtual Machine</title>
+
+  <p>
+    Before Java was created in the mid-1990s, programming languages generally fell into
+    one of two distinct camps: they were either compiled or interpreted. Understanding
+    how these two approaches work—and their respective drawbacks—makes it clear why
+    Java’s architecture was so revolutionary.
+  </p>
+
+  <p>
+    In traditionally compiled languages like C, C++, and Rust, a compiler takes the
+    programmer's human-readable source code and translates the entire program directly
+    into native machine language before the program is ever run:
+  </p>
+
+  <cd>
+    Source Code (.cpp)  ----[ Compiler ]----&gt;  Native Machine Code (.exe)  ----&gt;  Runs directly on CPU
+  </cd>
+
+  <ul>
+    <li>
+      <p>
+        The Advantage (Speed): Because the resulting executable file consists strictly of
+        the CPU's native binary instructions, the computer executes it at maximum hardware
+        speed with zero translation overhead.
+      </p>
+    </li>
+    <li>
+      <p>
+        The Drawback (Platform Dependence): The generated machine code is permanently
+        locked to one specific type of CPU architecture (such as Intel/AMD x86-64 or Apple
+        Silicon ARM64) and a specific operating system (Windows, macOS, or Linux). An
+        <c>.exe</c> file compiled on an Intel Windows PC is completely unintelligible to an
+        ARM-based Mac or a Linux server.
+      </p>
+    </li>
+  </ul>
+
+  <p>
+    Historically, software companies had to maintain separate codebases and recompile
+    their software independently for every single hardware and operating system
+    combination they wanted to support.
+  </p>
+
+  <p>
+    At the opposite end of the spectrum are interpreted languages (such as Python,
+    Ruby, and JavaScript).
+  </p>
+
+  <p>
+    In a purely interpreted system, there is no separate ahead-of-time compilation step
+    that creates a standalone binary file. Instead, another program called an interpreter
+    reads the source code and carries out the instructions on the fly:
+  </p>
+
+  <cd>
+    Source Code (.py)  ----&gt;  [ Interpreter Program ]  ----&gt;  Translates and executes line by line
+  </cd>
+
+  <ul>
+    <li>
+      <p>
+        The Advantage (Portability): Because source files remain plain text, they are
+        completely portable. You can write a Python script on Windows and run the exact same
+        file on a Mac or a Linux server, provided that machine has a Python interpreter
+        installed.
+      </p>
+    </li>
+    <li>
+      <p>
+        The Drawback (Execution Overhead): Translating code into machine instructions line
+        by line while the program is actively running takes significant time.
+        Historically, interpreted programs ran anywhere from 10 to 50 times slower than
+        natively compiled C++ programs.
+      </p>
+    </li>
+  </ul>
+
+  <p>
+    In 1995, James Gosling and his team at Sun Microsystems engineered a brilliant
+    hybrid approach that combines the speed of compilation with the universal
+    portability of interpretation.
+  </p>
+
+  <p>
+    Instead of compiling directly to a physical chip's machine language, the Java
+    compiler (<c>javac</c>) translates human-readable <c>.java</c> source code into an
+    intermediate format called Java bytecode, which is saved in a <c>.class</c> file:
+  </p>
+
+  <cd>
+    Source Code (.java)  ----[ javac Compiler ]----&gt;  Java Bytecode (.class)
+  </cd>
+
+  <p>
+    Bytecode looks very much like machine language—it consists of primitive,
+    binary-encoded instructions—but it is not designed for an Intel, AMD, or ARM
+    processor. Instead, it is the machine language of an idealized, theoretical
+    computer: the Java Virtual Machine (JVM).
+  </p>
+
+  <table xml:id="table-java-bytecode-instructions">
+    <title>Example Java Bytecode Instructions</title>
+    <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+      <col width="28%"/>
+      <col width="18%"/>
+      <col width="16%"/>
+      <col width="38%"/>
+      <row header="yes">
+        <cell halign="center"><strong>Bytecode (Hex and Binary)</strong></cell>
+        <cell halign="center"><strong>Bytecode Mnemonic</strong></cell>
+        <cell halign="center"><strong>Operation</strong></cell>
+        <cell halign="center"><strong>Description</strong></cell>
+      </row>
+      <row>
+        <cell>
+          <p><c>15 01</c></p>
+          <p><c>(00010101 00000001)</c></p>
+        </cell>
+        <cell><c>iload 1</c></cell>
+        <cell>Load</cell>
+        <cell>
+          Push the integer stored in local variable 1 onto the JVM operand stack.
+          (Equivalent to LOAD R1)
+        </cell>
+      </row>
+      <row>
+        <cell>
+          <p><c>15 02</c></p>
+          <p><c>(00010101 00000010)</c></p>
+        </cell>
+        <cell><c>iload 2</c></cell>
+        <cell>Load</cell>
+        <cell>
+          Push the integer stored in local variable 2 onto the JVM operand stack.
+          (Equivalent to LOAD R2)
+        </cell>
+      </row>
+      <row>
+        <cell>
+          <p><c>60</c></p>
+          <p><c>(01100000)</c></p>
+        </cell>
+        <cell><c>iadd</c></cell>
+        <cell>Arithmetic</cell>
+        <cell>
+          Pop the top two integers from the stack, add them together, and push the sum back
+          onto the stack. (Equivalent to ADD)
+        </cell>
+      </row>
+      <row>
+        <cell>
+          <p><c>36 03</c></p>
+          <p><c>(00110110 00000011)</c></p>
+        </cell>
+        <cell><c>istore 3</c></cell>
+        <cell>Store</cell>
+        <cell>
+          Pop the integer from the top of the stack and store it in local variable 3.
+          (Equivalent to STORE R3)
+        </cell>
+      </row>
+      <row>
+        <cell>
+          <p><c>a7 00 14</c></p>
+          <p><c>(10100111 00000000 00010100)</c></p>
+        </cell>
+        <cell><c>goto 20</c></cell>
+        <cell>Branch</cell>
+        <cell>
+          Jump unconditionally to the instruction at bytecode position 20. (Equivalent to
+          JUMP)
+        </cell>
+      </row>
+      <row>
+        <cell>
+          <p><c>99 00 14</c></p>
+          <p><c>(10011001 00000000 00010100)</c></p>
+        </cell>
+        <cell><c>ifeq 20</c></cell>
+        <cell>Conditional</cell>
+        <cell>
+          Pop the top integer from the stack; if it equals zero, jump to bytecode position
+          20. (Equivalent to JUMP_IF_ZERO)
+        </cell>
+      </row>
+    </tabular>
+  </table>
+
+  <p>
+    The Java Virtual Machine is a software program that simulates a computer. It has its
+    own virtual registers, its own memory management system, and its own instruction set.
+  </p>
+
+  <p>
+    While the bytecode in your <c>.class</c> file is always identical regardless of where
+    it was compiled, the JVM itself is platform-specific. There is a Windows JVM for x86
+    processors, a macOS JVM for Apple Silicon processors, a Linux JVM for cloud servers,
+    and an Android JVM for mobile devices:
+  </p>
+
+  <figure xml:id="figure-write-once-run-anywhere">
+    <caption>Write once, run anywhere architecture</caption>
+    <image source="figures/figure_1_3.png" width="85%">
+      <shortdescription>Diagram showing Java bytecode branching to Windows, macOS, and Linux JVMs, which translate instructions for distinct physical CPU architectures.</shortdescription>
+    </image>
+  </figure>
+
+  <p>
+    When you type <c>java MyProgram</c>, the operating system launches the native JVM. The
+    JVM loads your <c>.class</c> bytecode, translates those virtual instructions into the
+    host computer's native machine language, and coordinates with the physical CPU to
+    execute your program.
+  </p>
+
+  <p>
+    This two-step architecture fulfilled Java’s famous founding motto: <q>Write Once, Run
+    Anywhere</q> (WORA). You can write and compile a Java application on your Windows
+    laptop, email the <c>.class</c> file to a friend running macOS, and upload it to a
+    Linux web server—the exact same bytecode runs everywhere without modification.
+  </p>
+
+  <p>
+    In early versions of Java, the JVM was a straightforward interpreter, executing
+    bytecode instructions one by one. While this made Java portable, early Java programs
+    were noticeably slower than C++.
+  </p>
+
+  <p>
+    Modern JVMs solve this performance gap using a sophisticated technology called a
+    Just-In-Time (JIT) compiler:
+  </p>
+
+  <ol>
+    <li>
+      <p>
+        When your program first starts up, the JVM begins executing by interpreting bytecode
+        quickly so the program launches without delay.
+      </p>
+    </li>
+    <li>
+      <p>
+        While the program runs, the JVM actively monitors its execution to identify <q>hot
+        spots</q>—sections of code, such as loops and frequently called methods, where the
+        program spends most of its time.
+      </p>
+    </li>
+    <li>
+      <p>
+        The JIT compiler takes those hot-spot bytecode sections and compiles them directly
+        into optimized native machine code in memory on the fly.
+      </p>
+    </li>
+    <li>
+      <p>
+        The next time that code is called, the CPU runs the ultra-fast native machine code
+        directly, completely bypassing bytecode translation!
+      </p>
+    </li>
+  </ol>
+
+  <p>
+    Thanks to the JIT compiler, modern Java combines the universal portability of an
+    interpreted language with execution speeds that rival fully compiled languages like C
+    and C++. As a programmer, you get the best of both worlds: write your code once in Java,
+    and let the compiler and JVM deliver fast, consistent performance on any device.
+  </p>
+</section>

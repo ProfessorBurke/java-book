@@ -21,6 +21,11 @@
     <caption>The CPU and memory</caption>
     <image source="figures/figure_1_1.png" width="90%">
       <shortdescription>Diagram showing the CPU components connected to addressed main memory via a system bus.</shortdescription>
+      <description>
+        <p>
+          A block diagram titled <q>Computer Architecture: CPU, Bus, and Main Memory.</q> On the left, a container labeled <q>Central Processing Unit (CPU)</q> holds three components linked by internal bidirectional arrows: <q>Registers</q> (listing <c>PC: 0x01</c>, <c>IR: LOAD 0x10</c>, <c>R0: 42</c>, and <c>R1: 15</c>), the <q>Control Unit</q> (labeled <q>Fetches &amp; Decodes Instructions</q>), and the <q>Arithmetic Logic Unit (ALU)</q> (labeled <q>Performs Calculations &amp; Logic</q>). In the center, a thick bidirectional arrow labeled <q>Bus</q> connects the CPU to a right-hand container labeled <q>Main Memory (RAM).</q> Inside RAM is a two-column table of addresses and contents: <c>0x00</c> (<c>LOAD 0x10</c>), <c>0x01</c> (<c>ADD 0x11</c>), <c>0x02</c> (<c>STORE 0x12</c>), <c>0x03</c> (<c>HALT</c>), followed by data values at <c>0x10</c> (<c>42</c>), <c>0x11</c> (<c>15</c>), and <c>0x12</c> (<c>[result]</c>).
+        </p>
+      </description>
     </image>
   </figure>
 
@@ -133,6 +138,134 @@
     <caption>The fetch-decode-execute cycle</caption>
     <image source="figures/figure_1_2.png" width="85%">
       <shortdescription>Cyclic flowchart showing the three stages of the CPU instruction cycle: Fetch, Decode, and Execute.</shortdescription>
+      <description>
+        <p>
+          A clockwise cyclic flowchart titled <q>The CPU Instruction Cycle (Fetch-Decode-Execute)</q> arranged around the center label <q>Continuous Cycle: Repeats billions of times per second.</q> At the top, box <q>1. FETCH</q> explains retrieving the next instruction from RAM at the Program Counter address, with an example showing <c>PC = 0x01 -&gt; Fetch 'ADD 0x11'</c> and <c>PC</c> incrementing to <c>0x02</c>. An arrow leads to the bottom-right box, <q>2. DECODE,</q> explaining that the Control Unit interprets the opcode, with an example showing <c>Opcode: ADD -&gt; Requires ALU addition</c> and <c>Operand: 0x11 -&gt; Load operand value (15)</c>. An arrow leads to the bottom-left box, <q>3. EXECUTE,</q> explaining that the ALU performs the computation and saves the result, with an example showing <c>ALU adds R0 (42) + operand (15) = 57</c> saved in a register/accumulator. A final arrow loops back up to <q>1. FETCH.</q>
+        </p>
+      </description>
     </image>
   </figure>
+
+  <reading-questions xml:id="checkpoint-1-2">
+    <title>Checkpoint</title>
+
+    <exercise xml:id="checkpoint-1-2-hardware-matching" label="checkpoint-1-2-hardware-matching">
+      <title>Hardware Components</title>
+      <statement>
+        <p>
+          Match each hardware component to its role in executing a program.
+        </p>
+      </statement>
+      <cardsort>
+        <match>
+          <premise order="3">Main Memory (RAM)</premise>
+          <response>Stores program instructions and data in addressed slots while the computer is on.</response>
+        </match>
+        <match>
+          <premise order="1">Central Processing Unit (CPU)</premise>
+          <response>Fetches, decodes, and executes instructions using arithmetic, logic, and registers.</response>
+        </match>
+        <match>
+          <premise order="4">The Bus</premise>
+          <response>Carries instructions and data back and forth between the CPU and main memory.</response>
+        </match>
+        <match>
+          <premise order="2">Program Counter (PC)</premise>
+          <response>Holds the memory address of the next instruction to be executed.</response>
+        </match>
+      </cardsort>
+    </exercise>
+
+    <exercise xml:id="checkpoint-1-2-compiler" label="checkpoint-1-2-compiler">
+      <title>The Role of a Compiler</title>
+      <statement>
+        <p>
+          Why is a compiler needed before a program written in a high-level language can run on a computer’s hardware?
+        </p>
+      </statement>
+      <choices randomize="yes">
+        <choice correct="yes">
+          <statement>
+            <p>
+              It translates human-readable high-level source code into binary machine-language instructions that the CPU can execute.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Correct! The physical CPU only understands its native binary machine language, so a compiler translates high-level code into instructions the hardware can run.
+            </p>
+          </feedback>
+        </choice>
+        <choice correct="no">
+          <statement>
+            <p>
+              It stores the program’s variables and instructions inside Main Memory (RAM) while the program runs.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Not quite. Main Memory (RAM) holds the program and its data during execution, while a compiler performs translation before execution begins.
+            </p>
+          </feedback>
+        </choice>
+        <choice correct="no">
+          <statement>
+            <p>
+              It connects the CPU to Main Memory so instructions can travel between them at high speed.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Not quite. The physical channel connecting the CPU and Main Memory is the bus, not the compiler.
+            </p>
+          </feedback>
+        </choice>
+        <choice correct="no">
+          <statement>
+            <p>
+              It executes each instruction one by one by advancing the Program Counter.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Not quite. The CPU carries out the fetch-decode-execute cycle and updates the Program Counter during execution.
+            </p>
+          </feedback>
+        </choice>
+      </choices>
+    </exercise>
+
+    <exercise xml:id="checkpoint-1-2-assembly-parsons" label="checkpoint-1-2-assembly-parsons" adaptive="yes">
+      <title>Challenge: Pseudo-Assembly</title>
+      <statement>
+        <p>
+          Using the pseudo-assembly instructions in <xref ref="table-machine-language-instructions" />, the following four-step program adds the values stored at memory addresses <c>100</c> and <c>101</c> and stores their sum at address <c>102</c>:
+        </p>
+        <pre>LOAD R1, [100]
+LOAD R2, [101]
+ADD R3, R1, R2
+STORE R3, [102]</pre>
+        <p>
+          Arrange the blocks below to write a similar program that loads the value at address <c>105</c> into <c>R1</c>, loads the value at address <c>106</c> into <c>R2</c>, adds them into <c>R3</c>, and stores the result at memory address <c>107</c>. (You might not need all of the blocks.)
+        </p>
+      </statement>
+      <blocks>
+        <block order="3">
+          <cline>LOAD R1, [105]</cline>
+        </block>
+        <block order="1">
+          <cline>LOAD R2, [106]</cline>
+        </block>
+        <block order="5">
+          <cline>ADD R3, R1, R2</cline>
+        </block>
+        <block order="2">
+          <cline>STORE R3, [107]</cline>
+        </block>
+        <block order="4" correct="no">
+          <cline>LOAD R3, [107]</cline>
+        </block>
+      </blocks>
+    </exercise>
+  </reading-questions>
 </section>

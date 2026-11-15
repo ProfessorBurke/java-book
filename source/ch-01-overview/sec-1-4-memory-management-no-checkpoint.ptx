@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-1-4-memory-management" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Memory Management</title>
+
+  <p>
+    As a program runs—whether natively on computer hardware, inside an interpreter, or
+    within the Java Virtual Machine—it constantly uses memory. Memory stores the program’s
+    instructions (which are fetched and executed by the CPU, interpreter, or JVM) as well
+    as the data the program manipulates. Because memory is a finite resource, it must be
+    carefully organized and managed.
+  </p>
+
+  <p>
+    In most programming languages, a program's memory is divided into four main areas:
+  </p>
+
+  <ul>
+    <li>
+      <p>
+        The Code Segment: Holds the compiled machine instructions or bytecode that the CPU
+        executes.
+      </p>
+    </li>
+    <li>
+      <p>
+        The Static Segment: Holds data (such as class definitions, global variables, and
+        constants) that exists for the entire duration of the program.
+      </p>
+    </li>
+    <li>
+      <p>
+        The Stack: A fast, highly structured scratchpad that automatically grows and shrinks
+        as code (subroutines or methods) are called and return. It holds temporary data,
+        such as local variables. (More on the stack in Chapters 2 and 5.)
+      </p>
+    </li>
+    <li>
+      <p>
+        The Heap: An open memory pool for dynamic data—data created while the program is
+        running whose size or lifetime cannot be predicted in advance. (You will learn a
+        little more about the heap in chapter 2 and work extensively with the heap
+        starting in Chapter 6.)
+      </p>
+    </li>
+  </ul>
+
+  <p>
+    Managing heap memory is the most challenging part of system design. Imagine running a
+    drawing application where you create shapes on a canvas. Behind the scenes, each shape
+    is represented by a bundle of data (its type, coordinates, size, color, and line
+    thickness) stored in the heap. Every time you draw a new circle, the program must find
+    an unused block of heap memory to store that circle's data. If you delete the circle,
+    the program should free that memory so it can be reused for future shapes. Ideally, this
+    allocation and deallocation happens seamlessly without slowing down the application.
+  </p>
+
+  <p>
+    Programming languages handle heap memory management using three primary strategies:
+  </p>
+
+  <ul>
+    <li>
+      <p>
+        Manual Memory Management (Programmer Responsibility): In languages like C and C++,
+        the programmer must explicitly write instructions to request memory when an item is
+        created and manually release it when it is no longer needed.
+      </p>
+    </li>
+    <li>
+      <p>
+        Compile-Time Ownership (Compiler Enforced): In languages like Rust, the compiler
+        tracks which variable owns each piece of heap memory. When that owner variable goes
+        out of scope on the stack, the compiler automatically inserts the cleanup
+        instructions, requiring neither manual freeing nor a background garbage collector.
+      </p>
+    </li>
+    <li>
+      <p>
+        Automatic Garbage Collection (Runtime Responsibility): In languages like Java,
+        Python, and C#, the runtime environment includes a background service called a
+        garbage collector. The garbage collector monitors the heap, automatically detects
+        data that the program is no longer using, and reclaims that memory on the
+        programmer's behalf.
+      </p>
+    </li>
+  </ul>
+
+  <p>
+    Each approach involves engineering trade-offs. Manual management gives maximum speed
+    and control, but human error frequently causes two major problems: memory leaks
+    (forgetting to free unused memory until the application runs out of space and
+    crashes) and dangling pointers (freeing memory while a variable is still using it,
+    causing unpredictable behavior, data corruption, or security vulnerabilities).
+  </p>
+
+  <p>
+    The compile-time ownership model attempts to provide the best of both worlds: it
+    delivers the raw speed and deterministic efficiency of manual management while
+    guaranteeing the safety of automatic garbage collection. However, its major trade-off
+    is a steep learning curve and increased development complexity. Because the compiler
+    strictly enforces ownership and borrowing rules at build time, the programmer must
+    spend extra effort designing their code to satisfy the compiler's safety checks, and
+    compilation times are typically longer.
+  </p>
+
+  <p>
+    Automatic garbage collection eliminates catastrophic memory-corruption bugs and
+    dramatically simplifies programming, but it requires extra memory for bookkeeping and
+    periodic CPU cycles to inspect the heap. In modern Java Virtual Machines, however, the
+    garbage collector is heavily optimized and runs with minimal impact on performance.
+  </p>
+
+  <p>
+    While computer architecture and virtual machines may seem theoretical at first glance,
+    they provide the essential foundation for everything you will build as a software
+    developer. Understanding how the CPU executes instructions, how the JVM achieves
+    cross-platform portability, and how memory is managed demystifies what is actually
+    happening when your code runs. With this mental model in place, it is time to move from
+    theory into practice. In the next section, we will roll up our sleeves, set up your
+    development environment, and run your very first program.
+  </p>
+</section>

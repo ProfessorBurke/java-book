@@ -119,4 +119,185 @@
     theory into practice. In the next section, we will roll up our sleeves, set up your
     development environment, and run your very first program.
   </p>
+
+  <reading-questions xml:id="checkpoint-1-4">
+    <title>Checkpoint</title>
+
+    <exercise xml:id="checkpoint-1-4-memory-regions" label="checkpoint-1-4-memory-regions">
+      <title>Memory Regions</title>
+      <statement>
+        <p>
+          In a drawing application where users can create and delete shapes at any time while the program is running, which area of memory stores each shape’s dynamic bundle of data?
+        </p>
+      </statement>
+      <choices randomize="yes">
+        <choice correct="yes">
+          <statement>
+            <p>
+              The Heap, because it is an open memory pool for dynamic data whose size or lifetime cannot be predicted in advance.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Correct! The heap is designed for dynamic data created and removed unpredictably at runtime.
+            </p>
+          </feedback>
+        </choice>
+        <choice correct="no">
+          <statement>
+            <p>
+              The Stack, because it grows and shrinks automatically as methods are called and return.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Not quite. The stack holds short-lived local variables tied to method calls, not dynamic objects whose lifetime depends on user actions.
+            </p>
+          </feedback>
+        </choice>
+        <choice correct="no">
+          <statement>
+            <p>
+              The Code Segment, because it stores everything the CPU needs to execute the drawing program.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Not quite. The Code Segment holds the compiled machine instructions or bytecode, not the dynamic data created by the user.
+            </p>
+          </feedback>
+        </choice>
+        <choice correct="no">
+          <statement>
+            <p>
+              The Static Segment, because it holds data that exists for the entire duration of the program.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Not quite. The Static Segment is for class definitions, global variables, and constants that persist for the entire run, whereas shapes are created and deleted dynamically.
+            </p>
+          </feedback>
+        </choice>
+      </choices>
+    </exercise>
+
+    <exercise xml:id="checkpoint-1-4-manual-management" label="checkpoint-1-4-manual-management">
+      <title>Manual Memory Management Pitfall</title>
+      <statement>
+        <p>
+          In a language with manual memory management (such as C or C++), what happens if a program repeatedly allocates heap memory for temporary data and forgets to release it when it is no longer needed?
+        </p>
+      </statement>
+      <choices randomize="yes">
+        <choice correct="yes">
+          <statement>
+            <p>
+              A memory leak occurs, consuming available space until the application runs out of memory and crashes.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Correct! Forgetting to free unused memory in a manually managed language leaves it unavailable for reuse, causing a memory leak.
+            </p>
+          </feedback>
+        </choice>
+        <choice correct="no">
+          <statement>
+            <p>
+              A dangling pointer occurs, allowing a variable to read corrupted data from freed memory.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Not quite. A dangling pointer happens for the opposite reason—freeing memory too early while a variable is still using it.
+            </p>
+          </feedback>
+        </choice>
+        <choice correct="no">
+          <statement>
+            <p>
+              The compiler automatically inserts cleanup instructions when the owner variable goes out of scope.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Not quite. Automatic compile-time cleanup is how Rust’s ownership model works, not manual memory management in C or C++.
+            </p>
+          </feedback>
+        </choice>
+        <choice correct="no">
+          <statement>
+            <p>
+              The background garbage collector detects the unused memory and reclaims it automatically.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Not quite. Manually managed languages like C and C++ do not include a runtime garbage collector.
+            </p>
+          </feedback>
+        </choice>
+      </choices>
+    </exercise>
+
+    <exercise xml:id="checkpoint-1-4-garbage-collection" label="checkpoint-1-4-garbage-collection">
+      <title>Java’s Memory Strategy</title>
+      <statement>
+        <p>
+          How does Java’s automatic garbage collection differ from manual memory management and compile-time ownership?
+        </p>
+      </statement>
+      <choices randomize="yes">
+        <choice correct="yes">
+          <statement>
+            <p>
+              A background service in the JVM monitors the heap at runtime and automatically reclaims unused memory, trading a small amount of bookkeeping overhead for safety and simplicity.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Correct! Java’s runtime garbage collector frees unused heap memory automatically, eliminating memory leaks and dangling pointers while requiring modest CPU and memory overhead.
+            </p>
+          </feedback>
+        </choice>
+        <choice correct="no">
+          <statement>
+            <p>
+              The Java compiler enforces strict ownership rules at build time and inserts cleanup instructions so no runtime service is needed.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Not quite. That describes compile-time ownership (as used in Rust), whereas Java manages heap memory at runtime.
+            </p>
+          </feedback>
+        </choice>
+        <choice correct="no">
+          <statement>
+            <p>
+              The Java programmer must write explicit instructions to free every heap object when it is no longer needed.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Not quite. That describes manual memory management in C and C++; Java programmers do not manually free heap objects.
+            </p>
+          </feedback>
+        </choice>
+        <choice correct="no">
+          <statement>
+            <p>
+              Java avoids using the heap entirely by storing all dynamic objects on the call stack.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Not quite. Java uses the heap extensively for dynamic data and objects, relying on the garbage collector to manage that heap space.
+            </p>
+          </feedback>
+        </choice>
+      </choices>
+    </exercise>
+  </reading-questions>
 </section>

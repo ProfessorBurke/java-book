@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<!--******************************************-->
+<!--*  Authored with PreTeXt                 *-->
+<!--*  pretextbook.org                       *-->
+<!--*  Theme: default-modern                 *-->
+<!--*  Palette:                              *-->
+<!--******************************************-->
+
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body class="ignore-math">
+<figure class="table table-like"><figcaption><span class="type">Table</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">1.2<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span>Example Machine Language Instructions and Assembly Mnemonics<div class="autopermalink" aria-hidden="true" data-description="Table 1.2: Example Machine Language Instructions and Assembly Mnemonics"><a tabindex="-1" href="#table-machine-language-instructions" title="Copy heading and permalink for Table 1.2: Example Machine Language Instructions and Assembly Mnemonics" aria-label="Copy heading and permalink for Table 1.2: Example Machine Language Instructions and Assembly Mnemonics">🔗</a></div></figcaption><div class="tabular-box natural-width"><table class="tabular">
+<tr class="header-horizontal">
+<th scope="col" class="c m b1 r1 l1 t1 lines">Binary Machine Code</th>
+<th scope="col" class="c m b1 r1 l0 t1 lines">Assembly Mnemonic</th>
+<th scope="col" class="c m b1 r1 l0 t1 lines">Operation</th>
+<th scope="col" class="c m b1 r1 l0 t1 lines">Description</th>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines"><code class="code-inline tex2jax_ignore">0001 0001 0110 0100</code></td>
+<td class="l m b1 r1 l0 t0 lines"><code class="code-inline tex2jax_ignore">LOAD R1, [100]</code></td>
+<td class="l m b1 r1 l0 t0 lines">Load</td>
+<td class="l m b1 r1 l0 t0 lines">Copy the 8-bit value from memory address 100 into CPU register R1.</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines"><code class="code-inline tex2jax_ignore">0001 0010 0110 0101</code></td>
+<td class="l m b1 r1 l0 t0 lines"><code class="code-inline tex2jax_ignore">LOAD R2, [101]</code></td>
+<td class="l m b1 r1 l0 t0 lines">Load</td>
+<td class="l m b1 r1 l0 t0 lines">Copy the 8-bit value from memory address 101 into CPU register R2.</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines"><code class="code-inline tex2jax_ignore">0010 0011 0001 0010</code></td>
+<td class="l m b1 r1 l0 t0 lines"><code class="code-inline tex2jax_ignore">ADD R3, R1, R2</code></td>
+<td class="l m b1 r1 l0 t0 lines">Arithmetic</td>
+<td class="l m b1 r1 l0 t0 lines">Add the values in R1 and R2 using the ALU; store the sum in R3.</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines"><code class="code-inline tex2jax_ignore">0011 0011 0110 0110</code></td>
+<td class="l m b1 r1 l0 t0 lines"><code class="code-inline tex2jax_ignore">STORE R3, [102]</code></td>
+<td class="l m b1 r1 l0 t0 lines">Store</td>
+<td class="l m b1 r1 l0 t0 lines">Copy the value from register R3 into memory address 102.</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines"><code class="code-inline tex2jax_ignore">0100 0000 1100 1000</code></td>
+<td class="l m b1 r1 l0 t0 lines"><code class="code-inline tex2jax_ignore">JUMP [200]</code></td>
+<td class="l m b1 r1 l0 t0 lines">Branch</td>
+<td class="l m b1 r1 l0 t0 lines">Change the Program Counter (PC) to address 200, jumping execution there.</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l1 t0 lines"><code class="code-inline tex2jax_ignore">0101 0001 1100 1000</code></td>
+<td class="l m b1 r1 l0 t0 lines"><code class="code-inline tex2jax_ignore">JUMP_IF_ZERO R1, [200]</code></td>
+<td class="l m b1 r1 l0 t0 lines">Conditional</td>
+<td class="l m b1 r1 l0 t0 lines">If register R1 equals zero, jump to address 200; otherwise continue sequentially.</td>
+</tr>
+</table></div>
+</figure><span class="incontext"><a class="internal" href="sec-1-2-hardware-cycle.html#table-machine-language-instructions">In Context</a></span>
+</body>
+</html>

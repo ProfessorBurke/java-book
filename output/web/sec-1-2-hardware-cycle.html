@@ -143,9 +143,18 @@ eBookConfig.enable_chatcodes =  false;
 <li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-1-1-overview.html#subsec-1-1-3-setting-up-workshop" class="internal"><span class="codenumber">1.1.3</span> <span class="title">Setting Up Your Workshop: The JDK, the Command Line, and Eclipse</span></a></div></li>
 </ul>
 </li>
-<li class="toc-item toc-section active"><div class="toc-title-box"><a href="sec-1-2-hardware-cycle.html" class="internal"><span class="codenumber">1.2</span> <span class="title">Computer Organization and the Fetch and Execute Cycle</span></a></div></li>
-<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-1-3-jvm.html" class="internal"><span class="codenumber">1.3</span> <span class="title">The Java Virtual Machine</span></a></div></li>
-<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-1-4-memory-management.html" class="internal"><span class="codenumber">1.4</span> <span class="title">Memory Management</span></a></div></li>
+<li class="toc-item toc-section contains-active">
+<div class="toc-title-box"><a href="sec-1-2-hardware-cycle.html" class="internal"><span class="codenumber">1.2</span> <span class="title">Computer Organization and the Fetch and Execute Cycle</span></a></div>
+<ul class="structural toc-item-list active" id="ptx-toc-group-sec-1-2-hardware-cycle"><li class="toc-item toc-reading-questions"><div class="toc-title-box"><a href="sec-1-2-hardware-cycle.html#checkpoint-1-2" class="internal"><span class="codenumber">1.2</span> <span class="title">Checkpoint</span></a></div></li></ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-1-3-jvm.html" class="internal"><span class="codenumber">1.3</span> <span class="title">The Java Virtual Machine</span></a></div>
+<ul id="ptx-toc-group-sec-1-3-jvm" class="structural toc-item-list"><li class="toc-item toc-reading-questions"><div class="toc-title-box"><a href="sec-1-3-jvm.html#checkpoint-1-3" class="internal"><span class="codenumber">1.3</span> <span class="title">Checkpoint</span></a></div></li></ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-1-4-memory-management.html" class="internal"><span class="codenumber">1.4</span> <span class="title">Memory Management</span></a></div>
+<ul id="ptx-toc-group-sec-1-4-memory-management" class="structural toc-item-list"><li class="toc-item toc-reading-questions"><div class="toc-title-box"><a href="sec-1-4-memory-management.html#checkpoint-1-4" class="internal"><span class="codenumber">1.4</span> <span class="title">Checkpoint</span></a></div></li></ul>
+</li>
 <li class="toc-item toc-section">
 <div class="toc-title-box"><a href="sec-1-5-programming-environments.html" class="internal"><span class="codenumber">1.5</span> <span class="title">Programming Environments</span></a></div>
 <ul id="ptx-toc-group-sec-1-5-programming-environments" class="structural toc-item-list">
@@ -161,6 +170,7 @@ eBookConfig.enable_chatcodes =  false;
 </ul>
 </li>
 <li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-1-5-programming-environments.html#subsec-1-5-4-jshell" class="internal"><span class="codenumber">1.5.4</span> <span class="title">Interactive Java with JShell</span></a></div></li>
+<li class="toc-item toc-reading-questions"><div class="toc-title-box"><a href="sec-1-5-programming-environments.html#checkpoint-1-5" class="internal"><span class="codenumber">1.5.5</span> <span class="title">Checkpoint</span></a></div></li>
 </ul>
 </li>
 </ul>
@@ -847,7 +857,12 @@ eBookConfig.enable_chatcodes =  false;
 </h1>
 <div class="para" id="sec-1-2-hardware-cycle-2">To understand how a computer executes a program, you only need to look at the relationship between two primary hardware components: Main Memory (RAM) and the Central Processing Unit (CPU). Main memory can be thought of as a vast, ordered grid of numbered storage boxes, each identified by a unique numerical address. RAM holds both the data your program works with and the step-by-step instructions of the program itself while the computer is turned on. The CPU is the processing engine of the computer. It contains the electronic circuitry needed to perform arithmetic and logical comparisons, along with a small collection of ultra-fast internal storage slots called registers used to hold values during immediate calculations. The CPU and main memory are connected by a high-speed communication channel called the bus, which allows the CPU to read instructions and data from memory and write results back.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#sec-1-2-hardware-cycle-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<figure class="figure figure-like" id="figure-cpu-and-memory"><div class="image-box" style="width: 90%; margin-left: 5%; margin-right: 5%;"><img src="external/figures/figure_1_1.png" class="contained" alt="Diagram showing the CPU components connected to addressed main memory via a system bus."></div>
+<figure class="figure figure-like" id="figure-cpu-and-memory"><div class="image-box" style="width: 90%; margin-left: 5%; margin-right: 5%;">
+<img src="external/figures/figure_1_1.png" class="contained" alt="Diagram showing the CPU components connected to addressed main memory via a system bus."><details class="image-description" aria-live="polite"><summary title="details"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe88e;</span></summary><div id="figure-cpu-and-memory-2-description" style="width: 88.89%; margin-left: 5.56%;">
+<div class="para" id="figure-cpu-and-memory-2-2-1">A block diagram titled “Computer Architecture: CPU, Bus, and Main Memory.” On the left, a container labeled “Central Processing Unit (CPU)” holds three components linked by internal bidirectional arrows: “Registers” (listing <code class="code-inline tex2jax_ignore">PC: 0x01</code>, <code class="code-inline tex2jax_ignore">IR: LOAD 0x10</code>, <code class="code-inline tex2jax_ignore">R0: 42</code>, and <code class="code-inline tex2jax_ignore">R1: 15</code>), the “Control Unit” (labeled “Fetches &amp; Decodes Instructions”), and the “Arithmetic Logic Unit (ALU)” (labeled “Performs Calculations &amp; Logic”). In the center, a thick bidirectional arrow labeled “Bus” connects the CPU to a right-hand container labeled “Main Memory (RAM).” Inside RAM is a two-column table of addresses and contents: <code class="code-inline tex2jax_ignore">0x00</code> (<code class="code-inline tex2jax_ignore">LOAD 0x10</code>), <code class="code-inline tex2jax_ignore">0x01</code> (<code class="code-inline tex2jax_ignore">ADD 0x11</code>), <code class="code-inline tex2jax_ignore">0x02</code> (<code class="code-inline tex2jax_ignore">STORE 0x12</code>), <code class="code-inline tex2jax_ignore">0x03</code> (<code class="code-inline tex2jax_ignore">HALT</code>), followed by data values at <code class="code-inline tex2jax_ignore">0x10</code> (<code class="code-inline tex2jax_ignore">42</code>), <code class="code-inline tex2jax_ignore">0x11</code> (<code class="code-inline tex2jax_ignore">15</code>), and <code class="code-inline tex2jax_ignore">0x12</code> (<code class="code-inline tex2jax_ignore">[result]</code>).<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#figure-cpu-and-memory-2-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</div></details>
+</div>
 <figcaption><span class="type">Figure</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">1.1<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span>The CPU and memory<div class="autopermalink" aria-hidden="true" data-description="Figure 1.1"><a tabindex="-1" href="#figure-cpu-and-memory" title="Copy heading and permalink for Figure 1.1" aria-label="Copy heading and permalink for Figure 1.1">🔗</a></div></figcaption>
 </figure>
 <div class="para" id="sec-1-2-hardware-cycle-4">Although modern software can perform sophisticated tasks, the physical CPU is capable of executing only its native machine language—a primitive set of instructions encoded entirely as binary numbers (sequences of 0s and 1s). Each machine-language instruction performs only a microscopic, elementary operation, such as copying a number from a memory address into a CPU register, adding two values together, or checking whether a result equals zero. Because writing software directly in strings of binary numbers is unimaginably tedious and error-prone, programmers write code in high-level programming languages (such as Java, C++, or Python) that use readable English words, familiar punctuation, and mathematical operators. Before the physical hardware can execute this code, a specialized program called a compiler must translate the human-readable source code into the binary machine-language instructions that the CPU can directly understand.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#sec-1-2-hardware-cycle-4" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
@@ -918,9 +933,105 @@ eBookConfig.enable_chatcodes =  false;
 </ol>
 <div class="para" id="sec-1-2-hardware-cycle-8">This cycle runs without pause until the program explicitly tells the processor to halt. By repeating this simple loop of fetching, decoding, and executing primitive machine instructions at incomprehensible speeds, the CPU brings complex software to life.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#sec-1-2-hardware-cycle-8" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<figure class="figure figure-like" id="figure-fetch-decode-execute-cycle"><div class="image-box" style="width: 85%; margin-left: 7.5%; margin-right: 7.5%;"><img src="external/figures/figure_1_2.png" class="contained" alt="Cyclic flowchart showing the three stages of the CPU instruction cycle: Fetch, Decode, and Execute."></div>
+<figure class="figure figure-like" id="figure-fetch-decode-execute-cycle"><div class="image-box" style="width: 85%; margin-left: 7.5%; margin-right: 7.5%;">
+<img src="external/figures/figure_1_2.png" class="contained" alt="Cyclic flowchart showing the three stages of the CPU instruction cycle: Fetch, Decode, and Execute."><details class="image-description" aria-live="polite"><summary title="details"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe88e;</span></summary><div id="figure-fetch-decode-execute-cycle-2-description" style="width: 94.12%; margin-left: 2.94%;">
+<div class="para" id="figure-fetch-decode-execute-cycle-2-2-1">A clockwise cyclic flowchart titled “The CPU Instruction Cycle (Fetch-Decode-Execute)” arranged around the center label “Continuous Cycle: Repeats billions of times per second.” At the top, box “1. FETCH” explains retrieving the next instruction from RAM at the Program Counter address, with an example showing <code class="code-inline tex2jax_ignore">PC = 0x01 -&gt; Fetch 'ADD 0x11'</code> and <code class="code-inline tex2jax_ignore">PC</code> incrementing to <code class="code-inline tex2jax_ignore">0x02</code>. An arrow leads to the bottom-right box, “2. DECODE,” explaining that the Control Unit interprets the opcode, with an example showing <code class="code-inline tex2jax_ignore">Opcode: ADD -&gt; Requires ALU addition</code> and <code class="code-inline tex2jax_ignore">Operand: 0x11 -&gt; Load operand value (15)</code>. An arrow leads to the bottom-left box, “3. EXECUTE,” explaining that the ALU performs the computation and saves the result, with an example showing <code class="code-inline tex2jax_ignore">ALU adds R0 (42) + operand (15) = 57</code> saved in a register/accumulator. A final arrow loops back up to “1. FETCH.”<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#figure-fetch-decode-execute-cycle-2-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</div></details>
+</div>
 <figcaption><span class="type">Figure</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">1.3<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span>The fetch-decode-execute cycle<div class="autopermalink" aria-hidden="true" data-description="Figure 1.3"><a tabindex="-1" href="#figure-fetch-decode-execute-cycle" title="Copy heading and permalink for Figure 1.3" aria-label="Copy heading and permalink for Figure 1.3">🔗</a></div></figcaption>
-</figure><div class="autopermalink" aria-hidden="true" data-description="Section 1.2: Computer Organization and the Fetch and Execute Cycle"><a tabindex="-1" href="#sec-1-2-hardware-cycle" title="Copy heading and permalink for Section 1.2: Computer Organization and the Fetch and Execute Cycle" aria-label="Copy heading and permalink for Section 1.2: Computer Organization and the Fetch and Execute Cycle">🔗</a></div>
+</figure>
+<section class="reading-questions" id="checkpoint-1-2">
+<h2 class="heading hide-type">
+<span class="type">Reading Questions</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber"></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Checkpoint</span>
+</h2>
+<article class="exercise exercise-like" id="checkpoint-1-2-hardware-matching"><h3 class="heading">
+<span class="codenumber">1<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Hardware Components.</span>
+</h3>
+<div class="ptx-runestone-container"><div class="runestone cardsort_section"><ul data-component="dragndrop" data-question_label="" style="visibility: hidden;" id="rs-checkpoint-1-2-hardware-matching">
+<span data-subcomponent="question">
+<div class="para" id="checkpoint-1-2-hardware-matching-2-1">Match each hardware component to its role in executing a program.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-1-2-hardware-matching-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div></span><li data-subcomponent="draggable" id="rs-checkpoint-1-2-hardware-matching_drag1" data-category="1">Main Memory (RAM)</li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-1-2-hardware-matching_drag1" data-category="1">Stores program instructions and data in addressed slots while the computer is on.</li>
+<li data-subcomponent="draggable" id="rs-checkpoint-1-2-hardware-matching_drag2" data-category="2">Central Processing Unit (CPU)</li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-1-2-hardware-matching_drag2" data-category="2">Fetches, decodes, and executes instructions using arithmetic, logic, and registers.</li>
+<li data-subcomponent="draggable" id="rs-checkpoint-1-2-hardware-matching_drag3" data-category="3">The Bus</li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-1-2-hardware-matching_drag3" data-category="3">Carries instructions and data back and forth between the CPU and main memory.</li>
+<li data-subcomponent="draggable" id="rs-checkpoint-1-2-hardware-matching_drag4" data-category="4">Program Counter (PC)</li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-1-2-hardware-matching_drag4" data-category="4">Holds the memory address of the next instruction to be executed.</li>
+</ul></div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 1.2.1: Hardware Components"><a tabindex="-1" href="#checkpoint-1-2-hardware-matching" title="Copy heading and permalink for Reading Question 1.2.1: Hardware Components" aria-label="Copy heading and permalink for Reading Question 1.2.1: Hardware Components">🔗</a></div>
+</article>
+<article class="exercise exercise-like" id="checkpoint-1-2-compiler"><h3 class="heading">
+<span class="codenumber">2<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">The Role of a Compiler.</span>
+</h3>
+<div class="ptx-runestone-container"><div class="runestone multiplechoice_section">
+<div class="exercise-statement">
+<div class="para" id="checkpoint-1-2-compiler-2-1">Why is a compiler needed before a program written in a high-level language can run on a computer’s hardware?<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-1-2-compiler-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</div>
+<ul data-component="multiplechoice" class="exercise-interactives" id="rs-checkpoint-1-2-compiler" data-multipleanswers="false" data-random="">
+<li data-component="answer" id="rs-checkpoint-1-2-compiler_opt_a" data-correct="">
+<div class="para" id="checkpoint-1-2-compiler-3-1-1-1">It translates human-readable high-level source code into binary machine-language instructions that the CPU can execute.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-1-2-compiler_opt_a">
+<div class="para" id="checkpoint-1-2-compiler-3-1-2-1">Correct! The physical CPU only understands its native binary machine language, so a compiler translates high-level code into instructions the hardware can run.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-1-2-compiler_opt_b">
+<div class="para" id="checkpoint-1-2-compiler-3-2-1-1">It stores the program’s variables and instructions inside Main Memory (RAM) while the program runs.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-1-2-compiler_opt_b">
+<div class="para" id="checkpoint-1-2-compiler-3-2-2-1">Not quite. Main Memory (RAM) holds the program and its data during execution, while a compiler performs translation before execution begins.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-1-2-compiler_opt_c">
+<div class="para" id="checkpoint-1-2-compiler-3-3-1-1">It connects the CPU to Main Memory so instructions can travel between them at high speed.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-1-2-compiler_opt_c">
+<div class="para" id="checkpoint-1-2-compiler-3-3-2-1">Not quite. The physical channel connecting the CPU and Main Memory is the bus, not the compiler.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-1-2-compiler_opt_d">
+<div class="para" id="checkpoint-1-2-compiler-3-4-1-1">It executes each instruction one by one by advancing the Program Counter.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-1-2-compiler_opt_d">
+<div class="para" id="checkpoint-1-2-compiler-3-4-2-1">Not quite. The CPU carries out the fetch-decode-execute cycle and updates the Program Counter during execution.</div>
+</li>
+</ul>
+</div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 1.2.2: The Role of a Compiler"><a tabindex="-1" href="#checkpoint-1-2-compiler" title="Copy heading and permalink for Reading Question 1.2.2: The Role of a Compiler" aria-label="Copy heading and permalink for Reading Question 1.2.2: The Role of a Compiler">🔗</a></div>
+</article>
+<article class="exercise exercise-like" id="checkpoint-1-2-assembly-parsons"><h3 class="heading">
+<span class="codenumber">3<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Challenge: Pseudo-Assembly.</span>
+</h3>
+<div class="ptx-runestone-container"><div class="runestone parsons_section" style="max-width: none;"><div data-component="parsons" class="parsons" id="rs-checkpoint-1-2-assembly-parsons">
+<div class="parsons_question parsons-text">
+<div class="para" id="checkpoint-1-2-assembly-parsons-2-1">Using the pseudo-assembly instructions in <a href="sec-1-2-hardware-cycle.html#table-machine-language-instructions" class="xref" data-knowl="./knowl/xref/table-machine-language-instructions.html" data-reveal-label="Reveal" data-close-label="Close" title="Table 1.2: Example Machine Language Instructions and Assembly Mnemonics">Table 1.2</a>, the following four-step program adds the values stored at memory addresses <code class="code-inline tex2jax_ignore">100</code> and <code class="code-inline tex2jax_ignore">101</code> and stores their sum at address <code class="code-inline tex2jax_ignore">102</code>:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-1-2-assembly-parsons-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<pre class="code-block tex2jax_ignore clipboardable">LOAD R1, [100]
+LOAD R2, [101]
+ADD R3, R1, R2
+STORE R3, [102]
+</pre>
+<div class="para" id="checkpoint-1-2-assembly-parsons-2-3">Arrange the blocks below to write a similar program that loads the value at address <code class="code-inline tex2jax_ignore">105</code> into <code class="code-inline tex2jax_ignore">R1</code>, loads the value at address <code class="code-inline tex2jax_ignore">106</code> into <code class="code-inline tex2jax_ignore">R2</code>, adds them into <code class="code-inline tex2jax_ignore">R3</code>, and stores the result at memory address <code class="code-inline tex2jax_ignore">107</code>. (You might not need all of the blocks.)<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-1-2-assembly-parsons-2-3" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</div>
+<pre class="parsonsblocks" data-question_label="" style="visibility: hidden;" data-language="natural" data-adaptive="true" data-noindent="true">LOAD R1, [105]
+
+---
+LOAD R2, [106]
+
+---
+ADD R3, R1, R2
+
+---
+STORE R3, [107]
+
+---
+LOAD R3, [107]
+ #distractor</pre>
+</div></div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 1.2.3: Challenge: Pseudo-Assembly"><a tabindex="-1" href="#checkpoint-1-2-assembly-parsons" title="Copy heading and permalink for Reading Question 1.2.3: Challenge: Pseudo-Assembly" aria-label="Copy heading and permalink for Reading Question 1.2.3: Challenge: Pseudo-Assembly">🔗</a></div>
+</article><div class="autopermalink" aria-hidden="true" data-description="Reading Questions 1.2: Checkpoint"><a tabindex="-1" href="#checkpoint-1-2" title="Copy heading and permalink for Reading Questions 1.2: Checkpoint" aria-label="Copy heading and permalink for Reading Questions 1.2: Checkpoint">🔗</a></div>
+</section><div class="autopermalink" aria-hidden="true" data-description="Section 1.2: Computer Organization and the Fetch and Execute Cycle"><a tabindex="-1" href="#sec-1-2-hardware-cycle" title="Copy heading and permalink for Section 1.2: Computer Organization and the Fetch and Execute Cycle" aria-label="Copy heading and permalink for Section 1.2: Computer Organization and the Fetch and Execute Cycle">🔗</a></div>
 </section>
 </div>
 <div id="ptx-content-footer" class="ptx-content-footer">

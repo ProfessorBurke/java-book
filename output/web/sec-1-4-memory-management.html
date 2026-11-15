@@ -143,9 +143,18 @@ eBookConfig.enable_chatcodes =  false;
 <li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-1-1-overview.html#subsec-1-1-3-setting-up-workshop" class="internal"><span class="codenumber">1.1.3</span> <span class="title">Setting Up Your Workshop: The JDK, the Command Line, and Eclipse</span></a></div></li>
 </ul>
 </li>
-<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-1-2-hardware-cycle.html" class="internal"><span class="codenumber">1.2</span> <span class="title">Computer Organization and the Fetch and Execute Cycle</span></a></div></li>
-<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-1-3-jvm.html" class="internal"><span class="codenumber">1.3</span> <span class="title">The Java Virtual Machine</span></a></div></li>
-<li class="toc-item toc-section active"><div class="toc-title-box"><a href="sec-1-4-memory-management.html" class="internal"><span class="codenumber">1.4</span> <span class="title">Memory Management</span></a></div></li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-1-2-hardware-cycle.html" class="internal"><span class="codenumber">1.2</span> <span class="title">Computer Organization and the Fetch and Execute Cycle</span></a></div>
+<ul id="ptx-toc-group-sec-1-2-hardware-cycle" class="structural toc-item-list"><li class="toc-item toc-reading-questions"><div class="toc-title-box"><a href="sec-1-2-hardware-cycle.html#checkpoint-1-2" class="internal"><span class="codenumber">1.2</span> <span class="title">Checkpoint</span></a></div></li></ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-1-3-jvm.html" class="internal"><span class="codenumber">1.3</span> <span class="title">The Java Virtual Machine</span></a></div>
+<ul id="ptx-toc-group-sec-1-3-jvm" class="structural toc-item-list"><li class="toc-item toc-reading-questions"><div class="toc-title-box"><a href="sec-1-3-jvm.html#checkpoint-1-3" class="internal"><span class="codenumber">1.3</span> <span class="title">Checkpoint</span></a></div></li></ul>
+</li>
+<li class="toc-item toc-section contains-active">
+<div class="toc-title-box"><a href="sec-1-4-memory-management.html" class="internal"><span class="codenumber">1.4</span> <span class="title">Memory Management</span></a></div>
+<ul class="structural toc-item-list active" id="ptx-toc-group-sec-1-4-memory-management"><li class="toc-item toc-reading-questions"><div class="toc-title-box"><a href="sec-1-4-memory-management.html#checkpoint-1-4" class="internal"><span class="codenumber">1.4</span> <span class="title">Checkpoint</span></a></div></li></ul>
+</li>
 <li class="toc-item toc-section">
 <div class="toc-title-box"><a href="sec-1-5-programming-environments.html" class="internal"><span class="codenumber">1.5</span> <span class="title">Programming Environments</span></a></div>
 <ul id="ptx-toc-group-sec-1-5-programming-environments" class="structural toc-item-list">
@@ -161,6 +170,7 @@ eBookConfig.enable_chatcodes =  false;
 </ul>
 </li>
 <li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-1-5-programming-environments.html#subsec-1-5-4-jshell" class="internal"><span class="codenumber">1.5.4</span> <span class="title">Interactive Java with JShell</span></a></div></li>
+<li class="toc-item toc-reading-questions"><div class="toc-title-box"><a href="sec-1-5-programming-environments.html#checkpoint-1-5" class="internal"><span class="codenumber">1.5.5</span> <span class="title">Checkpoint</span></a></div></li>
 </ul>
 </li>
 </ul>
@@ -900,7 +910,122 @@ eBookConfig.enable_chatcodes =  false;
 </div>
 <div class="para" id="sec-1-4-memory-management-11">While computer architecture and virtual machines may seem theoretical at first glance, they provide the essential foundation for everything you will build as a software developer. Understanding how the CPU executes instructions, how the JVM achieves cross-platform portability, and how memory is managed demystifies what is actually happening when your code runs. With this mental model in place, it is time to move from theory into practice. In the next section, we will roll up our sleeves, set up your development environment, and run your very first program.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#sec-1-4-memory-management-11" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="autopermalink" aria-hidden="true" data-description="Section 1.4: Memory Management"><a tabindex="-1" href="#sec-1-4-memory-management" title="Copy heading and permalink for Section 1.4: Memory Management" aria-label="Copy heading and permalink for Section 1.4: Memory Management">🔗</a></div>
+<section class="reading-questions" id="checkpoint-1-4">
+<h2 class="heading hide-type">
+<span class="type">Reading Questions</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber"></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Checkpoint</span>
+</h2>
+<article class="exercise exercise-like" id="checkpoint-1-4-memory-regions"><h3 class="heading">
+<span class="codenumber">1<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Memory Regions.</span>
+</h3>
+<div class="ptx-runestone-container"><div class="runestone multiplechoice_section">
+<div class="exercise-statement">
+<div class="para" id="checkpoint-1-4-memory-regions-2-1">In a drawing application where users can create and delete shapes at any time while the program is running, which area of memory stores each shape’s dynamic bundle of data?<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-1-4-memory-regions-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</div>
+<ul data-component="multiplechoice" class="exercise-interactives" id="rs-checkpoint-1-4-memory-regions" data-multipleanswers="false" data-random="">
+<li data-component="answer" id="rs-checkpoint-1-4-memory-regions_opt_a" data-correct="">
+<div class="para" id="checkpoint-1-4-memory-regions-3-1-1-1">The Heap, because it is an open memory pool for dynamic data whose size or lifetime cannot be predicted in advance.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-1-4-memory-regions_opt_a">
+<div class="para" id="checkpoint-1-4-memory-regions-3-1-2-1">Correct! The heap is designed for dynamic data created and removed unpredictably at runtime.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-1-4-memory-regions_opt_b">
+<div class="para" id="checkpoint-1-4-memory-regions-3-2-1-1">The Stack, because it grows and shrinks automatically as methods are called and return.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-1-4-memory-regions_opt_b">
+<div class="para" id="checkpoint-1-4-memory-regions-3-2-2-1">Not quite. The stack holds short-lived local variables tied to method calls, not dynamic objects whose lifetime depends on user actions.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-1-4-memory-regions_opt_c">
+<div class="para" id="checkpoint-1-4-memory-regions-3-3-1-1">The Code Segment, because it stores everything the CPU needs to execute the drawing program.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-1-4-memory-regions_opt_c">
+<div class="para" id="checkpoint-1-4-memory-regions-3-3-2-1">Not quite. The Code Segment holds the compiled machine instructions or bytecode, not the dynamic data created by the user.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-1-4-memory-regions_opt_d">
+<div class="para" id="checkpoint-1-4-memory-regions-3-4-1-1">The Static Segment, because it holds data that exists for the entire duration of the program.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-1-4-memory-regions_opt_d">
+<div class="para" id="checkpoint-1-4-memory-regions-3-4-2-1">Not quite. The Static Segment is for class definitions, global variables, and constants that persist for the entire run, whereas shapes are created and deleted dynamically.</div>
+</li>
+</ul>
+</div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 1.4.1: Memory Regions"><a tabindex="-1" href="#checkpoint-1-4-memory-regions" title="Copy heading and permalink for Reading Question 1.4.1: Memory Regions" aria-label="Copy heading and permalink for Reading Question 1.4.1: Memory Regions">🔗</a></div>
+</article>
+<article class="exercise exercise-like" id="checkpoint-1-4-manual-management"><h3 class="heading">
+<span class="codenumber">2<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Manual Memory Management Pitfall.</span>
+</h3>
+<div class="ptx-runestone-container"><div class="runestone multiplechoice_section">
+<div class="exercise-statement">
+<div class="para" id="checkpoint-1-4-manual-management-2-1">In a language with manual memory management (such as C or C++), what happens if a program repeatedly allocates heap memory for temporary data and forgets to release it when it is no longer needed?<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-1-4-manual-management-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</div>
+<ul data-component="multiplechoice" class="exercise-interactives" id="rs-checkpoint-1-4-manual-management" data-multipleanswers="false" data-random="">
+<li data-component="answer" id="rs-checkpoint-1-4-manual-management_opt_a" data-correct="">
+<div class="para" id="checkpoint-1-4-manual-management-3-1-1-1">A memory leak occurs, consuming available space until the application runs out of memory and crashes.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-1-4-manual-management_opt_a">
+<div class="para" id="checkpoint-1-4-manual-management-3-1-2-1">Correct! Forgetting to free unused memory in a manually managed language leaves it unavailable for reuse, causing a memory leak.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-1-4-manual-management_opt_b">
+<div class="para" id="checkpoint-1-4-manual-management-3-2-1-1">A dangling pointer occurs, allowing a variable to read corrupted data from freed memory.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-1-4-manual-management_opt_b">
+<div class="para" id="checkpoint-1-4-manual-management-3-2-2-1">Not quite. A dangling pointer happens for the opposite reason—freeing memory too early while a variable is still using it.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-1-4-manual-management_opt_c">
+<div class="para" id="checkpoint-1-4-manual-management-3-3-1-1">The compiler automatically inserts cleanup instructions when the owner variable goes out of scope.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-1-4-manual-management_opt_c">
+<div class="para" id="checkpoint-1-4-manual-management-3-3-2-1">Not quite. Automatic compile-time cleanup is how Rust’s ownership model works, not manual memory management in C or C++.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-1-4-manual-management_opt_d">
+<div class="para" id="checkpoint-1-4-manual-management-3-4-1-1">The background garbage collector detects the unused memory and reclaims it automatically.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-1-4-manual-management_opt_d">
+<div class="para" id="checkpoint-1-4-manual-management-3-4-2-1">Not quite. Manually managed languages like C and C++ do not include a runtime garbage collector.</div>
+</li>
+</ul>
+</div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 1.4.2: Manual Memory Management Pitfall"><a tabindex="-1" href="#checkpoint-1-4-manual-management" title="Copy heading and permalink for Reading Question 1.4.2: Manual Memory Management Pitfall" aria-label="Copy heading and permalink for Reading Question 1.4.2: Manual Memory Management Pitfall">🔗</a></div>
+</article>
+<article class="exercise exercise-like" id="checkpoint-1-4-garbage-collection"><h3 class="heading">
+<span class="codenumber">3<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Java’s Memory Strategy.</span>
+</h3>
+<div class="ptx-runestone-container"><div class="runestone multiplechoice_section">
+<div class="exercise-statement">
+<div class="para" id="checkpoint-1-4-garbage-collection-2-1">How does Java’s automatic garbage collection differ from manual memory management and compile-time ownership?<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-1-4-garbage-collection-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</div>
+<ul data-component="multiplechoice" class="exercise-interactives" id="rs-checkpoint-1-4-garbage-collection" data-multipleanswers="false" data-random="">
+<li data-component="answer" id="rs-checkpoint-1-4-garbage-collection_opt_a" data-correct="">
+<div class="para" id="checkpoint-1-4-garbage-collection-3-1-1-1">A background service in the JVM monitors the heap at runtime and automatically reclaims unused memory, trading a small amount of bookkeeping overhead for safety and simplicity.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-1-4-garbage-collection_opt_a">
+<div class="para" id="checkpoint-1-4-garbage-collection-3-1-2-1">Correct! Java’s runtime garbage collector frees unused heap memory automatically, eliminating memory leaks and dangling pointers while requiring modest CPU and memory overhead.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-1-4-garbage-collection_opt_b">
+<div class="para" id="checkpoint-1-4-garbage-collection-3-2-1-1">The Java compiler enforces strict ownership rules at build time and inserts cleanup instructions so no runtime service is needed.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-1-4-garbage-collection_opt_b">
+<div class="para" id="checkpoint-1-4-garbage-collection-3-2-2-1">Not quite. That describes compile-time ownership (as used in Rust), whereas Java manages heap memory at runtime.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-1-4-garbage-collection_opt_c">
+<div class="para" id="checkpoint-1-4-garbage-collection-3-3-1-1">The Java programmer must write explicit instructions to free every heap object when it is no longer needed.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-1-4-garbage-collection_opt_c">
+<div class="para" id="checkpoint-1-4-garbage-collection-3-3-2-1">Not quite. That describes manual memory management in C and C++; Java programmers do not manually free heap objects.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-1-4-garbage-collection_opt_d">
+<div class="para" id="checkpoint-1-4-garbage-collection-3-4-1-1">Java avoids using the heap entirely by storing all dynamic objects on the call stack.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-1-4-garbage-collection_opt_d">
+<div class="para" id="checkpoint-1-4-garbage-collection-3-4-2-1">Not quite. Java uses the heap extensively for dynamic data and objects, relying on the garbage collector to manage that heap space.</div>
+</li>
+</ul>
+</div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 1.4.3: Java’s Memory Strategy"><a tabindex="-1" href="#checkpoint-1-4-garbage-collection" title="Copy heading and permalink for Reading Question 1.4.3: Java’s Memory Strategy" aria-label="Copy heading and permalink for Reading Question 1.4.3: Java’s Memory Strategy">🔗</a></div>
+</article><div class="autopermalink" aria-hidden="true" data-description="Reading Questions 1.4: Checkpoint"><a tabindex="-1" href="#checkpoint-1-4" title="Copy heading and permalink for Reading Questions 1.4: Checkpoint" aria-label="Copy heading and permalink for Reading Questions 1.4: Checkpoint">🔗</a></div>
+</section><div class="autopermalink" aria-hidden="true" data-description="Section 1.4: Memory Management"><a tabindex="-1" href="#sec-1-4-memory-management" title="Copy heading and permalink for Section 1.4: Memory Management" aria-label="Copy heading and permalink for Section 1.4: Memory Management">🔗</a></div>
 </section>
 </div>
 <div id="ptx-content-footer" class="ptx-content-footer">

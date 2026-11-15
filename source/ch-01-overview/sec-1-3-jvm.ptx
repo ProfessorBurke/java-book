@@ -15,9 +15,17 @@
     into native machine language before the program is ever run:
   </p>
 
-  <cd>
-    Source Code (.cpp)  ----[ Compiler ]----&gt;  Native Machine Code (.exe)  ----&gt;  Runs directly on CPU
-  </cd>
+  <figure xml:id="figure-compiled-pipeline">
+    <caption>Traditional ahead-of-time compilation pipeline</caption>
+    <image source="figures/figure_1_3_compiled.png" width="95%">
+      <shortdescription>Pipeline diagram showing Source Code (.cpp) compiled ahead-of-time into Native Machine Code (.exe) that runs on the CPU.</shortdescription>
+      <description>
+        <p>
+          A horizontal four-stage pipeline diagram illustrating ahead-of-time compilation. From left to right, arrows connect <c>Source Code (.cpp)</c> to a <c>Compiler (ahead-of-time)</c> block, which outputs <c>Native Machine Code (.exe)</c>, which then <c>Runs Directly on CPU</c>.
+        </p>
+      </description>
+    </image>
+  </figure>
 
   <ul>
     <li>
@@ -55,9 +63,17 @@
     reads the source code and carries out the instructions on the fly:
   </p>
 
-  <cd>
-    Source Code (.py)  ----&gt;  [ Interpreter Program ]  ----&gt;  Translates and executes line by line
-  </cd>
+  <figure xml:id="figure-interpreted-pipeline">
+    <caption>Purely interpreted execution pipeline</caption>
+    <image source="figures/figure_1_3_interpreted.png" width="90%">
+      <shortdescription>Pipeline diagram showing Source Code (.py) read by an Interpreter Program that translates and executes line by line.</shortdescription>
+      <description>
+        <p>
+          A horizontal three-stage pipeline diagram illustrating interpreted execution. From left to right, arrows connect <c>Source Code (.py)</c> to an <c>Interpreter Program (on-the-fly)</c> block, which then <c>Translates &amp; Executes line by line</c>.
+        </p>
+      </description>
+    </image>
+  </figure>
 
   <ul>
     <li>
@@ -90,9 +106,17 @@
     intermediate format called Java bytecode, which is saved in a <c>.class</c> file:
   </p>
 
-  <cd>
-    Source Code (.java)  ----[ javac Compiler ]----&gt;  Java Bytecode (.class)
-  </cd>
+  <figure xml:id="figure-java-compile-pipeline">
+    <caption>Java bytecode compilation pipeline</caption>
+    <image source="figures/figure_1_3_java_compile.png" width="85%">
+      <shortdescription>Pipeline diagram showing Source Code (.java) translated by the Java Compiler (javac) into Java Bytecode (.class).</shortdescription>
+      <description>
+        <p>
+          A horizontal three-stage pipeline diagram illustrating Java compilation. From left to right, arrows connect <c>Source Code (.java)</c> to the <c>Java Compiler (javac)</c> block, which outputs <c>Java Bytecode (.class)</c>.
+        </p>
+      </description>
+    </image>
+  </figure>
 
   <p>
     Bytecode looks very much like machine language—it consists of primitive,
@@ -205,6 +229,11 @@
     <caption>Write once, run anywhere architecture</caption>
     <image source="figures/figure_1_3.png" width="85%">
       <shortdescription>Diagram showing Java bytecode branching to Windows, macOS, and Linux JVMs, which translate instructions for distinct physical CPU architectures.</shortdescription>
+      <description>
+        <p>
+          A three-column architecture diagram titled <q>The &quot;Write Once, Run Anywhere&quot; Java Architecture.</q> On the left under <q>1. Universal Bytecode,</q> a single box labeled <q>Java Bytecode: Compiled (.class), Platform-Independent</q> branches via arrows into three boxes in the middle column under <q>2. Platform-Specific JVM</q>: <q>Windows JVM,</q> <q>macOS JVM,</q> and <q>Linux JVM.</q> From each JVM, an arrow points right to its corresponding target in the third column under <q>3. Physical Hardware</q>: <q>Intel / AMD x86_64 (Windows PC),</q> <q>Apple Silicon (ARM) (Mac Laptop),</q> and <q>Cloud Server CPU (Data Center).</q>
+        </p>
+      </description>
     </image>
   </figure>
 
@@ -267,4 +296,120 @@
     and C++. As a programmer, you get the best of both worlds: write your code once in Java,
     and let the compiler and JVM deliver fast, consistent performance on any device.
   </p>
+
+  <reading-questions xml:id="checkpoint-1-3">
+    <title>Checkpoint</title>
+
+    <exercise xml:id="checkpoint-1-3-execution-models" label="checkpoint-1-3-execution-models">
+      <title>Compilers, Interpreters, and the JVM</title>
+      <statement>
+        <p>
+          Match each translation tool to how it processes code.
+        </p>
+      </statement>
+      <cardsort>
+        <match>
+          <premise order="3">Traditional Compiler (e.g., C++)</premise>
+          <response>Translates source code into platform-specific native machine code before the program runs.</response>
+        </match>
+        <match>
+          <premise order="1">Pure Interpreter (e.g., Python)</premise>
+          <response>Translates and executes source code line by line while the program is running.</response>
+        </match>
+        <match>
+          <premise order="4">Java Compiler (<c>javac</c>)</premise>
+          <response>Translates <c>.java</c> source code into platform-independent <c>.class</c> bytecode.</response>
+        </match>
+        <match>
+          <premise order="2">Just-In-Time (JIT) Compiler</premise>
+          <response>Compiles frequently executed <q>hot spot</q> bytecode into native machine code on the fly.</response>
+        </match>
+      </cardsort>
+    </exercise>
+
+    <exercise xml:id="checkpoint-1-3-wora" label="checkpoint-1-3-wora">
+      <title>Write Once, Run Anywhere</title>
+      <statement>
+        <p>
+          Suppose you compile <c>WeatherApp.java</c> on a Windows laptop to produce <c>WeatherApp.class</c>. What is needed to run that <c>WeatherApp.class</c> file on a macOS computer?
+        </p>
+      </statement>
+      <choices randomize="yes">
+        <choice correct="yes">
+          <statement>
+            <p>
+              A macOS Java Virtual Machine (JVM) installed on the Mac; the <c>.class</c> file does not need to be recompiled.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Correct! Bytecode in a <c>.class</c> file is identical across platforms, while the JVM itself is platform-specific and translates that bytecode for the host macOS hardware.
+            </p>
+          </feedback>
+        </choice>
+        <choice correct="no">
+          <statement>
+            <p>
+              You must copy <c>WeatherApp.java</c> to the Mac and recompile it with <c>javac</c> before it can run.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Not quite. Recompiling for every operating system is what Java avoids; the compiled <c>.class</c> bytecode is already portable.
+            </p>
+          </feedback>
+        </choice>
+        <choice correct="no">
+          <statement>
+            <p>
+              You must install the Windows JVM on the Mac because the <c>.class</c> file was compiled on Windows.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Not quite. The JVM is specific to the host operating system and CPU—so a Mac runs the macOS JVM, which reads the same universal <c>.class</c> bytecode.
+            </p>
+          </feedback>
+        </choice>
+        <choice correct="no">
+          <statement>
+            <p>
+              Nothing at all—<c>.class</c> files contain native machine code that executes directly on any CPU.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Not quite. A <c>.class</c> file contains Java bytecode for the virtual machine, so a native JVM is still required to translate and run it on the physical CPU.
+            </p>
+          </feedback>
+        </choice>
+      </choices>
+    </exercise>
+
+    <exercise xml:id="checkpoint-1-3-bytecode-parsons" label="checkpoint-1-3-bytecode-parsons" adaptive="yes">
+      <title>Challenge: JVM Bytecode</title>
+      <statement>
+        <p>
+          Using the JVM bytecode mnemonics in <xref ref="table-java-bytecode-instructions" />, arrange the blocks below to push the integer in local variable <c>1</c> onto the operand stack, push the integer in local variable <c>2</c> onto the stack, add them together, and store the sum in local variable <c>3</c>. (You might not need all of the blocks.)
+        </p>
+      </statement>
+      <blocks>
+        <block order="3">
+          <cline>iload 1</cline>
+        </block>
+        <block order="1">
+          <cline>iload 2</cline>
+        </block>
+        <block order="5">
+          <cline>iadd</cline>
+        </block>
+        <block order="2">
+          <cline>istore 3</cline>
+        </block>
+        <block order="4" correct="no">
+          <cline>iload 3</cline>
+        </block>
+      </blocks>
+    </exercise>
+  </reading-questions>
 </section>

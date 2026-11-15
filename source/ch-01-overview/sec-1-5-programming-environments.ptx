@@ -22,7 +22,7 @@
       where each larger box contains the smaller one plus additional tools:
     </p>
 
-     <figure xml:id="figure-java-platform-hierarchy">
+    <figure xml:id="figure-java-platform-hierarchy">
       <caption>The Java platform hierarchy</caption>
       <image source="figures/figure_1_4.png" width="85%">
         <shortdescription>Concentric diagram of the Java platform: JDK containing JRE, which contains the JVM.</shortdescription>
@@ -47,7 +47,7 @@
     <ol>
       <li>
         <p>
-          <line><strong>The JVM (Java Virtual Machine): The Execution Engine</strong></line>
+          <line><term>The JVM (Java Virtual Machine): The Execution Engine</term></line>
           The JVM is the software program that executes Java bytecode instructions on your
           physical computer. Every operating system (Windows, macOS, Linux) has its own
           specific JVM built to translate bytecode into that computer's native machine
@@ -56,7 +56,7 @@
       </li>
       <li>
         <p>
-          <line><strong>The JRE (Java Runtime Environment): For Running Programs</strong></line>
+          <line><term>The JRE (Java Runtime Environment): For Running Programs</term></line>
           The JRE contains the JVM plus the standard Java class libraries (all the
           pre-written Java code that provides basic features like math operations, text
           handling, and input reading).
@@ -70,7 +70,7 @@
       </li>
       <li>
         <p>
-          <line><strong>The JDK (Java Development Kit): For Creating Programs</strong></line>
+          <line><term>The JDK (Java Development Kit): For Creating Programs</term></line>
           The JDK is the complete software package designed for programmers. It contains
           everything in the JRE (so you can run programs), plus all the developer tools
           needed to create software from scratch.
@@ -136,20 +136,20 @@
     <ul>
       <li>
         <p>
-          <strong>Eclipse Temurin (by Adoptium):</strong> A community-driven,
+          <term>Eclipse Temurin (by Adoptium):</term> A community-driven,
           vendor-neutral distribution managed by the Eclipse Foundation; widely popular in
           education and industry for its reliability and open-source licensing.
         </p>
       </li>
       <li>
         <p>
-          <strong>Oracle OpenJDK / Oracle JDK:</strong> The official builds provided
+          <term>Oracle OpenJDK / Oracle JDK:</term> The official builds provided
           directly by Oracle (the stewards of the Java language).
         </p>
       </li>
       <li>
         <p>
-          <strong>Cloud &amp; Enterprise Distributions:</strong> Other well-maintained,
+          <term>Cloud &amp; Enterprise Distributions:</term> Other well-maintained,
           free builds backed by major tech companies, including Amazon Corretto, Microsoft
           Build of OpenJDK, and Azul Zulu.
         </p>
@@ -168,7 +168,7 @@
     <p>
       Once you’ve downloaded the installer, run it to start the installation. On Windows,
       during the setup wizard, you will see a list of optional features. Make sure that
-      both <strong>Add to PATH</strong> and <strong>Set JAVA_HOME variable</strong> are
+      both <term>Add to PATH</term> and <term>Set JAVA_HOME variable</term> are
       selected. This ensures you can run Java tools directly from the command line. On
       macOS and Linux, run the package installer and follow the standard on-screen prompts.
     </p>
@@ -176,14 +176,14 @@
     <p>
       Once installed, you will be able to run the <c>java</c>, <c>javac</c>, and
       <c>jshell</c> commands directly from your computer’s terminal or command prompt.
-      (There is more detail about the command prompt in the next section of this chapter,
+      (There is more detail about the command prompt in the next sub-section of this chapter,
       but for a quick start, on Windows, press the Windows key and search for <c>cmd</c>;
-      on macOS, press Command-Space and search for Terminal.) To confirm that Java is
+      on macOS, press <kbd>Command</kbd> + <kbd>Space</kbd> and search for Terminal.) To confirm that Java is
       installed and properly configured, open a new terminal or command prompt window
       (opening a new window ensures your system recognizes the newly installed software) and
       type <c>jshell</c>. If your installation succeeded, you will see a brief welcome
       message followed by an interactive prompt, as in the session below. To exit JShell
-      and return to your operating system prompt, simply type <c>/exit</c> and press Enter.
+      and return to your operating system prompt, simply type <c>/exit</c> and press <kbd>Enter</kbd>.
     </p>
 
     <console>
@@ -201,8 +201,8 @@
     <p>
       If your computer displays an error like <q>command not found,</q> try closing and
       reopening your command prompt or restarting your computer and reopening the command
-      prompt. If the command still fails, re-run the installer and ensure the option to Add
-      to PATH was selected. These will fix common installation errors, but if neither
+      prompt. If the command still fails, re-run the installer and ensure the option to <term>Add
+      to PATH</term> was selected. These will fix common installation errors, but if neither
       works, consult your instructor.
     </p>
   </subsection>
@@ -230,7 +230,7 @@
     <p>
       On Windows, you interact with the command line using the Command Prompt or
       PowerShell. On macOS and Linux, you use the application called Terminal. In the
-      command line application, you will type a command at the prompt and press Enter. The
+      command line application, you will type a command at the prompt and press <kbd>Enter</kbd>. The
       computer will carry out the command, displaying any output in the command window, and
       will then redisplay the prompt so that you can type another command.
     </p>
@@ -252,8 +252,8 @@
 
     <p>
       To see the contents of your current directory on Windows Command Prompt, type
-      <c>dir</c> and press Enter. On macOS, Linux, and Windows PowerShell, type <c>ls</c>
-      and press Enter. To navigate into a different folder, use the <c>cd</c> (change
+      <c>dir</c> and press <kbd>Enter</kbd>. On macOS, Linux, and Windows PowerShell, type <c>ls</c>
+      and press <kbd>Enter</kbd>. To navigate into a different folder, use the <c>cd</c> (change
       directory) command followed by the name of the folder. To move into a subfolder,
       simply type the name of the folder. For example, if you are in your home directory
       and want to enter your Desktop folder, type <c>cd Desktop</c>.
@@ -287,7 +287,7 @@
       To create a folder called JavaPrograms at the command line, first navigate to the
       parent folder (the folder that will hold your new JavaPrograms folder). Then use the
       <c>mkdir</c> command followed by the name of the new directory, e.g. <c>mkdir
-      JavaPrograms</c> (followed by Enter, as always). Note that this will create the
+      JavaPrograms</c> (followed by <kbd>Enter</kbd>, as always). Note that this will create the
       directory but will not change the current working directory. If you list the
       directory contents after this command, you should see the contents of the parent
       directory, with your new directory in its alphabetical position in the list. If you
@@ -327,7 +327,7 @@
 
     <p>
       The tradition in programming, to test a new language or installation, is to write a
-      program that prints Hello world to the screen. Let’s do that to learn how to compile
+      program that prints <q>Hello world</q> to the screen. Let’s do that to learn how to compile
       and run programs at the command line.
     </p>
 
@@ -357,7 +357,7 @@ public class Hello {
       save a file with a double extension, such as <c>Hello.java.txt</c>. You will be able
       to see this double extension when you list the directory contents in the command line.
       If this happens, rename your file using the <c>ren</c> command. For example, <c>ren
-      Hello.java.txt Hello.java</c> (and press Enter). If you need to rename a file in
+      Hello.java.txt Hello.java</c> (and press <kbd>Enter</kbd>). If you need to rename a file in
       macOS or Linux, use the move command, for example, <c>mv Hello.java.txt
       Hello.java</c>. A Java program name will not contain any spaces, but if you are
       renaming another type of file, remember to use double quotes around your file name if
@@ -382,7 +382,7 @@ public class Hello {
       saved the file in the JavaPrograms directory by navigating to JavaPrograms and typing
       either <c>dir</c> or <c>ls</c>, depending on what command-line program you’re using.
       You will see <c>Hello.java</c> in the directory. (If you don’t, solve that before you
-      continue.) Now type <c>javac Hello.java</c> and press Enter.
+      continue.) Now type <c>javac Hello.java</c> and press <kbd>Enter</kbd>.
     </p>
 
     <p>
@@ -462,15 +462,15 @@ public class Hello {
       </p>
 
       <p>
-        When running the installer, choose <strong>Eclipse IDE for Java Developers</strong>.
+        When running the installer, choose <term>Eclipse IDE for Java Developers</term>.
       </p>
 
       <p>
         On the configuration screen that appears, confirm that Eclipse has selected your
-        newly installed JDK in the Java VM field (if it hasn't, select your installed version
-        from the dropdown menu, or click the Browse button to locate it). You can accept the
-        default suggested Installation Folder. Ensure that the options to create desktop
-        and start menu shortcuts are checked, then click Install.
+        newly installed JDK in the <term>Java VM</term> field (if it hasn't, select your installed version
+        from the dropdown menu, or click the <term>Browse</term> button to locate it). You can accept the
+        default suggested <term>Installation Folder</term>. Ensure that the options to create desktop
+        and start menu shortcuts are checked, then click <term>Install</term>.
       </p>
     </subsubsection>
 
@@ -483,7 +483,7 @@ public class Hello {
       </p>
 
       <p>
-        When Eclipse starts, it will ask you to select a Workspace. The Eclipse Workspace
+        When Eclipse starts, it will ask you to select a <term>Workspace</term>. The Eclipse Workspace
         is a folder on your hard drive where Eclipse will store all of your Java projects,
         code, and preferences. You can accept the default folder or choose another folder.
         For now, you will probably only need one Workspace, but it is possible to have
@@ -492,51 +492,51 @@ public class Hello {
 
       <p>
         When a new Workspace is first opened, the Eclipse window will be filled by a large
-        Welcome screen that includes links to extensive documentation and tutorials. You
-        should close this screen, by clicking the x next to the word Welcome in the tab; you
-        can get back to it later by choosing Help -> Welcome. (You might also see a request
+        <term>Welcome</term> screen that includes links to extensive documentation and tutorials. You
+        should close this screen, by clicking the <term>x</term> next to the word <term>Welcome</term> in the tab; you
+        can get back to it later by choosing <menuchoice><guimenu>Help</guimenu><guimenuitem>Welcome</guimenuitem></menuchoice>. (You might also see a request
         for a donation again; you can safely close that.)
       </p>
 
       <p>
         The Eclipse window is made up of several panes that contain one or more tabbed
-        Views. A particular arrangement of these Views and editor panes is called a
-        Perspective. You don’t need to worry about these names too much right now—they are
+        <term>Views</term>. A particular arrangement of these Views and editor panes is called a
+        <term>Perspective</term>. You don’t need to worry about these names too much right now—they are
         mainly useful to know when you accidentally close something and need to find the
         menu command to get it back!
       </p>
 
       <p>
         When Eclipse opens (after you close the Welcome screen), your window is arranged in
-        the default Java Perspective. By default, this layout consists of:
+        the default <term>Java Perspective</term>. By default, this layout consists of:
       </p>
 
       <ul>
         <li>
           <p>
-            The Package Explorer (on the left): This view displays your files, organized
+            The <term>Package Explorer</term> (on the left): This view displays your files, organized
             neatly into folders and projects (we will create our first project in a
             moment).
           </p>
         </li>
         <li>
           <p>
-            The Editor Area (in the middle): This central area is where you will open, type,
+            The <term>Editor Area</term> (in the middle): This central area is where you will open, type,
             and edit your <c>.java</c> source code.
           </p>
         </li>
         <li>
           <p>
-            The Bottom Pane (utilities): This area holds several tabbed utility views, such
-            as Problems and Javadoc. The Console view will also live here; although it may
-            not be visible right now, Eclipse will automatically pop the Console open in
+            The <term>Bottom Pane</term> (utilities): This area holds several tabbed utility views, such
+            as <term>Problems</term> and <term>Javadoc</term>. The <term>Console</term> view will also live here; although it may
+            not be visible right now, Eclipse will automatically pop the <term>Console</term> open in
             this bottom pane the first time you run a program.
           </p>
         </li>
       </ul>
 
       <p>
-        You will also see an Outline view to the far right, which we can ignore for now.
+        You will also see an <term>Outline</term> view to the far right, which we can ignore for now.
       </p>
 
       <p>
@@ -548,15 +548,15 @@ public class Hello {
       <ul>
         <li>
           <p>
-            Restore an individual view: Go to Window-> Show View and select the name of the
-            missing view (such as Package Explorer or Console).
+            Restore an individual view: Go to <menuchoice><guimenu>Window</guimenu><guimenuitem>Show View</guimenuitem></menuchoice> and select the name of the
+            missing view (such as <term>Package Explorer</term> or <term>Console</term>).
           </p>
         </li>
         <li>
           <p>
             Reset the entire window: To reset your workspace back to its original factory
-            layout, choose Window->Perspective->Reset Perspective... and click Reset
-            Perspective in the dialog box that pops up. Everything will immediately snap
+            layout, choose <menuchoice><guimenu>Window</guimenu><guisubmenu>Perspective</guisubmenu><guimenuitem>Reset Perspective...</guimenuitem></menuchoice> and click <term>Reset
+            Perspective</term> in the dialog box that pops up. Everything will immediately snap
             back to its proper place!
           </p>
         </li>
@@ -579,7 +579,7 @@ public class Hello {
       <title>Writing Hello, world in Eclipse</title>
 
       <p>
-        To create a Java project, go to choose File -> New -> Java Project. In the window
+        To create a Java project, choose <menuchoice><guimenu>File</guimenu><guisubmenu>New</guisubmenu><guimenuitem>Java Project</guimenuitem></menuchoice>. In the window
         that pops up, you will need to fill in a project name. If you decide to organize
         your programs by chapter, then Chapter1Programs is a reasonable name. You can
         organize your Java programs however you like, but as you’re just learning Eclipse,
@@ -587,26 +587,26 @@ public class Hello {
       </p>
 
       <p>
-        Under the JRE section in the project dialog box, leave the Use an execution
-        environment JRE option chosen, but make sure the number matches the JDK you
+        Under the <term>JRE</term> section in the project dialog box, leave the <term>Use an execution
+        environment JRE</term> option chosen, but make sure the number matches the JDK you
         installed. If that number is higher than the number you installed, choose the
         matching number from the drop-down.
       </p>
 
       <p>
         For projects you create while you’re learning, you should also uncheck the option
-        labeled Create module-info.java file in the Module section. If you forget to do this,
+        labeled <term>Create module-info.java file</term> in the <term>Module</term> section. If you forget to do this,
         then delete the <c>module-info.java</c> file in your project, once created. If you
         don’t delete it, it will cause problems when you try to execute your programs.
       </p>
 
       <p>
         Once you have given your project a name, confirmed that the version of the JDK in the
-        execution environment matches the version you installed, and unchecked the Create
-        module-info.java box, you can click the Finish button.
+        execution environment matches the version you installed, and unchecked the <term>Create
+        module-info.java</term> box, you can click the <term>Finish</term> button.
       </p>
 
-<figure xml:id="figure-eclipse-create-project">
+      <figure xml:id="figure-eclipse-create-project">
         <caption>Creating a Java project in Eclipse</caption>
         <image source="figures/figure_1_5.jpg" width="80%">
           <shortdescription>The Create New Project dialog box in Eclipse with recommended settings annotated.</shortdescription>
@@ -627,43 +627,43 @@ public class Hello {
       </figure>
 
       <p>
-        The project should appear in the Package Explorer view on the left side of the
+        The project should appear in the <term>Package Explorer</term> view on the left side of the
         Eclipse window. Click on the small triangle or plus sign next to the project name to
-        see the contents of the project. Inside the project, you should see the JRE System
-        Library (the collection of standard built-in classes that come with Java) and a
+        see the contents of the project. Inside the project, you should see the <term>JRE System
+        Library</term> (the collection of standard built-in classes that come with Java) and a
         folder called <c>src</c> (where your Java source code files will go). If you
         unchecked the module box: The <c>src</c> folder is currently empty, so it will not
         have an expand arrow next to it. This is the expected result. If you forgot to
         uncheck the module-info box: An expand arrow will appear next to <c>src</c>. If you
         see an arrow, click it to expand <c>src</c>, right-click on <c>module-info.java</c>,
-        and choose Delete.
+        and choose <term>Delete</term>.
       </p>
 
       <p>
         Let’s now test your Eclipse installation by writing a <q>Hello world</q> program.
-        Right-click on the <c>src</c> folder in the Package Explorer and choose New -> Class.
-        In the dialog that opens, first check the Source folder. You should see your
+        Right-click on the <c>src</c> folder in the <term>Package Explorer</term> and choose <menuchoice><guimenu>New</guimenu><guimenuitem>Class</guimenuitem></menuchoice>.
+        In the dialog that opens, first check the <term>Source folder</term>. You should see your
         project name followed by <c>/src</c>, e.g. <c>Chapter1Programs/src</c>. If you do
-        not see that, click the Browse button to the right and choose the <c>src</c> folder of
+        not see that, click the <term>Browse</term> button to the right and choose the <c>src</c> folder of
         your project.
       </p>
 
       <p>
-        You should see nothing next to Package. If a Package is suggested, select the name
+        You should see nothing next to <term>Package</term>. If a Package is suggested, select the name
         and delete it.
       </p>
 
       <p>
-        In the Name box, type <c>Hello</c>. We are going to write the same program we wrote
+        In the <term>Name</term> box, type <c>Hello</c>. We are going to write the same program we wrote
         and ran at the command line.
       </p>
 
       <p>
         The other default options should be fine. To save yourself some time, check the box
-        next to <c>public static void main(String[] args)</c>, and click Finish.
+        next to <c>public static void main(String[] args)</c>, and click <term>Finish</term>.
       </p>
 
-<figure xml:id="figure-eclipse-create-class">
+      <figure xml:id="figure-eclipse-create-class">
         <caption>Creating a Java class in Eclipse</caption>
         <image source="figures/figure_1_6.png" width="80%">
           <shortdescription>The New Java Class dialog box in Eclipse creating Hello.java.</shortdescription>
@@ -685,11 +685,10 @@ public class Hello {
         ref="listing-hello-world" />), you can see that most of it is already filled in!
         There is a line that you should select, <c>// TODO Auto-generated method stub</c>,
         delete, and replace with the line that begins <c>System.out.println</c> in the program
-        we wrote earlier. Once you have done that, save your edits and then choose Run ->
-        Run As -> Java Application, or click the icon that looks like a play button in the
+        we wrote earlier. Once you have done that, save your edits and then choose <menuchoice><guimenu>Run</guimenu><guisubmenu>Run As</guisubmenu><guimenuitem>Java Application</guimenuitem></menuchoice>, or click the icon that looks like a play button in the
         toolbar above the editing window. If you typed the program correctly, it will run in
-        the Console view below the editing window. In Eclipse, compiling and running are
-        accomplished together with the Run command.
+        the <term>Console</term> view below the editing window. In Eclipse, compiling and running are
+        accomplished together with the <term>Run</term> command.
       </p>
 
       <p>
@@ -716,20 +715,20 @@ public class Hello {
       </p>
 
       <p>
-        One of the most powerful features in Eclipse is Content Assist (often referred to
+        One of the most powerful features in Eclipse is <term>Content Assist</term> (often referred to
         as code completion or autocomplete). As you write Java code, you do not need to
         memorize every class name, method signature, or standard library package. By
         pressing <kbd>Ctrl</kbd> + <kbd>Space</kbd> on Windows/Linux (or <kbd>Cmd</kbd> +
         <kbd>Space</kbd> on macOS), Eclipse inspects your current code context and displays
         a pop-up list of valid completions matching whatever you have typed so far.
-        Selecting a suggestion from the list and pressing Enter inserts the remaining code
+        Selecting a suggestion from the list and pressing <kbd>Enter</kbd> inserts the remaining code
         automatically. This not only speeds up your typing, but it also eliminates spelling
         mistakes and case-sensitivity errors that would otherwise prevent your program from
         compiling.
       </p>
 
       <p>
-        Content Assist is especially helpful when working with objects and classes. For
+        <term>Content Assist</term> is especially helpful when working with objects and classes. For
         example, typing a class or variable name followed immediately by a period (such as
         <c>System.</c> or <c>Math.</c>) prompts Eclipse to show every method available on
         that object, complete with its expected parameters, return type, and a preview of
@@ -737,7 +736,7 @@ public class Hello {
         templates: typing common shortcuts such as <c>sysout</c> followed by
         <kbd>Ctrl</kbd> + <kbd>Space</kbd> automatically expands into
         <c>System.out.println();</c>, and typing <c>main</c> expands into a complete
-        <c>public static void main(String[] args)</c> method header. Using Content Assist
+        <c>public static void main(String[] args)</c> method header. Using <term>Content Assist</term>
         regularly turns Eclipse from a simple text editor into an active partner that guides
         your learning.
       </p>
@@ -753,15 +752,14 @@ public class Hello {
         default package, there is no default package subfolder within <c>src</c>.) Take a
         moment to find the Workspace directory on your hard drive and compare the directory
         structure to what you see in Eclipse. If you don’t remember the directory that you
-        chose for a Workspace, you can see the path by choosing File -> Switch Workspace, or
-        you can right-click on a file in the Package Explorer and choose Show In -> System
-        Explorer (or on macOS, Show In -> Finder). You now know where your source files are
+        chose for a Workspace, you can see the path by choosing <menuchoice><guimenu>File</guimenu><guimenuitem>Switch Workspace</guimenuitem></menuchoice>, or
+        you can right-click on a file in the <term>Package Explorer</term> and choose <menuchoice><guimenu>Show In</guimenu><guimenuitem>System Explorer</guimenuitem></menuchoice> (or on macOS, <menuchoice><guimenu>Show In</guimenu><guimenuitem>Finder</guimenuitem></menuchoice>). You now know where your source files are
         if you need to locate them. If you kept the default settings, when you compile your
         Java programs, the Java bytecode (<c>.class</c> files) will be stored in the
         <c>bin</c> folder.
       </p>
 
-<figure xml:id="figure-package-explorer-system-explorer">
+      <figure xml:id="figure-package-explorer-system-explorer">
         <caption>The Package Explorer and System Explorer, compared</caption>
         <image source="figures/figure_1_7.png" width="90%">
           <shortdescription>Comparison of Eclipse Package Explorer and the physical filesystem on disk.</shortdescription>
@@ -784,21 +782,21 @@ public class Hello {
         To run any of the sample Java programs from this textbook, you need to copy the
         source code file into your Eclipse Java project. First download the source code to
         your computer. You can then right-click on the default package in the project you
-        want to import the code into and choose Import. Open General (by clicking the arrow
-        next to it), choose File System, and click Next. You should then click the Browse
+        want to import the code into and choose <term>Import</term>. Open <term>General</term> (by clicking the arrow
+        next to it), choose <term>File System</term>, and click <term>Next</term>. You should then click the <term>Browse</term>
         button and use the file picker to select the folder that contains the source files.
-        Click Select Folder. Once you do that, you’ll see all of the files in that folder
+        Click <term>Select Folder</term>. Once you do that, you’ll see all of the files in that folder
         with boxes next to them. Check the boxes of the <c>.java</c> source files that you
         want to import into your project. Confirm that they are going into the <c>src</c>
-        folder of the correct project (and if not, use the Browse button to select the
-        correct folder). Then click Finish. You will then see the file in the default folder
+        folder of the correct project (and if not, use the <term>Browse</term> button to select the
+        correct folder). Then click <term>Finish</term>. You will then see the file in the default folder
         of the <c>src</c> folder of your project. If a file gets imported into the wrong
-        folder, you can simply drag it into the right place in the Package Explorer.
+        folder, you can simply drag it into the right place in the <term>Package Explorer</term>.
       </p>
 
       <p>
         Once a Java program is in the project, you can open it in an editor by
-        double-clicking the file name in the Package Explorer.
+        double-clicking the file name in the <term>Package Explorer</term>.
       </p>
 
       <p>
@@ -810,7 +808,7 @@ public class Hello {
         and not move the file, you should select and copy the file and then paste into the
         <c>src</c> folder of the Eclipse project. When you copy a file this way, you won’t
         immediately see a change in Eclipse. Once you’ve made a change in the System
-        Explorer, right-click the project in Eclipse and choose Refresh to see the changes.
+        Explorer, right-click the project in Eclipse and choose <term>Refresh</term> to see the changes.
       </p>
 
       <p>
@@ -834,7 +832,7 @@ public class Hello {
 
     <p>
       To start JShell, run your command-line environment and type <c>jshell</c>, followed by
-      Enter. You will get a JShell prompt where you can enter either a Java statement or a
+      <kbd>Enter</kbd>. You will get a JShell prompt where you can enter either a Java statement or a
       Java expression. If you enter a statement, it will be executed. If you enter an
       expression, its value will be printed. (You will learn the difference between
       statements and expressions in the next chapter.) In computer science, this kind of
@@ -885,4 +883,146 @@ $3 ==&gt; 1764
       it occasionally throughout the book to illustrate Java features.
     </p>
   </subsection>
+
+  <reading-questions xml:id="checkpoint-1-5">
+    <title>Checkpoint</title>
+
+    <exercise xml:id="checkpoint-1-5-java-platform" label="checkpoint-1-5-java-platform">
+      <title>The Java Platform</title>
+      <statement>
+        <p>
+          Match each Java platform component to what it provides.
+        </p>
+      </statement>
+      <cardsort>
+        <match>
+          <premise order="3">JVM (Java Virtual Machine)</premise>
+          <response>The execution engine that translates and runs compiled bytecode on your physical computer.</response>
+        </match>
+        <match>
+          <premise order="1">JRE (Java Runtime Environment)</premise>
+          <response>Contains the JVM plus the standard Java class libraries needed to run existing programs.</response>
+        </match>
+        <match>
+          <premise order="2">JDK (Java Development Kit)</premise>
+          <response>Contains the JRE plus developer tools like <c>javac</c>, <c>jshell</c>, and <c>javadoc</c> for creating programs.</response>
+        </match>
+      </cardsort>
+    </exercise>
+
+    <exercise xml:id="checkpoint-1-5-eclipse-files" label="checkpoint-1-5-eclipse-files">
+      <title>Eclipse and Your Hard Drive</title>
+      <statement>
+        <p>
+          Match each Eclipse item to where it lives on your computer’s hard drive.
+        </p>
+      </statement>
+      <cardsort>
+        <match>
+          <premise order="4">Workspace</premise>
+          <response>The top-level folder on disk where Eclipse stores all of your Java projects and preferences.</response>
+        </match>
+        <match>
+          <premise order="1"><c>src</c> folder</premise>
+          <response>Stores your human-readable <c>.java</c> source code files inside a project.</response>
+        </match>
+        <match>
+          <premise order="3"><c>bin</c> folder</premise>
+          <response>Stores compiled <c>.class</c> bytecode files (hidden from the Package Explorer by default).</response>
+        </match>
+        <match>
+          <premise order="2">Project folder (e.g., <c>Chapter1Programs</c>)</premise>
+          <response>A folder inside the Workspace containing <c>src</c>, <c>bin</c>, <c>.settings</c>, and <c>.project</c>.</response>
+        </match>
+      </cardsort>
+    </exercise>
+
+    <exercise xml:id="checkpoint-1-5-eclipse-window" label="checkpoint-1-5-eclipse-window">
+      <title>Restoring the Eclipse Window</title>
+      <statement>
+        <p>
+          You accidentally close the <term>Console</term> and <term>Package Explorer</term> tabs and drag another pane into an awkward spot. Which menu command resets your entire Eclipse window back to its original factory layout?
+        </p>
+      </statement>
+      <choices randomize="yes">
+        <choice correct="yes">
+          <statement>
+            <p>
+              Window &#x2192; Perspective &#x2192; Reset Perspective...
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Correct! Resetting the perspective snaps all default views and panes back to their original factory positions.
+            </p>
+          </feedback>
+        </choice>
+        <choice correct="no">
+          <statement>
+            <p>
+              File &#x2192; Switch Workspace
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Not quite. Switching workspaces opens a different project folder on disk rather than resetting the current window layout.
+            </p>
+          </feedback>
+        </choice>
+        <choice correct="no">
+          <statement>
+            <p>
+              Help &#x2192; Welcome
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Not quite. That reopens the initial Welcome screen with documentation links, but does not restore closed views or rearrange panes.
+            </p>
+          </feedback>
+        </choice>
+        <choice correct="no">
+          <statement>
+            <p>
+              Run &#x2192; Run As &#x2192; Java Application
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Not quite. Running a program opens the Console view if it was hidden, but it will not restore Package Explorer or reset dragged panes.
+            </p>
+          </feedback>
+        </choice>
+      </choices>
+    </exercise>
+
+    <exercise xml:id="checkpoint-1-5-hello-parsons" label="checkpoint-1-5-hello-parsons" language="java" adaptive="yes">
+      <title>Writing Hello World</title>
+      <statement>
+        <p>
+          Arrange the blocks below to form a complete, valid <c>Hello.java</c> program that prints <q>Hello world</q> to the console. (You might not need all of the blocks.)
+        </p>
+      </statement>
+      <blocks>
+        <block order="4">
+          <cline>public class Hello {</cline>
+        </block>
+        <block order="1">
+          <cline>    public static void main(String[] args) {</cline>
+        </block>
+        <block order="5">
+          <cline>        System.out.println("Hello world");</cline>
+        </block>
+        <block order="2">
+          <cline>    }</cline>
+        </block>
+        <block order="6">
+          <cline>}</cline>
+        </block>
+        <block order="3" correct="no">
+          <cline>        System.out.println(Hello world);</cline>
+        </block>
+      </blocks>
+    </exercise>
+  </reading-questions>
 </section>
