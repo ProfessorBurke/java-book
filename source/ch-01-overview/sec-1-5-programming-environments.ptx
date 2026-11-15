@@ -494,7 +494,7 @@ public class Hello {
         When a new Workspace is first opened, the Eclipse window will be filled by a large
         <term>Welcome</term> screen that includes links to extensive documentation and tutorials. You
         should close this screen, by clicking the <term>x</term> next to the word <term>Welcome</term> in the tab; you
-        can get back to it later by choosing <menuchoice><guimenu>Help</guimenu><guimenuitem>Welcome</guimenuitem></menuchoice>. (You might also see a request
+        can get back to it later by choosing <term>Help</term> &#x2192; <term>Welcome</term>. (You might also see a request
         for a donation again; you can safely close that.)
       </p>
 
@@ -548,14 +548,14 @@ public class Hello {
       <ul>
         <li>
           <p>
-            Restore an individual view: Go to <menuchoice><guimenu>Window</guimenu><guimenuitem>Show View</guimenuitem></menuchoice> and select the name of the
+            Restore an individual view: Go to <term>Window</term> &#x2192; <term>Show View</term> and select the name of the
             missing view (such as <term>Package Explorer</term> or <term>Console</term>).
           </p>
         </li>
         <li>
           <p>
             Reset the entire window: To reset your workspace back to its original factory
-            layout, choose <menuchoice><guimenu>Window</guimenu><guisubmenu>Perspective</guisubmenu><guimenuitem>Reset Perspective...</guimenuitem></menuchoice> and click <term>Reset
+            layout, choose <term>Window</term> &#x2192; <term>Perspective</term> &#x2192; <term>Reset Perspective...</term> and click <term>Reset
             Perspective</term> in the dialog box that pops up. Everything will immediately snap
             back to its proper place!
           </p>
@@ -579,7 +579,7 @@ public class Hello {
       <title>Writing Hello, world in Eclipse</title>
 
       <p>
-        To create a Java project, choose <menuchoice><guimenu>File</guimenu><guisubmenu>New</guisubmenu><guimenuitem>Java Project</guimenuitem></menuchoice>. In the window
+        To create a Java project, choose <term>File</term> &#x2192; <term>New</term> &#x2192; <term>Java Project</term>. In the window
         that pops up, you will need to fill in a project name. If you decide to organize
         your programs by chapter, then Chapter1Programs is a reasonable name. You can
         organize your Java programs however you like, but as you’re just learning Eclipse,
@@ -641,7 +641,7 @@ public class Hello {
 
       <p>
         Let’s now test your Eclipse installation by writing a <q>Hello world</q> program.
-        Right-click on the <c>src</c> folder in the <term>Package Explorer</term> and choose <menuchoice><guimenu>New</guimenu><guimenuitem>Class</guimenuitem></menuchoice>.
+        Right-click on the <c>src</c> folder in the <term>Package Explorer</term> and choose <term>New</term> &#x2192; <term>Class</term>.
         In the dialog that opens, first check the <term>Source folder</term>. You should see your
         project name followed by <c>/src</c>, e.g. <c>Chapter1Programs/src</c>. If you do
         not see that, click the <term>Browse</term> button to the right and choose the <c>src</c> folder of
@@ -685,7 +685,7 @@ public class Hello {
         ref="listing-hello-world" />), you can see that most of it is already filled in!
         There is a line that you should select, <c>// TODO Auto-generated method stub</c>,
         delete, and replace with the line that begins <c>System.out.println</c> in the program
-        we wrote earlier. Once you have done that, save your edits and then choose <menuchoice><guimenu>Run</guimenu><guisubmenu>Run As</guisubmenu><guimenuitem>Java Application</guimenuitem></menuchoice>, or click the icon that looks like a play button in the
+        we wrote earlier. Once you have done that, save your edits and then choose <term>Run</term> &#x2192; <term>Run As</term> &#x2192; <term>Java Application</term>, or click the icon that looks like a play button in the
         toolbar above the editing window. If you typed the program correctly, it will run in
         the <term>Console</term> view below the editing window. In Eclipse, compiling and running are
         accomplished together with the <term>Run</term> command.
@@ -752,8 +752,8 @@ public class Hello {
         default package, there is no default package subfolder within <c>src</c>.) Take a
         moment to find the Workspace directory on your hard drive and compare the directory
         structure to what you see in Eclipse. If you don’t remember the directory that you
-        chose for a Workspace, you can see the path by choosing <menuchoice><guimenu>File</guimenu><guimenuitem>Switch Workspace</guimenuitem></menuchoice>, or
-        you can right-click on a file in the <term>Package Explorer</term> and choose <menuchoice><guimenu>Show In</guimenu><guimenuitem>System Explorer</guimenuitem></menuchoice> (or on macOS, <menuchoice><guimenu>Show In</guimenu><guimenuitem>Finder</guimenuitem></menuchoice>). You now know where your source files are
+        chose for a Workspace, you can see the path by choosing <term>File</term> &#x2192; <term>Switch Workspace</term>, or
+        you can right-click on a file in the <term>Package Explorer</term> and choose <term>Show In</term> &#x2192; <term>System Explorer</term> (or on macOS, <term>Show In</term> &#x2192; <term>Finder</term>). You now know where your source files are
         if you need to locate them. If you kept the default settings, when you compile your
         Java programs, the Java bytecode (<c>.class</c> files) will be stored in the
         <c>bin</c> folder.

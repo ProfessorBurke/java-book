@@ -3,11 +3,11 @@
   <title>Java Application Overview</title>
 
   <p>
-    Let’s write a program that does a little more than <xref ref="listing-hello-world" />. This will give us the opportunity to discuss program structure, documentation, input, output, data types, and arithmetic in a Java program. Create a new Java class by right-clicking on your project default package and choosing <c>New-&gt;Class</c>.
+    Let’s write a program that does a little more than <xref ref="listing-hello-world" />. This will give us the opportunity to discuss program structure, documentation, input, output, data types, and arithmetic in a Java program. Create a new Java class by right-clicking on your project default package and choosing <term>New</term> &#x2192; <term>Class</term>.
   </p>
 
   <p>
-    In the <c>New Java Class</c> dialog box, confirm that your file is in the correct project folder (and if not, click the <c>Browse</c> button and choose the correct project), confirm that the <c>.java</c> file will be in the default package (if not, delete the offered package name), type <c>MulchCalculator</c> in the <c>Name</c> box, check the <c>public static void main(String[] args)</c> check box, and click <c>Finish</c>. In the <c>MulchCalculator.java</c> editing window, type in <xref ref="listing-mulch-calculator" /> (be sure to delete the <c>// TODO…</c> comment line.) From here forward, when you type in a listing, you will choose a project to put the Java file in and follow the steps described above. We won’t repeat them every time, unless there’s a change in the process.
+    In the <term>New Java Class</term> dialog box, confirm that your file is in the correct project folder (and if not, click the <term>Browse</term> button and choose the correct project), confirm that the <c>.java</c> file will be in the default package (if not, delete the offered package name), type <c>MulchCalculator</c> in the <term>Name</term> box, check the <c>public static void main(String[] args)</c> check box, and click <term>Finish</term>. In the <c>MulchCalculator.java</c> editing window, type in <xref ref="listing-mulch-calculator" /> (be sure to delete the <c>// TODO…</c> comment line.) From here forward, when you type in a listing, you will choose a project to put the Java file in and follow the steps described above. We won’t repeat them every time, unless there’s a change in the process.
   </p>
 
   <listing xml:id="listing-mulch-calculator">
@@ -58,7 +58,7 @@ public class MulchCalculator {
   </p>
 
   <p>
-    In programming, errors generally fall into three categories: syntax, run-time, and semantic (logic) errors. Right now, as you type, the only errors you can encounter are syntax error: violations of Java’s strict grammar rules, such as forgetting a semicolon, leaving a quote unclosed, or mismatching curly braces.
+    In programming, errors generally fall into three categories: syntax, run-time, and semantic (logic) errors. Right now, as you type, the only errors you can encounter are syntax errors: violations of Java’s strict grammar rules, such as forgetting a semicolon, leaving a quote unclosed, or mismatching curly braces.
   </p>
 
   <p>
@@ -151,4 +151,226 @@ public class MulchCalculator {
   <p>
     Now that you’ve had an overview, let’s talk about each of these program elements in more detail.
   </p>
+
+  <reading-questions xml:id="checkpoint-2-2">
+    <title>Checkpoint</title>
+
+    <exercise xml:id="checkpoint-2-2-code-elements" label="checkpoint-2-2-code-elements">
+      <title>Identifying Program Elements</title>
+      <statement>
+        <p>
+          Match each line from <xref ref="listing-mulch-calculator" /> to the type of program element it represents.
+        </p>
+      </statement>
+      <cardsort>
+        <match>
+          <premise order="4"><c>// Calculate the cubic yards of mulch required.</c></premise>
+          <response>Single-line comment</response>
+        </match>
+        <match>
+          <premise order="1"><c>double depthInFeet;</c></premise>
+          <response>Variable declaration</response>
+        </match>
+        <match>
+          <premise order="6"><c>stdin = new Scanner(System.in);</c></premise>
+          <response>Object creation and assignment</response>
+        </match>
+        <match>
+          <premise order="2"><c>length = stdin.nextDouble();</c></premise>
+          <response>Console input</response>
+        </match>
+        <match>
+          <premise order="5"><c>cubicFeet = length * width * depthInFeet;</c></premise>
+          <response>Calculation</response>
+        </match>
+        <match>
+          <premise order="3"><c>System.out.println("You need " + cubicYards + " cubic yards of mulch.");</c></premise>
+          <response>Console output (print)</response>
+        </match>
+      </cardsort>
+    </exercise>
+
+    <exercise xml:id="checkpoint-2-2-flow-of-control" label="checkpoint-2-2-flow-of-control">
+      <title>Execution Order</title>
+      <statement>
+        <p>
+          What term describes the order in which statements are executed in a running program?
+        </p>
+      </statement>
+      <choices randomize="yes">
+        <choice correct="yes">
+          <statement>
+            <p>
+              Flow of control
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Correct! The order in which statements are executed is the flow of control, and top-to-bottom execution is sequential flow of control.
+            </p>
+          </feedback>
+        </choice>
+        <choice correct="no">
+          <statement>
+            <p>
+              String concatenation
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Not quite. String concatenation combines text and values using the <c>+</c> operator.
+            </p>
+          </feedback>
+        </choice>
+        <choice correct="no">
+          <statement>
+            <p>
+              Variable declaration
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Not quite. A variable declaration specifies a variable’s name and data type before it is used.
+            </p>
+          </feedback>
+        </choice>
+        <choice correct="no">
+          <statement>
+            <p>
+              Syntax checking
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Not quite. Syntax checking verifies that your code follows Java’s grammar rules before the program runs.
+            </p>
+          </feedback>
+        </choice>
+      </choices>
+    </exercise>
+
+    <exercise xml:id="checkpoint-2-2-import-statement" label="checkpoint-2-2-import-statement">
+      <title>The Purpose of <c>import</c></title>
+      <statement>
+        <p>
+          What is the purpose of the <c>import java.util.Scanner;</c> statement on line 1 of <xref ref="listing-mulch-calculator" />?
+        </p>
+      </statement>
+      <choices randomize="yes">
+        <choice correct="yes">
+          <statement>
+            <p>
+              It lets you refer to <c>Scanner</c> by its simple name instead of typing its fully qualified name <c>java.util.Scanner</c>.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Correct! An import statement provides a convenient shorthand for a class defined in another package.
+            </p>
+          </feedback>
+        </choice>
+        <choice correct="no">
+          <statement>
+            <p>
+              It creates a <c>Scanner</c> object connected to <c>System.in</c> so the program can read keyboard input.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Not quite. Creating the <c>Scanner</c> object happens later in <c>main</c> with <c>new Scanner(System.in)</c>.
+            </p>
+          </feedback>
+        </choice>
+        <choice correct="no">
+          <statement>
+            <p>
+              It installs the <c>java.util</c> package onto your computer so Eclipse can compile the program.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Not quite. The <c>java.util</c> package is already included in the JDK’s standard class libraries.
+            </p>
+          </feedback>
+        </choice>
+        <choice correct="no">
+          <statement>
+            <p>
+              It tells the JVM to begin program execution inside the <c>Scanner</c> class instead of <c>main</c>.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Not quite. Java applications always begin execution at the first statement inside the <c>main</c> method.
+            </p>
+          </feedback>
+        </choice>
+      </choices>
+    </exercise>
+
+    <exercise xml:id="checkpoint-2-2-syntax-errors" label="checkpoint-2-2-syntax-errors">
+      <title>Diagnosing Syntax Errors</title>
+      <statement>
+        <p>
+          Match each broken line from <xref ref="listing-mulch-calculator" /> to the syntax error message Eclipse reports. (You might need to experiment in Eclipse to see the exact error messages!)
+        </p>
+      </statement>
+      <cardsort>
+        <match>
+          <premise order="3"><c>System.out.print("Enter the length of the area in feet: ")</c></premise>
+          <response><c>Syntax error, insert ";" to complete Statement</c></response>
+        </match>
+        <match>
+          <premise order="1"><c>System.out.print("Enter the width of the area in feet: );</c></premise>
+          <response><c>String literal is not properly closed by a double-quote</c></response>
+        </match>
+        <match>
+          <premise order="4"><c>system.out.println("You need " + cubicYards + " cubic yards of mulch.");</c></premise>
+          <response><c>system cannot be resolved</c></response>
+        </match>
+        <match>
+          <premise order="2">Deleting the closing <c>}</c> on line 39</premise>
+          <response><c>Syntax error, insert "}" to complete ClassBody</c></response>
+        </match>
+      </cardsort>
+    </exercise>
+
+    <exercise xml:id="checkpoint-2-2-sum-parsons" label="checkpoint-2-2-sum-parsons" language="java" adaptive="yes">
+      <title>Challenge: Adding Two Numbers</title>
+      <statement>
+        <p>
+          Arrange the blocks below to form a complete, valid <c>AddTwoNumbers.java</c> program that declares <c>int first = 12;</c> followed by <c>int second = 8;</c>, stores their sum in <c>sum</c>, and prints the result. (You might not need all of the blocks.)
+        </p>
+      </statement>
+      <blocks>
+        <block order="5">
+          <cline>public class AddTwoNumbers {</cline>
+        </block>
+        <block order="2">
+          <cline>    public static void main(String[] args) {</cline>
+        </block>
+        <block order="7">
+          <cline>        int first = 12;</cline>
+        </block>
+        <block order="1">
+          <cline>        int second = 8;</cline>
+        </block>
+        <block order="6">
+          <cline>        int sum = first + second;</cline>
+        </block>
+        <block order="3">
+          <cline>        System.out.println("The sum is " + sum);</cline>
+        </block>
+        <block order="8">
+          <cline>    }</cline>
+        </block>
+        <block order="4">
+          <cline>}</cline>
+        </block>
+        <block order="9" correct="no">
+          <cline>        first + second = sum;</cline>
+        </block>
+      </blocks>
+    </exercise>
+  </reading-questions>
 </section>
