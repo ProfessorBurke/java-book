@@ -3,7 +3,7 @@
   <title>Class Structure</title>
 
   <p>
-    Java programs generally consist of many Java classes. One of the classes must contain a <c>main</c> method, which is where program execution begins. For this chapter and the next three, we will write programs consisting of a single Java class containing a <c>main</c> method. In chapter 5, we will learn how to build programs made up of multiple interacting objects defined by multiple classes.
+    Java programs generally consist of many Java classes. One of the classes must contain a <c>main</c> method, which is where program execution begins. For this chapter and the next three, we will write programs consisting of a single Java class containing a <c>main</c> method. In Chapter 6, we will learn how to build programs made up of multiple interacting objects defined by multiple classes.
   </p>
 
   <p>
@@ -72,7 +72,7 @@
   </p>
 
   <p>
-    In Eclipse’s New Class dialog box, you left the <c>Package</c> field blank, which places your code in the default package. When a class is in the default package, there is no package declaration at the top of the file. (You may have noticed Eclipse showing a warning that <q>The use of the default package is discouraged.</q> For our early learning programs, you can safely ignore this warning<mdash />using the default package keeps your setup simple and makes sharing single <c>.java</c> files effortless).
+    In Eclipse’s New Class dialog box, you left the <c>Package</c> field blank, which places your code in the default package. When a class is in the default package, there is no package declaration at the top of the file. (You may have noticed Eclipse showing a warning that <q>The use of the default package is discouraged.</q> For our early learning programs, you can safely ignore this warning<mdash />using the default package keeps your setup simple and makes sharing single <c>.java</c> files effortless.)
   </p>
 
   <p>
@@ -138,6 +138,214 @@ java.util.Scanner keyboard = new java.util.Scanner(System.in);]]></program>
   </ul>
 
   <p>
-    You should practice following these indentation and spacing guidelines in all your programs. If your indentation ever gets messy in Eclipse, select your code and press <kbd>Ctrl+I</kbd> (or <kbd>Cmd+I</kbd> on macOS)<mdash />or choose <menuchoice><guimenu>Source</guimenu><guimenuitem>Correct Indentation</guimenuitem></menuchoice> from the menu<mdash />and Eclipse will automatically re-align your code according to standard Java formatting rules.
+    You should practice following these indentation and spacing guidelines in all your programs. If your indentation ever gets messy in Eclipse, select your code and press <kbd>Ctrl+I</kbd> (or <kbd>Cmd+I</kbd> on macOS)<mdash />or choose <c>Source</c> &#x2192; <c>Correct Indentation</c> from the menu<mdash />and Eclipse will automatically re-align your code according to standard Java formatting rules.
   </p>
+
+  <reading-questions xml:id="checkpoint-2-3">
+    <title>Checkpoint</title>
+
+    <exercise xml:id="checkpoint-2-3-executable-class" label="checkpoint-2-3-executable-class">
+      <title>Executable Class Requirements</title>
+      <statement>
+        <p>
+          Which of the following must be true for a <c>public class</c> that serves as an executable Java program?
+        </p>
+      </statement>
+      <choices>
+        <choice correct="no">
+          <statement>
+            <p>
+              Its name must match the <c>.java</c> file name exactly, including capitalization.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              That is true, but it is not the only requirement listed here.
+            </p>
+          </feedback>
+        </choice>
+        <choice correct="no">
+          <statement>
+            <p>
+              It must contain a <c>public static void main(String[] args)</c> method.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              That is true, but it is not the only requirement listed here.
+            </p>
+          </feedback>
+        </choice>
+        <choice correct="no">
+          <statement>
+            <p>
+              Its contents must be enclosed in a matching pair of curly braces <c>{ ... }</c>.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              That is true, but it is not the only requirement listed here.
+            </p>
+          </feedback>
+        </choice>
+        <choice correct="yes">
+          <statement>
+            <p>
+              All of the above.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Correct! An executable public class must match its file name, enclose its contents in curly braces, and include a <c>main</c> method where execution begins.
+            </p>
+          </feedback>
+        </choice>
+      </choices>
+    </exercise>
+
+    <exercise xml:id="checkpoint-2-3-naming-conventions" label="checkpoint-2-3-naming-conventions">
+      <title>Identifier Naming Conventions</title>
+      <statement>
+        <p>
+          Match each Java identifier to the program element its capitalization style signals.
+        </p>
+      </statement>
+      <cardsort>
+        <match>
+          <premise order="3"><c>MulchCalculator</c></premise>
+          <response>Class (PascalCase)</response>
+        </match>
+        <match>
+          <premise order="1"><c>mulchDepth</c></premise>
+          <response>Variable (camelCase)</response>
+        </match>
+        <match>
+          <premise order="4"><c>calculateTotal()</c></premise>
+          <response>Method (camelCase with parentheses)</response>
+        </match>
+        <match>
+          <premise order="2"><c>MAX_VALUE</c></premise>
+          <response>Constant (UPPER_SNAKE_CASE)</response>
+        </match>
+      </cardsort>
+    </exercise>
+
+    <exercise xml:id="checkpoint-2-3-imports" label="checkpoint-2-3-imports">
+      <title>Using <c>Scanner</c> Without an <c>import</c></title>
+      <statement>
+        <p>
+          If you omitted <c>import java.util.Scanner;</c> from the top of <c>MulchCalculator.java</c>, how could you still use <c>Scanner</c> in your program?
+        </p>
+      </statement>
+      <choices randomize="yes">
+        <choice correct="yes">
+          <statement>
+            <p>
+              Type its fully qualified name, <c>java.util.Scanner</c>, each time you refer to it.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Correct! An import statement simply lets you use the simple name <c>Scanner</c> instead of writing the full package path <c>java.util.Scanner</c> everywhere.
+            </p>
+          </feedback>
+        </choice>
+        <choice correct="no">
+          <statement>
+            <p>
+              You could not—Java refuses to compile any program that uses <c>Scanner</c> without an <c>import</c> statement.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Not quite. You can still use classes from other packages without importing them by writing their full package path.
+            </p>
+          </feedback>
+        </choice>
+        <choice correct="no">
+          <statement>
+            <p>
+              Add a <c>package</c> declaration at the top of the file instead.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Not quite. A <c>package</c> declaration specifies which package your own class belongs to, not where to find <c>Scanner</c>.
+            </p>
+          </feedback>
+        </choice>
+        <choice correct="no">
+          <statement>
+            <p>
+              Use the default package, which automatically imports all classes in <c>java.util</c>.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Not quite. Putting your class in the default package does not import <c>java.util</c> classes automatically.
+            </p>
+          </feedback>
+        </choice>
+      </choices>
+    </exercise>
+
+    <exercise xml:id="checkpoint-2-3-whitespace" label="checkpoint-2-3-whitespace">
+      <title>Whitespace and Indentation</title>
+      <statement>
+        <p>
+          Because Java is largely a <q>free-format</q> language, what does the Java compiler do with blank lines and extra indentation?
+        </p>
+      </statement>
+      <choices randomize="yes">
+        <choice correct="yes">
+          <statement>
+            <p>
+              It ignores them, except where at least one space is needed to separate keywords and identifiers.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Correct! Indentation and blank lines are for human readability—the compiler only requires whitespace where tokens would otherwise run together.
+            </p>
+          </feedback>
+        </choice>
+        <choice correct="no">
+          <statement>
+            <p>
+              It reports a syntax error if a class body is not indented by four spaces.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Not quite. Four-space indentation is a style convention for programmers, not a rule enforced by the compiler.
+            </p>
+          </feedback>
+        </choice>
+        <choice correct="no">
+          <statement>
+            <p>
+              It requires every statement to be separated by a blank line.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Not quite. Blank lines are used to group related statements like paragraphs, and the compiler ignores them.
+            </p>
+          </feedback>
+        </choice>
+        <choice correct="no">
+          <statement>
+            <p>
+              It treats tabs and spaces differently and refuses to compile code that mixes them.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Not quite. The compiler treats spaces, tabs, and blank lines as whitespace and ignores extra formatting.
+            </p>
+          </feedback>
+        </choice>
+      </choices>
+    </exercise>
+  </reading-questions>
 </section>

@@ -3,11 +3,11 @@
   <title>Java Application Overview</title>
 
   <p>
-    Let’s write a program that does a little more than <xref ref="listing-hello-world" />. This will give us the opportunity to discuss program structure, documentation, input, output, data types, and arithmetic in a Java program. Create a new Java class by right-clicking on your project default package and choosing <term>New</term> &#x2192; <term>Class</term>.
+    Let’s write a program that does a little more than <xref ref="listing-hello-world" />. This will give us the opportunity to discuss program structure, documentation, input, output, data types, and arithmetic in a Java program. Create a new Java class by right-clicking on your project default package and choosing <c>New</c> &#x2192; <c>Class</c>.
   </p>
 
   <p>
-    In the <term>New Java Class</term> dialog box, confirm that your file is in the correct project folder (and if not, click the <term>Browse</term> button and choose the correct project), confirm that the <c>.java</c> file will be in the default package (if not, delete the offered package name), type <c>MulchCalculator</c> in the <term>Name</term> box, check the <c>public static void main(String[] args)</c> check box, and click <term>Finish</term>. In the <c>MulchCalculator.java</c> editing window, type in <xref ref="listing-mulch-calculator" /> (be sure to delete the <c>// TODO…</c> comment line.) From here forward, when you type in a listing, you will choose a project to put the Java file in and follow the steps described above. We won’t repeat them every time, unless there’s a change in the process.
+    In the <c>New Java Class</c> dialog box, confirm that your file is in the correct project folder (and if not, click the <c>Browse</c> button and choose the correct project), confirm that the <c>.java</c> file will be in the default package (if not, delete the offered package name), type <c>MulchCalculator</c> in the <c>Name</c> box, check the <c>public static void main(String[] args)</c> check box, and click <c>Finish</c>. In the <c>MulchCalculator.java</c> editing window, type in <xref ref="listing-mulch-calculator" /> (be sure to delete the <c>// TODO…</c> comment line.) From here forward, when you type in a listing, you will choose a project to put the Java file in and follow the steps described above. We won’t repeat them every time, unless there’s a change in the process.
   </p>
 
   <listing xml:id="listing-mulch-calculator">

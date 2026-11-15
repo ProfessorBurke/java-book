@@ -280,24 +280,6 @@ var ptx_lunr_docs = [
   "body": "Cloud & Enterprise Distributions: "
 },
 {
-  "id": "subsec-1-5-1-getting-jdk-5",
-  "level": "2",
-  "url": "sec-1-5-programming-environments.html#subsec-1-5-1-getting-jdk-5",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "Add to PATH Set JAVA_HOME variable "
-},
-{
-  "id": "subsec-1-5-1-getting-jdk-8",
-  "level": "2",
-  "url": "sec-1-5-programming-environments.html#subsec-1-5-1-getting-jdk-8",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "Add to PATH "
-},
-{
   "id": "listing-hello-world",
   "level": "2",
   "url": "sec-1-5-programming-environments.html#listing-hello-world",
@@ -305,42 +287,6 @@ var ptx_lunr_docs = [
   "number": "1.10",
   "title": "Hello world program in <code class=\"code-inline tex2jax_ignore\">Hello.java<\/code>.",
   "body": " Hello world program in Hello.java .  public class Hello { public static void main(String[] args) { System.out.println(\"Hello world \"); } }  "
-},
-{
-  "id": "subsubsec-1-5-3-1-installing-eclipse-5",
-  "level": "2",
-  "url": "sec-1-5-programming-environments.html#subsubsec-1-5-3-1-installing-eclipse-5",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "Eclipse IDE for Java Developers "
-},
-{
-  "id": "subsubsec-1-5-3-1-installing-eclipse-6",
-  "level": "2",
-  "url": "sec-1-5-programming-environments.html#subsubsec-1-5-3-1-installing-eclipse-6",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "Java VM Browse Installation Folder Install "
-},
-{
-  "id": "subsubsec-1-5-3-2-running-eclipse-3",
-  "level": "2",
-  "url": "sec-1-5-programming-environments.html#subsubsec-1-5-3-2-running-eclipse-3",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "Workspace "
-},
-{
-  "id": "subsubsec-1-5-3-2-running-eclipse-4",
-  "level": "2",
-  "url": "sec-1-5-programming-environments.html#subsubsec-1-5-3-2-running-eclipse-4",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "Welcome x Welcome Help Welcome "
 },
 {
   "id": "subsubsec-1-5-3-2-running-eclipse-5",
@@ -352,105 +298,6 @@ var ptx_lunr_docs = [
   "body": "Views Perspective "
 },
 {
-  "id": "subsubsec-1-5-3-2-running-eclipse-6",
-  "level": "2",
-  "url": "sec-1-5-programming-environments.html#subsubsec-1-5-3-2-running-eclipse-6",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "Java Perspective "
-},
-{
-  "id": "subsubsec-1-5-3-2-running-eclipse-7-1-1",
-  "level": "2",
-  "url": "sec-1-5-programming-environments.html#subsubsec-1-5-3-2-running-eclipse-7-1-1",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "Package Explorer "
-},
-{
-  "id": "subsubsec-1-5-3-2-running-eclipse-7-2-1",
-  "level": "2",
-  "url": "sec-1-5-programming-environments.html#subsubsec-1-5-3-2-running-eclipse-7-2-1",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "Editor Area "
-},
-{
-  "id": "subsubsec-1-5-3-2-running-eclipse-7-3-1",
-  "level": "2",
-  "url": "sec-1-5-programming-environments.html#subsubsec-1-5-3-2-running-eclipse-7-3-1",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "Bottom Pane Problems Javadoc Console Console "
-},
-{
-  "id": "subsubsec-1-5-3-2-running-eclipse-8",
-  "level": "2",
-  "url": "sec-1-5-programming-environments.html#subsubsec-1-5-3-2-running-eclipse-8",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "Outline "
-},
-{
-  "id": "subsubsec-1-5-3-2-running-eclipse-10-1-1",
-  "level": "2",
-  "url": "sec-1-5-programming-environments.html#subsubsec-1-5-3-2-running-eclipse-10-1-1",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "Window Show View Package Explorer Console "
-},
-{
-  "id": "subsubsec-1-5-3-2-running-eclipse-10-2-1",
-  "level": "2",
-  "url": "sec-1-5-programming-environments.html#subsubsec-1-5-3-2-running-eclipse-10-2-1",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "Window Perspective Reset Perspective... Reset Perspective "
-},
-{
-  "id": "subsubsec-1-5-3-3-hello-world-eclipse-2",
-  "level": "2",
-  "url": "sec-1-5-programming-environments.html#subsubsec-1-5-3-3-hello-world-eclipse-2",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "File New Java Project "
-},
-{
-  "id": "subsubsec-1-5-3-3-hello-world-eclipse-3",
-  "level": "2",
-  "url": "sec-1-5-programming-environments.html#subsubsec-1-5-3-3-hello-world-eclipse-3",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "JRE Use an execution environment JRE "
-},
-{
-  "id": "subsubsec-1-5-3-3-hello-world-eclipse-4",
-  "level": "2",
-  "url": "sec-1-5-programming-environments.html#subsubsec-1-5-3-3-hello-world-eclipse-4",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "Create module-info.java file Module "
-},
-{
-  "id": "subsubsec-1-5-3-3-hello-world-eclipse-5",
-  "level": "2",
-  "url": "sec-1-5-programming-environments.html#subsubsec-1-5-3-3-hello-world-eclipse-5",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "Create module-info.java Finish "
-},
-{
   "id": "figure-eclipse-create-project",
   "level": "2",
   "url": "sec-1-5-programming-environments.html#figure-eclipse-create-project",
@@ -458,51 +305,6 @@ var ptx_lunr_docs = [
   "number": "1.11",
   "title": "",
   "body": " Creating a Java project in Eclipse   The Create New Project dialog box in Eclipse with recommended settings annotated.   The Create New Project dialog box, annotated. The Project name is Chapter1Programs with the annotation Create a project to hold the chapter 1 program examples. The use an execution environment JRE radio button is selected, and in the drop-down, it says JavaSE-25. It is annotated Use this option... , and then below, the unselected option Use default JRE indicates jdk-25.0.4 and is annotated ...but make sure the number matches the JDK you installed. Under Module, the Create module-info.java file check box is unchecked, with the annotation Uncheck this box.     "
-},
-{
-  "id": "subsubsec-1-5-3-3-hello-world-eclipse-7",
-  "level": "2",
-  "url": "sec-1-5-programming-environments.html#subsubsec-1-5-3-3-hello-world-eclipse-7",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "Package Explorer JRE System Library Delete "
-},
-{
-  "id": "subsubsec-1-5-3-3-hello-world-eclipse-8",
-  "level": "2",
-  "url": "sec-1-5-programming-environments.html#subsubsec-1-5-3-3-hello-world-eclipse-8",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "Package Explorer New Class Source folder Browse "
-},
-{
-  "id": "subsubsec-1-5-3-3-hello-world-eclipse-9",
-  "level": "2",
-  "url": "sec-1-5-programming-environments.html#subsubsec-1-5-3-3-hello-world-eclipse-9",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "Package "
-},
-{
-  "id": "subsubsec-1-5-3-3-hello-world-eclipse-10",
-  "level": "2",
-  "url": "sec-1-5-programming-environments.html#subsubsec-1-5-3-3-hello-world-eclipse-10",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "Name "
-},
-{
-  "id": "subsubsec-1-5-3-3-hello-world-eclipse-11",
-  "level": "2",
-  "url": "sec-1-5-programming-environments.html#subsubsec-1-5-3-3-hello-world-eclipse-11",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "Finish "
 },
 {
   "id": "figure-eclipse-create-class",
@@ -514,42 +316,6 @@ var ptx_lunr_docs = [
   "body": " Creating a Java class in Eclipse   The New Java Class dialog box in Eclipse creating Hello.java.   The New Java Class dialog box. Next to Source folder: Chapter1Programs\/src . Next to Package: blank with (default) after. Enclosing type box unchecked. Name: Hello . All other boxes are defaults except the public static void main(String[] args) checkbox is checked.    "
 },
 {
-  "id": "subsubsec-1-5-3-3-hello-world-eclipse-13",
-  "level": "2",
-  "url": "sec-1-5-programming-environments.html#subsubsec-1-5-3-3-hello-world-eclipse-13",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "Run Run As Java Application Console Run "
-},
-{
-  "id": "subsubsec-1-5-3-3-hello-world-eclipse-15",
-  "level": "2",
-  "url": "sec-1-5-programming-environments.html#subsubsec-1-5-3-3-hello-world-eclipse-15",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "Content Assist "
-},
-{
-  "id": "subsubsec-1-5-3-3-hello-world-eclipse-16",
-  "level": "2",
-  "url": "sec-1-5-programming-environments.html#subsubsec-1-5-3-3-hello-world-eclipse-16",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "Content Assist Content Assist "
-},
-{
-  "id": "subsubsec-1-5-3-4-file-management-eclipse-2",
-  "level": "2",
-  "url": "sec-1-5-programming-environments.html#subsubsec-1-5-3-4-file-management-eclipse-2",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "File Switch Workspace Package Explorer Show In System Explorer Show In Finder "
-},
-{
   "id": "figure-package-explorer-system-explorer",
   "level": "2",
   "url": "sec-1-5-programming-environments.html#figure-package-explorer-system-explorer",
@@ -557,33 +323,6 @@ var ptx_lunr_docs = [
   "number": "1.13",
   "title": "",
   "body": " The Package Explorer and System Explorer, compared   Comparison of Eclipse Package Explorer and the physical filesystem on disk.   Package Explorer on the left and System Explorer on the right. On the left, the folder Chapter1Programs , and within it the JRE System Library and src . Within src , default package, and within default package, Hello.java . On the right, the physical Chapter1Programs folder contains the .settings , bin , and src folders, and the .classpath and .project files. An arrow points from bin to an open folder showing Hello.class . An arrow points from src to an open folder showing Hello.java .    "
-},
-{
-  "id": "subsubsec-1-5-3-4-file-management-eclipse-4",
-  "level": "2",
-  "url": "sec-1-5-programming-environments.html#subsubsec-1-5-3-4-file-management-eclipse-4",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "Import General File System Next Browse Select Folder Browse Finish Package Explorer "
-},
-{
-  "id": "subsubsec-1-5-3-4-file-management-eclipse-5",
-  "level": "2",
-  "url": "sec-1-5-programming-environments.html#subsubsec-1-5-3-4-file-management-eclipse-5",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "Package Explorer "
-},
-{
-  "id": "subsubsec-1-5-3-4-file-management-eclipse-6",
-  "level": "2",
-  "url": "sec-1-5-programming-environments.html#subsubsec-1-5-3-4-file-management-eclipse-6",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "Refresh "
 },
 {
   "id": "checkpoint-1-5-java-platform",
@@ -638,24 +377,6 @@ var ptx_lunr_docs = [
   "number": "2.2",
   "title": "Java Application Overview",
   "body": " Java Application Overview  Let’s write a program that does a little more than . This will give us the opportunity to discuss program structure, documentation, input, output, data types, and arithmetic in a Java program. Create a new Java class by right-clicking on your project default package and choosing New → Class .  In the New Java Class dialog box, confirm that your file is in the correct project folder (and if not, click the Browse button and choose the correct project), confirm that the .java file will be in the default package (if not, delete the offered package name), type MulchCalculator in the Name box, check the public static void main(String[] args) check box, and click Finish . In the MulchCalculator.java editing window, type in (be sure to delete the \/\/ TODO… comment line.) From here forward, when you type in a listing, you will choose a project to put the Java file in and follow the steps described above. We won’t repeat them every time, unless there’s a change in the process.   MulchCalculator.java  import java.util.Scanner; \/** * Calculates the amount of mulch needed to cover a rectangular * area to a specified depth. The length and width are entered * in feet, and the depth is entered in inches. *\/ public class MulchCalculator { public static void main(String[] args) { Scanner stdin; \/\/ To obtain console input. double length; \/\/ Length of the mulched area (ft). double width; \/\/ Width of the mulched area (ft). double depth; \/\/ Depth of the mulched area (in). double depthInFeet; \/\/ Depth converted to feet. double cubicFeet; \/\/ Cubic feet (calculated). double cubicYards; \/\/ Cubic yards (calculated). \/\/ Obtain the dimensions of the area requiring mulch. stdin = new Scanner(System.in); System.out.print(\"Enter the length of the area in feet: \"); length = stdin.nextDouble(); System.out.print(\"Enter the width of the area in feet: \"); width = stdin.nextDouble(); System.out.print(\"Enter the desired depth in inches: \"); depth = stdin.nextDouble(); stdin.close(); \/\/ Calculate the cubic yards of mulch required. depthInFeet = depth \/ 12.0; cubicFeet = length * width * depthInFeet; cubicYards = cubicFeet \/ 27.0; \/\/ Display the cubic yards required to the user. System.out.println(\"You need \" + cubicYards + \" cubic yards of mulch.\"); } }    has a lot more code than our hello world program from earlier, so take your time typing it in and be careful to match the punctuation, spelling, and capitalization exactly. Type the code yourself rather than copying and pasting it, because typing will force you to notice every semicolon, brace, and keyword. As you type, see if you can guess what each line of code is doing.  In programming, errors generally fall into three categories: syntax, run-time, and semantic (logic) errors. Right now, as you type, the only errors you can encounter are syntax errors: violations of Java’s strict grammar rules, such as forgetting a semicolon, leaving a quote unclosed, or mismatching curly braces.  Eclipse actively checks your syntax as you type. If it detects a mistake, it flags the line with a red 'x' in the left margin and a red squiggly underline beneath the problem code. Mousing over the red 'x' or the underline displays a pop-up message explaining what went wrong. Don't be alarmed if Eclipse marks a line with red while you are in the middle of typing it – it doesn't know you aren't done yet! Wait until you have finished typing the entire line before checking for red error markers.   Eclipse flags a syntax error   Eclipse flags a syntax error with a red x and tooltip on missing semicolon.   A red x next to line 22 with a box that says Syntax error, insert ; to complete Statement. Line 22 is the prompt for the length of the area in feet, and there is a little red highlight after the parentheses where there should be a semicolon.     Once the program is typed in and Eclipse is not reporting any syntax errors, save and run the program. Unlike , this program asks the user for input. Type in some values for the length, width, and depth of the mulched area at the prompts (pressing enter after each value) and you should get a result. For example, here is a console session in which the user entered 30, 10, and 2 at the prompts:   30  10  2  You need 1.8518518518518519 cubic yards of mulch.   Now that you’ve run the program, revisit your educated guesses about how each line of code contributes to the program’s functionality. There should be some fairly obvious connections between the program and the output, for example, the line System.out.print(\"Enter the length of the area in feet: \"); and the prompt in the console Enter the length of the area in feet: are clearly connected, and you can probably read the calculations and make sense of them, even if you don’t yet feel confident writing your own.  Some lines might be less obvious, such as stdin = new Scanner(System.in); and lines beginning with double , like double length; . By the end of this chapter, you will have a working familiarity with everything in this program, and you will be able to write your own programs that solve similar problems.  We will go through everything in this program first, as an overview, and then we’ll cover each topic in depth in subsequent sections.  Let’s start on line 1, with the import java.util.Scanner; statement. An import statement allows us to use a shorter name for a program element that is contained in another package. (In this example, the Scanner data type, or class, is in the java.util package.) The import statement on line 1 allows us to refer to the Scanner by its simple name ( Scanner ) rather than having to type its fully qualified name ( java.util.Scanner ) every time we use it in the program.  On lines 2 through 6 in the program, we see a Javadoc comment. A comment is a notation that is intended to be read by other programmers. A Javadoc comment begins with \/** and ends with *\/ and can extend over many lines.  In Java, all program code must reside inside a class definition. Line 7 begins this definition with public class followed by the class name and an opening curly brace. The public class name will also be the name of the file (with the .java extension), and at the end of the program, there will be a closing curly brace. (In our program, that closing curly brace is on line 39.) The class definition (right now you can think of this as the program) is contained within the curly braces.  Line 9 is the header for the main method. All Java programs begin execution in the method called main . That is why there’s a checkbox in the New Class dialog box for adding public static void main(String[] args) to your class! A method’s code is also enclosed in curly braces, so there is an opening curly brace on line 9, and the matching closing curly brace is on line 38. Try clicking next to the closing curly brace in Eclipse, and Eclipse will highlight its matching opening curly brace. This can be very helpful when you have too many or too few curly braces in your program!  Lines 10 through 16 are variable declarations. These lines tell Java what data type each variable is. The data type determines how the value is stored in memory and what operations are allowed on the variable. Most of the variables in our program are of the double data type, which is a 64-bit numeric type used for numbers with decimal points (stored somewhat like scientific notation, with a sign, significant digits, and an exponent). We can perform arithmetic on double variables. The only non-double variable is our Scanner variable.  On line 19, we create a Scanner . A Scanner must be created using the pattern you see on line 19: new Scanner(…) , with one or more arguments in parentheses that tell the Scanner where the input is coming from. This Scanner is used to get input from the user in the console. We will always pass System.in as the argument when we’re reading input from the console. (Later, when we learn to read from files, we will pass in a reference to a File object.)  On lines 21 through 28, we have a series of print statements and statements that use the Scanner . Each of these pairs of statements displays a prompt to the user and reads in their response, converting it to an appropriate data type, and storing the converted value in the variable on the left (e.g. length , width , depth ).  After the statements that read values from the console, we close the Scanner .  Lines 32, 33, and 34 perform calculations and store the results. For example, on line 32, we divide the value for depth that we obtained from the user by 12.0, converting depth in inches to depth in feet, and store the result in the variable depthInFeet . Now that depthInFeet has a value, we can then use it in the next calculation, cubicFeet = length * width * depthInFeet; .  Line 37 displays the final result – cubicYards – to the console. It embeds the number in a sentence using string concatenation, which combines text with the variable’s value using the + operator. (Programmers call a block of text a string. )  Finally, there are several single-line comments in the program: on the same line immediately following each variable declaration, and on lines 18, 31, and 36. Single-line comments are preceded by \/\/ and extend to the end of the line. These are annotations for programmers to read and don’t impact program execution.  When a Java program runs, execution always begins at the first statement inside the main method. You may have intuitively assumed that the computer executes your instructions one by one from top to bottom, and if so, your intuition was correct! The order in which statements are executed is called the flow of control, and executing in order from top to bottom is called sequential flow of control. Sequential execution is Java’s default behavior: each statement finishes before the next one begins, unless a control structure (such as a conditional branch or a loop) directs execution elsewhere.  Now that you’ve had an overview, let’s talk about each of these program elements in more detail.   Checkpoint   Identifying Program Elements   Match each line from to the type of program element it represents.     \/\/ Calculate the cubic yards of mulch required.  Single-line comment    double depthInFeet;  Variable declaration    stdin = new Scanner(System.in);  Object creation and assignment    length = stdin.nextDouble();  Console input    cubicFeet = length * width * depthInFeet;  Calculation    System.out.println(\"You need \" + cubicYards + \" cubic yards of mulch.\");  Console output (print)      Execution Order   What term describes the order in which statements are executed in a running program?      Flow of control    Correct! The order in which statements are executed is the flow of control, and top-to-bottom execution is sequential flow of control.      String concatenation    Not quite. String concatenation combines text and values using the + operator.      Variable declaration    Not quite. A variable declaration specifies a variable’s name and data type before it is used.      Syntax checking    Not quite. Syntax checking verifies that your code follows Java’s grammar rules before the program runs.       The Purpose of import   What is the purpose of the import java.util.Scanner; statement on line 1 of ?      It lets you refer to Scanner by its simple name instead of typing its fully qualified name java.util.Scanner .    Correct! An import statement provides a convenient shorthand for a class defined in another package.      It creates a Scanner object connected to System.in so the program can read keyboard input.    Not quite. Creating the Scanner object happens later in main with new Scanner(System.in) .      It installs the java.util package onto your computer so Eclipse can compile the program.    Not quite. The java.util package is already included in the JDK’s standard class libraries.      It tells the JVM to begin program execution inside the Scanner class instead of main .    Not quite. Java applications always begin execution at the first statement inside the main method.       Diagnosing Syntax Errors   Match each broken line from to the syntax error message Eclipse reports. (You might need to experiment in Eclipse to see the exact error messages!)     System.out.print(\"Enter the length of the area in feet: \")  Syntax error, insert \";\" to complete Statement    System.out.print(\"Enter the width of the area in feet: );  String literal is not properly closed by a double-quote    system.out.println(\"You need \" + cubicYards + \" cubic yards of mulch.\");  system cannot be resolved    Deleting the closing } on line 39  Syntax error, insert \"}\" to complete ClassBody      Challenge: Adding Two Numbers   Arrange the blocks below to form a complete, valid AddTwoNumbers.java program that declares int first = 12; followed by int second = 8; , stores their sum in sum , and prints the result. (You might not need all of the blocks.)     public class AddTwoNumbers {    public static void main(String[] args) {    int first = 12;    int second = 8;    int sum = first + second;    System.out.println(\"The sum is \" + sum);    }    }    first + second = sum;      "
-},
-{
-  "id": "sec-2-2-app-overview-2",
-  "level": "2",
-  "url": "sec-2-2-app-overview.html#sec-2-2-app-overview-2",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "New Class "
-},
-{
-  "id": "sec-2-2-app-overview-3",
-  "level": "2",
-  "url": "sec-2-2-app-overview.html#sec-2-2-app-overview-3",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "New Java Class Browse Name Finish "
 },
 {
   "id": "listing-mulch-calculator",
@@ -727,7 +448,7 @@ var ptx_lunr_docs = [
   "type": "Section",
   "number": "2.3",
   "title": "Class Structure",
-  "body": " Class Structure  Java programs generally consist of many Java classes. One of the classes must contain a main method, which is where program execution begins. For this chapter and the next three, we will write programs consisting of a single Java class containing a main method. In chapter 5, we will learn how to build programs made up of multiple interacting objects defined by multiple classes.  A class that serves as an executable program is declared using the keywords public class , followed by the name of the class and a pair of curly braces that enclose the class contents, as we saw in :  public class MulchCalculator { \/\/ Contents of the class go here }  The class name must match the file name exactly, including capitalization (but without the .java extension). In , the class name is MulchCalculator , so the file must be saved as MulchCalculator.java . (When you create a class with the New Class dialog box in Eclipse, Eclipse will properly name your class and file.)  Inside the class, there must be a method named main , which takes this standard form:  public static void main(String[] args) { \/\/ Your program statements go here }  For now, don’t worry about the exact meaning of every word in the main method header, such as public , static , void , and String[] args . (Although it’s completely natural to wonder!) We will break down each of these keywords in upcoming chapters.  When you compile a Java source file ( .java ), the compiler generates a corresponding binary file with the .class extension. For example, compiling MulchCalculator.java produces MulchCalculator.class . The .java file contains your human-readable source code. The .class file contains Java bytecode the instructions that will execute on the JVM.  In programming, names that you create such as the names of classes, variables, and methods are called identifiers . Java’s compiler does not strictly enforce how you capitalize an identifier. You could name a class in all lowercase letters (like mulchcalculator ), and your program would compile and run without any errors. However, the Java community adheres to strict naming conventions to make code consistent, and easy for other programmers to read.  In fact, the capitalization style of an identifier immediately signals what role it plays in your program:    PascalCase (UpperCamelCase)  Used for types, such as classes (and later, interfaces, records, and enumerations). Words are joined together with every word capitalized, including the first as in MulchCalculator or HelloWorld .    camelCase (lowerCamelCase)  Used for variables and methods. Identifiers begin with a lowercase letter, and each subsequent word is capitalized as in mulchDepth or calculateTotal() .    UPPER_SNAKE_CASE  Used for constants (fixed values that never change, such as Math.PI ). These are written in all uppercase letters, with words separated by underscores as in MAX_VALUE .    At the very top of a Java file, before the class header, you will often see two types of compiler directives: package declarations and import declarations.  Java classes are organized into packages, which mirror the folder structure of your file system. Related classes are grouped into packages to keep large-scale projects and libraries organized.  In Eclipse’s New Class dialog box, you left the Package field blank, which places your code in the default package. When a class is in the default package, there is no package declaration at the top of the file. (You may have noticed Eclipse showing a warning that The use of the default package is discouraged. For our early learning programs, you can safely ignore this warning using the default package keeps your setup simple and makes sharing single .java files effortless).  In , you saw an import declaration:  import java.util.Scanner;  This line tells the compiler where to find the Scanner class inside Java's standard library. Importing it allows you to refer to it by its simple name ( Scanner ) throughout your code. Without this import, you would have to type out its full, cumbersome package path every single time you used it:  \/\/ What you would have to write without an import: java.util.Scanner keyboard = new java.util.Scanner(System.in);  You can place as many import statements at the top of your file as your program requires.  In , you will notice blank lines and indented text. In programming, blank lines, spaces, and tabs are collectively referred to as whitespace .  Java is largely a free-format language: the compiler ignores whitespace except where spaces are strictly necessary to separate keywords and identifiers (such as the space between public , class , and MulchCalculator ).  To make code readable and maintainable, professional programmers follow established indentation and style conventions:    Flush Left  The package and import declarations, as well as the public class header, start flush against the left margin.    Class Body Indentation  Everything declared inside the class curly braces { ... } is indented by a consistent number of spaces (four spaces is the standard in Java).    Method Body Indentation  Everything written inside a method's curly braces is indented by an additional four spaces (eight spaces from the left margin).    Comment Spacing  Include a single space between the comment marker ( \/\/ or \/* ) and the first letter of your comment text.    Paragraphing  Use single blank lines to separate logical groups of statements (similar to paragraphs in an essay), while keeping closely related lines grouped together without blank lines.    You should practice following these indentation and spacing guidelines in all your programs. If your indentation ever gets messy in Eclipse, select your code and press Ctrl+I (or Cmd+I on macOS) or choose Source Correct Indentation from the menu and Eclipse will automatically re-align your code according to standard Java formatting rules.  "
+  "body": " Class Structure  Java programs generally consist of many Java classes. One of the classes must contain a main method, which is where program execution begins. For this chapter and the next three, we will write programs consisting of a single Java class containing a main method. In Chapter 6, we will learn how to build programs made up of multiple interacting objects defined by multiple classes.  A class that serves as an executable program is declared using the keywords public class , followed by the name of the class and a pair of curly braces that enclose the class contents, as we saw in :  public class MulchCalculator { \/\/ Contents of the class go here }  The class name must match the file name exactly, including capitalization (but without the .java extension). In , the class name is MulchCalculator , so the file must be saved as MulchCalculator.java . (When you create a class with the New Class dialog box in Eclipse, Eclipse will properly name your class and file.)  Inside the class, there must be a method named main , which takes this standard form:  public static void main(String[] args) { \/\/ Your program statements go here }  For now, don’t worry about the exact meaning of every word in the main method header, such as public , static , void , and String[] args . (Although it’s completely natural to wonder!) We will break down each of these keywords in upcoming chapters.  When you compile a Java source file ( .java ), the compiler generates a corresponding binary file with the .class extension. For example, compiling MulchCalculator.java produces MulchCalculator.class . The .java file contains your human-readable source code. The .class file contains Java bytecode the instructions that will execute on the JVM.  In programming, names that you create such as the names of classes, variables, and methods are called identifiers . Java’s compiler does not strictly enforce how you capitalize an identifier. You could name a class in all lowercase letters (like mulchcalculator ), and your program would compile and run without any errors. However, the Java community adheres to strict naming conventions to make code consistent, and easy for other programmers to read.  In fact, the capitalization style of an identifier immediately signals what role it plays in your program:    PascalCase (UpperCamelCase)  Used for types, such as classes (and later, interfaces, records, and enumerations). Words are joined together with every word capitalized, including the first as in MulchCalculator or HelloWorld .    camelCase (lowerCamelCase)  Used for variables and methods. Identifiers begin with a lowercase letter, and each subsequent word is capitalized as in mulchDepth or calculateTotal() .    UPPER_SNAKE_CASE  Used for constants (fixed values that never change, such as Math.PI ). These are written in all uppercase letters, with words separated by underscores as in MAX_VALUE .    At the very top of a Java file, before the class header, you will often see two types of compiler directives: package declarations and import declarations.  Java classes are organized into packages, which mirror the folder structure of your file system. Related classes are grouped into packages to keep large-scale projects and libraries organized.  In Eclipse’s New Class dialog box, you left the Package field blank, which places your code in the default package. When a class is in the default package, there is no package declaration at the top of the file. (You may have noticed Eclipse showing a warning that The use of the default package is discouraged. For our early learning programs, you can safely ignore this warning using the default package keeps your setup simple and makes sharing single .java files effortless.)  In , you saw an import declaration:  import java.util.Scanner;  This line tells the compiler where to find the Scanner class inside Java's standard library. Importing it allows you to refer to it by its simple name ( Scanner ) throughout your code. Without this import, you would have to type out its full, cumbersome package path every single time you used it:  \/\/ What you would have to write without an import: java.util.Scanner keyboard = new java.util.Scanner(System.in);  You can place as many import statements at the top of your file as your program requires.  In , you will notice blank lines and indented text. In programming, blank lines, spaces, and tabs are collectively referred to as whitespace .  Java is largely a free-format language: the compiler ignores whitespace except where spaces are strictly necessary to separate keywords and identifiers (such as the space between public , class , and MulchCalculator ).  To make code readable and maintainable, professional programmers follow established indentation and style conventions:    Flush Left  The package and import declarations, as well as the public class header, start flush against the left margin.    Class Body Indentation  Everything declared inside the class curly braces { ... } is indented by a consistent number of spaces (four spaces is the standard in Java).    Method Body Indentation  Everything written inside a method's curly braces is indented by an additional four spaces (eight spaces from the left margin).    Comment Spacing  Include a single space between the comment marker ( \/\/ or \/* ) and the first letter of your comment text.    Paragraphing  Use single blank lines to separate logical groups of statements (similar to paragraphs in an essay), while keeping closely related lines grouped together without blank lines.    You should practice following these indentation and spacing guidelines in all your programs. If your indentation ever gets messy in Eclipse, select your code and press Ctrl+I (or Cmd+I on macOS) or choose Source → Correct Indentation from the menu and Eclipse will automatically re-align your code according to standard Java formatting rules.   Checkpoint   Executable Class Requirements   Which of the following must be true for a public class that serves as an executable Java program?      Its name must match the .java file name exactly, including capitalization.    That is true, but it is not the only requirement listed here.      It must contain a public static void main(String[] args) method.    That is true, but it is not the only requirement listed here.      Its contents must be enclosed in a matching pair of curly braces { ... } .    That is true, but it is not the only requirement listed here.      All of the above.    Correct! An executable public class must match its file name, enclose its contents in curly braces, and include a main method where execution begins.       Identifier Naming Conventions   Match each Java identifier to the program element its capitalization style signals.     MulchCalculator  Class (PascalCase)    mulchDepth  Variable (camelCase)    calculateTotal()  Method (camelCase with parentheses)    MAX_VALUE  Constant (UPPER_SNAKE_CASE)      Using Scanner Without an import   If you omitted import java.util.Scanner; from the top of MulchCalculator.java , how could you still use Scanner in your program?      Type its fully qualified name, java.util.Scanner , each time you refer to it.    Correct! An import statement simply lets you use the simple name Scanner instead of writing the full package path java.util.Scanner everywhere.      You could not—Java refuses to compile any program that uses Scanner without an import statement.    Not quite. You can still use classes from other packages without importing them by writing their full package path.      Add a package declaration at the top of the file instead.    Not quite. A package declaration specifies which package your own class belongs to, not where to find Scanner .      Use the default package, which automatically imports all classes in java.util .    Not quite. Putting your class in the default package does not import java.util classes automatically.       Whitespace and Indentation   Because Java is largely a free-format language, what does the Java compiler do with blank lines and extra indentation?      It ignores them, except where at least one space is needed to separate keywords and identifiers.    Correct! Indentation and blank lines are for human readability—the compiler only requires whitespace where tokens would otherwise run together.      It reports a syntax error if a class body is not indented by four spaces.    Not quite. Four-space indentation is a style convention for programmers, not a rule enforced by the compiler.      It requires every statement to be separated by a blank line.    Not quite. Blank lines are used to group related statements like paragraphs, and the compiler ignores them.      It treats tabs and spaces differently and refuses to compile code that mixes them.    Not quite. The compiler treats spaces, tabs, and blank lines as whitespace and ignores extra formatting.       "
 },
 {
   "id": "sec-2-3-class-structure-10",
@@ -746,6 +467,42 @@ var ptx_lunr_docs = [
   "number": "",
   "title": "",
   "body": "whitespace "
+},
+{
+  "id": "checkpoint-2-3-executable-class",
+  "level": "2",
+  "url": "sec-2-3-class-structure.html#checkpoint-2-3-executable-class",
+  "type": "Reading Question",
+  "number": "2.3.1",
+  "title": "Executable Class Requirements.",
+  "body": " Executable Class Requirements   Which of the following must be true for a public class that serves as an executable Java program?      Its name must match the .java file name exactly, including capitalization.    That is true, but it is not the only requirement listed here.      It must contain a public static void main(String[] args) method.    That is true, but it is not the only requirement listed here.      Its contents must be enclosed in a matching pair of curly braces { ... } .    That is true, but it is not the only requirement listed here.      All of the above.    Correct! An executable public class must match its file name, enclose its contents in curly braces, and include a main method where execution begins.     "
+},
+{
+  "id": "checkpoint-2-3-naming-conventions",
+  "level": "2",
+  "url": "sec-2-3-class-structure.html#checkpoint-2-3-naming-conventions",
+  "type": "Reading Question",
+  "number": "2.3.2",
+  "title": "Identifier Naming Conventions.",
+  "body": " Identifier Naming Conventions   Match each Java identifier to the program element its capitalization style signals.     MulchCalculator  Class (PascalCase)    mulchDepth  Variable (camelCase)    calculateTotal()  Method (camelCase with parentheses)    MAX_VALUE  Constant (UPPER_SNAKE_CASE)    "
+},
+{
+  "id": "checkpoint-2-3-imports",
+  "level": "2",
+  "url": "sec-2-3-class-structure.html#checkpoint-2-3-imports",
+  "type": "Reading Question",
+  "number": "2.3.3",
+  "title": "Using <code class=\"code-inline tex2jax_ignore\">Scanner<\/code> Without an <code class=\"code-inline tex2jax_ignore\">import<\/code>.",
+  "body": " Using Scanner Without an import   If you omitted import java.util.Scanner; from the top of MulchCalculator.java , how could you still use Scanner in your program?      Type its fully qualified name, java.util.Scanner , each time you refer to it.    Correct! An import statement simply lets you use the simple name Scanner instead of writing the full package path java.util.Scanner everywhere.      You could not—Java refuses to compile any program that uses Scanner without an import statement.    Not quite. You can still use classes from other packages without importing them by writing their full package path.      Add a package declaration at the top of the file instead.    Not quite. A package declaration specifies which package your own class belongs to, not where to find Scanner .      Use the default package, which automatically imports all classes in java.util .    Not quite. Putting your class in the default package does not import java.util classes automatically.     "
+},
+{
+  "id": "checkpoint-2-3-whitespace",
+  "level": "2",
+  "url": "sec-2-3-class-structure.html#checkpoint-2-3-whitespace",
+  "type": "Reading Question",
+  "number": "2.3.4",
+  "title": "Whitespace and Indentation.",
+  "body": " Whitespace and Indentation   Because Java is largely a free-format language, what does the Java compiler do with blank lines and extra indentation?      It ignores them, except where at least one space is needed to separate keywords and identifiers.    Correct! Indentation and blank lines are for human readability—the compiler only requires whitespace where tokens would otherwise run together.      It reports a syntax error if a class body is not indented by four spaces.    Not quite. Four-space indentation is a style convention for programmers, not a rule enforced by the compiler.      It requires every statement to be separated by a blank line.    Not quite. Blank lines are used to group related statements like paragraphs, and the compiler ignores them.      It treats tabs and spaces differently and refuses to compile code that mixes them.    Not quite. The compiler treats spaces, tabs, and blank lines as whitespace and ignores extra formatting.     "
 },
 {
   "id": "sec-2-4-variables-types",
