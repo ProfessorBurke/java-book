@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-7-6-partially-filled-arrays" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Partially Filled Arrays &amp; File Input</title>
+
+  <introduction>
+    <p>
+      When we allocate memory for an array, we must assign a permanent size to the array<mdash />but some arrays won’t use all of their allocated memory. An array with unfilled slots is called a partially filled array. We might have a partially filled array if we don’t know exactly how much data we’ll need to store<mdash />for example, when obtaining values in a sentinel loop. We will also have a partially filled array if the amount of data we need to store grows and shrinks as the program is executing, such as in a shopping cart, class roster, or array of user-drawn shapes in a drafting program. When working with a partially filled array, we must manage three things:
+    </p>
+
+    <ul>
+      <li>
+        <title>Allocating</title>
+        <p>
+          Choose an initial capacity large enough to handle the program’s worst-case needs without wasting memory.
+        </p>
+      </li>
+      <li>
+        <title>Adding</title>
+        <p>
+          Check that the array isn’t full before inserting a new value, so we don’t write past the end of the array.
+        </p>
+      </li>
+      <li>
+        <title>Processing</title>
+        <p>
+          Process only the slots that hold valid data, ignoring any unused slots at the end.
+        </p>
+      </li>
+    </ul>
+
+    <p>
+      Choosing the right capacity starts with the problem’s specifications<mdash />a class roster might cap at 35 students, while a daily log needs at most 366 entries<mdash />and capturing that limit in a named constant. To track which slots are in use, we pair the array with a separate integer variable (often called <c>count</c> or <c>size</c>).
+    </p>
+  </introduction>
+
+  <subsection xml:id="subsec-7-6-1-sentinel-example">
+    <title>A sentinel example</title>
+
+    <p>
+      <xref ref="listing-sentinel-array" /> is an update of our example from Chapter 4 in which we obtain scores from the user in a loop until they enter the sentinel <c>-1</c>. In this program, we store the values entered by the user in the integer array <c>scores</c>. We’ve set the maximum array size with a constant <c>MAX_SCORES</c>, set at <c>5</c> for easier illustration of the program’s output. (This constant would normally be set to the maximum number of scores that could be entered based on the program’s specifications.) Note how the loop is written to check not only that the sentinel hasn’t been entered, but also that we haven’t yet reached the array’s capacity. We keep track of the number of values inserted into the array with the variable <c>count</c>, initialized to zero.
+    </p>
+
+    <listing xml:id="listing-sentinel-array">
+      <caption>Obtaining array values in a sentinel loop</caption>
+      <program language="java" line-numbers="yes"><![CDATA[import java.util.Scanner;
+import java.util.Arrays;
+
+/**
+ * Obtains and stores up to MAX_SCORES scores.
+ */
+public class SentinelArray {
+
+    public static void main(String[] args) {
+
+        // The maximum number of scores that can be stored.
+        final int MAX_SCORES = 5;
+
+        Scanner stdin;    // To obtain scores.
+        int score;        // Score OR the sentinel.
+        int count = 0;    // The actual number of scores entered.
+
+        // To hold the obtained scores.
+        int[] scores = new int[MAX_SCORES];
+
+        // Priming read: read the first score.
+        stdin = new Scanner(System.in);
+        System.out.print("Enter score (-1 to stop): ");
+        score = stdin.nextInt();
+
+        // Obtains scores as long as the sentinel isn't entered
+        // and we haven't filled the array.
+        while (score != -1 && count < scores.length) {
+            // Adds the score into the current location in the array.
+            scores[count] = score;
+            count++;
+
+            // Obtains the next score or sentinel only
+            // if we haven't filled the array.
+            if (count < scores.length) {
+                System.out.print("Enter score (-1 to stop): ");
+                score = stdin.nextInt();
+            }
+        }
+        stdin.close();
+
+        // Displays the number of scores entered and the scores array.
+        System.out.println("Number of scores stored: " + count);
+        System.out.println(Arrays.toString(scores));
+    }
+}]]></program>
+    </listing>
+
+    <p>
+      In <xref ref="listing-sentinel-array" />, our loop is controlled by <c>score != -1 &amp;&amp; count &lt; scores.length</c>. This condition ensures that the user hasn’t finished entering values (<c>score != -1</c>), but it also checks that there is still space in the array to store values (<c>count &lt; scores.length</c>), in case the user attempts to enter more values than the array can hold.
+    </p>
+
+    <p>
+      We compare against <c>scores.length</c> and not <c>MAX_SCORES</c> because we are guarding against an <c>ArrayIndexOutOfBoundsException</c>. In the code as currently written, <c>scores.length</c> and <c>MAX_SCORES</c> are the same. But checking against the array’s actual length guards against future errors, for example, if the program were edited to set the array to a different size. If that happened, <c>MAX_SCORES</c> would no longer guard against an <c>ArrayIndexOutOfBoundsException</c>. We are always safer getting the length of the array from the array itself.
+    </p>
+
+    <p>
+      Within the loop, we use <c>count</c> as our array index. It is initialized to zero, so our first value is stored in location <c>0</c> in the array. We then increment it so it points to the next location in the array and so it is an accurate count of the number of values entered.
+    </p>
+
+    <p>
+      Before we prompt for another value, we check that there’s space to store another value with <c>count &lt; scores.length</c>. This prevents the program from asking the user for a value it can’t store.
+    </p>
+
+    <p>
+      Finally, once either the user has entered <c>-1</c> or they’ve filled the array, the loop ends and we print the number of scores stored in the array and we print the array itself. If we pass an array variable directly to <c>println</c>, its <c>toString</c> method will be invoked and we’ll get the default <c>String</c> composed of class and hash value. But the <c>Arrays</c> utility class, which we saw in an earlier section on copying arrays, also has a <c>toString</c> method that will convert an array to a readable <c>String</c>.
+    </p>
+
+    <p>
+      If the user immediately enters the sentinel on line 24, the loop will be bypassed and lines 43 and 44 will print:
+    </p>
+
+    <console>
+      <output>Number of scores stored: 0
+[0, 0, 0, 0, 0]</output>
+    </console>
+
+    <p>
+      The array contains all zeros<mdash />the value each element was initialized to by the JVM. If the user enters <c>90</c>, <c>85</c>, <c>78</c>, <c>-1</c>, the program will print:
+    </p>
+
+    <console>
+      <output>Number of scores stored: 3
+[90, 85, 78, 0, 0]</output>
+    </console>
+
+    <p>
+      The three values entered by the user are in the first three slots, and the last two hold the original zeros. The variable <c>count</c> correctly holds <c>3</c><mdash />both the number of valid elements in the array and the index one past the last valid element.
+    </p>
+
+    <p>
+      If the user enters five scores and never enters <c>-1</c>, the program will stop prompting for input because the array capacity is reached, and lines 43 and 44 will display:
+    </p>
+
+    <console>
+      <output>Number of scores stored: 5
+[90, 85, 78, 92, 88]</output>
+    </console>
+
+    <p>
+      Once our array is filled, <c>count</c> should be bundled with it wherever it goes so that only the valid values in the array are processed. Imagine if we wanted to average the scores in the array<mdash />we wouldn’t want zeroes averaged together with the user-entered scores! An algorithm that loops over the array and accumulates the valid scores must therefore be controlled by <c>count</c>, not <c>scores.length</c>.
+    </p>
+
+    <p>
+      If we are passing our array to a method to process the values, the method must also take an integer parameter for the number of valid elements in the array. Suppose we write that method, called <c>findAverage</c>, and call it from <c>main</c>, after reading the values:
+    </p>
+
+    <program language="java"><![CDATA[// Displays the average of the scores, if any.
+if (count > 0) {
+    System.out.printf("The average of the scores is %.2f.%n",
+                      findAverage(scores, count));
+}]]></program>
+
+    <p>
+      Here is the method:
+    </p>
+
+    <program language="java"><![CDATA[/**
+ * Calculates and returns the average of the values within the parameter
+ * scores.
+ *
+ * Preconditions:  scores != null and
+ *                 0 < size <= scores.length
+ * Postconditions: Returns the mean of the first
+ *                 size values in scores
+ *
+ * @param scores   A non-null partially filled array of values.
+ * @param size     The number of valid elements in scores.
+ * @return         The mean of the valid values in scores.
+ */
+public static double findAverage(int[] scores, int size) {
+    assert scores != null : "The array is null.";
+    assert 0 < size && size <= scores.length : "Size is not a valid value.";
+    int total = 0;
+    for (int i = 0; i < size; i++) {
+        total += scores[i];
+    }
+    return (double)total / size;
+}]]></program>
+
+    <p>
+      The method <c>findAverage</c> takes the array and the size as parameters, and when we invoke it, we pass in our <c>scores</c> array and <c>count</c>. The method’s preconditions are that the array is not <c>null</c> and, importantly, that <c>size</c> is a value between one and the length of the array. It doesn’t make sense to take the average of zero values, and the number of values in the array can’t be more than its length. Therefore, back in <c>main</c>, we invoke this method only if the user entered at least one score. (Whenever we have a sentinel-controlled loop, there is always the possibility that the user immediately entered the sentinel, and we must guard against that when processing the results.)
+    </p>
+
+    <p>
+      Within the method we have assertions to test the preconditions, and then we initialize the gatherer variable <c>total</c> and loop from <c>0</c> through <c>size - 1</c>, adding each valid score to <c>total</c>. The method then returns <c>total / size</c>, converting <c>total</c> to a <c>double</c> to ensure floating-point division.
+    </p>
+  </subsection>
+
+  <subsection xml:id="subsec-7-6-2-adding-removing">
+    <title>Adding and removing values in a partially filled array</title>
+
+    <p>
+      If we have an array that can change dynamically as a program executes, then we change both the array and the <c>count</c> variable that is bundled with the array. Method <c>addValue</c> adds a value to a partially filled array:
+    </p>
+
+    <program language="java"><![CDATA[/**
+ * Adds a value to the end of a partially filled array if there is room,
+ * and returns the updated number of valid elements.
+ *
+ * Preconditions:  array != null and
+ *                 0 <= size <= array.length
+ * Postconditions: If size < array.length, value is stored at array[size]
+ *                 and size + 1 is returned; otherwise, array is unchanged
+ *                 and size is returned.
+ *
+ * @param array  A non-null partially filled array of integers.
+ * @param size   The current number of valid elements in array.
+ * @param value  The integer value to add to the array.
+ * @return       The updated number of valid elements in array.
+ */
+public static int addValue(int[] array, int size, int value) {
+    assert array != null : "Array cannot be null";
+    assert 0 <= size && size <= array.length : "Size is not a valid array size";
+
+    // If there is room in the array, add the value
+    // and increment the size.
+    if (size < array.length) {
+        array[size] = value;
+        size++;
+    }
+    return size;
+}]]></program>
+
+    <p>
+      There are two main considerations here: ensuring that we have room to add the value and updating the number of elements stored in the array. We can change the array in-place in the method because it is stored in the heap, but changing the integer <c>size</c> will only change the local variable on the stack, which will disappear once the method finishes executing. We must therefore return <c>size</c> from the method. When this method is called, the calling method must store the new value of <c>size</c> so that it remains synchronized with the array, e.g.:
+    </p>
+
+    <program language="java"><![CDATA[count = addValue(scores, count, 97);]]></program>
+
+    <p>
+      The code within the method simply checks that the array isn’t already full, and if not, stores the value in the next slot in the array and increments <c>size</c>. The <c>size</c> is then returned.
+    </p>
+
+    <p>
+      The preconditions ensure that the array isn’t <c>null</c> and that <c>size</c> is a valid size (from an empty array through a full array). If these preconditions are met, the method will add the value in the next location (if space) and return the current size of the array (whether it added a value or not).
+    </p>
+
+    <p>
+      Removing a value from an array is a little trickier<mdash />if we’re not always removing from the end, then we must move values to the left to close the gap created by removing an element. Method <c>removeValue</c> removes a value from a partially filled array:
+    </p>
+
+    <program language="java"><![CDATA[/**
+ * Removes the element at the specified index from a partially filled array
+ * by shifting subsequent valid elements one position to the left, and
+ * returns the updated number of valid elements.
+ *
+ * Preconditions:  array != null,
+ *                 0 < size <= array.length, and
+ *                 0 <= index < size
+ * Postconditions: Elements from index + 1 through size - 1 are shifted
+ *                 one position left, and size - 1 is returned.
+ *
+ * @param array  A non-null partially filled array of integers.
+ * @param size   The current number of valid elements in array.
+ * @param index  The index of the valid element to remove.
+ * @return       The updated number of valid elements in array.
+ */
+public static int removeValue(int[] array, int size, int index) {
+    assert array != null : "Array cannot be null";
+    assert 0 < size && size <= array.length : "Size is not a valid array size";
+    assert 0 <= index && index < size : "Index isn't a valid array index";
+
+    // Move array values from index + 1 to size-1 to the left.
+    for (int i = index + 1; i < size; i++) {
+        array[i-1] = array[i];
+    }
+    return size-1;
+}]]></program>
+
+    <p>
+      Method <c>removeValue</c> takes the array, <c>size</c>, and the <c>index</c> of the element to remove as parameters. Provided all the preconditions are met, the method copies the elements into the slot to the left, from the element immediately to the right of the element being removed to the last valid element. This writes over the element being removed. It then returns the new size of the array, which is the old size minus one.
+    </p>
+
+    <p>
+      This method doesn’t attempt to zero-out the original last element in the array. The <c>size</c> value that is bundled with the array gives the number of valid elements in the array. It doesn’t matter what values are stored at the indices from <c>size</c> to the end of the array.
+    </p>
+
+    <p>
+      The preconditions for <c>removeValue</c> are that the array isn’t <c>null</c>, that <c>size</c> is a number between one (there must be at least one element to remove) and the length of the array, and the <c>index</c> of the element to be removed is a valid index of a stored element (<c>0</c> through <c>size - 1</c>). <xref ref="figure-remove-value" /> illustrates the <c>removeValue</c> method with sample parameters.
+    </p>
+
+    <figure xml:id="figure-remove-value">
+      <caption>The <c>removeValue</c> algorithm.</caption>
+      <image source="figures/figure_7_12.png" width="85%">
+        <shortdescription>Before-and-after diagram of removeValue shifting elements left and returning size 3.</shortdescription>
+        <description>
+          <p>
+            An abstract array diagram illustrating <c>removeValue(array, size = 4, index = 1)</c> on a 5-element array. In the Before view (<c>size = 4</c>), indices 0 through 3 hold 90, 85, 78, and 92, and unused index 4 holds 0. Index 1 (85) is highlighted for removal, and curved arrows beneath the array show the elements at indices 2 and 3 shifting one position to the left. In the After view (<c>returns 3</c>), indices 0 through 2 hold the valid elements 90, 78, and 92, while indices 3 and 4 (holding the leftover 92 and 0) are shaded as unused and ignored.
+          </p>
+        </description>
+      </image>
+    </figure>
+  </subsection>
+
+  <subsection xml:id="subsec-7-6-3-file-input">
+    <title>Reading from a file into an array</title>
+
+    <p>
+      Reading from a file into an array is similar to reading in a sentinel loop<mdash />we read data from the file until there is no more data. <xref ref="listing-file-array" /> is an update to <xref ref="listing-sentinel-array" /> that reads the scores from a file, where the scores are stored one to a line. We will again assume that the problem specification gives us a maximum number of scores, which we store in <c>MAX_SCORES</c>. <xref ref="listing-file-array" /> is a <c>main</c> method that reads scores from a file, assuming we’ve defined the same <c>findAverage</c> method as before and the file is called <c>scores.txt</c>:
+    </p>
+
+    <listing xml:id="listing-file-array">
+      <caption>Reading from a file into an array.</caption>
+      <program language="java" line-numbers="yes"><![CDATA[import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Arrays;
+...
+
+        public static void main(String[] args) throws FileNotFoundException {
+
+            // The maximum number of scores that can be stored.
+            final int MAX_SCORES = 5;
+            int count = 0; // The number of scores read.
+
+            // To hold the scores.
+            int[] scores = new int[MAX_SCORES];
+
+            // Open the file and create a Scanner if it exists.
+            File scoresFile = new File("scores.txt");
+            if (scoresFile.exists()) {
+                Scanner fileScanner = new Scanner(scoresFile);
+                // Adds scores from the file into the array until
+                // the end of file or we've reached capacity.
+                while (count < scores.length && fileScanner.hasNextInt()) {
+                    // Adds the score into the current location in the array.
+                    scores[count] = fileScanner.nextInt();
+                    count++;
+                }
+                fileScanner.close();
+
+                // Displays the number of scores stored and the scores array.
+                System.out.println("Number of scores stored: " + count);
+                System.out.println(Arrays.toString(scores));
+
+                // Displays the average of the scores, if any.
+                if (count > 0) {
+                    System.out.printf("The average of the scores is %.2f.%n", findAverage(scores, count));
+                }
+            } else {
+                System.out.println("The file was not found.");
+            }
+        }]]></program>
+    </listing>
+
+    <p>
+      In <xref ref="listing-file-array" />, we must still keep track of the number of elements stored in the array with <c>count</c>, which is initialized to zero and incremented each time we read an integer from the file and store it in the array.
+    </p>
+
+    <p>
+      You might remember from Chapter 4 that we must add a <c>throws</c> clause to the header for <c>main</c>, even though we’re checking that the file exists. The only way to avoid a <c>throws</c> clause is to handle the exception within the method<mdash />something we’ll cover in a future chapter.
+    </p>
+
+    <p>
+      Our loop is controlled by <c>count &lt; scores.length &amp;&amp; fileScanner.hasNextInt()</c>, so we only attempt to read a value from the file into the array if there is a value, and if we have space in the array to store it. If the file exceeds <c>MAX_SCORES</c> values, the extra values are ignored.
+    </p>
+
+    <p>
+      There are ways we can avoid a partially filled array when reading from a file. For example, a file might be configured with metadata at the top including the number of elements in the file. Or we could make the expensive choice to take two passes over the file<mdash />the first to count elements, followed by instantiating an array of precisely the right size, and the second to then read the elements into the array.
+    </p>
+
+    <p>
+      However, in the next section, we’ll see there’s a better approach when we don’t know the amount of data we’ll need to store in advance<mdash />the <c>ArrayList</c>.
+    </p>
+  </subsection>
+</section>
