@@ -25,13 +25,13 @@ INFO    : Downloading Runestone Services, version 8.4.0
 INFO    : Extracting Runestone Services from archive file
 INFO    : Node.js not available. Relying on prebuilt default-modern.
 INFO    : Using prebuilt CSS theme: default-modern with options: {'options': {'primary-color': '#195684', 'secondary-color': '#932c1c'}, 'contrast-checks': {'primary-color': '#fff', 'secondary-color': '#fff', 'primary-color-dark': '#23241f'}}
-INFO    : converting D:\CCRI\__Java book rewrite\cs1-java-textbook\source\main.ptx to HTML in C:\Users\Maggie\AppData\Local\Temp\ptx-8f011cpj
+INFO    : converting D:\CCRI\__Java book rewrite\cs1-java-textbook\source\main.ptx to HTML in C:\Users\Maggie\AppData\Local\Temp\ptx-gnn5raco
 INFO    : XSL conversion of D:\CCRI\__Java book rewrite\cs1-java-textbook\source\main.ptx by C:\Users\Maggie\.ptx\2.56.2\core\xsl\pretext-html.xsl
 INFO    : messages from the log for XSL processing (prefaced with a *):
 INFO    : * PTX:INFO:   checking all deprecated elements.
 INFO    : successful application of C:\Users\Maggie\.ptx\2.56.2\core\xsl\pretext-html.xsl
-INFO    : Removing temporary directory C:\Users\Maggie\AppData\Local\Temp\ptx-8f011cpj
-INFO    : Removing temporary directory C:\Users\Maggie\AppData\Local\Temp\ptx-4rrt_aac
+INFO    : Removing temporary directory C:\Users\Maggie\AppData\Local\Temp\ptx-gnn5raco
+INFO    : Removing temporary directory C:\Users\Maggie\AppData\Local\Temp\ptx-so4n6bfv
 INFO    : 
 Finished build for target web. Run `pretext view web` to see the results.
 

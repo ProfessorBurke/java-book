@@ -2,14 +2,13 @@
 <section xml:id="sec-2-4-variables-types" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Data: Variables, Literals, and Types</title>
 
-  
   <introduction>
     <p>
       In chapter 1 we learned that programs store data in computer memory, and everything stored in memory is stored as binary numbers. (Technically, data is stored using some physical method that we interpret as binary numbers.) Fortunately, modern programming languages provide data types that allow us to think of data in a way that is closer to the problems we’re solving: as text, as individual characters, and as integers and real numbers in decimal (base ten). It is important to remember, though, that the underlying representation is a finite number of binary bits that are interpreted by Java as text, a number, or something else. When the underlying representation can impact your high-level programming, we will discuss how and why.
     </p>
 
     <p>
-      Every piece of data in a Java program has a type. The type specifies how many bits are set aside for that piece of data and how they are organized and interpreted. Java provides eight primitive data types (four integer types, two real types, a character type, and a Boolean type) and many class data types (such as <c>String</c> and <c>Scanner</c>). The classes that we are writing in this chapter and the next two, like <c>MulchCalculator</c>, are programs. But most classes are data types, and we will learn to create our own data types in chapter 5.
+      Every piece of data in a Java program has a type. The type specifies how many bits are set aside for that piece of data and how they are organized and interpreted. Java provides eight primitive data types (four integer types, two real types, a character type, and a Boolean type) and many class data types (such as <c>String</c> and <c>Scanner</c>). The classes that we are writing in this chapter and the next three, like <c>MulchCalculator</c>, are programs. But most classes are data types, and we will learn to create our own data types in chapter 6.
     </p>
 
     <p>
@@ -33,8 +32,8 @@
     </p>
 
     <program language="java" line-numbers="yes"><![CDATA[System.out.print("Enter the desired depth in inches: ");
-  depth = stdin.nextDouble();
-  depth = depth / 12.0;]]></program>
+depth = stdin.nextDouble();
+depth = depth / 12.0;]]></program>
 
     <p>
       It’s very similar to <xref ref="listing-mulch-calculator" />, but instead of storing the depth converted to feet in the variable <c>depthInFeet</c>, we’re storing it back in the variable <c>depth</c>. Then, if the user enters 4 at the prompt, the value in <c>depth</c> after line 2 executes is 4, and the value in <c>depth</c> after line 3 executes is .3 repeating. If we ask Java to evaluate <c>depth</c> after line 2, it would evaluate to 4, but if we ask Java to evaluate <c>depth</c> after line 3, it would evaluate to .3 repeating. And it never evaluates to <c>depth</c><mdash />the thing we literally type in the program<mdash />it always evaluates to the value assigned to <c>depth</c>.
@@ -53,7 +52,6 @@
   <subsection xml:id="subsec-2-4-1-primitive-types">
     <title>Java’s Primitive Types</title>
 
-    
     <introduction>
       <p>
         So what are the available data types?
@@ -124,15 +122,15 @@
       <table xml:id="table-integer-data-types">
         <title>Summary of integer data types</title>
         <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
-          <col width="15%"/>
-          <col width="15%"/>
-          <col width="30%"/>
-          <col width="40%"/>
+          <col width="12%"/>
+          <col width="13%"/>
+          <col width="42%"/>
+          <col width="33%"/>
           <row header="yes">
-            <cell><strong>Data Type</strong></cell>
-            <cell><strong>Size (Bytes)</strong></cell>
-            <cell><strong>Range of Values</strong></cell>
-            <cell><strong>Typical Use / Best Practice</strong></cell>
+            <cell>Data Type</cell>
+            <cell>Size (Bytes)</cell>
+            <cell>Range of Values</cell>
+            <cell>Typical Use / Best Practice</cell>
           </row>
           <row>
             <cell><c>byte</c></cell>
@@ -159,7 +157,8 @@
             <cell><c>long</c></cell>
             <cell>8 bytes</cell>
             <cell>
-              <p><m>-9{,}223{,}372{,}036{,}854{,}775{,}808</m> to <m>9{,}223{,}372{,}036{,}854{,}775{,}807</m></p>
+              <p><m>-9{,}223{,}372{,}036{,}854{,}775{,}808</m></p>
+              <p>to <m>9{,}223{,}372{,}036{,}854{,}775{,}807</m></p>
               <p>(<m>-2^{63}</m> to <m>2^{63} - 1</m>)</p>
             </cell>
             <cell>Values exceeding 2 billion (timestamps, large financial sums); append <c>L</c>.</cell>
@@ -168,7 +167,7 @@
       </table>
 
       <p>
-        If you have an integer literal in a program, its data type will be <c>int</c> by default. This can make assignment statements a little confusing when you’re assigning a literal to a variable that isn’t of the <c>int</c> type. When a value is moved from a smaller representation to a larger one (e.g. <c>int</c> to <c>long</c>), the operation is called <term>widening</term>. When a value is moved from a larger representation to a smaller one (e.g. <c>int</c> to <c>byte</c>), the operation is called <term>narrowing</term>. Because narrowing can cause data loss, Java will never automatically narrow a variable. However, for integer literals, Java provides a helpful exception: it allows automatic narrowing only if the literal fits within the target type's range.
+        If you have an integer literal in a program, its data type will be <c>int</c> by default. This can make assignment statements a little confusing when you’re assigning a literal to a variable that isn’t of the <c>int</c> type. When a value is moved from a smaller representation to a larger one (e.g. <c>int</c> to <c>long</c>), the operation is called widening. When a value is moved from a larger representation to a smaller one (e.g. <c>int</c> to <c>byte</c>), the operation is called narrowing. Because narrowing can cause data loss, Java will never automatically narrow a variable. However, for integer literals, Java provides a helpful exception: it allows automatic narrowing only if the literal fits within the target type's range.
       </p>
 
       <p>
@@ -227,7 +226,7 @@ float babyReal = 1.2;     // This flags a "type mismatch" syntax error.]]></prog
       </p>
 
       <p>
-        Java will sometimes use E notation, which can be jarring if you haven’t seen it before! If a <c>double</c> calculation produces a number greater than or equal to 10 million (such as <c>1.5E7</c>) or a tiny fraction smaller than 0.001 (such as <c>5.0E-4</c>), Java will automatically display the result in this exponential notation. Don't worry<mdash />the calculation is correct! Later in this chapter, you will learn how to use <c>System.out.printf</c> to force Java to display numbers in standard decimal form.
+        Java will sometimes use E notation, which can be jarring if you haven’t seen it before! If a <c>double</c> calculation produces a number greater than or equal to 10 million (such as <c>1.5E7</c>) or a tiny fraction smaller than 0.001 (such as <c>5.0E-4</c>), Java will automatically display the result in this exponential notation. Later in this chapter, you will learn how to use <c>System.out.printf</c> to force Java to display numbers in standard decimal form.
       </p>
 
       <p>
@@ -242,10 +241,10 @@ float babyReal = 1.2;     // This flags a "type mismatch" syntax error.]]></prog
           <col width="30%"/>
           <col width="40%"/>
           <row header="yes">
-            <cell><strong>Data Type</strong></cell>
-            <cell><strong>Size (Bytes)</strong></cell>
-            <cell><strong>Range &amp; Precision</strong></cell>
-            <cell><strong>Typical Use / Best Practice</strong></cell>
+            <cell>Data Type</cell>
+            <cell>Size (Bytes)</cell>
+            <cell>Range &amp; Precision</cell>
+            <cell>Typical Use / Best Practice</cell>
           </row>
           <row>
             <cell><c>float</c></cell>
@@ -263,7 +262,7 @@ float babyReal = 1.2;     // This flags a "type mismatch" syntax error.]]></prog
               <p>Range: <m>\pm 4.9 \times 10^{-324}</m> to <m>\pm 1.8 \times 10^{308}</m></p>
               <p>Precision: <m>15</m> to <m>17</m> decimal digits</p>
             </cell>
-            <cell>The default choice for all calculations involving decimal points and fractions. Provides <q>double precision</q> to avoid rounding errors. All standard decimal literals (e.g., <c>3.14</c>, <c>0.5</c>) are <c>double</c> by default.</cell>
+            <cell>The default choice for all calculations involving decimal points and fractions. Provides <q>double precision</q> to minimize rounding errors. All standard decimal literals (e.g., <c>3.14</c>, <c>0.5</c>) are <c>double</c> by default.</cell>
           </row>
         </tabular>
       </table>
@@ -297,18 +296,236 @@ float babyReal = 1.2;     // This flags a "type mismatch" syntax error.]]></prog
         In the upcoming section on arithmetic, we will look at the surprising errors that can happen when calculations bump up against the boundaries of a fixed, finite representation<mdash />and how to handle them. (Errors are always more fun to study when they’re happening to somebody else!)
       </p>
     </subsubsection>
+
+    <reading-questions xml:id="checkpoint-2-4-1">
+      <title>Checkpoint</title>
+
+      <exercise xml:id="checkpoint-2-4-1-literal-types" label="checkpoint-2-4-1-literal-types">
+        <title>Matching Literals to Types</title>
+        <statement>
+          <p>
+            Match each Java literal to its data type.
+          </p>
+        </statement>
+        <cardsort>
+          <match>
+            <premise order="4"><c>42</c></premise>
+            <response><c>int</c></response>
+          </match>
+          <match>
+            <premise order="1"><c>2147483648L</c></premise>
+            <response><c>long</c></response>
+          </match>
+          <match>
+            <premise order="6"><c>3.14</c></premise>
+            <response><c>double</c></response>
+          </match>
+          <match>
+            <premise order="2"><c>1.2F</c></premise>
+            <response><c>float</c></response>
+          </match>
+          <match>
+            <premise order="5"><c>'A'</c></premise>
+            <response><c>char</c></response>
+          </match>
+          <match>
+            <premise order="3"><c>true</c></premise>
+            <response><c>boolean</c></response>
+          </match>
+        </cardsort>
+      </exercise>
+
+      <exercise xml:id="checkpoint-2-4-1-statement-expression" label="checkpoint-2-4-1-statement-expression">
+        <title>Statements vs. Expressions</title>
+        <statement>
+          <p>
+            In Java, what is the difference between a statement and an expression?
+          </p>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                A statement is a complete instruction to do something, while an expression calculates a single value.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! Statements tell the program what action to perform, and many statements contain expressions that Java evaluates down to a single value.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                A statement always calculates a single value, while an expression must end with a semicolon.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Simple statements end with a semicolon, while expressions calculate or represent a single value.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                A statement can only contain literal values, while an expression can only contain variable names.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Both literals and variables can be expressions, and statements can contain both.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                A statement and an expression mean the same thing; Java uses both terms interchangeably.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Statements are complete instructions, while expressions are pieces of code that evaluate to a value.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-2-4-1-literal-variable" label="checkpoint-2-4-1-literal-variable">
+        <title>Evaluating Literals and Variables</title>
+        <statement>
+          <p>
+            Suppose <c>depth</c> currently holds <c>4</c>, and then the statement <c>depth = depth / 12.0;</c> executes. Afterward, what do the expression <c>depth</c> and the literal <c>12.0</c> evaluate to?
+          </p>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                <c>depth</c> evaluates to <c>0.3333...</c> (the last value assigned to it), while <c>12.0</c> evaluates to <c>12.0</c>.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! A variable evaluates to the last value assigned to it during execution, while a literal always evaluates to what you literally typed.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>depth</c> evaluates to <c>"depth"</c>, while <c>12.0</c> evaluates to <c>4</c>.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. A variable never evaluates to its own name, and a literal evaluates to the value you typed.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>depth</c> evaluates to <c>4</c>, while <c>12.0</c> evaluates to <c>0.3333...</c>.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. <c>depth</c> was updated by the assignment statement, and the literal <c>12.0</c> never changes.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                Both <c>depth</c> and <c>12.0</c> evaluate to <c>4</c>.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. <c>depth</c> holds the new quotient after the assignment, and <c>12.0</c> evaluates to <c>12.0</c>.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-2-4-1-octal-literal" label="checkpoint-2-4-1-octal-literal">
+        <title>Watch That Leading Zero</title>
+        <statement>
+          <p>
+            What decimal (base 10) value does Java store in <c>code</c> when it executes <c>int code = 012;</c>?
+          </p>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                <c>10</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! Because <c>012</c> begins with a leading zero, Java interprets it in octal (base 8): <m>1 \times 8^1 + 2 \times 8^0 = 10</m>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>12</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. In Java, a leading zero tells the compiler the literal is in octal (base 8), not decimal (base 10).
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>18</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. That would be hexadecimal (<c>0x12</c>), whereas a leading <c>0</c> alone indicates octal (base 8).
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                It causes a compiler error because leading zeros are not allowed in Java.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Leading zeros are legal when all digits are <c>0</c>–<c>7</c>; they tell Java to treat the number as octal.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+    </reading-questions>
   </subsection>
 
   <!-- ============================================================ -->
-  <!-- 2.4.2 Variables and Assignment Statements                     -->
+  <!-- 2.4.2 Variables and Assignment Statements                    -->
   <!-- ============================================================ -->
   <subsection xml:id="subsec-2-4-2-variables-assignments">
     <title>Variables and Assignment Statements</title>
 
-    
     <introduction>
       <p>
-        A variable is a named location in the computer’s memory used to store a value while your program runs. Think of a variable as a labeled storage container: its name (the label) allows you to refer to the data, its type dictates what kind of data fits inside, and its value is whatever item is currently placed in the container. As the word variable implies, the value stored inside can change (vary) as your program executes, allowing your code to keep track of scores, perform ongoing calculations, and respond dynamically to user input. When you write a program, you might need a variable to store each input, temporary calculation, and result.
+        A variable is a named location in the computer’s memory used to store a value while your program runs. Think of a variable as a labeled storage container: its name (the label) allows you to refer to the data, its type dictates what kind of data fits inside, and its value is whatever item is currently placed in the container. As the word <q>variable</q> implies, the value stored inside can change (vary) as your program executes, allowing your code to keep track of scores, perform ongoing calculations, and respond dynamically to user input.
+      </p>
+      <p>
+        When you write a program, you might need a variable to store each input, temporary calculation, and result.
       </p>
 
       <p>
@@ -323,7 +540,7 @@ float babyReal = 1.2;     // This flags a "type mismatch" syntax error.]]></prog
       <title>Declaring Variables and Giving Them Values</title>
 
       <p>
-        Let’s begin with variable declarations and naming. In our programs in this book, we will declare variables at the top of the method they belong to, under the method header. Technically, you only need to declare a variable before you give it a value, but if you declare all of a method’s variables at the top of the method (with a few exceptions we’ll discuss as they arise), then anybody reading your code will always know where to go to see the type of a variable and, if you’ve commented it, a description.
+        Let’s begin with variable declarations and naming. In our programs in this book, we will generally declare variables at the top of the method they belong to, under the method header. (Occasionally we will violate this rule to save space in a listing.) Technically, you only need to declare a variable before you give it a value, but if you declare all of a method’s variables at the top of the method (with a few exceptions we’ll discuss as they arise), then anybody reading your code will always know where to go to see the type of a variable and, if you’ve commented it, a description.
       </p>
 
       <p>
@@ -340,7 +557,7 @@ boolean validInput;]]></program>
       </p>
 
       <p>
-        There are certain rules which govern what can be a variable name. First, you can’t use a Java reserved word as a variable name. Reserved words are words with special meaning to Java. Reserved words you’ve seen include <c>public</c>, <c>class</c>, <c>static</c>, <c>void</c>, <c>int</c>, and <c>double</c>, among others. Second, your variable name can consist of letters, numbers, the dollar sign, and the underscore only (no other characters), and may not begin with a number. This means that you cannot have a space in a variable name.
+        There are certain rules which govern what can be a variable name. First, you can’t use a Java reserved word as a variable name. Reserved words are words with special meaning to Java. Reserved words you’ve seen include <c>public</c>, <c>class</c>, <c>static</c>, <c>void</c>, <c>int</c>, and <c>double</c>, among others. You can see a full list of Java’s reserved words <url href="https://docs.oracle.com/javase/tutorial/java/nutsandbolts/_keywords.html" visual="docs.oracle.com/javase/tutorial/java/nutsandbolts/_keywords.html">here</url>. Second, your variable name can consist of letters, numbers, the dollar sign, and the underscore only (no other characters), and may not begin with a number. This means that you cannot have a space in a variable name.
       </p>
 
       <p>
@@ -348,11 +565,11 @@ boolean validInput;]]></program>
       </p>
 
       <p>
-        You may have noticed that when a variable name consists of more than one word, the words are run together with the first letter of each word capitalized. This is called <term>camelCase</term>, and it is the convention for naming variables in Java. (In other words, Java doesn’t care if you use camelCase, but Java programmers are accustomed to variables being named with camelCase.)
+        You may have noticed that when a variable name consists of more than one word, the words are run together with the first letter of each word capitalized. This is called camelCase, and it is the convention for naming variables in Java. (In other words, Java doesn’t care if you use camelCase, but Java programmers are accustomed to variables being named with camelCase.)
       </p>
 
       <p>
-        Most importantly, variable names are meaningful. This means that a variable name clearly communicates what is stored in it, usually drawing from the language of the problem description or domain. For example, if you are told to obtain the number of pages from the user, it makes sense to call the variable <c>numberOfPages</c> and not <c>numSheets</c>, because <c>numberOfPages</c> relates back to the problem description. A person reading your code who is familiar with the problem will immediately know what <c>numberOfPages</c> is, whereas <c>numSheets</c> will be unfamiliar.
+        Most importantly, variable names are meaningful. This means that a variable name clearly communicates what is stored in it, usually drawing from the language of the problem description or domain. For example, if you are told to obtain the number of pages from the user, it makes sense to call the variable <c>numberOfPages</c> and not <c>numSheets</c>, because <c>numberOfPages</c> relates back to the problem description. A person reading your code who is familiar with the problem will immediately know what <c>numberOfPages</c> is, whereas <c>numSheets</c> might be confusing.
       </p>
 
       <p>
@@ -365,7 +582,7 @@ firstLetter = 'A';
 area = length * width;]]></program>
 
       <p>
-        It is also allowed to declare a variable and assign a value to it on the same line, as in:
+        You can also declare a variable and assign a value to it on the same line, as in:
       </p>
 
       <program language="java"><![CDATA[double average = 0.0;]]></program>
@@ -421,7 +638,7 @@ area = length * width;]]></program>
       </figure>
 
       <p>
-        Once a method is finished executing, its frame is removed from the call stack and the variables declared in the method, called <term>local variables</term>, no longer exist. We think of the existence of variables in two different ways: their <term>lifetime</term>, which refers to when the memory space physically exists on the call stack, and their <term>scope</term>, which refers to where that variable can be seen and used in the program.
+        Once a method is finished executing, its frame is removed from the call stack and the variables declared in the method, called local variables, no longer exist. We think of the existence of variables in two different ways: their lifetime, which refers to when the memory space physically exists on the call stack, and their scope, which refers to where that variable can be seen and used in the program.
       </p>
 
       <p>
@@ -442,7 +659,7 @@ area = length * width;]]></program>
       </p>
 
       <p>
-        In Java, a variable whose value cannot be changed once initialized is called a <term>constant</term>. To turn a regular variable into a constant, add the <c>final</c> keyword before the data type:
+        In Java, a variable whose value cannot be changed once initialized is called a constant. To turn a regular variable into a constant, add the <c>final</c> keyword before the data type:
       </p>
 
       <program language="java"><![CDATA[final double SALES_TAX_RATE = 0.0625;
@@ -453,11 +670,11 @@ final int INCHES_PER_FOOT   = 12;]]></program>
       </p>
 
       <program language="java"><![CDATA[final int MAX_ATTEMPTS = 3;
-MAX_ATTEMPTS = 4; 
+MAX_ATTEMPTS = 4;
 // ERROR: The final local variable MAX_ATTEMPTS cannot be assigned.]]></program>
 
       <p>
-        Earlier, we saw that variables use camelCase and classes use PascalCase. For constants, Java follows a completely different convention: all uppercase letters with words separated by underscores, often called <term>UPPER_SNAKE_CASE</term>. This formatting immediately alerts anyone reading your code that this identifier represents a permanent, read-only value. You will see this convention in Java’s standard library with constants like <c>Math.PI</c> and <c>Integer.MAX_VALUE</c>.
+        Earlier, we saw that variables use camelCase and classes use PascalCase. For constants, Java follows a completely different convention: all uppercase letters with words separated by underscores, often called UPPER_SNAKE_CASE. This formatting immediately alerts anyone reading your code that this identifier represents a permanent, read-only value. You will see this convention in Java’s standard library with constants like <c>Math.PI</c> and <c>Integer.MAX_VALUE</c>.
       </p>
 
       <p>
@@ -497,5 +714,220 @@ double total = subtotal + (subtotal * SALES_TAX_RATE);   // Named constant]]></p
         From a memory perspective, a <c>final</c> local variable is stored on the stack in the exact same way as a standard variable. The only difference is that the compiler enforces a strict rule: once a value is written into that memory slot, no statement in your program is allowed to overwrite it.
       </p>
     </subsubsection>
+
+    <reading-questions xml:id="checkpoint-2-4-2">
+      <title>Checkpoint</title>
+
+      <exercise xml:id="checkpoint-2-4-2-identifiers" label="checkpoint-2-4-2-identifiers">
+        <title>Classifying Identifiers</title>
+        <statement>
+          <p>
+            Match each identifier to what it represents in Java.
+          </p>
+        </statement>
+        <cardsort>
+          <match>
+            <premise order="3"><c>SALES_TAX_RATE</c></premise>
+            <response>Constant</response>
+          </match>
+          <match>
+            <premise order="1"><c>elapsedTime</c></premise>
+            <response>Variable</response>
+          </match>
+          <match>
+            <premise order="4"><c>MulchCalculator</c></premise>
+            <response>Class name</response>
+          </match>
+          <match>
+            <premise order="2"><c>2ndAttempt</c></premise>
+            <response>Invalid identifier)</response>
+          </match>
+        </cardsort>
+      </exercise>
+
+      <exercise xml:id="checkpoint-2-4-2-stack-heap" label="checkpoint-2-4-2-stack-heap">
+        <title>Stack and Heap Storage</title>
+        <statement>
+          <p>
+            Consider <c>double length = 30.0;</c> and <c>Scanner stdin = new Scanner(System.in);</c> inside <c>main</c>. How are <c>length</c> and <c>stdin</c> stored in memory?
+          </p>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                Both variables live in <c>main</c>’s stack frame: <c>length</c> holds <c>30.0</c> directly, while <c>stdin</c> holds a reference to a <c>Scanner</c> object on the heap.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! Local primitive variables store their values directly on the stack, while object variables store a heap memory address on the stack.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>length</c> is stored in <c>main</c>’s stack frame, while <c>stdin</c> is stored entirely on the heap with no space reserved on the stack.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Space for the reference variable <c>stdin</c> is still allocated in <c>main</c>’s stack frame; only the <c>Scanner</c> object itself lives on the heap.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                Both <c>length</c> and <c>stdin</c> store their data values on the heap, and the stack only keeps track of their variable names.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Primitive values like <c>double</c> are stored directly on the stack, not on the heap.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>length</c> is stored on the heap because it is a <c>double</c>, while <c>stdin</c> is stored directly on the stack.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. <c>double</c> is a primitive type stored on the stack, whereas <c>new Scanner(System.in)</c> allocates an object on the heap.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-2-4-2-assignment-calc" label="checkpoint-2-4-2-assignment-calc">
+        <title>Tracing Assignment Statements</title>
+        <statement>
+          <p>
+            What is the value of <c>area</c> after these statements execute?
+          </p>
+          <program language="java"><![CDATA[int length = 5;
+int width = 3;
+int area = length * width;
+length = 10;]]></program>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                <c>15</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! <c>area</c> is assigned <c>5 * 3</c> (<c>15</c>) on line 3. Changing <c>length</c> to <c>10</c> afterward does not recalculate <c>area</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>30</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. An assignment statement calculates the value at the moment it executes—it does not link <c>area</c> to update automatically when <c>length</c> changes later.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>10</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. <c>10</c> is the final value of <c>length</c>, not <c>area</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>8</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. The <c>*</c> operator multiplies <c>length</c> and <c>width</c> rather than adding them.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-2-4-2-self-assignment" label="checkpoint-2-4-2-self-assignment">
+        <title>Updating a Variable</title>
+        <statement>
+          <p>
+            What is the value of <c>count</c> after these statements execute?
+          </p>
+          <program language="java"><![CDATA[int count = 4;
+count = count + 3;
+count = count * 2;]]></program>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                <c>14</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! First <c>count</c> becomes <c>4 + 3 = 7</c>, and then <c>count</c> becomes <c>7 * 2 = 14</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>10</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Each assignment statement executes in order from top to bottom, so <c>count</c> is already <c>7</c> before line 3 multiplies by <c>2</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>7</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. <c>7</c> is the value after the second line, before <c>count = count * 2;</c> executes.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                It causes a compiler error because <c>count</c> cannot appear on both sides of <c>=</c>.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. In Java, <c>=</c> is the assignment operator, not mathematical equality, so evaluating the right side and storing the result back into <c>count</c> is completely valid.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+    </reading-questions>
   </subsection>
 </section>

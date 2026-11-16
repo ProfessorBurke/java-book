@@ -196,6 +196,7 @@ eBookConfig.enable_chatcodes =  false;
 <li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-2-4-variables-types.html#subsubsec-2-4-1-1-integer-primitives" class="internal"><span class="codenumber">2.4.1.1</span> <span class="title">Integer Primitives</span></a></div></li>
 <li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-2-4-variables-types.html#subsubsec-2-4-1-2-floating-point-primitives" class="internal"><span class="codenumber">2.4.1.2</span> <span class="title">Floating-Point Primitives</span></a></div></li>
 <li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-2-4-variables-types.html#subsubsec-2-4-1-3-char-boolean-primitives" class="internal"><span class="codenumber">2.4.1.3</span> <span class="title">The char and boolean Primitives</span></a></div></li>
+<li class="toc-item toc-reading-questions"><div class="toc-title-box"><a href="sec-2-4-variables-types.html#checkpoint-2-4-1" class="internal"><span class="codenumber">2.4.1.4</span> <span class="title">Checkpoint</span></a></div></li>
 </ul>
 </li>
 <li class="toc-item toc-subsection">
@@ -204,6 +205,7 @@ eBookConfig.enable_chatcodes =  false;
 <li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-2-4-variables-types.html#subsubsec-2-4-2-1-declaring-variables" class="internal"><span class="codenumber">2.4.2.1</span> <span class="title">Declaring Variables and Giving Them Values</span></a></div></li>
 <li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-2-4-variables-types.html#subsubsec-2-4-2-2-where-variables-live" class="internal"><span class="codenumber">2.4.2.2</span> <span class="title">Where Variables Live in Memory</span></a></div></li>
 <li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-2-4-variables-types.html#subsubsec-2-4-2-3-constants" class="internal"><span class="codenumber">2.4.2.3</span> <span class="title">Constants (Using the final Keyword)</span></a></div></li>
+<li class="toc-item toc-reading-questions"><div class="toc-title-box"><a href="sec-2-4-variables-types.html#checkpoint-2-4-2" class="internal"><span class="codenumber">2.4.2.4</span> <span class="title">Checkpoint</span></a></div></li>
 </ul>
 </li>
 </ul>
@@ -872,7 +874,7 @@ eBookConfig.enable_chatcodes =  false;
 <section class="introduction" id="sec-2-4-variables-types-2">
 <div class="para" id="sec-2-4-variables-types-2-1">In chapter 1 we learned that programs store data in computer memory, and everything stored in memory is stored as binary numbers. (Technically, data is stored using some physical method that we interpret as binary numbers.) Fortunately, modern programming languages provide data types that allow us to think of data in a way that is closer to the problems we’re solving: as text, as individual characters, and as integers and real numbers in decimal (base ten). It is important to remember, though, that the underlying representation is a finite number of binary bits that are interpreted by Java as text, a number, or something else. When the underlying representation can impact your high-level programming, we will discuss how and why.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#sec-2-4-variables-types-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="para" id="sec-2-4-variables-types-2-2">Every piece of data in a Java program has a type. The type specifies how many bits are set aside for that piece of data and how they are organized and interpreted. Java provides eight primitive data types (four integer types, two real types, a character type, and a Boolean type) and many class data types (such as <code class="code-inline tex2jax_ignore">String</code> and <code class="code-inline tex2jax_ignore">Scanner</code>). The classes that we are writing in this chapter and the next two, like <code class="code-inline tex2jax_ignore">MulchCalculator</code>, are programs. But most classes are data types, and we will learn to create our own data types in chapter 5.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#sec-2-4-variables-types-2-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="sec-2-4-variables-types-2-2">Every piece of data in a Java program has a type. The type specifies how many bits are set aside for that piece of data and how they are organized and interpreted. Java provides eight primitive data types (four integer types, two real types, a character type, and a Boolean type) and many class data types (such as <code class="code-inline tex2jax_ignore">String</code> and <code class="code-inline tex2jax_ignore">Scanner</code>). The classes that we are writing in this chapter and the next three, like <code class="code-inline tex2jax_ignore">MulchCalculator</code>, are programs. But most classes are data types, and we will learn to create our own data types in chapter 6.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#sec-2-4-variables-types-2-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="para" id="sec-2-4-variables-types-2-3">Let’s focus in on that idea of a “piece of data.” Each individual variable and literal in a program is a piece of data. In our <code class="code-inline tex2jax_ignore">MulchCalculator</code> program, we have eight variables, declared in the method header on line 9 and on lines 10 to 16 (<code class="code-inline tex2jax_ignore">args</code>, <code class="code-inline tex2jax_ignore">stdin</code>, <code class="code-inline tex2jax_ignore">length</code>, <code class="code-inline tex2jax_ignore">width</code>, <code class="code-inline tex2jax_ignore">depth</code>, <code class="code-inline tex2jax_ignore">depthInFeet</code>, <code class="code-inline tex2jax_ignore">cubicFeet</code>, and <code class="code-inline tex2jax_ignore">cubicYards</code>), and we have seven literals in the program. The literals are, in the order you see them in the program, <code class="code-inline tex2jax_ignore">"Enter the length of the area in feet: "</code>, <code class="code-inline tex2jax_ignore">"Enter the width of the area in feet: "</code>, <code class="code-inline tex2jax_ignore">"Enter the desired depth in inches: "</code>, <code class="code-inline tex2jax_ignore">12.0</code>, <code class="code-inline tex2jax_ignore">27.0</code>, <code class="code-inline tex2jax_ignore">"You need "</code>, and <code class="code-inline tex2jax_ignore">" cubic yards of mulch."</code>. Each variable and literal is a piece of data that has a data type and is stored in the computer’s memory at some point while the program is running.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#sec-2-4-variables-types-2-3" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
@@ -885,8 +887,8 @@ eBookConfig.enable_chatcodes =  false;
 <div class="para" id="sec-2-4-variables-types-2-7">What does a variable evaluate to? A variable evaluates to the last value assigned to it during the program’s execution. We will talk more about assignments in a moment, but for now, assignments are the statements with a variable on the left, an equals sign, and an expression on the right, and they give the expression’s value to the variable on the left. For a moment, imagine we had this code in the program:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#sec-2-4-variables-types-2-7" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="code-box"><pre class="program clipboardable line-numbers"><code class="language-java">System.out.print("Enter the desired depth in inches: ");
-  depth = stdin.nextDouble();
-  depth = depth / 12.0;
+depth = stdin.nextDouble();
+depth = depth / 12.0;
 </code></pre></div>
 <div class="para" id="sec-2-4-variables-types-2-9">It’s very similar to <a href="sec-2-2-app-overview.html#listing-mulch-calculator" class="xref" data-knowl="./knowl/xref/listing-mulch-calculator.html" data-reveal-label="Reveal" data-close-label="Close" title="Listing 2.1: MulchCalculator.java">Listing 2.1</a>, but instead of storing the depth converted to feet in the variable <code class="code-inline tex2jax_ignore">depthInFeet</code>, we’re storing it back in the variable <code class="code-inline tex2jax_ignore">depth</code>. Then, if the user enters 4 at the prompt, the value in <code class="code-inline tex2jax_ignore">depth</code> after line 2 executes is 4, and the value in <code class="code-inline tex2jax_ignore">depth</code> after line 3 executes is .3 repeating. If we ask Java to evaluate <code class="code-inline tex2jax_ignore">depth</code> after line 2, it would evaluate to 4, but if we ask Java to evaluate <code class="code-inline tex2jax_ignore">depth</code> after line 3, it would evaluate to .3 repeating. And it never evaluates to <code class="code-inline tex2jax_ignore">depth</code>—the thing we literally type in the program—it always evaluates to the value assigned to <code class="code-inline tex2jax_ignore">depth</code>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#sec-2-4-variables-types-2-9" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
@@ -972,7 +974,7 @@ eBookConfig.enable_chatcodes =  false;
 <tr>
 <td class="l m b1 r1 l1 t0 lines"><code class="code-inline tex2jax_ignore">int</code></td>
 <td class="l m b1 r1 l0 t0 lines">4 bytes</td>
-<td class="l m b1 r1 l0 t0" style="max-width:180px;">
+<td class="l m b1 r1 l0 t0" style="max-width:252px;">
 <div class="para" id="table-integer-data-types-2-8-3-1">
 <span class="process-math">\(-2{,}147{,}483{,}648\)</span> to <span class="process-math">\(2{,}147{,}483{,}647\)</span><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-integer-data-types-2-8-3-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
@@ -984,18 +986,20 @@ eBookConfig.enable_chatcodes =  false;
 <tr>
 <td class="l m b1 r1 l1 t0 lines"><code class="code-inline tex2jax_ignore">long</code></td>
 <td class="l m b1 r1 l0 t0 lines">8 bytes</td>
-<td class="l m b1 r1 l0 t0" style="max-width:180px;">
+<td class="l m b1 r1 l0 t0" style="max-width:252px;">
 <div class="para" id="table-integer-data-types-2-9-3-1">
-<span class="process-math">\(-9{,}223{,}372{,}036{,}854{,}775{,}808\)</span> to <span class="process-math">\(9{,}223{,}372{,}036{,}854{,}775{,}807\)</span><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-integer-data-types-2-9-3-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<span class="process-math">\(-9{,}223{,}372{,}036{,}854{,}775{,}808\)</span><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-integer-data-types-2-9-3-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="para" id="table-integer-data-types-2-9-3-2">(<span class="process-math">\(-2^{63}\)</span> to <span class="process-math">\(2^{63} - 1\)</span>)<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-integer-data-types-2-9-3-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="table-integer-data-types-2-9-3-2">to <span class="process-math">\(9{,}223{,}372{,}036{,}854{,}775{,}807\)</span><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-integer-data-types-2-9-3-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="table-integer-data-types-2-9-3-3">(<span class="process-math">\(-2^{63}\)</span> to <span class="process-math">\(2^{63} - 1\)</span>)<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-integer-data-types-2-9-3-3" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 </td>
 <td class="l m b1 r1 l0 t0 lines">Values exceeding 2 billion (timestamps, large financial sums); append <code class="code-inline tex2jax_ignore">L</code>.</td>
 </tr>
 </table></div>
 </figure>
-<div class="para" id="subsubsec-2-4-1-1-integer-primitives-4">If you have an integer literal in a program, its data type will be <code class="code-inline tex2jax_ignore">int</code> by default. This can make assignment statements a little confusing when you’re assigning a literal to a variable that isn’t of the <code class="code-inline tex2jax_ignore">int</code> type. When a value is moved from a smaller representation to a larger one (e.g. <code class="code-inline tex2jax_ignore">int</code> to <code class="code-inline tex2jax_ignore">long</code>), the operation is called <dfn class="terminology">widening</dfn>. When a value is moved from a larger representation to a smaller one (e.g. <code class="code-inline tex2jax_ignore">int</code> to <code class="code-inline tex2jax_ignore">byte</code>), the operation is called <dfn class="terminology">narrowing</dfn>. Because narrowing can cause data loss, Java will never automatically narrow a variable. However, for integer literals, Java provides a helpful exception: it allows automatic narrowing only if the literal fits within the target type’s range.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-2-4-1-1-integer-primitives-4" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsubsec-2-4-1-1-integer-primitives-4">If you have an integer literal in a program, its data type will be <code class="code-inline tex2jax_ignore">int</code> by default. This can make assignment statements a little confusing when you’re assigning a literal to a variable that isn’t of the <code class="code-inline tex2jax_ignore">int</code> type. When a value is moved from a smaller representation to a larger one (e.g. <code class="code-inline tex2jax_ignore">int</code> to <code class="code-inline tex2jax_ignore">long</code>), the operation is called widening. When a value is moved from a larger representation to a smaller one (e.g. <code class="code-inline tex2jax_ignore">int</code> to <code class="code-inline tex2jax_ignore">byte</code>), the operation is called narrowing. Because narrowing can cause data loss, Java will never automatically narrow a variable. However, for integer literals, Java provides a helpful exception: it allows automatic narrowing only if the literal fits within the target type’s range.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-2-4-1-1-integer-primitives-4" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="para" id="subsubsec-2-4-1-1-integer-primitives-5">If you are assigning an integer literal to a <code class="code-inline tex2jax_ignore">byte</code> or <code class="code-inline tex2jax_ignore">short</code> variable, Java will check that the literal can be stored in the smaller number of bits, and if it can, it will assign it to the variable. If it can’t, Java will flag a “type mismatch” syntax error and tell you that it cannot convert from an <code class="code-inline tex2jax_ignore">int</code> to a <code class="code-inline tex2jax_ignore">byte</code> or <code class="code-inline tex2jax_ignore">short</code>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-2-4-1-1-integer-primitives-5" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
@@ -1033,7 +1037,7 @@ float babyReal = 1.2;     // This flags a "type mismatch" syntax error.
 </code></pre></div>
 <div class="para" id="subsubsec-2-4-1-2-floating-point-primitives-7">Real numbers can also be represented in an exponential (E) form such as <code class="code-inline tex2jax_ignore">1.3E12</code> or <code class="code-inline tex2jax_ignore">12.3737E-108</code>. The <code class="code-inline tex2jax_ignore">E12</code> and <code class="code-inline tex2jax_ignore">E-108</code> represent powers of 10, so that <code class="code-inline tex2jax_ignore">1.3E12</code> means <span class="process-math">\(1.3 \times 10^{12}\)</span> and <code class="code-inline tex2jax_ignore">12.3737E-108</code> means <span class="process-math">\(12.3737 \times 10^{-108}\text{.}\)</span> This format can be useful for expressing very large and very small numbers. They are, again, doubles. If you want to use E notation to write a literal <code class="code-inline tex2jax_ignore">float</code>, append <code class="code-inline tex2jax_ignore">F</code> to the end of the number (e.g. <code class="code-inline tex2jax_ignore">1.3E12F</code>).<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-2-4-1-2-floating-point-primitives-7" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="para" id="subsubsec-2-4-1-2-floating-point-primitives-8">Java will sometimes use E notation, which can be jarring if you haven’t seen it before! If a <code class="code-inline tex2jax_ignore">double</code> calculation produces a number greater than or equal to 10 million (such as <code class="code-inline tex2jax_ignore">1.5E7</code>) or a tiny fraction smaller than 0.001 (such as <code class="code-inline tex2jax_ignore">5.0E-4</code>), Java will automatically display the result in this exponential notation. Don’t worry—the calculation is correct! Later in this chapter, you will learn how to use <code class="code-inline tex2jax_ignore">System.out.printf</code> to force Java to display numbers in standard decimal form.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-2-4-1-2-floating-point-primitives-8" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsubsec-2-4-1-2-floating-point-primitives-8">Java will sometimes use E notation, which can be jarring if you haven’t seen it before! If a <code class="code-inline tex2jax_ignore">double</code> calculation produces a number greater than or equal to 10 million (such as <code class="code-inline tex2jax_ignore">1.5E7</code>) or a tiny fraction smaller than 0.001 (such as <code class="code-inline tex2jax_ignore">5.0E-4</code>), Java will automatically display the result in this exponential notation. Later in this chapter, you will learn how to use <code class="code-inline tex2jax_ignore">System.out.printf</code> to force Java to display numbers in standard decimal form.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-2-4-1-2-floating-point-primitives-8" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="para" id="subsubsec-2-4-1-2-floating-point-primitives-9">
 <a href="sec-2-4-variables-types.html#table-real-data-types" class="xref" data-knowl="./knowl/xref/table-real-data-types.html" data-reveal-label="Reveal" data-close-label="Close" title="Table 2.4: Summary of real data types">Table 2.4</a> summarizes the two floating-point primitive types, their bit-widths, and their exact numerical ranges.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-2-4-1-2-floating-point-primitives-9" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
@@ -1065,7 +1069,7 @@ float babyReal = 1.2;     // This flags a "type mismatch" syntax error.
 <div class="para" id="table-real-data-types-2-7-3-2">Precision: <span class="process-math">\(15\)</span> to <span class="process-math">\(17\)</span> decimal digits<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-real-data-types-2-7-3-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 </td>
-<td class="l m b1 r1 l0 t0 lines">The default choice for all calculations involving decimal points and fractions. Provides “double precision” to avoid rounding errors. All standard decimal literals (e.g., <code class="code-inline tex2jax_ignore">3.14</code>, <code class="code-inline tex2jax_ignore">0.5</code>) are <code class="code-inline tex2jax_ignore">double</code> by default.</td>
+<td class="l m b1 r1 l0 t0 lines">The default choice for all calculations involving decimal points and fractions. Provides “double precision” to minimize rounding errors. All standard decimal literals (e.g., <code class="code-inline tex2jax_ignore">3.14</code>, <code class="code-inline tex2jax_ignore">0.5</code>) are <code class="code-inline tex2jax_ignore">double</code> by default.</td>
 </tr>
 </table></div>
 </figure><div class="autopermalink" aria-hidden="true" data-description="Subsubsection 2.4.1.2: Floating-Point Primitives"><a tabindex="-1" href="#subsubsec-2-4-1-2-floating-point-primitives" title="Copy heading and permalink for Subsubsection 2.4.1.2: Floating-Point Primitives" aria-label="Copy heading and permalink for Subsubsection 2.4.1.2: Floating-Point Primitives">🔗</a></div>
@@ -1087,6 +1091,147 @@ float babyReal = 1.2;     // This flags a "type mismatch" syntax error.
 <div class="para" id="subsubsec-2-4-1-3-char-boolean-primitives-7">In the upcoming section on arithmetic, we will look at the surprising errors that can happen when calculations bump up against the boundaries of a fixed, finite representation—and how to handle them. (Errors are always more fun to study when they’re happening to somebody else!)<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-2-4-1-3-char-boolean-primitives-7" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="autopermalink" aria-hidden="true" data-description="Subsubsection 2.4.1.3: The char and boolean Primitives"><a tabindex="-1" href="#subsubsec-2-4-1-3-char-boolean-primitives" title="Copy heading and permalink for Subsubsection 2.4.1.3: The char and boolean Primitives" aria-label="Copy heading and permalink for Subsubsection 2.4.1.3: The char and boolean Primitives">🔗</a></div>
+</section>
+<section class="reading-questions" id="checkpoint-2-4-1">
+<h3 class="heading hide-type">
+<span class="type">Reading Questions</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">2.4.1.4</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Checkpoint</span>
+</h3>
+<article class="exercise exercise-like" id="checkpoint-2-4-1-literal-types"><h4 class="heading">
+<span class="codenumber">1<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Matching Literals to Types.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone cardsort_section"><ul data-component="dragndrop" data-question_label="" style="visibility: hidden;" id="rs-checkpoint-2-4-1-literal-types">
+<span data-subcomponent="question">
+<div class="para" id="checkpoint-2-4-1-literal-types-2-1">Match each Java literal to its data type.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-2-4-1-literal-types-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div></span><li data-subcomponent="draggable" id="rs-checkpoint-2-4-1-literal-types_drag1" data-category="1"><code class="code-inline tex2jax_ignore">42</code></li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-2-4-1-literal-types_drag1" data-category="1"><code class="code-inline tex2jax_ignore">int</code></li>
+<li data-subcomponent="draggable" id="rs-checkpoint-2-4-1-literal-types_drag2" data-category="2"><code class="code-inline tex2jax_ignore">2147483648L</code></li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-2-4-1-literal-types_drag2" data-category="2"><code class="code-inline tex2jax_ignore">long</code></li>
+<li data-subcomponent="draggable" id="rs-checkpoint-2-4-1-literal-types_drag3" data-category="3"><code class="code-inline tex2jax_ignore">3.14</code></li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-2-4-1-literal-types_drag3" data-category="3"><code class="code-inline tex2jax_ignore">double</code></li>
+<li data-subcomponent="draggable" id="rs-checkpoint-2-4-1-literal-types_drag4" data-category="4"><code class="code-inline tex2jax_ignore">1.2F</code></li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-2-4-1-literal-types_drag4" data-category="4"><code class="code-inline tex2jax_ignore">float</code></li>
+<li data-subcomponent="draggable" id="rs-checkpoint-2-4-1-literal-types_drag5" data-category="5"><code class="code-inline tex2jax_ignore">'A'</code></li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-2-4-1-literal-types_drag5" data-category="5"><code class="code-inline tex2jax_ignore">char</code></li>
+<li data-subcomponent="draggable" id="rs-checkpoint-2-4-1-literal-types_drag6" data-category="6"><code class="code-inline tex2jax_ignore">true</code></li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-2-4-1-literal-types_drag6" data-category="6"><code class="code-inline tex2jax_ignore">boolean</code></li>
+</ul></div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 2.4.1.4.1: Matching Literals to Types"><a tabindex="-1" href="#checkpoint-2-4-1-literal-types" title="Copy heading and permalink for Reading Question 2.4.1.4.1: Matching Literals to Types" aria-label="Copy heading and permalink for Reading Question 2.4.1.4.1: Matching Literals to Types">🔗</a></div>
+</article>
+<article class="exercise exercise-like" id="checkpoint-2-4-1-statement-expression"><h4 class="heading">
+<span class="codenumber">2<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Statements vs. Expressions.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone multiplechoice_section">
+<div class="exercise-statement">
+<div class="para" id="checkpoint-2-4-1-statement-expression-2-1">In Java, what is the difference between a statement and an expression?<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-2-4-1-statement-expression-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</div>
+<ul data-component="multiplechoice" class="exercise-interactives" id="rs-checkpoint-2-4-1-statement-expression" data-multipleanswers="false" data-random="">
+<li data-component="answer" id="rs-checkpoint-2-4-1-statement-expression_opt_a" data-correct="">
+<div class="para" id="checkpoint-2-4-1-statement-expression-3-1-1-1">A statement is a complete instruction to do something, while an expression calculates a single value.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-4-1-statement-expression_opt_a">
+<div class="para" id="checkpoint-2-4-1-statement-expression-3-1-2-1">Correct! Statements tell the program what action to perform, and many statements contain expressions that Java evaluates down to a single value.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-2-4-1-statement-expression_opt_b">
+<div class="para" id="checkpoint-2-4-1-statement-expression-3-2-1-1">A statement always calculates a single value, while an expression must end with a semicolon.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-4-1-statement-expression_opt_b">
+<div class="para" id="checkpoint-2-4-1-statement-expression-3-2-2-1">Not quite. Simple statements end with a semicolon, while expressions calculate or represent a single value.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-2-4-1-statement-expression_opt_c">
+<div class="para" id="checkpoint-2-4-1-statement-expression-3-3-1-1">A statement can only contain literal values, while an expression can only contain variable names.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-4-1-statement-expression_opt_c">
+<div class="para" id="checkpoint-2-4-1-statement-expression-3-3-2-1">Not quite. Both literals and variables can be expressions, and statements can contain both.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-2-4-1-statement-expression_opt_d">
+<div class="para" id="checkpoint-2-4-1-statement-expression-3-4-1-1">A statement and an expression mean the same thing; Java uses both terms interchangeably.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-4-1-statement-expression_opt_d">
+<div class="para" id="checkpoint-2-4-1-statement-expression-3-4-2-1">Not quite. Statements are complete instructions, while expressions are pieces of code that evaluate to a value.</div>
+</li>
+</ul>
+</div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 2.4.1.4.2: Statements vs. Expressions"><a tabindex="-1" href="#checkpoint-2-4-1-statement-expression" title="Copy heading and permalink for Reading Question 2.4.1.4.2: Statements vs. Expressions" aria-label="Copy heading and permalink for Reading Question 2.4.1.4.2: Statements vs. Expressions">🔗</a></div>
+</article>
+<article class="exercise exercise-like" id="checkpoint-2-4-1-literal-variable"><h4 class="heading">
+<span class="codenumber">3<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Evaluating Literals and Variables.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone multiplechoice_section">
+<div class="exercise-statement">
+<div class="para" id="checkpoint-2-4-1-literal-variable-2-1">Suppose <code class="code-inline tex2jax_ignore">depth</code> currently holds <code class="code-inline tex2jax_ignore">4</code>, and then the statement <code class="code-inline tex2jax_ignore">depth = depth / 12.0;</code> executes. Afterward, what do the expression <code class="code-inline tex2jax_ignore">depth</code> and the literal <code class="code-inline tex2jax_ignore">12.0</code> evaluate to?<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-2-4-1-literal-variable-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</div>
+<ul data-component="multiplechoice" class="exercise-interactives" id="rs-checkpoint-2-4-1-literal-variable" data-multipleanswers="false" data-random="">
+<li data-component="answer" id="rs-checkpoint-2-4-1-literal-variable_opt_a" data-correct="">
+<div class="para" id="checkpoint-2-4-1-literal-variable-3-1-1-1">
+<code class="code-inline tex2jax_ignore">depth</code> evaluates to <code class="code-inline tex2jax_ignore">0.3333...</code> (the last value assigned to it), while <code class="code-inline tex2jax_ignore">12.0</code> evaluates to <code class="code-inline tex2jax_ignore">12.0</code>.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-4-1-literal-variable_opt_a">
+<div class="para" id="checkpoint-2-4-1-literal-variable-3-1-2-1">Correct! A variable evaluates to the last value assigned to it during execution, while a literal always evaluates to what you literally typed.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-2-4-1-literal-variable_opt_b">
+<div class="para" id="checkpoint-2-4-1-literal-variable-3-2-1-1">
+<code class="code-inline tex2jax_ignore">depth</code> evaluates to <code class="code-inline tex2jax_ignore">"depth"</code>, while <code class="code-inline tex2jax_ignore">12.0</code> evaluates to <code class="code-inline tex2jax_ignore">4</code>.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-4-1-literal-variable_opt_b">
+<div class="para" id="checkpoint-2-4-1-literal-variable-3-2-2-1">Not quite. A variable never evaluates to its own name, and a literal evaluates to the value you typed.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-2-4-1-literal-variable_opt_c">
+<div class="para" id="checkpoint-2-4-1-literal-variable-3-3-1-1">
+<code class="code-inline tex2jax_ignore">depth</code> evaluates to <code class="code-inline tex2jax_ignore">4</code>, while <code class="code-inline tex2jax_ignore">12.0</code> evaluates to <code class="code-inline tex2jax_ignore">0.3333...</code>.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-4-1-literal-variable_opt_c">
+<div class="para" id="checkpoint-2-4-1-literal-variable-3-3-2-1">Not quite. <code class="code-inline tex2jax_ignore">depth</code> was updated by the assignment statement, and the literal <code class="code-inline tex2jax_ignore">12.0</code> never changes.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-2-4-1-literal-variable_opt_d">
+<div class="para" id="checkpoint-2-4-1-literal-variable-3-4-1-1">Both <code class="code-inline tex2jax_ignore">depth</code> and <code class="code-inline tex2jax_ignore">12.0</code> evaluate to <code class="code-inline tex2jax_ignore">4</code>.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-4-1-literal-variable_opt_d">
+<div class="para" id="checkpoint-2-4-1-literal-variable-3-4-2-1">Not quite. <code class="code-inline tex2jax_ignore">depth</code> holds the new quotient after the assignment, and <code class="code-inline tex2jax_ignore">12.0</code> evaluates to <code class="code-inline tex2jax_ignore">12.0</code>.</div>
+</li>
+</ul>
+</div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 2.4.1.4.3: Evaluating Literals and Variables"><a tabindex="-1" href="#checkpoint-2-4-1-literal-variable" title="Copy heading and permalink for Reading Question 2.4.1.4.3: Evaluating Literals and Variables" aria-label="Copy heading and permalink for Reading Question 2.4.1.4.3: Evaluating Literals and Variables">🔗</a></div>
+</article>
+<article class="exercise exercise-like" id="checkpoint-2-4-1-octal-literal"><h4 class="heading">
+<span class="codenumber">4<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Watch That Leading Zero.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone multiplechoice_section">
+<div class="exercise-statement">
+<div class="para" id="checkpoint-2-4-1-octal-literal-2-1">What decimal (base 10) value does Java store in <code class="code-inline tex2jax_ignore">code</code> when it executes <code class="code-inline tex2jax_ignore">int code = 012;</code>?<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-2-4-1-octal-literal-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</div>
+<ul data-component="multiplechoice" class="exercise-interactives" id="rs-checkpoint-2-4-1-octal-literal" data-multipleanswers="false" data-random="">
+<li data-component="answer" id="rs-checkpoint-2-4-1-octal-literal_opt_a" data-correct="">
+<div class="para" id="checkpoint-2-4-1-octal-literal-3-1-1-1"><code class="code-inline tex2jax_ignore">10</code></div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-4-1-octal-literal_opt_a">
+<div class="para" id="checkpoint-2-4-1-octal-literal-3-1-2-1">Correct! Because <code class="code-inline tex2jax_ignore">012</code> begins with a leading zero, Java interprets it in octal (base 8): <span class="process-math">\(1 \times 8^1 + 2 \times 8^0 = 10\text{.}\)</span>
+</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-2-4-1-octal-literal_opt_b">
+<div class="para" id="checkpoint-2-4-1-octal-literal-3-2-1-1"><code class="code-inline tex2jax_ignore">12</code></div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-4-1-octal-literal_opt_b">
+<div class="para" id="checkpoint-2-4-1-octal-literal-3-2-2-1">Not quite. In Java, a leading zero tells the compiler the literal is in octal (base 8), not decimal (base 10).</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-2-4-1-octal-literal_opt_c">
+<div class="para" id="checkpoint-2-4-1-octal-literal-3-3-1-1"><code class="code-inline tex2jax_ignore">18</code></div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-4-1-octal-literal_opt_c">
+<div class="para" id="checkpoint-2-4-1-octal-literal-3-3-2-1">Not quite. That would be hexadecimal (<code class="code-inline tex2jax_ignore">0x12</code>), whereas a leading <code class="code-inline tex2jax_ignore">0</code> alone indicates octal (base 8).</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-2-4-1-octal-literal_opt_d">
+<div class="para" id="checkpoint-2-4-1-octal-literal-3-4-1-1">It causes a compiler error because leading zeros are not allowed in Java.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-4-1-octal-literal_opt_d">
+<div class="para" id="checkpoint-2-4-1-octal-literal-3-4-2-1">Not quite. Leading zeros are legal when all digits are <code class="code-inline tex2jax_ignore">0</code>–<code class="code-inline tex2jax_ignore">7</code>; they tell Java to treat the number as octal.</div>
+</li>
+</ul>
+</div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 2.4.1.4.4: Watch That Leading Zero"><a tabindex="-1" href="#checkpoint-2-4-1-octal-literal" title="Copy heading and permalink for Reading Question 2.4.1.4.4: Watch That Leading Zero" aria-label="Copy heading and permalink for Reading Question 2.4.1.4.4: Watch That Leading Zero">🔗</a></div>
+</article><div class="autopermalink" aria-hidden="true" data-description="Reading Questions 2.4.1.4: Checkpoint"><a tabindex="-1" href="#checkpoint-2-4-1" title="Copy heading and permalink for Reading Questions 2.4.1.4: Checkpoint" aria-label="Copy heading and permalink for Reading Questions 2.4.1.4: Checkpoint">🔗</a></div>
 </section><div class="autopermalink" aria-hidden="true" data-description="Subsection 2.4.1: Java’s Primitive Types"><a tabindex="-1" href="#subsec-2-4-1-primitive-types" title="Copy heading and permalink for Subsection 2.4.1: Java’s Primitive Types" aria-label="Copy heading and permalink for Subsection 2.4.1: Java’s Primitive Types">🔗</a></div>
 </section>
 <section class="subsection" id="subsec-2-4-2-variables-assignments">
@@ -1094,16 +1239,18 @@ float babyReal = 1.2;     // This flags a "type mismatch" syntax error.
 <span class="type">Subsection</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">2.4.2</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Variables and Assignment Statements</span>
 </h2>
 <section class="introduction" id="subsec-2-4-2-variables-assignments-2">
-<div class="para" id="subsec-2-4-2-variables-assignments-2-1">A variable is a named location in the computer’s memory used to store a value while your program runs. Think of a variable as a labeled storage container: its name (the label) allows you to refer to the data, its type dictates what kind of data fits inside, and its value is whatever item is currently placed in the container. As the word variable implies, the value stored inside can change (vary) as your program executes, allowing your code to keep track of scores, perform ongoing calculations, and respond dynamically to user input. When you write a program, you might need a variable to store each input, temporary calculation, and result.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-2-4-2-variables-assignments-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-2-4-2-variables-assignments-2-1">A variable is a named location in the computer’s memory used to store a value while your program runs. Think of a variable as a labeled storage container: its name (the label) allows you to refer to the data, its type dictates what kind of data fits inside, and its value is whatever item is currently placed in the container. As the word “variable” implies, the value stored inside can change (vary) as your program executes, allowing your code to keep track of scores, perform ongoing calculations, and respond dynamically to user input.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-2-4-2-variables-assignments-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="para" id="subsec-2-4-2-variables-assignments-2-2">
-<a href="sec-2-2-app-overview.html#listing-mulch-calculator" class="xref" data-knowl="./knowl/xref/listing-mulch-calculator.html" data-reveal-label="Reveal" data-close-label="Close" title="Listing 2.1: MulchCalculator.java">Listing 2.1</a> has eight variables—<code class="code-inline tex2jax_ignore">args</code>, which you need not worry about for now, <code class="code-inline tex2jax_ignore">stdin</code>, which is of type <code class="code-inline tex2jax_ignore">Scanner</code>, and <code class="code-inline tex2jax_ignore">length</code>, <code class="code-inline tex2jax_ignore">width</code>, <code class="code-inline tex2jax_ignore">depth</code>, <code class="code-inline tex2jax_ignore">depthInFeet</code>, <code class="code-inline tex2jax_ignore">cubicFeet</code>, and <code class="code-inline tex2jax_ignore">cubicYards</code>, all of type <code class="code-inline tex2jax_ignore">double</code>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-2-4-2-variables-assignments-2-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-2-4-2-variables-assignments-2-2">When you write a program, you might need a variable to store each input, temporary calculation, and result.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-2-4-2-variables-assignments-2-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="subsec-2-4-2-variables-assignments-2-3">
+<a href="sec-2-2-app-overview.html#listing-mulch-calculator" class="xref" data-knowl="./knowl/xref/listing-mulch-calculator.html" data-reveal-label="Reveal" data-close-label="Close" title="Listing 2.1: MulchCalculator.java">Listing 2.1</a> has eight variables—<code class="code-inline tex2jax_ignore">args</code>, which you need not worry about for now, <code class="code-inline tex2jax_ignore">stdin</code>, which is of type <code class="code-inline tex2jax_ignore">Scanner</code>, and <code class="code-inline tex2jax_ignore">length</code>, <code class="code-inline tex2jax_ignore">width</code>, <code class="code-inline tex2jax_ignore">depth</code>, <code class="code-inline tex2jax_ignore">depthInFeet</code>, <code class="code-inline tex2jax_ignore">cubicFeet</code>, and <code class="code-inline tex2jax_ignore">cubicYards</code>, all of type <code class="code-inline tex2jax_ignore">double</code>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-2-4-2-variables-assignments-2-3" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div></section>
 <section class="subsubsection" id="subsubsec-2-4-2-1-declaring-variables">
 <h3 class="heading hide-type">
 <span class="type">Subsubsection</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">2.4.2.1</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Declaring Variables and Giving Them Values</span>
 </h3>
-<div class="para" id="subsubsec-2-4-2-1-declaring-variables-2">Let’s begin with variable declarations and naming. In our programs in this book, we will declare variables at the top of the method they belong to, under the method header. Technically, you only need to declare a variable before you give it a value, but if you declare all of a method’s variables at the top of the method (with a few exceptions we’ll discuss as they arise), then anybody reading your code will always know where to go to see the type of a variable and, if you’ve commented it, a description.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-2-4-2-1-declaring-variables-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsubsec-2-4-2-1-declaring-variables-2">Let’s begin with variable declarations and naming. In our programs in this book, we will generally declare variables at the top of the method they belong to, under the method header. (Occasionally we will violate this rule to save space in a listing.) Technically, you only need to declare a variable before you give it a value, but if you declare all of a method’s variables at the top of the method (with a few exceptions we’ll discuss as they arise), then anybody reading your code will always know where to go to see the type of a variable and, if you’ve commented it, a description.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-2-4-2-1-declaring-variables-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="para" id="subsubsec-2-4-2-1-declaring-variables-3">To declare a variable, give the type of the variable followed by a space, and then the variable name, followed by a semicolon. You can also declare more than one variable of the same type in one declaration, by separating the names with commas. Here are some examples:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-2-4-2-1-declaring-variables-3" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
@@ -1114,13 +1261,13 @@ boolean validInput;
 </code></pre></div>
 <div class="para" id="subsubsec-2-4-2-1-declaring-variables-5">A good practice is to declare one variable to a line followed by a single-line comment, as in <a href="sec-2-2-app-overview.html#listing-mulch-calculator" class="xref" data-knowl="./knowl/xref/listing-mulch-calculator.html" data-reveal-label="Reveal" data-close-label="Close" title="Listing 2.1: MulchCalculator.java">Listing 2.1</a>. The comment should provide additional information about the variable that will help a person understand the variable’s role in the program. (Such as the unit of the data and whether the variable is calculated or obtained from the user.) If variables are closely related or are so obvious they don’t require a comment, you can declare them together on one line without sacrificing readability.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-2-4-2-1-declaring-variables-5" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="para" id="subsubsec-2-4-2-1-declaring-variables-6">There are certain rules which govern what can be a variable name. First, you can’t use a Java reserved word as a variable name. Reserved words are words with special meaning to Java. Reserved words you’ve seen include <code class="code-inline tex2jax_ignore">public</code>, <code class="code-inline tex2jax_ignore">class</code>, <code class="code-inline tex2jax_ignore">static</code>, <code class="code-inline tex2jax_ignore">void</code>, <code class="code-inline tex2jax_ignore">int</code>, and <code class="code-inline tex2jax_ignore">double</code>, among others. Second, your variable name can consist of letters, numbers, the dollar sign, and the underscore only (no other characters), and may not begin with a number. This means that you cannot have a space in a variable name.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-2-4-2-1-declaring-variables-6" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsubsec-2-4-2-1-declaring-variables-6">There are certain rules which govern what can be a variable name. First, you can’t use a Java reserved word as a variable name. Reserved words are words with special meaning to Java. Reserved words you’ve seen include <code class="code-inline tex2jax_ignore">public</code>, <code class="code-inline tex2jax_ignore">class</code>, <code class="code-inline tex2jax_ignore">static</code>, <code class="code-inline tex2jax_ignore">void</code>, <code class="code-inline tex2jax_ignore">int</code>, and <code class="code-inline tex2jax_ignore">double</code>, among others. You can see a full list of Java’s reserved words <a class="external" href="https://docs.oracle.com/javase/tutorial/java/nutsandbolts/_keywords.html" target="_blank">here</a>. Second, your variable name can consist of letters, numbers, the dollar sign, and the underscore only (no other characters), and may not begin with a number. This means that you cannot have a space in a variable name.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-2-4-2-1-declaring-variables-6" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="para" id="subsubsec-2-4-2-1-declaring-variables-7">Java is case sensitive, meaning that it recognizes the difference between uppercase and lowercase letters. Therefore, <code class="code-inline tex2jax_ignore">numberOfPages</code> and <code class="code-inline tex2jax_ignore">numberofpages</code> are two different names. Mistyping a name is a common and frustrating error, but most programming editors (including Eclipse) have an autocomplete feature to help prevent it. If you type control-space while you’re typing a name in Eclipse, it will offer you a menu of options that include the text you’ve typed.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-2-4-2-1-declaring-variables-7" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="para" id="subsubsec-2-4-2-1-declaring-variables-8">You may have noticed that when a variable name consists of more than one word, the words are run together with the first letter of each word capitalized. This is called <dfn class="terminology">camelCase</dfn>, and it is the convention for naming variables in Java. (In other words, Java doesn’t care if you use camelCase, but Java programmers are accustomed to variables being named with camelCase.)<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-2-4-2-1-declaring-variables-8" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsubsec-2-4-2-1-declaring-variables-8">You may have noticed that when a variable name consists of more than one word, the words are run together with the first letter of each word capitalized. This is called camelCase, and it is the convention for naming variables in Java. (In other words, Java doesn’t care if you use camelCase, but Java programmers are accustomed to variables being named with camelCase.)<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-2-4-2-1-declaring-variables-8" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="para" id="subsubsec-2-4-2-1-declaring-variables-9">Most importantly, variable names are meaningful. This means that a variable name clearly communicates what is stored in it, usually drawing from the language of the problem description or domain. For example, if you are told to obtain the number of pages from the user, it makes sense to call the variable <code class="code-inline tex2jax_ignore">numberOfPages</code> and not <code class="code-inline tex2jax_ignore">numSheets</code>, because <code class="code-inline tex2jax_ignore">numberOfPages</code> relates back to the problem description. A person reading your code who is familiar with the problem will immediately know what <code class="code-inline tex2jax_ignore">numberOfPages</code> is, whereas <code class="code-inline tex2jax_ignore">numSheets</code> will be unfamiliar.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-2-4-2-1-declaring-variables-9" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsubsec-2-4-2-1-declaring-variables-9">Most importantly, variable names are meaningful. This means that a variable name clearly communicates what is stored in it, usually drawing from the language of the problem description or domain. For example, if you are told to obtain the number of pages from the user, it makes sense to call the variable <code class="code-inline tex2jax_ignore">numberOfPages</code> and not <code class="code-inline tex2jax_ignore">numSheets</code>, because <code class="code-inline tex2jax_ignore">numberOfPages</code> relates back to the problem description. A person reading your code who is familiar with the problem will immediately know what <code class="code-inline tex2jax_ignore">numberOfPages</code> is, whereas <code class="code-inline tex2jax_ignore">numSheets</code> might be confusing.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-2-4-2-1-declaring-variables-9" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="para" id="subsubsec-2-4-2-1-declaring-variables-10">To assign a value to a variable—to put a value in its container—use an assignment statement. To write an assignment statement, write the variable name, the assignment operator, which is the equals sign, and then an expression that evaluates to the same type as the variable. Here are examples of assignment statements with some of the variables we declared above:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-2-4-2-1-declaring-variables-10" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
@@ -1129,7 +1276,7 @@ numberOfPages = stdin.nextInt();
 firstLetter = 'A';
 area = length * width;
 </code></pre></div>
-<div class="para" id="subsubsec-2-4-2-1-declaring-variables-12">It is also allowed to declare a variable and assign a value to it on the same line, as in:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-2-4-2-1-declaring-variables-12" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsubsec-2-4-2-1-declaring-variables-12">You can also declare a variable and assign a value to it on the same line, as in:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-2-4-2-1-declaring-variables-12" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="code-box"><pre class="program clipboardable"><code class="language-java">double average = 0.0;
 </code></pre></div>
@@ -1163,7 +1310,7 @@ area = length * width;
 </div>
 <figcaption><span class="type">Figure</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">2.5<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><div class="autopermalink" aria-hidden="true" data-description="Figure 2.5: Stack and heap in memory"><a tabindex="-1" href="#figure-stack-heap-memory" title="Copy heading and permalink for Figure 2.5: Stack and heap in memory" aria-label="Copy heading and permalink for Figure 2.5: Stack and heap in memory">🔗</a></div></figcaption>
 </figure>
-<div class="para" id="subsubsec-2-4-2-2-where-variables-live-8">Once a method is finished executing, its frame is removed from the call stack and the variables declared in the method, called <dfn class="terminology">local variables</dfn>, no longer exist. We think of the existence of variables in two different ways: their <dfn class="terminology">lifetime</dfn>, which refers to when the memory space physically exists on the call stack, and their <dfn class="terminology">scope</dfn>, which refers to where that variable can be seen and used in the program.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-2-4-2-2-where-variables-live-8" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsubsec-2-4-2-2-where-variables-live-8">Once a method is finished executing, its frame is removed from the call stack and the variables declared in the method, called local variables, no longer exist. We think of the existence of variables in two different ways: their lifetime, which refers to when the memory space physically exists on the call stack, and their scope, which refers to where that variable can be seen and used in the program.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-2-4-2-2-where-variables-live-8" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="para" id="subsubsec-2-4-2-2-where-variables-live-9">The lifetime of a local variable begins when the method is called and ends when the method finishes and its frame is removed. The scope of a variable begins at its declaration and ends at the closing curly brace of the block it was declared in. In our program, all of our local variables come into scope at their declaration within <code class="code-inline tex2jax_ignore">main</code>, and go out of scope at the closing curly brace at the end of <code class="code-inline tex2jax_ignore">main</code>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-2-4-2-2-where-variables-live-9" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
@@ -1177,7 +1324,7 @@ area = length * width;
 </h3>
 <div class="para" id="subsubsec-2-4-2-3-constants-2">As the name implies, variables are designed to vary—their values can change throughout the execution of a program. Often, however, your program needs to work with values that should never change while the program runs. Examples of values that shouldn’t change while a program is running include mathematical constants such as pi, conversion factors such as the number of seconds in a minute, and organizational rules, such as the maximum number of attempted logins.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-2-4-2-3-constants-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="para" id="subsubsec-2-4-2-3-constants-3">In Java, a variable whose value cannot be changed once initialized is called a <dfn class="terminology">constant</dfn>. To turn a regular variable into a constant, add the <code class="code-inline tex2jax_ignore">final</code> keyword before the data type:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-2-4-2-3-constants-3" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsubsec-2-4-2-3-constants-3">In Java, a variable whose value cannot be changed once initialized is called a constant. To turn a regular variable into a constant, add the <code class="code-inline tex2jax_ignore">final</code> keyword before the data type:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-2-4-2-3-constants-3" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="code-box"><pre class="program clipboardable"><code class="language-java">final double SALES_TAX_RATE = 0.0625;
 final int INCHES_PER_FOOT   = 12;
@@ -1185,10 +1332,10 @@ final int INCHES_PER_FOOT   = 12;
 <div class="para" id="subsubsec-2-4-2-3-constants-5">The <code class="code-inline tex2jax_ignore">final</code> keyword acts as a permanent lock on that memory location. If you accidentally attempt to assign a new value to a <code class="code-inline tex2jax_ignore">final</code> variable later in the program, the Java compiler will flag the line with an error.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-2-4-2-3-constants-5" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="code-box"><pre class="program clipboardable"><code class="language-java">final int MAX_ATTEMPTS = 3;
-MAX_ATTEMPTS = 4; 
+MAX_ATTEMPTS = 4;
 // ERROR: The final local variable MAX_ATTEMPTS cannot be assigned.
 </code></pre></div>
-<div class="para" id="subsubsec-2-4-2-3-constants-7">Earlier, we saw that variables use camelCase and classes use PascalCase. For constants, Java follows a completely different convention: all uppercase letters with words separated by underscores, often called <dfn class="terminology">UPPER_SNAKE_CASE</dfn>. This formatting immediately alerts anyone reading your code that this identifier represents a permanent, read-only value. You will see this convention in Java’s standard library with constants like <code class="code-inline tex2jax_ignore">Math.PI</code> and <code class="code-inline tex2jax_ignore">Integer.MAX_VALUE</code>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-2-4-2-3-constants-7" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsubsec-2-4-2-3-constants-7">Earlier, we saw that variables use camelCase and classes use PascalCase. For constants, Java follows a completely different convention: all uppercase letters with words separated by underscores, often called UPPER_SNAKE_CASE. This formatting immediately alerts anyone reading your code that this identifier represents a permanent, read-only value. You will see this convention in Java’s standard library with constants like <code class="code-inline tex2jax_ignore">Math.PI</code> and <code class="code-inline tex2jax_ignore">Integer.MAX_VALUE</code>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-2-4-2-3-constants-7" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="para" id="subsubsec-2-4-2-3-constants-8">Beginners often wonder why they should use constants, rather than simply typing the literal values into the code. Using constants provides three major software engineering benefits:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-2-4-2-3-constants-8" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
@@ -1222,6 +1369,148 @@ double total = subtotal + (subtotal * SALES_TAX_RATE);   // Named constant
 <div class="para" id="subsubsec-2-4-2-3-constants-10">From a memory perspective, a <code class="code-inline tex2jax_ignore">final</code> local variable is stored on the stack in the exact same way as a standard variable. The only difference is that the compiler enforces a strict rule: once a value is written into that memory slot, no statement in your program is allowed to overwrite it.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-2-4-2-3-constants-10" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="autopermalink" aria-hidden="true" data-description="Subsubsection 2.4.2.3: Constants (Using the final Keyword)"><a tabindex="-1" href="#subsubsec-2-4-2-3-constants" title="Copy heading and permalink for Subsubsection 2.4.2.3: Constants (Using the final Keyword)" aria-label="Copy heading and permalink for Subsubsection 2.4.2.3: Constants (Using the final Keyword)">🔗</a></div>
+</section>
+<section class="reading-questions" id="checkpoint-2-4-2">
+<h3 class="heading hide-type">
+<span class="type">Reading Questions</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">2.4.2.4</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Checkpoint</span>
+</h3>
+<article class="exercise exercise-like" id="checkpoint-2-4-2-identifiers"><h4 class="heading">
+<span class="codenumber">1<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Classifying Identifiers.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone cardsort_section"><ul data-component="dragndrop" data-question_label="" style="visibility: hidden;" id="rs-checkpoint-2-4-2-identifiers">
+<span data-subcomponent="question">
+<div class="para" id="checkpoint-2-4-2-identifiers-2-1">Match each identifier to what it represents in Java.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-2-4-2-identifiers-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div></span><li data-subcomponent="draggable" id="rs-checkpoint-2-4-2-identifiers_drag1" data-category="1"><code class="code-inline tex2jax_ignore">SALES_TAX_RATE</code></li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-2-4-2-identifiers_drag1" data-category="1">Constant</li>
+<li data-subcomponent="draggable" id="rs-checkpoint-2-4-2-identifiers_drag2" data-category="2"><code class="code-inline tex2jax_ignore">elapsedTime</code></li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-2-4-2-identifiers_drag2" data-category="2">Variable</li>
+<li data-subcomponent="draggable" id="rs-checkpoint-2-4-2-identifiers_drag3" data-category="3"><code class="code-inline tex2jax_ignore">MulchCalculator</code></li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-2-4-2-identifiers_drag3" data-category="3">Class name</li>
+<li data-subcomponent="draggable" id="rs-checkpoint-2-4-2-identifiers_drag4" data-category="4"><code class="code-inline tex2jax_ignore">2ndAttempt</code></li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-2-4-2-identifiers_drag4" data-category="4">Invalid identifier (cannot start with a digit)</li>
+</ul></div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 2.4.2.4.1: Classifying Identifiers"><a tabindex="-1" href="#checkpoint-2-4-2-identifiers" title="Copy heading and permalink for Reading Question 2.4.2.4.1: Classifying Identifiers" aria-label="Copy heading and permalink for Reading Question 2.4.2.4.1: Classifying Identifiers">🔗</a></div>
+</article>
+<article class="exercise exercise-like" id="checkpoint-2-4-2-stack-heap"><h4 class="heading">
+<span class="codenumber">2<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Stack and Heap Storage.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone multiplechoice_section">
+<div class="exercise-statement">
+<div class="para" id="checkpoint-2-4-2-stack-heap-2-1">Consider <code class="code-inline tex2jax_ignore">double length = 30.0;</code> and <code class="code-inline tex2jax_ignore">Scanner stdin = new Scanner(System.in);</code> inside <code class="code-inline tex2jax_ignore">main</code>. How are <code class="code-inline tex2jax_ignore">length</code> and <code class="code-inline tex2jax_ignore">stdin</code> stored in memory?<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-2-4-2-stack-heap-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</div>
+<ul data-component="multiplechoice" class="exercise-interactives" id="rs-checkpoint-2-4-2-stack-heap" data-multipleanswers="false" data-random="">
+<li data-component="answer" id="rs-checkpoint-2-4-2-stack-heap_opt_a" data-correct="">
+<div class="para" id="checkpoint-2-4-2-stack-heap-3-1-1-1">Both variables live in <code class="code-inline tex2jax_ignore">main</code>’s stack frame: <code class="code-inline tex2jax_ignore">length</code> holds <code class="code-inline tex2jax_ignore">30.0</code> directly, while <code class="code-inline tex2jax_ignore">stdin</code> holds a reference to a <code class="code-inline tex2jax_ignore">Scanner</code> object on the heap.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-4-2-stack-heap_opt_a">
+<div class="para" id="checkpoint-2-4-2-stack-heap-3-1-2-1">Correct! Local primitive variables store their values directly on the stack, while object variables store a heap memory address on the stack.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-2-4-2-stack-heap_opt_b">
+<div class="para" id="checkpoint-2-4-2-stack-heap-3-2-1-1">
+<code class="code-inline tex2jax_ignore">length</code> is stored in <code class="code-inline tex2jax_ignore">main</code>’s stack frame, while <code class="code-inline tex2jax_ignore">stdin</code> is stored entirely on the heap with no space reserved on the stack.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-4-2-stack-heap_opt_b">
+<div class="para" id="checkpoint-2-4-2-stack-heap-3-2-2-1">Not quite. Space for the reference variable <code class="code-inline tex2jax_ignore">stdin</code> is still allocated in <code class="code-inline tex2jax_ignore">main</code>’s stack frame; only the <code class="code-inline tex2jax_ignore">Scanner</code> object itself lives on the heap.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-2-4-2-stack-heap_opt_c">
+<div class="para" id="checkpoint-2-4-2-stack-heap-3-3-1-1">Both <code class="code-inline tex2jax_ignore">length</code> and <code class="code-inline tex2jax_ignore">stdin</code> store their data values on the heap, and the stack only keeps track of their variable names.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-4-2-stack-heap_opt_c">
+<div class="para" id="checkpoint-2-4-2-stack-heap-3-3-2-1">Not quite. Primitive values like <code class="code-inline tex2jax_ignore">double</code> are stored directly on the stack, not on the heap.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-2-4-2-stack-heap_opt_d">
+<div class="para" id="checkpoint-2-4-2-stack-heap-3-4-1-1">
+<code class="code-inline tex2jax_ignore">length</code> is stored on the heap because it is a <code class="code-inline tex2jax_ignore">double</code>, while <code class="code-inline tex2jax_ignore">stdin</code> is stored directly on the stack.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-4-2-stack-heap_opt_d">
+<div class="para" id="checkpoint-2-4-2-stack-heap-3-4-2-1">Not quite. <code class="code-inline tex2jax_ignore">double</code> is a primitive type stored on the stack, whereas <code class="code-inline tex2jax_ignore">new Scanner(System.in)</code> allocates an object on the heap.</div>
+</li>
+</ul>
+</div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 2.4.2.4.2: Stack and Heap Storage"><a tabindex="-1" href="#checkpoint-2-4-2-stack-heap" title="Copy heading and permalink for Reading Question 2.4.2.4.2: Stack and Heap Storage" aria-label="Copy heading and permalink for Reading Question 2.4.2.4.2: Stack and Heap Storage">🔗</a></div>
+</article>
+<article class="exercise exercise-like" id="checkpoint-2-4-2-assignment-calc"><h4 class="heading">
+<span class="codenumber">3<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Tracing Assignment Statements.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone multiplechoice_section">
+<div class="exercise-statement">
+<div class="para" id="checkpoint-2-4-2-assignment-calc-2-1">What is the value of <code class="code-inline tex2jax_ignore">area</code> after these statements execute?<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-2-4-2-assignment-calc-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div> <div class="code-box"><pre class="program clipboardable"><code class="language-java">int length = 5;
+int width = 3;
+int area = length * width;
+length = 10;
+</code></pre></div>
+</div>
+<ul data-component="multiplechoice" class="exercise-interactives" id="rs-checkpoint-2-4-2-assignment-calc" data-multipleanswers="false" data-random="">
+<li data-component="answer" id="rs-checkpoint-2-4-2-assignment-calc_opt_a" data-correct="">
+<div class="para" id="checkpoint-2-4-2-assignment-calc-3-1-1-1"><code class="code-inline tex2jax_ignore">15</code></div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-4-2-assignment-calc_opt_a">
+<div class="para" id="checkpoint-2-4-2-assignment-calc-3-1-2-1">Correct! <code class="code-inline tex2jax_ignore">area</code> is assigned <code class="code-inline tex2jax_ignore">5 * 3</code> (<code class="code-inline tex2jax_ignore">15</code>) on line 3. Changing <code class="code-inline tex2jax_ignore">length</code> to <code class="code-inline tex2jax_ignore">10</code> afterward does not recalculate <code class="code-inline tex2jax_ignore">area</code>.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-2-4-2-assignment-calc_opt_b">
+<div class="para" id="checkpoint-2-4-2-assignment-calc-3-2-1-1"><code class="code-inline tex2jax_ignore">30</code></div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-4-2-assignment-calc_opt_b">
+<div class="para" id="checkpoint-2-4-2-assignment-calc-3-2-2-1">Not quite. An assignment statement calculates the value at the moment it executes—it does not link <code class="code-inline tex2jax_ignore">area</code> to update automatically when <code class="code-inline tex2jax_ignore">length</code> changes later.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-2-4-2-assignment-calc_opt_c">
+<div class="para" id="checkpoint-2-4-2-assignment-calc-3-3-1-1"><code class="code-inline tex2jax_ignore">10</code></div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-4-2-assignment-calc_opt_c">
+<div class="para" id="checkpoint-2-4-2-assignment-calc-3-3-2-1">Not quite. <code class="code-inline tex2jax_ignore">10</code> is the final value of <code class="code-inline tex2jax_ignore">length</code>, not <code class="code-inline tex2jax_ignore">area</code>.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-2-4-2-assignment-calc_opt_d">
+<div class="para" id="checkpoint-2-4-2-assignment-calc-3-4-1-1"><code class="code-inline tex2jax_ignore">8</code></div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-4-2-assignment-calc_opt_d">
+<div class="para" id="checkpoint-2-4-2-assignment-calc-3-4-2-1">Not quite. The <code class="code-inline tex2jax_ignore">*</code> operator multiplies <code class="code-inline tex2jax_ignore">length</code> and <code class="code-inline tex2jax_ignore">width</code> rather than adding them.</div>
+</li>
+</ul>
+</div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 2.4.2.4.3: Tracing Assignment Statements"><a tabindex="-1" href="#checkpoint-2-4-2-assignment-calc" title="Copy heading and permalink for Reading Question 2.4.2.4.3: Tracing Assignment Statements" aria-label="Copy heading and permalink for Reading Question 2.4.2.4.3: Tracing Assignment Statements">🔗</a></div>
+</article>
+<article class="exercise exercise-like" id="checkpoint-2-4-2-self-assignment"><h4 class="heading">
+<span class="codenumber">4<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Updating a Variable.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone multiplechoice_section">
+<div class="exercise-statement">
+<div class="para" id="checkpoint-2-4-2-self-assignment-2-1">What is the value of <code class="code-inline tex2jax_ignore">count</code> after these statements execute?<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-2-4-2-self-assignment-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div> <div class="code-box"><pre class="program clipboardable"><code class="language-java">int count = 4;
+count = count + 3;
+count = count * 2;
+</code></pre></div>
+</div>
+<ul data-component="multiplechoice" class="exercise-interactives" id="rs-checkpoint-2-4-2-self-assignment" data-multipleanswers="false" data-random="">
+<li data-component="answer" id="rs-checkpoint-2-4-2-self-assignment_opt_a" data-correct="">
+<div class="para" id="checkpoint-2-4-2-self-assignment-3-1-1-1"><code class="code-inline tex2jax_ignore">14</code></div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-4-2-self-assignment_opt_a">
+<div class="para" id="checkpoint-2-4-2-self-assignment-3-1-2-1">Correct! First <code class="code-inline tex2jax_ignore">count</code> becomes <code class="code-inline tex2jax_ignore">4 + 3 = 7</code>, and then <code class="code-inline tex2jax_ignore">count</code> becomes <code class="code-inline tex2jax_ignore">7 * 2 = 14</code>.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-2-4-2-self-assignment_opt_b">
+<div class="para" id="checkpoint-2-4-2-self-assignment-3-2-1-1"><code class="code-inline tex2jax_ignore">10</code></div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-4-2-self-assignment_opt_b">
+<div class="para" id="checkpoint-2-4-2-self-assignment-3-2-2-1">Not quite. Each assignment statement executes in order from top to bottom, so <code class="code-inline tex2jax_ignore">count</code> is already <code class="code-inline tex2jax_ignore">7</code> before line 3 multiplies by <code class="code-inline tex2jax_ignore">2</code>.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-2-4-2-self-assignment_opt_c">
+<div class="para" id="checkpoint-2-4-2-self-assignment-3-3-1-1"><code class="code-inline tex2jax_ignore">7</code></div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-4-2-self-assignment_opt_c">
+<div class="para" id="checkpoint-2-4-2-self-assignment-3-3-2-1">Not quite. <code class="code-inline tex2jax_ignore">7</code> is the value after the second line, before <code class="code-inline tex2jax_ignore">count = count * 2;</code> executes.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-2-4-2-self-assignment_opt_d">
+<div class="para" id="checkpoint-2-4-2-self-assignment-3-4-1-1">It causes a compiler error because <code class="code-inline tex2jax_ignore">count</code> cannot appear on both sides of <code class="code-inline tex2jax_ignore">=</code>.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-4-2-self-assignment_opt_d">
+<div class="para" id="checkpoint-2-4-2-self-assignment-3-4-2-1">Not quite. In Java, <code class="code-inline tex2jax_ignore">=</code> is the assignment operator, not mathematical equality, so evaluating the right side and storing the result back into <code class="code-inline tex2jax_ignore">count</code> is completely valid.</div>
+</li>
+</ul>
+</div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 2.4.2.4.4: Updating a Variable"><a tabindex="-1" href="#checkpoint-2-4-2-self-assignment" title="Copy heading and permalink for Reading Question 2.4.2.4.4: Updating a Variable" aria-label="Copy heading and permalink for Reading Question 2.4.2.4.4: Updating a Variable">🔗</a></div>
+</article><div class="autopermalink" aria-hidden="true" data-description="Reading Questions 2.4.2.4: Checkpoint"><a tabindex="-1" href="#checkpoint-2-4-2" title="Copy heading and permalink for Reading Questions 2.4.2.4: Checkpoint" aria-label="Copy heading and permalink for Reading Questions 2.4.2.4: Checkpoint">🔗</a></div>
 </section><div class="autopermalink" aria-hidden="true" data-description="Subsection 2.4.2: Variables and Assignment Statements"><a tabindex="-1" href="#subsec-2-4-2-variables-assignments" title="Copy heading and permalink for Subsection 2.4.2: Variables and Assignment Statements" aria-label="Copy heading and permalink for Subsection 2.4.2: Variables and Assignment Statements">🔗</a></div>
 </section><div class="autopermalink" aria-hidden="true" data-description="Section 2.4: Data: Variables, Literals, and Types"><a tabindex="-1" href="#sec-2-4-variables-types" title="Copy heading and permalink for Section 2.4: Data: Variables, Literals, and Types" aria-label="Copy heading and permalink for Section 2.4: Data: Variables, Literals, and Types">🔗</a></div>
 </section>
