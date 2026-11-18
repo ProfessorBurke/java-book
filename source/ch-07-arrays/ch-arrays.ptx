@@ -9,12 +9,13 @@
   <xi:include href="sec-7-5-parallel-arrays.ptx" />
   <xi:include href="sec-7-6-partially-filled-arrays.ptx" />
   <xi:include href="sec-7-7-arraylist.ptx" />
+  <xi:include href="sec-7-8-arrays-of-objects.ptx" />
   <!--
   
   
   
   
-  <xi:include href="sec-5-8-scope-lifetime.ptx" />
+  
   <xi:include href="sec-5-9-method-overloading.ptx" />
   <xi:include href="sec-5-10-javadoc.ptx" />
   <xi:include href="sec-5-11-testing-methods.ptx" />

@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-7-8-arrays-of-objects" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Arrays of Objects</title>
+
+  <introduction>
+    <p>
+      One of the most powerful combinations in programming is storing objects inside arrays and <c>ArrayList</c> collections. An object encapsulates related data and methods, but on its own it represents only a single instance of its type. Most real applications need to manage many instances together. The software you are using right now, for example, tracks collections of GUI components such as menu items and window controls. Similarly, in the community baking case study from Chapter 6, a realistic daily schedule requires a flexibly sized collection of <c>RecipeBatch</c> objects that grows and shrinks as batches start and finish baking.
+    </p>
+
+    <p>
+      You have already worked with collections of built-in objects like <c>String</c> and <c>Integer</c>. Now, we’ll apply those same mechanics to the user-defined <c>Point</c> class you built in Chapter 6. In this section, we’ll examine the syntax, algorithms, and memory model behind arrays and <c>ArrayList</c>s of objects<mdash />including how creating an object array allocates space for references (initially <c>null</c>), rather than the objects themselves..
+    </p>
+  </introduction>
+
+  <subsection xml:id="subsec-7-8-1-syntax">
+    <title>Syntax of Programmer-Defined Object Arrays and ArrayLists</title>
+
+    <p>
+      In <xref ref="sec-6-3-structure" />, we wrote a <c>Point</c> class (<xref ref="listing-point-class" />), which we enhanced in <xref ref="sec-6-7-memory-model" /> by adding a copy constructor (<xref ref="listing-point-copy-constructor" />), and in <xref ref="sec-6-8-tostring-equals" /> by adding <c>equals</c> (<xref ref="listing-point-equals" />) and <c>toString</c> (<xref ref="listing-point-tostring" />) methods. In a drawing application, we might store a polygon as an ordered collection of points (where lines would be drawn between the points, in order, with a final line from the last point back to the first). Let’s look at how we might define an array of objects of the <c>Point</c> class:
+    </p>
+
+    <program language="java"><![CDATA[Point[] polygonArray = new Point[3];]]></program>
+
+    <p>
+      Just as with our other arrays, the variable declaration consists of the array element type followed by square brackets, a space, and the variable name.
+    </p>
+
+    <p>
+      To allocate the array, we write <c>new Point[3]</c>, with the fixed array size in brackets. When we create a new array, we are creating space in the heap for an array of the specified size (in this case, three) object references. There are no <c>Point</c> objects stored in the array, though! Java will fill the array with default <c>null</c> values. <xref ref="fig-7-13-empty-object-array" /> shows our memory after we’ve allocated <c>polygonArray</c>, before we’ve added any objects to it.
+    </p>
+
+    <figure xml:id="fig-7-13-empty-object-array">
+      <caption>Memory immediately after an array of <c>Point</c> objects is allocated.</caption>
+      <image source="figures/figure_7_13.png" width="85%">
+        <shortdescription>Call stack and heap showing polygonArray pointing to a three-element Point array filled with null.</shortdescription>
+        <description>
+          <p>
+            A call stack and heap memory diagram after executing Point[] polygonArray = new Point[3]. The main() frame on the call stack holds args and polygonArray, which stores heap address 0x4200. On the heap at 0x4200 is a Point[] object of length 3 whose slots [0], [1], and [2] all contain null, with no Point objects allocated yet.
+          </p>
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      If we attempted to invoke a method on one of the array elements right now<mdash />while the slots still hold <c>null</c><mdash />the JVM would throw a <c>NullPointerException</c>. With arrays of objects, creating the array and creating the objects in the array are two separate steps. Each object you create requires allocating memory with <c>new</c>.
+    </p>
+
+    <p>
+      Let’s look at how we fill <c>polygonArray</c> with data. Each location in the array can hold a reference to a <c>Point</c> object. Right now, there are no <c>Point</c> objects in memory, but we can create some by using the <c>new</c> keyword and invoking the <c>Point</c> constructor. Try to picture memory after this code executes, before you look at <xref ref="fig-7-14-filled-object-array" />:
+    </p>
+
+    <program language="java"><![CDATA[Point point = new Point(50, 50);
+polygonArray[0] = point;
+polygonArray[1] = new Point(200, 50);
+polygonArray[2] = new Point(125, 150);]]></program>
+
+    <p>
+      We first create a new <c>Point</c> object, assigned to the local variable <c>point</c>. On the next line, we assign the variable to <c>polygonArray[0]</c>, creating an alias. Both variables<mdash /><c>point</c> on the stack and <c>polygonArray[0]</c> in the heap<mdash />reference the new <c>Point</c> <c>(50, 50)</c> in the heap.
+    </p>
+
+    <p>
+      On the next two lines, we create two new <c>Point</c> objects and assign them directly to the next two locations in <c>polygonArray</c>. <xref ref="fig-7-14-filled-object-array" /> illustrates memory after this code has executed. There are three <c>Point</c> objects in the heap, each referenced by one of the slots in <c>polygonArray</c>, also in the heap. The first is also referenced by the local variable <c>point</c>, on the stack.
+    </p>
+
+    <figure xml:id="fig-7-14-filled-object-array">
+      <caption>Memory after filling <c>polygonArray</c>.</caption>
+      <image source="figures/figure_7_14.png" width="85%">
+        <shortdescription>Call stack and heap showing polygonArray slots referencing three Point objects, with point aliasing slot 0.</shortdescription>
+        <description>
+          <p>
+            A call stack and heap memory diagram after populating polygonArray. On the call stack, polygonArray points to the Point[] at 0x4200, and local variable point points to the Point object (50, 50) at 0x5100. On the heap, polygonArray[0] also points to 0x5100, polygonArray[1] points to (200, 50) at 0x5200, and polygonArray[2] points to (125, 150) at 0x5300.
+          </p>
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      Note that because both <c>point</c> and <c>polygonArray[0]</c> reference the same object in memory, invoking a mutator from either reference (e.g. <c>point.translate(10, 0)</c>) changes the object for both.
+    </p>
+
+    <p>
+      We can also use array initializer syntax to initialize an array of objects. The values we pass to the initializer can be references to objects that have already been allocated, or we can use the <c>new</c> keyword, invoke one of the object’s constructors, and allocate directly in the initializer. This code will create an equivalent allocation in memory to <xref ref="fig-7-14-filled-object-array" />, and illustrates that a variable that’s referencing a <c>Point</c> object or direct allocation will both work in an array initializer:
+    </p>
+
+    <program language="java"><![CDATA[Point point = new Point(50, 50);
+Point[] polygonArray = {
+    point,
+    new Point(200, 50),
+    new Point(125, 150)
+};]]></program>
+
+    <p>
+      More typically, we’ll read values from a file or from the console, use them to instantiate an object, and then store the object in the next array location in a loop:
+    </p>
+
+    <program language="java"><![CDATA[for (int i = 0; i < polygonArray.length; i++) {
+    System.out.print("Enter x and y for vertex " + i + ": ");
+    double x = stdin.nextDouble();
+    double y = stdin.nextDouble();
+    polygonArray[i] = new Point(x, y);
+}]]></program>
+
+    <p>
+      An <c>ArrayList</c> can only hold objects, so every example you’ve seen so far has been an <c>ArrayList</c> of objects. But the autoboxing of primitive types and Java’s <c>String</c> syntactic sugar hide the <c>new</c> keyword from us. To create an <c>ArrayList</c> of <c>Point</c> objects and add three <c>Point</c> objects to it, we again use <c>new</c> to create the <c>ArrayList</c> and then <c>new</c> for each <c>Point</c>, and again, we can alias an existing object or create object references that are stored only in the <c>ArrayList</c>. This code creates an <c>ArrayList</c> equivalent to the array we just created:
+    </p>
+
+    <program language="java"><![CDATA[ArrayList<Point> polygonList = new ArrayList<>();
+Point point = new Point(50, 50);
+polygonList.add(point);
+polygonList.add(new Point(200, 50));
+polygonList.add(new Point(125, 150));]]></program>
+  </subsection>
+
+  <subsection xml:id="subsec-7-8-2-invoking-methods">
+    <title>Invoking Methods on Array and ArrayList Objects</title>
+
+    <p>
+      To invoke a method on an object in an array, use dot notation and the method call on <c>arrayName[index]</c>, for example:
+    </p>
+
+    <program language="java"><![CDATA[polygonArray[0].translate(10, 10);]]></program>
+
+    <p>
+      This can look a little intimidating at first, but if you break it down, it is just an object reference<mdash /><c>polygonArray[0]</c> holds a reference to a <c>Point</c> object<mdash />followed by a dot and then the method name and parameter list. If you’re invoking a value-returning method, be sure to use the result in an expression, such as the right side of an assignment statement or in a calculation:
+    </p>
+
+    <program language="java"><![CDATA[double distance = polygonArray[0].distanceFromOrigin();
+double difference = Math.abs(polygonArray[0].getX() - polygonArray[1].getX());]]></program>
+
+    <p>
+      It is important to check that an object reference is non-null before accessing it. This code averages the distance from the origin of all the <c>Point</c> objects in <c>polygonArray</c>:
+    </p>
+
+    <program language="java"><![CDATA[double total = 0;
+int count = 0;
+for (int i = 0; i < polygonArray.length; i++) {
+    if (polygonArray[i] != null) {
+        total += polygonArray[i].distanceFromOrigin();
+        count++;
+    }
+}
+if (count != 0) {
+    System.out.printf("The average distance is %.1f.%n", total / count);
+} else {
+    System.out.println("There are no points.");
+}]]></program>
+
+    <p>
+      In this indexing <c>for</c> loop, we iterate over <c>polygonArray</c>’s indices. Within the loop, we first check that a slot in the array is non-null with <c>polygonArray[i] != null</c> before invoking the <c>distanceFromOrigin</c> method on the object and adding it to our <c>total</c>.
+    </p>
+
+    <p>
+      To average the values, we’re also counting them with a counter that is initialized to zero before the loop and incremented each time there is a non-null object in the array. After the loop, we avoid a divide-by-zero error by checking that <c>count</c> is non-zero before dividing the <c>total</c> by <c>count</c>.
+    </p>
+
+    <p>
+      If we run this code on an array that is initialized, before any objects have been added, it prints:
+    </p>
+
+    <console>
+      <output>There are no points.</output>
+    </console>
+
+    <p>
+      If there is at least one <c>Point</c> object in the array, the code correctly calculates the average by totaling the distances and counting up the number of objects before the computation. (Note also that because <c>total</c> is a <c>double</c>, a floating-point division will automatically be calculated, so we don’t need to cast either variable to avoid integer division.)
+    </p>
+
+    <p>
+      You can use an enhanced <c>for</c> loop to iterate over an array of objects as well:
+    </p>
+
+    <program language="java"><![CDATA[for (Point polyPoint : polygonArray) {
+    if (polyPoint != null) {
+        total += polyPoint.distanceFromOrigin();
+        count++;
+    }
+}]]></program>
+
+    <p>
+      This is easier to read, but remember that if you need to change what’s stored at a location in the array (e.g., storing an object reference, as in the loop that creates <c>Point</c> objects and stores them in the array) you will need to use an indexed <c>for</c> loop. However, you can accomplish changes to each individual object in the array with an enhanced <c>for</c> loop by invoking a mutator (such as <c>translate</c>).
+    </p>
+
+    <p>
+      Let’s look at the syntax for the same operations with an <c>ArrayList</c>. To access an element, we invoke the <c>get</c> method with the element index. To invoke a method, we then use the dot notation followed by the method name and parameter list. Assuming our <c>ArrayList</c> <c>polygonList</c>:
+    </p>
+
+    <program language="java"><![CDATA[polygonList.get(0).translate(10, 10);
+double distance = polygonList.get(0).distanceFromOrigin();
+double difference = Math.abs(polygonList.get(0).getX() - polygonList.get(1).getX());]]></program>
+
+    <p>
+      As with an array, we can use both an index-controlled <c>for</c> loop or an enhanced <c>for</c> loop to invoke methods on objects in the <c>ArrayList</c>:
+    </p>
+
+    <program language="java"><![CDATA[double total = 0;
+int count = 0;
+for (int i = 0; i < polygonList.size(); i++) {
+    if (polygonList.get(i) != null) {
+        total += polygonList.get(i).distanceFromOrigin();
+        count++;
+    }
+}
+if (count != 0) {
+    System.out.printf("The average distance is %.1f.%n", total / count);
+} else {
+    System.out.println("There are no points.");
+}]]></program>
+
+    <p>
+      Or:
+    </p>
+
+    <program language="java"><![CDATA[for (Point polyPoint : polygonList) {
+    if (polyPoint != null) {
+        total += polyPoint.distanceFromOrigin();
+        count++;
+    }
+}]]></program>
+
+    <p>
+      Notice, when iterating over an <c>ArrayList</c>:
+    </p>
+
+    <ul>
+      <li>
+        <p>
+          We still check that an element isn’t <c>null</c>. Even though a new <c>ArrayList</c> starts empty (with <c>size()</c> equal to <c>0</c>), <c>null</c> references can still be explicitly added to the list, so it is best practice to check before invoking a method on a reference.
+        </p>
+      </li>
+      <li>
+        <p>
+          The <c>get(i)</c> invocation evaluates to an object of type <c>Point</c> (if it’s not a <c>null</c> reference). We can therefore chain a call to <c>distanceFromOrigin</c> to that call, which is similar to invoking a method on <c>polygonArray[i]</c>.
+        </p>
+      </li>
+      <li>
+        <p>
+          As with the array example, the enhanced <c>for</c> loop code is easier to read and will still allow modifying an object by invoking a mutator method.
+        </p>
+      </li>
+    </ul>
+  </subsection>
+
+  <subsection xml:id="subsec-7-8-3-most-wanted">
+    <title>Returning an Object Reference: The Most-Wanted Pattern</title>
+
+    <p>
+      When we used the most-wanted holder pattern in <xref ref="subsubsec-7-7-3-2-most-wanted" />, <c>findHighest</c> returned a primitive <c>int</c>. With a collection of objects, you will often want a method to find the <q>best-fit</q> object<mdash />such as the highest-scoring player, the earliest appointment, or the <c>Point</c> farthest from the origin<mdash />and return the object itself.
+    </p>
+
+    <p>
+      In Java, returning an object really means returning a reference to that object on the heap:
+    </p>
+
+    <program language="java"><![CDATA[/**
+ * Finds the Point in points that is farthest from the origin.
+ *
+ * Precondition: points != null
+ * Postcondition: Returns a reference to the Point with the greatest
+ *                distanceFromOrigin(), or null if points is empty
+ *                or contains only null references.
+ *
+ * @param points  An ArrayList of Point objects.
+ * @return        The farthest Point, or null if none exist.
+ */
+public static Point findFarthest(ArrayList<Point> points) {
+    assert points != null : "points is null";
+
+    Point farthest = null;
+    double maxDistance = -1.0;
+
+    for (Point p : points) {
+        if (p != null) {
+            double dist = p.distanceFromOrigin();
+            if (dist > maxDistance) {
+                maxDistance = dist;
+                farthest = p;
+            }
+        }
+    }
+    return farthest;
+}]]></program>
+
+    <p>
+      Let’s trace how this works:
+    </p>
+
+    <ol>
+      <li>
+        <title>Initializing the holder to <c>null</c></title>
+        <p>
+          In <xref ref="subsubsec-7-7-3-2-most-wanted" />, we initialized <c>highest</c> to <c>values.get(0)</c> because we required the list to be non-empty. Here, <c>points</c> might be empty, or some of its slots might hold <c>null</c>. Initializing <c>farthest</c> to <c>null</c> and <c>maxDistance</c> to <c>-1.0</c> (since a distance can never be negative) lets the method handle those cases safely without crashing.
+        </p>
+      </li>
+      <li>
+        <title>Guarding each element</title>
+        <p>
+          Inside the enhanced <c>for</c> loop, <c>if (p != null)</c> ensures we never invoke <c>distanceFromOrigin()</c> on a <c>null</c> reference, which would trigger a <c>NullPointerException</c>.
+        </p>
+      </li>
+      <li>
+        <title>Updating the holder</title>
+        <p>
+          Whenever <c>p</c> is farther from the origin than <c>maxDistance</c>, we update <c>maxDistance</c> and set <c>farthest = p;</c>. Notice that <c>farthest = p;</c> does not copy the <c>Point</c> object<mdash />it simply copies the heap address stored in <c>p</c> into <c>farthest</c>.
+        </p>
+      </li>
+      <li>
+        <title>Returning a reference</title>
+        <p>
+          When <c>findFarthest</c> returns <c>farthest</c>, the caller receives a reference to that existing <c>Point</c> on the heap (or <c>null</c> if no non-null <c>Point</c> was found).
+        </p>
+      </li>
+    </ol>
+
+    <p>
+      Because <c>findFarthest</c> can return <c>null</c>, the caller should check the return value before invoking a method on it:
+    </p>
+
+    <program language="java"><![CDATA[Point outer = findFarthest(polygonList);
+if (outer != null) {
+    System.out.println("Farthest point: " + outer);
+} else {
+    System.out.println("No points to compare.");
+}]]></program>
+
+    <p>
+      And remember: because <c>outer</c> and <c>polygonList.get(...)</c> point to the exact same <c>Point</c> object in memory, calling a mutator like <c>outer.translate(10, 10)</c> would also change that <c>Point</c> inside <c>polygonList</c>. <xref ref="fig-7-15-find-farthest" /> illustrates how <c>outer</c> in <c>main</c> and the slot in <c>polygonList</c> share the same heap object after <c>findFarthest</c> returns.
+    </p>
+
+    <figure xml:id="fig-7-15-find-farthest">
+      <caption>Memory after <c>findFarthest</c> is called on an <c>ArrayList</c> of three <c>Point</c> objects.</caption>
+      <image source="figures/figure_7_15.png" width="85%">
+        <shortdescription>Call stack and heap showing outer and polygonList[1] both referencing the Point (200, 50) at 0x5200.</shortdescription>
+        <description>
+          <p>
+            A call stack and heap memory diagram after calling findFarthest(polygonList). On the call stack, polygonList points to the ArrayList of three Point references at 0x4200, and outer stores 0x5200. On the heap, slot [1] of the ArrayList and outer on the stack both point to the same Point object (200, 50) at 0x5200, which has the greatest distance from the origin (approximately 206.2).
+          </p>
+        </description>
+      </image>
+    </figure>
+  </subsection>
+
+  <subsection xml:id="subsec-7-8-4-copying">
+    <title>Copying Object Arrays</title>
+
+    <introduction>
+      <p>
+        In <xref ref="sec-6-7-memory-model" />, you saw that assigning one object variable to another (<c>p2 = p1;</c>) copies only the reference, creating an alias, whereas a copy constructor (<c>new Point(p1)</c>) creates an independent duplicate on the heap. The exact same distinction applies when you copy an array or <c>ArrayList</c> of objects<mdash />except now there are two layers of references to think about.
+      </p>
+    </introduction>
+
+    <subsubsection xml:id="subsubsec-7-8-4-1-aliasing">
+      <title>Copying the Collection Reference (Aliasing the Whole Array)</title>
+
+      <p>
+        If you write:
+      </p>
+
+      <program language="java"><![CDATA[Point[] alias = polygonArray;]]></program>
+
+      <p>
+        no new array is created at all. Both <c>alias</c> and <c>polygonArray</c> point to the exact same <c>Point[]</c> on the heap. Changing a slot in <c>alias</c> (such as <c>alias[0] = new Point(0, 0);</c>) immediately changes <c>polygonArray[0]</c>.
+      </p>
+
+      <figure xml:id="fig-7-16-array-alias">
+        <caption>An array alias made with the assignment operator.</caption>
+        <image source="figures/figure_7_16.png" width="85%">
+          <shortdescription>Call stack and heap showing polygonArray and alias both pointing to the same Point[] at 0x4200.</shortdescription>
+          <description>
+            <p>
+              A call stack and heap memory diagram illustrating an array alias. Both polygonArray and alias in the main() stack frame store the same heap address 0x4200, pointing to a single Point[] array whose three slots reference the Point objects at 0x5100, 0x5200, and 0x5300.
+            </p>
+          </description>
+        </image>
+      </figure>
+    </subsubsection>
+
+    <subsubsection xml:id="subsubsec-7-8-4-2-shallow-copy">
+      <title>Shallow Copy (New Array, Shared Objects)</title>
+
+      <p>
+        Suppose instead that we allocate a new array of the same length and copy each element from <c>polygonArray</c> into it:
+      </p>
+
+      <program language="java"><![CDATA[Point[] shallowCopy = new Point[polygonArray.length];
+for (int i = 0; i < polygonArray.length; i++) {
+    shallowCopy[i] = polygonArray[i];
+}]]></program>
+
+      <p>
+        This creates a shallow copy: <c>shallowCopy</c> is a separate <c>Point[]</c> object on the heap, so reassigning <c>shallowCopy[0] = new Point(0, 0);</c> will not replace <c>polygonArray[0]</c>.
+      </p>
+
+      <p>
+        However, each slot in <c>shallowCopy</c> still holds the exact same heap address as the corresponding slot in <c>polygonArray</c>. If you mutate one of the shared <c>Point</c> objects through <c>shallowCopy</c>:
+      </p>
+
+      <program language="java"><![CDATA[shallowCopy[1].translate(10, 10);]]></program>
+
+      <p>
+        you will see that <c>polygonArray[1]</c> moved too, because both arrays point to the same <c>Point</c> object in memory.
+      </p>
+
+      <p>
+        Built-in shortcuts like <c>Arrays.copyOf(polygonArray, polygonArray.length)</c> and <c>new ArrayList&lt;&gt;(polygonList)</c> also perform shallow copies. They duplicate the array or list structure, not the objects inside it.
+      </p>
+
+      <figure xml:id="fig-7-17-shallow-copy">
+        <caption>A shallow object array copy.</caption>
+        <image source="figures/figure_7_17.png" width="85%">
+          <shortdescription>Call stack and heap showing two separate Point[] arrays pointing to the same three Point objects.</shortdescription>
+          <description>
+            <p>
+              A call stack and heap memory diagram illustrating a shallow copy. On the call stack, polygonArray points to 0x4200 and shallowCopy points to 0x4400. On the heap, both arrays are separate Point[] objects, but their corresponding slots [0], [1], and [2] hold the same addresses (0x5100, 0x5200, and 0x5300) and therefore share the same three Point objects.
+            </p>
+          </description>
+        </image>
+      </figure>
+    </subsubsection>
+
+    <subsubsection xml:id="subsubsec-7-8-4-3-deep-copy">
+      <title>Deep Copy (New Array, New Objects)</title>
+
+      <p>
+        When you want two collections to be completely independent<mdash />so that mutating an object in the copy never affects the original<mdash />you must perform a deep copy. To deep-copy an array of objects, allocate a new array and construct a duplicate of each non-null element using its copy constructor (like the <c>Point</c> copy constructor we wrote in <xref ref="listing-point-copy-constructor" />):
+      </p>
+
+      <program language="java"><![CDATA[Point[] deepCopy = new Point[polygonArray.length];
+for (int i = 0; i < polygonArray.length; i++) {
+    if (polygonArray[i] != null) {
+        deepCopy[i] = new Point(polygonArray[i]);
+    }
+}]]></program>
+
+      <p>
+        And the same pattern works for an <c>ArrayList&lt;Point&gt;</c>:
+      </p>
+
+      <program language="java"><![CDATA[ArrayList<Point> deepListCopy = new ArrayList<>();
+for (Point p : polygonList) {
+    if (p != null) {
+        deepListCopy.add(new Point(p));
+    } else {
+        deepListCopy.add(null);
+    }
+}]]></program>
+
+      <p>
+        Notice two important details in both deep-copy loops:
+      </p>
+
+      <ul>
+        <li>
+          <title>Check for <c>null</c> first</title>
+          <p>
+            Our <c>Point</c> copy constructor requires a non-null argument (<c>assert toCopy != null</c>), so we guard with <c>if (polygonArray[i] != null)</c> before calling <c>new Point(...)</c>. (In the array version, any skipped slot simply stays <c>null</c>; in the <c>ArrayList</c> version, the <c>else</c> branch preserves <c>null</c> slots at the same indices.)
+          </p>
+        </li>
+        <li>
+          <title>Complete independence</title>
+          <p>
+            Because <c>new Point(...)</c> allocates a fresh <c>Point</c> on the heap for every element, calling <c>deepCopy[1].translate(10, 10)</c> moves only the <c>Point</c> in <c>deepCopy</c>, leaving <c>polygonArray[1]</c> untouched.
+          </p>
+        </li>
+      </ul>
+
+      <figure xml:id="fig-7-18-deep-copy">
+        <caption>A deep copy of an array of objects.</caption>
+        <image source="figures/figure_7_18.png" width="85%">
+          <shortdescription>Call stack and heap showing polygonArray and deepCopy pointing to separate arrays and separate cloned Point objects.</shortdescription>
+          <description>
+            <p>
+              A call stack and heap memory diagram illustrating a deep copy. On the call stack, polygonArray points to 0x4200 and deepCopy points to 0x4400. On the heap, 0x4200 points to the original Point objects at 0x5100, 0x5200, and 0x5300, while 0x4400 points to three independent cloned Point objects at 0x6100, 0x6200, and 0x6300.
+            </p>
+          </description>
+        </image>
+      </figure>
+    </subsubsection>
+  </subsection>
+</section>

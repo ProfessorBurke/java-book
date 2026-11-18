@@ -882,7 +882,9 @@ System.out.println(p1 == p2); // false (0x100 != 0x200; they are distinct object
         Let's add a copy constructor to the <c>Point</c> class:
       </p>
 
-      <program language="java" line-numbers="yes">
+<listing xml:id="listing-point-copy-constructor">
+        <caption>A copy constructor for the <c>Point</c> class</caption>
+        <program language="java" line-numbers="yes">
     /**
      * Constructs a new Point with the same coordinates as an existing Point.
      *
@@ -894,7 +896,8 @@ System.out.println(p1 == p2); // false (0x100 != 0x200; they are distinct object
         assert toCopy != null : "Cannot copy a null Point";
         this(toCopy.x, toCopy.y);
     }
-      </program>
+        </program>
+      </listing>
 
       <p>
         Here we follow the constructor chaining pattern, invoking the primary two-parameter 
