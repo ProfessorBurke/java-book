@@ -525,7 +525,7 @@ for (int i = 0; i < scores.size(); i++) {
       </li>
       <li>
         <p>
-          You are working with multidimensional grids (such as a 2D table or image pixels, covered in Section 7.9) or native C/C++ libraries.
+          You are working with multidimensional grids (such as a two-dimensional table or image pixels, covered in Section 7.9) or native C/C++ libraries.
         </p>
       </li>
     </ul>

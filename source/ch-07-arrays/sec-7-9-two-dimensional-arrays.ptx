@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-7-9-two-dimensional-arrays" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Two-Dimensional Arrays</title>
+
+  <introduction>
+    <p>
+      So far, every array and <c>ArrayList</c> we have written stores a single linear sequence of elements. Many real-world problems, however, organize data into rows and columns: a spreadsheet, a seating chart, a digital image of pixels, a game board, or a terrain elevation map. To model two-dimensional grids in Java, we use a two-dimensional array.
+    </p>
+  </introduction>
+
+  <subsection xml:id="subsec-7-9-1-declarations">
+    <title>Declarations, Initializer Lists, and Memory Layout</title>
+
+    <p>
+      To declare and allocate a rectangular two-dimensional array of integers with <c>3</c> rows and <c>4</c> columns, we write:
+    </p>
+
+    <program language="java"><![CDATA[int[][] grid = new int[3][4];]]></program>
+
+    <p>
+      Notice the two pairs of square brackets. The data type for a two-dimensional array is the data type of the elements followed by two sets of empty square brackets. When allocating a two-dimensional array, the first bracket contains the number of rows (<c>3</c>), and the second bracket contains the number of columns (<c>4</c>). Just like one-dimensional arrays, both row and column indices are zero-based<mdash />valid row indices run from <c>0</c> to <c>2</c>, and valid column indices run from <c>0</c> to <c>3</c>. To read or assign an individual cell, provide both indices:
+    </p>
+
+    <program language="java"><![CDATA[grid[0][0] = 10;   // Top-left cell (row 0, column 0)
+grid[2][3] = 99;   // Bottom-right cell (row 2, column 3)]]></program>
+
+    <p>
+      In Java, a two-dimensional array is not a single flat block of memory. Instead, a two-dimensional array is an array of arrays<mdash />an outer one-dimensional array whose elements are references to individual one-dimensional row arrays on the heap (just as <c>Point[]</c> in <xref ref="sec-7-8-arrays-of-objects" /> held references to <c>Point</c> objects). For <c>grid</c> (<c>int[3][4]</c>):
+    </p>
+
+    <ul>
+      <li>
+        <p>
+          <c>grid</c> holds a reference to an outer array of length <c>3</c>.
+        </p>
+      </li>
+      <li>
+        <p>
+          Each slot (<c>grid[0]</c>, <c>grid[1]</c>, <c>grid[2]</c>) holds a reference to its own <c>int[]</c> row array of length <c>4</c>, initialized to <c>0</c>.
+        </p>
+      </li>
+    </ul>
+
+    <p>
+      Because <c>grid</c> is an array of row arrays, <c>grid.length</c> reports the number of rows (<c>3</c>), while <c>grid[r].length</c> reports the number of columns in row <c>r</c> (<c>4</c>).
+    </p>
+
+    <p>
+      You can also create and populate a two-dimensional array in one step using nested initializer lists, where each inner <c>{ ... }</c> represents one row:
+    </p>
+
+    <program language="java"><![CDATA[int[][] scores = {
+    {85, 92, 78, 90},
+    {88, 76, 95, 84},
+    {91, 89, 82, 94}
+};]]></program>
+
+    <p>
+      Here, <c>scores</c> has <c>3</c> rows (<c>scores.length == 3</c>) and <c>4</c> columns (<c>scores[0].length == 4</c>).
+    </p>
+
+    <p>
+      We might illustrate <c>scores</c> as a vertical array holding references to three horizontal arrays, as in <xref ref="fig-7-19-2d-array-scores" />.
+    </p>
+
+    <figure xml:id="fig-7-19-2d-array-scores">
+      <caption>The <c>scores</c> array<mdash />an array of arrays.</caption>
+      <image source="figures/figure_7_19.png" width="85%">
+        <shortdescription>Abstract diagram of scores as a three-element vertical array pointing to three four-element horizontal row arrays.</shortdescription>
+        <description>
+          <p>
+            An abstract diagram of the two-dimensional scores array. The variable scores points to a vertical three-element outer array (scores.length == 3) indexed [0], [1], and [2]. Each slot holds a pointer to a separate horizontal four-element int array (scores[0].length == 4): row 0 holds 85, 92, 78, 90; row 1 holds 88, 76, 95, 84; and row 2 holds 91, 89, 82, 94.
+          </p>
+        </description>
+      </image>
+    </figure>
+  </subsection>
+
+  <subsection xml:id="subsec-7-9-2-nested-traversals">
+    <title>Nested Loop Traversals: Row-Major vs. Column-Major</title>
+
+    <p>
+      Processing every element in a two-dimensional array requires nested loops<mdash />one loop to step through one dimension, and an inner loop to step through the other. Depending on which dimension you place in the outer loop, you get two standard traversal orders:
+    </p>
+
+    <ol>
+      <li>
+        <title>Row-major traversal (across each horizontal row)</title>
+        <p>
+          Put the <c>row</c> index in the outer loop and the <c>col</c> index in the inner loop. For each row, the inner loop visits every column from left to right before moving down to the next row:
+        </p>
+        <program language="java"><![CDATA[for (int row = 0; row < scores.length; row++) {
+    for (int col = 0; col < scores[row].length; col++) {
+        System.out.print(scores[row][col] + "\t");
+    }
+    System.out.println();
+}]]></program>
+        <p>
+          Notice that the inner loop uses <c>scores[row].length</c> rather than a hard-coded number (or <c>scores[0].length</c>). That habit keeps your loop bound tied to the actual row being visited.
+        </p>
+        <p>
+          You can also write a read-only row-major traversal with nested enhanced <c>for</c> loops, which makes the <q>array of arrays</q> structure explicit<mdash />the outer loop pulls out one <c>int[]</c> row at a time, and the inner loop steps through each <c>int</c> in that row:
+        </p>
+        <program language="java"><![CDATA[for (int[] row : scores) {
+    for (int val : row) {
+        System.out.print(val + "\t");
+    }
+    System.out.println();
+}]]></program>
+      </li>
+      <li>
+        <title>Column-major traversal (down each vertical column)</title>
+        <p>
+          Put the <c>col</c> index in the outer loop and the <c>row</c> index in the inner loop. For each column, the inner loop visits every row from top to bottom before moving right to the next column:
+        </p>
+        <program language="java"><![CDATA[for (int col = 0; col < scores[0].length; col++) {
+    for (int row = 0; row < scores.length; row++) {
+        System.out.print(scores[row][col] + "\t");
+    }
+    System.out.println();
+}]]></program>
+        <p>
+          Note that using <c>scores[0].length</c> in the outer loop assumes <c>scores</c> is rectangular and has at least one row.
+        </p>
+      </li>
+    </ol>
+  </subsection>
+
+  <subsection xml:id="subsec-7-9-3-grid-algorithms">
+    <title>Grid Algorithms</title>
+
+    <subsubsection xml:id="subsubsec-7-9-3-1-summing">
+      <title>Summing Rows and Summing Columns</title>
+
+      <p>
+        Choosing between row-major and column-major order depends on how you want to group your results. Suppose each row in <c>scores</c> represents a student and each column represents a quiz.
+      </p>
+
+      <p>
+        To compute each student's total (a row sum), use row-major order and reset <c>rowTotal</c> to <c>0</c> at the start of each <c>row</c> iteration:
+      </p>
+
+      <program language="java"><![CDATA[for (int row = 0; row < scores.length; row++) {
+    int rowTotal = 0;
+    for (int col = 0; col < scores[row].length; col++) {
+        rowTotal += scores[row][col];
+    }
+    System.out.println("Student " + row + " total: " + rowTotal);
+}]]></program>
+
+      <p>
+        To compute the class average on each quiz (a column sum), switch to column-major order and reset <c>colTotal</c> to <c>0</c> at the start of each <c>col</c> iteration:
+      </p>
+
+      <program language="java"><![CDATA[for (int col = 0; col < scores[0].length; col++) {
+    int colTotal = 0;
+    for (int row = 0; row < scores.length; row++) {
+        colTotal += scores[row][col];
+    }
+    double quizAvg = (double) colTotal / scores.length;
+    System.out.printf("Quiz %d average: %.1f%n", col, quizAvg);
+}]]></program>
+
+      <figure xml:id="fig-7-20-row-vs-column-major">
+        <caption>Example of row-major vs. column-major traversal.</caption>
+        <image source="figures/figure_7_20.png" width="90%">
+          <shortdescription>Side-by-side comparison of row-major traversal summing student rows and column-major traversal averaging quiz columns.</shortdescription>
+          <description>
+            <p>
+              Two side-by-side 3-by-4 grids of the scores table (rows Student 0 to 2, columns Quiz 0 to 3). On the left, Row-Major Traversal shows horizontal arrows across each row producing student totals 345, 343, and 356. On the right, Column-Major Traversal shows downward arrows down each column producing quiz averages 88.0, 85.7, 85.0, and 89.3.
+            </p>
+          </description>
+        </image>
+      </figure>
+    </subsubsection>
+
+    <subsubsection xml:id="subsubsec-7-9-3-2-grid-extremes">
+      <title>Finding Grid Extremes</title>
+
+      <p>
+        To find the largest or smallest value across an entire two-dimensional grid, adapt the most-wanted holder pattern: initialize <c>highest</c> to <c>grid[0][0]</c> (assuming at least one row and one column) and compare every cell in a nested loop:
+      </p>
+
+      <program language="java"><![CDATA[/**
+ * Finds the highest value in a non-empty rectangular two-dimensional array.
+ *
+ * Precondition: grid != null, grid.length > 0, and grid[0].length > 0
+ * Postcondition: Returns the greatest integer value in grid.
+ *
+ * @param grid  A non-empty two-dimensional array of integers.
+ * @return      The maximum value stored in grid.
+ */
+public static int findGridMax(int[][] grid) {
+    assert grid != null && grid.length > 0 && grid[0].length > 0 : "grid is empty";
+
+    int highest = grid[0][0];
+    for (int row = 0; row < grid.length; row++) {
+        for (int col = 0; col < grid[row].length; col++) {
+            if (grid[row][col] > highest) {
+                highest = grid[row][col];
+            }
+        }
+    }
+    return highest;
+}]]></program>
+
+      <p>
+        Note the parameter type in this example<mdash /><c>grid</c> is a two-dimensional array of integers, so the parameter type is <c>int[][]</c>. This is our standard most-wanted holder algorithm in which we set the most-wanted holder variable <c>highest</c> to the element at <c>[0][0]</c> in the array. Unlike a single-dimensional loop (which can start at index <c>1</c>), both loops here still start at <c>0</c>: starting <c>row</c> at <c>1</c> would skip the rest of row <c>0</c>, and starting <c>col</c> at <c>1</c> would skip column <c>0</c> in every other row<mdash />so starting at <c>[0][0]</c> simply compares that first cell to itself once and ensures every other cell is checked.
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="subsubsec-7-9-3-3-board-games">
+      <title>Board Game Representations</title>
+
+      <p>
+        Two-dimensional arrays are also a natural fit for board games and spatial maps. For example, a Tic-Tac-Toe board can be represented as a 3&#x00D7;3 <c>char[][]</c> array where empty squares hold <c>' '</c> and player moves hold <c>'X'</c> or <c>'O'</c>:
+      </p>
+
+      <program language="java"><![CDATA[char[][] board = {
+    {'X', 'O', ' '},
+    {' ', 'X', 'O'},
+    {' ', ' ', 'X'}
+};]]></program>
+
+      <p>
+        Checking whether any row has three matching marks uses a single loop over <c>row</c>:
+      </p>
+
+      <program language="java"><![CDATA[boolean rowWin = false;
+for (int row = 0; row < board.length; row++) {
+    if (board[row][0] != ' '
+            && board[row][0] == board[row][1]
+            && board[row][1] == board[row][2]) {
+        rowWin = true;
+    }
+}]]></program>
+
+      <p>
+        Notice the <c>board[row][0] != ' '</c> check first<mdash />without it, three blank spaces in an unplayed row would falsely count as a match.
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="subsubsec-7-9-3-4-ragged-arrays">
+      <title>Non-Rectangular (Ragged) Arrays</title>
+
+      <p>
+        Because a two-dimensional array in Java is an array of independent row references, the row arrays do not all have to be the same length. A two-dimensional array with rows of different lengths is called a ragged array.
+      </p>
+
+      <p>
+        You can create a ragged array with an initializer list:
+      </p>
+
+      <program language="java"><![CDATA[int[][] triangle = {
+    {1},
+    {1, 2},
+    {1, 2, 3}
+};]]></program>
+
+      <p>
+        Or you can allocate the outer array first (leaving the column size blank) and then allocate each row separately:
+      </p>
+
+      <program language="java"><![CDATA[int[][] ragged = new int[3][];
+ragged[0] = new int[2];
+ragged[1] = new int[4];
+ragged[2] = new int[1];]]></program>
+
+      <p>
+        In this ragged array, <c>ragged[0].length</c> is <c>2</c>, <c>ragged[1].length</c> is <c>4</c>, and <c>ragged[2].length</c> is <c>1</c>. That is why using <c>grid[row].length</c> as the inner loop bound in row-major traversals is so important: it works reliably for both rectangular and ragged arrays without risking an <c>ArrayIndexOutOfBoundsException</c>.
+      </p>
+
+      <p>
+        Because rows can have different lengths, the idea of a uniform <q>column</q> doesn't really apply to a ragged array, which means a standard column-major traversal won't work safely across all rows. Ragged arrays are useful whenever each row has a known but different size<mdash />such as storing daily temperatures for each month of the year (<c>31</c>, <c>28</c>, <c>31</c>, <c>30</c>, … days), theater seating rows, or a triangular city-to-city mileage chart.
+      </p>
+    </subsubsection>
+  </subsection>
+</section>
