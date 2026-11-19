@@ -1,0 +1,626 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-7-10-searching-sorting" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Searching, Sorting, and Time Complexity</title>
+
+  <introduction>
+    <p>
+      Once you can store data in arrays and <c>ArrayList</c> collections, two of the most common tasks you will perform are searching for a specific value and sorting elements into order. Almost every application relies on them<mdash />looking up a student ID in a roster, finding a contact on your phone, or displaying products from lowest to highest price.
+    </p>
+
+    <p>
+      As collections grow from dozens of items to millions, how you search and sort starts to matter just as much as whether your code produces the right answer. In this section, we’ll implement standard searching and sorting algorithms, see why sorting unlocks much faster searching, and introduce time complexity<mdash />a standardized way to describe how the time an algorithm takes depends on the size of its input, independent of the computer hardware running it.
+    </p>
+  </introduction>
+
+  <subsection xml:id="subsec-7-10-1-sequential-search">
+    <title>Sequential (Linear) Search</title>
+
+    <subsubsection xml:id="subsubsec-7-10-1-1-algorithm">
+      <title>The Sequential Search Algorithm</title>
+
+      <p>
+        Suppose you have an unsorted array of integers and want to know whether a target value appears in it<mdash />and if so, at what index. Because the elements are in no particular order, you have no choice but to start at index <c>0</c> and examine elements one by one until you either find <c>target</c> or reach the end of the array. This approach is called sequential search (or linear search).
+      </p>
+
+      <p>
+        By convention, a search method returns the index of the first matching element, or <c>-1</c> if the target is not found (since <c>-1</c> is never a valid array index):
+      </p>
+
+      <program language="java"><![CDATA[/**
+ * Searches arr sequentially for target.
+ *
+ * Precondition: arr != null
+ * Postcondition: Returns the index of the first occurrence of target in arr,
+ *                or -1 if target is not in arr.
+ *
+ * @param arr     An array of integers.
+ * @param target  The integer value to search for.
+ * @return        The index of target, or -1 if not found.
+ */
+public static int sequentialSearch(int[] arr, int target) {
+    assert arr != null : "arr is null";
+
+    int index = 0;
+    boolean found = false;
+    int result = -1;
+
+    while (index < arr.length && !found) {
+        if (arr[index] == target) {
+            found = true;
+            result = index;
+        } else {
+            index++;
+        }
+    }
+    return result;
+}]]></program>
+
+      <p>
+        Let’s walk through how <c>sequentialSearch</c> works on <c>int[] nums = {18, 42, 7, 35, 12};</c> when searching for <c>target = 35</c> (illustrated in <xref ref="fig-7-21-sequential-search" />):
+      </p>
+
+      <ol>
+        <li>
+          <p>
+            We initialize <c>index</c> to <c>0</c>, <c>found</c> to <c>false</c>, and <c>result</c> to <c>-1</c>.
+          </p>
+        </li>
+        <li>
+          <p>
+            In the <c>while</c> loop, we check two things: we haven't walked past the end of the array (<c>index &lt; arr.length</c>), and we haven't found the target yet (<c>!found</c>).
+          </p>
+        </li>
+        <li>
+          <p>
+            At <c>index = 0</c>, <c>nums[0]</c> is <c>18</c>, which does not equal <c>35</c>, so <c>index</c> increments to <c>1</c>. At <c>index = 1</c> (<c>42</c>) and <c>index = 2</c> (<c>7</c>), the same happens.
+          </p>
+        </li>
+        <li>
+          <p>
+            At <c>index = 3</c>, <c>nums[3]</c> equals <c>35</c>. We set <c>found = true</c> and <c>result = 3</c>.
+          </p>
+        </li>
+        <li>
+          <p>
+            On the next check of the <c>while</c> condition, <c>!found</c> is <c>false</c>, so the loop terminates and the method returns <c>3</c>. If we had searched for <c>99</c> instead, <c>index</c> would reach <c>5</c> (<c>nums.length</c>), <c>index &lt; arr.length</c> would become <c>false</c>, and the method would return <c>-1</c>.
+          </p>
+        </li>
+      </ol>
+
+      <figure xml:id="fig-7-21-sequential-search">
+        <caption>Walking through a sequential search.</caption>
+        <image source="figures/figure_7_21.png" width="85%">
+          <shortdescription>Four-step trace of sequentialSearch on {18, 42, 7, 35, 12} with index advancing from 0 to 3.</shortdescription>
+          <description>
+            <p>
+              A four-step trace of sequentialSearch searching {18, 42, 7, 35, 12} for target = 35. Step 1 checks index 0 (18 != 35), Step 2 checks index 1 (42 != 35), Step 3 checks index 2 (7 != 35), and Step 4 checks index 3 (35 == 35), setting found = true and result = 3.
+            </p>
+          </description>
+        </image>
+      </figure>
+    </subsubsection>
+
+    <subsubsection xml:id="subsubsec-7-10-1-2-complexity">
+      <title>Sequential Search Complexity</title>
+
+      <p>
+        How fast is <c>sequentialSearch</c>? Rather than measuring in seconds (which depends on your computer's hardware), computer scientists count how many basic operations an algorithm performs as a function of the input size <m>n</m> (here, <c>arr.length</c>). We express this growth rate using Big-O notation:
+      </p>
+
+      <ul>
+        <li>
+          <title>Constant time <mdash /> <m>O(1)</m></title>
+          <p>
+            An operation whose work does not depend on <m>n</m>. Reading or writing an array element like <c>arr[index]</c> takes <m>O(1)</m> time. Because an array's memory on the heap is contiguous (stored side by side in sequential memory slots), the JVM can jump straight to any element in a single step by calculating an offset from the array's starting address<mdash />whether the array has 5 elements or 5 million.
+          </p>
+        </li>
+        <li>
+          <title>Linear time <mdash /> <m>O(n)</m></title>
+          <p>
+            An operation whose work grows in direct proportion to <m>n</m>. In <c>sequentialSearch</c>:
+          </p>
+          <ul>
+            <li>
+              <title>Best case</title>
+              <p>
+                <c>target</c> is at index <c>0</c> (1 comparison, <m>O(1)</m>).
+              </p>
+            </li>
+            <li>
+              <title>Average case</title>
+              <p>
+                If <c>target</c> is in the array, you check roughly <m>n / 2</m> elements on average. In Big-O notation, we drop constant multipliers like <m>1 / 2</m>, so this is still <m>O(n)</m>.
+              </p>
+            </li>
+            <li>
+              <title>Worst case</title>
+              <p>
+                <c>target</c> is at the very end of the array or not present at all, forcing the loop to inspect all <m>n</m> elements (<m>O(n)</m>).
+              </p>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <p>
+        When comparing algorithms, computer scientists usually focus on worst-case performance because it gives a guarantee that the algorithm will never take longer than that bound.
+      </p>
+    </subsubsection>
+  </subsection>
+
+  <subsection xml:id="subsec-7-10-2-selection-sort">
+    <title>Selection Sort</title>
+<introduction>
+      <p>
+        Searching an unsorted array takes <m>O(n)</m> time. If the array is small<mdash />or if you only need to search a large array once<mdash />a single pass is hard to beat. But when <m>n</m> is large and you need to search the same data millions of times, starting over from index <c>0</c> on every lookup becomes a serious bottleneck. Sorting arranges an array's elements into ascending (or descending) order, which both makes data easier for humans to read and unlocks much faster searching.
+      </p>
+    </introduction>
+
+    <subsubsection xml:id="subsubsec-7-10-2-1-algorithm">
+      <title>The Selection Sort Algorithm</title>
+
+      <p>
+        In selection sort, we divide the array into two regions: a sorted partition on the left (initially empty) and an unsorted partition on the right (initially the entire array). On each pass:
+      </p>
+
+      <ol>
+        <li>
+          <p>
+            Scan the unsorted partition to find the index of its smallest element (the same most-wanted pattern you saw earlier in this chapter).
+          </p>
+        </li>
+        <li>
+          <p>
+            Swap that smallest element with the first element of the unsorted partition.
+          </p>
+        </li>
+        <li>
+          <p>
+            Advance the boundary between the sorted and unsorted partitions one position to the right.
+          </p>
+        </li>
+      </ol>
+
+      <p>
+        We repeat this process until the unsorted partition has only one element left, which must already be in its final place.
+      </p>
+
+      <p>
+        To keep the sorting loop easy to follow, we use a <c>swap</c> helper method (based on the three-step swap we wrote in <xref ref="listing-swap-elements" />) to exchange two elements in an array:
+      </p>
+
+      <program language="java"><![CDATA[/**
+ * Swaps the elements at indices i and j in arr.
+ *
+ * Precondition: arr != null, 0 <= i < arr.length, 0 <= j < arr.length
+ * Postcondition: arr[i] and arr[j] have exchanged values.
+ *
+ * @param arr  The array containing the elements to swap.
+ * @param i    The index of the first element.
+ * @param j    The index of the second element.
+ */
+public static void swap(int[] arr, int i, int j) {
+    assert arr != null : "arr is null";
+    assert i >= 0 && i < arr.length : "i out of bounds";
+    assert j >= 0 && j < arr.length : "j out of bounds";
+
+    int temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+}
+
+/**
+ * Sorts arr into ascending order using selection sort.
+ *
+ * Precondition: arr != null
+ * Postcondition: Elements of arr are arranged from smallest to largest.
+ *
+ * @param arr  The array of integers to sort.
+ */
+public static void selectionSort(int[] arr) {
+    assert arr != null : "arr is null";
+
+    for (int i = 0; i < arr.length - 1; i++) {
+        // Find the index of the smallest element in the unsorted partition.
+        int minIndex = i;
+        for (int j = i + 1; j < arr.length; j++) {
+            if (arr[j] < arr[minIndex]) {
+                minIndex = j;
+            }
+        }
+        // Swap the smallest element into position i.
+        if (minIndex != i) {
+            swap(arr, i, minIndex);
+        }
+    }
+}]]></program>
+
+      <p>
+        Let’s trace <c>selectionSort</c> on <c>int[] nums = {29, 10, 14, 37, 13};</c> (shown in <xref ref="fig-7-22-selection-sort" />):
+      </p>
+
+      <ul>
+        <li>
+          <title>Pass <c>i = 0</c></title>
+          <p>
+            Everything from index <c>0</c> to <c>4</c> is unsorted. <c>minIndex</c> starts at <c>0</c> (<c>29</c>). The inner loop (<c>j = 1</c> to <c>4</c>) finds <c>10</c> at index <c>1</c> (<c>minIndex = 1</c>). We swap the values at indices <c>0</c> and <c>1</c>, giving <c>{10 | 29, 14, 37, 13}</c>. Now <c>10</c> is in the sorted partition.
+          </p>
+        </li>
+        <li>
+          <title>Pass <c>i = 1</c></title>
+          <p>
+            The unsorted partition starts at index <c>1</c>. The inner loop (<c>j = 2</c> to <c>4</c>) finds <c>13</c> at index <c>4</c>. We swap the values at indices <c>1</c> and <c>4</c>, giving <c>{10, 13 | 14, 37, 29}</c>.
+          </p>
+        </li>
+        <li>
+          <title>Pass <c>i = 2</c></title>
+          <p>
+            The inner loop (<c>j = 3</c> to <c>4</c>) finds <c>14</c> at index <c>2</c>. It is already in position, so no swap is needed. <c>{10, 13, 14 | 37, 29}</c>.
+          </p>
+        </li>
+        <li>
+          <title>Pass <c>i = 3</c></title>
+          <p>
+            The unsorted partition starts at index <c>3</c> (<c>37</c>). The inner loop checks <c>j = 4</c> (<c>29</c>). <c>29 &lt; 37</c>, so the elements at indices <c>3</c> and <c>4</c> are swapped, giving us <c>{10, 13, 14, 29, 37}</c>. Only one element remains in the unsorted partition, so the array is sorted.
+          </p>
+        </li>
+      </ul>
+
+      <p>
+        Notice why the outer loop stops at <c>arr.length - 1</c>: once the first <m>n - 1</m> elements are in their final positions, the last element is automatically in the right place.
+      </p>
+
+      <figure xml:id="fig-7-22-selection-sort">
+        <caption>Walking through a selection sort.</caption>
+        <image source="figures/figure_7_22.png" width="90%">
+          <shortdescription>Bar-chart trace of selectionSort on {29, 10, 14, 37, 13} showing sorted and unsorted partitions across four passes.</shortdescription>
+          <description>
+            <p>
+              A bar-chart trace of selectionSort on {29, 10, 14, 37, 13}. Four pass panels plus a final Sorted Array panel show bar heights proportional to values, with a dashed vertical divider and diagonal hatching separating the Sorted partition on the left from the Unsorted partition on the right, along with i, min, and swap arcs.
+            </p>
+          </description>
+        </image>
+      </figure>
+    </subsubsection>
+
+    <subsubsection xml:id="subsubsec-7-10-2-2-complexity">
+      <title>Selection Sort Complexity</title>
+
+      <p>
+        In selection sort, the outer loop runs <m>n - 1</m> times. The inner loop scans <m>n - 1</m> elements on the first pass, <m>n - 2</m> on the second, and so on down to <m>1</m>:
+      </p>
+
+      <md>(n - 1) + (n - 2) + \dots + 1 = \frac{n(n - 1)}{2} = \frac{1}{2}n^2 - \frac{1}{2}n</md>
+
+      <p>
+        In Big-O notation, we keep only the fastest-growing term (<m>n^2</m>) and drop constant factors (<m>1 / 2</m>), so selection sort runs in quadratic time<mdash /><m>O(n^2)</m>. Even if the array is already sorted, selection sort still scans the remaining unsorted partition on every pass, so its best, average, and worst cases are all <m>O(n^2)</m>.
+      </p>
+    </subsubsection>
+  </subsection>
+
+  <subsection xml:id="subsec-7-10-3-other-sorts">
+    <title>Other Sorting Algorithms</title>
+
+    <p>
+      Selection sort is straightforward to trace, but computer scientists have developed many sorting algorithms because different algorithms shine in different situations:
+    </p>
+
+    <ul>
+      <li>
+        <title>Insertion Sort (<m>O(n^2)</m> worst case, <m>O(n)</m> best case)</title>
+        <p>
+          Like sorting a hand of playing cards, insertion sort takes the next element from the unsorted partition and shifts larger elements in the sorted partition to the right until it finds the right spot to insert it. Although it is still <m>O(n^2)</m> in the worst case (a reverse-sorted array), it runs in near-linear <m>O(n)</m> time when the array is already mostly sorted.
+        </p>
+      </li>
+      <li>
+        <title>Bubble Sort (<m>O(n^2)</m>)</title>
+        <p>
+          Repeatedly steps through the array, compares adjacent pairs, and swaps them if they are out of order, causing larger values to <q>bubble</q> to the end on each pass. It is easy to describe, though generally slower in practice than insertion sort because it performs many swaps.
+        </p>
+      </li>
+      <li>
+        <title>Faster <m>O(n \log n)</m> Sorts (Merge Sort and Quicksort)</title>
+        <p>
+          For large datasets, <m>O(n^2)</m> becomes impractical<mdash />sorting 1,000,000 items can take roughly a trillion steps. Production libraries use divide-and-conquer algorithms such as Merge Sort and Quicksort, which run in <m>O(n \log n)</m> time.
+        </p>
+      </li>
+    </ul>
+
+    <p>
+      In your own Java programs, you rarely need to write a sorting method from scratch. Java’s standard library provides <c>Arrays.sort(arr)</c> (for arrays, in <c>java.util.Arrays</c>) and <c>Collections.sort(list)</c> (for <c>ArrayList</c>s, in <c>java.util.Collections</c>), both of which use highly tuned <m>O(n \log n)</m> algorithms.
+    </p>
+  </subsection>
+
+  <subsection xml:id="subsec-7-10-4-binary-search">
+    <title>Binary Search</title>
+
+    <subsubsection xml:id="subsubsec-7-10-4-1-algorithm">
+      <title>The Binary Search Algorithm</title>
+
+      <p>
+        Suppose you are looking up a name in a printed dictionary or an alphabetized phone book. You don't start on page 1 and read one line at a time<mdash />you open near the middle, check whether your target comes before or after that page, and immediately rule out half the book.
+      </p>
+
+      <p>
+        Binary search applies that same divide-and-conquer strategy to an array. However, it comes with one strict precondition: the array must already be sorted.
+      </p>
+
+      <p>
+        Here is how binary search works:
+      </p>
+
+      <ol>
+        <li>
+          <p>
+            Track the active search range with two indices: <c>low</c> (initially <c>0</c>) and <c>high</c> (initially <c>arr.length - 1</c>).
+          </p>
+        </li>
+        <li>
+          <p>
+            While <c>low &lt;= high</c> and we haven't found <c>target</c>:
+          </p>
+          <ul>
+            <li>
+              <p>
+                Compute the middle index: <c>mid = (low + high) / 2</c> (or <c>low + (high - low) / 2</c> to avoid integer overflow on huge arrays).
+              </p>
+            </li>
+            <li>
+              <p>
+                If <c>arr[mid] == target</c>, we found it! Save <c>mid</c> and set <c>found = true</c>.
+              </p>
+            </li>
+            <li>
+              <p>
+                If <c>target &lt; arr[mid]</c>, <c>target</c> can only be in the left half, so discard the right half by setting <c>high = mid - 1</c>.
+              </p>
+            </li>
+            <li>
+              <p>
+                Otherwise (<c>target &gt; arr[mid]</c>), <c>target</c> can only be in the right half, so discard the left half by setting <c>low = mid + 1</c>.
+              </p>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <p>
+            If the loop ends with <c>low &gt; high</c> without finding <c>target</c>, return <c>-1</c>.
+          </p>
+        </li>
+      </ol>
+
+      <program language="java"><![CDATA[/**
+ * Searches a sorted array arr for target using binary search.
+ *
+ * Precondition: arr != null and arr is sorted in ascending order
+ * Postcondition: Returns an index where target occurs in arr,
+ *                or -1 if target is not in arr.
+ *
+ * @param arr     A sorted array of integers.
+ * @param target  The integer value to search for.
+ * @return        An index of target, or -1 if not found.
+ */
+public static int binarySearch(int[] arr, int target) {
+    assert arr != null : "arr is null";
+
+    int low = 0;
+    int high = arr.length - 1;
+    boolean found = false;
+    int result = -1;
+
+    while (low <= high && !found) {
+        int mid = (low + high) / 2;
+        if (arr[mid] == target) {
+            found = true;
+            result = mid;
+        } else if (target < arr[mid]) {
+            high = mid - 1;
+        } else {
+            low = mid + 1;
+        }
+    }
+    return result;
+}]]></program>
+
+      <p>
+        Let’s trace <c>binarySearch</c> on <c>int[] sorted = {10, 13, 14, 29, 37, 45, 58};</c> searching for <c>target = 45</c> (illustrated in <xref ref="fig-7-23-binary-search" />):
+      </p>
+
+      <ul>
+        <li>
+          <title>Step 1</title>
+          <p>
+            <c>low = 0</c>, <c>high = 6</c>. <c>mid = (0 + 6) / 2 = 3</c>. <c>sorted[3]</c> is <c>29</c>. Since <c>45 &gt; 29</c>, we eliminate indices <c>0</c> through <c>3</c> and set <c>low = 4</c>.
+          </p>
+        </li>
+        <li>
+          <title>Step 2</title>
+          <p>
+            <c>low = 4</c>, <c>high = 6</c>. <c>mid = (4 + 6) / 2 = 5</c>. <c>sorted[5]</c> is <c>45</c>. We have a match! We set <c>found = true</c> and <c>result = 5</c>, exit the loop, and return <c>5</c>.
+          </p>
+        </li>
+      </ul>
+
+      <figure xml:id="fig-7-23-binary-search">
+        <caption>A binary search.</caption>
+        <image source="figures/figure_7_23.png" width="85%">
+          <shortdescription>Two-step trace of binarySearch on {10, 13, 14, 29, 37, 45, 58} for target 45 with hatched eliminated region.</shortdescription>
+          <description>
+            <p>
+              A two-step trace of binarySearch on {10, 13, 14, 29, 37, 45, 58} searching for target = 45. Step 1 sets low = 0, mid = 3 (value 29), and high = 6, eliminating indices 0 through 3. Step 2 marks indices 0 through 3 with diagonal hatching and a dashed divider, sets low = 4, mid = 5 (value 45), and high = 6, and finds the match at index 5.
+            </p>
+          </description>
+        </image>
+      </figure>
+    </subsubsection>
+	
+	<p>
+	Note that our algorithm to compute the middle index is using integer division. An array index must be an integer (there is no element at index 2.5, for example), so an integer division to find mid is the correct choice. 
+	</p>
+
+    <subsubsection xml:id="subsubsec-7-10-4-2-complexity">
+      <title>Binary Search Complexity</title>
+
+      <p>
+        Because every comparison cuts the remaining search space in half, binary search runs in logarithmic time<mdash /><m>O(\log n)</m>. (In computer science, <m>\log n</m> means <m>\log_2 n</m><mdash />the number of times you can divide <m>n</m> by <m>2</m> before reaching <m>1</m>.)
+      </p>
+
+      <p>
+        To see how dramatic that difference is, <xref ref="table-big-o-summary" /> compares the worst-case operations across the four Big-O classes we have seen:
+      </p>
+
+      <table xml:id="table-big-o-summary">
+        <title>Worst-case operations across Big-O complexity classes</title>
+        <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+          <col width="14%"/>
+          <col width="16%"/>
+          <col width="28%"/>
+          <col width="20%"/>
+          <col width="22%"/>
+          <row header="yes">
+            <cell>Big-O Class</cell>
+            <cell>Name</cell>
+            <cell>Example</cell>
+            <cell>Worst-Case Ops (<m>n = 1{,}000</m>)</cell>
+            <cell>Worst-Case Ops (<m>n = 1{,}000{,}000</m>)</cell>
+          </row>
+          <row>
+            <cell><m>O(1)</m></cell>
+            <cell>Constant</cell>
+            <cell>Array access (<c>arr[i]</c>)</cell>
+            <cell>1</cell>
+            <cell>1</cell>
+          </row>
+          <row>
+            <cell><m>O(\log n)</m></cell>
+            <cell>Logarithmic</cell>
+            <cell>Binary search (sorted)</cell>
+            <cell>~10</cell>
+            <cell>~20</cell>
+          </row>
+          <row>
+            <cell><m>O(n)</m></cell>
+            <cell>Linear</cell>
+            <cell>Sequential search</cell>
+            <cell>1,000</cell>
+            <cell>1,000,000</cell>
+          </row>
+          <row>
+            <cell><m>O(n^2)</m></cell>
+            <cell>Quadratic</cell>
+            <cell>Selection sort</cell>
+            <cell>1,000,000</cell>
+            <cell>1,000,000,000,000</cell>
+          </row>
+        </tabular>
+      </table>
+
+      <p>
+        For one million elements, sequential search can take up to 1,000,000 comparisons, while binary search needs at most 20! (Just remember the trade-off: if you only search an unsorted array once, sorting it first with an <m>O(n^2)</m> or <m>O(n \log n)</m> sort costs more than a single <m>O(n)</m> sequential search. Sorting pays off when you search the same data many times.)
+      </p>
+    </subsubsection>
+  </subsection>
+
+  <subsection xml:id="subsec-7-10-5-objects">
+    <title>Searching and Sorting with Objects</title>
+
+    <introduction>
+      <p>
+        When searching or sorting an array of objects, keep two extra rules in mind:
+      </p>
+
+      <ol>
+        <li>
+          <p>
+            Always check for <c>null</c> before invoking a method on an array element.
+          </p>
+        </li>
+        <li>
+          <p>
+            Use methods (<c>.equals()</c> and <c>.compareTo()</c>), not relational operators (<c>==</c>, <c>&lt;</c>, <c>&gt;</c>). Relational operators compare memory addresses or won't compile on object references.
+          </p>
+        </li>
+      </ol>
+    </introduction>
+
+    <subsubsection xml:id="subsubsec-7-10-5-1-point-search">
+      <title>Sequential Search with <c>Point</c> Objects</title>
+
+      <p>
+        To search a <c>Point[]</c> array sequentially, we adapt our <c>while</c>-loop pattern from <xref ref="subsec-7-10-1-sequential-search" />, guarding against <c>null</c> and calling <c>.equals()</c> (which we wrote for <c>Point</c> in <xref ref="sec-6-8-tostring-equals" />, <xref ref="listing-point-equals" />):
+      </p>
+
+      <program language="java"><![CDATA[/**
+ * Searches pointArray sequentially for a Point equal to target.
+ *
+ * Precondition: pointArray != null and target != null
+ * Postcondition: Returns the index of the first matching Point,
+ *                or -1 if no match is found.
+ *
+ * @param pointArray  An array of Point objects.
+ * @param target      The Point to search for.
+ * @return            The index of target, or -1 if not found.
+ */
+public static int sequentialSearch(Point[] pointArray, Point target) {
+    assert pointArray != null : "pointArray is null";
+    assert target != null : "target is null";
+
+    int index = 0;
+    boolean found = false;
+    int result = -1;
+
+    while (index < pointArray.length && !found) {
+        if (pointArray[index] != null && pointArray[index].equals(target)) {
+            found = true;
+            result = index;
+        } else {
+            index++;
+        }
+    }
+    return result;
+}]]></program>
+
+      <p>
+        Notice the short-circuit condition <c>pointArray[index] != null &amp;&amp; pointArray[index].equals(target)</c>: if <c>pointArray[index]</c> is <c>null</c>, Java stops immediately and avoids a <c>NullPointerException</c>.
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="subsubsec-7-10-5-2-sorting-objects">
+      <title>Sorting Objects Requires an Ordering (<c>String</c> and <c>compareTo</c>)</title>
+
+      <p>
+        Sequential search depends on being able to test if objects are equal, but sorting and binary search require objects to have a natural order and a way to compare them.
+      </p>
+
+      <p>
+        For a class like <c>Point</c>, there is no single obvious <c>&lt;</c> or <c>&gt;</c> order (should <c>(10, 50)</c> come before <c>(20, 5)</c> because <c>x</c> is smaller, or should we order by distance from the origin?). For classes that do have a natural order<mdash />like <c>String</c>, which orders alphabetically (lexicographically)<mdash />Java provides the <c>compareTo</c> method:
+      </p>
+
+      <ul>
+        <li>
+          <p>
+            <c>a.compareTo(b) &lt; 0</c> means <c>a</c> comes before <c>b</c>.
+          </p>
+        </li>
+        <li>
+          <p>
+            <c>a.compareTo(b) == 0</c> means <c>a</c> and <c>b</c> are equal.
+          </p>
+        </li>
+        <li>
+          <p>
+            <c>a.compareTo(b) &gt; 0</c> means <c>a</c> comes after <c>b</c>.
+          </p>
+        </li>
+      </ul>
+
+      <p>
+        In selection sort for a <c>String[]</c> array (assuming non-null elements), we simply replace <c>arr[j] &lt; arr[minIndex]</c> with <c>arr[j].compareTo(arr[minIndex]) &lt; 0</c><mdash />and swap <c>String</c> references in <c>swap(String[] arr, int i, int j)</c>.
+      </p>
+
+      <p>
+        One last memory insight: when you sort an array of <c>String</c> (or any object), Java only swaps the references stored in the array slots. The objects themselves stay right where they are on the heap. And just as with primitive arrays, <c>Arrays.sort(names)</c> and <c>Arrays.binarySearch(names, target)</c> work out of the box on <c>String[]</c> arrays.
+      </p>
+    </subsubsection>
+  </subsection>
+</section>

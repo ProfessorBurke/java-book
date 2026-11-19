@@ -11,19 +11,10 @@
   <xi:include href="sec-7-7-arraylist.ptx" />
   <xi:include href="sec-7-8-arrays-of-objects.ptx" />
   <xi:include href="sec-7-9-two-dimensional-arrays.ptx" />
+  <xi:include href="sec-7-10-searching-sorting.ptx" />
   <!--
-  
-  
-  
-  
-  
-  
-  <xi:include href="sec-5-10-javadoc.ptx" />
-  <xi:include href="sec-5-11-testing-methods.ptx" />
-  <xi:include href="sec-5-12-debugging-methods.ptx" />
-  <xi:include href="sec-5-13-putting-it-together.ptx" />
-  
-  <xi:include href="sec-7-11-moving-on.ptx" /> 
-  <xi:include href="sec-7-12-exercises.ptx" /> 
+   <xi:include href="sec-7-11-putting-it-together.ptx" />
+  <xi:include href="sec-7-12-moving-on.ptx" /> 
+  <xi:include href="sec-7-13-exercises.ptx" /> 
   -->
 </chapter>

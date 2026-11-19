@@ -209,11 +209,12 @@ aqiReadings[i + 1] = aqiReadings[i];]]></program>
       <p>
         To swap two values safely, you must use a temporary variable (<c>temp</c>) of the same data type as the array elements. Think of swapping the liquids in two full glasses: you need a third empty glass to hold one liquid temporarily while you pour.
       </p>
-
+<listing xml:id="listing-swap-elements">
+<caption>Swapping two array elements using a temporary variable</caption>
       <program language="java"><![CDATA[// CORRECT: Three-step swap using a temporary variable
 int temp = aqiReadings[i];
 aqiReadings[i] = aqiReadings[i + 1];
-aqiReadings[i + 1] = temp;]]></program>
+aqiReadings[i + 1] = temp;]]></program></listing>
 
       <p>
         Tracing this step by step with <c>68</c> at index <c>i</c> and <c>45</c> at index <c>i + 1</c>:

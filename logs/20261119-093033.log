@@ -1,0 +1,45 @@
+WARNING : Could not find a target 'pdf', but found a target 'print' with format='pdf'; using this target.
+INFO    : Building target print
+INFO    : XSL conversion of D:\CCRI\__Java book rewrite\cs1-java-textbook\source\main.ptx by C:\Users\Maggie\.ptx\2.56.2\core\xsl\utilities\pretext-enhanced-source.xsl
+INFO    : successful application of C:\Users\Maggie\.ptx\2.56.2\core\xsl\utilities\pretext-enhanced-source.xsl
+INFO    : discovering source file's directory name: D:\CCRI\__Java book rewrite\cs1-java-textbook\source
+INFO    : verifying and expanding input directory: D:\CCRI\__Java book rewrite\cs1-java-textbook\source\../assets
+INFO    : input directory expanded to absolute path: D:\CCRI\__Java book rewrite\cs1-java-textbook\assets
+INFO    : Generating any needed assets.
+WARNING : Now generating QR codes
+WARNING : You are trying to generate qrcodes, but the publication file does not have a base URL. This will result in qrcodes that do not point to anything meaningful.
+INFO    : XSL conversion of D:\CCRI\__Java book rewrite\cs1-java-textbook\source\main.ptx by C:\Users\Maggie\.ptx\2.56.2\core\xsl\utilities\report-publisher-variables.xsl
+INFO    : successful application of C:\Users\Maggie\.ptx\2.56.2\core\xsl\utilities\report-publisher-variables.xsl
+INFO    : discovering source file's directory name: D:\CCRI\__Java book rewrite\cs1-java-textbook\source
+INFO    : verifying and expanding input directory: D:\CCRI\__Java book rewrite\cs1-java-textbook\source\../assets
+INFO    : input directory expanded to absolute path: D:\CCRI\__Java book rewrite\cs1-java-textbook\assets
+INFO    : manufacturing QR codes from D:\CCRI\__Java book rewrite\cs1-java-textbook\source\main.ptx for placement in D:\CCRI\__Java book rewrite\cs1-java-textbook\generated-assets\qrcode
+INFO    : XSL conversion of D:\CCRI\__Java book rewrite\cs1-java-textbook\source\main.ptx by C:\Users\Maggie\.ptx\2.56.2\core\xsl\extract-qrcode.xsl
+INFO    : successful application of C:\Users\Maggie\.ptx\2.56.2\core\xsl\extract-qrcode.xsl
+INFO    : QR code creation complete
+INFO    : Removing temporary directory C:\Users\Maggie\AppData\Local\Temp\ptx-avhqn2e9
+INFO    : Finished generating assets.
+
+INFO    : Preparing to build into D:\CCRI\__Java book rewrite\cs1-java-textbook\output\print.
+INFO    : discovering source file's directory name: D:\CCRI\__Java book rewrite\cs1-java-textbook\source
+INFO    : verifying and expanding input directory: D:\CCRI\__Java book rewrite\cs1-java-textbook\source\../assets
+INFO    : input directory expanded to absolute path: D:\CCRI\__Java book rewrite\cs1-java-textbook\assets
+INFO    : discovering source file's directory name: D:\CCRI\__Java book rewrite\cs1-java-textbook\source
+INFO    : XSL conversion of D:\CCRI\__Java book rewrite\cs1-java-textbook\source\main.ptx by C:\Users\Maggie\.ptx\2.56.2\core\xsl\utilities\report-publisher-variables.xsl
+INFO    : successful application of C:\Users\Maggie\.ptx\2.56.2\core\xsl\utilities\report-publisher-variables.xsl
+INFO    : converting D:\CCRI\__Java book rewrite\cs1-java-textbook\source\main.ptx to LaTeX as C:\Users\Maggie\AppData\Local\Temp\ptx-39bm58um\main.tex
+INFO    : XSL conversion of D:\CCRI\__Java book rewrite\cs1-java-textbook\source\main.ptx by C:\Users\Maggie\.ptx\2.56.2\core\xsl\pretext-latex.xsl
+INFO    : messages from the log for XSL processing (prefaced with a *):
+INFO    : * PTX:INFO:   checking all deprecated elements.
+INFO    : successful application of C:\Users\Maggie\.ptx\2.56.2\core\xsl\pretext-latex.xsl
+INFO    : XSL conversion of D:\CCRI\__Java book rewrite\cs1-java-textbook\source\main.ptx by C:\Users\Maggie\.ptx\2.56.2\core\xsl\utilities\report-publisher-variables.xsl
+INFO    : successful application of C:\Users\Maggie\.ptx\2.56.2\core\xsl\utilities\report-publisher-variables.xsl
+FATAL   : the LaTeX compilation of main.tex failed, so no PDF was produced.  Consult main.log for the errors reported by the LaTeX engine
+INFO    : ------------------------
+exit    : Failed to build without errors.  Exiting...
+INFO    : 
+----------------------------------------------------
+INFO    : While running pretext, the following errors occurred:
+
+INFO    : (see log messages above or in the 'logs' folder for more information)
+INFO    : ----------------------------------------------------
