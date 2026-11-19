@@ -455,7 +455,7 @@ public static int binarySearch(int[] arr, int target) {
     </subsubsection>
 	
 	<p>
-	Note that our algorithm to compute the middle index is using integer division. An array index must be an integer (there is no element at index 2.5, for example), so an integer division to find mid is the correct choice. 
+	Note that our code to compute the middle index is using integer division. An array index must be an integer (there is no element at index 2.5, for example), so an integer division to find mid is the correct choice. 
 	</p>
 
     <subsubsection xml:id="subsubsec-7-10-4-2-complexity">
