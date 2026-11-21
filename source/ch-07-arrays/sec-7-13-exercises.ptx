@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exercises xml:id="sec-7-13-exercises" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Programming Projects</title>
+
+  <introduction>
+    <p>
+      The following programming projects require you to design, implement, and verify complete modular Java programs in your local integrated development environment (IDE), such as Eclipse. Each project reinforces the collection and algorithm principles explored in this chapter: fixed-size arrays, partially filled arrays, <c>ArrayList</c> collections, arrays of objects, two-dimensional arrays, selection sort, sequential and binary search, formal Javadoc contracts, and automated unit test drivers using Java assertions (<c>-ea</c>).
+    </p>
+  </introduction>
+
+  <!-- ============================================================ -->
+  <!-- Project 1: Bakery Batch Hydration Analyzer                   -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-hydration-analyzer-7">
+    <title>Bakery Batch Hydration Analyzer</title>
+    <statement>
+      <p>
+        Commercial bakeries monitor consistency across loaves by recording the actual hydration percentage of each batch baked during a shift.
+      </p>
+      <p>
+        Write a program with static helper methods that analyzes a <c>double[]</c> of batch hydration percentages (typically between <c>55.0</c> and <c>85.0</c>; for example, <c>{68.5, 72.0, 74.2, 69.0, 75.5}</c> with a target of <c>72.0</c> and an acceptable range of <c>70.0</c> to <c>75.0</c>).
+      </p>
+      <p>
+        <strong>Program Requirements:</strong>
+        <ol>
+          <li>
+            <p><strong>Helper Method 1 (<c>calculateAverage</c>):</strong></p>
+            <program language="java"><![CDATA[public static double calculateAverage(double[] hydrations)]]></program>
+            <p>
+              Returns the mean hydration percentage.
+            </p>
+            <p>
+              <em>Precondition:</em> <c>hydrations != null &amp;&amp; hydrations.length &gt; 0</c>.
+            </p>
+          </li>
+          <li>
+            <p><strong>Helper Method 2 (<c>countOutOfRange</c>):</strong></p>
+            <program language="java"><![CDATA[public static int countOutOfRange(double[] hydrations, double minTarget, double maxTarget)]]></program>
+            <p>
+              Returns the number of batches whose hydration falls strictly below <c>minTarget</c> or strictly above <c>maxTarget</c>.
+            </p>
+            <p>
+              <em>Precondition:</em> <c>hydrations != null &amp;&amp; minTarget &lt;= maxTarget</c>.
+            </p>
+          </li>
+          <li>
+            <p><strong>Helper Method 3 (<c>getDeviations</c>):</strong></p>
+            <program language="java"><![CDATA[public static double[] getDeviations(double[] hydrations, double target)]]></program>
+            <p>
+              Returns a <em>new</em> <c>double[]</c> of the same length where each element is <c>hydrations[i] - target</c> (positive for wetter than target, negative for stiffer).
+            </p>
+            <p>
+              <em>Precondition:</em> <c>hydrations != null</c>.
+            </p>
+          </li>
+          <li>
+            <p>
+              <strong>Testing Requirement:</strong> Write a self-checking test driver (<c>HydrationAnalyzerTest</c>) using the Arrange<ndash />Act<ndash />Assert pattern to verify average calculation, exact boundary matches for <c>countOutOfRange</c> (values equal to <c>minTarget</c> and <c>maxTarget</c> are in range), and non-mutation of the input array in <c>getDeviations</c>.
+            </p>
+          </li>
+        </ol>
+      </p>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 2: Daily Air Quality Log & Threshold Lookup          -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-air-quality-log-7">
+    <title>Daily Air Quality Log &amp; Threshold Lookup</title>
+    <statement>
+      <p>
+        Environmental sensors log daily Air Quality Index (AQI) readings to a text file (one integer per line, up to 31 readings per month), though incomplete months contain fewer than 31 values. Typical AQI values range from <c>0</c> to <c>500</c> (where <c>0</c><ndash /><c>50</c> is Good and values above <c>100</c> are unhealthy for sensitive groups; for example, <c>42, 55, 68, 112, 95, 134</c> with a threshold of <c>100</c>).
+      </p>
+      <p>
+        Write a program that reads readings from a file into a partially filled <c>int[]</c> of capacity 31 while tracking <c>logicalSize</c>.
+      </p>
+      <p>
+        <strong>Program Requirements:</strong>
+        <ol>
+          <li>
+            <p><strong>Helper Method 1 (<c>readReadings</c>):</strong></p>
+            <program language="java"><![CDATA[public static int readReadings(String fileName, int[] readings) throws FileNotFoundException]]></program>
+            <p>
+              Reads up to <c>readings.length</c> integers from <c>fileName</c> into <c>readings</c> and returns <c>logicalSize</c> (or <c>0</c> if the file does not exist).
+            </p>
+            <p>
+              <em>Precondition:</em> <c>fileName != null &amp;&amp; readings != null</c>.
+            </p>
+          </li>
+          <li>
+            <p><strong>Helper Method 2 (<c>findFirstAboveThreshold</c>):</strong></p>
+            <program language="java"><![CDATA[public static int findFirstAboveThreshold(int[] readings, int logicalSize, int threshold)]]></program>
+            <p>
+              Uses sequential search (with a <c>while</c> loop and a <c>boolean found</c> flag) to return the index of the <em>first</em> day whose AQI is strictly greater than <c>threshold</c>, or <c>-1</c> if no reading exceeds <c>threshold</c>.
+            </p>
+            <p>
+              <em>Precondition:</em> <c>readings != null &amp;&amp; logicalSize &gt;= 0 &amp;&amp; logicalSize &lt;= readings.length</c>.
+            </p>
+          </li>
+          <li>
+            <p><strong>Helper Method 3 (<c>insertReading</c>):</strong></p>
+            <program language="java"><![CDATA[public static boolean insertReading(int[] readings, int logicalSize, int index, int newValue)]]></program>
+            <p>
+              Inserts <c>newValue</c> at <c>index</c> by shifting existing elements to the right if <c>logicalSize &lt; readings.length</c>, returning <c>true</c> on success or <c>false</c> if the array is full.
+            </p>
+            <p>
+              <em>Precondition:</em> <c>readings != null &amp;&amp; logicalSize &gt;= 0 &amp;&amp; logicalSize &lt;= readings.length &amp;&amp; index &gt;= 0 &amp;&amp; index &lt;= logicalSize</c>.
+            </p>
+          </li>
+          <li>
+            <p>
+              <strong>Testing Requirement:</strong> Write a unit test driver (<c>AirQualityLogTest</c>) verifying sequential search when a match is at index <c>0</c>, at <c>logicalSize - 1</c>, and absent (<c>-1</c>), as well as insertion into a partially filled versus full array.
+            </p>
+          </li>
+        </ol>
+      </p>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 3: Hiking Pace & Elevation Logger                    -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-elevation-logger-7">
+    <title>Hiking Pace &amp; Elevation Logger</title>
+    <statement>
+      <p>
+        Hikers tracking a multi-segment trail do not know in advance how many elevation checkpoints they will record.
+      </p>
+      <p>
+        Write a program that manages an <c>ArrayList&lt;Double&gt;</c> of segment elevation gains (in feet) entered interactively by the user until they enter a sentinel value (<c>-1</c>). Typical trail segments gain between <c>20.0</c> and <c>1500.0</c> feet (for example, <c>[120.0, 45.0, 35.0, 480.0, 820.0, 20.0]</c> with <c>minGain = 50.0</c>).
+      </p>
+      <p>
+        <strong>Program Requirements:</strong>
+        <ol>
+          <li>
+            <p><strong>Helper Method 1 (<c>removeFlatSegments</c>):</strong></p>
+            <program language="java"><![CDATA[public static void removeFlatSegments(ArrayList<Double> gains, double minGain)]]></program>
+            <p>
+              Removes all segments whose elevation gain is strictly less than <c>minGain</c> (be careful to adjust your loop index when removing elements so you do not skip consecutive entries).
+            </p>
+            <p>
+              <em>Precondition:</em> <c>gains != null &amp;&amp; minGain &gt;= 0.0</c>.
+            </p>
+          </li>
+          <li>
+            <p><strong>Helper Method 2 (<c>findMaxGain</c>):</strong></p>
+            <program language="java"><![CDATA[public static double findMaxGain(ArrayList<Double> gains)]]></program>
+            <p>
+              Uses the most-wanted pattern to return the largest elevation gain in <c>gains</c>.
+            </p>
+            <p>
+              <em>Precondition:</em> <c>gains != null &amp;&amp; gains.size() &gt; 0</c>.
+            </p>
+          </li>
+          <li>
+            <p><strong>Helper Method 3 (<c>convertToMeters</c>):</strong></p>
+            <program language="java"><![CDATA[public static ArrayList<Double> convertToMeters(ArrayList<Double> gainsInFeet)]]></program>
+            <p>
+              Returns a <em>new</em> <c>ArrayList&lt;Double&gt;</c> with every gain converted to meters (<m>\text{feet} \times 0.3048</m>), leaving the original list unchanged.
+            </p>
+            <p>
+              <em>Precondition:</em> <c>gainsInFeet != null</c>.
+            </p>
+          </li>
+          <li>
+            <p>
+              <strong>Testing Requirement:</strong> Write a test driver (<c>ElevationLoggerTest</c>) that specifically tests <c>removeFlatSegments</c> when two or more removable values appear consecutively, and verifies that <c>convertToMeters</c> does not mutate the original <c>ArrayList</c>.
+            </p>
+          </li>
+        </ol>
+      </p>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 4: Tabletop RPG Inventory Manager                    -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-rpg-inventory-7">
+    <title>Tabletop RPG Inventory Manager</title>
+    <statement>
+      <p>
+        In role-playing games, players carry dozens of items and need to sort their pack alphabetically and look up items quickly by name.
+      </p>
+      <p>
+        Design an <c>InventoryItem</c> class with <c>private String name</c>, <c>private double weight</c> (in pounds, typically <c>0.1</c><ndash /><c>50.0</c>), and <c>private int goldValue</c> (typically <c>1</c><ndash /><c>5000</c>; for example, <c>("Healing Potion", 0.5, 50)</c>, <c>("Longsword", 3.0, 15)</c>, <c>("Rope (50 ft)", 10.0, 1)</c>, and <c>("Torch", 1.0, 1)</c>):
+        <ul>
+          <li><p>Enforce class invariants in the constructor <c>InventoryItem(String name, double weight, int goldValue)</c>: <c>name != null &amp;&amp; !name.isBlank()</c>, <c>weight &gt;= 0.0</c>, and <c>goldValue &gt;= 0</c>.</p></li>
+          <li><p>Provide getters <c>getName()</c>, <c>getWeight()</c>, and <c>getGoldValue()</c>.</p></li>
+          <li><p>Implement <c>compareTo(InventoryItem other)</c> comparing <c>name</c> lexicographically (case-sensitive).</p></li>
+        </ul>
+      </p>
+      <p>
+        Then write a manager class (<c>InventoryManager</c>) with methods operating on an <c>ArrayList&lt;InventoryItem&gt;</c>:
+        <ol>
+          <li>
+            <p><strong>Helper Method 1 (<c>sortByName</c>):</strong></p>
+            <program language="java"><![CDATA[public static void sortByName(ArrayList<InventoryItem> pack)]]></program>
+            <p>
+              Sorts <c>pack</c> into ascending alphabetical order using selection sort and <c>InventoryItem.compareTo</c>.
+            </p>
+            <p>
+              <em>Precondition:</em> <c>pack != null</c> and no element is <c>null</c>.
+            </p>
+          </li>
+          <li>
+            <p><strong>Helper Method 2 (<c>findItemIndex</c>):</strong></p>
+            <program language="java"><![CDATA[public static int findItemIndex(ArrayList<InventoryItem> pack, String targetName)]]></program>
+            <p>
+              Uses binary search (with <c>while (low &lt;= high &amp;&amp; !found)</c>) to return the index of the item matching <c>targetName</c>, or <c>-1</c> if not found.
+            </p>
+            <p>
+              <em>Precondition:</em> <c>pack != null</c>, <c>targetName != null</c>, no element is <c>null</c>, and <c>pack</c> is sorted by <c>InventoryItem.compareTo</c>.
+            </p>
+          </li>
+          <li>
+            <p><strong>Helper Method 3 (<c>calculateTotalWeight</c>):</strong></p>
+            <program language="java"><![CDATA[public static double calculateTotalWeight(ArrayList<InventoryItem> pack)]]></program>
+            <p>
+              Returns the combined weight of all items in <c>pack</c>.
+            </p>
+            <p>
+              <em>Precondition:</em> <c>pack != null</c> and no element is <c>null</c>.
+            </p>
+          </li>
+          <li>
+            <p>
+              <strong>Testing Requirement:</strong> Write an Arrange<ndash />Act<ndash />Assert test suite (<c>InventoryManagerTest</c>) verifying selection sort on an already-sorted, reverse-sorted, and mixed-order pack, and testing binary search for the first item, last item, middle item, and a missing item.
+            </p>
+          </li>
+        </ol>
+      </p>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 5: Multi-Room Renovation Estimator                   -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-floor-plan-estimator-7">
+    <title>Multi-Room Renovation Estimator</title>
+    <statement>
+      <p>
+        Extend the <c>RoomRenovation</c> class from Chapter 6 (adding a copy constructor <c>RoomRenovation(RoomRenovation other)</c> and <c>equals(Object obj)</c>) to manage an entire floor plan stored as a <c>RoomRenovation[]</c> array. Typical room dimensions range from <c>8.0</c> to <c>25.0</c> feet with flooring unit costs from <c>3.00</c> to <c>12.00</c> dollars per square foot (for example, <c>new RoomRenovation("Kitchen", 14.0, 12.0, 6.50)</c> and <c>new RoomRenovation("Bedroom", 12.0, 10.0, 4.25)</c>, with <c>wastePercent = 10.0</c> and <c>baseboardCostPerFoot = 2.50</c>).
+      </p>
+      <p>
+        <strong>Program Requirements:</strong>
+        Write a class <c>FloorPlanEstimator</c> with:
+        <ol>
+          <li>
+            <p><strong>Helper Method 1 (<c>findLargestRoom</c>):</strong></p>
+            <program language="java"><![CDATA[public static RoomRenovation findLargestRoom(RoomRenovation[] rooms)]]></program>
+            <p>
+              Returns a <em>deep copy</em> of the room with the greatest floor area (using <c>RoomRenovation</c>’s copy constructor so callers cannot mutate the array’s internal objects).
+            </p>
+            <p>
+              <em>Precondition:</em> <c>rooms != null &amp;&amp; rooms.length &gt; 0</c> and no element is <c>null</c>.
+            </p>
+          </li>
+          <li>
+            <p><strong>Helper Method 2 (<c>containsDuplicateRoom</c>):</strong></p>
+            <program language="java"><![CDATA[public static boolean containsDuplicateRoom(RoomRenovation[] rooms)]]></program>
+            <p>
+              Returns <c>true</c> if any two distinct indices in <c>rooms</c> hold equal <c>RoomRenovation</c> objects (using <c>.equals</c>, not <c>==</c>), and <c>false</c> otherwise.
+            </p>
+            <p>
+              <em>Precondition:</em> <c>rooms != null</c> and no element is <c>null</c>.
+            </p>
+          </li>
+          <li>
+            <p><strong>Helper Method 3 (<c>calculateProjectTotal</c>):</strong></p>
+            <program language="java"><![CDATA[public static double calculateProjectTotal(RoomRenovation[] rooms, double wastePercent,
+                                           double baseboardCostPerFoot)]]></program>
+            <p>
+              Returns the combined flooring and baseboard cost across all rooms in <c>rooms</c>.
+            </p>
+            <p>
+              <em>Precondition:</em> <c>rooms != null</c>, no element is <c>null</c>, <c>wastePercent &gt;= 0.0</c>, and <c>baseboardCostPerFoot &gt;= 0.0</c>.
+            </p>
+          </li>
+          <li>
+            <p>
+              <strong>Testing Requirement:</strong> Write a test driver (<c>FloorPlanEstimatorTest</c>) verifying that mutating or replacing the <c>RoomRenovation</c> returned by <c>findLargestRoom</c> does not alter the original array element, and verifying <c>containsDuplicateRoom</c> with two separate <c>RoomRenovation</c> instances that have identical field values.
+            </p>
+          </li>
+        </ol>
+      </p>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 6: Solar Panel Array Weekly Output Grid              -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-solar-grid-7">
+    <title>Solar Panel Array Weekly Output Grid</title>
+    <statement>
+      <p>
+        A solar installation arranges panels in a rectangular grid of <c>rows</c> strings by <c>cols</c> panels per string, recording weekly kilowatt-hour (kWh) output in a <c>double[][]</c> grid. A single residential panel typically produces <c>6.0</c> to <c>14.0</c> kWh per week (for example, a <m>3 \times 4</m> grid <c>{{10.2, 11.4, 7.8, 10.9}, {11.0, 11.8, 8.1, 11.2}, {9.8, 10.5, 6.4, 10.1}}</c> with <c>minKwh = 8.5</c>, where column <c>2</c> is partially shaded).
+      </p>
+      <p>
+        <strong>Program Requirements:</strong>
+        Write a class <c>SolarGridAnalyzer</c> with:
+        <ol>
+          <li>
+            <p><strong>Helper Method 1 (<c>calculateStringTotals</c>):</strong></p>
+            <program language="java"><![CDATA[public static double[] calculateStringTotals(double[][] outputGrid)]]></program>
+            <p>
+              Uses row-major traversal to return a <c>double[]</c> containing the total kWh produced by each row (string of panels).
+            </p>
+            <p>
+              <em>Precondition:</em> <c>outputGrid != null &amp;&amp; outputGrid.length &gt; 0</c>, every row is non-null with equal positive length, and all values are <c>&gt;= 0.0</c>.
+            </p>
+          </li>
+          <li>
+            <p><strong>Helper Method 2 (<c>findLowestColumn</c>):</strong></p>
+            <program language="java"><![CDATA[public static int findLowestColumn(double[][] outputGrid)]]></program>
+            <p>
+              Uses column-major traversal to compute each column’s total output and return the index of the column with the <em>lowest</em> total output (useful for spotting shaded or failing columns).
+            </p>
+            <p>
+              <em>Precondition:</em> Same rectangular, non-negative grid precondition.
+            </p>
+          </li>
+          <li>
+            <p><strong>Helper Method 3 (<c>countUnderperformingPanels</c>):</strong></p>
+            <program language="java"><![CDATA[public static int countUnderperformingPanels(double[][] outputGrid, double minKwh)]]></program>
+            <p>
+              Returns the count of individual panels producing strictly less than <c>minKwh</c>.
+            </p>
+            <p>
+              <em>Precondition:</em> Same rectangular, non-negative grid precondition, and <c>minKwh &gt;= 0.0</c>.
+            </p>
+          </li>
+          <li>
+            <p>
+              <strong>Testing Requirement:</strong> Write a test driver (<c>SolarGridAnalyzerTest</c>) on a non-square grid (e.g., <m>3 \times 4</m>, so row-count and column-count bugs cannot hide behind a square matrix) verifying <c>calculateStringTotals</c>, <c>findLowestColumn</c>, and <c>countUnderperformingPanels</c>.
+            </p>
+          </li>
+        </ol>
+      </p>
+    </statement>
+  </exercise>
+</exercises>

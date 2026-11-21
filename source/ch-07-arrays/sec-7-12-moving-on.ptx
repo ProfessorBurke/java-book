@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-7-12-moving-on" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Moving On!</title>
+
+  <p>
+    Congratulations! In this chapter, you moved beyond storing one value per variable to organizing, transforming, and analyzing entire collections of data in memory:
+  </p>
+
+  <ul>
+    <li>
+      <p>
+        <strong>Mastering one-dimensional arrays:</strong> Declaring, instantiating, and indexing fixed-capacity arrays on the heap, and traversing them safely without off-by-one errors using standard <c>for</c> and enhanced <c>for-each</c> loops.
+      </p>
+    </li>
+    <li>
+      <p>
+        <strong>Implementing core array algorithms:</strong> Applying variable roles<mdash />such as accumulators, most-wanted holders, and adjacent comparisons<mdash />and passing array references into and out of methods.
+      </p>
+    </li>
+    <li>
+      <p>
+        <strong>Managing parallel and partially filled arrays:</strong> Synchronizing related data across parallel arrays, tracking logical size separately from physical capacity, and shifting elements during insertions and deletions.
+      </p>
+    </li>
+    <li>
+      <p>
+        <strong>Working with dynamic <c>ArrayList</c> collections:</strong> Using generics and wrapper types (<c>Integer</c>, <c>Double</c>) with autoboxing and unboxing to build collections that resize automatically.
+      </p>
+    </li>
+    <li>
+      <p>
+        <strong>Storing and copying arrays of objects:</strong> Navigating two-phase instantiation for reference arrays, guarding against <c>null</c> elements, and choosing deliberately between aliasing, shallow copies, and deep copies.
+      </p>
+    </li>
+    <li>
+      <p>
+        <strong>Navigating two-dimensional grids:</strong> Organizing tabular data in two-dimensional arrays and writing nested loops for row-major and column-major traversals.
+      </p>
+    </li>
+    <li>
+      <p>
+        <strong>Searching, sorting, and analyzing time complexity:</strong> Implementing sequential search, selection sort, and binary search (using <c>equals</c> and <c>compareTo</c> for objects), and using Big-O notation to evaluate how algorithms scale as input size grows.
+      </p>
+    </li>
+    <li>
+      <p>
+        <strong>Synthesizing collections in a full application:</strong> Combining file input, a custom <c>Site</c> class with invariants and deep copies, sorting, binary search, and HTML <c>&lt;canvas&gt;</c> generation in a complete capstone case study.
+      </p>
+    </li>
+  </ul>
+
+  <p>
+    You are now ready to tackle the programming exercises at the end of this chapter. Work through each problem methodically: decide whether a fixed-size array, <c>ArrayList</c>, or two-dimensional array fits the data best; define preconditions and class invariants upfront; test boundary cases such as empty collections, <c>null</c> references, and first/last indices; and sketch stack-and-heap diagrams<mdash />or step through Eclipse’s debugger<mdash />whenever you need to trace how references and array contents change.
+  </p>
+</section>

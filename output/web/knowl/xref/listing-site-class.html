@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<!--******************************************-->
+<!--*  Authored with PreTeXt                 *-->
+<!--*  pretextbook.org                       *-->
+<!--*  Theme: default-modern                 *-->
+<!--*  Palette:                              *-->
+<!--******************************************-->
+
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body class="ignore-math">
+<figure class="listing figure-like"><figcaption><span class="type">Listing</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">7.39<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span>The <code class="code-inline tex2jax_ignore">Site</code> class<div class="autopermalink" aria-hidden="true" data-description="Listing 7.39: The Site class"><a tabindex="-1" href="#listing-site-class" title="Copy heading and permalink for Listing 7.39: The Site class" aria-label="Copy heading and permalink for Listing 7.39: The Site class">🔗</a></div></figcaption><div class="listing__contents"><div class="code-box"><pre class="program clipboardable line-numbers"><code class="language-java">/**
+ * Represents a named landmark or trail segment on a map as a sequence of
+ * one or more Point coordinates.
+ *
+ * Class Invariants:
+ * - name != null and contains at least one non-whitespace character
+ * - points != null, points.length &gt;= 1, and no element of points is null
+ */
+public class Site {
+
+    private String name;
+    private Point[] points;
+
+    /**
+     * Constructs a Site with the given name and a deep copy of the
+     * given array of coordinates.
+     *
+     * Precondition:  name != null and contains at least one non-whitespace character;
+     *                points != null, points.length &gt;= 1, and no element of points is null.
+     * Postcondition: This Site is initialized with the given name and an independent
+     *                deep copy of points.
+     *
+     * @param name    The name of the landmark or trail segment.
+     * @param points  An array of one or more Point coordinates for this site.
+     */
+    public Site(String name, Point[] points) {
+        assert name != null &amp;&amp; !name.isBlank() : "Site name cannot be null or blank";
+        assert points != null &amp;&amp; points.length &gt;= 1 : "Site must have at least one point";
+
+        this.name = name;
+        this.points = new Point[points.length];
+        for (int i = 0; i &lt; points.length; i++) {
+            assert points[i] != null : "Point element at index " + i + " cannot be null";
+            this.points[i] = new Point(points[i]);
+        }
+    }
+
+    /**
+     * Returns a deep copy of the array of coordinates for this site.
+     *
+     * Precondition:  None.
+     * Postcondition: Returns a new, non-null array containing deep copies of this
+     *                site's Point objects.
+     *
+     * @return  A deep copy of the Point array representing this site.
+     */
+    public Point[] getPoints() {
+        Point[] copy = new Point[this.points.length];
+        for (int i = 0; i &lt; this.points.length; i++) {
+            copy[i] = new Point(this.points[i]);
+        }
+        return copy;
+    }
+
+    /**
+     * Returns the name of this site.
+     *
+     * Precondition:  None.
+     * Postcondition: Returns a non-null, non-blank String.
+     *
+     * @return  This site's name.
+     */
+    public String getName() {
+        return this.name;
+    }
+
+    /**
+     * Compares this site to another site alphabetically by name.
+     *
+     * Precondition:  other != null
+     * Postcondition: Returns a negative integer, zero, or a positive integer as this
+     *                site's name is lexicographically less than, equal to, or greater
+     *                than other's name.
+     *
+     * @param other  The Site to compare against.
+     * @return       The lexicographic comparison result of the two site names.
+     */
+    public int compareTo(Site other) {
+        assert other != null : "Other site cannot be null";
+        return this.name.compareTo(other.name);
+    }
+}
+</code></pre></div></div>
+</figure><span class="incontext"><a class="internal" href="sec-7-11-capstone.html#listing-site-class">In Context</a></span>
+</body>
+</html>

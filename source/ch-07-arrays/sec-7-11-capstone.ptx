@@ -1,0 +1,795 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-7-11-capstone" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Putting It Together: Capstone Case Study</title>
+
+  <introduction>
+    <p>
+      You now have the tools you need to solve a problem that requires storing, manipulating, and accessing a collection of data. Let’s put it all together with a program that reads records of object data from a file, sorts the records, and produces a map overlay that can be rendered in a browser.
+    </p>
+  </introduction>
+
+  <subsection xml:id="subsec-7-11-1-problem">
+    <title>The Problem</title>
+
+    <p>
+      Imagine you are given a map of trails and landmarks along with a text file of the names and <c>(x, y)</c> coordinates for the sites. You’re asked to write a program that will read the data in, alphabetize it by name, and present the list of sites to the user. The user will choose a site, and your program will produce an HTML document that displays the map with the user’s site choice highlighted.
+    </p>
+
+    <image source="figures/boston_map.png" width="90%">
+      <shortdescription>Park map of Boston National Historical Park showing the Freedom Trail and Black Heritage Trail.</shortdescription>
+      <description>
+        <p>
+          Official National Park Service map of Boston National Historical Park and surrounding neighborhoods, including Cambridge, Beacon Hill, Downtown Boston, the North End, and Charlestown. The red Freedom Trail line and blue Black Heritage Trail line are drawn across the street grid with landmark labels.
+        </p>
+      </description>
+    </image>
+    <p>
+      Park map of Boston National Historic Park retrieved from <url href="https://npgallery.nps.gov/HFC/Cartography" />.
+    </p>
+
+    <p>
+      A record of site information is organized as the site name on the first line (text), the number of points making up the site (integer), and then the <c>x, y</c> coordinate for each point, each pair on its own line. For example:
+    </p>
+
+    <program><![CDATA[African Meeting House
+1
+470 690]]></program>
+
+    <p>
+      This site is a landmark and is therefore represented by only one coordinate. The output HTML is boilerplate, except for three insertions that your program will make from the chosen site. The name as the title and heading of the page:
+    </p>
+
+    <program language="html"><![CDATA[<title>African Meeting House</title>
+<h1>African Meeting House</h1>]]></program>
+
+    <p>
+      And the list of points to either highlight with a red circle (for a landmark) or a yellow line (for a trail):
+    </p>
+
+    <program language="javascript"><![CDATA[const points = [
+{x: 470.0, y: 690.0}
+];]]></program>
+
+    <p>
+      When the HTML page is rendered in a browser, the user will see this (this image is slightly cropped), with “African Meeting House” as the title of the tab:
+    </p>
+
+    <figure xml:id="fig-7-24-african-meeting-house">
+      <caption>Tourism map of Boston with the African Meeting House marked with a red dot surrounded by a red circle.</caption>
+      <image source="figures/african_meeting_house.png" width="85%">
+        <shortdescription>Browser rendering of the Boston map with the African Meeting House highlighted by a red dot and circle.</shortdescription>
+        <description>
+          <p>
+            A slightly cropped browser view displaying the heading "African Meeting House" at the top above the Boston National Historical Park map. In Beacon Hill, the African Meeting House location is highlighted with a solid red dot surrounded by a red circle.
+          </p>
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      A trail record consists of a name and the number of points, followed by that number of lines of point data:
+    </p>
+
+    <program><![CDATA[Black Heritage Trail
+17
+526 780
+525 772
+488 790
+488 725
+346 725
+346 742
+323 742
+323 767
+323 706
+350 706
+350 676
+452 675
+452 646
+490 646
+490 681
+475 681
+475 694]]></program>
+
+    <p>
+      Your program will insert the name and the points into the HTML:
+    </p>
+
+    <program language="html"><![CDATA[<title>Black Heritage Trail</title>
+<h1>Black Heritage Trail</h1>]]></program>
+
+    <p>
+      And:
+    </p>
+
+    <program language="javascript"><![CDATA[const points = [
+{x: 526.0, y: 780.0},
+{x: 525.0, y: 772.0},
+{x: 488.0, y: 790.0},
+{x: 488.0, y: 725.0},
+{x: 346.0, y: 725.0},
+{x: 346.0, y: 742.0},
+{x: 323.0, y: 742.0},
+{x: 323.0, y: 767.0},
+{x: 323.0, y: 706.0},
+{x: 350.0, y: 706.0},
+{x: 350.0, y: 676.0},
+{x: 452.0, y: 675.0},
+{x: 452.0, y: 646.0},
+{x: 490.0, y: 646.0},
+{x: 490.0, y: 681.0},
+{x: 475.0, y: 681.0},
+{x: 475.0, y: 694.0}
+];]]></program>
+
+    <p>
+      Resulting in this map when rendered in a browser (slightly cropped, with the trail name as the title of the tab):
+    </p>
+
+    <figure xml:id="fig-7-25-black-heritage-trail">
+      <caption>Tourism map of Boston with a thick yellow line marking the Black Heritage Trail.</caption>
+      <image source="figures/black_heritage_trail.png" width="85%">
+        <shortdescription>Browser rendering of the Boston map with the Black Heritage Trail highlighted by a thick yellow polyline.</shortdescription>
+        <description>
+          <p>
+            A slightly cropped browser view displaying the heading "Black Heritage Trail" at the top above the Boston National Historical Park map. Along Beacon Hill, a thick yellow-amber polyline traces the full route of the Black Heritage Trail from the Robert Gould Shaw Memorial through the north slope of Beacon Hill to the African Meeting House.
+          </p>
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      It might feel like an intimidating problem, but when we break it down piece-by-piece, you’ll see that each piece is a problem you already know how to solve.
+    </p>
+  </subsection>
+
+  <subsection xml:id="subsec-7-11-2-decomposing">
+    <title>Decomposing the Problem</title>
+
+    <p>
+      The problem we’ve been asked to solve has a simple, linear structure. We can decompose it into four steps, with each implemented as a method:
+    </p>
+
+    <ol>
+      <li>
+        <p>
+          Read the data from the file into a collection
+        </p>
+      </li>
+      <li>
+        <p>
+          Sort the collection alphabetically by name
+        </p>
+      </li>
+      <li>
+        <p>
+          Present the sorted names to the user and get their choice
+        </p>
+      </li>
+      <li>
+        <p>
+          Write the HTML, inserting data from the record (name and points)
+        </p>
+      </li>
+    </ol>
+
+    <p>
+      Considering the data we need to store, we recognize that we already have a <c>Point</c> class that we can use to represent the individual points of a trail or the single point representing a landmark. But how should we represent a site, which is a name and either a single point or an ordered list of points?
+    </p>
+
+    <p>
+      A <c>Site</c> class allows us to encapsulate together a name and any non-zero number of <c>Point</c> objects (one to many) into a single object that we can store in a collection of <c>Site</c> objects. Here is a class diagram for <c>Site</c>:
+    </p>
+
+    <table xml:id="table-site-uml">
+      <title>UML Class diagram for Site.</title>
+      <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+        <col width="100%"/>
+        <row header="yes">
+          <cell><c>Site</c></cell>
+        </row>
+        <row>
+          <cell>
+            <p><c>- name: String</c></p>
+            <p><c>- points: Point[]</c></p>
+          </cell>
+        </row>
+        <row>
+          <cell>
+            <p><c>+ Site(name: String, points: Point[])</c></p>
+            <p><c>+ getPoints() : Point[]</c></p>
+            <p><c>+ getName() : String</c></p>
+            <p><c>+ compareTo(other: Site): int</c></p>
+          </cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      Besides the constructor and accessors for the <c>name</c> and <c>points</c> fields, we include a <c>compareTo</c> method so that <c>Site</c> objects can be sorted by name. The <c>compareTo</c> method takes another <c>Site</c> object as a parameter and returns equivalent values to the <c>String.compareTo</c> method: zero if the <c>name</c> fields are equal, a negative integer if the <c>Site</c> on which the method was invoked is lexicographically before the parameter, and a positive integer if the <c>Site</c> on which the method was invoked is lexicographically after the parameter.
+    </p>
+  </subsection>
+
+  <subsection xml:id="subsec-7-11-3-site-class">
+    <title>Site Class Implementation</title>
+
+    <p>
+      The <c>Site</c> class is relatively simple, but let’s establish some class invariants to avoid run-time errors:
+    </p>
+
+    <ul>
+      <li>
+        <p>
+          The <c>name</c> cannot be <c>null</c> or blank.
+        </p>
+      </li>
+      <li>
+        <p>
+          The <c>points</c> array cannot be <c>null</c> or empty, as every valid site has at least one point.
+        </p>
+      </li>
+      <li>
+        <p>
+          No <c>Point</c> within the <c>points</c> array can be <c>null</c>.
+        </p>
+      </li>
+    </ul>
+
+    <p>
+      We must also decide whether the constructor should deep copy the <c>points</c> parameter or alias it. (Because <c>String</c> objects are immutable, we don’t need to copy <c>name</c>.) If we alias <c>points</c>, the <c>Site</c> object shares the exact same array as the code that called the constructor<mdash />meaning the caller still holds a reference to the array and its <c>Point</c> objects. That caller could later invoke <c>translate</c> on one of the <c>Point</c> objects, moving it off the correct location on the map, or worse, set an element of the array to <c>null</c> and break our class invariant. We therefore deep copy <c>points</c> in the constructor. Similarly, to protect our class invariant, we’ll return a deep copy of <c>points</c> from <c>getPoints</c>.
+    </p>
+
+    <p>
+      <xref ref="listing-site-class" /> is an implementation of <c>Site</c>.
+    </p>
+
+    <listing xml:id="listing-site-class">
+      <caption>The <c>Site</c> class</caption>
+      <program language="java" line-numbers="yes"><![CDATA[/**
+ * Represents a named landmark or trail segment on a map as a sequence of
+ * one or more Point coordinates.
+ *
+ * Class Invariants:
+ * - name != null and contains at least one non-whitespace character
+ * - points != null, points.length >= 1, and no element of points is null
+ */
+public class Site {
+
+    private String name;
+    private Point[] points;
+
+    /**
+     * Constructs a Site with the given name and a deep copy of the
+     * given array of coordinates.
+     *
+     * Precondition:  name != null and contains at least one non-whitespace character;
+     *                points != null, points.length >= 1, and no element of points is null.
+     * Postcondition: This Site is initialized with the given name and an independent
+     *                deep copy of points.
+     *
+     * @param name    The name of the landmark or trail segment.
+     * @param points  An array of one or more Point coordinates for this site.
+     */
+    public Site(String name, Point[] points) {
+        assert name != null && !name.isBlank() : "Site name cannot be null or blank";
+        assert points != null && points.length >= 1 : "Site must have at least one point";
+
+        this.name = name;
+        this.points = new Point[points.length];
+        for (int i = 0; i < points.length; i++) {
+            assert points[i] != null : "Point element at index " + i + " cannot be null";
+            this.points[i] = new Point(points[i]);
+        }
+    }
+
+    /**
+     * Returns a deep copy of the array of coordinates for this site.
+     *
+     * Precondition:  None.
+     * Postcondition: Returns a new, non-null array containing deep copies of this
+     *                site's Point objects.
+     *
+     * @return  A deep copy of the Point array representing this site.
+     */
+    public Point[] getPoints() {
+        Point[] copy = new Point[this.points.length];
+        for (int i = 0; i < this.points.length; i++) {
+            copy[i] = new Point(this.points[i]);
+        }
+        return copy;
+    }
+
+    /**
+     * Returns the name of this site.
+     *
+     * Precondition:  None.
+     * Postcondition: Returns a non-null, non-blank String.
+     *
+     * @return  This site's name.
+     */
+    public String getName() {
+        return this.name;
+    }
+
+    /**
+     * Compares this site to another site alphabetically by name.
+     *
+     * Precondition:  other != null
+     * Postcondition: Returns a negative integer, zero, or a positive integer as this
+     *                site's name is lexicographically less than, equal to, or greater
+     *                than other's name.
+     *
+     * @param other  The Site to compare against.
+     * @return       The lexicographic comparison result of the two site names.
+     */
+    public int compareTo(Site other) {
+        assert other != null : "Other site cannot be null";
+        return this.name.compareTo(other.name);
+    }
+}]]></program>
+    </listing>
+  </subsection>
+
+  <subsection xml:id="subsec-7-11-4-reading-site-data">
+    <title>Reading Site Data</title>
+
+    <subsubsection xml:id="subsubsec-7-11-4-1-main-method">
+      <title>The <c>main</c> Method</title>
+
+      <p>
+        The <c>main</c> method for our program invokes four methods. Before we implement them, we can put stubs in place for each method. A stub is a method with the correct method header but a dummy implementation. It should return a meaningful dummy value if it has a return type. If it’s a <c>void</c> method, the body can be empty. Implementing a stub this way allows us to write and test the methods that invoke it. <xref ref="listing-tour-map-stubs" /> is an outline of the program, with stubs in place for all four methods invoked by <c>main</c>:
+      </p>
+
+      <listing xml:id="listing-tour-map-stubs">
+        <caption>The <c>main</c> method and stubs</caption>
+        <program language="java" line-numbers="yes"><![CDATA[import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.File;
+
+public class TourMapGenerator {
+
+    public static void main(String[] args) throws FileNotFoundException {
+        // Reads the list in.
+        ArrayList<Site> sites = readSites("boston_trails.txt");
+        // If there were sites, then:
+        if (sites.size() > 0) {
+            // Sorts the list of sites.
+            sortList(sites);
+            // Presents the options to the user and gets their choice.
+            int index = getUserChoice(sites);
+            // Writes the HTML file with the user choice highlighted.
+            writeHTMLFile(sites.get(index), "tour.html");
+        } else {
+            System.out.println("No sites in boston_trails.txt; tour.html was not written.");
+        }
+    }
+
+    public static ArrayList<Site> readSites(String fileName) throws FileNotFoundException {
+        // TO DO: replace stub
+        ArrayList<Site> sites = new ArrayList<>();
+        Point[] freedomPoints = {new Point(524,858), new Point(531,856), new Point(545,837), new Point(542,827)};
+        Point[] commonPoints = {new Point(524, 856)};
+        sites.add(new Site("Freedom Trail - Downtown", freedomPoints));
+        sites.add(new Site("Boston Common", commonPoints));
+        return sites;
+    }
+
+    public static void sortList(ArrayList<Site> sites) {
+        // TO DO: replace stub
+    }
+
+    public static int getUserChoice(ArrayList<Site> sites) {
+        // TO DO: replace stub
+        return 0;
+    }
+
+    public static void writeHTMLFile(Site site, String fileName) throws FileNotFoundException {
+        // TO DO: replace stub
+        System.out.println(site.getName());
+        System.out.println(Arrays.toString(site.getPoints()));
+    }
+}]]></program>
+      </listing>
+
+      <p>
+        The <c>sortList</c> stub does nothing, as it will sort our <c>ArrayList</c> in place and therefore doesn’t return anything. The <c>getUserChoice</c> method will, eventually, display all <c>Site</c> names to the user, get the <c>Site</c> they want highlighted on the map, and return the index of that <c>Site</c>. We can put off implementing this method and return a hard-coded index to test our other methods on both trail and landmark choices. Right now, it’s returning index <c>0</c>.
+      </p>
+
+      <p>
+        The <c>writeHTMLFile</c> method is simply printing the site data to the screen. This will allow us to test our file-reading method by passing different indices to <c>writeHTMLFile</c> and confirming that the name and point data were correctly read.
+      </p>
+
+      <p>
+        We will work on the <c>readSites</c> method first, but you don’t have to implement methods in the order that they’re called <mdash /> you can write and test the methods in whatever order suits you. We’ve included a <c>readSites</c> stub in which both a trail <c>Site</c> and a landmark <c>Site</c> are hard-coded into the returned <c>ArrayList</c>. This helps us get used to the data structure we’re building and allows us to practice with it before we write the code to read it from the text file. It would allow us to write and test the other methods without reading from the file, if we were going to implement them first.
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="subsubsec-7-11-4-2-reading-file">
+      <title>Reading From the File into the <c>ArrayList</c> of <c>Site</c> objects</title>
+
+      <p>
+        Let’s build the <c>sites</c> <c>ArrayList</c> from the file data. The file is organized into an unknown number of records, which we will read one record per iteration of a file-reading loop. At the end of the loop, we’ll have a <c>Site</c> object to store in our <c>ArrayList</c>. Each record begins with a name, so we’ll read the <c>Site</c> name from the file, storing it in a local variable until we’re ready to instantiate our object.
+      </p>
+
+      <p>
+        The next line of the file is the number of points associated with the <c>Site</c>. We will use this information to initialize an array of <c>Point</c> to its exact size. We then loop that number of times, reading <c>x, y</c> coordinates, instantiating <c>Point</c> objects, and storing them in the <c>Point</c> array. Once we’ve finished reading the <c>Point</c> data, we can instantiate a <c>Site</c> with the name we read earlier and the <c>Point</c> array.
+      </p>
+
+      <p>
+        We will set preconditions on the method that the file name isn’t <c>null</c> and that it’s the name of a text file of <c>Site</c> data in the correct format. This is the updated <c>readSites</c> method, ready to insert in place of our stub:
+      </p>
+
+      <program language="java" line-numbers="yes"><![CDATA[/**
+ * Reads map location data from the file fileName, instantiates Site objects for
+ * each record of location data and stores in the returned ArrayList.
+ *
+ * Preconditions:  fileName != null and fileName is a text file of records formatted as
+ *                 location name 
+ number of points 
+ number of points lines of x y
+ * Postconditions: If the file exists, returns an ArrayList of Site objects -- one
+ *                 for each record in the file. If it doesn't, returns an empty ArrayList.
+ *
+ * @param fileName  The name of the file containing location data.
+ * @return          An ArrayList of Site objects, one for each record in the file, or
+ *                  an empty ArrayList if the file cannot be found or is empty.
+ * @throws FileNotFoundException
+ */
+public static ArrayList<Site> readSites(String fileName) throws FileNotFoundException {
+    assert fileName != null : "File name cannot be null";
+    ArrayList<Site> sites = new ArrayList<>();
+    File siteFile = new File(fileName);
+    if (siteFile.exists()) {
+        Scanner fileScanner = new Scanner(siteFile);
+        while (fileScanner.hasNext()) {
+            String name = fileScanner.nextLine();
+            int numPoints = fileScanner.nextInt();
+            Point[] pointsList = new Point[numPoints];
+            for (int i = 0; i < numPoints; i++) {
+                int x = fileScanner.nextInt();
+                int y = fileScanner.nextInt();
+                pointsList[i] = new Point(x, y);
+            }
+            sites.add(new Site(name, pointsList));
+            // Consumes the newline:
+            if (fileScanner.hasNextLine()) {
+                fileScanner.nextLine();
+            }
+        }
+        fileScanner.close();
+    }
+    return sites;
+}]]></program>
+
+      <p>
+        With that method in place, we can hard-code different return indices from the <c>getUserChoice</c> stub and the program will print the data at that index in the <c>ArrayList</c>. This will allow us to confirm that all data has been properly read into the data structure.
+      </p>
+    </subsubsection>
+  </subsection>
+
+  <subsection xml:id="subsec-7-11-5-sorting-searching">
+    <title>Sorting and Searching the <c>Site</c> <c>ArrayList</c></title>
+
+    <p>
+      We’ll next implement sorting the array. If the array is sorted, then we can use a binary search when we search the array for the user’s choice of site to highlight.
+    </p>
+
+    <p>
+      We’ll use our selection sort algorithm from before, but this time written to sort <c>Site</c> objects. Because we are comparing objects, we can’t use the relational (<c>&lt;</c> <c>&gt;</c>) operators. We will take advantage of the <c>compareTo</c> method we wrote for <c>Site</c> objects, so the comparison in our algorithm becomes:
+    </p>
+
+    <program language="java"><![CDATA[(sites.get(j).compareTo(sites.get(minIndex)) < 0)]]></program>
+
+    <p>
+      Here we get an element at index <c>j</c>, which is a <c>Site</c>, and invoke the <c>compareTo</c> method on it, passing it the element at <c>get(minIndex)</c>. These are swapped if the element at <c>j</c> is less than (alphabetically before) the element at <c>minIndex</c>, using the <c>get</c> and <c>set</c> methods.
+    </p>
+
+    <program language="java" line-numbers="yes"><![CDATA[/**
+ * Sorts sites into ascending lexicographical order by site name
+ * using selection sort.
+ *
+ * Precondition:  sites != null and no element of sites is null.
+ * Postcondition: The elements of sites are arranged in ascending order
+ *                according to Site.compareTo.
+ *
+ * @param sites  The ArrayList of Site objects to sort.
+ */
+public static void sortList(ArrayList<Site> sites) {
+    assert sites != null : "sites can't be null.";
+    for (Site site : sites) {
+        assert site != null : "site elements can't be null.";
+    }
+
+    for (int i = 0; i < sites.size() - 1; i++) {
+        int minIndex = i;
+        for (int j = i + 1; j < sites.size(); j++) {
+            if (sites.get(j).compareTo(sites.get(minIndex)) < 0) {
+                minIndex = j;
+            }
+        }
+        if (minIndex != i) {
+            Site temp = sites.get(i);
+            sites.set(i, sites.get(minIndex));
+            sites.set(minIndex, temp);
+        }
+    }
+}]]></program>
+
+    <p>
+      Now that our list of sites is sorted, we can implement the <c>getUserChoice</c> method using a binary search. This method will display the site names to the user in the sorted (alphabetical) order and then ask the user for their choice.
+    </p>
+
+    <p>
+      Let’s start with the preconditions and postconditions for the method. We can only display the site names if the <c>ArrayList</c> is non-null and contains at least one <c>Site</c>, and if all <c>Site</c> objects have non-null names. We check that there is at least one value in the <c>ArrayList</c>, back in <c>main</c>, before invoking this method, so it will never be invoked if there was a problem reading the file or if the file was empty.
+    </p>
+
+    <p>
+      As a postcondition, the method will return a valid index into <c>sites</c>. This means that, within the method, we’ll prompt the user for their choice and then find the choice within the list. If it’s not found, we’ll need to prompt and search again. A binary search ensures that each lookup<mdash />whether the name is valid or not<mdash />runs in <m>O(\log n)</m> time.
+    </p>
+
+    <p>
+      We therefore have a binary search nested within an input validation loop. The binary search is the same algorithm we presented before, but once again, because we are comparing <c>Site</c> objects, we rely on the <c>compareTo</c> method rather than relational operators.
+    </p>
+
+    <program language="java" line-numbers="yes"><![CDATA[/**
+ * Presents the Site names to the user, obtains the name of the site they
+ * want to visit, and returns the index of the chosen site using binary search.
+ *
+ * Preconditions:  sites != null and has at least one element;
+ *                 sites.get(i) != null and sites.get(i).getName() != null
+ *                 for 0 <= i < sites.size();
+ *                 sites is sorted in ascending order by Site.compareTo.
+ * Postconditions: Returns a valid index into sites corresponding to the user's choice.
+ *
+ * @param sites  A sorted ArrayList of non-null Site objects with size >= 1.
+ * @return       A valid index into sites.
+ */
+public static int getUserChoice(ArrayList<Site> sites) {
+    assert sites != null : "sites can't be null.";
+    assert sites.size() >= 1 : "sites can't be empty.";
+
+    Scanner stdin = new Scanner(System.in); // For reading user input.
+    String choice;                          // The user's choice of site.
+    int index = -1;                         // The index of the user's choice.
+
+    // Displays the site names to the user.
+    for (Site site : sites) {
+        assert site != null : "site can't be null.";
+        assert site.getName() != null : "site can't have a null name.";
+        System.out.println(site.getName());
+    }
+
+    // Obtains the user's choice in an input validation loop.
+    while (index == -1) {
+        System.out.print("Which site would you like to highlight? ");
+        choice = stdin.nextLine().trim();
+
+        // Uses binary search to locate the user's choice in sites.
+        int low = 0;
+        int high = sites.size() - 1;
+        boolean found = false;
+
+        while (low <= high && !found) {
+            int mid = (low + high) / 2;
+            int cmp = sites.get(mid).getName().compareTo(choice);
+            if (cmp == 0) {
+                found = true;
+                index = mid;
+            } else if (cmp < 0) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+
+        if (!found) {
+            System.out.println("Site not found. Please enter a name from the list (case-sensitive).");
+        }
+    }
+    stdin.close();
+    return index;
+}]]></program>
+  </subsection>
+
+  <subsection xml:id="subsec-7-11-6-writing-html">
+    <title>Writing the HTML File</title>
+
+    <p>
+      The output of the current stub <c>writeHTMLFile</c> method is to the console. For example, here is the output when we search for “Paul Revere House”:
+    </p>
+
+    <program><![CDATA[Paul Revere House
+[(788.0, 520.0)]]]></program>
+
+    <p>
+      And here is the output for “Black Heritage Trail”:
+    </p>
+
+    <program><![CDATA[Black Heritage Trail
+[(526.0, 780.0), (525.0, 772.0), (488.0, 790.0), (488.0, 725.0), (346.0, 725.0), (346.0, 742.0), (323.0, 742.0), (323.0, 767.0), (323.0, 706.0), (350.0, 706.0), (350.0, 676.0), (452.0, 675.0), (452.0, 646.0), (490.0, 646.0), (490.0, 681.0), (475.0, 681.0), (475.0, 694.0)]]]></program>
+
+    <p>
+      We can use this output to test that the other methods are working correctly without the extra work of opening an HTML document in a browser and visually inspecting the map.
+    </p>
+
+    <p>
+      Once we’ve thoroughly unit tested each of the methods we’ve written, we can implement the <c>writeHTMLFile</c> method to write HTML with embedded JavaScript to a file that displays our map image with a site highlight.
+    </p>
+
+    <p>
+      We’ll enforce preconditions that the Site object, its name, and its points aren’t <c>null</c>, and that there is at least one point. We’re also passing a file name to this method for the output file, and that can’t be <c>null</c> or blank.
+    </p>
+
+    <p>
+      Most of this method is simply writing boilerplate HTML and JavaScript to the file:
+    </p>
+
+    <program language="java" line-numbers="yes"><![CDATA[/**
+ * Writes an HTML file into the working directory that opens boston_map.png
+ * and draws a highlight for the given Site (a circle for a single point,
+ * or a polyline for multiple points).
+ *
+ * Precondition:  site != null, site.getName() != null,
+ *                site.getPoints() != null, site.getPoints().length > 0,
+ *                and fileName != null and is not blank.
+ * Postcondition: Creates or overwrites the file named fileName with an HTML5
+ *                canvas page displaying boston_map.png and the highlighted
+ *                site.
+ *
+ * @param site      The Site to highlight.
+ * @param fileName  The output HTML file name.
+ * @throws FileNotFoundException if the output file cannot be created or opened.
+ */
+public static void writeHTMLFile(Site site, String fileName) throws FileNotFoundException {
+
+    assert site != null : "Site to display cannot be null.";
+    assert fileName != null && !fileName.isBlank() : "File name cannot be null or blank.";
+    assert site.getName() != null : "Site name cannot be null.";
+    Point[] points = site.getPoints();
+    assert points != null : "Site cannot consist of null points.";
+    assert points.length > 0 : "Site must have at least one point.";
+
+    File outputFile = new File(fileName);
+    PrintWriter writer = new PrintWriter(outputFile);
+
+    // Sets up the HTML header.
+    writer.println("<!DOCTYPE html>");
+    writer.println("<html>");
+    writer.println("<head>");
+    writer.println("    <title>" + site.getName() + "</title>");
+    writer.println("</head>");
+    writer.println("<body>");
+    writer.println("    <h1>" + site.getName() + "</h1>");
+    writer.println("    <canvas id="mapCanvas"></canvas>");
+
+    // Writes the Javascript code.
+    writer.println("    <script>");
+    writer.println("    const canvas = document.getElementById("mapCanvas");");
+    writer.println("    const ctx = canvas.getContext("2d");");
+
+    // Creates a Javascript array of objects called points from the site.
+    writer.println("    const points = [");
+    for (int i = 0; i < points.length - 1; i++) {
+        writer.println("        {x: " + points[i].getX() + ", y: " + points[i].getY() + "},");
+    }
+    writer.println("        {x: " + points[points.length - 1].getX() + ", y: " + points[points.length - 1].getY() + "}");
+    writer.println("    ];");
+
+    // Writes the script to draw the map and highlight the landmark.
+    writer.println("    const img = new Image();");
+    writer.println("    img.onload = function () {");
+    writer.println("        canvas.width = img.width;");
+    writer.println("        canvas.height = img.height;");
+    writer.println("        ctx.drawImage(img, 0, 0);");
+
+    writer.println("        if (points.length === 1) {");
+    writer.println("            // Landmark: draw a highlight ring and center dot");
+    writer.println("            ctx.beginPath();");
+    writer.println("            ctx.arc(points[0].x, points[0].y, 16, 0, 2 * Math.PI);");
+    writer.println("            ctx.strokeStyle = "#dc2626";");
+    writer.println("            ctx.lineWidth = 4;");
+    writer.println("            ctx.stroke();");
+    writer.println("            ctx.beginPath();");
+    writer.println("            ctx.arc(points[0].x, points[0].y, 5, 0, 2 * Math.PI);");
+    writer.println("            ctx.fillStyle = "#dc2626";");
+    writer.println("            ctx.fill();");
+    writer.println("        } else if (points.length > 1) {");
+    writer.println("            // Trail segment: draw a thick highlighted polyline");
+    writer.println("            ctx.beginPath();");
+    writer.println("            ctx.moveTo(points[0].x, points[0].y);");
+    writer.println("            for (let i = 1; i < points.length; i++) {");
+    writer.println("                ctx.lineTo(points[i].x, points[i].y);");
+    writer.println("            }");
+    writer.println("            ctx.strokeStyle = "#f59e0b";");
+    writer.println("            ctx.lineWidth = 6;");
+    writer.println("            ctx.lineCap = "round";");
+    writer.println("            ctx.lineJoin = "round";");
+    writer.println("            ctx.stroke();");
+    writer.println("        }");
+    writer.println("    };");
+    writer.println("    img.src = "boston_map.png";");
+    writer.println("    </script>");
+
+    // Close the HTML document.
+    writer.println("</body>");
+    writer.println("</html>");
+
+    // Closes the PrintWriter so it writes the rest of the stream to the file.
+    writer.close();
+}]]></program>
+
+    <p>
+      There are three places in the code where we insert values from the <c>site</c> parameter <mdash /> when we write the HTML <c>title</c> and header level one tags:
+    </p>
+
+    <program language="java"><![CDATA[writer.println("    <title>" + site.getName() + "</title>");
+writer.println("    <h1>" + site.getName() + "</h1>");]]></program>
+
+    <p>
+      and when we create an array of the point data (as JavaScript objects), inside the embedded script:
+    </p>
+
+    <program language="java"><![CDATA[        writer.println("    const points = [");
+        for (int i = 0; i < points.length - 1; i++) {
+            writer.println("        {x: " + points[i].getX() + ", y: " + points[i].getY() + "},");
+        }
+        writer.println("        {x: " + points[points.length - 1].getX() + ", y: " + points[points.length - 1].getY() + "}");
+        writer.println("    ];");]]></program>
+
+    <p>
+      You don’t need to know HTML or JavaScript to write this code <mdash /> you only need to know where to put values from our <c>Site</c> object.
+    </p>
+
+    <p>
+      For the title and header tags, this is quite simple <mdash /> a title tag should look like, for example, <c>&lt;title&gt;Paul Revere House&lt;/title&gt;</c> or <c>&lt;title&gt;Black Heritage Trail&lt;/title&gt;</c>. We are simply concatenating the <c>name</c> field from our <c>Site</c> object between opening (<c>&lt;title&gt;</c>) and closing (<c>&lt;/title&gt;</c>) tags. The same for the <c>h1</c> (header level one) tag.
+    </p>
+
+    <p>
+      The <c>points</c> array is similar, except we must loop over our array of points to construct the JavaScript <c>points</c> array. For an array of points, such as points for the Black Heritage Trail, the JavaScript would look like:
+    </p>
+
+    <program language="javascript"><![CDATA[const points = [
+        {x: 526.0, y: 780.0},
+        {x: 525.0, y: 772.0},
+        {x: 488.0, y: 790.0},
+        {x: 488.0, y: 725.0},
+        {x: 346.0, y: 725.0},
+        {x: 346.0, y: 742.0},
+        {x: 323.0, y: 742.0},
+        {x: 323.0, y: 767.0},
+        {x: 323.0, y: 706.0},
+        {x: 350.0, y: 706.0},
+        {x: 350.0, y: 676.0},
+        {x: 452.0, y: 675.0},
+        {x: 452.0, y: 646.0},
+        {x: 490.0, y: 646.0},
+        {x: 490.0, y: 681.0},
+        {x: 475.0, y: 681.0},
+        {x: 475.0, y: 694.0}
+    ];]]></program>
+
+    <p>
+      To construct this, we construct the beginning of the array, and then for each <c>Point</c> in our <c>points</c> list, we construct a JavaScript object by concatenating together the curly braces, field names, colons, and commas, together with our <c>Point</c> <c>x</c> and <c>y</c> values:
+    </p>
+
+    <program language="java"><![CDATA[writer.println("        {x: " + points[i].getX() + ", y: " + points[i].getY() + "},");]]></program>
+
+    <p>
+      Because there is no comma after the last point, we iterate from index <c>0</c> through index <c>length-2</c> and then concatenate the last point in without a trailing comma.
+    </p>
+
+    <p>
+      So although the whole method looks very intimidating, it’s simply a series of print statements, constructed from an HTML document that is broken into lines being written to the file. In three locations, we concatenate values from our <c>Site</c> into the output.
+    </p>
+
+    <p>
+      The result of the program is very satisfying <mdash /> a map with a user-defined highlight displayed in a browser. The program would work for any map and properly structured text file of names and coordinates, and the program could be enhanced to allow the user to select multiple sites for highlighting.
+    </p>
+
+    <p>
+      To smooth the development process, we broke the problem into manageable methods with a well-structured class design for the data and programmed stubs, initially, so we could develop incrementally. We precisely specified the contract for each method, ensuring that the methods, once developed and tested, would work together without throwing run-time exceptions or producing garbage output.
+    </p>
+  </subsection>
+</section>
