@@ -413,6 +413,8 @@
               statcounter-project="0123456"
               statcounter-security="0123456"
             /> -->
+			<analytics google-gst="G-S108N9XBTT"/>
+			
   </html>
 
   <!-- EPUB options.  The cover element takes a @front attribute naming -->
