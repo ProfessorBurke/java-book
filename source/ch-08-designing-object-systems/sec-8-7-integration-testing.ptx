@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-8-7-integration-testing" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Integration Testing from Use Cases</title>
+
+  <introduction>
+    <p>
+      In Sections 5.11 and 6.10, you learned how to write unit tests to verify individual methods and classes in isolation. Unit testing is essential<mdash />we want to know that <c>Stamp</c> stores its cost properly and <c>ReaderAccount.logMinutes</c> adds minutes correctly before we assemble the whole system. However, bugs often hide in the spaces between classes: a method might return the wrong value to a collaborator, forget to update a partner object’s state, or break an invariant across an object boundary. Integration testing verifies that collaborating objects work together properly as a system.
+    </p>
+
+    <p>
+      Just as use cases guide our class and sequence diagram design, they also give us a natural blueprint for integration tests. A use case describes an end-to-end interaction across multiple classes, complete with preconditions, a normal path, and failure paths. By writing test cases directly from our use cases, we ensure that the implemented collaborations match the behavior the client asked for.
+    </p>
+  </introduction>
+
+  <subsection xml:id="subsec-8-7-1-deriving-tests">
+    <title>Deriving Test Cases from a Use Case</title>
+
+    <p>
+      To build an integration test plan from a use case, we organize our tests using the familiar Arrange–Act–Assert (AAA) pattern:
+      <ul>
+        <li><p>Arrange: Instantiate the collaborating objects and establish the use case’s preconditions.</p></li>
+        <li><p>Act: Invoke the method that triggers the use case.</p></li>
+        <li><p>Assert: Verify all postconditions<mdash />both the value returned and any changes (or non-changes) to the state of the collaborating objects.</p></li>
+      </ul>
+    </p>
+
+    <p>
+      When scanning a use case for test cases, look for four categories:
+      <ol>
+        <li>
+          <p>
+            Main flow (“happy path”): A typical, successful run where all preconditions and conditions are met (e.g., a reader has plenty of minutes to earn a stamp).
+          </p>
+        </li>
+        <li>
+          <p>
+            Boundary cases: Inputs right on the threshold of a decision<mdash />such as having exactly <c>90</c> minutes when a stamp costs <c>90</c>, or <c>89</c> minutes (one shy). Boundary tests catch off-by-one errors like using <c>&gt;</c> instead of <c>&gt;=</c>.
+          </p>
+        </li>
+        <li>
+          <p>
+            Alternative flows: Valid variations that branch from the main path and still succeed (for example, earning a second stamp after already holding one).
+          </p>
+        </li>
+        <li>
+          <p>
+            Exceptional flows (failure paths): Expected situations where the goal cannot be completed, such as a reader requesting a stamp without enough minutes. Notice that a use-case exceptional flow is not a Java exception or <c>AssertionError</c><mdash />the system handles it gracefully by returning <c>false</c> and leaving the account and passport unchanged, so we can test it directly with live <c>assert</c> statements. (By contrast, violated method preconditions<mdash />such as passing <c>null</c> for <c>StampManager</c><mdash />trigger an <c>AssertionError</c>, which we leave commented out here. Uncomment them to test that an <c>AssertionError</c> is thrown.)
+          </p>
+        </li>
+      </ol>
+    </p>
+
+    <p>
+      <xref ref="table-8-12-request-stamp-tests" /> summarizes an integration test plan for the <em>Request stamp</em> use case (assuming <c>StampManager</c> sets <c>stampCost</c> to <c>90</c>).
+    </p>
+
+    <table xml:id="table-8-12-request-stamp-tests">
+      <title>Integration Test Plan for the <em>Request stamp</em> Use Case.</title>
+      <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+        <col width="18%"/>
+        <col width="16%"/>
+        <col width="24%"/>
+        <col width="16%"/>
+        <col width="26%"/>
+        <row header="yes">
+          <cell>Test Case</cell>
+          <cell>Flow / Category</cell>
+          <cell>Initial State (Arrange)</cell>
+          <cell>Action (Act)</cell>
+          <cell>Expected Outcome (Assert)</cell>
+        </row>
+        <row>
+          <cell>1. Surplus minutes</cell>
+          <cell>Main flow</cell>
+          <cell><c>freeMinutes == 120</c>, <c>stampCount == 0</c></cell>
+          <cell><c>requestStamp()</c></cell>
+          <cell>Returns <c>true</c>; <c>freeMinutes == 30</c>; <c>stampCount == 1</c></cell>
+        </row>
+        <row>
+          <cell>2. Exact cost</cell>
+          <cell>Boundary</cell>
+          <cell><c>freeMinutes == 90</c>, <c>stampCount == 0</c></cell>
+          <cell><c>requestStamp()</c></cell>
+          <cell>Returns <c>true</c>; <c>freeMinutes == 0</c>; <c>stampCount == 1</c></cell>
+        </row>
+        <row>
+          <cell>3. Insufficient minutes</cell>
+          <cell>Exceptional flow</cell>
+          <cell><c>freeMinutes == 60</c>, <c>stampCount == 0</c></cell>
+          <cell><c>requestStamp()</c></cell>
+          <cell>Returns <c>false</c>; <c>freeMinutes == 60</c>; <c>stampCount == 0</c></cell>
+        </row>
+        <row>
+          <cell>4. Multiple stamps</cell>
+          <cell>Alternative / sequential</cell>
+          <cell>Account from Case 3 (<c>60</c> min) logs <c>60</c> more (<c>120</c> total)</cell>
+          <cell><c>requestStamp()</c></cell>
+          <cell>Returns <c>true</c>; <c>freeMinutes == 30</c>; <c>stampCount == 1</c></cell>
+        </row>
+      </tabular>
+    </table>
+  </subsection>
+
+  <subsection xml:id="subsec-8-7-2-implementing-tests">
+    <title>Implementing the Integration Tests</title>
+
+    <p>
+      <xref ref="listing-8-3-reader-client" /> implements this test plan in <c>ReaderClient.java</c>. Remember to run the program with assertions enabled (<c>-ea</c>) so every <c>assert</c> check executes.
+    </p>
+
+    <listing xml:id="listing-8-3-reader-client">
+      <caption>Integration tests for the <em>Request stamp</em> use case in <c>ReaderClient.java</c>.</caption>
+      <program language="java" line-numbers="yes"><![CDATA[/**
+ * Integration tests for the Request stamp use case, verifying collaboration
+ * among ReaderAccount, Passport, StampManager, and Stamp.
+ * Run with assertions enabled (-ea).
+ */
+public class ReaderClient {
+
+    public static void main(String[] args) {
+        // Shared StampManager (stampCost = 90)
+        StampManager manager = new StampManager();
+
+        // Test 1: Main flow (surplus minutes: 120 >= 90)
+        ReaderAccount priya = new ReaderAccount(112233, "Priya Nair", manager);
+        priya.logMinutes(120);
+        boolean priyaGranted = priya.requestStamp();
+        assert priyaGranted : "Main flow: request should succeed.";
+        assert priya.getFreeMinutes() == 30 : "Main flow: 30 minutes should remain.";
+        assert priya.getStampCount() == 1 : "Main flow: passport should have 1 stamp.";
+
+        // Test 2: Boundary case (exact cost: 90 == 90)
+        ReaderAccount mateo = new ReaderAccount(445566, "Mateo Morales", manager);
+        mateo.logMinutes(90);
+        boolean mateoGranted = mateo.requestStamp();
+        assert mateoGranted : "Boundary: exact 90 minutes should succeed.";
+        assert mateo.getFreeMinutes() == 0 : "Boundary: 0 minutes should remain.";
+        assert mateo.getStampCount() == 1 : "Boundary: passport should have 1 stamp.";
+
+        // Test 3: Exceptional flow (insufficient minutes: 60 < 90)
+        ReaderAccount amina = new ReaderAccount(778899, "Amina Diallo", manager);
+        amina.logMinutes(60);
+        boolean aminaFirstGranted = amina.requestStamp();
+        assert !aminaFirstGranted : "Exceptional flow: request should fail.";
+        assert amina.getFreeMinutes() == 60 : "Exceptional flow: minutes must be unchanged.";
+        assert amina.getStampCount() == 0 : "Exceptional flow: passport must remain empty.";
+
+        // Test 4: Sequential follow-up (Amina logs 60 more minutes -> 120 total)
+        amina.logMinutes(60);
+        boolean aminaSecondGranted = amina.requestStamp();
+        assert aminaSecondGranted : "Follow-up: 120 minutes should now succeed.";
+        assert amina.getFreeMinutes() == 30 : "Follow-up: 30 minutes should remain.";
+        assert amina.getStampCount() == 1 : "Follow-up: passport should now have 1 stamp.";
+
+        // Precondition-violation check (uncomment to verify AssertionError):
+        // ReaderAccount invalid = new ReaderAccount(101010, "Invalid", null);
+
+        System.out.println("All Request stamp integration tests passed!");
+    }
+}]]></program>
+    </listing>
+
+    <p>
+      Notice how each test exercises the entire collaboration chain from <c>ReaderAccount</c> to <c>Passport</c> to <c>StampManager</c> without printing raw objects and inspecting them by eye. By checking both the boolean return value and the resulting account and passport state, these tests confirm that the collaboration satisfies every requirement of the <em>Request stamp</em> use case.
+    </p>
+
+    <p>
+      Our <em>Request stamp</em> design applies divide-and-conquer<mdash />breaking a complex problem into smaller, manageable parts<mdash />together with encapsulation to distribute data and responsibilities across focused classes (<c>ReaderAccount</c>, <c>Passport</c>, <c>StampManager</c>, and <c>Stamp</c>). When objects are designed this way, several important software-engineering benefits follow:
+      <ul>
+        <li>
+          <p>
+            Information hiding: Each class exposes a public interface<mdash />the set of public methods that other objects can invoke<mdash />while keeping its internal data representation private. Because <c>Passport</c> and <c>ReaderAccount</c> interact only through <c>StampManager</c>’s public methods (<c>getStampCost()</c> and <c>getEmptyStamp()</c>), we could later add an image to <c>Stamp</c> or change how <c>StampManager</c> stores its stamps without breaking <c>Passport</c> or <c>ReaderAccount</c>.
+          </p>
+        </li>
+        <li>
+          <p>
+            Invariant protection: Because fields are <c>private</c> and state changes happen only through well-defined methods, objects protect their own data from invalid states. For example, <c>ReaderAccount</c> lets callers add minutes (<c>logMinutes</c>) or deduct a stamp cost (<c>deductFreeMinutes</c>), rather than allowing arbitrary changes to <c>freeMinutes</c>.
+          </p>
+        </li>
+        <li>
+          <p>
+            Loose coupling and generality: Coupling measures how strongly one class depends on the internal details of another; loose coupling means keeping classes as independent as possible. Paired with generality<mdash />designing classes to solve a broad category of problems rather than one rigid case<mdash />loosely coupled classes are far easier to modify, test, and reuse in other systems.
+          </p>
+        </li>
+      </ul>
+    </p>
+  </subsection>
+</section>

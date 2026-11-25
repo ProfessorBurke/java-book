@@ -20,6 +20,7 @@
 	<xi:include href="ch-05-methods/ch-methods.ptx" />
     <xi:include href="ch-06-objects-classes/ch-objects-classes.ptx" />
 	<xi:include href="ch-07-arrays/ch-arrays.ptx" />
+	<xi:include href="ch-08-designing-object-systems/ch-designing.ptx" />
   </book>
 
 </pretext>

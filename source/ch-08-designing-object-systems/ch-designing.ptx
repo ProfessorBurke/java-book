@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xml:id="ch-08-designing-object-systems" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Designing Object Systems</title>
+
+  <xi:include href="sec-8-1-overview.ptx" />
+  <xi:include href="sec-8-2-associations.ptx" />
+  <xi:include href="sec-8-3-use-cases.ptx" />
+  <xi:include href="sec-8-4-collaborations.ptx" />
+  <xi:include href="sec-8-5-sequence-diagrams.ptx" />
+  <xi:include href="sec-8-6-implementing.ptx" />
+  <xi:include href="sec-8-7-integration-testing.ptx" />
+  <xi:include href="sec-8-8-moving-on.ptx" />
+  <xi:include href="sec-8-9-exercises.ptx" />
+</chapter>

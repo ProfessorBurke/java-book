@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-8-8-moving-on" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Moving On!</title>
+
+  <p>
+    Congratulations! In this chapter, you moved from designing single classes in isolation to architecting, documenting, and testing entire systems of collaborating objects:
+  </p>
+
+  <ul>
+    <li>
+      <p>
+        <strong>Modeling object associations:</strong> Distinguishing unidirectional navigation, bidirectional navigation (and keeping reciprocal references synchronized), composition (exclusive whole–part ownership enforced through creation and defensive deep copying), and association classes.
+      </p>
+    </li>
+    <li>
+      <p>
+        <strong>Specifying requirements with use cases:</strong> Identifying actors and system boundaries, writing main, alternative, and exceptional flows, and visualizing system behavior in UML use case diagrams.
+      </p>
+    </li>
+    <li>
+      <p>
+        <strong>Discovering classes and responsibilities:</strong> Using CRC cards to extract candidate classes from nouns and responsibilities from verb phrases, and translating collaborator lists into static class diagrams.
+      </p>
+    </li>
+    <li>
+      <p>
+        <strong>Tracing dynamic collaborations with sequence diagrams:</strong> Reading and drawing lifelines, activation bars, found messages, reply arrows, and <c>loop</c>, <c>opt</c>, and <c>alt</c> blocks<mdash />and using sequence diagrams iteratively to uncover missing classes like <c>StampManager</c>.
+      </p>
+    </li>
+    <li>
+      <p>
+        <strong>Implementing multi-class collaborations:</strong> Capturing fields, methods, and class invariants in four-row class diagrams, translating sequence diagrams into Java method calls, and enforcing invariants defensively across object boundaries.
+      </p>
+    </li>
+    <li>
+      <p>
+        <strong>Integration testing from use cases:</strong> Deriving Arrange–Act–Assert integration test plans from a use case’s main flow, boundary values, and exceptional flows to verify that collaborating classes work together as specified.
+      </p>
+    </li>
+  </ul>
+
+  <p>
+    You are now ready to tackle the programming projects at the end of this chapter. Work through each problem methodically: begin by identifying actors, use cases, and candidate classes; sketch association and sequence diagrams before writing code; define explicit class invariants for every class; and build an Arrange–Act–Assert integration test suite to verify every flow of your design.
+  </p>
+</section>

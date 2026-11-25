@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exercises xml:id="sec-8-9-exercises" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Programming Projects</title>
+
+  <introduction>
+    <p>
+      For each project, design your classes and associations before writing code, enforce all preconditions and class invariants with <c>assert</c> statements, and write an Arrange–Act–Assert test driver (run with <c>-ea</c>) verifying main, boundary, and failure paths.
+    </p>
+  </introduction>
+
+  <!-- ============================================================ -->
+  <!-- Project 1: Smart Thermostat and Temperature Sensor           -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-8-1-thermostat">
+    <title>Smart Thermostat and Temperature Sensor</title>
+    <statement>
+      <p>
+        A smart home thermostat reads the current room temperature from a separate wall sensor and decides whether to turn on the heat. Because the sensor simply measures temperature, it has no reference back to the thermostat.
+      </p>
+      <p>
+        <ol>
+        <li>
+          <p>
+            Draw a UML association class diagram showing the unidirectional association between <c>Thermostat</c> (<c>1</c>) and <c>TemperatureSensor</c> (<c>1</c>, field <c>-sensor</c>).
+          </p>
+        </li>
+        <li>
+          <p>
+            Implement <c>TemperatureSensor</c>:
+            <ul>
+              <li><p>Fields: <c>currentTemp : double</c></p></li>
+              <li><p>Constructor: <c>TemperatureSensor(double initialTemp)</c> (invariant: <c>-40.0 &lt;= currentTemp &lt;= 140.0</c>)</p></li>
+              <li><p>Methods: <c>getTemperature() : double</c>, <c>setTemperature(double temp) : void</c></p></li>
+            </ul>
+          </p>
+        </li>
+        <li>
+          <p>
+            Implement <c>Thermostat</c>:
+            <ul>
+              <li><p>Fields: <c>targetTemp : double</c>, <c>sensor : TemperatureSensor</c></p></li>
+              <li><p>Constructor: <c>Thermostat(double targetTemp, TemperatureSensor sensor)</c> (invariants: <c>50.0 &lt;= targetTemp &lt;= 90.0</c>, <c>sensor != null</c>)</p></li>
+              <li><p>Methods: <c>setTargetTemp(double targetTemp) : void</c>, <c>needsHeat() : boolean</c> (queries <c>sensor.getTemperature()</c> and returns <c>true</c> if the room temperature is strictly below <c>targetTemp</c>).</p></li>
+            </ul>
+          </p>
+        </li>
+        <li>
+          <p>
+            Write a test class <c>ThermostatTest</c> using sample temperatures (e.g., target <c>68.0</c>°F; test <c>65.5</c>°F → <c>true</c>, boundary <c>68.0</c>°F → <c>false</c>, and <c>71.2</c>°F → <c>false</c>).
+          </p>
+        </li>
+        </ol>
+      </p>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 2: Ride-Share Driver and Vehicle                     -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-8-2-dispatch">
+    <title>Ride-Share Driver and Vehicle</title>
+    <statement>
+      <p>
+        In a dispatch system, each <c>Driver</c> is paired with one <c>Vehicle</c>, and each <c>Vehicle</c> must know which <c>Driver</c> is currently operating it (<c>1</c>-to-<c>1</c> bidirectional association).
+      </p>
+      <p>
+        <ol>
+        <li>
+          <p>
+            Draw a UML association class diagram showing the bidirectional association between <c>Driver</c> (<c>-driver</c>) and <c>Vehicle</c> (<c>-vehicle</c>).
+          </p>
+        </li>
+        <li>
+          <p>
+            Implement <c>Vehicle</c> (<c>licensePlate : String</c>, <c>model : String</c>, <c>driver : Driver</c>) and <c>Driver</c> (<c>name : String</c>, <c>licenseId : String</c>, <c>vehicle : Vehicle</c>).
+            <ul>
+              <li><p>Design <c>assignVehicle(Vehicle vehicle)</c> in <c>Driver</c> (and a helper <c>setDriver(Driver driver)</c> in <c>Vehicle</c>) so that assigning a vehicle automatically updates both sides of the relationship without infinite recursion.</p></li>
+              <li><p>Enforce the invariant that if <c>driver.getVehicle() == car</c>, then <c>car.getDriver() == driver</c> (and neither can be assigned to a second partner while already paired).</p></li>
+            </ul>
+          </p>
+        </li>
+        <li>
+          <p>
+            Write an integration test <c>DispatchTest</c> verifying that pairing a <c>Driver</c> (e.g., <c>"Elena Rostova"</c>) with a <c>Vehicle</c> (<c>"ABC-1234"</c>, <c>"Civic"</c>) synchronizes both references and rejects an attempt to reassign an already-paired <c>Vehicle</c>.
+          </p>
+        </li>
+        </ol>
+      </p>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 3: Store Receipt and Line Items                      -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-8-3-receipt">
+    <title>Store Receipt and Line Items</title>
+    <statement>
+      <p>
+        A point-of-sale <c>Receipt</c> owns a list of <c>LineItem</c> objects. A <c>LineItem</c> cannot exist outside its <c>Receipt</c>, and no outside code should hold a mutable reference to the receipt’s items.
+      </p>
+      <p>
+        <ol>
+        <li>
+          <p>
+            Draw a UML composition diagram (<c>Receipt</c> ◆─── <c>LineItem</c>, <c>1</c> to <c>0..*</c>).
+          </p>
+        </li>
+        <li>
+          <p>
+            Implement <c>LineItem</c> (<c>description : String</c>, <c>unitPrice : double</c>, <c>quantity : int</c>) with invariants <c>description != null &amp;&amp; !description.isBlank()</c>, <c>unitPrice &gt;= 0.0</c>, and <c>quantity &gt; 0</c>, plus <c>getLineTotal() : double</c>.
+          </p>
+        </li>
+        <li>
+          <p>
+            Implement <c>Receipt</c> (<c>receiptNumber : int</c>, <c>items : ArrayList&lt;LineItem&gt;</c>):
+            <ul>
+              <li><p>Constructor initializes an empty <c>ArrayList&lt;LineItem&gt;</c>.</p></li>
+              <li><p><c>addItem(String description, double unitPrice, int quantity) : void</c> creates the <c>LineItem</c> inside <c>Receipt</c> and adds it to <c>items</c> (preserving exclusive ownership).</p></li>
+              <li><p><c>getItemCount() : int</c>, <c>calculateSubtotal() : double</c>, and <c>toString() : String</c>.</p></li>
+            </ul>
+          </p>
+        </li>
+        <li>
+          <p>
+            Write <c>ReceiptTest</c> using sample items (e.g., <c>2</c> notebooks at <c>$3.50</c> each and <c>1</c> pen set at <c>$6.25</c>, verifying subtotal <c>$13.25</c> and item count <c>2</c>).
+          </p>
+        </li>
+        </ol>
+      </p>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 4: Silent Auction Bidding                            -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-8-4-auction">
+    <title>Silent Auction Bidding</title>
+    <statement>
+      <p>
+        In a charity silent auction, <c>Bidder</c> objects place <c>Bid</c>s on <c>AuctionItem</c> objects. Because a bid connects a <c>Bidder</c> to an <c>AuctionItem</c> and carries its own amount, <c>Bid</c> is modeled as an association class.
+      </p>
+      <p>
+        <ol>
+        <li>
+          <p>
+            Draw a UML association class diagram connecting <c>Bidder</c> and <c>AuctionItem</c> through <c>Bid</c>.
+          </p>
+        </li>
+        <li>
+          <p>
+            Implement <c>Bidder</c> (<c>bidderId : int</c>, <c>name : String</c>), <c>AuctionItem</c> (<c>itemId : int</c>, <c>title : String</c>, <c>startingPrice : double</c>, <c>highBid : Bid</c>), and <c>Bid</c> (<c>bidder : Bidder</c>, <c>item : AuctionItem</c>, <c>amount : double</c>).
+            <ul>
+              <li><p>Give <c>AuctionItem</c> a method <c>placeBid(Bidder bidder, double amount) : boolean</c> that creates a new <c>Bid</c> and updates <c>highBid</c> only if <c>amount</c> is strictly greater than the current <c>highBid</c> amount (or <c>&gt;= startingPrice</c> when no bid exists yet).</p></li>
+            </ul>
+          </p>
+        </li>
+        <li>
+          <p>
+            Before writing your test driver, create an Integration Test Plan Table (like <xref ref="table-8-12-request-stamp-tests" />) for the <em>Place bid</em> use case covering:
+            <ul>
+              <li><p>First valid bid meeting <c>startingPrice</c> (e.g., <c>$50.00</c> on a <c>$50.00</c> starting item)</p></li>
+              <li><p>Higher subsequent bid (<c>$65.00</c>)</p></li>
+              <li><p>Boundary bid equal to the current high bid (<c>$65.00</c>, rejected)</p></li>
+              <li><p>Lower bid (<c>$40.00</c>, rejected; <c>highBid</c> remains <c>$65.00</c>)</p></li>
+            </ul>
+          </p>
+        </li>
+        <li>
+          <p>
+            Implement your test plan in <c>AuctionClient.java</c> using Arrange–Act–Assert <c>assert</c> statements.
+          </p>
+        </li>
+        </ol>
+      </p>
+    </statement>
+  </exercise>
+
+  <!-- ============================================================ -->
+  <!-- Project 5: Fitness Class Reservation                         -->
+  <!-- ============================================================ -->
+  <exercise xml:id="project-8-5-fitness">
+    <title>Fitness Class Reservation</title>
+    <statement>
+      <p>
+        In this problem, you are given the class contracts for <c>FitnessClass</c> and <c>MemberPass</c>, an empty <c>reserveClass</c> method, and a sequence diagram showing how the two objects collaborate.
+      </p>
+      <p>
+        <ol>
+        <li>
+          <p>
+            Implement <c>FitnessClass</c>:
+            <ul>
+              <li><p>Fields: <c>className : String</c>, <c>enrolled : int</c> (initially <c>0</c>), <c>capacity : int</c></p></li>
+              <li>
+                <p>
+                  Methods:
+                  <ul>
+                    <li><p><c>hasOpenSpot() : boolean</c><mdash />returns <c>true</c> if <c>enrolled &lt; capacity</c></p></li>
+                    <li><p><c>addMember() : void</c><mdash />increments <c>enrolled</c> by <c>1</c> (precondition: <c>enrolled &lt; capacity</c>)</p></li>
+                  </ul>
+                </p>
+              </li>
+            </ul>
+          </p>
+        </li>
+        <li>
+          <p>
+            Implement <c>MemberPass</c>:
+            <ul>
+              <li><p>Fields: <c>memberId : int</c>, <c>credits : int</c>, <c>active : boolean</c></p></li>
+              <li>
+                <p>Method to implement from <xref ref="fig-8-19-reserveclass-sequence" />:</p>
+                <program language="java"><![CDATA[public boolean reserveClass(FitnessClass fitnessClass)]]></program>
+              </li>
+            </ul>
+          </p>
+        </li>
+        <li>
+          <p>
+            Sequence Diagram Specification for <c>reserveClass(fitnessClass)</c> (shown in <xref ref="fig-8-19-reserveclass-sequence" />):
+            <ul>
+              <li><p><c>pass : MemberPass</c> receives the found message <c>reserveClass(fitnessClass)</c>.</p></li>
+              <li><p><c>pass</c> invokes <c>hasOpenSpot()</c> on <c>fitnessClass : FitnessClass</c>, which returns <c>open</c>.</p></li>
+              <li>
+                <p>
+                  Inside an <c>opt</c> block with guard <c>[active &amp;&amp; credits &gt; 0 &amp;&amp; open]</c>:
+                  <ul>
+                    <li><p><c>pass</c> invokes <c>addMember()</c> on <c>fitnessClass</c>.</p></li>
+                    <li><p><c>pass</c> decrements <c>credits</c> by <c>1</c> and sets <c>reserved = true</c>.</p></li>
+                  </ul>
+                </p>
+              </li>
+              <li><p>After the <c>opt</c> block, <c>pass</c> returns <c>reserved</c>.</p></li>
+            </ul>
+          </p>
+        </li>
+        <li>
+          <p>
+            Implement <c>reserveClass</c> so it matches the sequence diagram (plus <c>assert fitnessClass != null</c>), and write <c>ReservationTest.java</c> testing a successful reservation (active pass, <c>3</c> credits, <c>4</c> of <c>10</c> spots filled), a reservation blocked when the class is full (<c>10</c> of <c>10</c> spots filled), and a reservation blocked when <c>credits == 0</c>.
+          </p>
+        </li>
+        </ol>
+      </p>
+
+      <figure xml:id="fig-8-19-reserveclass-sequence">
+        <caption>Sequence diagram for the <c>reserveClass</c> method.</caption>
+        <image source="figures/figure_8_19.png" width="90%">
+          <shortdescription>Sequence diagram for reserveClass(fitnessClass) with hasOpenSpot(), opt block, and addMember().</shortdescription>
+          <description>
+            <p>
+              A UML sequence diagram with two un-underlined boxes: pass : MemberPass on the left and fitnessClass : FitnessClass on the right. A found message reserveClass(fitnessClass) enters pass from a filled circle on the left. pass calls hasOpenSpot() on fitnessClass, which returns open. Inside an opt box guarded [active &amp;&amp; credits &gt; 0 &amp;&amp; open], pass calls addMember() on fitnessClass and updates credits-- and reserved = true. Finally, a dashed reply arrow returns reserved to the left margin.
+            </p>
+          </description>
+        </image>
+      </figure>
+    </statement>
+  </exercise>
+</exercises>

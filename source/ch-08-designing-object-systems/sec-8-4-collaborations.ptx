@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-8-4-collaborations" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Collaborations and Responsibilities</title>
+
+  <introduction>
+    <p>
+      Once we have a set of use cases specifying the system’s requirements, we can begin designing the classes that will realize them. A natural first step is to revisit the CRC card technique from Chapter 6. By scanning each use case for nouns (candidate classes such as <c>ReaderAccount</c>, <c>Passport</c>, and <c>Stamp</c>) and verb phrases (system responsibilities such as checking unspent minutes, deducting minutes, and adding a stamp slot), we can sketch a CRC card for each candidate class and distribute the system’s responsibilities among them. One class will often have responsibilities related to fulfilling many use cases.
+    </p>
+
+    <p>
+      In Chapter 6, you mostly designed one class at a time, so the Collaborators column on your CRC cards stayed fairly quiet. In a multi-object system, that column takes center stage: it records which other classes each class must know about and send messages to in order to fulfill a use case. Those collaborator lists point directly back to the object associations we studied in Section 8.2<mdash />helping us decide which classes need references to which, whether navigation is one-way or two-way, whether one object owns another through composition, or whether two classes are related through an association class.
+    </p>
+  </introduction>
+
+  <subsection xml:id="subsec-8-4-1-candidate-classes">
+    <title>Candidate Classes in the <em>Request stamp</em> Use Case</title>
+
+    <p>
+      Suppose we have completed our use cases for the library reading program system, and we wish to design the system. We will use the <em>Request stamp</em> use case as an example. In the <em>Request stamp</em> use case, a Reader (an actor outside of the system) chooses to request a passport stamp, and the system compares the Reader’s unspent minutes (minutes that have not already been awarded a passport stamp) with the amount needed to earn a stamp. If the Reader has enough minutes, the minutes will be deducted from their account and an empty stamp slot will be added to their passport. If the Reader does not have enough minutes, the system will inform them and no other changes will be made.
+    </p>
+
+    <p>
+      We find some obvious class candidates in the use case by looking for nouns:
+      <ul>
+        <li><p>Reader account</p></li>
+        <li><p>Passport</p></li>
+        <li><p>Stamp</p></li>
+      </ul>
+    </p>
+
+    <p>
+      These are “things” in our use case. If they are things which aggregate data and have a coherent set of responsibilities related to that data, then they may end up as classes in our system. It is also possible that we can use built-in data types to represent some things. For example, unspent minutes is a “thing” in our system, but we will likely represent that with a numeric type, such as an <c>int</c> or a <c>double</c> (depending on whether we are allowing fractions of minutes). As another example, the passport will contain more than one stamp. It is possible that we will use an array or <c>ArrayList</c> to hold the stamps.
+    </p>
+
+    <p>
+      Finding classes is a process that involves both discovery and invention. To discover classes within the requirements, we should look for things. Nouns are a great start, but don’t be limited to nouns in the description or expect that all nouns will be classes. Classes might also be, for example, concepts, organizations, events, algorithms, or interactions. We might also invent classes to manage an interaction between objects or facilitate some other collaboration within the system. There will not be one correct object-oriented design for a system, so expect a messy and iterative process.
+    </p>
+
+    <p>
+      Evaluate your class candidates according to how well they function within the overall design, whether they are a natural part of the design (or a collaboration mechanism), whether the same pattern of collaborating objects has been used successfully to solve similar problems, whether each object has a coherent set of responsibilities, and whether the objects are loosely coupled, meaning they are as independent as possible from the rest of the system.
+    </p>
+  </subsection>
+
+  <subsection xml:id="subsec-8-4-2-identifying-responsibilities">
+    <title>Identifying Responsibilities in the <em>Request stamp</em> Use Case</title>
+
+    <p>
+      With a candidate set of classes (that we are willing to revisit), we identify the following system responsibilities in this use case:
+      <ul>
+        <li><p>Providing the option to request a passport stamp.</p></li>
+        <li><p>Maintaining the Reader’s unspent minutes.</p></li>
+        <li><p>Maintaining the passport.</p></li>
+        <li><p>Knowing the number of minutes required for a stamp.</p></li>
+        <li><p>Deducting minutes from the Reader account.</p></li>
+        <li><p>Adding a stamp slot to a passport.</p></li>
+        <li><p>Displaying a rejection message.</p></li>
+      </ul>
+    </p>
+
+    <p>
+      We can now distribute the responsibilities among our class candidates. Sometimes elaborating responsibilities allows us to identify new classes. Once we’ve followed the process of identifying classes and responsibilities for all use cases, we distribute the responsibilities among the class candidates. This is not a linear process<mdash />our initial class candidates may eventually help us define classes in our system, but we might also combine classes, split classes apart, change class responsibilities, add classes, and remove classes from our list of candidates.
+    </p>
+
+    <p>
+      There are several responsibilities related to interacting with the user, such as giving the Reader the choice to request a stamp, displaying an empty stamp slot in the passport, and informing the Reader if the stamp request was rejected. It is practical to separate the interface from the part of our program that models the library reading program, so we will factor out interface responsibilities from our discussion here.
+    </p>
+  </subsection>
+
+  <subsection xml:id="subsec-8-4-3-distributing-responsibilities">
+    <title>Distributing Responsibilities in the <em>Request stamp</em> Use Case</title>
+
+    <p>
+      Let us assume that, after completing an analysis of all use cases, we decide that the <c>ReaderAccount</c>, <c>Passport</c>, and <c>Stamp</c> class candidates should be classes in our design. We assign to the <c>ReaderAccount</c> class the name and uniquely identifying information for a Reader, as well as the free minutes (minutes that have not been spent on a passport stamp), and a passport. The <c>ReaderAccount</c> object allows the Reader to log minutes and request a stamp. This data and these responsibilities all relate to the reader account, so encapsulating this data and these responsibilities together gives us a coherent, meaningful object. <xref ref="table-8-5-readeraccount-prelim" /> is a preliminary class diagram for <c>ReaderAccount</c>. We list the responsibilities in a fourth row, and leave the methods row empty for now:
+    </p>
+
+    <table xml:id="table-8-5-readeraccount-prelim">
+      <title>A preliminary class diagram for <c>ReaderAccount</c>.</title>
+      <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+        <col width="100%"/>
+        <row header="yes">
+          <cell halign="center"><c>ReaderAccount</c></cell>
+        </row>
+        <row>
+          <cell>
+            <p><c>- readerId: int</c></p>
+            <p><c>- name: String</c></p>
+            <p><c>- freeMinutes: int</c></p>
+            <p><c>- passport: Passport</c></p>
+          </cell>
+        </row>
+        <row>
+          <cell><p></p></cell>
+        </row>
+        <row>
+          <cell>
+            <p>Responsibilities:</p>
+                      <p>• Allow Reader to log minutes</p>
+          <p>• Allow Reader to request a stamp</p>
+          </cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      The <c>Passport</c> class contains a list of stamps and can process stamp requests and allow the Reader to choose a stamp. This is also an encapsulation of data and responsibilities that relate to one “thing” from our requirements<mdash />the passport. The <c>Stamp</c> class will contain some data (such as text or an image, depending on whether we have a graphical or text interface), and a minute value (the “cost” of the stamp). The <c>Stamp</c> object will be able to display itself. <xref ref="table-8-6-passport-prelim" /> and <xref ref="table-8-7-stamp-prelim" /> show preliminary class diagrams for the <c>Passport</c> and <c>Stamp</c> classes:
+    </p>
+
+    <table xml:id="table-8-6-passport-prelim">
+      <title>A preliminary class diagram for <c>Passport</c>.</title>
+      <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+        <col width="100%"/>
+        <row header="yes">
+          <cell halign="center"><c>Passport</c></cell>
+        </row>
+        <row>
+          <cell>
+            <p><c>- stampCost: int</c></p>
+            <p><c>- stamps: ArrayList&lt;Stamp&gt;</c></p>
+          </cell>
+        </row>
+        <row>
+          <cell><p></p></cell>
+        </row>
+        <row>
+          <cell>
+            <p>Responsibilities:</p>
+                      <p>• Process stamp requests</p>
+          <p>• Allow Reader to choose a stamp</p>
+          </cell>
+        </row>
+      </tabular>
+    </table>
+
+    <table xml:id="table-8-7-stamp-prelim">
+      <title>A preliminary class diagram for <c>Stamp</c>.</title>
+      <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+        <col width="100%"/>
+        <row header="yes">
+          <cell halign="center"><c>Stamp</c></cell>
+        </row>
+        <row>
+          <cell>
+            <p><c>- value: String</c></p>
+            <p><c>- cost: int</c></p>
+          </cell>
+        </row>
+        <row>
+          <cell><p></p></cell>
+        </row>
+        <row>
+          <cell>
+            <p>Responsibilities:</p>
+                      <p>• Can display itself</p>
+          </cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      <xref ref="fig-8-7-readeraccount-passport-stamp" /> shows the associations between the <c>ReaderAccount</c>, <c>Passport</c>, and <c>Stamp</c> classes. The <c>Passport</c> class has a composition association with the <c>ReaderAccount</c> class because there should be one passport per Reader, and that is owned by the <c>ReaderAccount</c>. A <c>ReaderAccount</c> has one <c>Passport</c> that is created when the <c>ReaderAccount</c> is created, and the <c>Passport</c> will stop existing when the <c>ReaderAccount</c> stops existing. Because the <c>Passport</c> object’s lifetime exists within the <c>ReaderAccount</c> lifetime and it is not shared with any other object, it is “part-of” the <c>ReaderAccount</c>.
+    </p>
+
+    <p>
+      The <c>Passport</c> object contains a list of <c>Stamp</c> objects. The list will be empty before the Reader logs minutes and requests a stamp, so the cardinality of the <c>Stamp</c> objects is zero to many. Because there will be potentially many <c>ReaderAccount</c> objects and therefore <c>Passport</c> objects, but a <c>Stamp</c> will not necessarily be contained in any <c>Passport</c> lists, the cardinality of the <c>Passport</c> objects is also zero to many. A <c>Stamp</c> object does not have a composition relation with a <c>Passport</c> object, as a <c>Stamp</c> object might be displayed in many <c>Passport</c> objects (and therefore does not belong to, or live and die with, any one <c>Passport</c> object). Therefore, the association between <c>Passport</c> and <c>Stamp</c> is a unidirectional navigation association.
+    </p>
+
+    <figure xml:id="fig-8-7-readeraccount-passport-stamp">
+      <caption>A class diagram showing the composition association between <c>ReaderAccount</c> and <c>Passport</c>, and the navigation association between <c>Passport</c> and <c>Stamp</c>.</caption>
+      <image source="figures/figure_8_7.png" width="85%">
+        <shortdescription>UML diagram showing composition from ReaderAccount to Passport and unidirectional navigation from Passport to Stamp.</shortdescription>
+        <description>
+          <p>
+            A UML class diagram with three boxes in a row: ReaderAccount, Passport, and Stamp. ReaderAccount is connected to Passport by a solid line with a filled black diamond at the ReaderAccount end and multiplicity 1 on both ends. Passport is connected to Stamp by a solid line with an open arrowhead pointing to Stamp and multiplicity 0..* on both ends.
+          </p>
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      The design described here is not the only possible design. For example, we might have decided to model the relationship between the <c>Passport</c> and <c>Stamp</c> as a composition association (in which there would be many copies of the same <c>Stamp</c><mdash />one per <c>Passport</c> object), or we might not have separated <c>Passport</c> from <c>ReaderAccount</c> or <c>Stamp</c> from <c>Passport</c>. We will proceed with the design we have chosen but remain flexible to change as more of the system is designed.
+    </p>
+  </subsection>
+</section>

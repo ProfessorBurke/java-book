@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-8-2-associations" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Object Associations and Ownership</title>
+
+  <introduction>
+    <p>
+      Responsibilities in an object-oriented system are distributed among objects, which collaborate to accomplish work. To collaborate, objects must be able to invoke methods on each other, and to do that, they must have references to each other. In other words, an object must “know” (through references) the objects that it collaborates with to accomplish its work. Occasionally, a method is passed a reference to an object as a parameter. You’ve seen this pattern many times, e.g.:
+    </p>
+
+    <program language="java"><![CDATA[public static void writeHTMLFile(Site site, String fileName) throws FileNotFoundException {]]></program>
+
+    <p>
+      Here, <c>writeHTMLFile</c> receives a reference to a <c>Site</c> object as a parameter so it can invoke <c>getName()</c> and <c>getPoints()</c> on it. Similarly, an object can receive a reference to another object as a method parameter, as when one <c>Site</c> object is passed to another <c>Site</c> object’s <c>compareTo</c> method.
+    </p>
+
+    <p>
+      Most references, though, are the result of associations<mdash />structural relationships that connect objects to each other, implemented as fields within a class definition. Software engineers design objects and associations after they analyze the requirements of the problem being solved, a development phase called requirements analysis.
+    </p>
+
+    <p>
+      In this section we will look at examples of four different kinds of associations, or structural relationships: unidirectional navigation, bidirectional navigation, composition, and association classes.
+    </p>
+  </introduction>
+
+  <subsection xml:id="subsec-8-2-1-unidirectional">
+    <title>Unidirectional Navigation Association</title>
+
+    <p>
+      In a unidirectional navigation association, an object of one class will have a reference to an object of another class, but there is no reciprocal reference. It is therefore unidirectional<mdash />one-way. You’ve seen an example of a unidirectional navigation association in the capstone project in Chapter 6: the <c>RecipeBatch</c> class has an <c>oven</c> field that references an object of the <c>Oven</c> class, but an <c>Oven</c> class has no equivalent field referencing <c>RecipeBatch</c> objects.
+    </p>
+
+    <p>
+      An <c>Oven</c> isn’t a part of a <c>RecipeBatch</c><mdash />it’s a separate object that’s created independently of <c>RecipeBatch</c> objects. It is passed to a <c>RecipeBatch</c> in its constructor and the reference is saved in a field so the <c>RecipeBatch</c> object can invoke methods on the <c>Oven</c>. A <c>RecipeBatch</c> object invokes the <c>recordRunTime</c> and <c>calculateOperatingCost</c> methods of the <c>Oven</c> object referenced by its <c>oven</c> field.
+    </p>
+
+    <p>
+      Over the course of an <c>Oven</c> object’s lifetime, it might be associated with many <c>RecipeBatch</c> objects through a unidirectional association. Its methods will execute when invoked through the reference.
+    </p>
+
+    <p>
+      This type of reference is appropriate when an object depends on another object to fulfill its responsibilities, but there is no need for communication in the other direction.
+    </p>
+
+    <p>
+      <xref ref="fig-8-1-recipebatch-oven" /> is a class diagram showing the relationship between <c>RecipeBatch</c> and <c>Oven</c>. In a diagram that shows associations, it is common to simplify class diagrams to the class name only, so the focus of the diagram is the relationships between classes. To distinguish class diagrams that show associations from the detailed class diagrams we used in Chapters 6 and 7, we will refer to a class diagram showing associations as an association class diagram, although this is not standard UML terminology.
+    </p>
+
+    <figure xml:id="fig-8-1-recipebatch-oven">
+      <caption>The unidirectional navigation association between <c>RecipeBatch</c> and <c>Oven</c>.</caption>
+      <image source="figures/figure_8_1.png" width="75%">
+        <shortdescription>UML association diagram showing a unidirectional arrow from RecipeBatch to Oven.</shortdescription>
+        <description>
+          <p>
+            A UML class diagram with two boxes, RecipeBatch on the left and Oven on the right, connected by a solid line with an open arrowhead pointing to Oven. The RecipeBatch end is labeled with multiplicity asterisk (*), and the Oven end is labeled with multiplicity 1 above the line and -oven below the line.
+          </p>
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      Class diagrams showing associations can show different levels of detail at different phases during the design of the software and for different communication goals. Early in the design phase, an association class diagram might show only a line between two classes. As design decisions are made, more detail might be added. <xref ref="fig-8-1-recipebatch-oven" /> shows that the relationship is unidirectional by putting an arrowhead on the line from the class that has the reference (<c>RecipeBatch</c>) to the class it has a reference to (<c>Oven</c>).
+    </p>
+
+    <p>
+      The cardinality of the association can be included on the diagram above the connecting line, on each end. This diagram shows that each <c>RecipeBatch</c> references one <c>Oven</c>, shown with a <c>1</c> at the <c>Oven</c> end of the line. A single <c>Oven</c> object might be referenced by many <c>RecipeBatch</c> objects, shown with an asterisk (which means zero or more) on the <c>RecipeBatch</c> end of the connecting line. The diagram also shows that a <c>RecipeBatch</c> reference to an <c>Oven</c> is called <c>oven</c> and is private (indicated by the dash in front of the <c>oven</c> name). The standard UML cardinalities are:
+      <ul>
+        <li><p><c>1</c><mdash />exactly one</p></li>
+        <li><p><c>0..1</c><mdash />zero or one (optional)</p></li>
+        <li><p><c>*</c> or <c>0..*</c><mdash />0 or more</p></li>
+        <li><p><c>1..*</c><mdash />1 or more</p></li>
+      </ul>
+    </p>
+  </subsection>
+
+  <subsection xml:id="subsec-8-2-2-bidirectional">
+    <title>Bidirectional Navigation Association</title>
+
+    <p>
+      In a bidirectional navigation association, an object of class A will hold one or more references to objects of class B, and class B will hold references to one or more objects of class A. Consider an advising system that has <c>Advisor</c> and <c>Student</c> classes. A <c>Student</c> will have an <c>advisor</c> field which is a reference to an <c>Advisor</c> object. The <c>Advisor</c> will have a list of <c>advisees</c><mdash />a collection of <c>Student</c> objects. <c>Student</c>s and <c>Advisor</c>s are otherwise independent<mdash />a <c>Student</c> isn’t part of an <c>Advisor</c>, nor vice versa. They have references to each other so they can invoke methods on the other (e.g., a student might invoke a <c>makeAppointment</c> method on the <c>Advisor</c>, and the <c>Advisor</c> might invoke <c>checkIn</c> and <c>gpaWarning</c> methods on the <c>Student</c>).
+    </p>
+
+    <p>
+      Class A and class B can also be of the same class; for example, we can imagine a <c>Person</c> class with a <c>spouse</c> field that is a reference to another <c>Person</c> object.
+    </p>
+
+    <p>
+      In both examples, it is important that the references remain synchronized, and the reciprocal relationship would be defined as a class invariant for both classes. To keep them synchronized, you can have one class solely responsible for maintaining the relationship. For example, when the <c>addAdvisee(student)</c> method is invoked on an <c>Advisor</c>, it invokes the <c>setAdvisor(this)</c> method on the <c>student</c> parameter, giving responsibility to the <c>Advisor</c> class. You can also have both maintain the relationship, checking first that the <c>Advisor</c> or <c>Student</c> is new to avoid setting an infinite circular chain of calls into motion, e.g.:
+    </p>
+
+    <program language="java"><![CDATA[if (this.advisor != newAdvisor) {
+    this.advisor = newAdvisor;
+    newAdvisor.addAdvisee(this);
+}]]></program>
+
+    <p>
+      A straight line joins the classes in the bidirectional navigation association class diagram. <xref ref="fig-8-2-advisor-student" /> is the class diagram for <c>Advisor</c> and <c>Student</c>. It shows the bidirectional association, with many (<c>*</c>) <c>Student</c> objects to <c>1</c> <c>Advisor</c> object, and the private labels <c>-advisees</c> and <c>-advisor</c>.
+    </p>
+
+    <figure xml:id="fig-8-2-advisor-student">
+      <caption>Class diagram for the <c>Advisor</c>-<c>Student</c> bidirectional navigation association.</caption>
+      <image source="figures/figure_8_2.png" width="75%">
+        <shortdescription>UML association diagram showing a bidirectional solid line between Advisor and Student.</shortdescription>
+        <description>
+          <p>
+            A UML class diagram with Advisor on the left and Student on the right, joined by a plain solid line with no arrowheads. The Advisor end is labeled 1 above and -advisor below; the Student end is labeled asterisk (*) above and -advisees below.
+          </p>
+        </description>
+      </image>
+    </figure>
+  </subsection>
+
+  <subsection xml:id="subsec-8-2-3-composition">
+    <title>Composition Association</title>
+
+    <p>
+      A composition association is sometimes called a part-of (or has-part) relationship, because it is a relationship between a class acting as a container and a class acting as a part. There are three requirements for a relationship to be a composition association:
+      <ul>
+        <li><p>The container must have a reference to the part;</p></li>
+        <li><p>The container creates the part and the part is released (or destroyed) before or at the same time as the container;</p></li>
+        <li><p>No other object has a reference to the part.</p></li>
+      </ul>
+    </p>
+
+    <p>
+      We have already seen a composition association in the capstone project in Chapter 7: a <c>Site</c> object contains an array field, <c>points</c>, holding references to one or more <c>Point</c> objects.
+    </p>
+
+    <p>
+      The <c>Site</c> constructor creates the array of <c>Point</c> objects by deep copying a parameter to the constructor.
+    </p>
+
+    <p>
+      To ensure that no other object has a reference to the array or any of the <c>Point</c> objects in the array, the <c>getPoints</c> method deep copies the array and returns the copy.
+    </p>
+
+    <p>
+      In a composition association, the lifetime of the parts is directly connected to the lifetime of the container. The container object (in our example, <c>Site</c>) is responsible for creating its parts. (In other languages, such as C++, it’s also directly responsible for destroying them.) The parts can be part of only one container object. In Java, the container can either release the parts for garbage collection by setting the reference to <c>null</c> or setting the reference to a new object, or the parts are marked for garbage collection when the container is, because the container had the sole reference to the parts.
+    </p>
+
+    <p>
+      The composition association must have a cardinality of one on the container side (because the part objects cannot be a part of more than one container), but can have any cardinality on the part side. <xref ref="fig-8-3-site-point" /> shows the composition association between <c>Site</c> and <c>Point</c>.
+    </p>
+
+    <figure xml:id="fig-8-3-site-point">
+      <caption>A composition association class diagram showing <c>Site</c> and <c>Point</c>.</caption>
+      <image source="figures/figure_8_3.png" width="75%">
+        <shortdescription>UML composition diagram showing a filled diamond at Site connected to Point.</shortdescription>
+        <description>
+          <p>
+            A UML class diagram with Site on the left and Point on the right, connected by a solid line with a filled black diamond at the Site end and no arrowhead. The Site end is labeled with multiplicity 1, and the Point end is labeled with multiplicity 1..* above the line and -points below the line.
+          </p>
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      To show a composition association, we draw a filled diamond on the container end of the line connecting the classes.
+    </p>
+
+    <p>
+      You might see a class diagram with an open diamond at the container end. This shows an aggregation. An aggregation is like a composition association in that there is a container class and a part class, but there is no requirement that the container creates the part or that the container has the only reference to the part. Structurally, therefore, it is simply a unidirectional or bidirectional navigation association. Conceptually, it represents a whole-part relationship, such as a <c>Course</c>-<c>Student</c> relationship, where a <c>Course</c> might contain a <c>Student</c>, but the <c>Student</c> could also be a part of other <c>Course</c> objects.
+    </p>
+  </subsection>
+
+  <subsection xml:id="subsec-8-2-4-association-class">
+    <title>Association Class</title>
+
+    <p>
+      An association class models the relationship between two classes when that relationship has properties or behavior of its own. To illustrate association classes, consider library software that already contains <c>Book</c> and <c>Reader</c> classes. The library wants to add the ability for readers to write reviews for books. We model this association between a <c>Book</c> and a <c>Reader</c> with a <c>Review</c> class, where each <c>Review</c> object relates a single <c>Book</c> object to a single <c>Reader</c> object. The <c>Review</c> connects <c>Reader</c> objects to <c>Book</c> objects, but it also has properties of its own, such as a rating (e.g., one to five stars) and the text of the review. <xref ref="fig-8-4-review-association" /> shows the association class <c>Review</c> relating <c>Book</c> and <c>Reader</c> classes. The association class <c>Review</c> is connected to the <c>Book</c> and <c>Reader</c> association with a dashed line.
+    </p>
+
+    <figure xml:id="fig-8-4-review-association">
+      <caption>A class diagram showing the association class <c>Review</c>, relating <c>Book</c> and <c>Reader</c> classes.</caption>
+      <image source="figures/figure_8_4.png" width="75%">
+        <shortdescription>UML association class diagram with Review connected by a dashed line to the Book-Reader association.</shortdescription>
+        <description>
+          <p>
+            A UML class diagram with Book on the left and Reader on the right, joined by a solid line labeled asterisk (*) and -book on the Book end and asterisk (*) and -reviewer on the Reader end. A vertical dashed line drops from the midpoint of the association line to a Review box below.
+          </p>
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      We can design a very simple version of the <c>Book</c>, <c>Reader</c>, <c>Review</c> classes to illustrate how a structural association is implemented. Here are detailed class diagrams of the three classes in the design:
+    </p>
+
+    <table xml:id="table-8-1-book-uml">
+      <title>A detailed class diagram for <c>Book</c>.</title>
+      <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+        <col width="100%"/>
+        <row header="yes">
+          <cell halign="center"><c>Book</c></cell>
+        </row>
+        <row>
+          <cell>
+            <p><c>- author: String</c></p>
+            <p><c>- title: String</c></p>
+          </cell>
+        </row>
+        <row>
+          <cell>
+            <p><c>+ Book(title: String, author: String)</c></p>
+            <p><c>+ toString(): String</c></p>
+          </cell>
+        </row>
+      </tabular>
+    </table>
+
+    <table xml:id="table-8-2-reader-uml">
+      <title>A detailed class diagram for <c>Reader</c>.</title>
+      <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+        <col width="100%"/>
+        <row header="yes">
+          <cell halign="center"><c>Reader</c></cell>
+        </row>
+        <row>
+          <cell>
+            <p><c>- name: String</c></p>
+            <p><c>- cardNumber: int</c></p>
+          </cell>
+        </row>
+        <row>
+          <cell>
+            <p><c>+ Reader(name: String, cardNumber: int)</c></p>
+            <p><c>+ toString(): String</c></p>
+          </cell>
+        </row>
+      </tabular>
+    </table>
+
+    <table xml:id="table-8-3-review-uml">
+      <title>A detailed class diagram for <c>Review</c>.</title>
+      <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+        <col width="100%"/>
+        <row header="yes">
+          <cell halign="center"><c>Review</c></cell>
+        </row>
+        <row>
+          <cell>
+            <p><c>- reviewer: Reader</c></p>
+            <p><c>- book: Book</c></p>
+            <p><c>- rating: int</c></p>
+            <p><c>- review: String</c></p>
+          </cell>
+        </row>
+        <row>
+          <cell>
+            <p><c>+ Review(reader: Reader, book: Book, rating: int, review: String)</c></p>
+            <p><c>+ toString(): String</c></p>
+          </cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      The <c>Book</c> and <c>Reader</c> classes are extremely bare bones for the sake of our example<mdash />each consists of two fields, a constructor, and a <c>toString</c> method. Note that neither of these classes has a reference to the other. When a <c>Reader</c> reviews a <c>Book</c>, an instance of the <c>Review</c> association class is created. The <c>Review</c> class has private references to one <c>Reader</c> object (called <c>reviewer</c>) and one <c>Book</c> object (called <c>book</c>), as well as the data that’s specific to the association: a rating and the review text. Like the other classes, it has constructor and <c>toString</c> methods.
+    </p>
+
+    <p>
+      <xref ref="listing-8-1-review" /> is an implementation of the <c>Review</c> class. In this class, we’ve included a <c>static main</c> method that creates instances of one book, two readers, and two reviews. Up to this point, we have always placed <c>main</c> in a separate driver class, but it is common in Java to include a <c>main</c> method directly inside a class that we instantiate. Sometimes <c>main</c> serves as a quick built-in test driver for that single class (as in <xref ref="listing-8-1-review" />), keeping the example self-contained in one file. In larger object-oriented applications, <c>main</c> is often placed in a central controller class, where it creates an instance of that class and starts execution by calling an instance method such as <c>run()</c> or <c>start()</c>.
+    </p>
+
+    <listing xml:id="listing-8-1-review">
+      <caption>The <c>Review</c> association class.</caption>
+      <program language="java" line-numbers="yes"><![CDATA[/**
+ * A library book review that associates a Reader with a Book,
+ * storing a star rating (1–5) and review text.
+ */
+public class Review {
+
+    private Reader reviewer;
+    private Book book;
+    private int rating;
+    private String review;
+
+    /**
+     * Constructs a Review linking a Reader and a Book.
+     *
+     * Precondition:  reviewer != null, book != null,
+     *                1 <= rating <= 5, and review != null and not blank.
+     * Postcondition: Initializes all fields of this Review.
+     *
+     * @param reviewer The Reader who wrote the review.
+     * @param book     The Book being reviewed.
+     * @param rating   The star rating, from 1 to 5 inclusive.
+     * @param review   The text of the review.
+     */
+    public Review(Reader reviewer, Book book, int rating, String review) {
+        assert reviewer != null : "Reviewer cannot be null.";
+        assert book != null : "Book cannot be null.";
+        assert rating >= 1 && rating <= 5 : "Rating must be between 1 and 5.";
+        assert review != null && !review.isBlank() : "Review text cannot be null or blank.";
+
+        this.reviewer = reviewer;
+        this.book = book;
+        this.rating = rating;
+        this.review = review;
+    }
+
+    /**
+     * Returns a formatted string containing the book, reviewer,
+     * rating, and review text.
+     *
+     * @return A formatted summary of this review.
+     */
+    @Override
+    public String toString() {
+        return String.format("%-15s%s%n%-15s%s%n%-15s%d%n%-15s%s%n",
+                "Review of:", this.book,
+                "By:", this.reviewer,
+                "Rating:", this.rating,
+                "Review:", this.review);
+    }
+
+    /**
+     * Demonstrates and verifies the Review association class.
+     *
+     * @param args Command-line arguments (not used).
+     */
+    public static void main(String[] args) {
+        // Arrange: create one book and two readers
+        Book book = new Book("Palindromemordnilap", "Hannah Nolon");
+        Reader priya = new Reader("Priya Nair", 100226843);
+        Reader mateo = new Reader("Mateo Morales", 100235178);
+
+        // Act: create two reviews of the same book
+        Review priyaReview = new Review(priya, book, 5,
+                "Loved it! I'll never read only forward again!");
+        Review mateoReview = new Review(mateo, book, 1,
+                "Book was twice as long as I expected.");
+
+        // Assert: verify formatted output includes book, reader, and rating
+        assert priyaReview.toString().contains("Priya Nair");
+        assert priyaReview.toString().contains("5");
+        assert mateoReview.toString().contains("Mateo Morales");
+        assert mateoReview.toString().contains("1");
+
+        // Print the reviews
+        System.out.println(priyaReview);
+        System.out.println(mateoReview);
+    }
+}]]></program>
+    </listing>
+
+    <p>
+      When the program runs, it produces the following output:
+    </p>
+
+    <console>
+      <output><![CDATA[Review of:     Palindromemordnilap by Hannah Nolon
+By:            Priya Nair, 100226843
+Rating:        5
+Review:        Loved it! I'll never read only forward again!
+
+Review of:     Palindromemordnilap by Hannah Nolon
+By:            Mateo Morales, 100235178
+Rating:        1
+Review:        Book was twice as long as I expected.]]></output>
+    </console>
+
+    <p>
+      The <c>main</c> method of the <c>Review</c> class merely demonstrates the three classes and the association by hard-coding one <c>Book</c> object and two <c>Reader</c> objects on lines 58–60, and then creating two <c>Review</c> objects on lines 63–66. On lines 75 and 76, the <c>toString</c> method of the <c>Review</c> objects is implicitly invoked by the <c>System.out.println</c> statement. We can imagine that the classes could be embedded in a more interesting system that manages many books, readers, and reviews, and allows the user to search for all reviews of a particular book, report an average rating, or allow a reader to submit a review.
+    </p>
+
+    <p>
+      The association, or link between a <c>Book</c> and <c>Reader</c>, is formed when a <c>Review</c> object is created. The <c>Review</c> object has fields which reference a <c>Book</c> and a <c>Reader</c>, as well as the review-specific rating and review text. On lines 63 and 64, a <c>Review</c> object called <c>priyaReview</c> is created linking the <c>Reader</c> object <c>priya</c>, created on line 59, with the <c>Book</c> object <c>book</c>, created on line 58. Similarly, a <c>Review</c> object called <c>mateoReview</c> is then created linking the <c>Reader</c> object <c>mateo</c> with the same <c>Book</c> object.
+    </p>
+
+    <p>
+      The <c>toString</c> method of <c>Review</c> displays the <c>String</c> versions of the <c>book</c> and the <c>reviewer</c> (by implicitly invoking their <c>toString</c> methods), combined with the <c>rating</c> and <c>review</c> fields of the <c>Review</c>.
+    </p>
+
+    <p>
+      <xref ref="fig-8-5-review-stack-heap" /> illustrates memory after the two <c>Review</c> objects have been created. You can see that <c>Book</c> and <c>Reader</c> objects have no references to each other, but a <c>Review</c> object references a <c>Book</c> and a <c>Reader</c>.
+    </p>
+
+    <figure xml:id="fig-8-5-review-stack-heap">
+      <caption>Memory after the <c>Review</c> objects have been created.</caption>
+      <image source="figures/figure_8_5.png" width="90%">
+        <shortdescription>Stack-and-heap diagram showing five main variables and two Review objects linking to Book and Reader objects.</shortdescription>
+        <description>
+          <p>
+            A stack-and-heap memory diagram. On the left, the main stack frame holds five reference variables: priyaReview, book, priya, mateo, and mateoReview. In the heap on the right, a middle column holds one Book object ("Palindromemordnilap" by "Hannah Nolon") and two Reader objects ("Priya Nair" and "Mateo Morales"), while a right column holds two Review objects. Both Review objects have book references pointing to the same Book object and reviewer references pointing to their respective Reader objects.
+          </p>
+        </description>
+      </image>
+    </figure>
+  </subsection>
+</section>

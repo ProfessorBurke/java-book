@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-8-3-use-cases" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Use Cases</title>
+
+  <p>
+    In Chapter 6, we looked at the Class-Responsibility-Collaborator (CRC) card method of finding classes and defining their data and behavior, given software requirements. In this section, we’ll look at one way of finding and specifying software requirements: use cases.
+  </p>
+
+  <p>
+    Use cases are the UML method for specifying software requirements. Use cases capture the functional requirements of a system by describing sequences of actions, with variations, between an actor outside of the system and the system itself. One use case describes one sequence of actions. The complete functionality of a system will usually be described by a set of use cases.
+  </p>
+
+  <p>
+    Each use case begins with an actor. An actor is a role that a person or outside system takes with the system being developed. A very general role is user, but quite often there are different kinds of users for a system being designed, with different work they need to accomplish, such as manager and salesperson, student and advisor, or customer and technician. An actor represents a role and not an individual. For example, there might be several people using a system in the manager role, and many more in the salesperson role. Occasionally, a manager might need to interact with the system as a salesperson, and a salesperson might need to interact with the system as a manager. The roles do not necessarily correspond directly to individual people<mdash />the roles are a collection of ways that an outside entity (not necessarily a person) interacts with the system to accomplish work.
+  </p>
+
+  <p>
+    To illustrate, we will develop use cases for some new functionality for a library reading program. Suppose we are given the following text description of a system that we are being asked to design and build:
+  </p>
+
+  <blockquote>
+    <p>
+      The library reading program software will allow librarians to create accounts for readers. An account should be uniquely linked to an individual reader. An account includes unique reader information, the number of minutes logged, and a reading passport. Reading passports include stamps. Librarians set the number of minutes needed to earn a passport stamp. Readers can log minutes, review their reading statistics, and look at the pages of their reading passport. A reader can also request a new passport stamp. If the reader has enough minutes, the stamp request will be granted. When a reader has a granted passport stamp request, a new stamp slot appears in their passport, and they can choose from the stamps available in the system. The chosen stamp will be added to their passport.
+    </p>
+  </blockquote>
+
+  <p>
+    Our first task with this description will be to design a slightly more formal and more detailed set of requirements for how the system should behave. We can use the document that we create to confirm the system behavior with the client, so that we are building the system that they have asked us to build. We begin with identifying the actors that interact with the system. One purpose of identifying the actors is to identify the boundaries of the system<mdash />actors are outside the system we are building. The second purpose is to identify use cases.
+  </p>
+
+  <p>
+    In our description of the library reading program software, two different kinds of users are named: librarians and readers. We will use these names for our actors, as they are descriptive and appear naturally in the requirements that we have been given. We know that these two roles exist outside of the system because the description tells us how they can interact with the system to accomplish work. For example, the description says “the software will allow librarians to create accounts,” situating the librarian outside the software, using the software to accomplish a task.
+  </p>
+
+  <p>
+    The second step in the requirements modeling process is to list the system behaviors that each actor will need to accomplish work or make a change to the state of the system. If we carefully read each sentence in the description, we find two tasks that a Librarian can perform: creating accounts and setting the minutes needed to earn a stamp. No other statements in the description we were given directly reference a librarian, so we will move on to the Reader actor. The description states that Readers can log minutes, review reading statistics, request a passport stamp, look at their passport, and choose a stamp (if they have a granted stamp request).
+  </p>
+
+  <p>
+    One function that is implicit in our system is accessing accounts. The requirements state that accounts are uniquely linked to individual Readers, and we might also assume (but should confirm) that Librarians have accounts. We should confirm with our client that there are sign in and sign out processes for both actors, and that signing in will result in access to a specific account and a limited set of system functions depending on the user logging in. (In other words, a Reader account should not be able to set the number of minutes needed to earn a passport stamp, which is a system behavior reserved for Librarians.)
+  </p>
+
+  <p>
+    The system behaviors that we have identified will become our use cases. We have identified the following use cases for our two actors:
+  </p>
+
+  <table xml:id="table-8-4-actors-use-cases">
+    <title>Actors and Use Cases in the Library Reading Program Software</title>
+    <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+      <col width="50%"/>
+      <col width="50%"/>
+      <row header="yes">
+        <cell>Librarian</cell>
+        <cell>Reader</cell>
+      </row>
+      <row>
+        <cell>
+          <p><em>Create reader account</em></p>
+          <p><em>Set stamp minutes cost</em></p>
+          <p><em>Sign in</em></p>
+          <p><em>Sign out</em></p>
+        </cell>
+        <cell>
+          <p><em>Log minutes</em></p>
+          <p><em>Review statistics</em></p>
+          <p><em>Review passport</em></p>
+          <p><em>Request stamp</em></p>
+          <p><em>Choose stamp</em></p>
+          <p><em>Sign in</em></p>
+          <p><em>Sign out</em></p>
+        </cell>
+      </row>
+    </tabular>
+  </table>
+
+  <p>
+    We will further specify each use case by defining when it starts, describing the flow of events that compose the use case, and defining when it ends. We will also include variations on each use case that represent exceptions.
+  </p>
+
+  <p>
+    To illustrate, we will write a description for the Reader use case <em>Request stamp</em>:
+  </p>
+
+  <blockquote>
+    <p>
+      Main flow of events: The use case starts when the Reader chooses to request a stamp. The system will compare the Reader’s unspent minutes to the number of minutes needed to earn a passport stamp and add an empty stamp slot to the Reader’s passport. The number of minutes spent on the stamp is deducted from the Reader’s account, ending the use case.
+    </p>
+    <p>
+      Exceptional flow of events: The Reader does not have enough minutes to earn a passport stamp. The minutes in the Reader’s account and the passport are unchanged. The system indicates the Reader does not have enough minutes.
+    </p>
+  </blockquote>
+
+  <p>
+    When all use cases are written out in detail, we might find that there is overlap between some use cases. (For example, the signing in use cases for both actors might have steps in common.) We can factor the overlapping behavior out of the use cases into a new use case that the original use cases use, just as we factor common code into a method that can be invoked from other methods.
+  </p>
+
+  <p>
+    An important function of the complete set of use cases is to confirm the requirements with the client. We can show the use cases to our client, to learn if we have accurately specified the behavior of the system (and to discuss the changes we must make if we have not).
+  </p>
+
+  <p>
+    A use case diagram shows the actors and use cases that specify the behavior of a system or subsystem. <xref ref="fig-8-6-use-case-stamp-requests" /> is a use case diagram of only the library reading program software requirements that relate to stamp requests.
+  </p>
+
+  <figure xml:id="fig-8-6-use-case-stamp-requests">
+    <caption>A use case diagram showing use cases in the library reading program software related to stamp requests.</caption>
+    <image source="figures/figure_8_6.png" width="85%">
+      <shortdescription>UML use case diagram with Librarian and Reader actors connected to stamp request use cases.</shortdescription>
+      <description>
+        <p>
+          A UML use case diagram showing a rectangular system boundary box titled "Library Reading Program Stamp Requests." Outside on the left is a stick figure labeled Librarian connected by a solid line to an oval inside the box labeled "Set stamp minutes cost." Outside on the right is a stick figure labeled Reader connected by solid lines to two ovals inside the box labeled "Request stamp" and "Choose stamp."
+        </p>
+      </description>
+    </image>
+  </figure>
+
+  <p>
+    In a use case diagram, we depict the system as a box. Actors are depicted as labeled stick figures outside of the system. (Despite that they are depicted as stick figures, it is important to remember that actors are roles that are not necessarily enacted by people; for example, an actor could be an external payment service, a sensor, or a scheduled timer.) Use cases are labeled ovals within the system, and actors are connected to use cases by lines.
+  </p>
+</section>

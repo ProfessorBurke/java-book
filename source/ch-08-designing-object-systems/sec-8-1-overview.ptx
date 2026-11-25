@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-8-1-overview" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Chapter Overview</title>
+
+  <p>
+    In Chapters 6 and 7, you learned how to design individual classes<mdash />protecting class invariants with private fields, writing constructors and defensive checks, and storing collections of objects in arrays and <c>ArrayList</c>s. Along the way, you already saw early glimpses of objects working together: <c>RecipeBatch</c> and <c>Oven</c> collaborating in Chapter 6’s capstone, and <c>Site</c> holding an array of <c>Point</c> objects in Chapter 7’s trail map generator.
+  </p>
+
+  <p>
+    Designing a single well-encapsulated class is one skill; designing an entire system of collaborating objects is another. Real software rarely consists of one or two isolated classes. Instead, responsibilities are distributed across many objects that must know about one another, invoke methods on each other, and share resources without breaking each other’s invariants. For example:
+    <ul>
+      <li>
+        <p>
+          A library reading program where <c>ReaderAccount</c>, <c>Passport</c>, <c>Stamp</c>, and <c>StampManager</c> objects coordinate to track reading minutes and award stamps.
+        </p>
+      </li>
+      <li>
+        <p>
+          An online auction system where <c>AuctionItem</c>, <c>Bid</c>, and <c>Bidder</c> objects stay synchronized as new high bids arrive.
+        </p>
+      </li>
+      <li>
+        <p>
+          A course registration system where <c>Course</c>, <c>Professor</c>, and <c>Student</c> objects manage enrollment caps and waitlists.
+        </p>
+      </li>
+    </ul>
+  </p>
+
+  <p>
+    Jumping straight into writing Java code for systems like these quickly leads to tangled dependencies and misplaced responsibilities. Before we write a single line of code, we need tools to specify what a system must do, model how classes relate to one another, and trace how objects collaborate at runtime.
+  </p>
+
+  <p>
+    In this chapter, you will learn how to design multi-object systems from requirements down to tested Java classes. You will explore the structural relationships that connect objects<mdash />including navigation, composition, and association classes. You will also practice specifying system behavior with UML use cases and modeling dynamic object collaborations with sequence diagrams before translating your design into loosely coupled, integration-tested Java code.
+  </p>
+
+  <paragraphs>
+    <title>Roadmap for Chapter 8</title>
+    <p>
+      <ul>
+        <li>
+          <p>
+            <strong>8.2 Object Associations and Ownership</strong><mdash />Unidirectional and bidirectional navigation, composition, association classes, and how Java references and defensive copying enforce ownership.
+          </p>
+        </li>
+        <li>
+          <p>
+            <strong>8.3 Specifying Requirements with Use Cases</strong><mdash />Identifying actors and system boundaries, writing main and exceptional flows, factoring shared behavior, and drawing UML use case diagrams.
+          </p>
+        </li>
+        <li>
+          <p>
+            <strong>8.4 Object Collaborations and Responsibilities</strong><mdash />Revisiting CRC cards to extract candidate classes and responsibilities from use cases, and sketching preliminary class designs.
+          </p>
+        </li>
+        <li>
+          <p>
+            <strong>8.5 Sequence Diagrams</strong><mdash />Tracing dynamic method invocations with UML sequence diagrams, including found messages, reply arrows, and <c>loop</c>, <c>opt</c>, and <c>alt</c> blocks.
+          </p>
+        </li>
+        <li>
+          <p>
+            <strong>8.6 Implementing the Design</strong><mdash />Completing four-row class diagrams with invariants, updating associations, and translating sequence diagrams into collaborating Java classes.
+          </p>
+        </li>
+        <li>
+          <p>
+            <strong>8.7 Integration Testing from Use Cases</strong><mdash />Deriving Arrange–Act–Assert integration test plans from a use case’s main, boundary, and exceptional flows to verify multi-class behavior.
+          </p>
+        </li>
+      </ul>
+    </p>
+  </paragraphs>
+
+  <p>
+    Once you master the concepts in this chapter, you will have the tools you need to begin designing, documenting, and verifying larger, multi-class Java systems. Let’s get started.
+  </p>
+</section>

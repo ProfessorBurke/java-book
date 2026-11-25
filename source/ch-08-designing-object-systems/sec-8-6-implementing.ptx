@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-8-6-implementing" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Implementing the Library Reading Program Classes</title>
+
+  <p>
+    Use cases can be used as a basis for integration tests, which test how units (in our example, classes) function together. A use case specifies an interaction between an actor and the system and is usually realized by several collaborating objects. Once we have run unit tests on our classes, we can run integration tests that are developed from our use cases.
+  </p>
+
+  <p>
+    Before we can test our system, we must implement it! Rather than including all of the code here (much of which will be boilerplate), we’ll complete the class diagrams and include class invariants in the fourth row. To see how our <em>Request stamp</em> use case is realized in code, we’ll take a deep dive into the <c>ReaderAccount</c> constructor, <c>requestStamp</c>, and <c>Passport</c> <c>requestStamp</c> methods.
+  </p>
+
+  <table xml:id="table-8-8-stamp-uml">
+    <title>Class diagram for <c>Stamp</c> including class invariants.</title>
+    <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+      <col width="100%"/>
+      <row header="yes">
+        <cell halign="center"><c>Stamp</c></cell>
+      </row>
+      <row>
+        <cell>
+          <p><c>- value : String</c></p>
+          <p><c>- cost : int</c></p>
+        </cell>
+      </row>
+      <row>
+        <cell>
+          <p><c>+ Stamp(value : String, cost : int)</c></p>
+          <p><c>+ getValue() : String</c></p>
+          <p><c>+ getCost() : int</c></p>
+          <p><c>+ toString() : String</c></p>
+        </cell>
+      </row>
+      <row>
+        <cell>
+          <p>Class invariants:</p>
+                    <p>• <c>value != null &amp;&amp; !value.isBlank()</c></p>
+          <p>• <c>cost &gt; 0</c></p>
+        </cell>
+      </row>
+    </tabular>
+  </table>
+
+  <p>
+    <c>Stamp</c> is the most straightforward class, with two fields, an argument constructor that gives the fields values, and accessors for those fields. The original class diagram for <c>Stamp</c> gave it the responsibility to display itself, which is fulfilled by the <c>toString</c> method. The class invariants specify that the <c>value</c> field is non-null and non-blank, and that the <c>cost</c> is a positive value. These invariants would be enforced through <c>assert</c> statements in the constructor.
+  </p>
+
+  <table xml:id="table-8-9-passport-uml">
+    <title>Class diagram for <c>Passport</c> including class invariants.</title>
+    <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+      <col width="100%"/>
+      <row header="yes">
+        <cell halign="center"><c>Passport</c></cell>
+      </row>
+      <row>
+        <cell>
+          <p><c>- stamps : ArrayList&lt;Stamp&gt;</c></p>
+          <p><c>- stampManager : StampManager</c></p>
+        </cell>
+      </row>
+      <row>
+        <cell>
+          <p><c>+ Passport(stampManager : StampManager)</c></p>
+          <p><c>+ requestStamp(readerAccount : ReaderAccount) : boolean</c></p>
+          <p><c>+ getStampCount() : int</c></p>
+          <p><c>+ toString() : String</c></p>
+        </cell>
+      </row>
+      <row>
+        <cell>
+          <p>Class invariants:</p>
+                    <p>• <c>stamps != null</c> and no <c>null</c> elements</p>
+          <p>• <c>stampManager != null</c></p>
+        </cell>
+      </row>
+    </tabular>
+  </table>
+
+  <p>
+    The <c>Passport</c> class fields have changed from <c>stamps</c> and <c>stampCost</c> in the proposed class design to <c>stampManager</c> and <c>stamps</c> in the implementation. The <c>StampManager</c> has the responsibility for maintaining the stamp cost, so the <c>stampCost</c> field that was originally proposed for <c>Passport</c> has been removed. It will get that information from the <c>StampManager</c>.
+  </p>
+
+  <p>
+    The <c>requestStamp</c> method is added to the <c>Passport</c> class from the <em>Request stamp</em> use case. We have also added a <c>getStampCount</c> accessor to facilitate testing<mdash />we can use that to confirm that a <c>Stamp</c> is (or is not) added to the <c>Passport</c> by checking if the number of stamps has changed after a <c>requestStamp</c> invocation.
+  </p>
+
+  <p>
+    The class invariants are that the <c>stamps ArrayList</c> is not <c>null</c> and contains no <c>null</c> elements, and that the <c>stampManager</c> is not <c>null</c>. We can assert that the <c>stampManager</c> is non-null in the constructor. The <c>stamps ArrayList</c> will be created in the constructor. We will enforce the non-null elements invariant each time we add a <c>Stamp</c> in the <c>requestStamp</c> method.
+  </p>
+
+  <table xml:id="table-8-10-readeraccount-uml">
+    <title>Class diagram for <c>ReaderAccount</c> including class invariants.</title>
+    <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+      <col width="100%"/>
+      <row header="yes">
+        <cell halign="center"><c>ReaderAccount</c></cell>
+      </row>
+      <row>
+        <cell>
+          <p><c>- readerId : int</c></p>
+          <p><c>- name : String</c></p>
+          <p><c>- freeMinutes : int</c></p>
+          <p><c>- passport : Passport</c></p>
+        </cell>
+      </row>
+      <row>
+        <cell>
+          <p><c>+ ReaderAccount(readerId : int, name : String, stampManager : StampManager)</c></p>
+          <p><c>+ getFreeMinutes() : int</c></p>
+          <p><c>+ getStampCount() : int</c></p>
+          <p><c>+ logMinutes(minutes : int) : void</c></p>
+          <p><c>+ deductFreeMinutes(minutes : int) : void</c></p>
+          <p><c>+ requestStamp() : boolean</c></p>
+          <p><c>+ toString() : String</c></p>
+        </cell>
+      </row>
+      <row>
+        <cell>
+          <p>Class invariants:</p>
+                    <p>• <c>readerId &gt; 0</c></p>
+          <p>• <c>name != null &amp;&amp; !name.isBlank()</c></p>
+          <p>• <c>freeMinutes &gt;= 0</c></p>
+          <p>• <c>passport != null</c> (exclusively owned by this <c>ReaderAccount</c>)</p>
+        </cell>
+      </row>
+    </tabular>
+  </table>
+
+  <p>
+    The <c>ReaderAccount</c> fields have not changed from the original proposal. The <c>getFreeMinutes</c> and <c>deductFreeMinutes</c> methods are from the <em>Request stamp</em> sequence diagram. The <c>requestStamp</c> method is the method that is shown in the sequence diagram<mdash />the original method that starts the <em>Request stamp</em> use case. The <c>logMinutes</c> and <c>getStampCount</c> methods are necessary for testing, but log minutes is functionality that we originally identified for the Reader, so we can imagine that the method was added from the <em>Log minutes</em> use case.
+  </p>
+
+  <p>
+    The <c>ReaderAccount</c> has class invariants that the <c>readerId</c> is greater than <c>0</c> and the <c>name</c> is non-null and non-blank. These can be enforced with <c>assert</c> statements in the constructor (which we will see in a moment). The <c>passport</c> cannot be <c>null</c><mdash />it is created by the <c>ReaderAccount</c> in its constructor. Finally, the <c>freeMinutes</c> must be non-negative. We can enforce this class invariant starting in the constructor, by setting the field to an initial value of <c>0</c>, in the <c>deductFreeMinutes</c> method, through an <c>assert</c> statement that prevents a <c>minutes</c> parameter that would reduce <c>freeMinutes</c> to a value below zero, and in the <c>logMinutes</c> method, that can prevent a negative parameter with an <c>assert</c> statement.
+  </p>
+
+  <table xml:id="table-8-11-stampmanager-uml">
+    <title>Class diagram for <c>StampManager</c> including class invariants.</title>
+    <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+      <col width="100%"/>
+      <row header="yes">
+        <cell halign="center"><c>StampManager</c></cell>
+      </row>
+      <row>
+        <cell>
+          <p><c>- stampCost : int</c></p>
+          <p><c>- emptyStamp : Stamp</c></p>
+          <p><c>- stamps : Stamp[]</c></p>
+        </cell>
+      </row>
+      <row>
+        <cell>
+          <p><c>+ StampManager()</c></p>
+          <p><c>+ getStampCost() : int</c></p>
+          <p><c>+ getEmptyStamp() : Stamp</c></p>
+        </cell>
+      </row>
+      <row>
+        <cell>
+          <p>Class invariants:</p>
+                    <p>• <c>stampCost &gt; 0</c></p>
+          <p>• <c>emptyStamp != null &amp;&amp; emptyStamp.getCost() == stampCost</c></p>
+          <p>• <c>stamps != null &amp;&amp; stamps.length &gt; 0</c> (no <c>null</c> elements)</p>
+        </cell>
+      </row>
+    </tabular>
+  </table>
+
+  <p>
+    The <c>StampManager</c> class is new, with its responsibilities drawn from the <em>Request stamp</em> use case (and sequence diagram fulfilling the use case). The <c>StampManager</c> has a constructor<mdash />we will instantiate a single <c>StampManager</c> object as a shared resource for all <c>Passport</c> objects. In its constructor, it will create the <c>Stamp</c> objects, including the empty stamp, and it will set the stamp cost.
+  </p>
+
+  <p>
+    From the <em>Request stamp</em> sequence diagram, we add the <c>getStampCost</c> and <c>getEmptyStamp</c> accessors. To fulfill these responsibilities, we give the <c>StampManager stampCost</c>, <c>emptyStamp</c>, and <c>stamps</c> fields.
+  </p>
+
+  <p>
+    The <c>StampManager</c> has class invariants that <c>stampCost</c> is greater than zero, that the <c>emptyStamp</c> is not <c>null</c> and has a cost of <c>stampCost</c>, and that <c>stamps</c> is non-null, not empty, and has no <c>null</c> elements. All of these fields are given values in the constructor and there are no mutators to potentially violate the class invariants.
+  </p>
+
+  <p>
+    <xref ref="fig-8-18-updated-associations" /> shows a new association class diagram for the classes fulfilling the <em>Request stamp</em> use case, which now includes the <c>StampManager</c>.
+  </p>
+
+  <figure xml:id="fig-8-18-updated-associations">
+    <caption>A class diagram showing the associations among the classes that fulfill the <em>Request stamp</em> use case.</caption>
+    <image source="figures/figure_8_18.png" width="90%">
+      <shortdescription>Updated association diagram linking ReaderAccount, Passport, Stamp, and StampManager.</shortdescription>
+      <description>
+        <p>
+          A UML association class diagram with ReaderAccount, Passport, and Stamp across the top row and StampManager below Passport. ReaderAccount has a 1-to-1 composition (filled diamond) to Passport. Passport has unidirectional arrows to Stamp (0..* to 0..*) and down to StampManager (0..* to 1). StampManager has a unidirectional arrow to Stamp (1 to 1..*).
+        </p>
+      </description>
+    </image>
+  </figure>
+
+  <p>
+    In this diagram, we can see that <c>ReaderAccount</c> has a composition association with <c>Passport</c> that is one-to-one: each <c>ReaderAccount</c> owns one <c>Passport</c>, and there are no other objects that have references to a <c>Passport</c>.
+  </p>
+
+  <p>
+    There is one <c>StampManager</c>, which might be referenced by many <c>Passport</c> objects. The relationship is a unidirectional navigation association<mdash />the <c>StampManager</c> has no reference back to <c>Passport</c>. There are also unidirectional navigation associations between <c>Passport</c> and <c>Stamp</c>, and between <c>StampManager</c> and <c>Stamp</c>. A <c>StampManager</c> creates the <c>Stamp</c> objects, but <c>Stamp</c> objects have no references back to <c>StampManager</c>. A <c>StampManager</c> will give a reference to a <c>Stamp</c> object to a <c>Passport</c>, but again, the <c>Stamp</c> object has no reference to a <c>Passport</c>. There is one <c>StampManager</c> to at least one (but possibly many) <c>Stamp</c> objects. A <c>Passport</c> can reference zero to many <c>Stamp</c> objects. A <c>Stamp</c> object might be referenced by zero to many <c>Passport</c> objects.
+  </p>
+
+  <p>
+    The <c>ReaderAccount</c> object is constructed with parameters for <c>readerId</c>, <c>name</c>, and <c>stampManager</c>. The <c>readerId</c> must be positive, and the <c>name</c> cannot be <c>null</c> or blank according to the class invariants, so the parameter values are checked with <c>assert</c> statements. The values are then assigned to the appropriate fields. The <c>freeMinutes</c> field is initialized to zero.
+  </p>
+
+  <p>
+    The <c>ReaderAccount</c> has a <c>Passport</c> object reference as a field, as part of a composition association. The <c>Passport</c> is created in the <c>ReaderAccount</c> constructor and assigned to the <c>passport</c> field.
+  </p>
+
+  <p>
+    The <c>StampManager</c> reference is passed to the <c>ReaderAccount</c> constructor so that it can be passed to the <c>Passport</c> constructor. It is a method precondition that the <c>StampManager</c> reference not be <c>null</c>, so that is checked with an <c>assert</c> at the start of the method. The <c>ReaderAccount</c> doesn’t maintain its own reference to the <c>StampManager</c>. Here is the complete <c>ReaderAccount</c> constructor:
+  </p>
+
+  <program language="java" line-numbers="yes"><![CDATA[/**
+ * Initializes a new ReaderAccount with zero free minutes and creates its
+ * own exclusively owned Passport.
+ *
+ * Precondition:  readerId > 0, name != null and is not blank, and
+ *                stampManager != null.
+ * Postcondition: Sets readerId and name, initializes freeMinutes to 0,
+ *                and creates a new Passport backed by stampManager.
+ *
+ * @param readerId     The unique positive identifier for this reader.
+ * @param name         The reader's name.
+ * @param stampManager A reference to the shared StampManager.
+ */
+public ReaderAccount(int readerId, String name, StampManager stampManager) {
+    assert readerId > 0 : "readerId must be positive.";
+    assert name != null && !name.isBlank() : "name cannot be null or blank.";
+    assert stampManager != null : "stampManager cannot be null.";
+
+    this.readerId = readerId;
+    this.name = name;
+    this.freeMinutes = 0;
+    this.passport = new Passport(stampManager);
+}]]></program>
+
+  <p>
+    In the sequence diagram we see the <c>ReaderAccount</c> invoke the <c>requestStamp</c> method on its <c>Passport</c>, sending in a reference to itself. An object sends a reference to itself by passing <c>this</c> as an argument. Remember that <c>this</c> refers to the object that the method was invoked on. So if we have a <c>ReaderAccount</c> called <c>readerPriya</c> and we invoke the <c>requestStamp</c> method on it (<c>readerPriya.requestStamp()</c>), <c>this</c> refers to the same object in memory as <c>readerPriya</c>. If we have a <c>ReaderAccount</c> called <c>readerMateo</c> and we invoke the <c>requestStamp</c> method on it (<c>readerMateo.requestStamp()</c>), <c>this</c> refers to the same object in memory as <c>readerMateo</c>. Here is the <c>requestStamp</c> method in the <c>ReaderAccount</c> class:
+  </p>
+
+  <program language="java" line-numbers="yes"><![CDATA[/**
+ * Requests a stamp in exchange for reading minutes through this account's
+ * passport.
+ *
+ * Postcondition: If this account has enough free minutes for a stamp,
+ *                an empty stamp slot is added to its passport, the stamp
+ *                cost is deducted from freeMinutes, and true is returned;
+ *                otherwise, account state is unchanged and false is returned.
+ *
+ * @return true if the stamp request succeeded; false otherwise.
+ */
+public boolean requestStamp() {
+    return this.passport.requestStamp(this);
+}]]></program>
+
+  <p>
+    Most of our sequence diagram is the <c>requestStamp</c> method in the <c>Passport</c> class. Read through the method and compare it to <xref ref="fig-8-17-request-stamp-stampmanager" />:
+  </p>
+
+  <program language="java" line-numbers="yes"><![CDATA[/**
+ * Processes a stamp request for the given ReaderAccount by checking its
+ * free minutes against the stamp cost from the StampManager. If the account
+ * has enough free minutes, adds an empty stamp slot to this passport and
+ * deducts the cost from the account.
+ *
+ * Precondition:  readerAccount != null.
+ * Postcondition: Returns true and updates this passport and readerAccount
+ *                if freeMinutes >= stampCost; otherwise leaves both
+ *                unchanged and returns false.
+ *
+ * @param readerAccount The ReaderAccount requesting a stamp.
+ * @return true if the transaction succeeded; false otherwise.
+ */
+public boolean requestStamp(ReaderAccount readerAccount) {
+    assert readerAccount != null : "readerAccount cannot be null.";
+
+    boolean success = false;
+    int freeMinutes = readerAccount.getFreeMinutes();
+    int stampCost = this.stampManager.getStampCost();
+
+    if (freeMinutes >= stampCost) {
+        Stamp emptyStamp = this.stampManager.getEmptyStamp();
+        assert emptyStamp != null : "emptyStamp from StampManager cannot be null.";
+        this.stamps.add(0, emptyStamp);
+        readerAccount.deductFreeMinutes(stampCost);
+        success = true;
+    }
+
+    return success;
+}]]></program>
+
+  <p>
+    This method returns a one-way flag, <c>success</c>, so that is set to <c>false</c> at the start of the method. In the sequence diagram, the first method invocation from <c>Passport.requestStamp</c> is an arrow from the <c>passport</c> to <c>readerAccount</c> labeled <c>getFreeMinutes</c>. The reference to the <c>readerAccount</c> came in as a parameter, so the first call in the method is:
+  </p>
+
+  <program language="java"><![CDATA[int freeMinutes = readerAccount.getFreeMinutes();]]></program>
+
+  <p>
+    This invokes the <c>getFreeMinutes</c> method on the <c>readerAccount</c> object that was passed as a parameter, and stores the return value (<c>freeMinutes</c>, returned on a dashed line in the diagram) into the local variable <c>freeMinutes</c>.
+  </p>
+
+  <p>
+    The next invocation is obtaining the stamp cost from the <c>StampManager</c>. This is very similar<mdash />a method invocation on an object, storing the return value in a local variable. The difference here is that the <c>Passport</c> object has a <c>StampManager</c> field, so the method is invoked on the field:
+  </p>
+
+  <program language="java"><![CDATA[int stampCost = this.stampManager.getStampCost();]]></program>
+
+  <p>
+    In our sequence diagram, we then have an <c>opt</c> combined fragment. The rest of the processing, except returning the <c>success</c> flag, is within the combined fragment. In our code, this is realized as an <c>if</c> statement with the guard as the condition, and all code enclosed within the <c>if</c> braces.
+  </p>
+
+  <p>
+    Within the <c>opt</c> combined fragment there are two more method invocations. Before adding the empty stamp to the list of stamps, we check that it’s non-null, to enforce the class invariant that all objects in the <c>stamps</c> list are non-null. We set the <c>success</c> flag to <c>true</c>, and at the end of the method, we return the flag.
+  </p>
+</section>

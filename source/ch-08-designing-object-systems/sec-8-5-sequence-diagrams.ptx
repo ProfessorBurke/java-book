@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-8-5-sequence-diagrams" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Sequence Diagrams</title>
+
+  <introduction>
+    <p>
+      Class diagrams are static, or structural diagrams. They do not show the dynamic behavior of the system being developed. In other words, they do not show how work is accomplished while the system is running. They show a structural view of the system, which means the relationships between objects and classes. A dynamic view shows us the way that objects collaborate to complete a task. This can be valuable in object-oriented systems, in which the distribution of responsibilities can make the flow of control difficult to follow.
+    </p>
+
+    <p>
+      A sequence diagram shows the objects that are collaborating to fulfill a use case by showing the time ordering of the messages they send. A sequence diagram is a kind of interaction diagram, so you might see the names used interchangeably. Like many UML diagrams, sequence diagrams can be used during the design phase and they can be used to document the design.
+    </p>
+
+    <p>
+      Before we jump into sequence diagrams for the <em>Request stamp</em> use case, let’s go over the basics by documenting code you’ve already seen.
+    </p>
+  </introduction>
+
+  <subsection xml:id="subsec-8-5-1-basics">
+    <title>Sequence Diagram Basics</title>
+
+    <p>
+      <xref ref="listing-point-class" /> is the <c>Point</c> class, and <xref ref="listing-point-demo" /> is the <c>PointDemo</c> class with a <c>main</c> method that instantiates two <c>Point</c> objects and invokes methods on them (<c>getX</c>, <c>getY</c>, <c>distanceFromOrigin</c>, and <c>translate</c>). We will draw a sequence diagram for the <c>main</c> method.
+    </p>
+
+    <p>
+      To start, we draw boxes at the top of the diagram for the classes and objects involved in the use case (or in this example, the classes and objects in <c>PointDemo.main</c>). The <c>main</c> method isn’t part of an object, it’s a <c>static</c> method that’s part of the <c>PointDemo</c> class. We’ll label the first box with the class name: <c>PointDemo</c>. The <c>main</c> method creates two objects of class <c>Point</c>, <c>p1</c> and <c>p2</c>, so we will draw boxes for those objects as well, labeled <c>p1 : Point</c> and <c>p2 : Point</c>. When we are showing a specific instance of an object in a sequence diagram, as we are here, we underline the names. We draw dashed lines from the center of the boxes to the bottom of the diagram. These are called lifelines, and they represent the lifespan of each object. <xref ref="fig-8-8-pointdemo-lifelines" /> illustrates this initial setup.
+    </p>
+
+    <figure xml:id="fig-8-8-pointdemo-lifelines">
+      <caption>The class and object boxes and lifelines for a sequence diagram of <c>PointDemo.main</c>.</caption>
+      <image source="figures/figure_8_8.png" width="85%">
+        <shortdescription>Sequence diagram setup showing PointDemo, p1 : Point, and p2 : Point boxes with dashed lifelines.</shortdescription>
+        <description>
+          <p>
+            A UML sequence diagram header showing three boxes across the top: PointDemo (not underlined), p1 : Point (underlined), and p2 : Point (underlined). A vertical dashed lifeline extends downward from the center of each box.
+          </p>
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      A sequence diagram shows methods that are invoked, in order, from top to bottom in the diagram. Method invocations are horizontal arrows that start from the lifeline of the object (or class) invoking the method and point to the lifeline of the object on which the method is invoked. A box commonly called an activation bar (formally called an execution specification in UML 2) is drawn over a lifeline, showing when an object (or class) has control. You can think of these bars as representing frames on the call stack. We’ll add some activation bars and a method invocation to our diagram to illustrate.
+    </p>
+
+    <p>
+      The <c>main</c> method in <c>PointDemo</c> has control for this entire sequence diagram, because that is what we’re modeling, so we will draw an activation bar over the <c>PointDemo</c> lifeline from the top of the bar to the bottom. This bar coincides with the lifeline<mdash />once the <c>main</c> method finishes executing, the program ends. The first line of code in <c>main</c> is a method invocation, which we model with an arrow:
+    </p>
+
+    <program language="java"><![CDATA[Point p1 = new Point(3.0, 4.0);]]></program>
+
+    <p>
+      This invokes the constructor, <c>Point</c>, on the object <c>p1</c>, so we draw a solid arrow with a filled arrowhead from the <c>PointDemo</c> activation bar to the <c>p1</c> lifeline. We put this near the top of the <c>PointDemo</c> activation bar because it is the first method that is invoked, and the diagram reads sequentially from top to bottom. We will label the arrow <c>Point(3.0, 4.0)</c><mdash />the name of the method and the argument list. On the <c>p1</c> lifeline, we’ll place a small activation bar, because this method simply assigns two fields and then returns. It invokes no methods itself.
+    </p>
+
+    <p>
+      Now one note<mdash />the <c>Point</c> object <c>p1</c> comes into existence with the <c>new</c> keyword, and then the argument constructor is invoked. In some sequence diagrams, the rectangle labeled <c>p1 : Point</c> is placed here, and not at the top of the diagram, to accurately reflect the lifetime of <c>p1</c>. (It comes into existence after <c>PointDemo.main</c>.) Placement of the box is a trade-off between lifetime accuracy and readability. In this text, we’ll draw our sequence diagrams with all class and object boxes at the top, because you can then quickly see which objects are involved in a use case, and the object boxes aren’t cluttering the diagram. You may see diagrams drawn with lifetimes beginning and ending throughout the diagram. <xref ref="fig-8-9-pointdemo-first-call" /> is our diagram with this first method invocation added.
+    </p>
+
+    <figure xml:id="fig-8-9-pointdemo-first-call">
+      <caption>The sequence diagram for <c>PointDemo.main</c> with one method invocation added.</caption>
+      <image source="figures/figure_8_9.png" width="85%">
+        <shortdescription>Sequence diagram adding the Point(3.0, 4.0) constructor call from PointDemo to p1 : Point.</shortdescription>
+        <description>
+          <p>
+            The sequence diagram from Figure 8-8 updated with a full-height activation bar on the PointDemo lifeline, a solid arrow with a filled arrowhead labeled Point(3.0, 4.0) pointing to p1 : Point, and a short activation bar on p1's lifeline.
+          </p>
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      The next line of code in <c>PointDemo.main</c> is the construction of <c>p2</c>:
+    </p>
+
+    <program language="java"><![CDATA[Point p2 = new Point(5.0, 12.0);]]></program>
+
+    <p>
+      We draw another arrow from <c>PointDemo</c>’s activation bar, this time to the <c>p2</c> lifeline, labeled with <c>Point(5.0, 12.0)</c>, and we draw a small activation bar on <c>p2</c>’s lifeline. This method invocation is drawn under the activation bar on <c>p1</c>’s lifeline, because this method invocation happens after that method returns. <xref ref="fig-8-10-pointdemo-second-call" /> illustrates this addition.
+    </p>
+
+    <figure xml:id="fig-8-10-pointdemo-second-call">
+      <caption>The sequence diagram for <c>PointDemo.main</c> with a second method invocation.</caption>
+      <image source="figures/figure_8_10.png" width="85%">
+        <shortdescription>Sequence diagram adding the Point(5.0, 12.0) constructor call from PointDemo to p2 : Point.</shortdescription>
+        <description>
+          <p>
+            The sequence diagram from Figure 8-9 with a second solid call arrow labeled Point(5.0, 12.0) drawn below the first activation bar, extending from PointDemo to a short activation bar on the p2 : Point lifeline.
+          </p>
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      The next line of code in <c>PointDemo.main</c> invokes value-returning methods on <c>p1</c>: <c>getX</c> and <c>getY</c>:
+    </p>
+
+    <program language="java"><![CDATA[System.out.println("Point 1 coordinates: (" + p1.getX() + ", " + p1.getY() + ")");]]></program>
+
+    <p>
+      We again draw arrows to show these method invocations, below the method invocations that are already shown on the diagram, because they occur after. When a method returns a value, we show a dashed arrow with a stick arrowhead from the bottom of the activation bar back to the calling method, labeled with the value that’s returned. <xref ref="fig-8-11-pointdemo-value-return" /> shows the diagram with the two value-returning method invocations on <c>p1</c> added.
+    </p>
+
+    <figure xml:id="fig-8-11-pointdemo-value-return">
+      <caption>A sequence diagram with value-returning method invocations.</caption>
+      <image source="figures/figure_8_11.png" width="85%">
+        <shortdescription>Sequence diagram adding getX() and getY() calls on p1 with dashed return arrows labeled 3.0 and 4.0.</shortdescription>
+        <description>
+          <p>
+            The sequence diagram from Figure 8-10 with two value-returning calls from PointDemo to p1 : Point added below Point(5.0, 12.0): getX() with a dashed return arrow labeled 3.0, followed by getY() with a dashed return arrow labeled 4.0.
+          </p>
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      <xref ref="fig-8-12-pointdemo-complete" /> is a complete sequence diagram of <c>PointDemo.main</c>. See if you can match all of the method invocations to the method calls in the diagram:
+    </p>
+
+    <figure xml:id="fig-8-12-pointdemo-complete">
+      <caption>A complete sequence diagram for <c>PointDemo.main</c>.</caption>
+      <image source="figures/figure_8_12.png" width="85%">
+        <shortdescription>Complete sequence diagram of PointDemo.main including distanceFromOrigin, p2 calls, and translate.</shortdescription>
+        <description>
+          <p>
+            A complete UML sequence diagram for PointDemo.main showing 12 calls in order from top to bottom: Point(3.0, 4.0) on p1, Point(5.0, 12.0) on p2, getX() returning 3.0, getY() returning 4.0, distanceFromOrigin() returning 5.0 on p1, getX() returning 5.0, getY() returning 12.0, distanceFromOrigin() returning 13.0 on p2, translate(3.0, 4.0) on p1, and then getX() returning 6.0, getY() returning 8.0, and distanceFromOrigin() returning 10.0 on p1.
+          </p>
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      If you turn the diagram on its side, you get a dynamic picture of the stack growing and shrinking as the program executes. Initially, there is a frame for <c>main</c> on the call stack. When the <c>Point</c> constructor is first invoked, the <c>main</c> frame is inactive and the <c>Point</c> frame is active. When the constructor returns, the <c>Point</c> frame is removed and the <c>main</c> frame is active again. The <c>Point</c> constructor is called a second time, and its frame is placed on the call stack, etc. <xref ref="fig-8-13-call-stack-detailed" /> depicts this sideways view of the first part of the sequence diagram.
+    </p>
+
+    <figure xml:id="fig-8-13-call-stack-detailed">
+      <caption>A sequence diagram on its side mirrors the timeline of the stack.</caption>
+      <image source="figures/figure_8_13.png" width="95%">
+        <shortdescription>Call stack timeline from left to right showing main and Point frames pushing and popping over time.</shortdescription>
+        <description>
+          <p>
+            A horizontal timeline diagram showing six snapshots of the call stack from left to right above a Time arrow: start (main only), call 1 (p1.Point stacked on main), return (main with p1 ref), call 2 (p2.Point stacked on main), return (main with p1 and p2 refs), and call 3 (p1.getX() stacked on main).
+          </p>
+        </description>
+      </image>
+    </figure>
+  </subsection>
+
+  <subsection xml:id="subsec-8-5-2-conditionals-loops-roles">
+    <title>Conditionals, Loops, and Roles in Sequence Diagrams</title>
+
+    <introduction>
+      <p>
+        Now that you’re familiar with modeling a sequential series of method invocations with a sequence diagram, let’s look at modeling conditionals, loops, and objects in roles (rather than specific object instances). <xref ref="listing-8-2-find-site-index" /> is a sequential search method, <c>findSiteIndex</c>, that finds the index of a <c>Site</c>, given its name, in an <c>ArrayList</c> of <c>Site</c> objects. We saw the <c>Site</c> class in the Chapter 7 capstone project. To keep this section focused, this method does not include <c>assert</c> statements to check preconditions.
+    </p>
+
+    <listing xml:id="listing-8-2-find-site-index">
+      <caption>A sequential search of an <c>ArrayList</c> of <c>Site</c> objects.</caption>
+      <program language="java" line-numbers="yes"><![CDATA[/**
+ * Searches an ArrayList of Site objects for a site with the given name
+ * using sequential search.
+ *
+ * Precondition:  sites != null, targetName != null and is not blank,
+ *                and no element of sites is null.
+ * Postcondition: Returns the index of the first Site whose name matches
+ *                targetName (case-sensitive), or -1 if not found.
+ *
+ * @param sites      The list of Site objects to search.
+ * @param targetName The name of the site to find.
+ * @return The index of the matching Site, or -1 if not found.
+ */
+public static int findSiteIndex(ArrayList<Site> sites, String targetName) {
+    int index = -1;
+    int i = 0;
+
+    while (i < sites.size() && index == -1) {
+        Site current = sites.get(i);
+        if (current.getName().equals(targetName)) {
+            index = i;
+        }
+        i++;
+    }
+
+    return index;
+}]]></program>
+    </listing>
+
+    <p>
+      The sequential search method takes the <c>ArrayList</c> of <c>Site</c> objects and the name of the <c>Site</c> we are searching for, a <c>String</c>. It will return the index of the object in the <c>ArrayList</c> or <c>-1</c> if it’s not found. In a sequential search, we loop through the collection, comparing each element to the target, and we quit when either we’ve found the target or reached the end of the collection.
+    </p>
+
+    <p>
+      <xref ref="fig-8-14-findsiteindex-sequence" /> is a sequence diagram of the <c>findSiteIndex</c> method. You are familiar with most of the diagram components<mdash />the class and object boxes at the top, their lifelines, the activation bars showing control, and the method invocations and return values. Compare the diagram to the code before you read the discussion of the new elements.
+    </p>
+
+    <figure xml:id="fig-8-14-findsiteindex-sequence">
+      <caption>Sequence diagram of the <c>findSiteIndex</c> method.</caption>
+      <image source="figures/figure_8_14.png" width="95%">
+        <shortdescription>Sequence diagram for findSiteIndex with a found message, loop box, and nested opt box.</shortdescription>
+        <description>
+          <p>
+            A UML sequence diagram with four un-underlined boxes: TourMapGenerator, sites : ArrayList&lt;Site&gt;, current : Site, and name : String. A found message findSiteIndex(sites, targetName) enters from a filled circle on the left. Inside a loop box guarded by [i &lt; sites.size() &amp;&amp; index == -1], TourMapGenerator calls get(i) on sites returning current, getName() on current returning name, and equals(targetName) on name returning match. A nested opt box guarded by [match == true] shows index = i. After the loop, a dashed reply arrow returns index to the left margin.
+          </p>
+        </description>
+      </image>
+    </figure>
+    </introduction>
+
+    <subsubsection xml:id="subsubsec-8-5-2-1-found-messages">
+      <title>Found Messages</title>
+
+      <p>
+        The sequence diagram of <c>findSiteIndex</c> begins with a found message: an arrow originating from a filled circle instead of any lifeline in the diagram. This is how we denote a method invocation that comes from another caller outside of the current diagram.
+      </p>
+
+      <p>
+        At the end of the method, we return <c>index</c> to the left side of the diagram, where the found message originated. We do not put a circle at the end of the return arrow.
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="subsubsec-8-5-2-2-objects-in-roles">
+      <title>Objects in Roles</title>
+
+      <p>
+        There are no object instantiations in this sequence diagram<mdash />the <c>ArrayList sites</c> is passed as a parameter to the method. We don’t know its length or what objects are in it (beyond what we know from the preconditions of the method). All of the objects in the diagram<mdash />the <c>sites ArrayList</c>, the <c>current Site</c> that we’re examining each iteration through the loop, and the <c>name</c> of the <c>current Site</c>, are all representing roles and not specific objects.
+      </p>
+
+      <p>
+        The idea of a role is particularly clear in the loop, where we have a most-recent holder variable: <c>current</c> (of type <c>Site</c>), and the <c>String</c> returned from <c>current.getName()</c>, which we don’t store in a variable. Each time through the loop the most-recent holder is referencing a different value. In the diagram, we show each as one box and lifeline, just as we have one most-recent holder variable for many different values. Each time through the loop, it’s the most-recent holder that we invoke the <c>getName</c> method on, regardless of which object it’s actually referencing.
+      </p>
+
+      <p>
+        When we have object roles in a sequence diagram, we don’t underline the object name in the box at the top. We only underline the name when the box and lifeline refer to an instance of a specific object.
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="subsubsec-8-5-2-3-the-loop">
+      <title>The <c>loop</c></title>
+
+      <p>
+        The primary work of the sequential search is done within a loop that is iterating over a collection<mdash />the <c>get</c> method is invoked on the <c>ArrayList</c>, the <c>getName</c> method is invoked on the <c>Site</c> returned by <c>get</c>, and the <c>equals</c> method is invoked on the <c>String</c> returned by <c>getName</c>. There is an <c>if</c> statement with a conditional assignment statement.
+      </p>
+
+      <p>
+        To show a loop in a sequence diagram, enclose all of the method invocations that are within the loop in a box, formally called a combined fragment, with a pentagon (that looks like a rectangle with the bottom right corner cut off) in the upper left corner labeled “<c>loop</c>”. Under the pentagon (or to the right), put a guard in square brackets that is the condition under which the loop executes. Our sequence diagram shows the exact loop entry condition, and it contains all of the method invocations after <c>findSiteIndex</c>, because the method makes all of its calls inside the loop, with the exception of <c>sites.size()</c>, which is in the loop entry condition and is not shown as a method invocation in the diagram.
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="subsubsec-8-5-2-4-alt-and-opt">
+      <title>The <c>alt</c> and <c>opt</c> Boxes</title>
+
+      <p>
+        There is an <c>if</c> statement in the <c>findSiteIndex</c> method:
+      </p>
+
+      <program language="java"><![CDATA[if (current.getName().equals(targetName)) {
+    index = i;
+}]]></program>
+
+      <p>
+        Although there are no method invocations within the <c>if</c> statement, we’ve included it on the diagram to illustrate, first, how to show a single conditionally executed block, and second, to show that combined fragments can be nested. (And third, this combined fragment shows that you can include code that is not a method invocation if you believe it clarifies the diagram.)
+      </p>
+
+      <p>
+        The <c>if</c> statement, because it is a single <c>if</c>, is in a combined fragment labeled “<c>opt</c>” (optional execution) with a guard below showing the condition under which the code executes, enclosed in square brackets. Just as with an <c>if</c> statement, if the guard is false, the combined fragment is skipped.
+      </p>
+
+      <p>
+        There are no method calls within the <c>if</c> statement, but if there were, they would be drawn fully within the <c>opt</c> combined fragment box. Because of the importance of the conditional assignment in the sequential search, we’ve included the <c>opt</c> box with the assignment within the box as text.
+      </p>
+
+      <p>
+        If you have a chained conditional, with two or more mutually exclusive conditions, you use an <c>alt</c> combined fragment, with each condition separated by a dashed line with a guard beneath each dashed line. If there’s an <c>else</c>, put <c>else</c> in the guard. Consider the following code, which invokes different methods on a <c>Student</c> object based on the value in <c>average</c>:
+      </p>
+
+      <program language="java"><![CDATA[if (average >= 90) {
+    student.awardHonors();
+} else if (average >= 70) {
+    student.recordPass();
+} else {
+    student.scheduleReview();
+}]]></program>
+
+      <p>
+        We would draw a sequence diagram with an <c>alt</c> box, separated into three partitions by dashed lines, with an appropriate guard under each line. Only one of the partitions of an <c>alt</c> will execute. If there’s no <c>else</c>, then if none of the guard conditions is true, the box is bypassed.
+      </p>
+
+      <figure xml:id="fig-8-15-alt-else-sequence">
+        <caption>Sequence diagram showing an <c>alt</c> box with three alternatives.</caption>
+        <image source="figures/figure_8_15.png" width="85%">
+          <shortdescription>Sequence diagram with an alt box partitioned into three branches: [average &gt;= 90], [average &gt;= 70], and [else].</shortdescription>
+          <description>
+            <p>
+              A UML sequence diagram with two un-underlined boxes, gradeBook : GradeBook and student : Student, and an alt box split into three sections by horizontal dashed lines. The top section is guarded [average &gt;= 90] and calls awardHonors(); the middle section is guarded [average &gt;= 70] and calls recordPass(); the bottom section is guarded [else] and calls scheduleReview().
+            </p>
+          </description>
+        </image>
+      </figure>
+    </subsubsection>
+  </subsection>
+
+  <subsection xml:id="subsec-8-5-3-designing">
+    <title>Designing with Sequence Diagrams</title>
+
+    <introduction>
+      <p>
+        In the design process, sequence diagrams let us propose and test a candidate sequence of method invocations for each use case before we write code. As we trace how work gets done step by step, we often uncover responsibilities that haven’t been assigned to any class yet<mdash />or notice a class taking on too many responsibilities that should be split into a new class. Drawing sequence diagrams for our use cases is one of the best ways to refine a static class design.
+      </p>
+    </introduction>
+
+    <subsubsection xml:id="subsubsec-8-5-3-1-proposed">
+      <title>Proposed <em>Request stamp</em> Sequence Diagram</title>
+
+      <p>
+        Now that you’ve learned sequence diagram mechanics, let’s use a sequence diagram to work out how <c>ReaderAccount</c> and <c>Passport</c> from Section 8.4 can collaborate to fulfill the <em>Request stamp</em> use case. <xref ref="fig-8-16-request-stamp-opt" /> shows a first-draft sequence diagram for this use case.
+      </p>
+
+      <figure xml:id="fig-8-16-request-stamp-opt">
+        <caption>A sequence diagram for the <em>Request stamp</em> use case.</caption>
+        <image source="figures/figure_8_16.png" width="90%">
+          <shortdescription>First-draft sequence diagram for Request stamp between account : ReaderAccount and passport : Passport.</shortdescription>
+          <description>
+            <p>
+              A UML sequence diagram with account : ReaderAccount on the left and passport : Passport on the right. ReaderAccount invokes requestStamp(account) on Passport, which calls getFreeMinutes() back on ReaderAccount returning freeMinutes. Inside an opt box guarded [freeMinutes &gt;= stampCost], Passport adds an empty stamp slot and calls deductFreeMinutes(stampCost) on ReaderAccount. Finally, Passport returns status to ReaderAccount.
+            </p>
+          </description>
+        </image>
+      </figure>
+
+      <p>
+        In this diagram we propose that the <em>Request stamp</em> use case begins when the <c>ReaderAccount</c> object invokes the <c>requestStamp</c> method on the <c>Passport</c> object. The <c>ReaderAccount</c> passes itself as a parameter, so the <c>Passport</c> object can invoke methods back on the <c>ReaderAccount</c> object as needed. You can see, by the activation bar on its lifeline, that the <c>Passport</c> object has control for the rest of the diagram as it handles <c>requestStamp</c>.
+      </p>
+
+      <p>
+        It first invokes the <c>getFreeMinutes</c> method on the <c>ReaderAccount</c> object. Notice here that we draw a small activation bar over the existing activation bar already on the <c>ReaderAccount</c> lifeline. This is how we show a method invocation on an object that already has a method that is waiting (paused) on the call stack.
+      </p>
+
+      <p>
+        The <c>ReaderAccount</c>’s free minutes are returned to the <c>Passport</c> object, which then adds an empty stamp slot and invokes <c>deductFreeMinutes</c> on the <c>ReaderAccount</c> if the Reader had enough free minutes to purchase a stamp, so that method invocation and some notes about processing are enclosed in an <c>opt</c> box (combined fragment).
+      </p>
+
+      <p>
+        You can read this diagram two ways: read all the methods, from top to bottom, to see the methods that are invoked when the <c>ReaderAccount</c> has enough free minutes to earn a stamp. If the <c>ReaderAccount</c> does not have enough free minutes, read the methods from top to bottom, but skip over the methods enclosed in the <c>opt</c> box, as they will not be invoked if the <c>opt</c> condition is false.
+      </p>
+
+      <p>
+        The <c>status</c><mdash />true if the Reader had enough minutes to purchase a stamp and false otherwise<mdash />is returned to the <c>ReaderAccount</c>.
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="subsubsec-8-5-3-2-inventing-class">
+      <title>Inventing a Class and Revising a Use Case</title>
+
+      <p>
+        As we produce more sequence diagrams for use cases in our system, we realize that the <c>Stamp</c> objects would benefit from a manager object, a single object responsible for creating and maintaining the list of all <c>Stamp</c> objects. There is no <c>StampManager</c> in our description, but some system responsibilities do not seem to belong in any other object in our system, such as displaying the list of available stamps when the Reader chooses a stamp. There is a need for some organization of the <c>Stamp</c>s beyond a simple list, so we invent the <c>StampManager</c> object. The <c>StampManager</c> will also know the cost of a stamp and will maintain a special instance of a <c>Stamp</c> object to represent an empty slot in the reader’s passport. The single empty stamp instance will be special because it can be replaced by another stamp of the same cost.
+      </p>
+
+      <p>
+        <xref ref="fig-8-17-request-stamp-stampmanager" /> is an updated sequence diagram for the <em>Request stamp</em> use case that includes the <c>StampManager</c> object and that updates the <c>opt</c> block to fetch the empty stamp from the <c>StampManager</c>.
+      </p>
+
+      <figure xml:id="fig-8-17-request-stamp-stampmanager">
+        <caption>An updated sequence diagram for the <em>Request stamp</em> use case that includes the <c>StampManager</c>.</caption>
+        <image source="figures/figure_8_17.png" width="95%">
+          <shortdescription>Updated Request stamp sequence diagram adding stampManager : StampManager for getStampCost and getEmptyStamp.</shortdescription>
+          <description>
+            <p>
+              An updated UML sequence diagram with account : ReaderAccount, passport : Passport, and stampManager : StampManager. Passport calls getFreeMinutes() on ReaderAccount and getStampCost() on StampManager. Inside the opt box guarded [freeMinutes &gt;= stampCost], Passport calls getEmptyStamp() on StampManager returning emptyStamp, adds emptyStamp to the stamps list, and calls deductFreeMinutes(stampCost) on ReaderAccount before returning status.
+            </p>
+          </description>
+        </image>
+      </figure>
+
+      <p>
+        The <c>StampManager</c> has been added to our earlier sequence diagram. In response to the <c>requestStamp</c> method call, the <c>Passport</c> object invokes <c>getFreeMinutes</c> on <c>ReaderAccount</c>, then asks the <c>StampManager</c> object for the cost of a stamp. It can now compare the cost to the number of free minutes the <c>ReaderAccount</c> has available.
+      </p>
+
+      <p>
+        Within the <c>opt</c> block, which executes only if the <c>ReaderAccount</c> can afford a stamp, the <c>Passport</c> object asks the <c>StampManager</c> for the empty stamp (the stamp that indicates an open stamp slot in the Reader’s passport) by invoking <c>getEmptyStamp</c>, and the <c>StampManager</c> returns the empty stamp from that method.
+      </p>
+
+      <p>
+        Notice how drawing these sequence diagrams changed our design. In <xref ref="fig-8-16-request-stamp-opt" />, tracing the <em>Request stamp</em> use case step by step exposed a gap: <c>Passport</c> needed to know the cost of a stamp and obtain an empty stamp slot, yet storing the entire stamp catalog inside <c>Passport</c> didn’t fit its responsibilities. That realization led us to invent <c>StampManager</c>, update our class diagrams and associations (since <c>Passport</c> now collaborates with <c>StampManager</c>), and redraw the sequence diagram in <xref ref="fig-8-17-request-stamp-stampmanager" />. Object-oriented design is rarely a straight line from requirements to code<mdash />instead, you iterate back and forth between use cases, static class diagrams, and dynamic sequence diagrams, refining classes and redistributing responsibilities until every collaboration makes sense before you begin coding.
+      </p>
+    </subsubsection>
+  </subsection>
+</section>
