@@ -90,7 +90,7 @@
 
       <console>
         <output>Total mulch needed: 1.8518518518518519 cubic yards.
-  Peak Height         : 2.106610877142E10 meters</output>
+Peak Height         : 2.106610877142E10 meters</output>
       </console>
 
       <p>
@@ -127,57 +127,57 @@ System.out.printf("Total mulch needed: %.2f cubic yards.%n", cubicYards);]]></pr
       <program language="java"><![CDATA[System.out.printf(formatString, value1, value2, ...);]]></program>
 
       <p>
-        Inside the format string, special markers called format specifiers begin with a percent sign (<c>%</c>). Each specifier acts as a placeholder for one of the expressions (<q>values to insert</q>) that follows. <xref ref="table-format-specifiers" /> shows the more common format specifiers.
+        Inside the format string, special markers called format specifiers begin with a percent sign (<c>%</c>). Each specifier acts as a placeholder for one of the expressions (values to insert) that follows. <xref ref="table-format-specifiers" /> shows the more common format specifiers.
       </p>
 
       <table xml:id="table-format-specifiers">
-        <title>Format specifiers</title>
-        <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
-          <col width="15%"/>
-          <col width="20%"/>
-          <col width="30%"/>
-          <col width="35%"/>
-          <row header="yes">
-            <cell><strong>Specifier</strong></cell>
-            <cell><strong>Data Type</strong></cell>
-            <cell><strong>Description</strong></cell>
-            <cell><strong>Example / Output</strong></cell>
-          </row>
-          <row>
-            <cell><c>%d</c></cell>
-            <cell><c>int</c>, <c>long</c></cell>
-            <cell>(d)ecimal integer</cell>
-            <cell>
-              <p><c>System.out.printf("%d", 42);</c></p>
-              <p><m>\to</m> <c>42</c></p>
-            </cell>
-          </row>
-          <row>
-            <cell><c>%f</c></cell>
-            <cell><c>double</c>, <c>float</c></cell>
-            <cell>(f)loating-point number</cell>
-            <cell>
-              <p><c>System.out.printf("%.2f", 3.14159);</c></p>
-              <p><m>\to</m> <c>3.14</c></p>
-            </cell>
-          </row>
-          <row>
-            <cell><c>%s</c></cell>
-            <cell><c>String</c></cell>
-            <cell>(s)tring of text</cell>
-            <cell>
-              <p><c>System.out.printf("%s", "Alice");</c></p>
-              <p><m>\to</m> <c>Alice</c></p>
-            </cell>
-          </row>
-          <row>
-            <cell><c>%n</c></cell>
-            <cell>None</cell>
-            <cell>Platform-independent (n)ewline</cell>
-            <cell>Moves the cursor to the next line.</cell>
-          </row>
-        </tabular>
-      </table>
+  <title>Format specifiers</title>
+  <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+    <col width="10%"/>
+    <col width="18%"/>
+    <col width="24%"/>
+    <col width="48%"/>
+    <row header="yes">
+      <cell><strong>Specifier</strong></cell>
+      <cell><strong>Data Type</strong></cell>
+      <cell><strong>Description</strong></cell>
+      <cell><strong>Example / Output</strong></cell>
+    </row>
+    <row>
+      <cell><c>%d</c></cell>
+      <cell><c>int, long</c></cell>
+      <cell>(d)ecimal integer</cell>
+      <cell>
+        <p><c>System.out.printf("%d", 42);</c></p>
+        <p><m>\to</m> <c>42</c></p>
+      </cell>
+    </row>
+    <row>
+      <cell><c>%f</c></cell>
+      <cell><c>double, float</c></cell>
+      <cell>(f)loating-point number</cell>
+      <cell>
+        <p><c>System.out.printf("%.2f", 3.14159);</c></p>
+        <p><m>\to</m> <c>3.14</c></p>
+      </cell>
+    </row>
+    <row>
+      <cell><c>%s</c></cell>
+      <cell><c>String</c></cell>
+      <cell>(s)tring of text</cell>
+      <cell>
+        <p><c>System.out.printf("%s", "Alice");</c></p>
+        <p><m>\to</m> <c>Alice</c></p>
+      </cell>
+    </row>
+    <row>
+      <cell><c>%n</c></cell>
+      <cell>None</cell>
+      <cell>Platform-independent (n)ewline</cell>
+      <cell>Moves the cursor to the next line.</cell>
+    </row>
+  </tabular>
+</table>
 
       <p>
         You can embed multiple format specifiers in a single format string. When you do, the values are substituted in the exact order they appear, and their types must match the specifiers:
@@ -237,18 +237,18 @@ System.out.printf("%.3f%n", price); // 19.995 (rounded to 3 decimal places)]]></
         <c>printf</c> is ideal for printing neat, aligned tables of data. You achieve columns by specifying a field width<mdash />the minimum number of character spaces the output should occupy. Any characters left over after the value is inserted into the string are padded with spaces.
       </p>
 
-      <program language="java"><![CDATA[System.out.printf("%-10s %20s %n", "Leah", "she / her / hers");
-System.out.printf("%-10s %20s %n", "Cheese", "he / him / his");
-System.out.printf("%-10s %20s%n", "Fin", "they / them / theirs");]]></program>
+      <program language="java"><![CDATA[System.out.printf("%-10s%20s%n", "Leah", "she / her / hers");
+System.out.printf("%-10s%20s%n", "Cheese", "he / him / his");
+System.out.printf("%-10s%20s%n", "Fin", "they / them / theirs");]]></program>
 
       <p>
         This prints:
       </p>
 
       <console>
-        <output>Leah           she / her / hers
-Cheese           he / him / his
-Fin        they / them / theirs</output>
+        <output>Leah          she / her / hers
+Cheese          he / him / his
+Fin       they / them / theirs</output>
       </console>
 
       <p>
@@ -284,5 +284,179 @@ String message = String.format("Current temperature: %.1f°C", temperature);
     <p>
       Whenever you need formatted text, you have a choice: use <c>printf</c> if you want to display it immediately on the console, or use <c>String.format()</c> if you need to hold onto the formatted text as a <c>String</c> variable.
     </p>
+
+    <reading-questions xml:id="checkpoint-2-7">
+      <title>Checkpoint</title>
+
+      <exercise xml:id="checkpoint-2-7-print-println" label="checkpoint-2-7-print-println">
+        <title>Tracing print and println</title>
+        <statement>
+          <p>
+            What does the following code display on the console?
+          </p>
+          <program language="java"><![CDATA[System.out.print("A");
+System.out.println("B");
+System.out.print("C");
+System.out.println();
+System.out.print("D");]]></program>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                <c>AB</c> on the first line, <c>C</c> on the second line, and <c>D</c> on the third line.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! <c>print("A")</c> stays on line 1, <c>println("B")</c> prints <c>B</c> and moves to line 2, <c>print("C")</c> prints <c>C</c> on line 2, <c>println()</c> moves to line 3, and <c>print("D")</c> prints <c>D</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>AB</c> on the first line, a blank line, <c>C</c> on the third line, and <c>D</c> on the fourth line.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. <c>System.out.println();</c> only creates a blank line if the cursor is already at the start of a new line; here, <c>print("C")</c> left the cursor after <c>C</c> on line 2, so <c>println()</c> simply ends line 2.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>A</c>, <c>B</c>, <c>C</c>, and <c>D</c> each on its own separate line.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. <c>System.out.print</c> does not advance to a new line, so <c>A</c> and <c>B</c> appear together on the first line.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>ABCD</c> all on a single line.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Both <c>println("B")</c> and <c>println()</c> move the cursor to the start of the next line.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-2-7-specifiers" label="checkpoint-2-7-specifiers">
+        <title>Matching Format Specifiers</title>
+        <statement>
+          <p>
+            Match each <c>printf</c> format specifier to what it formats or inserts.
+          </p>
+        </statement>
+        <cardsort>
+          <match>
+            <premise order="3"><c>%d</c></premise>
+            <response>An <c>int</c> or <c>long</c> value</response>
+          </match>
+          <match>
+            <premise order="1"><c>%f</c></premise>
+            <response>A <c>double</c> or <c>float</c> value</response>
+          </match>
+          <match>
+            <premise order="5"><c>%s</c></premise>
+            <response>A <c>String</c> (or any value converted to text)</response>
+          </match>
+          <match>
+            <premise order="2"><c>%n</c></premise>
+            <response>A platform-independent newline</response>
+          </match>
+          <match>
+            <premise order="4"><c>%-10s</c></premise>
+            <response>A left-aligned string in a 10-character field</response>
+          </match>
+        </cardsort>
+      </exercise>
+
+      <exercise xml:id="checkpoint-2-7-widening" label="checkpoint-2-7-widening">
+        <title>Type Matching in printf</title>
+        <statement correct="no">
+          <p>
+            Passing an <c>int</c> variable to a <c>%f</c> format specifier in <c>System.out.printf</c> automatically widens the <c>int</c> to a <c>double</c>.
+          </p>
+        </statement>
+        <feedback>
+          <p>
+            False. Unlike arithmetic expressions, <c>printf</c> does not perform automatic widening for numeric specifiers. Passing an <c>int</c> to <c>%f</c> throws an <c>IllegalFormatConversionException</c> at runtime unless you explicitly cast it to <c>double</c>.
+          </p>
+        </feedback>
+      </exercise>
+
+      <exercise xml:id="checkpoint-2-7-format-string" label="checkpoint-2-7-format-string">
+        <title>Formatting Decimals and Building Strings</title>
+        <statement>
+          <p>
+            What is stored in <c>report</c> after these two lines execute, and what is printed to the console?
+          </p>
+          <program language="java"><![CDATA[double avg = 87.456;
+String report = String.format("Average: %.2f", avg);]]></program>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                <c>report</c> holds <c>"Average: 87.46"</c>, and nothing is printed to the console.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! <c>%.2f</c> rounds <c>87.456</c> to two decimal places (<c>87.46</c>), and <c>String.format</c> returns the formatted <c>String</c> without printing it.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>report</c> holds <c>"Average: 87.45"</c>, and nothing is printed to the console.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. <c>%.2f</c> rounds the displayed number rather than truncating, so <c>87.456</c> rounds up to <c>87.46</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>report</c> holds <c>"Average: 87.46"</c>, and <c>Average: 87.46</c> is printed to the console.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Unlike <c>System.out.printf</c>, <c>String.format</c> builds and returns a <c>String</c> without printing anything to the console.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>report</c> holds <c>"Average: %.2f"</c>, because <c>String.format</c> does not substitute <c>avg</c>.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. <c>String.format</c> uses the same format specifiers as <c>printf</c> and substitutes <c>avg</c> into <c>%.2f</c>.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+    </reading-questions>
   </subsection>
 </section>

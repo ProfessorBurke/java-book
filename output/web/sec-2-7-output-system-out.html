@@ -276,7 +276,10 @@ eBookConfig.enable_chatcodes =  false;
 <li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-2-7-output-system-out.html#subsubsec-2-7-2-3-columns-alignment" class="internal"><span class="codenumber">2.7.2.3</span> <span class="title">Formatting Columns and Alignment</span></a></div></li>
 </ul>
 </li>
-<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-2-7-output-system-out.html#subsec-2-7-3-building-strings-format" class="internal"><span class="codenumber">2.7.3</span> <span class="title">Building Strings with <code class="code-inline tex2jax_ignore">String.format</code></span></a></div></li>
+<li class="toc-item toc-subsection">
+<div class="toc-title-box"><a href="sec-2-7-output-system-out.html#subsec-2-7-3-building-strings-format" class="internal"><span class="codenumber">2.7.3</span> <span class="title">Building Strings with <code class="code-inline tex2jax_ignore">String.format</code></span></a></div>
+<ul id="ptx-toc-group-subsec-2-7-3-building-strings-format" class="structural toc-item-list"><li class="toc-item toc-reading-questions"><div class="toc-title-box"><a href="sec-2-7-output-system-out.html#checkpoint-2-7" class="internal"><span class="codenumber">2.7.3</span> <span class="title">Checkpoint</span></a></div></li></ul>
+</li>
 </ul>
 </li>
 <li class="toc-item toc-section">
@@ -1112,7 +1115,7 @@ eBookConfig.enable_chatcodes =  false;
 <div class="para" id="subsec-2-7-2-formatted-output-2-3">This can result in output that either contains more decimals than users want to read, or is shown in scientific notation, if the value is large or small enough. For example:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-2-7-2-formatted-output-2-3" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="code-box"><pre class="console clipboardable">Total mulch needed: 1.8518518518518519 cubic yards.
-  Peak Height         : 2.106610877142E10 meters
+Peak Height         : 2.106610877142E10 meters
 </pre></div>
 <div class="para" id="subsec-2-7-2-formatted-output-2-5">While accurate, the results are distracting or could be misread, if a user (understandably) didn’t notice the E. To control how numbers and text look on screen, Java provides formatted output.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-2-7-2-formatted-output-2-5" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div></section>
@@ -1134,7 +1137,7 @@ System.out.printf("Total mulch needed: %.2f cubic yards.%n", cubicYards);
 </div>
 <div class="code-box"><pre class="program clipboardable"><code class="language-java">System.out.printf(formatString, value1, value2, ...);
 </code></pre></div>
-<div class="para" id="subsubsec-2-7-2-1-string-interpolation-8">Inside the format string, special markers called format specifiers begin with a percent sign (<code class="code-inline tex2jax_ignore">%</code>). Each specifier acts as a placeholder for one of the expressions (“values to insert”) that follows. <a href="sec-2-7-output-system-out.html#table-format-specifiers" class="xref" data-knowl="./knowl/xref/table-format-specifiers.html" data-reveal-label="Reveal" data-close-label="Close" title="Table 2.17: Format specifiers">Table 2.17</a> shows the more common format specifiers.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-2-7-2-1-string-interpolation-8" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsubsec-2-7-2-1-string-interpolation-8">Inside the format string, special markers called format specifiers begin with a percent sign (<code class="code-inline tex2jax_ignore">%</code>). Each specifier acts as a placeholder for one of the expressions (values to insert) that follows. <a href="sec-2-7-output-system-out.html#table-format-specifiers" class="xref" data-knowl="./knowl/xref/table-format-specifiers.html" data-reveal-label="Reveal" data-close-label="Close" title="Table 2.17: Format specifiers">Table 2.17</a> shows the more common format specifiers.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-2-7-2-1-string-interpolation-8" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <figure class="table table-like" id="table-format-specifiers"><figcaption><span class="type">Table</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">2.17<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span>Format specifiers<div class="autopermalink" aria-hidden="true" data-description="Table 2.17: Format specifiers"><a tabindex="-1" href="#table-format-specifiers" title="Copy heading and permalink for Table 2.17: Format specifiers" aria-label="Copy heading and permalink for Table 2.17: Format specifiers">🔗</a></div></figcaption><div class="tabular-box natural-width"><table class="tabular">
 <tr class="header-horizontal">
@@ -1145,11 +1148,9 @@ System.out.printf("Total mulch needed: %.2f cubic yards.%n", cubicYards);
 </tr>
 <tr>
 <td class="l m b1 r1 l1 t0 lines"><code class="code-inline tex2jax_ignore">%d</code></td>
-<td class="l m b1 r1 l0 t0 lines">
-<code class="code-inline tex2jax_ignore">int</code>, <code class="code-inline tex2jax_ignore">long</code>
-</td>
+<td class="l m b1 r1 l0 t0 lines"><code class="code-inline tex2jax_ignore">int, long</code></td>
 <td class="l m b1 r1 l0 t0 lines">(d)ecimal integer</td>
-<td class="l m b1 r1 l0 t0" style="max-width:210px;">
+<td class="l m b1 r1 l0 t0" style="max-width:288px;">
 <div class="para" id="table-format-specifiers-2-6-4-1">
 <code class="code-inline tex2jax_ignore">System.out.printf("%d", 42);</code><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-format-specifiers-2-6-4-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
@@ -1160,11 +1161,9 @@ System.out.printf("Total mulch needed: %.2f cubic yards.%n", cubicYards);
 </tr>
 <tr>
 <td class="l m b1 r1 l1 t0 lines"><code class="code-inline tex2jax_ignore">%f</code></td>
-<td class="l m b1 r1 l0 t0 lines">
-<code class="code-inline tex2jax_ignore">double</code>, <code class="code-inline tex2jax_ignore">float</code>
-</td>
+<td class="l m b1 r1 l0 t0 lines"><code class="code-inline tex2jax_ignore">double, float</code></td>
 <td class="l m b1 r1 l0 t0 lines">(f)loating-point number</td>
-<td class="l m b1 r1 l0 t0" style="max-width:210px;">
+<td class="l m b1 r1 l0 t0" style="max-width:288px;">
 <div class="para" id="table-format-specifiers-2-7-4-1">
 <code class="code-inline tex2jax_ignore">System.out.printf("%.2f", 3.14159);</code><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-format-specifiers-2-7-4-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
@@ -1177,7 +1176,7 @@ System.out.printf("Total mulch needed: %.2f cubic yards.%n", cubicYards);
 <td class="l m b1 r1 l1 t0 lines"><code class="code-inline tex2jax_ignore">%s</code></td>
 <td class="l m b1 r1 l0 t0 lines"><code class="code-inline tex2jax_ignore">String</code></td>
 <td class="l m b1 r1 l0 t0 lines">(s)tring of text</td>
-<td class="l m b1 r1 l0 t0" style="max-width:210px;">
+<td class="l m b1 r1 l0 t0" style="max-width:288px;">
 <div class="para" id="table-format-specifiers-2-8-4-1">
 <code class="code-inline tex2jax_ignore">System.out.printf("%s", "Alice");</code><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-format-specifiers-2-8-4-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
@@ -1242,15 +1241,15 @@ System.out.printf("%.3f%n", price); // 19.995 (rounded to 3 decimal places)
 <div class="para" id="subsubsec-2-7-2-3-columns-alignment-2">
 <code class="code-inline tex2jax_ignore">printf</code> is ideal for printing neat, aligned tables of data. You achieve columns by specifying a field width—the minimum number of character spaces the output should occupy. Any characters left over after the value is inserted into the string are padded with spaces.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-2-7-2-3-columns-alignment-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="code-box"><pre class="program clipboardable"><code class="language-java">System.out.printf("%-10s %20s %n", "Leah", "she / her / hers");
-System.out.printf("%-10s %20s %n", "Cheese", "he / him / his");
-System.out.printf("%-10s %20s%n", "Fin", "they / them / theirs");
+<div class="code-box"><pre class="program clipboardable"><code class="language-java">System.out.printf("%-10s%20s%n", "Leah", "she / her / hers");
+System.out.printf("%-10s%20s%n", "Cheese", "he / him / his");
+System.out.printf("%-10s%20s%n", "Fin", "they / them / theirs");
 </code></pre></div>
 <div class="para" id="subsubsec-2-7-2-3-columns-alignment-4">This prints:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-2-7-2-3-columns-alignment-4" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="code-box"><pre class="console clipboardable">Leah           she / her / hers
-Cheese           he / him / his
-Fin        they / them / theirs
+<div class="code-box"><pre class="console clipboardable">Leah          she / her / hers
+Cheese          he / him / his
+Fin       they / them / theirs
 </pre></div>
 <div class="para" id="subsubsec-2-7-2-3-columns-alignment-6">Values can be left- or right-aligned within a field (column). In the example above, the initial strings are left-aligned in the left column. This is specified with a negative field width (<code class="code-inline tex2jax_ignore">%-10s</code>). The values in the right column are right-aligned, specified with a positive field width (<code class="code-inline tex2jax_ignore">%20s</code>). You can add field width and alignment to any format specifier. If you’re formatting a floating-point value and you want to include both decimal precision and field width, include field width first, for example <code class="code-inline tex2jax_ignore">%20.2f</code>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-2-7-2-3-columns-alignment-6" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
@@ -1275,7 +1274,136 @@ String message = String.format("Current temperature: %.1f°C", temperature);
 </code></pre></div>
 <div class="para" id="subsec-2-7-3-building-strings-format-7">Whenever you need formatted text, you have a choice: use <code class="code-inline tex2jax_ignore">printf</code> if you want to display it immediately on the console, or use <code class="code-inline tex2jax_ignore">String.format()</code> if you need to hold onto the formatted text as a <code class="code-inline tex2jax_ignore">String</code> variable.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-2-7-3-building-strings-format-7" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="autopermalink" aria-hidden="true" data-description="Subsection 2.7.3: Building Strings with String.format"><a tabindex="-1" href="#subsec-2-7-3-building-strings-format" title="Copy heading and permalink for Subsection 2.7.3: Building Strings with String.format" aria-label="Copy heading and permalink for Subsection 2.7.3: Building Strings with String.format">🔗</a></div>
+<section class="reading-questions" id="checkpoint-2-7">
+<h3 class="heading hide-type">
+<span class="type">Reading Questions</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber"></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Checkpoint</span>
+</h3>
+<article class="exercise exercise-like" id="checkpoint-2-7-print-println"><h4 class="heading">
+<span class="codenumber">1<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Tracing print and println.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone multiplechoice_section">
+<div class="exercise-statement">
+<div class="para" id="checkpoint-2-7-print-println-2-1">What does the following code display on the console?<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-2-7-print-println-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div> <div class="code-box"><pre class="program clipboardable"><code class="language-java">System.out.print("A");
+System.out.println("B");
+System.out.print("C");
+System.out.println();
+System.out.print("D");
+</code></pre></div>
+</div>
+<ul data-component="multiplechoice" class="exercise-interactives" id="rs-checkpoint-2-7-print-println" data-multipleanswers="false" data-random="">
+<li data-component="answer" id="rs-checkpoint-2-7-print-println_opt_a" data-correct="">
+<div class="para" id="checkpoint-2-7-print-println-3-1-1-1">
+<code class="code-inline tex2jax_ignore">AB</code> on the first line, <code class="code-inline tex2jax_ignore">C</code> on the second line, and <code class="code-inline tex2jax_ignore">D</code> on the third line.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-7-print-println_opt_a">
+<div class="para" id="checkpoint-2-7-print-println-3-1-2-1">Correct! <code class="code-inline tex2jax_ignore">print("A")</code> stays on line 1, <code class="code-inline tex2jax_ignore">println("B")</code> prints <code class="code-inline tex2jax_ignore">B</code> and moves to line 2, <code class="code-inline tex2jax_ignore">print("C")</code> prints <code class="code-inline tex2jax_ignore">C</code> on line 2, <code class="code-inline tex2jax_ignore">println()</code> moves to line 3, and <code class="code-inline tex2jax_ignore">print("D")</code> prints <code class="code-inline tex2jax_ignore">D</code>.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-2-7-print-println_opt_b">
+<div class="para" id="checkpoint-2-7-print-println-3-2-1-1">
+<code class="code-inline tex2jax_ignore">AB</code> on the first line, a blank line, <code class="code-inline tex2jax_ignore">C</code> on the third line, and <code class="code-inline tex2jax_ignore">D</code> on the fourth line.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-7-print-println_opt_b">
+<div class="para" id="checkpoint-2-7-print-println-3-2-2-1">Not quite. <code class="code-inline tex2jax_ignore">System.out.println();</code> only creates a blank line if the cursor is already at the start of a new line; here, <code class="code-inline tex2jax_ignore">print("C")</code> left the cursor after <code class="code-inline tex2jax_ignore">C</code> on line 2, so <code class="code-inline tex2jax_ignore">println()</code> simply ends line 2.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-2-7-print-println_opt_c">
+<div class="para" id="checkpoint-2-7-print-println-3-3-1-1">
+<code class="code-inline tex2jax_ignore">A</code>, <code class="code-inline tex2jax_ignore">B</code>, <code class="code-inline tex2jax_ignore">C</code>, and <code class="code-inline tex2jax_ignore">D</code> each on its own separate line.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-7-print-println_opt_c">
+<div class="para" id="checkpoint-2-7-print-println-3-3-2-1">Not quite. <code class="code-inline tex2jax_ignore">System.out.print</code> does not advance to a new line, so <code class="code-inline tex2jax_ignore">A</code> and <code class="code-inline tex2jax_ignore">B</code> appear together on the first line.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-2-7-print-println_opt_d">
+<div class="para" id="checkpoint-2-7-print-println-3-4-1-1">
+<code class="code-inline tex2jax_ignore">ABCD</code> all on a single line.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-7-print-println_opt_d">
+<div class="para" id="checkpoint-2-7-print-println-3-4-2-1">Not quite. Both <code class="code-inline tex2jax_ignore">println("B")</code> and <code class="code-inline tex2jax_ignore">println()</code> move the cursor to the start of the next line.</div>
+</li>
+</ul>
+</div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 2.7.3.1: Tracing print and println"><a tabindex="-1" href="#checkpoint-2-7-print-println" title="Copy heading and permalink for Reading Question 2.7.3.1: Tracing print and println" aria-label="Copy heading and permalink for Reading Question 2.7.3.1: Tracing print and println">🔗</a></div>
+</article>
+<article class="exercise exercise-like" id="checkpoint-2-7-specifiers"><h4 class="heading">
+<span class="codenumber">2<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Matching Format Specifiers.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone cardsort_section"><ul data-component="dragndrop" data-question_label="" style="visibility: hidden;" id="rs-checkpoint-2-7-specifiers">
+<span data-subcomponent="question">
+<div class="para" id="checkpoint-2-7-specifiers-2-1">Match each <code class="code-inline tex2jax_ignore">printf</code> format specifier to what it formats or inserts.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-2-7-specifiers-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div></span><li data-subcomponent="draggable" id="rs-checkpoint-2-7-specifiers_drag1" data-category="1"><code class="code-inline tex2jax_ignore">%d</code></li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-2-7-specifiers_drag1" data-category="1">An <code class="code-inline tex2jax_ignore">int</code> or <code class="code-inline tex2jax_ignore">long</code> value</li>
+<li data-subcomponent="draggable" id="rs-checkpoint-2-7-specifiers_drag2" data-category="2"><code class="code-inline tex2jax_ignore">%f</code></li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-2-7-specifiers_drag2" data-category="2">A <code class="code-inline tex2jax_ignore">double</code> or <code class="code-inline tex2jax_ignore">float</code> value</li>
+<li data-subcomponent="draggable" id="rs-checkpoint-2-7-specifiers_drag3" data-category="3"><code class="code-inline tex2jax_ignore">%s</code></li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-2-7-specifiers_drag3" data-category="3">A <code class="code-inline tex2jax_ignore">String</code> (or any value converted to text)</li>
+<li data-subcomponent="draggable" id="rs-checkpoint-2-7-specifiers_drag4" data-category="4"><code class="code-inline tex2jax_ignore">%n</code></li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-2-7-specifiers_drag4" data-category="4">A platform-independent newline</li>
+<li data-subcomponent="draggable" id="rs-checkpoint-2-7-specifiers_drag5" data-category="5"><code class="code-inline tex2jax_ignore">%-10s</code></li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-2-7-specifiers_drag5" data-category="5">A left-aligned string in a 10-character field</li>
+</ul></div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 2.7.3.2: Matching Format Specifiers"><a tabindex="-1" href="#checkpoint-2-7-specifiers" title="Copy heading and permalink for Reading Question 2.7.3.2: Matching Format Specifiers" aria-label="Copy heading and permalink for Reading Question 2.7.3.2: Matching Format Specifiers">🔗</a></div>
+</article>
+<article class="exercise exercise-like" id="checkpoint-2-7-widening"><h4 class="heading">
+<span class="codenumber">3<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Type Matching in printf.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone multiplechoice_section"><ul data-component="multiplechoice" data-multipleanswers="false" id="rs-checkpoint-2-7-widening">
+<div class="para" id="checkpoint-2-7-widening-2-1">Passing an <code class="code-inline tex2jax_ignore">int</code> variable to a <code class="code-inline tex2jax_ignore">%f</code> format specifier in <code class="code-inline tex2jax_ignore">System.out.printf</code> automatically widens the <code class="code-inline tex2jax_ignore">int</code> to a <code class="code-inline tex2jax_ignore">double</code>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-2-7-widening-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<li data-component="answer" id="rs-checkpoint-2-7-widening_opt_t"><p>True.</p></li>
+<li data-component="feedback" id="rs-checkpoint-2-7-widening_opt_t">
+<div class="para" id="checkpoint-2-7-widening-3-1">False. Unlike arithmetic expressions, <code class="code-inline tex2jax_ignore">printf</code> does not perform automatic widening for numeric specifiers. Passing an <code class="code-inline tex2jax_ignore">int</code> to <code class="code-inline tex2jax_ignore">%f</code> throws an <code class="code-inline tex2jax_ignore">IllegalFormatConversionException</code> at runtime unless you explicitly cast it to <code class="code-inline tex2jax_ignore">double</code>.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-2-7-widening_opt_f" data-correct=""><p>False.</p></li>
+<li data-component="feedback" id="rs-checkpoint-2-7-widening_opt_f">
+<div class="para" id="checkpoint-2-7-widening-3-1">False. Unlike arithmetic expressions, <code class="code-inline tex2jax_ignore">printf</code> does not perform automatic widening for numeric specifiers. Passing an <code class="code-inline tex2jax_ignore">int</code> to <code class="code-inline tex2jax_ignore">%f</code> throws an <code class="code-inline tex2jax_ignore">IllegalFormatConversionException</code> at runtime unless you explicitly cast it to <code class="code-inline tex2jax_ignore">double</code>.</div>
+</li>
+</ul></div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 2.7.3.3: Type Matching in printf"><a tabindex="-1" href="#checkpoint-2-7-widening" title="Copy heading and permalink for Reading Question 2.7.3.3: Type Matching in printf" aria-label="Copy heading and permalink for Reading Question 2.7.3.3: Type Matching in printf">🔗</a></div>
+</article>
+<article class="exercise exercise-like" id="checkpoint-2-7-format-string"><h4 class="heading">
+<span class="codenumber">4<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Formatting Decimals and Building Strings.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone multiplechoice_section">
+<div class="exercise-statement">
+<div class="para" id="checkpoint-2-7-format-string-2-1">What is stored in <code class="code-inline tex2jax_ignore">report</code> after these two lines execute, and what is printed to the console?<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-2-7-format-string-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div> <div class="code-box"><pre class="program clipboardable"><code class="language-java">double avg = 87.456;
+String report = String.format("Average: %.2f", avg);
+</code></pre></div>
+</div>
+<ul data-component="multiplechoice" class="exercise-interactives" id="rs-checkpoint-2-7-format-string" data-multipleanswers="false" data-random="">
+<li data-component="answer" id="rs-checkpoint-2-7-format-string_opt_a" data-correct="">
+<div class="para" id="checkpoint-2-7-format-string-3-1-1-1">
+<code class="code-inline tex2jax_ignore">report</code> holds <code class="code-inline tex2jax_ignore">"Average: 87.46"</code>, and nothing is printed to the console.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-7-format-string_opt_a">
+<div class="para" id="checkpoint-2-7-format-string-3-1-2-1">Correct! <code class="code-inline tex2jax_ignore">%.2f</code> rounds <code class="code-inline tex2jax_ignore">87.456</code> to two decimal places (<code class="code-inline tex2jax_ignore">87.46</code>), and <code class="code-inline tex2jax_ignore">String.format</code> returns the formatted <code class="code-inline tex2jax_ignore">String</code> without printing it.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-2-7-format-string_opt_b">
+<div class="para" id="checkpoint-2-7-format-string-3-2-1-1">
+<code class="code-inline tex2jax_ignore">report</code> holds <code class="code-inline tex2jax_ignore">"Average: 87.45"</code>, and nothing is printed to the console.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-7-format-string_opt_b">
+<div class="para" id="checkpoint-2-7-format-string-3-2-2-1">Not quite. <code class="code-inline tex2jax_ignore">%.2f</code> rounds the displayed number rather than truncating, so <code class="code-inline tex2jax_ignore">87.456</code> rounds up to <code class="code-inline tex2jax_ignore">87.46</code>.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-2-7-format-string_opt_c">
+<div class="para" id="checkpoint-2-7-format-string-3-3-1-1">
+<code class="code-inline tex2jax_ignore">report</code> holds <code class="code-inline tex2jax_ignore">"Average: 87.46"</code>, and <code class="code-inline tex2jax_ignore">Average: 87.46</code> is printed to the console.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-7-format-string_opt_c">
+<div class="para" id="checkpoint-2-7-format-string-3-3-2-1">Not quite. Unlike <code class="code-inline tex2jax_ignore">System.out.printf</code>, <code class="code-inline tex2jax_ignore">String.format</code> builds and returns a <code class="code-inline tex2jax_ignore">String</code> without printing anything to the console.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-2-7-format-string_opt_d">
+<div class="para" id="checkpoint-2-7-format-string-3-4-1-1">
+<code class="code-inline tex2jax_ignore">report</code> holds <code class="code-inline tex2jax_ignore">"Average: %.2f"</code>, because <code class="code-inline tex2jax_ignore">String.format</code> does not substitute <code class="code-inline tex2jax_ignore">avg</code>.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-7-format-string_opt_d">
+<div class="para" id="checkpoint-2-7-format-string-3-4-2-1">Not quite. <code class="code-inline tex2jax_ignore">String.format</code> uses the same format specifiers as <code class="code-inline tex2jax_ignore">printf</code> and substitutes <code class="code-inline tex2jax_ignore">avg</code> into <code class="code-inline tex2jax_ignore">%.2f</code>.</div>
+</li>
+</ul>
+</div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 2.7.3.4: Formatting Decimals and Building Strings"><a tabindex="-1" href="#checkpoint-2-7-format-string" title="Copy heading and permalink for Reading Question 2.7.3.4: Formatting Decimals and Building Strings" aria-label="Copy heading and permalink for Reading Question 2.7.3.4: Formatting Decimals and Building Strings">🔗</a></div>
+</article><div class="autopermalink" aria-hidden="true" data-description="Reading Questions 2.7.3: Checkpoint"><a tabindex="-1" href="#checkpoint-2-7" title="Copy heading and permalink for Reading Questions 2.7.3: Checkpoint" aria-label="Copy heading and permalink for Reading Questions 2.7.3: Checkpoint">🔗</a></div>
+</section><div class="autopermalink" aria-hidden="true" data-description="Subsection 2.7.3: Building Strings with String.format"><a tabindex="-1" href="#subsec-2-7-3-building-strings-format" title="Copy heading and permalink for Subsection 2.7.3: Building Strings with String.format" aria-label="Copy heading and permalink for Subsection 2.7.3: Building Strings with String.format">🔗</a></div>
 </section><div class="autopermalink" aria-hidden="true" data-description="Section 2.7: Output: Displaying Text with System.out"><a tabindex="-1" href="#sec-2-7-output-system-out" title="Copy heading and permalink for Section 2.7: Output: Displaying Text with System.out" aria-label="Copy heading and permalink for Section 2.7: Output: Displaying Text with System.out">🔗</a></div>
 </section>
 </div>
