@@ -5,7 +5,7 @@
   
   <introduction>
     <p>
-      You now have all the tools you need to solve problems that obtain input from the user at the console, process the input using arithmetic, math functions, and string formatting, and display the results to the user. Let’s work through an example problem and then you can try some of the exercises at the end of the chapter.
+      You now have all the tools you need to solve problems that obtain input from the user at the console, process the input using arithmetic, math functions, and string formatting, and display the results to the user. Let’s work through an example problem and then you can hone your skills on the exercises at the end of the chapter.
     </p>
 
     <!-- ============================================================ -->
@@ -58,7 +58,7 @@ Southeast         315.00       135.36      214.64</output>
     <title>Solution Process</title>
 
     <p>
-      We will practice a five-step problem-solving process on a complete project at the end of each chapter:
+      It is one thing to write small snippets of code that perform a single task. It is another to be faced with a complex problem description that feels like it encompasses many moving parts! Don't worry, software engineers have been faced with this problem for decades, and have developed methodologies for breaking a problem down and building (and testing) a solution in manageable chunks. For this problem, we will practice a five-step problem-solving process:
     </p>
 
     <ol>
@@ -296,7 +296,7 @@ Southeast         315.00       135.36      214.64</output>
     </p>
 
     <p>
-      It’s better to write the program incrementally<mdash />coding and testing one piece at a time. That way, when you have a bug, you know that the cause is the code you just wrote, and it’s easier to find and fix. (And you will have bugs! Even experienced programmers write bugs into their code. That’s why we write our programs incrementally.)
+      It’s better to write the program incrementally<mdash />coding and testing one piece at a time. That way, when you have a bug, you know that the cause is the code you just wrote, and it’s easier to find and fix. (And you will have bugs! Even experienced programmers write bugs into their code. That’s why we write our programs incrementally and test thoroughly.)
     </p>
 
     <p>
@@ -318,8 +318,8 @@ Southeast         315.00       135.36      214.64</output>
       <program language="java" line-numbers="yes"><![CDATA[import java.util.Scanner;
 
 /**
- * Given a center (x,y) coordinate and radius, calculates the perimeter of the search
- * circle and the (x,y) coordinates of waypoints at 45, 135, 225, and 315 degrees.
+- Given a center (x,y) coordinate and radius, calculates the perimeter of the search
+- circle and the (x,y) coordinates of waypoints at 45, 135, 225, and 315 degrees.
  */
 public class DroneSearch {
 
@@ -424,7 +424,7 @@ public class DroneSearch {
     </p>
 
     <p>
-      Do not click the usual green Run button (the white triangle inside a green circle). Instead, look just to the left of it on the main Eclipse toolbar and click the Debug button (the small green bug icon). Alternatively, right-click inside <c>DroneSearch.java</c> and choose <menuchoice><guimenu>Debug As</guimenu><guimenuitem>Java Application</guimenuitem></menuchoice>.
+      Do not click the usual green Run button (the white triangle inside a green circle). Instead, look just to the left of it on the main Eclipse toolbar and click the Debug button (the small green bug icon). Alternatively, right-click inside <c>DroneSearch.java</c> and choose <c>Debug As</c> &#x2192; <c>Java Application</c>.
     </p>
 
     <p>
@@ -477,12 +477,12 @@ public class DroneSearch {
     </p>
 
     <ul>
-      <li><p><strong>Resume (F8)</strong>: If you want to let the rest of the program run to completion at normal speed, click the green Resume button (the play button) or press <kbd>F8</kbd>. The remaining calculations will run, the table will print to the console, and the program will terminate cleanly.</p></li>
+      <li><p><strong>Resume (F8)</strong>: If you want to let the rest of the program run to completion at normal speed, click the green Resume button (the play button) or press <kbd>F8</kbd>. The remaining calculations will run, the table will print to the console, and the program will terminate as it would if you hadn't run it in the debugger.</p></li>
       <li><p><strong>Terminate (Ctrl+F2)</strong>: If you found your bug and want to stop immediately so you can fix your code, click the red square Terminate button. This halts the program instantly.</p></li>
     </ul>
 
     <p>
-      Once debugging is finished, you will want your standard code-editing screen back. Look at the very top-right corner of the Eclipse window. You will see two small perspective buttons: one labeled Debug (which is currently active) and one labeled Java. Click the Java button. Your screen will immediately snap back to your familiar coding layout. (You can also choose <menuchoice><guimenu>Window</guimenu><guisubmenu>Perspective</guisubmenu><guisubmenu>Open Perspective</guisubmenu><guimenuitem>Java</guimenuitem></menuchoice> from the menu bar).
+      Once debugging is finished, you will want your standard code-editing screen back. Look at the very top-right corner of the Eclipse window. You will see two small perspective buttons: one labeled Debug (which is currently active) and one labeled Java. Click the Java button. Your screen will immediately snap back to your familiar coding layout. (You can also choose <c>Window</c> &#x2192; <c>Perspective</c> &#x2192; <c>Open Perspective</c> &#x2192; <c>Java</c> from the menu bar).
     </p>
 
     <p>
@@ -490,7 +490,241 @@ public class DroneSearch {
     </p>
 
     <p>
-      Novice programmers often try to debug by sprinkling dozens of <c>System.out.println()</c> statements throughout their code to see what variables contain, and then spend another hour deleting those print statements once the bug is fixed. Professional software engineers rarely do that. Learning to use Eclipse’s debugger gives you x-ray vision into computer memory. You can freeze time, inspect every memory slot on the stack, and verify your logic statement by statement.
+      You can debug by sprinkling dozens of <c>System.out.println()</c> statements throughout your code to see what variables contain, but there are disadvantages to this approach. You will need to disable them all when the program is in production mode -- otherwise the output will leave your users scratching their heads! You can also lose track of where the print statements are located in the code if you don't include a lot of contextual information in the print statement. Professional software engineers rarely debug with print statements. Learning to use Eclipse’s debugger gives you x-ray vision into computer memory. You can freeze time, inspect every memory slot on the stack, and verify your logic statement by statement.
     </p>
+
+    <reading-questions xml:id="checkpoint-2-9">
+      <title>Checkpoint</title>
+
+      <exercise xml:id="checkpoint-2-9-test-cases" label="checkpoint-2-9-test-cases">
+        <title>Matching Inputs to Test Cases</title>
+        <statement>
+          <p>
+            A program calculates the area of a rectangular garden bed given integer <c>length</c> and <c>width</c> (in feet), where both dimensions must be between <c>1</c> and <c>500</c> feet inclusive. Match each input pair <c>(length, width)</c> to the test case category it represents.
+          </p>
+        </statement>
+        <cardsort>
+          <match>
+            <premise order="3"><c>(12, 8)</c></premise>
+            <response>Typical (normal) case</response>
+          </match>
+          <match>
+            <premise order="1"><c>(1, 1)</c></premise>
+            <response>Lower boundary (edge) case</response>
+          </match>
+          <match>
+            <premise order="4"><c>(500, 500)</c></premise>
+            <response>Upper boundary (edge) case</response>
+          </match>
+          <match>
+            <premise order="2"><c>(-5, 10)</c></premise>
+            <response>Invalid input</response>
+          </match>
+        </cardsort>
+      </exercise>
+
+      <exercise xml:id="checkpoint-2-9-edge-cases" label="checkpoint-2-9-edge-cases">
+        <title>Choosing Boundary Test Inputs</title>
+        <statement>
+          <p>
+            A program computes a quiz percentage from <c>score</c> and <c>totalPoints</c>, with constraints <m>0 \le \text{score} \le \text{totalPoints}</m> and <m>\text{totalPoints} \ge 1</m>. Which input pair is the best lower-boundary edge case to include in your test table?
+          </p>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                <c>score = 0</c>, <c>totalPoints = 1</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! Both values sit right at the smallest allowed limits (<c>0</c> and <c>1</c>) while still satisfying the preconditions.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>score = 18</c>, <c>totalPoints = 20</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. That is a good typical (normal) test case, not a boundary edge case.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>score = 10</c>, <c>totalPoints = 0</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. <c>totalPoints = 0</c> violates the constraint <m>\text{totalPoints} \ge 1</m> (and <c>score &gt; totalPoints</c>), making it invalid input rather than a valid boundary case.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>score = -3</c>, <c>totalPoints = 20</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. A negative <c>score</c> violates <m>0 \le \text{score}</m>, so it is invalid input rather than a valid edge case.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-2-9-debugger-step" label="checkpoint-2-9-debugger-step">
+        <title>Breakpoints and Step Over</title>
+        <statement>
+          <p>
+            You set a breakpoint on line 32 in Eclipse, start the program in Debug mode, and execution pauses at line 32. What happens when you press <kbd>F6</kbd> (Step Over) once?
+          </p>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                Line 32 executes, the Variables view updates with any newly assigned value, and execution pauses before line 33.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! Step Over (<kbd>F6</kbd>) runs the current highlighted statement and stops at the very next line so you can inspect updated variables.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                The debugger skips line 32 without running it and pauses at line 33.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Step Over still executes line 32—it just steps over any method calls on that line as a single step rather than entering them.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                The program runs at full speed to completion without pausing again.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Running to completion is what Resume (<kbd>F8</kbd>) does, not Step Over (<kbd>F6</kbd>).
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                The program terminates immediately so you can return to editing your code.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Terminating immediately is what the red Terminate button (<kbd>Ctrl+F2</kbd>) does.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-2-9-debugger-variables" label="checkpoint-2-9-debugger-variables">
+        <title>Inspecting the Variables View</title>
+        <statement>
+          <p>
+            In Eclipse’s Debug perspective, why don’t calculation variables like <c>perimeter</c> or <c>neX</c> appear in the Variables view when execution first pauses at line 32 (<c>perimeter = Math.PI * 2 * radius;</c>)?
+          </p>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                They have not been assigned a value yet, because the lines that compute them have not executed.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! Execution pauses immediately before line 32 runs, so variables only appear in the Variables view once they have received a value.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                The Variables view only displays <c>Scanner</c> input values, not calculated variables.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Once you press <kbd>F6</kbd> to execute line 32, <c>perimeter</c> appears in the Variables view with its calculated value.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>double</c> variables are stored on the heap and are hidden from the Variables view.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. <c>double</c> is a primitive type stored on the stack, and all initialized local variables appear in the Variables view.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                Setting a breakpoint clears all local variables from memory until you click Resume.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. <c>centerX</c>, <c>centerY</c>, and <c>radius</c> are already visible in the Variables view when execution pauses at line 32.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-2-9-parsons-input-calc" label="checkpoint-2-9-parsons-input-calc" language="java">
+        <title>Ordering an Input-Processing-Output Program</title>
+        <statement>
+          <p>
+            Put the statements in order to declare variables, prompt the user for a circle’s radius, read the input using an existing <c>Scanner</c> named <c>stdin</c>, calculate the circumference, and display the result.
+          </p>
+        </statement>
+        <blocks>
+          <block order="4">
+            <cline>double radius, circumference;</cline>
+          </block>
+          <block order="1">
+            <cline>System.out.print("Enter radius: ");</cline>
+          </block>
+          <block order="5">
+            <cline>radius = stdin.nextDouble();</cline>
+          </block>
+          <block order="2">
+            <cline>circumference = 2 * Math.PI * radius;</cline>
+          </block>
+          <block order="3">
+            <cline>System.out.printf("Circumference: %.2f%n", circumference);</cline>
+          </block>
+        </blocks>
+      </exercise>
+    </reading-questions>
   </subsection>
 </section>
