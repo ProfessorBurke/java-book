@@ -2,7 +2,6 @@
 <section xml:id="sec-2-5-arithmetic" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Arithmetic</title>
 
-  
   <introduction>
     <p>
       In this section, we’ll take a closer look at expressions that calculate a value using arithmetic. As a quick refresher, an expression is a piece of program code that represents or computes a value. An expression can be a literal, a variable, a method call that evaluates to a value, or several of these things combined with operators such as <c>+</c> and <c>&gt;</c>. The value of an expression can be assigned to a variable (as on lines 19, 22, 25, 28, 32, 33, and 34 of <xref ref="listing-mulch-calculator" />), used as a parameter in a method call (lines 21, 24, 27, and 37), or combined with other values into a more complicated expression (lines 32, 33, 34, and 37). Expressions are an essential part of programming. In this section we will dig into the details of arithmetic expressions<mdash />expressions that evaluate to a numeric value. You will learn how to build them, what operations are available in Java, and how to avoid some of the common errors that arise because of the underlying fixed-space binary representation. Later we will cover expressions that evaluate to non-numeric results, such as the <c>boolean</c> and <c>String</c> values.
@@ -17,12 +16,10 @@
     <p>
       The expression is on the right side of the assignment operator and is <c>depth / 12.0</c>. There are two operands<mdash />the expression <c>depth</c> and the expression <c>12.0</c>. The first operand, <c>depth</c>, is a variable and evaluates to the value that is stored in the variable at the time that the statement executes. The second operand is a literal and evaluates to what is literally typed in the program<mdash /><c>12.0</c>. There is one operator<mdash /><c>/</c><mdash />which is the division operator in Java.
     </p>
-
-    <!-- ============================================================ -->
-    <!-- 2.5.1 Arithmetic Operators                                   -->
   </introduction>
 
-
+  <!-- ============================================================ -->
+  <!-- 2.5.1 Arithmetic Operators                                   -->
   <!-- ============================================================ -->
   <subsection xml:id="subsec-2-5-1-arithmetic-operators">
     <title>Arithmetic Operators</title>
@@ -161,6 +158,92 @@ int remainder = 13 % 3;]]></program>
     <p>
       The expression on the right, <c>score / total * 100</c>, is an integer division followed by an integer multiplication (integer calculations because both operands are integers for both operations). But the value stored in <c>percentage</c> is 0.0, because the entire expression on the right is evaluated first as an integer (producing 0), and only then is that final result widened to 0.0 as it is stored in the <c>double</c> variable.
     </p>
+
+    <reading-questions xml:id="checkpoint-2-5-1">
+      <title>Checkpoint</title>
+
+      <exercise xml:id="checkpoint-2-5-1-percentage" label="checkpoint-2-5-1-percentage">
+        <title>Casting for Percentage Calculation</title>
+        <statement>
+        <p>
+          Suppose <c>int score = 17;</c> and <c>int total = 20;</c>. Which statement correctly stores <c>85.0</c> in <c>percentage</c>?
+        </p>
+      </statement>
+      <choices randomize="yes">
+        <choice correct="yes">
+          <statement><p><c>double percentage = (double) score / total * 100;</c></p></statement>
+          <feedback><p>Correct! Casting <c>score</c> to <c>double</c> forces floating-point division (<c>17.0 / 20 = 0.85</c>), and multiplying by <c>100</c> gives <c>85.0</c>.</p></feedback>
+        </choice>
+        <choice correct="no">
+          <statement><p><c>double percentage = (double) (score / total) * 100;</c></p></statement>
+          <feedback><p>Not quite. The parentheses cause <c>score / total</c> to perform integer division first (<c>17 / 20 = 0</c>), so casting to <c>double</c> gives <c>0.0</c>.</p></feedback>
+        </choice>
+        <choice correct="no">
+          <statement><p><c>double percentage = (double) (score / total * 100);</c></p></statement>
+          <feedback><p>Not quite. The entire expression inside the parentheses uses integer arithmetic (<c>17 / 20 = 0</c>, <c>0 * 100 = 0</c>) before the cast happens.</p></feedback>
+        </choice>
+        <choice correct="no">
+          <statement><p><c>double percentage = score / total * 100.0;</c></p></statement>
+          <feedback><p>Not quite. <c>score / total</c> is evaluated left-to-right first as integer division (<c>0</c>), and <c>0 * 100.0</c> still produces <c>0.0</c>.</p></feedback>
+        </choice>
+      </choices>
+    </exercise>
+
+      <exercise xml:id="checkpoint-2-5-1-mod-expr" label="checkpoint-2-5-1-mod-expr">
+        <title>Evaluating Integer Expressions</title>
+        <statement>
+        <p>
+          Given <c>int a = 17;</c>, <c>int b = 5;</c>, and <c>int c = 3;</c>, what value is stored in <c>result</c> after the following statement executes?
+        </p>
+        <program language="java"><![CDATA[int result = a % b + a / b * c;]]></program>
+      </statement>
+      <choices randomize="yes">
+        <choice correct="yes">
+          <statement><p><c>11</c></p></statement>
+          <feedback><p>Correct! <c>17 % 5</c> is <c>2</c>, <c>17 / 5</c> is <c>3</c> (integer division), <c>3 * 3</c> is <c>9</c>, and <c>2 + 9</c> is <c>11</c>.</p></feedback>
+        </choice>
+        <choice correct="no">
+          <statement><p><c>15</c></p></statement>
+          <feedback><p>Remember that <c>*</c> and <c>/</c> have higher precedence than <c>+</c>, so <c>(17 / 5) * 3</c> is evaluated before adding <c>17 % 5</c>.</p></feedback>
+        </choice>
+        <choice correct="no">
+          <statement><p><c>9</c></p></statement>
+          <feedback><p>Check which operator is <c>%</c> and which is <c>/</c>: <c>17 % 5</c> is <c>2</c> (the remainder) and <c>17 / 5</c> is <c>3</c> (the quotient), not the other way around.</p></feedback>
+        </choice>
+        <choice correct="no">
+          <statement><p><c>3</c></p></statement>
+          <feedback><p>Because <c>/</c> and <c>*</c> have the same precedence, <c>a / b * c</c> evaluates left-to-right as <c>(17 / 5) * 3</c>, not <c>17 / (5 * 3)</c>.</p></feedback>
+        </choice>
+      </choices>
+    </exercise>
+
+      <exercise xml:id="checkpoint-2-5-1-widening" label="checkpoint-2-5-1-widening">
+        <title>Widening Conversions</title>
+        <statement>
+        <p>
+          Which statement about widening conversions in Java is true?
+        </p>
+      </statement>
+      <choices randomize="yes">
+        <choice correct="yes">
+          <statement><p><c>byte</c> and <c>short</c> values are converted to <c>int</c> before arithmetic, and an <c>int</c> can automatically widen to <c>long</c>, <c>float</c>, or <c>double</c>.</p></statement>
+          <feedback><p>Correct! Java converts <c>byte</c>, <c>short</c>, and <c>char</c> to <c>int</c> for arithmetic, and widens along <c>int</c> → <c>long</c> → <c>float</c> → <c>double</c>.</p></feedback>
+        </choice>
+        <choice correct="no">
+          <statement><p>When an <c>int</c> variable is widened in an expression like <c>x + 2.5</c>, the variable <c>x</c> permanently changes its declared type to <c>double</c>.</p></statement>
+          <feedback><p>Not quite. Widening only converts the value temporarily during evaluation of the expression; <c>x</c> keeps its declared type.</p></feedback>
+        </choice>
+        <choice correct="no">
+          <statement><p>Java automatically widens a <c>double</c> to an <c>int</c> whenever it is assigned to an <c>int</c> variable.</p></statement>
+          <feedback><p>Not quite. Converting <c>double</c> to <c>int</c> is a narrowing conversion, which requires an explicit cast.</p></feedback>
+        </choice>
+        <choice correct="no">
+          <statement><p>Widening converts <c>double</c> to <c>float</c> and <c>long</c> to <c>int</c> to save memory during calculations.</p></statement>
+          <feedback><p>Not quite. Widening always moves from a smaller range to a larger type (<c>int</c> → <c>long</c> → <c>float</c> → <c>double</c>).</p></feedback>
+        </choice>
+      </choices>
+    </exercise>
+    </reading-questions>
   </subsection>
 
   <!-- ============================================================ -->
@@ -211,7 +294,8 @@ health -= 2;]]></program>
       There are compound assignment operators for all of the arithmetic operators we just covered. Assume two variables <c>x</c> and <c>y</c>, which have already been given values:
     </p>
 
-    <program language="java"><![CDATA[x -= y; // same as: x = x - y;
+    <program language="java"><![CDATA[
+x -= y; // same as: x = x - y;
 x *= y; // same as: x = x * y;
 x /= y; // same as: x = x / y;
 x %= y; // same as: x = x % y;]]></program>
@@ -674,6 +758,120 @@ public class ProjectileCalculator {
     <p>
       When you are writing code, it is a good idea to make the order of calculations explicit with parentheses. Other programmers may not, however, so it is important that you understand the order in which operations will be evaluated in an expression so that you can read others’ code. (And look it up if you don’t remember!)
     </p>
+    <reading-questions xml:id="checkpoint-2-5-5">
+      <title>Checkpoint</title>
+
+    <exercise xml:id="checkpoint-2-5-2-concat" label="checkpoint-2-5-2-concat">
+            <title>String Concatenation</title>
+      <statement>
+        <p>
+          What is printed by the following statement?
+        </p>
+        <program language="java"><![CDATA[System.out.println("Total: " + 5 + 3);]]></program>
+      </statement>
+      <choices randomize="yes">
+        <choice correct="yes">
+          <statement><p><c>Total: 53</c></p></statement>
+          <feedback><p>Correct! Evaluating left-to-right, <c>"Total: " + 5</c> concatenates into the <c>String</c> <c>"Total: 5"</c>, and then <c>"Total: 5" + 3</c> concatenates into <c>"Total: 53"</c>.</p></feedback>
+        </choice>
+        <choice correct="no">
+          <statement><p><c>Total: 8</c></p></statement>
+          <feedback><p>Because <c>+</c> evaluates left-to-right starting with a <c>String</c>, both <c>5</c> and <c>3</c> are concatenated as strings rather than added numerically. You would need parentheses <c>(5 + 3)</c> to get <c>8</c>.</p></feedback>
+        </choice>
+        <choice correct="no">
+          <statement><p><c>Total: 5 + 3</c></p></statement>
+          <feedback><p>The <c>+</c> operators are outside the quotation marks, so Java evaluates them as concatenation rather than printing literal <c>+ 3</c>.</p></feedback>
+        </choice>
+        <choice correct="no">
+          <statement><p>A compiler error occurs because you cannot add an <c>int</c> to a <c>String</c>.</p></statement>
+          <feedback><p>Java automatically converts numeric operands to <c>String</c> when concatenated with a <c>String</c> using <c>+</c>.</p></feedback>
+        </choice>
+      </choices>
+    </exercise>
+
+    <exercise xml:id="checkpoint-2-5-3-increment" label="checkpoint-2-5-3-increment">
+            <title>Postfix Increment</title>
+      <statement>
+        <p>
+          What are the values of <c>x</c> and <c>y</c> after these two lines execute?
+        </p>
+        <program language="java"><![CDATA[int x = 4;
+int y = x++ + 2;]]></program>
+      </statement>
+      <choices randomize="yes">
+        <choice correct="yes">
+          <statement><p><c>x</c> is <c>5</c> and <c>y</c> is <c>6</c></p></statement>
+          <feedback><p>Correct! Because <c>x++</c> is postfix, <c>x</c> evaluates to <c>4</c> in the addition (<c>4 + 2 = 6</c>), and then <c>x</c> is incremented to <c>5</c>.</p></feedback>
+        </choice>
+        <choice correct="no">
+          <statement><p><c>x</c> is <c>5</c> and <c>y</c> is <c>7</c></p></statement>
+          <feedback><p>That would happen with prefix <c>++x</c>. With postfix <c>x++</c>, <c>x</c> is evaluated before it is incremented.</p></feedback>
+        </choice>
+        <choice correct="no">
+          <statement><p><c>x</c> is <c>4</c> and <c>y</c> is <c>6</c></p></statement>
+          <feedback><p><c>y</c> is <c>6</c>, but <c>x++</c> still increments <c>x</c> to <c>5</c>.</p></feedback>
+        </choice>
+        <choice correct="no">
+          <statement><p><c>x</c> is <c>6</c> and <c>y</c> is <c>7</c></p></statement>
+          <feedback><p><c>x++</c> only increments <c>x</c> by <c>1</c>, not <c>2</c>.</p></feedback>
+        </choice>
+      </choices>
+    </exercise>
+
+    <exercise xml:id="checkpoint-2-5-4-math" label="checkpoint-2-5-4-math">
+            <title>Using Math.random()</title>
+      <statement>
+        <p>
+          Which expression simulates rolling a standard six-sided die (producing an integer from <c>1</c> to <c>6</c> inclusive)?
+        </p>
+      </statement>
+      <choices randomize="yes">
+        <choice correct="yes">
+          <statement><p><c>(int)(Math.random() * 6) + 1</c></p></statement>
+          <feedback><p>Correct! <c>Math.random() * 6</c> produces a <c>double</c> in <m>[0.0, 6.0)</m>, casting to <c>int</c> truncates to <c>0..5</c>, and adding <c>1</c> shifts to <c>1..6</c>.</p></feedback>
+        </choice>
+        <choice correct="no">
+          <statement><p><c>(int) Math.random() * 6 + 1</c></p></statement>
+          <feedback><p>Watch the parentheses! Without parentheses around <c>Math.random() * 6</c>, <c>(int) Math.random()</c> casts first and always produces <c>0</c>, so the result is always <c>1</c>.</p></feedback>
+        </choice>
+        <choice correct="no">
+          <statement><p><c>(int)(Math.random() * 5) + 1</c></p></statement>
+          <feedback><p>Because <c>Math.random()</c> is strictly less than <c>1.0</c>, <c>Math.random() * 5</c> truncates to <c>0..4</c>, giving only <c>1..5</c>.</p></feedback>
+        </choice>
+        <choice correct="no">
+          <statement><p><c>Math.round(Math.random() * 6)</c></p></statement>
+          <feedback><p><c>Math.round</c> returns a <c>long</c>, and rounding <c>[0.0, 6.0)</c> can produce <c>0</c> as well as <c>6</c>.</p></feedback>
+        </choice>
+      </choices>
+    </exercise>
+
+    <exercise xml:id="checkpoint-2-5-5-precedence" label="checkpoint-2-5-5-precedence">
+            <title>Precedence and Associativity</title>
+      <statement>
+        <p>
+          What is the value of the expression <c>20 - 6 / 2 + 12 % 5</c>?
+        </p>
+      </statement>
+      <choices randomize="yes">
+        <choice correct="yes">
+          <statement><p><c>19</c></p></statement>
+          <feedback><p>Correct! <c>/</c> and <c>%</c> have higher precedence than <c>-</c> and <c>+</c>, so <c>6 / 2 = 3</c> and <c>12 % 5 = 2</c>; then left-to-right gives <c>20 - 3 + 2 = 19</c>.</p></feedback>
+        </choice>
+        <choice correct="no">
+          <statement><p><c>9</c></p></statement>
+          <feedback><p>It looks like you computed <c>(20 - 6) / 2</c> first. Division has higher precedence than subtraction.</p></feedback>
+        </choice>
+        <choice correct="no">
+          <statement><p><c>15</c></p></statement>
+          <feedback><p>Watch the left-to-right associativity of <c>-</c> and <c>+</c>: <c>20 - (3 + 2)</c> would be <c>15</c>, but <c>(20 - 3) + 2</c> is <c>19</c>.</p></feedback>
+        </choice>
+        <choice correct="no">
+          <statement><p><c>4</c></p></statement>
+          <feedback><p>Remember to evaluate <c>6 / 2</c> and <c>12 % 5</c> before subtracting and adding.</p></feedback>
+        </choice>
+      </choices>
+    </exercise>
+    </reading-questions>
   </subsection>
 
   <!-- ============================================================ -->
@@ -682,7 +880,6 @@ public class ProjectileCalculator {
   <subsection xml:id="subsec-2-5-6-pitfalls-binary">
     <title>Pitfalls of Finite Binary Representation</title>
 
-    
     <introduction>
       <p>
         When we do math on paper, numbers have infinite precision, and we can write numbers as large as our paper allows and use symbols to represent infinite repetition. Computers, however, do not have infinite space. In Java, every numeric type is stored in a finite number of bits using binary (base 2).
@@ -691,11 +888,9 @@ public class ProjectileCalculator {
       <p>
         Because memory is finite and many common decimals cannot be represented exactly in binary, programs sometimes produce surprising mathematical results. Understanding these limitations early will save you from subtle bugs down the road.
       </p>
-
-      <!-- 2.5.6.1 Integer Overflow and the "Odometer" Effect -->
     </introduction>
 
-
+    <!-- 2.5.6.1 Integer Overflow and the "Odometer" Effect -->
     <subsubsection xml:id="subsubsec-2-5-6-1-integer-overflow">
       <title>Integer Overflow and the <q>Odometer</q> Effect</title>
 
@@ -843,5 +1038,44 @@ System.out.println(Math.sqrt(-4.0));     // Prints: NaN]]></program>
         You can access these values directly through constants such as <c>Double.POSITIVE_INFINITY</c> and <c>Double.NaN</c>. If you ever see <c>NaN</c> or <c>Infinity</c> printed in your program’s output, check your computations<mdash />you likely divided by a variable that evaluated to zero or took the square root of a negative number.
       </p>
     </subsubsection>
+
+    <reading-questions xml:id="checkpoint-2-5-6">
+      <title>Checkpoint</title>
+      <exercise xml:id="checkpoint-2-5-6-overflow" label="checkpoint-2-5-6-overflow">
+        <title>Integer Overflow</title>
+        <statement correct="no">
+          <p>
+            In Java, adding <c>1</c> to <c>Integer.MAX_VALUE</c> throws an <c>ArithmeticException</c>.
+          </p>
+        </statement>
+        <feedback>
+          <p>False. Java does not throw an error on integer overflow; instead, <c>Integer.MAX_VALUE + 1</c> silently wraps around to <c>Integer.MIN_VALUE</c>.</p>
+        </feedback>
+      </exercise>
+
+      <exercise xml:id="checkpoint-2-5-6-decimals" label="checkpoint-2-5-6-decimals">
+        <title>Binary Floating-Point Precision</title>
+        <statement correct="yes">
+          <p>
+            In Java, <c>0.1 + 0.2</c> evaluates to <c>0.30000000000000004</c> because <c>0.1</c> and <c>0.2</c> cannot be represented exactly in a finite number of binary bits.
+          </p>
+        </statement>
+        <feedback>
+          <p>True. Because 10 is not a power of 2, fractions like <m>1/10</m> are infinitely repeating in binary and must be rounded to fit in a <c>double</c>.</p>
+        </feedback>
+      </exercise>
+
+      <exercise xml:id="checkpoint-2-5-6-divzero" label="checkpoint-2-5-6-divzero">
+        <title>Division by Zero</title>
+        <statement correct="no">
+          <p>
+            Dividing <c>5.0 / 0.0</c> in Java throws an <c>ArithmeticException</c>, just like <c>5 / 0</c>.
+          </p>
+        </statement>
+        <feedback>
+          <p>False. Integer division by zero (<c>5 / 0</c>) throws <c>ArithmeticException</c>, whereas floating-point division (<c>5.0 / 0.0</c>) evaluates to <c>Infinity</c>.</p>
+        </feedback>
+      </exercise>
+    </reading-questions>
   </subsection>
 </section>
