@@ -258,7 +258,10 @@ eBookConfig.enable_chatcodes =  false;
 <li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-2-6-strings.html#subsubsec-2-6-4-4-case-conversion" class="internal"><span class="codenumber">2.6.4.4</span> <span class="title">Changing Case: <code class="code-inline tex2jax_ignore">toUpperCase</code> and <code class="code-inline tex2jax_ignore">toLowerCase</code></span></a></div></li>
 </ul>
 </li>
-<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-2-6-strings.html#subsec-2-6-5-immutability" class="internal"><span class="codenumber">2.6.5</span> <span class="title">Immutability: Strings Never Change</span></a></div></li>
+<li class="toc-item toc-subsection">
+<div class="toc-title-box"><a href="sec-2-6-strings.html#subsec-2-6-5-immutability" class="internal"><span class="codenumber">2.6.5</span> <span class="title">Immutability: Strings Never Change</span></a></div>
+<ul id="ptx-toc-group-subsec-2-6-5-immutability" class="structural toc-item-list"><li class="toc-item toc-reading-questions"><div class="toc-title-box"><a href="sec-2-6-strings.html#checkpoint-2-6" class="internal"><span class="codenumber">2.6.5</span> <span class="title">Checkpoint</span></a></div></li></ul>
+</li>
 </ul>
 </li>
 <li class="toc-item toc-section">
@@ -1048,9 +1051,9 @@ eBookConfig.enable_chatcodes =  false;
 </div>
 <div class="code-box"><pre class="program clipboardable"><code class="language-java">String greeting = "Hello, World!";
 </code></pre></div>
-<div class="para" id="subsec-2-6-1-what-is-a-string-4">Notice that while a character literal (<code class="code-inline tex2jax_ignore">char</code>) is enclosed in single quotes (<code class="code-inline tex2jax_ignore">'A'</code>), a string literal is always enclosed in double quotes (<code class="code-inline tex2jax_ignore">"A"</code>). A string literal can even be composed of just one character or no characters at all (<code class="code-inline tex2jax_ignore">""</code>, known as the <dfn class="terminology">empty string</dfn>).<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-2-6-1-what-is-a-string-4" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-2-6-1-what-is-a-string-4">Notice that while a character literal (<code class="code-inline tex2jax_ignore">char</code>) is enclosed in single quotes (<code class="code-inline tex2jax_ignore">'A'</code>), a string literal is always enclosed in double quotes (<code class="code-inline tex2jax_ignore">"A"</code>). A string literal can even be composed of just one character or no characters at all (<code class="code-inline tex2jax_ignore">""</code>, known as the empty string).<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-2-6-1-what-is-a-string-4" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="para" id="subsec-2-6-1-what-is-a-string-5">Every character in a string occupies a specific numerical position called its <dfn class="terminology">index</dfn>. Like many programming languages, Java uses zero-based indexing: the first character is always at index 0, the second is at index 1, and so on.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-2-6-1-what-is-a-string-5" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-2-6-1-what-is-a-string-5">Every character in a string occupies a specific numerical position called its index. Like many programming languages, Java uses zero-based indexing: the first character is always at index 0, the second is at index 1, and so on.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-2-6-1-what-is-a-string-5" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="para" id="subsec-2-6-1-what-is-a-string-6">Consider the string <code class="code-inline tex2jax_ignore">"Java"</code>:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-2-6-1-what-is-a-string-6" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
@@ -1071,7 +1074,7 @@ String quote = "She said, "Hello!" to everyone.";
 </code></pre></div>
 <div class="para" id="subsec-2-6-1-what-is-a-string-11">The Java compiler sees the second quote as the end of the string <code class="code-inline tex2jax_ignore">"She said, "</code>, and becomes confused by the word <code class="code-inline tex2jax_ignore">Hello!</code>, which, to Java, falls outside of the string literal.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-2-6-1-what-is-a-string-11" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="para" id="subsec-2-6-1-what-is-a-string-12">To include special characters inside a string literal, Java provides <dfn class="terminology">escape sequences</dfn>. An escape sequence is a backslash (<code class="code-inline tex2jax_ignore">\</code>) followed by a character. The backslash tells the compiler to treat the next character inside the string literal as special. Escaping a character is a way to either take the syntactical meaning away from a character or give a syntactical meaning to a character. For example, a quote or backslash has special syntactical meaning within (or at the end of) a string. Escaping a quote or backslash takes away the syntactical meaning so we can include the literal character in the string. Some ordinary characters, like n and t, have a special meaning when escaped. Some common escape sequences are shown in <a href="sec-2-6-strings.html#table-escape-sequences" class="xref" data-knowl="./knowl/xref/table-escape-sequences.html" data-reveal-label="Reveal" data-close-label="Close" title="Table 2.12: Escape sequences">Table 2.12</a>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-2-6-1-what-is-a-string-12" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-2-6-1-what-is-a-string-12">To include special characters inside a string literal, Java provides escape sequences. An escape sequence is a backslash (<code class="code-inline tex2jax_ignore">\</code>) followed by a character. The backslash tells the compiler to treat the next character inside the string literal as special. Escaping a character is a way to either take the syntactical meaning away from a character or give a syntactical meaning to a character. For example, a quote or backslash has special syntactical meaning within (or at the end of) a string. Escaping a quote or backslash takes away the syntactical meaning so we can include the literal character in the string. Some ordinary characters, like n and t, have a special meaning when escaped. Some common escape sequences are shown in <a href="sec-2-6-strings.html#table-escape-sequences" class="xref" data-knowl="./knowl/xref/table-escape-sequences.html" data-reveal-label="Reveal" data-close-label="Close" title="Table 2.12: Escape sequences">Table 2.12</a>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-2-6-1-what-is-a-string-12" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <figure class="table table-like" id="table-escape-sequences"><figcaption><span class="type">Table</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">2.12<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span>Escape sequences<div class="autopermalink" aria-hidden="true" data-description="Table 2.12: Escape sequences"><a tabindex="-1" href="#table-escape-sequences" title="Copy heading and permalink for Table 2.12: Escape sequences" aria-label="Copy heading and permalink for Table 2.12: Escape sequences">🔗</a></div></figcaption><div class="tabular-box natural-width"><table class="tabular">
 <tr class="header-horizontal">
@@ -1133,7 +1136,7 @@ C:\Users\Alice\Documents
 </h2>
 <div class="para" id="subsec-2-6-2-primitives-vs-objects-2">In <a href="sec-2-4-variables-types.html" class="internal" title="Section 2.4: Data: Variables, Literals, and Types">Section 2.4</a>, we explored Java’s eight primitive types (<code class="code-inline tex2jax_ignore">int</code>, <code class="code-inline tex2jax_ignore">double</code>, <code class="code-inline tex2jax_ignore">boolean</code>, <code class="code-inline tex2jax_ignore">char</code>, etc.). <code class="code-inline tex2jax_ignore">String</code> is not a primitive type. Notice that <code class="code-inline tex2jax_ignore">String</code> begins with a capital S, which we know signals a class name. The primitive type names all begin with a lowercase letter.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-2-6-2-primitives-vs-objects-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="para" id="subsec-2-6-2-primitives-vs-objects-3">A <code class="code-inline tex2jax_ignore">String</code> is an object, and the variables we declare to hold them are called <dfn class="terminology">reference variables</dfn>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-2-6-2-primitives-vs-objects-3" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-2-6-2-primitives-vs-objects-3">A <code class="code-inline tex2jax_ignore">String</code> is an object, and the variables we declare to hold them are called reference variables.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-2-6-2-primitives-vs-objects-3" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="para" id="subsec-2-6-2-primitives-vs-objects-4">To understand the difference between primitives and objects, let’s briefly review how Java organizes computer memory:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-2-6-2-primitives-vs-objects-4" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
@@ -1178,7 +1181,7 @@ C:\Users\Alice\Documents
 <span class="type">Subsection</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">2.6.3</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Java’s VIP Treatment: Syntactic Sugar for Strings</span>
 </h2>
 <section class="introduction" id="subsec-2-6-3-syntactic-sugar-2">
-<div class="para" id="subsec-2-6-3-syntactic-sugar-2-1">Variables of type <code class="code-inline tex2jax_ignore">String</code> have a built-in feel in Java, despite that they are objects. We can have a literal of type <code class="code-inline tex2jax_ignore">String</code> and we can create a <code class="code-inline tex2jax_ignore">String</code> without using the <code class="code-inline tex2jax_ignore">new</code> keyword. We can concatenate two <code class="code-inline tex2jax_ignore">String</code> objects together with the <code class="code-inline tex2jax_ignore">+</code> operator. This special language support is often called <dfn class="terminology">syntactic sugar</dfn>. This support was built into Java to make strings as effortless to use as a primitive. Let’s take a quick tour of the special syntactic support for strings.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-2-6-3-syntactic-sugar-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-2-6-3-syntactic-sugar-2-1">Variables of type <code class="code-inline tex2jax_ignore">String</code> have a built-in feel in Java, despite that they are objects. We can have a literal of type <code class="code-inline tex2jax_ignore">String</code> and we can create a <code class="code-inline tex2jax_ignore">String</code> without using the <code class="code-inline tex2jax_ignore">new</code> keyword. We can concatenate two <code class="code-inline tex2jax_ignore">String</code> objects together with the <code class="code-inline tex2jax_ignore">+</code> operator. This special language support is often called syntactic sugar. This support was built into Java to make strings as effortless to use as a primitive. Let’s take a quick tour of the special syntactic support for strings.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-2-6-3-syntactic-sugar-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div></section>
 <section class="subsubsection" id="subsubsec-2-6-3-1-string-literals">
 <h3 class="heading hide-type">
@@ -1190,7 +1193,7 @@ C:\Users\Alice\Documents
 </code></pre></div>
 <div class="para" id="subsubsec-2-6-3-1-string-literals-4">Behind the scenes, the Java compiler automatically constructs a <code class="code-inline tex2jax_ignore">String</code> object in the heap for you. For almost all other classes in Java, creating an object requires using the <code class="code-inline tex2jax_ignore">new</code> keyword:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-2-6-3-1-string-literals-4" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="code-box"><pre class="program clipboardable"><code class="language-java">Scanner input = new Scanner(System.in);
+<div class="code-box"><pre class="program clipboardable"><code class="language-java">Scanner stdin = new Scanner(System.in);
 </code></pre></div>
 <div class="autopermalink" aria-hidden="true" data-description="Subsubsection 2.6.3.1: String Literals"><a tabindex="-1" href="#subsubsec-2-6-3-1-string-literals" title="Copy heading and permalink for Subsubsection 2.6.3.1: String Literals" aria-label="Copy heading and permalink for Subsubsection 2.6.3.1: String Literals">🔗</a></div>
 </section>
@@ -1417,7 +1420,7 @@ response = response.toUpperCase();
 <h2 class="heading hide-type">
 <span class="type">Subsection</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">2.6.5</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Immutability: Strings Never Change</span>
 </h2>
-<div class="para" id="subsec-2-6-5-immutability-2">There is one critical property of Java strings that trips up almost every beginner: Strings are <dfn class="terminology">immutable</dfn>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-2-6-5-immutability-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-2-6-5-immutability-2">There is one critical property of Java strings that trips up almost every beginner: Strings are immutable.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-2-6-5-immutability-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="para" id="subsec-2-6-5-immutability-3">An object is immutable if its internal data cannot be modified after it is created.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-2-6-5-immutability-3" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
@@ -1455,7 +1458,7 @@ System.out.println(state); // Prints: RHODE ISLAND
 </div>
 <figcaption><span class="type">Figure</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">2.16<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><div class="autopermalink" aria-hidden="true" data-description="Figure 2.16: Memory after a String variable is reassigned"><a tabindex="-1" href="#figure-string-reassignment" title="Copy heading and permalink for Figure 2.16: Memory after a String variable is reassigned" aria-label="Copy heading and permalink for Figure 2.16: Memory after a String variable is reassigned">🔗</a></div></figcaption>
 </figure>
-<div class="para" id="subsec-2-6-5-immutability-13">A new <code class="code-inline tex2jax_ignore">"RHODE ISLAND"</code> object is created in the heap, and the <code class="code-inline tex2jax_ignore">state</code> variable has its reference updated to point to that new object. The original <code class="code-inline tex2jax_ignore">"rhode island"</code> object was never modified; it simply no longer has any variables pointing to it. Java will eventually reclaim that abandoned memory through an automatic process called <dfn class="terminology">garbage collection</dfn>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-2-6-5-immutability-13" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-2-6-5-immutability-13">A new <code class="code-inline tex2jax_ignore">"RHODE ISLAND"</code> object is created in the heap, and the <code class="code-inline tex2jax_ignore">state</code> variable has its reference updated to point to that new object. The original <code class="code-inline tex2jax_ignore">"rhode island"</code> object was never modified; it simply no longer has any variables pointing to it. Java will eventually reclaim that abandoned memory through an automatic process called garbage collection.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-2-6-5-immutability-13" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="para" id="subsec-2-6-5-immutability-14">This behavior is true for every method in the <code class="code-inline tex2jax_ignore">String</code> class. Methods that seem to modify a string always return a new, distinct <code class="code-inline tex2jax_ignore">String</code> object.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-2-6-5-immutability-14" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
@@ -1475,7 +1478,129 @@ System.out.println(state); // Prints: RHODE ISLAND
 </ul>
 <div class="para" id="subsec-2-6-5-immutability-17">The variable <code class="code-inline tex2jax_ignore">state</code> is like an arrow. You can point that arrow at a different object in the heap anytime you like, but the text inside the <code class="code-inline tex2jax_ignore">String</code> object itself can never be edited.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-2-6-5-immutability-17" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="autopermalink" aria-hidden="true" data-description="Subsection 2.6.5: Immutability: Strings Never Change"><a tabindex="-1" href="#subsec-2-6-5-immutability" title="Copy heading and permalink for Subsection 2.6.5: Immutability: Strings Never Change" aria-label="Copy heading and permalink for Subsection 2.6.5: Immutability: Strings Never Change">🔗</a></div>
+<section class="reading-questions" id="checkpoint-2-6">
+<h3 class="heading hide-type">
+<span class="type">Reading Questions</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber"></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Checkpoint</span>
+</h3>
+<article class="exercise exercise-like" id="checkpoint-2-6-methods"><h4 class="heading">
+<span class="codenumber">1<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Matching String Methods to Return Values.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone cardsort_section"><ul data-component="dragndrop" data-question_label="" style="visibility: hidden;" id="rs-checkpoint-2-6-methods">
+<span data-subcomponent="question">
+<div class="para" id="checkpoint-2-6-methods-2-1">Given <code class="code-inline tex2jax_ignore">String s = "Boston";</code>, match each method call to the value it returns.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-2-6-methods-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div></span><li data-subcomponent="draggable" id="rs-checkpoint-2-6-methods_drag1" data-category="1"><code class="code-inline tex2jax_ignore">s.length()</code></li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-2-6-methods_drag1" data-category="1"><code class="code-inline tex2jax_ignore">6</code></li>
+<li data-subcomponent="draggable" id="rs-checkpoint-2-6-methods_drag2" data-category="2"><code class="code-inline tex2jax_ignore">s.charAt(1)</code></li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-2-6-methods_drag2" data-category="2"><code class="code-inline tex2jax_ignore">'o'</code></li>
+<li data-subcomponent="draggable" id="rs-checkpoint-2-6-methods_drag3" data-category="3"><code class="code-inline tex2jax_ignore">s.substring(0, 4)</code></li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-2-6-methods_drag3" data-category="3"><code class="code-inline tex2jax_ignore">"Bost"</code></li>
+<li data-subcomponent="draggable" id="rs-checkpoint-2-6-methods_drag4" data-category="4"><code class="code-inline tex2jax_ignore">s.substring(3)</code></li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-2-6-methods_drag4" data-category="4"><code class="code-inline tex2jax_ignore">"ton"</code></li>
+<li data-subcomponent="draggable" id="rs-checkpoint-2-6-methods_drag5" data-category="5"><code class="code-inline tex2jax_ignore">s.toUpperCase()</code></li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-2-6-methods_drag5" data-category="5"><code class="code-inline tex2jax_ignore">"BOSTON"</code></li>
+</ul></div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 2.6.5.1: Matching String Methods to Return Values"><a tabindex="-1" href="#checkpoint-2-6-methods" title="Copy heading and permalink for Reading Question 2.6.5.1: Matching String Methods to Return Values" aria-label="Copy heading and permalink for Reading Question 2.6.5.1: Matching String Methods to Return Values">🔗</a></div>
+</article>
+<article class="exercise exercise-like" id="checkpoint-2-6-memory"><h4 class="heading">
+<span class="codenumber">2<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">String Variables in Memory.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone multiplechoice_section"><ul data-component="multiplechoice" data-multipleanswers="false" id="rs-checkpoint-2-6-memory">
+<div class="para" id="checkpoint-2-6-memory-2-1">When Java executes <code class="code-inline tex2jax_ignore">String city = "Boston";</code>, the characters <code class="code-inline tex2jax_ignore">'B'</code>, <code class="code-inline tex2jax_ignore">'o'</code>, <code class="code-inline tex2jax_ignore">'s'</code>, <code class="code-inline tex2jax_ignore">'t'</code>, <code class="code-inline tex2jax_ignore">'o'</code>, <code class="code-inline tex2jax_ignore">'n'</code> are stored directly inside the <code class="code-inline tex2jax_ignore">city</code> variable on the stack.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-2-6-memory-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<li data-component="answer" id="rs-checkpoint-2-6-memory_opt_t"><p>True.</p></li>
+<li data-component="feedback" id="rs-checkpoint-2-6-memory_opt_t">
+<div class="para" id="checkpoint-2-6-memory-3-1">False. Because <code class="code-inline tex2jax_ignore">String</code> is an object, the <code class="code-inline tex2jax_ignore">"Boston"</code> object lives on the heap, and the <code class="code-inline tex2jax_ignore">city</code> variable on the stack stores a reference (memory address) pointing to it.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-2-6-memory_opt_f" data-correct=""><p>False.</p></li>
+<li data-component="feedback" id="rs-checkpoint-2-6-memory_opt_f">
+<div class="para" id="checkpoint-2-6-memory-3-1">False. Because <code class="code-inline tex2jax_ignore">String</code> is an object, the <code class="code-inline tex2jax_ignore">"Boston"</code> object lives on the heap, and the <code class="code-inline tex2jax_ignore">city</code> variable on the stack stores a reference (memory address) pointing to it.</div>
+</li>
+</ul></div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 2.6.5.2: String Variables in Memory"><a tabindex="-1" href="#checkpoint-2-6-memory" title="Copy heading and permalink for Reading Question 2.6.5.2: String Variables in Memory" aria-label="Copy heading and permalink for Reading Question 2.6.5.2: String Variables in Memory">🔗</a></div>
+</article>
+<article class="exercise exercise-like" id="checkpoint-2-6-escape"><h4 class="heading">
+<span class="codenumber">3<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Escape Sequences.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone multiplechoice_section">
+<div class="exercise-statement">
+<div class="para" id="checkpoint-2-6-escape-2-1">What is printed by the following statement?<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-2-6-escape-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div> <div class="code-box"><pre class="program clipboardable"><code class="language-java">System.out.println("Line 1\n\"Line 2\"");
+</code></pre></div>
+</div>
+<ul data-component="multiplechoice" class="exercise-interactives" id="rs-checkpoint-2-6-escape" data-multipleanswers="false" data-random="">
+<li data-component="answer" id="rs-checkpoint-2-6-escape_opt_a" data-correct="">
+<div class="para" id="checkpoint-2-6-escape-3-1-1-1">
+<code class="code-inline tex2jax_ignore">Line 1</code> on the first line, followed by <code class="code-inline tex2jax_ignore">"Line 2"</code> (with double quotes) on the next line.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-6-escape_opt_a">
+<div class="para" id="checkpoint-2-6-escape-3-1-2-1">Correct! <code class="code-inline tex2jax_ignore">\n</code> moves output to the next line, and <code class="code-inline tex2jax_ignore">\"</code> inserts a literal double quote character.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-2-6-escape_opt_b">
+<div class="para" id="checkpoint-2-6-escape-3-2-1-1">
+<code class="code-inline tex2jax_ignore">Line 1\n"Line 2"</code> all on one line.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-6-escape_opt_b">
+<div class="para" id="checkpoint-2-6-escape-3-2-2-1">Not quite. <code class="code-inline tex2jax_ignore">\n</code> is an escape sequence that inserts a newline rather than printing a literal backslash and <code class="code-inline tex2jax_ignore">n</code>.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-2-6-escape_opt_c">
+<div class="para" id="checkpoint-2-6-escape-3-3-1-1">
+<code class="code-inline tex2jax_ignore">Line 1</code> on the first line, followed by <code class="code-inline tex2jax_ignore">\"Line 2\"</code> on the next line.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-6-escape_opt_c">
+<div class="para" id="checkpoint-2-6-escape-3-3-2-1">Not quite. The backslash in <code class="code-inline tex2jax_ignore">\"</code> is part of the escape sequence and is not printed; only the literal <code class="code-inline tex2jax_ignore">"</code> appears.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-2-6-escape_opt_d">
+<div class="para" id="checkpoint-2-6-escape-3-4-1-1">It causes a compiler error because double quotes cannot appear inside a string literal.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-6-escape_opt_d">
+<div class="para" id="checkpoint-2-6-escape-3-4-2-1">Not quite. Unescaped double quotes cause a compiler error, but escaping them with <code class="code-inline tex2jax_ignore">\"</code> is completely valid.</div>
+</li>
+</ul>
+</div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 2.6.5.3: Escape Sequences"><a tabindex="-1" href="#checkpoint-2-6-escape" title="Copy heading and permalink for Reading Question 2.6.5.3: Escape Sequences" aria-label="Copy heading and permalink for Reading Question 2.6.5.3: Escape Sequences">🔗</a></div>
+</article>
+<article class="exercise exercise-like" id="checkpoint-2-6-immutability"><h4 class="heading">
+<span class="codenumber">4<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">String Immutability.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone multiplechoice_section">
+<div class="exercise-statement">
+<div class="para" id="checkpoint-2-6-immutability-2-1">What is printed by the following code?<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-2-6-immutability-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div> <div class="code-box"><pre class="program clipboardable"><code class="language-java">String word = "hello";
+word.toUpperCase();
+String result = word.substring(0, 2);
+System.out.println(word + " " + result);
+</code></pre></div>
+</div>
+<ul data-component="multiplechoice" class="exercise-interactives" id="rs-checkpoint-2-6-immutability" data-multipleanswers="false" data-random="">
+<li data-component="answer" id="rs-checkpoint-2-6-immutability_opt_a" data-correct="">
+<div class="para" id="checkpoint-2-6-immutability-3-1-1-1"><code class="code-inline tex2jax_ignore">hello he</code></div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-6-immutability_opt_a">
+<div class="para" id="checkpoint-2-6-immutability-3-1-2-1">Correct! Because <code class="code-inline tex2jax_ignore">String</code> objects are immutable, <code class="code-inline tex2jax_ignore">word.toUpperCase()</code> returns a new <code class="code-inline tex2jax_ignore">"HELLO"</code> object that is not saved, so <code class="code-inline tex2jax_ignore">word</code> still references <code class="code-inline tex2jax_ignore">"hello"</code> and <code class="code-inline tex2jax_ignore">word.substring(0, 2)</code> returns <code class="code-inline tex2jax_ignore">"he"</code>.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-2-6-immutability_opt_b">
+<div class="para" id="checkpoint-2-6-immutability-3-2-1-1"><code class="code-inline tex2jax_ignore">HELLO HE</code></div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-6-immutability_opt_b">
+<div class="para" id="checkpoint-2-6-immutability-3-2-2-1">Not quite. Calling <code class="code-inline tex2jax_ignore">word.toUpperCase()</code> without assigning the result back to <code class="code-inline tex2jax_ignore">word</code> leaves <code class="code-inline tex2jax_ignore">word</code> pointing to <code class="code-inline tex2jax_ignore">"hello"</code>.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-2-6-immutability_opt_c">
+<div class="para" id="checkpoint-2-6-immutability-3-3-1-1"><code class="code-inline tex2jax_ignore">hello hel</code></div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-6-immutability_opt_c">
+<div class="para" id="checkpoint-2-6-immutability-3-3-2-1">Not quite. In <code class="code-inline tex2jax_ignore">substring(0, 2)</code>, the ending index <code class="code-inline tex2jax_ignore">2</code> is exclusive, so only indices <code class="code-inline tex2jax_ignore">0</code> and <code class="code-inline tex2jax_ignore">1</code> (<code class="code-inline tex2jax_ignore">"he"</code>) are included.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-2-6-immutability_opt_d">
+<div class="para" id="checkpoint-2-6-immutability-3-4-1-1"><code class="code-inline tex2jax_ignore">HELLO he</code></div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-2-6-immutability_opt_d">
+<div class="para" id="checkpoint-2-6-immutability-3-4-2-1">Not quite. <code class="code-inline tex2jax_ignore">word.toUpperCase()</code> does not modify the <code class="code-inline tex2jax_ignore">"hello"</code> object in place, so <code class="code-inline tex2jax_ignore">word</code> remains <code class="code-inline tex2jax_ignore">"hello"</code>.</div>
+</li>
+</ul>
+</div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 2.6.5.4: String Immutability"><a tabindex="-1" href="#checkpoint-2-6-immutability" title="Copy heading and permalink for Reading Question 2.6.5.4: String Immutability" aria-label="Copy heading and permalink for Reading Question 2.6.5.4: String Immutability">🔗</a></div>
+</article><div class="autopermalink" aria-hidden="true" data-description="Reading Questions 2.6.5: Checkpoint"><a tabindex="-1" href="#checkpoint-2-6" title="Copy heading and permalink for Reading Questions 2.6.5: Checkpoint" aria-label="Copy heading and permalink for Reading Questions 2.6.5: Checkpoint">🔗</a></div>
+</section><div class="autopermalink" aria-hidden="true" data-description="Subsection 2.6.5: Immutability: Strings Never Change"><a tabindex="-1" href="#subsec-2-6-5-immutability" title="Copy heading and permalink for Subsection 2.6.5: Immutability: Strings Never Change" aria-label="Copy heading and permalink for Subsection 2.6.5: Immutability: Strings Never Change">🔗</a></div>
 </section><div class="autopermalink" aria-hidden="true" data-description="Section 2.6: Manipulating Text: Working with Strings"><a tabindex="-1" href="#sec-2-6-strings" title="Copy heading and permalink for Section 2.6: Manipulating Text: Working with Strings" aria-label="Copy heading and permalink for Section 2.6: Manipulating Text: Working with Strings">🔗</a></div>
 </section>
 </div>

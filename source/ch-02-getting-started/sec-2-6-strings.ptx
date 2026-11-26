@@ -28,11 +28,11 @@
     <program language="java"><![CDATA[String greeting = "Hello, World!";]]></program>
 
     <p>
-      Notice that while a character literal (<c>char</c>) is enclosed in single quotes (<c>'A'</c>), a string literal is always enclosed in double quotes (<c>"A"</c>). A string literal can even be composed of just one character or no characters at all (<c>""</c>, known as the <term>empty string</term>).
+      Notice that while a character literal (<c>char</c>) is enclosed in single quotes (<c>'A'</c>), a string literal is always enclosed in double quotes (<c>"A"</c>). A string literal can even be composed of just one character or no characters at all (<c>""</c>, known as the empty string).
     </p>
 
     <p>
-      Every character in a string occupies a specific numerical position called its <term>index</term>. Like many programming languages, Java uses zero-based indexing: the first character is always at index 0, the second is at index 1, and so on.
+      Every character in a string occupies a specific numerical position called its index. Like many programming languages, Java uses zero-based indexing: the first character is always at index 0, the second is at index 1, and so on.
     </p>
 
     <p>
@@ -67,7 +67,7 @@ String quote = "She said, "Hello!" to everyone.";]]></program>
     </p>
 
     <p>
-      To include special characters inside a string literal, Java provides <term>escape sequences</term>. An escape sequence is a backslash (<c>\</c>) followed by a character. The backslash tells the compiler to treat the next character inside the string literal as special. Escaping a character is a way to either take the syntactical meaning away from a character or give a syntactical meaning to a character. For example, a quote or backslash has special syntactical meaning within (or at the end of) a string. Escaping a quote or backslash takes away the syntactical meaning so we can include the literal character in the string. Some ordinary characters, like n and t, have a special meaning when escaped. Some common escape sequences are shown in <xref ref="table-escape-sequences" />.
+      To include special characters inside a string literal, Java provides escape sequences. An escape sequence is a backslash (<c>\</c>) followed by a character. The backslash tells the compiler to treat the next character inside the string literal as special. Escaping a character is a way to either take the syntactical meaning away from a character or give a syntactical meaning to a character. For example, a quote or backslash has special syntactical meaning within (or at the end of) a string. Escaping a quote or backslash takes away the syntactical meaning so we can include the literal character in the string. Some ordinary characters, like n and t, have a special meaning when escaped. Some common escape sequences are shown in <xref ref="table-escape-sequences" />.
     </p>
 
     <table xml:id="table-escape-sequences">
@@ -77,9 +77,9 @@ String quote = "She said, "Hello!" to everyone.";]]></program>
         <col width="25%"/>
         <col width="50%"/>
         <row header="yes">
-          <cell><strong>Escape sequence</strong></cell>
-          <cell><strong>Name</strong></cell>
-          <cell><strong>What it represents</strong></cell>
+          <cell>Escape sequence</cell>
+          <cell>Name</cell>
+          <cell>What it represents</cell>
         </row>
         <row>
           <cell><c>\"</c></cell>
@@ -148,7 +148,7 @@ C:\Users\Alice\Documents
     </p>
 
     <p>
-      A <c>String</c> is an object, and the variables we declare to hold them are called <term>reference variables</term>.
+      A <c>String</c> is an object, and the variables we declare to hold them are called reference variables.
     </p>
 
     <p>
@@ -212,7 +212,7 @@ C:\Users\Alice\Documents
     
     <introduction>
       <p>
-        Variables of type <c>String</c> have a built-in feel in Java, despite that they are objects. We can have a literal of type <c>String</c> and we can create a <c>String</c> without using the <c>new</c> keyword. We can concatenate two <c>String</c> objects together with the <c>+</c> operator. This special language support is often called <term>syntactic sugar</term>. This support was built into Java to make strings as effortless to use as a primitive. Let’s take a quick tour of the special syntactic support for strings.
+        Variables of type <c>String</c> have a built-in feel in Java, despite that they are objects. We can have a literal of type <c>String</c> and we can create a <c>String</c> without using the <c>new</c> keyword. We can concatenate two <c>String</c> objects together with the <c>+</c> operator. This special language support is often called syntactic sugar. This support was built into Java to make strings as effortless to use as a primitive. Let’s take a quick tour of the special syntactic support for strings.
       </p>
     </introduction>
 
@@ -231,7 +231,7 @@ C:\Users\Alice\Documents
         Behind the scenes, the Java compiler automatically constructs a <c>String</c> object in the heap for you. For almost all other classes in Java, creating an object requires using the <c>new</c> keyword:
       </p>
 
-      <program language="java"><![CDATA[Scanner input = new Scanner(System.in);]]></program>
+      <program language="java"><![CDATA[Scanner stdin = new Scanner(System.in);]]></program>
     </subsubsection>
 
     <subsubsection xml:id="subsubsec-2-6-3-2-concatenation-operator">
@@ -297,9 +297,9 @@ System.out.println("Total: " + (5 + 3)); // Prints: Total: 8]]></program>
           <col width="18%"/>
           <col width="50%"/>
           <row header="yes">
-            <cell><strong>Method</strong></cell>
-            <cell><strong>Return type</strong></cell>
-            <cell><strong>Description</strong></cell>
+            <cell>Method</cell>
+            <cell>Return type</cell>
+            <cell>Description</cell>
           </row>
           <row>
             <cell><c>length()</c></cell>
@@ -503,7 +503,7 @@ response = response.toUpperCase();]]></program>
     <title>Immutability: Strings Never Change</title>
 
     <p>
-      There is one critical property of Java strings that trips up almost every beginner: Strings are <term>immutable</term>.
+      There is one critical property of Java strings that trips up almost every beginner: Strings are immutable.
     </p>
 
     <p>
@@ -563,7 +563,7 @@ System.out.println(state); // Prints: RHODE ISLAND]]></program>
     </figure>
 
     <p>
-      A new <c>"RHODE ISLAND"</c> object is created in the heap, and the <c>state</c> variable has its reference updated to point to that new object. The original <c>"rhode island"</c> object was never modified; it simply no longer has any variables pointing to it. Java will eventually reclaim that abandoned memory through an automatic process called <term>garbage collection</term>.
+      A new <c>"RHODE ISLAND"</c> object is created in the heap, and the <c>state</c> variable has its reference updated to point to that new object. The original <c>"rhode island"</c> object was never modified; it simply no longer has any variables pointing to it. Java will eventually reclaim that abandoned memory through an automatic process called garbage collection.
     </p>
 
     <p>
@@ -586,5 +586,177 @@ System.out.println(state); // Prints: RHODE ISLAND]]></program>
     <p>
       The variable <c>state</c> is like an arrow. You can point that arrow at a different object in the heap anytime you like, but the text inside the <c>String</c> object itself can never be edited.
     </p>
+
+    <reading-questions xml:id="checkpoint-2-6">
+      <title>Checkpoint</title>
+
+      <exercise xml:id="checkpoint-2-6-methods" label="checkpoint-2-6-methods">
+        <title>Matching String Methods to Return Values</title>
+        <statement>
+          <p>
+            Given <c>String s = "Boston";</c>, match each method call to the value it returns.
+          </p>
+        </statement>
+        <cardsort>
+          <match>
+            <premise order="3"><c>s.length()</c></premise>
+            <response><c>6</c></response>
+          </match>
+          <match>
+            <premise order="1"><c>s.charAt(1)</c></premise>
+            <response><c>'o'</c></response>
+          </match>
+          <match>
+            <premise order="4"><c>s.substring(0, 4)</c></premise>
+            <response><c>"Bost"</c></response>
+          </match>
+          <match>
+            <premise order="2"><c>s.substring(3)</c></premise>
+            <response><c>"ton"</c></response>
+          </match>
+          <match>
+            <premise order="5"><c>s.toUpperCase()</c></premise>
+            <response><c>"BOSTON"</c></response>
+          </match>
+        </cardsort>
+      </exercise>
+
+      <exercise xml:id="checkpoint-2-6-memory" label="checkpoint-2-6-memory">
+        <title>String Variables in Memory</title>
+        <statement correct="no">
+          <p>
+            When Java executes <c>String city = "Boston";</c>, the characters <c>'B'</c>, <c>'o'</c>, <c>'s'</c>, <c>'t'</c>, <c>'o'</c>, <c>'n'</c> are stored directly inside the <c>city</c> variable on the stack.
+          </p>
+        </statement>
+        <feedback>
+          <p>
+            False. Because <c>String</c> is an object, the <c>"Boston"</c> object lives on the heap, and the <c>city</c> variable on the stack stores a reference (memory address) pointing to it.
+          </p>
+        </feedback>
+      </exercise>
+
+      <exercise xml:id="checkpoint-2-6-escape" label="checkpoint-2-6-escape">
+        <title>Escape Sequences</title>
+        <statement>
+          <p>
+            What is printed by the following statement?
+          </p>
+          <program language="java"><![CDATA[System.out.println("Line 1\n\"Line 2\"");]]></program>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                <c>Line 1</c> on the first line, followed by <c>"Line 2"</c> (with double quotes) on the next line.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! <c>\n</c> moves output to the next line, and <c>\"</c> inserts a literal double quote character.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>Line 1\n"Line 2"</c> all on one line.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. <c>\n</c> is an escape sequence that inserts a newline rather than printing a literal backslash and <c>n</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>Line 1</c> on the first line, followed by <c>\"Line 2\"</c> on the next line.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. The backslash in <c>\"</c> is part of the escape sequence and is not printed; only the literal <c>"</c> appears.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                It causes a compiler error because double quotes cannot appear inside a string literal.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Unescaped double quotes cause a compiler error, but escaping them with <c>\"</c> is completely valid.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-2-6-immutability" label="checkpoint-2-6-immutability">
+        <title>Tracing String Methods</title>
+        <statement>
+          <p>
+            What is printed by the following code?
+          </p>
+          <program language="java"><![CDATA[String word = "hello";
+word.toUpperCase();
+String result = word.substring(0, 2);
+System.out.println(word + " " + result);]]></program>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                <c>hello he</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! Because <c>String</c> objects are immutable, <c>word.toUpperCase()</c> returns a new <c>"HELLO"</c> object that is not saved, so <c>word</c> still references <c>"hello"</c> and <c>word.substring(0, 2)</c> returns <c>"he"</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>HELLO HE</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Calling <c>word.toUpperCase()</c> without assigning the result back to <c>word</c> leaves <c>word</c> pointing to <c>"hello"</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>hello hel</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. In <c>substring(0, 2)</c>, the ending index <c>2</c> is exclusive, so only indices <c>0</c> and <c>1</c> (<c>"he"</c>) are included.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>HELLO he</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. <c>word.toUpperCase()</c> does not modify the <c>"hello"</c> object in place, so <c>word</c> remains <c>"hello"</c>.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+    </reading-questions>
   </subsection>
 </section>
