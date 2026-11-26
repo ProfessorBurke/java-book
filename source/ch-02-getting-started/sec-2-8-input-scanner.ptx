@@ -111,19 +111,19 @@ length = stdin.nextDouble();]]></program>
           <cell><c>nextInt()</c></cell>
           <cell>Next integer token.</cell>
           <cell>42</cell>
-          <cell><c>42</c> (<c>int</c>)</cell>
+          <cell><c>42 (int)</c></cell>
         </row>
         <row>
           <cell><c>nextDouble()</c></cell>
           <cell>Next floating-point token.</cell>
           <cell>3.14</cell>
-          <cell><c>3.14</c> (<c>double</c>)</cell>
+          <cell><c>3.14 (double)</c></cell>
         </row>
         <row>
           <cell><c>next()</c></cell>
           <cell>Next token.</cell>
           <cell>Ada</cell>
-          <cell><c>"Ada"</c> (<c>String</c>)</cell>
+          <cell><c>"Ada" (String)</c></cell>
         </row>
       </tabular>
     </table>
@@ -251,5 +251,176 @@ System.out.println("Age: " + age + ", Color: " + color);]]></program>
     <p>
       This is one of the most common sources of errors for new Java programmers using the <c>Scanner</c>. You can memorize the pattern (consume a newline after reading a number), but ideally you should understand the difference between token-reading methods and <c>nextLine()</c>. If you do, writing correct code will come naturally.
     </p>
+
+    <reading-questions xml:id="checkpoint-2-8">
+      <title>Checkpoint</title>
+
+      <exercise xml:id="checkpoint-2-8-methods" label="checkpoint-2-8-methods">
+        <title>Matching Scanner Methods</title>
+        <statement>
+          <p>
+            Match each <c>Scanner</c> expression to what it reads and returns.
+          </p>
+        </statement>
+        <cardsort>
+          <match>
+            <premise order="3"><c>stdin.nextInt()</c></premise>
+            <response>Next integer token as an <c>int</c></response>
+          </match>
+          <match>
+            <premise order="1"><c>stdin.nextDouble()</c></premise>
+            <response>Next floating-point token as a <c>double</c></response>
+          </match>
+          <match>
+            <premise order="5"><c>stdin.next()</c></premise>
+            <response>Next whitespace-delimited word as a <c>String</c></response>
+          </match>
+          <match>
+            <premise order="2"><c>stdin.nextLine()</c></premise>
+            <response>Entire line of text (including spaces) up to the newline</response>
+          </match>
+          <match>
+            <premise order="4"><c>stdin.next().charAt(0)</c></premise>
+            <response>First character of the next token as a <c>char</c></response>
+          </match>
+        </cardsort>
+      </exercise>
+
+      <exercise xml:id="checkpoint-2-8-input-mismatch" label="checkpoint-2-8-input-mismatch">
+        <title>Handling Non-Numeric Input</title>
+        <statement correct="no">
+          <p>
+            If a user types <c>twenty</c> when <c>stdin.nextInt()</c> is waiting for an integer, <c>Scanner</c> returns <c>0</c> so the program can continue running.
+          </p>
+        </statement>
+        <feedback>
+          <p>
+            False. When <c>nextInt()</c> encounters input that cannot be parsed as an integer, Java immediately halts with an <c>InputMismatchException</c>.
+          </p>
+        </feedback>
+      </exercise>
+
+      <exercise xml:id="checkpoint-2-8-next-vs-nextline" label="checkpoint-2-8-next-vs-nextline">
+        <title>Tokens vs. Full Lines</title>
+        <statement>
+          <p>
+            Suppose a user types <c>Ada Lovelace</c> and presses Enter when the following statement executes. What is stored in <c>name</c>?
+          </p>
+          <program language="java"><![CDATA[String name = stdin.next();]]></program>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                <c>"Ada"</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! Because <c>next()</c> reads only up to the next whitespace character, it stops at the space after <c>Ada</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>"Ada Lovelace"</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. You would need <c>stdin.nextLine()</c> to read the entire line including spaces; <c>next()</c> stops at the first whitespace.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>"Ada "</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. <c>next()</c> stops before the space and does not include whitespace in the returned <c>String</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>"Lovelace"</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. <c>next()</c> reads the next available token from left to right, which is <c>"Ada"</c>.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-2-8-leftover-newline" label="checkpoint-2-8-leftover-newline">
+        <title>Fixing the Leftover Newline</title>
+        <statement>
+          <p>
+            In the code below, the user types <c>20</c> and presses Enter, and the program immediately prints <c>Age: 20, Color: </c> without letting the user type a color. Why does this happen, and how do you fix it?
+          </p>
+          <program language="java"><![CDATA[int age = keyboard.nextInt();
+String color = keyboard.nextLine();
+System.out.println("Age: " + age + ", Color: " + color);]]></program>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                <c>nextInt()</c> leaves <c>'\n'</c> in the buffer, so <c>nextLine()</c> consumes it immediately and returns <c>""</c>; add <c>keyboard.nextLine();</c> between the two lines to clear the buffer.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! Calling <c>keyboard.nextLine();</c> once discards the leftover newline so the next <c>nextLine()</c> call waits for the user to type a color.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>nextInt()</c> consumes <c>'\n'</c> and skips the next statement; add a second <c>keyboard.nextInt();</c> call to reset the scanner.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. <c>nextInt()</c> leaves <c>'\n'</c> in the input buffer rather than consuming it, and calling <c>nextLine()</c> is what clears it.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>nextLine()</c> cannot be called after <c>nextInt()</c> on the same <c>Scanner</c>; create a second <c>Scanner</c> object to read <c>color</c>.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. You can reuse the same <c>Scanner</c>—you just need to consume the leftover <c>'\n'</c> with <c>keyboard.nextLine();</c> first.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>nextLine()</c> ignores text unless a prompt is printed first; add <c>System.out.print</c> before <c>nextLine()</c>.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Printing a prompt does not affect the input buffer; the issue is the unread <c>'\n'</c> left behind by <c>nextInt()</c>.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+    </reading-questions>
   </subsection>
 </section>
