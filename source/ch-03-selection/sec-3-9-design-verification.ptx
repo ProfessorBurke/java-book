@@ -94,7 +94,7 @@
     <title>Tracing Execution Paths in a Selection Structure</title>
 
     <p>
-      A program with no branching statements, such as those we wrote in Chapter 2, has a single path of execution: each statement executes in order from the start of the <c>main</c> method until the end is reached. Once we add branching statements, a program has more than one possible execution paths.
+      A program with no branching statements, such as those we wrote in Chapter 2, has a single path of execution: each statement executes in order from the start of the <c>main</c> method until the end is reached. Once we add branching statements, a program has more than one possible execution path.
     </p>
 
     <p>
@@ -331,5 +331,213 @@
         <p>With just four test cases, we have achieved 100% branch coverage and verified the critical boundary, confirming that our program calculates percentages accurately and safely avoids dividing by zero.</p>
       </li>
     </ul>
+
+    <reading-questions xml:id="checkpoint-3-9">
+      <title>Checkpoint</title>
+
+      <exercise xml:id="checkpoint-3-9-structure-choice" label="checkpoint-3-9-structure-choice">
+        <title>Selecting a Branching Construct</title>
+        <statement>
+          <p>
+            You need to assign a shipping rate based on continuous package weight ranges (under 2 lbs, 2 to 10 lbs, over 10 lbs). Which selection structure is the most appropriate choice?
+          </p>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                An <c>if-else if-else</c> structure
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! An <c>if-else if-else</c> chain handles three or more mutually exclusive paths based on numeric ranges.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                A <c>switch</c> statement
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. A <c>switch</c> statement matches exact discrete integer, character, or <c>String</c> values rather than continuous ranges.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                A single <c>if</c> statement
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. A single <c>if</c> handles only one optional action, not three mutually exclusive weight tiers.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                Three separate, independent <c>if</c> statements
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Three independent <c>if</c> statements create eight possible execution paths instead of three mutually exclusive ones.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-3-9-execution-paths" label="checkpoint-3-9-execution-paths">
+        <title>Counting Execution Paths</title>
+        <statement>
+          <p>
+            How many possible execution paths exist through two consecutive, independent <c>if</c> statements (with no <c>else</c> clauses), assuming all combinations of their conditions are reachable?
+          </p>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                4 paths
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! Each <c>if</c> has 2 outcomes (execute or skip), giving <m>2 \times 2 = 4</m> paths: both execute, first only, second only, or neither.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                2 paths
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. A single <c>if</c> or <c>if-else</c> has 2 paths, but two independent <c>if</c> statements multiply the combinations.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                3 paths
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. A three-branch <c>if-else if-else</c> has 3 paths; two independent <c>if</c> statements can also both execute or both be skipped.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                8 paths
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Eight paths occur with three independent <c>if</c> statements (<m>2^3</m>), not two.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-3-9-boundary-values" label="checkpoint-3-9-boundary-values">
+        <title>Boundary Value Analysis</title>
+        <statement>
+          <p>
+            A program checks <c>if (score &gt;= 70)</c> to determine whether a student passes. Which set of integer test inputs applies boundary value analysis to this threshold?
+          </p>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                <c>69</c>, <c>70</c>, and <c>71</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! Boundary value analysis tests the exact threshold (<c>70</c>), the value immediately below (<c>69</c>), and the value immediately above (<c>71</c>).
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>75</c>, <c>85</c>, and <c>95</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. All three values fall inside the passing equivalence class and miss both the boundary and the failing branch.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>0</c>, <c>50</c>, and <c>100</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Those values test both branches, but they do not test the exact edge at <c>70</c> where <c>&gt;=</c> vs. <c>&gt;</c> errors occur.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>70</c>, <c>80</c>, and <c>90</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. This set includes the boundary <c>70</c>, but never tests a failing score or the value immediately below <c>70</c>.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-3-9-match" label="checkpoint-3-9-match">
+        <title>Matching Testing Concepts</title>
+        <statement>
+          <p>
+            Match each software testing concept to its description.
+          </p>
+        </statement>
+        <cardsort>
+          <match>
+            <premise order="3">Branch coverage</premise>
+            <response>Ensuring every decision evaluates to both true and false</response>
+          </match>
+          <match>
+            <premise order="1">Boundary value analysis</premise>
+            <response>Testing the exact edge where behavior changes and its neighbors</response>
+          </match>
+          <match>
+            <premise order="4">Equivalence class</premise>
+            <response>A bucket of inputs expected to be treated the same way</response>
+          </match>
+          <match>
+            <premise order="2">Test plan table</premise>
+            <response>Documenting inputs and expected outputs before running code</response>
+          </match>
+        </cardsort>
+      </exercise>
+    </reading-questions>
   </subsection>
 </section>
