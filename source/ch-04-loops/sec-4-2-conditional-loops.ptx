@@ -78,7 +78,7 @@ public class GuessTheNumber {
     <figure xml:id="figure-flowchart-guess-number">
       <title>Flowchart of the <c>while</c> loop in <xref ref="listing-guess-the-number" /></title>
 	  <caption>Flowchart for number guessing game.</caption>
-      <image source="figures/figure_4_1.svg" width="85%">
+      <image source="figures/figure_4_1.png" width="85%">
         <shortdescription>Flowchart of while loop testing userGuess != magicNumber, executing loop body if true and repeating.</shortdescription>
         <description>
           <p>
@@ -269,7 +269,7 @@ Blastoff!</output>
       <figure xml:id="figure-flowchart-while-vs-dowhile">
         <title><c>while</c> versus <c>do-while</c> flowcharts</title>
 		<caption>Pre-test vs. post-test flowcharts.</caption>
-        <image source="figures/figure_4_2.svg" width="85%">
+        <image source="figures/figure_4_2.png" width="85%">
           <shortdescription>Flowcharts comparing pre-test while loop (test at top) with post-test do-while loop (test at bottom).</shortdescription>
           <description>
             <p>

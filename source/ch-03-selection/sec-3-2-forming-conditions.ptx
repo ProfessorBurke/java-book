@@ -40,9 +40,9 @@
       <program language="java" line-numbers="yes"><![CDATA[import java.util.Scanner;
 
 /**
- * Calculates the percentage of successful freethrows,
- * given total freethrows and successful freethrows,
- * obtained from the user.
+- Calculates the percentage of successful freethrows,
+- given total freethrows and successful freethrows,
+- obtained from the user.
  */
 public class PercentSuccess {
 
@@ -224,7 +224,7 @@ public class PercentSuccess {
     <title>Order of Operations</title>
 
     <p>
-      You probably intuitively knew, when you read the expressions in <xref ref="table-relational-equality-operators" /> that included a mix of arithmetic and comparison, that the arithmetic must be calculated before the comparison can take place. When we add the relational and equality operators to our order-of-operations table, they do have a lower precedence than all of the arithmetic operators. However, we need to know, in Java, what their precedence is relative to each other and what their associativity is. <xref ref="table-precedence-relational-equality" /> is an updated version of <xref ref="table-precedence-rules" /> that now includes the relational and equality operators. The new rows are highlighted in bold.
+      You probably intuitively knew, when you read the expressions in <xref ref="table-relational-equality-operators" /> that included a mix of arithmetic and comparison, that the arithmetic must be calculated before the comparison can take place. When we add the relational and equality operators to our order-of-operations table, they do have a lower precedence than all of the arithmetic operators. However, we need to know, in Java, what their precedence is relative to each other and what their associativity is. <xref ref="table-precedence-relational-equality" /> is an updated version of <xref ref="table-precedence-rules" /> that now includes the relational and equality operators. The new rows are marked "new" and bordered with bold lines.
     </p>
 
     <table xml:id="table-precedence-relational-equality">
@@ -270,19 +270,19 @@ public class PercentSuccess {
           <cell>Left-to-right</cell>
           <cell>Multiplication, division, mod</cell>
         </row>
-        <row>
+        <row bottom = "major">
           <cell>Additive</cell>
           <cell><c>+</c> <c>-</c></cell>
           <cell>Left-to-right</cell>
           <cell>Addition and subtraction</cell>
         </row>
-        <row bottom="medium" top="medium">
+        <row bottom = "major">
           <cell><strong>Relational (new)</strong></cell>
           <cell><strong><c>&lt;</c> <c>&lt;=</c> <c>&gt;</c> <c>&gt;=</c></strong></cell>
           <cell><strong>Left-to-right</strong></cell>
           <cell><strong>Less than, less than or equal to, greater than, greater than or equal to</strong></cell>
         </row>
-        <row bottom="medium" top="medium">
+        <row bottom="major">
           <cell><strong>Equality (new)</strong></cell>
           <cell><strong><c>==</c> <c>!=</c></strong></cell>
           <cell><strong>Left-to-right</strong></cell>
@@ -446,8 +446,8 @@ public class SoilRecommendations {
 
         Scanner stdin;                     // For obtaining user input.
         double phLevel;                    // User input -- soil pH level.
-        boolean lowPh = false;              // Flag for a low pH level.
-        boolean highPh = false;             // Flag for a high pH level.
+        boolean lowPh = false;             // Flag for a low pH level.
+        boolean highPh = false;            // Flag for a high pH level.
 
         // Obtain the pH level from the user.
         stdin = new Scanner(System.in);
@@ -506,5 +506,209 @@ lowPh = phLevel < 6.0;]]></program>
     <p>
       It is often surprising to see the result of an expression with a relational operator assigned to a Boolean variable at first! But this code is equivalent to assigning the result of an arithmetic expression to a numeric variable. If <c>phLevel &gt; 7.5</c> evaluates to <c>true</c>, then <c>true</c> will be stored in <c>highPh</c>, and if it evaluates to <c>false</c>, then <c>false</c> will be stored in <c>highPh</c>. The same for <c>lowPh</c>. With this code, we don’t need to give <c>highPh</c> and <c>lowPh</c> initial values of <c>false</c><mdash />this code will always give them a value<mdash />either <c>false</c> or <c>true</c>, depending on the value in <c>phLevel</c>.
     </p>
+
+    <reading-questions xml:id="checkpoint-3-2">
+      <title>Checkpoint</title>
+
+      <exercise xml:id="checkpoint-3-2-braces" label="checkpoint-3-2-braces">
+        <title>Tracing an if Statement</title>
+        <statement>
+          <p>
+            What is printed by the following code?
+          </p>
+          <program language="java"><![CDATA[int x = 3;
+if (x > 5)
+    System.out.println("Big");
+    System.out.println("Done");]]></program>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                <c>Done</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! Without curly braces, the <c>if</c> statement controls only the single statement immediately following it (<c>System.out.println("Big");</c>). Because <c>3 &gt; 5</c> is <c>false</c>, <c>"Big"</c> is skipped, and <c>"Done"</c> always runs.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                Nothing is printed.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Java ignores indentation when deciding which statements belong to an <c>if</c>; without curly braces, only the first statement after <c>if</c> is conditional.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>Big</c> followed by <c>Done</c>.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Since <c>x</c> is <c>3</c>, <c>x &gt; 5</c> evaluates to <c>false</c>, so <c>"Big"</c> is not printed.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>Big</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Since <c>x</c> is <c>3</c>, <c>x &gt; 5</c> evaluates to <c>false</c>, so <c>"Big"</c> is not printed.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-3-2-precedence" label="checkpoint-3-2-precedence">
+        <title>Relational and Equality Precedence</title>
+        <statement>
+          <p>
+            Given <c>int a = 10;</c> and <c>int b = 4;</c>, what does the following expression evaluate to?
+          </p>
+          <program language="java"><![CDATA[a + 2 > 10 == b * 2 < 10]]></program>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                <c>true</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! Arithmetic runs first (<c>12 &gt; 10 == 8 &lt; 10</c>), then relational operators (<c>true == true</c>), and finally equality (<c>true</c>).
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>false</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Check both sides: <c>10 + 2 &gt; 10</c> is <c>true</c> and <c>4 * 2 &lt; 10</c> is <c>true</c>, and <c>true == true</c> evaluates to <c>true</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                It causes a compiler error because you cannot chain <c>&gt;</c>, <c>==</c>, and <c>&lt;</c>.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Because <c>&gt;</c> and <c>&lt;</c> have higher precedence than <c>==</c>, both relational comparisons evaluate to <c>boolean</c> values before <c>==</c> compares them.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>12</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Relational and equality operators always evaluate to a <c>boolean</c> (<c>true</c> or <c>false</c>), not a number.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-3-2-float-equals" label="checkpoint-3-2-float-equals">
+        <title>Comparing double Values</title>
+        <statement correct="no">
+          <p>
+            Using <c>a == b</c> to compare two calculated <c>double</c> values is always reliable because Java stores decimal numbers like <c>0.1</c> and <c>0.2</c> with exact precision.
+          </p>
+        </statement>
+        <feedback>
+          <p>
+            False. Many base-10 decimals (such as <c>0.1</c> and <c>0.2</c>) cannot be represented exactly in binary, so tiny rounding errors can make <c>0.1 + 0.2 == 0.3</c> evaluate to <c>false</c>. Use <c>Math.abs(a - b) &lt; EPSILON</c> instead.
+          </p>
+        </feedback>
+      </exercise>
+
+      <exercise xml:id="checkpoint-3-2-boolean-flag" label="checkpoint-3-2-boolean-flag">
+        <title>Assigning a Boolean Expression</title>
+        <statement>
+          <p>
+            Suppose <c>double phLevel = 5.8;</c>. What is stored in <c>lowPh</c>, and what happens when the <c>if</c> statement runs?
+          </p>
+          <program language="java"><![CDATA[boolean lowPh = phLevel < 6.0;
+if (lowPh) {
+    System.out.println("Add lime");
+}]]></program>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                <c>lowPh</c> stores <c>true</c>, and <c>Add lime</c> is printed.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! <c>5.8 &lt; 6.0</c> evaluates to <c>true</c>, which is stored in <c>lowPh</c>, so <c>if (lowPh)</c> executes its body.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>lowPh</c> stores <c>false</c>, and nothing is printed.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Since <c>phLevel</c> is <c>5.8</c>, <c>5.8 &lt; 6.0</c> evaluates to <c>true</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                It causes a compiler error because you must write <c>if (lowPh == true)</c> instead of <c>if (lowPh)</c>.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. A <c>boolean</c> variable is already a Boolean expression, so <c>if (lowPh)</c> is completely valid.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                It causes a compiler error because a relational expression like <c>phLevel &lt; 6.0</c> can only be used inside an <c>if</c> statement.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Any Boolean expression can be assigned directly to a <c>boolean</c> variable.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+    </reading-questions>
   </subsection>
 </section>

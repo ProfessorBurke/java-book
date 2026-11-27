@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-3-3-two-way-decisions" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Two-Way Decisions: <c>if-else</c> and Complements</title>
+
+  <!-- ============================================================ -->
+  <!-- 3.3.1 Pairing if with else                                   -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-3-3-1-pairing-if-else">
+    <title>Pairing <c>if</c> with <c>else</c></title>
+
+    <p>
+      It is so common to execute one block of code when a condition is true and a different block of code when the condition is false, that Java has an <c>else</c> keyword that can be paired with an <c>if</c> to handle mutually exclusive situations. For example, we might assign a <q>pass</q> or <q>retake</q> result, depending on whether the value of a score is greater than or equal to 60, as follows:
+    </p>
+
+    <program language="java"><![CDATA[if (score >= 60) {
+    result = "pass";
+} else {
+    result = "retake";
+}]]></program>
+
+    <p>
+      An <c>else</c> is an optional part of an <c>if</c> statement. Notice that it doesn’t have a condition of its own<mdash />it is the keyword <c>else</c>, all by itself. It must follow the closing of the statement controlled by the <c>if</c>. (The closing curly brace, if you’re following best practices.) Like an <c>if</c>, an <c>else</c> controls only a single statement following it, but that single statement can be a block (multiple statements enclosed in curly braces). And as with an <c>if</c>, it is best practice to indent the conditional code and enclose it in curly braces, even if it’s only one statement.
+    </p>
+
+    <p>
+      In our code above:
+    </p>
+
+    <ul>
+      <li>
+        <p>If the condition <c>score &gt;= 60</c> evaluates to <c>true</c>, the code in the <c>if</c> block executes (<c>{result = "pass";}</c>).</p>
+      </li>
+      <li>
+        <p>If the condition <c>score &gt;= 60</c> evaluates to <c>false</c>, the code in the <c>else</c> block executes (<c>{result = "retake";}</c>).</p>
+      </li>
+      <li>
+        <p>Either the <c>if</c> block or the <c>else</c> block executes. Never both, and never neither.</p>
+      </li>
+      <li>
+        <p>After either the <c>if</c> block or the <c>else</c> block executes, the first line of code following the block will execute (sequential flow of control resumes).</p>
+      </li>
+    </ul>
+
+    <p>
+      One final note on <c>if-else</c> statements: it is not required that you have an <c>else</c>. Beginning programmers often forget that an <c>if</c> can stand alone without an <c>else</c>. Sometimes a single <c>if</c>, with no <c>else</c>, is the best solution to a problem. In <xref ref="sec-3-9-design-verification" /> we’ll discuss criteria to consider when choosing among the selection statements that you learn in this chapter.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 3.3.2 Logical complements                                    -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-3-3-2-logical-complements">
+    <title>Logical Complements</title>
+
+    <p>
+      We know that the code <c>result = "retake";</c> will execute when the condition <c>score &gt;= 60</c> is false, but do we know when that is? When does the <c>else</c> code execute? When:
+    </p>
+
+    <ol marker="a)">
+      <li><p><c>score &lt; 60</c></p></li>
+      <li><p><c>score &lt;= 60</c></p></li>
+      <li><p><c>score &gt; 60</c></p></li>
+      <li><p>Something else</p></li>
+    </ol>
+
+    <p>
+      If you chose (a), <c>score &lt; 60</c>, well done! A score of 60 or more will result in the conditional <c>if</c> code executing, and everything else<mdash />values less than 60, will result in the <c>else</c> code executing.
+    </p>
+
+    <p>
+      Now here’s a trickier question: suppose we have <c>if (speed &gt; 65)</c>, and we pair it with an <c>else</c>. When does the <c>else</c> code execute? When:
+    </p>
+
+    <ol marker="a)">
+      <li><p><c>speed &lt; 65</c></p></li>
+      <li><p><c>speed &lt;= 65</c></p></li>
+      <li><p><c>speed &gt;= 65</c></p></li>
+      <li><p>Something else</p></li>
+    </ol>
+
+    <p>
+      If you chose (b), well done! If your initial instinct was (a), you’re in good company<mdash />in everyday English, we naturally pair <q>greater than</q> with <q>less than.</q>
+    </p>
+
+    <p>
+      But look closely at what happens to the exact number 65 if you choose <c>speed &lt; 65</c>:
+    </p>
+
+    <ul>
+      <li>
+        <p>Is <m>65 &gt; 65</m>? False. (The <c>if</c> branch doesn't run).</p>
+      </li>
+      <li>
+        <p>Is <m>65 &lt; 65</m>? False. (The <c>else</c> branch wouldn't run either!).</p>
+      </li>
+    </ul>
+
+    <p>
+      The number 65 falls through the cracks! Because an <c>if-else</c> covers every possible outcome, the opposite of <c>&gt;</c> must always include equality: <c>&lt;=</c>.
+    </p>
+
+    <p>
+      We call the conditions <c>speed &gt; 65</c> and <c>speed &lt;= 65</c> complementary conditions. <xref ref="table-relational-complements" /> shows the complements of the relational and equality operators.
+    </p>
+
+    <table xml:id="table-relational-complements">
+      <title>Relational and equality complements</title>
+      <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
+        <col width="50%"/>
+        <col width="50%"/>
+        <row header="yes">
+          <cell><strong>Operator</strong></cell>
+          <cell><strong>Complement</strong></cell>
+        </row>
+        <row>
+          <cell><c>&lt;</c></cell>
+          <cell><c>&gt;=</c></cell>
+        </row>
+        <row>
+          <cell><c>&gt;</c></cell>
+          <cell><c>&lt;=</c></cell>
+        </row>
+        <row>
+          <cell><c>&gt;=</c></cell>
+          <cell><c>&lt;</c></cell>
+        </row>
+        <row>
+          <cell><c>&lt;=</c></cell>
+          <cell><c>&gt;</c></cell>
+        </row>
+        <row>
+          <cell><c>==</c></cell>
+          <cell><c>!=</c></cell>
+        </row>
+        <row>
+          <cell><c>!=</c></cell>
+          <cell><c>==</c></cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      The complement of a logical expression is the expression that is:
+    </p>
+
+    <ul>
+      <li>
+        <p>Always <c>true</c> when the original expression is <c>false</c>.</p>
+      </li>
+      <li>
+        <p>Always <c>false</c> when the original expression is <c>true</c>.</p>
+      </li>
+    </ul>
+
+    <p>
+      Equality must appear in either the original expression or the complement, but never both. If equality appeared in both, the threshold value would trigger both branches (an overlap); if it appeared in neither, the threshold value would trigger neither branch (a gap).
+    </p>
+
+    <p>
+      A number line can be a helpful way of visualizing complements. Consider our complementary expressions <c>score &gt;= 60</c> and <c>score &lt; 60</c> from before. On a number line, <c>score &lt; 60</c> is true for the values from negative infinity up to but not including 60. The expression <c>score &gt;= 60</c> then takes over at 60 and covers all of the values up to positive infinity.
+    </p>
+
+    <figure xml:id="figure-number-line-complements">
+      <title>Line number illustrating complementary <c>&lt;</c> and <c>&gt;=</c> conditions</title>
+      <image source="figures/figure_3_1.png" width="85%">
+        <shortdescription>Number line showing score &lt; 60 with an open circle extending left and score &gt;= 60 with a solid circle extending right.</shortdescription>
+        <description>
+          <p>
+            A number line with values from 0 to 100 in increments of 20, with a critical boundary at 60. An open circle at 60 with a ray pointing left represents <c>score &lt; 60</c> (strictly less than 60). A solid circle at 60 with a ray pointing right represents <c>score &gt;= 60</c> (60 and greater). Together, the two rays cover all real values from negative infinity to positive infinity with no gap and no overlap.
+          </p>
+        </description>
+      </image>
+    </figure>
+  </subsection>
+</section>

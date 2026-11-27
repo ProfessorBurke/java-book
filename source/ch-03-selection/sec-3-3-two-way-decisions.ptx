@@ -9,7 +9,7 @@
     <title>Pairing <c>if</c> with <c>else</c></title>
 
     <p>
-      It is so common to execute one block of code when a condition is true and a different block of code when the condition is false, that Java has an <c>else</c> keyword that can be paired with an <c>if</c> to handle mutually exclusive situations. For example, we might assign a <q>pass</q> or <q>retake</q> result, depending on whether the value of a score is greater than or equal to 60, as follows:
+      It is so common to execute one block of code when a condition is true and a different block of code when the condition is false, that Java (like many other languages) has an <c>else</c> keyword that can be paired with an <c>if</c> to handle mutually exclusive situations. For example, we might assign a <q>pass</q> or <q>retake</q> result, depending on whether the value of a score is greater than or equal to 60, as follows:
     </p>
 
     <program language="java"><![CDATA[if (score >= 60) {
@@ -171,5 +171,142 @@
         </description>
       </image>
     </figure>
+
+    <reading-questions xml:id="checkpoint-3-3">
+      <title>Checkpoint</title>
+
+      <exercise xml:id="checkpoint-3-3-complements" label="checkpoint-3-3-complements">
+        <title>Matching Logical Complements</title>
+        <statement>
+          <p>
+            Match each Boolean expression to its logical complement.
+          </p>
+        </statement>
+        <cardsort>
+          <match>
+            <premise order="3"><c>x &lt; 10</c></premise>
+            <response><c>x &gt;= 10</c></response>
+          </match>
+          <match>
+            <premise order="1"><c>x &gt;= 10</c></premise>
+            <response><c>x &lt; 10</c></response>
+          </match>
+          <match>
+            <premise order="4"><c>x &gt; 10</c></premise>
+            <response><c>x &lt;= 10</c></response>
+          </match>
+          <match>
+            <premise order="2"><c>x == 10</c></premise>
+            <response><c>x != 10</c></response>
+          </match>
+        </cardsort>
+      </exercise>
+
+      <exercise xml:id="checkpoint-3-3-else-trace" label="checkpoint-3-3-else-trace">
+        <title>Tracing an if-else Statement</title>
+        <statement>
+          <p>
+            What is printed by the following code?
+          </p>
+          <program language="java"><![CDATA[int speed = 65;
+if (speed > 65) {
+    System.out.println("Ticket");
+} else {
+    System.out.println("No ticket");
+}
+System.out.println("Drive safely");]]></program>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                <c>No ticket</c> followed by <c>Drive safely</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! Because <c>65 &gt; 65</c> is <c>false</c>, the <c>else</c> branch prints <c>No ticket</c>, and then sequential execution resumes after the <c>if-else</c> block to print <c>Drive safely</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>Ticket</c> followed by <c>Drive safely</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. <c>65 &gt; 65</c> is <c>false</c> because <c>&gt;</c> does not include equality; the complement <c>speed &lt;= 65</c> triggers the <c>else</c> branch.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>No ticket</c> only
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. After either the <c>if</c> block or the <c>else</c> block finishes, execution continues with the statement immediately following the <c>if-else</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>Drive safely</c> only
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. In an <c>if-else</c> statement, either the <c>if</c> branch or the <c>else</c> branch always executes—never neither.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-3-3-else-syntax" label="checkpoint-3-3-else-syntax">
+        <title>Writing an else Clause</title>
+        <statement correct="no">
+          <p>
+            In Java, you can write a Boolean condition in parentheses directly after <c>else</c>, such as <c>else (score &lt; 60)</c>.
+          </p>
+        </statement>
+        <feedback>
+          <p>
+            False. The <c>else</c> keyword never takes a condition of its own; it automatically executes whenever the matching <c>if</c> condition evaluates to <c>false</c>.
+          </p>
+        </feedback>
+      </exercise>
+
+      <exercise xml:id="checkpoint-3-3-parsons-if-else" label="checkpoint-3-3-parsons-if-else" language="java">
+        <title>Building a Two-Way Decision</title>
+        <statement>
+          <p>
+            Put the blocks in order to check whether <c>age</c> is at least <c>18</c>. If so, assign <c>"Adult"</c> to <c>category</c>; otherwise, assign <c>"Minor"</c> to <c>category</c>.
+          </p>
+        </statement>
+        <blocks>
+          <block order="3">
+            <cline>if (age &gt;= 18) {</cline>
+          </block>
+          <block order="1">
+            <cline>    category = "Adult";</cline>
+          </block>
+          <block order="4">
+            <cline>} else {</cline>
+          </block>
+          <block order="2">
+            <cline>    category = "Minor";</cline>
+          </block>
+          <block order="5">
+            <cline>}</cline>
+          </block>
+        </blocks>
+      </exercise>
+    </reading-questions>
   </subsection>
 </section>

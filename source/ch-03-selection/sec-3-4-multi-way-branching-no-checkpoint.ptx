@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-3-4-multi-way-branching" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Multi-Way Branching (Series and Nested <c>if</c> Statements)</title>
+
+  
+  <introduction>
+    <p>
+      Imagine that you are asked to write three programs for a professor who is experimenting with different methods of grading her programming course. Students are given a pre-test at the beginning of the course and a post-test at the end. Based on the pre-test and post-test scores, she wants the following programs:
+    </p>
+
+    <p>
+      <strong>Program 1</strong> simply assigns a letter grade based on the post-test score, where 0 up to 60 is an F, 60 up to 70 is a D, 70 up to 80 is a C, 80 up to 90 is a B, and 90+ is an A.
+    </p>
+
+    <p>
+      <strong>Program 2</strong> breaks students into pass (70+) and retake (below 70) categories based on their post-test scores, but students in the retake category are further broken into two intervention categories based on their pre-test score: foundational focus for pre-test scores below 60, and conceptual focus for pre-test scores of 60 and above.
+    </p>
+
+    <p>
+      <strong>Program 3</strong> assigns a pass/retake category based on the same criteria as program 2, but then it also assigns a high achievement badge if the post-test score is at least 40 points higher than the pre-test score.
+    </p>
+
+    <p>
+      Each of these programs must include branching code<mdash />code that executes only under certain conditions. For example, programs 2 and 3 both split into two paths based on the post-test score, the pass path for scores 70 and higher, and the retake path for scores below 70. But each of these branching problems have properties that require a different branching structure. Let’s examine each.
+    </p>
+
+    <!-- ============================================================ -->
+    <!-- 3.4.1 Series if statements                                   -->
+  </introduction>
+
+
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-3-4-1-series-if">
+    <title>Series <c>if</c> Statements</title>
+
+    <p>
+      Program 1 has five mutually exclusive conditions. Mutually exclusive conditions can’t simultaneously exist. Each one might exist for a different execution of the program, but once the decision code is reached, only one of the mutually exclusive conditions will be true. For example, if the post-test grade is ninety or above, it can’t simultaneously fall into any of the other categories. We can picture this branching structure as multiple distinct branches.
+    </p>
+
+    <figure xml:id="figure-series-decision-tree">
+      <title>Tree structure illustrating a series decision</title>
+      <image source="figures/figure_3_2.png" width="85%">
+        <shortdescription>Binary decision tree testing score &lt; 60, score &lt; 70, score &lt; 80, and score &lt; 90 to assign letter grades A through F.</shortdescription>
+        <description>
+          <p>
+            Decision tree diagram in black and white illustrating multi-way selection for letter grades. The root decision box tests <c>score &lt; 60</c>. A <q>Yes</q> branch leads down and left to assign <c>grade = 'F'</c>, while a <q>No</q> branch leads down and right to the next condition, <c>score &lt; 70</c>. From <c>score &lt; 70</c>, <q>Yes</q> assigns <c>grade = 'D'</c> and <q>No</q> advances to <c>score &lt; 80</c>. From <c>score &lt; 80</c>, <q>Yes</q> assigns <c>grade = 'C'</c> and <q>No</q> advances to <c>score &lt; 90</c>. Finally, from <c>score &lt; 90</c>, <q>Yes</q> assigns <c>grade = 'B'</c> and <q>No</q> assigns <c>grade = 'A'</c>.
+          </p>
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      We have already seen how to solve a problem with two mutually exclusive conditions (that completely cover all possibilities)<mdash />an <c>if-else</c> structure. With an <c>if-else</c> structure, either a condition is <c>true</c> or its complement (opposite) is <c>true</c>. We extend that pattern when there are more than two mutually exclusive conditions with an <c>if-else if</c> structure, called a series <c>if</c>. A series <c>if</c> is a single <c>if</c> statement. <xref ref="listing-grading-series" /> is a solution to program 1 that shows only the code within the <c>main</c> method.
+    </p>
+
+    <listing xml:id="listing-grading-series">
+      <title>Series <c>if</c> for Letter Grades</title>
+      <program language="java" line-numbers="yes"><![CDATA[public static void main(String[] args) {
+    Scanner stdin;              // For obtaining user input.
+    double postTestScore; // User input; for determining the grade.
+    char letterGrade;           // The letter grade.
+
+    // Obtain the post-test score.
+    stdin = new Scanner(System.in);
+    System.out.print("Enter the post-test score: ");
+    postTestScore = stdin.nextDouble();
+    stdin.close();
+
+    // Calculate the letter grade.
+    if (postTestScore < 60) {
+        letterGrade = 'F';
+    } else if (postTestScore < 70) {
+        letterGrade = 'D';
+    } else if (postTestScore < 80) {
+        letterGrade = 'C';
+    } else if (postTestScore < 90) {
+        letterGrade = 'B';
+    } else {
+        letterGrade = 'A';
+    }
+
+    // Display the letter grade.
+    System.out.println("The letter grade is " + letterGrade + ".");
+}]]></program>
+    </listing>
+
+    <p>
+      The series <c>if</c> statement is on lines 13-23. It begins with the keyword <c>if</c> followed by a condition, and then the conditionally executed code (in this example, <c>{letterGrade = 'F';}</c>). It is then followed by an <c>else</c>. The <c>else</c>’s conditionally executed code is another <c>if</c>, followed by a condition, followed by conditionally executed code. In a series <c>if</c> statement, you can have as many conditions as you need for the problem you’re solving, all following the pattern <c>if-condition-code-else-if-condition-code…</c> etc.
+    </p>
+
+    <p>
+      A series <c>if</c> statement is a single <c>if</c> statement. Once a true condition is reached, its conditional code executes and the rest of the statement is skipped. Control will move to the first line of code following the series <c>if</c>. <xref ref="listing-grading-series" /> executes sequentially until line 13. On line 13, the condition <c>postTestScore &lt; 60</c> is tested. If that test is <c>true</c>, then line 14 will execute, the rest of the series <c>if</c> will be skipped, and execution will resume on the first line following the series <c>if</c>, which is the print statement on line 26.
+    </p>
+
+    <p>
+      If the test on line 13 is <c>false</c>, then the <c>else</c> code executes on line 15. The <c>else</c> code is another <c>if</c> statement. The test for that <c>if</c> statement, <c>postTestScore &lt; 70</c>, executes. If it’s <c>true</c>, the conditional code on line 16 executes, the rest of the series <c>if</c> is skipped, and control resumes on line 26. If the test on line 15 is <c>false</c>, the <c>else</c> code on line 17 is reached. That is another <c>if</c> statement, so that test executes.
+    </p>
+
+    <p>
+      This pattern continues through the entire series <c>if</c> statement. If all of the tests are <c>false</c>, line 21 is reached. Line 21 is a simple <c>else</c> followed by an assignment statement. If the <c>else</c> on line 21 is reached, the assignment statement on line 22 will execute.
+    </p>
+
+    <p>
+      In a series <c>if</c>, each condition is tested in order until a condition evaluates to <c>true</c>. Once a condition evaluates to <c>true</c>, its conditional code executes and the series <c>if</c> statement is complete. The rest of the series <c>if</c> is skipped and execution resumes at the first line of code following the series <c>if</c>.
+    </p>
+
+    <p>
+      Notice the sifting property at work in <xref ref="listing-grading-series" />. The first condition (<c>postTestScore &lt; 60</c>) catches every score below 60. If execution falls through to the next condition (<c>postTestScore &lt; 70</c>), we already know the complement must be true: <c>postTestScore &gt;= 60</c>. As a result, when <c>postTestScore &lt; 70</c> evaluates to <c>true</c>, the score is guaranteed to be in the range <m>[60.0, 70.0)</m>. Each successive branch sifts out the next layer of values.
+    </p>
+
+    <p>
+      <xref ref="listing-grading-series" /> is a series <c>if</c> with a final <c>else</c> that has no condition. This means one branch of the series <c>if</c> will always execute<mdash />if none of the conditions evaluate to <c>true</c>, then the final <c>else</c> will execute. This is not required. How you structure a series <c>if</c> depends on the problem you’re solving. It may be that you want code to execute for some number of mutually exclusive conditions, but there are some cases that require no response. In that case, you may write a series <c>if</c> that has no <q>default</q> <c>else</c> at the end.
+    </p>
+
+    <p>
+      Be careful, though, if you’re assigning a value to a variable in a series <c>if</c>. If the series <c>if</c> doesn’t cover all possible cases, then you may end up with a variable without a value, which could cause a compiler error later when you include the variable in a computation or try to print its value. To solve that, don’t just assign a default value to the variable<mdash />make sure you’re giving it the correct value for all possible conditions.
+    </p>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 3.4.2 Nested if statements                                   -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-3-4-2-nested-if">
+    <title>Nested <c>if</c> Statements</title>
+
+    <p>
+      Program 2 begins with two mutually exclusive conditions, assigning a grade of either pass or retake based on the post-test score. We know that we can use an <c>if-else</c> statement to solve this problem. However, if a grade is assigned to the retake category, we must then examine the pre-test score and further assign either a foundational focus or a conceptual focus.
+    </p>
+
+    <p>
+      Problem 2 involves a nested condition<mdash />we need to test the pre-test score only after we’ve tested the post-test score and selected the retake branch. We can picture this branching structure as a tree with some number of branches (in this example, two). One (or more) of the branches then also branches. (In our example, only one of the branches itself has branches.)
+    </p>
+
+    <figure xml:id="figure-nested-decision-tree">
+      <title>Nested decision structure</title>
+      <image source="figures/figure_3_3.png" width="85%">
+        <shortdescription>Decision tree testing postTest &gt;= 70 to branch into Pass or Retake, where Retake tests preTest &lt; 60 to branch into Foundational Focus or Conceptual Focus.</shortdescription>
+        <description>
+          <p>
+            Hierarchical decision tree diagram in black and white illustrating nested selection. The root decision box tests <c>postTest &gt;= 70</c>. A <q>Yes</q> branch leads down and left to assign <c>Pass</c>. A <q>No (Retake)</q> branch leads down and right to a nested condition, <c>preTest &lt; 60</c>. From this second decision, a <q>Yes</q> branch leads down and left to assign <c>Foundational Focus</c>, while a <q>No</q> branch leads down and right to assign <c>Conceptual Focus</c>.
+          </p>
+        </description>
+      </image>
+    </figure>
+
+    <p>
+      <xref ref="listing-grading-nested" /> shows the branching code after the variables <c>preTestScore</c> and <c>postTestScore</c> have been read from the keyboard.
+    </p>
+
+    <listing xml:id="listing-grading-nested">
+      <title>Nested <c>if</c> for Intervention Recommendations</title>
+      <program language="java" line-numbers="yes"><![CDATA[// Construct the recommendation.
+if (postTestScore >= 70) {
+    result = "Pass.";
+} else  {
+    result = "Retake with ";
+    if (preTestScore < 60) {
+        result += "foundational intervention.";
+    } else {
+        result += "conceptual intervention.";
+    }
+}]]></program>
+    </listing>
+
+    <p>
+      The structure of a nested solution is to include a complete <c>if</c> statement within the conditional code of either an <c>if</c> or <c>else</c> branch. The nested <c>if</c> statement can be any of the <c>if</c> statements we’ve learned, such as a simple <c>if</c>, an <c>if-else</c>, or a series <c>if</c>. In <xref ref="listing-grading-nested" />, we see an <c>if-else</c> nested within the <c>else</c> branch of an <c>if-else</c>. We refer to the first <c>if</c> as the outer <c>if</c> statement, and the <c>if</c> statement nested within the <c>else</c> as an inner <c>if</c> statement. (It might be helpful to picture Russian nesting dolls when considering the terms <q>inner</q> and <q>outer</q> in an <c>if</c> statement.) We are not restricted to a single level of nesting<mdash />it depends on the problem being solved.
+    </p>
+
+    <p>
+      In an <c>if</c> statement, once the condition has been evaluated, one of the conditional blocks is selected to execute. (For example, in an <c>if-else</c>, the <c>if</c> block is selected if the condition is <c>true</c>, and the <c>else</c> block is selected if the condition is <c>false</c>.) Within the block, execution begins sequentially, with the first line of code in the block. In <xref ref="listing-grading-nested" />, if we enter the <c>else</c> branch on line 4, the first line of code to execute is the assignment statement on line 5. Java then executes line 6, which is an <c>if</c> statement. If the test on line 6 is <c>true</c>, line 7 will execute. If it’s <c>false</c>, the <c>else</c> block on line 9 will execute. Execution then proceeds sequentially after the <c>if-else</c> statement within the outer <c>else</c> block. Because there is no more code within the outer <c>else</c> block, execution proceeds sequentially after the outer <c>if</c>.
+    </p>
+
+    <p>
+      In <xref ref="listing-grading-nested" />, if the outer <c>if</c> condition on line 2 evaluates to <c>true</c>, line 3 will execute and then execution will proceed to the first line of code after line 11. The <c>else</c> block and its nested <c>if</c> will never be reached.
+    </p>
+
+    <p>
+      It can sometimes be tricky to read a nested <c>if</c>, especially if the programmer has not put curly braces around the blocks. (This is one reason most style guides recommend you always put curly braces around conditionally executed code.) For example, consider this code:
+    </p>
+
+    <program language="java"><![CDATA[if (postTestScore < 70) 
+    if (preTestScore < 60) 
+        result = "Retake with foundational intervention.";
+else
+    result = "Pass.";]]></program>
+
+    <p>
+      Which <c>if</c> does the <c>else</c> pair with? Remember that Java ignores indentation. The indentation tells us that the programmer intended for the <c>else</c> to pair with the outer <c>if</c>, but when there are no curly braces, Java follows the rule that an <c>else</c> always pairs with the nearest <c>if</c> that doesn’t already have an <c>else</c>. Therefore, the <c>else</c> pairs with the inner <c>if</c> (<c>preTestScore &lt; 60</c>). In this example, the indentation communicates the wrong pairing. (You can paste this code into Eclipse, select it, and choose <menuchoice><guimenu>Source</guimenu><guimenuitem>Correct Indentation</guimenuitem></menuchoice>. Eclipse will show us that the <c>else</c> is paired with the inner <c>if</c>.)
+    </p>
+
+    <p>
+      If the programmer wanted the <c>else</c> to pair with the outer <c>if</c>, they could include curly braces around the conditional code for the outer <c>if</c>. The closing curly brace ends the outer <c>if</c> block’s conditional code:
+    </p>
+
+    <program language="java"><![CDATA[if (postTestScore < 70) { 
+    if (preTestScore < 60) 
+        result = "Retake with foundational intervention.";
+} else
+    result = "Pass.";]]></program>
+
+    <p>
+      It is very common for there to be multiple closing curly braces at the end of a block of code. Even when they’re properly indented, it can be difficult to see which opening curly brace is a match. Some Java style guides recommend documenting closing curly braces with single-line comments. If our code from <xref ref="listing-grading-nested" /> were the end of the program, the program would end with four closing curly braces, which we might document as shown below, to make the code more readable and easier to modify. If you wanted to add a print statement to display the result, you’d know to put it between the second and third curly braces so that it would fall within the <c>main</c> method, but after the conditional code that sets the <c>result</c> variable.
+    </p>
+
+    <program language="java"><![CDATA[        } // end if preTestScore < 60
+    } // end if postTestScore >= 70
+} // end main
+} // end GradingProgram2]]></program>
+  </subsection>
+
+  <!-- ============================================================ -->
+  <!-- 3.4.3 Separate if statements                                 -->
+  <!-- ============================================================ -->
+  <subsection xml:id="subsec-3-4-3-separate-if">
+    <title>Separate <c>if</c> Statements</title>
+
+    <p>
+      Our third grading scenario presents a different challenge: Program 3 assigns a pass/retake status based on the post-test score, but it also awards a high achievement badge if the post-test score is at least 40 points higher than the pre-test score.
+    </p>
+
+    <p>
+      Notice how this differs fundamentally from Programs 1 and 2:
+    </p>
+
+    <ul>
+      <li><p>In Program 1, the outcomes are mutually exclusive<mdash />a student cannot be assigned both a <c>'B'</c> and a <c>'C'</c>.</p></li>
+      <li><p>In Program 2, the intervention category is hierarchically dependent<mdash />we only evaluate the pre-test score if the student needs a retake.</p></li>
+      <li><p>In Program 3, the two decisions are independent. A student who passes might earn the badge, but a student who needs a retake could also earn the badge (for instance, improving from a pre-test score of 15 to a post-test score of 55 shows a 40-point leap, even though 55 requires a retake).</p></li>
+    </ul>
+
+    <p>
+      Because these conditions are not mutually exclusive and neither is subordinate to the other, we must use separate, standalone <c>if</c> statements. <xref ref="listing-grading-independent" /> shows the decision code for Program 3.
+    </p>
+
+    <listing xml:id="listing-grading-independent">
+      <title>Separate <c>if</c> Statements for Independent Decisions</title>
+      <program language="java" line-numbers="yes"><![CDATA[// Decision 1: Check for pass or retake status.
+if (postTestScore >= 70) {
+    result = "Pass";
+} else {
+    result = "Retake";
+}
+
+// Decision 2: Independently check for the achievement badge.
+if (postTestScore - preTestScore >= 40) {
+    result += " [High Achievement Badge Earned!]";
+}]]></program>
+    </listing>
+
+    <p>
+      In a series <c>if-else-if</c>, choosing one branch bypasses the rest. In nested <c>if</c> statements, inner branches are locked behind an outer gate.
+    </p>
+
+    <p>
+      With separate <c>if</c> statements, every condition is evaluated. The program evaluates <c>postTestScore &gt;= 70</c>. Regardless of whether the <c>if</c> or <c>else</c> branch executes, control moves sequentially to the next statement. The program then evaluates <c>postTestScore - preTestScore &gt;= 40</c>. It does not matter what happened in the first decision; this second check always occurs.
+    </p>
+
+    <p>
+      A very common beginner mistake is confusing separate <c>if</c> statements with a series <c>if-else-if</c>. Consider what would happen if we tried to write Program 1 using separate <c>if</c> statements instead of a series:
+    </p>
+
+    <program language="java"><![CDATA[// BUG: Multiple separate ifs instead of a series
+if (postTestScore < 60) {
+    letterGrade = 'F';
+}
+if (postTestScore < 70) {
+    letterGrade = 'D'; // Overwrites 'F'!
+}
+if (postTestScore < 80) {
+    letterGrade = 'C'; // Overwrites 'D'!
+}]]></program>
+
+    <p>
+      If a student scores a 50, the first <c>if</c> sets <c>letterGrade</c> to <c>'F'</c>. But because the next statement is an independent <c>if</c>, Java evaluates <c>50 &lt; 70</c> (<c>true</c>) and overwrites the grade with <c>'D'</c>. It then evaluates <c>50 &lt; 80</c> (<c>true</c>) and overwrites it with <c>'C'</c>.
+    </p>
+
+    <p>
+      Use a series <c>if-else-if</c> when you want at most one branch to execute. Use separate <c>if</c> statements when multiple independent actions may all need to execute during the same program run.
+    </p>
+  </subsection>
+</section>

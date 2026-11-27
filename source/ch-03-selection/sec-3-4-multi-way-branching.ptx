@@ -185,7 +185,7 @@ else
     result = "Pass.";]]></program>
 
     <p>
-      Which <c>if</c> does the <c>else</c> pair with? Remember that Java ignores indentation. The indentation tells us that the programmer intended for the <c>else</c> to pair with the outer <c>if</c>, but when there are no curly braces, Java follows the rule that an <c>else</c> always pairs with the nearest <c>if</c> that doesn’t already have an <c>else</c>. Therefore, the <c>else</c> pairs with the inner <c>if</c> (<c>preTestScore &lt; 60</c>). In this example, the indentation communicates the wrong pairing. (You can paste this code into Eclipse, select it, and choose <menuchoice><guimenu>Source</guimenu><guimenuitem>Correct Indentation</guimenuitem></menuchoice>. Eclipse will show us that the <c>else</c> is paired with the inner <c>if</c>.)
+      Which <c>if</c> does the <c>else</c> pair with? Remember that Java ignores indentation. The indentation tells us that the programmer intended for the <c>else</c> to pair with the outer <c>if</c>, but when there are no curly braces, Java follows the rule that an <c>else</c> always pairs with the nearest <c>if</c> that doesn’t already have an <c>else</c>. Therefore, the <c>else</c> pairs with the inner <c>if</c> (<c>preTestScore &lt; 60</c>). In this example, the indentation communicates the wrong pairing. (You can paste this code into Eclipse, select it, and choose <c>Source</c> &#x2192; <c>Correct Indentation</c>. Eclipse will show us that the <c>else</c> is paired with the inner <c>if</c>.)
     </p>
 
     <p>
@@ -277,5 +277,205 @@ if (postTestScore < 80) {
     <p>
       Use a series <c>if-else-if</c> when you want at most one branch to execute. Use separate <c>if</c> statements when multiple independent actions may all need to execute during the same program run.
     </p>
+
+    <reading-questions xml:id="checkpoint-3-4">
+      <title>Checkpoint</title>
+
+      <exercise xml:id="checkpoint-3-4-structure-match" label="checkpoint-3-4-structure-match">
+        <title>Matching Problems to Branching Structures</title>
+        <statement>
+          <p>
+            Match each programming task to the branching structure that fits it best.
+          </p>
+        </statement>
+        <cardsort>
+          <match>
+            <premise order="3">Assigning one letter grade (<c>'A'</c>–<c>'F'</c>) from a single numeric score</premise>
+            <response>Series <c>if-else-if</c></response>
+          </match>
+          <match>
+            <premise order="1">Testing a second condition only after a user selects a specific menu option</premise>
+            <response>Nested <c>if</c></response>
+          </match>
+          <match>
+            <premise order="4">Applying a senior discount and, independently, a veteran discount when either or both may apply</premise>
+            <response>Separate <c>if</c> statements</response>
+          </match>
+          <match>
+            <premise order="2">Handling two mutually exclusive outcomes (<c>even</c> or <c>odd</c>)</premise>
+            <response>Single <c>if-else</c></response>
+          </match>
+        </cardsort>
+      </exercise>
+
+      <exercise xml:id="checkpoint-3-4-series-vs-separate" label="checkpoint-3-4-series-vs-separate">
+        <title>Tracing Sequential Conditions</title>
+        <statement>
+          <p>
+            What value is stored in <c>grade</c> after the following code executes?
+          </p>
+          <program language="java"><![CDATA[int score = 55;
+char grade;
+if (score < 60) {
+    grade = 'F';
+}
+if (score < 70) {
+    grade = 'D';
+}
+if (score < 80) {
+    grade = 'C';
+}]]></program>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                <c>'C'</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! Because these are separate <c>if</c> statements rather than <c>else if</c>, all three conditions are evaluated and each true condition overwrites <c>grade</c>, leaving <c>'C'</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>'F'</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. <c>grade</c> would stay <c>'F'</c> only if the second and third checks used <c>else if</c>. Here, all three separate <c>if</c> statements run.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>'D'</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. After <c>55 &lt; 70</c> sets <c>grade</c> to <c>'D'</c>, Java still evaluates <c>55 &lt; 80</c>, which overwrites <c>grade</c> with <c>'C'</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                It causes a compiler error because <c>grade</c> is assigned more than once.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Variables can be reassigned as many times as needed; the issue here is a logic bug from using separate <c>if</c> statements instead of a series <c>if-else-if</c>.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-3-4-dangling-else" label="checkpoint-3-4-dangling-else">
+        <title>Tracing an Unbraced Nested if</title>
+        <statement>
+          <p>
+            What is stored in <c>msg</c> after the following code executes?
+          </p>
+          <program language="java"><![CDATA[int a = 10;
+int b = 2;
+String msg = "Start";
+if (a < 5)
+    if (b < 5)
+        msg = "Both";
+else
+    msg = "Outer else";]]></program>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                <c>"Start"</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! Because there are no curly braces, the <c>else</c> pairs with the nearest <c>if</c> (<c>if (b &lt; 5)</c>). Since <c>10 &lt; 5</c> is <c>false</c>, the entire inner <c>if-else</c> is skipped and <c>msg</c> remains <c>"Start"</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>"Outer else"</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Java ignores indentation; without curly braces, <c>else</c> always pairs with the nearest preceding <c>if</c> (<c>if (b &lt; 5)</c>), not the outer <c>if</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>"Both"</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Since <c>a</c> is <c>10</c>, <c>a &lt; 5</c> is <c>false</c>, so the inner <c>if (b &lt; 5)</c> never executes.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                It causes a compiler error because the <c>else</c> is indented to match the outer <c>if</c>.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Java ignores whitespace and indentation; the code compiles, but behaves differently from what the indentation suggests.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-3-4-parsons-series" label="checkpoint-3-4-parsons-series" language="java">
+        <title>Ordering a Multi-Way Calculation</title>
+        <statement>
+          <p>
+            Put the blocks in order to assign <c>shippingCost</c> based on <c>weight</c>: <c>5.00</c> for weights under <c>2</c> pounds, <c>10.00</c> for weights from <c>2</c> up to (but not including) <c>10</c> pounds, and <c>15.00</c> for <c>10</c> pounds or more.
+          </p>
+        </statement>
+        <blocks>
+          <block order="3">
+            <cline>if (weight &lt; 2) {</cline>
+          </block>
+          <block order="1">
+            <cline>    shippingCost = 5.00;</cline>
+          </block>
+          <block order="5">
+            <cline>} else if (weight &lt; 10) {</cline>
+          </block>
+          <block order="2">
+            <cline>    shippingCost = 10.00;</cline>
+          </block>
+          <block order="4">
+            <cline>} else {</cline>
+          </block>
+          <block order="6">
+            <cline>    shippingCost = 15.00;</cline>
+          </block>
+          <block order="7">
+            <cline>}</cline>
+          </block>
+        </blocks>
+      </exercise>
+    </reading-questions>
   </subsection>
 </section>
