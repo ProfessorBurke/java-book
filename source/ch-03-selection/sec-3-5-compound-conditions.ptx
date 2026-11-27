@@ -7,6 +7,13 @@
     <p>
       Sometimes we would like to test multiple conditions at once. For example, our precondition from <xref ref="listing-drone-search" /> is that both <c>x &gt;= radius</c> and <c>y &gt;= radius</c>. So far we haven’t seen a way to test two conditions in the same expression. Fortunately, Java (like most programming languages) has operators that allow us to logically combine Boolean expressions in two different ways: <c>&amp;&amp;</c> (logical and) and <c>||</c> (logical or) to build compound logical expressions.
     </p>
+	
+	<remark xml:id="py-logical">
+  <title>Logical Operators</title>
+  <p>
+    In Python, the logical operator names are literally the words <c>and</c> and <c>or</c>, but many languages, including Java, C, C++, and JavaScript, use the double ampersand <c>&amp;&amp;</c> and double pipe <c>||</c> for logical <c>and</c> and logical <c>or</c>.
+  </p>
+</remark>
 
     <!-- ============================================================ -->
     <!-- 3.5.1 Logical and && and or ||                               -->
@@ -96,6 +103,7 @@
       A logical or expression has the same construction as logical and, except we use the <c>||</c> (or) operator. Again, it is two pipe symbols written together with no space between, and like bitwise and, there is a single pipe operator which is bitwise or, which is a different operation. Each operand to a logical or operator must be a boolean expression. <xref ref="table-truth-table-or" /> is a truth table for logical or:
     </p>
 
+
     <table xml:id="table-truth-table-or">
       <title>Truth table for <c>||</c> (or)</title>
       <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
@@ -133,7 +141,12 @@
     <p>
       Note that <c>||</c> (or) evaluates to <c>true</c> if either or both of its operands are true. An <c>||</c> is false only when both operands are false.
     </p>
-
+<insight xml:id="insight-bitwise-operators">
+  <title>Curious about bitwise <c>&amp;</c> and <c>|</c> operators?</title>
+  <p>
+    Single <c>&amp;</c> and <c>|</c> are bitwise operators: when given integers, they compare the individual binary bits (<c>0</c> and <c>1</c>) of each number rather than testing whole-expression truth values. When given <c>boolean</c> operands, they evaluate both sides instead of short-circuiting—unlike <c>&amp;&amp;</c> and <c>||</c>, which stop as soon as the final result is known (more on that in a later section).
+  </p>
+</insight>
     <p>
       In our soil-testing program, suppose we want to set a flag if the pH is off<mdash />either too high or too low. We can do this with a logical or:
     </p>
@@ -165,7 +178,7 @@
         <shortdescription>Number line with open circles at 6.0 and 7.5 and rays extending outward, illustrating phLevel &lt; 6.0 or phLevel &gt; 7.5.</shortdescription>
         <description>
           <p>
-            A number line with values from 5.0 to 8.5. At 6.0, an open circle with a red arrow points left toward negative infinity, labeled <c>phLevel &lt; 6.0</c> (too acidic / low). At 7.5, an open circle with an orange arrow points right toward positive infinity, labeled <c>phLevel &gt; 7.5</c> (too alkaline / high). The region between 6.0 and 7.5 is excluded.
+            A number line with values from 5.0 to 8.5. At 6.0, an open circle with an arrow points left toward negative infinity, labeled <c>phLevel &lt; 6.0</c> (too acidic / low). At 7.5, an open circle with an arrow points right toward positive infinity, labeled <c>phLevel &gt; 7.5</c> (too alkaline / high). The region between 6.0 and 7.5 is excluded.
           </p>
         </description>
       </image>
@@ -185,7 +198,7 @@
         <shortdescription>Number line with closed circles at 6.0 and 7.5 and a shaded segment between them, showing (phLevel &gt;= 6.0) &amp;&amp; (phLevel &lt;= 7.5).</shortdescription>
         <description>
           <p>
-            A number line with values from 5.0 to 8.5. Solid green circles at boundary points 6.0 and 7.5 are connected by a thick green line segment, representing the closed interval [6.0, 7.5], labeled <c>(phLevel &gt;= 6.0) &amp;&amp; (phLevel &lt;= 7.5)</c> (healthy soil range).
+            A number line with values from 5.0 to 8.5. Solid  circles at boundary points 6.0 and 7.5 are connected by a thick  line segment, representing the closed interval [6.0, 7.5], labeled <c>(phLevel &gt;= 6.0) &amp;&amp; (phLevel &lt;= 7.5)</c> (healthy soil range).
           </p>
         </description>
       </image>
@@ -219,6 +232,13 @@
     <p>
       Java has one more logical operator: logical not (<c>!</c>). Logical not is a unary operator, meaning it has one operand: a boolean expression. Logical not negates the logical expression, as shown in <xref ref="table-truth-table-not" />:
     </p>
+	
+		<remark xml:id="py-not">
+  <title>Logical Not</title>
+  <p>
+    In Python, the logical not operator is literally the word <c>not</c>, but many languages, including Java, C, C++, and JavaScript, use the exclamation point <c>!</c>. In Python, the exclamation point is used in not equals (<c>!=</c>).
+  </p>
+</remark>
 
     <table xml:id="table-truth-table-not">
       <title>Truth table for <c>!</c> (not)</title>
@@ -249,7 +269,7 @@
 }]]></program>
 
     <p>
-      In Java, you can negate any Boolean expression but take care not to write expressions that are overly confusing. For example, can you easily tell when the following expression will evaluate to <c>true</c>?
+      In Java, you can negate any Boolean expression, but take care not to write expressions that are overly confusing. For example, can you easily tell when the following expression will evaluate to <c>true</c>?
     </p>
 
     <program language="java"><![CDATA[!((phLevel >= 6.0) && (phLevel <= 7.5))]]></program>
@@ -280,7 +300,7 @@
     <title>Logical Operator Precedence</title>
 
     <p>
-      <xref ref="table-operator-precedence-logical" /> is our operator precedence table with <c>&amp;&amp;</c>, <c>||</c>, and <c>!</c> added. The new and changed rows are highlighted in bold.
+      <xref ref="table-operator-precedence-logical" /> is our operator precedence table with <c>&amp;&amp;</c>, <c>||</c>, and <c>!</c> added. The new and changed rows are marked "new" or "updated" and highlighted with a thick bold line.
     </p>
 
     <table xml:id="table-operator-precedence-logical">
@@ -305,13 +325,13 @@
           <cell>Left-to-right</cell>
           <cell>Parentheses (grouping), method calls, and member access (e.g. <c>Math.PI</c>)</cell>
         </row>
-        <row>
+        <row bottom="major">
           <cell>Postfix</cell>
           <cell><c>expr++</c> <c>expr--</c></cell>
           <cell>Left-to-right</cell>
           <cell>Post-increment and post-decrement</cell>
         </row>
-        <row bottom="medium" top="medium">
+        <row bottom="major">
           <cell><strong>Prefix / Unary (updated)</strong></cell>
           <cell>
             <p><strong><c>++expr</c> <c>--expr</c></strong></p>
@@ -343,19 +363,19 @@
           <cell>Left-to-right</cell>
           <cell>Less than, less than or equal to, greater than, greater than or equal to</cell>
         </row>
-        <row>
-          <cell>Equality</cell>
+        <row bottom = "major">
+          <cell >Equality</cell>
           <cell><c>==</c> <c>!=</c></cell>
           <cell>Left-to-right</cell>
           <cell>Equal to, not equal to</cell>
         </row>
-        <row bottom="medium" top="medium">
+        <row bottom="major">
           <cell><strong>Logical and (new)</strong></cell>
           <cell><strong><c>&amp;&amp;</c></strong></cell>
           <cell><strong>Left-to-right</strong></cell>
           <cell><strong>Logical and</strong></cell>
         </row>
-        <row bottom="medium" top="medium">
+        <row bottom="major">
           <cell><strong>Logical or (new)</strong></cell>
           <cell><strong><c>||</c></strong></cell>
           <cell><strong>Left-to-right</strong></cell>
@@ -436,7 +456,7 @@ true]]></program>
     <title>Short-Circuit Evaluation</title>
 
     <p>
-      When Java evaluates a compound Boolean expression joined by <c>&amp;&amp;</c> or <c>||</c>, it does not always evaluate both operands. Instead, it stops evaluating as soon as the final truth value of the entire expression is guaranteed. This behavior is called <term>short-circuit evaluation</term>.
+      When Java evaluates a compound Boolean expression joined by <c>&amp;&amp;</c> or <c>||</c>, it does not always evaluate both operands. Instead, it stops evaluating as soon as the final truth value of the entire expression is guaranteed. This behavior is called short-circuit evaluation.
     </p>
 
     <p>
@@ -582,5 +602,189 @@ if (count > 0 && total / count > 10) { ... }]]></program>
     <p>
       Whenever you find yourself writing an <c>!</c> outside a parenthesized condition, use De Morgan’s laws to push the negation inside and simplify each comparison. Your code will be significantly easier to read, test, and maintain.
     </p>
+
+    <reading-questions xml:id="checkpoint-3-5">
+      <title>Checkpoint</title>
+
+      <exercise xml:id="checkpoint-3-5-range-test" label="checkpoint-3-5-range-test">
+        <title>Checking a Numeric Range</title>
+        <statement>
+          <p>
+            Which Java expression correctly tests whether an integer <c>temp</c> is between <c>32</c> and <c>212</c> inclusive?
+          </p>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                <c>temp &gt;= 32 &amp;&amp; temp &lt;= 212</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! A within-range test requires both conditions to be true at the same time, joined by <c>&amp;&amp;</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>32 &lt;= temp &lt;= 212</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Java does not allow chaining relational operators; <c>32 &lt;= temp</c> evaluates to a <c>boolean</c>, which cannot be compared to <c>212</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>temp &gt;= 32 || temp &lt;= 212</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. With <c>||</c>, every number satisfies at least one of the two comparisons (for example, <c>0 &lt;= 212</c> is <c>true</c>), so the expression is always <c>true</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>temp &gt;= 32 &amp;&amp; &lt;= 212</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Both sides of <c>&amp;&amp;</c> must be complete Boolean expressions, so <c>temp</c> must appear in both comparisons.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-3-5-precedence" label="checkpoint-3-5-precedence">
+        <title>Evaluating Compound Boolean Expressions</title>
+        <statement>
+          <p>
+            Given <c>boolean a = false;</c>, <c>boolean b = true;</c>, and <c>boolean c = false;</c>, what does the following expression evaluate to?
+          </p>
+          <program language="java"><![CDATA[!a || b && c]]></program>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                <c>true</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! <c>!</c> has the highest precedence (<c>!a</c> is <c>true</c>), followed by <c>&amp;&amp;</c> (<c>b &amp;&amp; c</c> is <c>false</c>), and finally <c>||</c> (<c>true || false</c> is <c>true</c>).
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>false</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Watch operator precedence: <c>!</c> binds to <c>a</c> first (giving <c>true</c>) and <c>&amp;&amp;</c> binds tighter than <c>||</c>, so Java groups this as <c>(!a) || (b &amp;&amp; c)</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                It causes a compiler error because parentheses are required around <c>b &amp;&amp; c</c>.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Parentheses are good style for readability, but Java compiles this using its built-in precedence rules (<c>!</c> &gt; <c>&amp;&amp;</c> &gt; <c>||</c>).
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-3-5-short-circuit" label="checkpoint-3-5-short-circuit">
+        <title>Order of Operands</title>
+        <statement correct="no">
+          <p>
+            In <c>if (count &gt; 0 &amp;&amp; total / count &gt; 10)</c>, if <c>count</c> is <c>0</c>, Java still evaluates <c>total / count &gt; 10</c> and throws an <c>ArithmeticException</c>.
+          </p>
+        </statement>
+        <feedback>
+          <p>
+            False. Because <c>count &gt; 0</c> evaluates to <c>false</c> and the operator is <c>&amp;&amp;</c>, Java short-circuits and skips evaluating the right side completely.
+          </p>
+        </feedback>
+      </exercise>
+
+      <exercise xml:id="checkpoint-3-5-demorgan" label="checkpoint-3-5-demorgan">
+        <title>Simplifying a Negated Condition</title>
+        <statement>
+          <p>
+            Which expression is logically equivalent to <c>!(x &gt; 0 &amp;&amp; y &lt;= 10)</c>?
+          </p>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                <c>x &lt;= 0 || y &gt; 10</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! By De Morgan’s laws, <c>!(A &amp;&amp; B)</c> becomes <c>!A || !B</c>: flip <c>&amp;&amp;</c> to <c>||</c> and replace each comparison with its complement.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>x &lt;= 0 &amp;&amp; y &gt; 10</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. When distributing <c>!</c>, De Morgan’s laws also flip <c>&amp;&amp;</c> to <c>||</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>x &lt; 0 || y &gt;= 10</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Check the complements of each relational operator: the complement of <c>&gt;</c> is <c>&lt;=</c>, and the complement of <c>&lt;=</c> is <c>&gt;</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>x &gt; 0 || y &lt;= 10</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. In addition to flipping <c>&amp;&amp;</c> to <c>||</c>, you must also negate both individual comparisons.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+    </reading-questions>
   </subsection>
 </section>

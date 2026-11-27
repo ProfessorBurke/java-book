@@ -6,6 +6,7 @@
     <defaults>
       <programs linenumbers="yes" />
     </defaults>
+	<rename element="remark">Python Note</rename>
   </docinfo>
   
 

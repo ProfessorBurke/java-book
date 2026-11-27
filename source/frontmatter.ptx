@@ -61,8 +61,8 @@
         and for technical production. Generative tools assisted with structuring 
         exercises, critiquing the author's narratives, drafting some initial narratives, 
 		generating PreTeXt XML mark-up, 
-        and rendering call stack memory models, structure charts, and some UML diagrams. 
-        Non-standard diagrams are based
+        and rendering call stack memory models, structure charts, flowcharts, and some UML diagrams. 
+        Non-standardized diagrams are based
 		on the author's diagrams and were drawn to the author's specifications, UML diagrams
 		and structure charts follow published standards.
         All pedagogy, curricular sequencing, code examples, diagrams, technical explanations, 

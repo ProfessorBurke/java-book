@@ -272,6 +272,28 @@
         exercise-worksheet="no"
         exercise-reading="no"
       />-->
+	  
+	  <!-- Changing the default for remark to yes for pop-up Python notes -->
+	  <knowl
+        theorem="no"
+        proof="yes"
+        definition="no"
+        example="yes"
+        example-solution="yes"
+        project="no"
+        task="no"
+        remark="yes"
+        objectives="no"
+        outcomes="no"
+        figure="no"
+        table="no"
+        listing="no"
+        list="no"
+        exercise-inline="yes"
+        exercise-divisional="no"
+        exercise-worksheet="no"
+        exercise-reading="no"
+      />
 
     <!-- The theme controls the look of the html.  Which extra attributes -->
     <!-- apply depends on the theme you choose:                           -->
