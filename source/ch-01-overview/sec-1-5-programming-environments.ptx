@@ -47,7 +47,7 @@
     <ol>
       <li>
         <p>
-          <line><term>The JVM (Java Virtual Machine): The Execution Engine</term></line>
+          <line>The JVM (Java Virtual Machine): The Execution Engine</line>
           The JVM is the software program that executes Java bytecode instructions on your
           physical computer. Every operating system (Windows, macOS, Linux) has its own
           specific JVM built to translate bytecode into that computer's native machine
@@ -56,7 +56,7 @@
       </li>
       <li>
         <p>
-          <line><term>The JRE (Java Runtime Environment): For Running Programs</term></line>
+          <line>The JRE (Java Runtime Environment): For Running Programs</line>
           The JRE contains the JVM plus the standard Java class libraries (all the
           pre-written Java code that provides basic features like math operations, text
           handling, and input reading).
@@ -70,7 +70,7 @@
       </li>
       <li>
         <p>
-          <line><term>The JDK (Java Development Kit): For Creating Programs</term></line>
+          <line>The JDK (Java Development Kit): For Creating Programs</line>
           The JDK is the complete software package designed for programmers. It contains
           everything in the JRE (so you can run programs), plus all the developer tools
           needed to create software from scratch.
@@ -136,20 +136,20 @@
     <ul>
       <li>
         <p>
-          <term>Eclipse Temurin (by Adoptium):</term> A community-driven,
+          Eclipse Temurin (by Adoptium): A community-driven,
           vendor-neutral distribution managed by the Eclipse Foundation; widely popular in
           education and industry for its reliability and open-source licensing.
         </p>
       </li>
       <li>
         <p>
-          <term>Oracle OpenJDK / Oracle JDK:</term> The official builds provided
+          Oracle OpenJDK / Oracle JDK: The official builds provided
           directly by Oracle (the stewards of the Java language).
         </p>
       </li>
       <li>
         <p>
-          <term>Cloud &amp; Enterprise Distributions:</term> Other well-maintained,
+          Cloud &amp; Enterprise Distributions: Other well-maintained,
           free builds backed by major tech companies, including Amazon Corretto, Microsoft
           Build of OpenJDK, and Azul Zulu.
         </p>
@@ -500,8 +500,8 @@ public class Hello {
 
       <p>
         The Eclipse window is made up of several panes that contain one or more tabbed
-        <term>Views</term>. A particular arrangement of these Views and editor panes is called a
-        <term>Perspective</term>. You don’t need to worry about these names too much right now—they are
+        Views. A particular arrangement of these Views and editor panes is called a
+        Perspective. You don’t need to worry about these names too much right now—they are
         mainly useful to know when you accidentally close something and need to find the
         menu command to get it back!
       </p>
@@ -829,6 +829,13 @@ public class Hello {
       to type small pieces of Java code and see an immediate result. This is helpful for
       experimenting with Java features as you’re learning the language.
     </p>
+	
+	<remark xml:id="py-jshell">
+  <title>JShell and IDLE</title>
+  <p>
+    JShell works much like interactive (immediate) mode in Python’s IDLE: each statement or expression you type is evaluated right away, and any variables you create stay in memory for the rest of your session so you can use them in later lines. One key difference is that in Java, you must specify a variable’s data type (such as <c>int</c> or <c>double</c>) the first time you create it.
+  </p>
+</remark>
 
     <p>
       To start JShell, run your command-line environment and type <c>jshell</c>, followed by

@@ -70,6 +70,13 @@
     <program language="java"><![CDATA[System.out.print("Enter the length of the area in feet: ");
 length = stdin.nextDouble();]]></program>
 
+<remark xml:id="py-input">
+  <title>Python <c>input</c> Statement</title>
+  <p>
+    In Python, the input statement combines the prompt with reading input, but the input statement always returns a string. We must then cast that input to another data type if we're prompting for a number, for example <c>length = float(input("Enter the length of the area in feet: "))</c>.
+  </p>
+</remark>
+
     <p>
       The <c>Scanner</c> class divides incoming input into individual chunks called tokens. By default, tokens are separated by whitespace (spaces, tabs, and newlines).
     </p>

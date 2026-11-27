@@ -265,6 +265,13 @@ System.out.println(message); // Prints: Loading...]]></program>
       <program language="java"><![CDATA[int score = 95;
 String report = "Final score: " + score; // "Final score: 95"]]></program>
 
+<remark xml:id="py-string-concatenation">
+  <title>Python vs. Java String Concatenation</title>
+  <p>
+    If you’re coming from Python, you’ll find Java's string concatenation a welcome upgrade! In Java, you can concatenate other data types directly with a string -- no need to cast them to a String first (as with Python's <c>str</c> function).
+  </p>
+</remark>
+
       <p>
         Be mindful of operator precedence when combining arithmetic with string concatenation. Because <c>+</c> evaluates from left to right:
       </p>

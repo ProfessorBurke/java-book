@@ -63,6 +63,12 @@ product = quantity * 5;]]></program>
     <p>
       However, if either of the operands is a floating-point expression, then Java will perform a floating-point division. For example, <c>10.0 / 4</c>, <c>10 / 4.0</c>, and <c>10.0 / 4.0</c> will all evaluate to 2.5.
     </p>
+	<remark xml:id="py-division">
+  <title>Python Division</title>
+  <p>
+    This is a big difference between Python and many other languages. In Python, integer division has its own operator -- <c>//</c>. In many other languages, including Java (and Python 2.0), <c>/</c> is overloaded, and which kind of division is performed depends on the types of the operands.
+  </p>
+</remark>
 
     <p>
       This is a very common source of errors for new programmers! One of the most common errors is calculating a percentage by dividing two integers and multiplying by 100. Consider the following code:
@@ -930,6 +936,13 @@ Max plus one: -2147483648</output>
       <p>
         Note that Java does not warn you when an integer overflows. If your program might handle quantities larger than 2 billion (such as bank balances, file sizes in bytes, or national populations), use the 64-bit <c>long</c> type instead of <c>int</c>. Be especially careful about variables storing temporary results of additions or multiplications. Your data may always fall within the integer range, but if a calculation with your data might result in a value outside the range, use a <c>long</c>.
       </p>
+	  
+	  <remark xml:id="py-integer-overflow">
+  <title>No Integer Overflow in Python</title>
+  <p>
+    In Python, integers are not limited to a fixed number of bits—Python automatically allocates more memory as an <c>int</c> grows, so integers never overflow or wrap around. In Java, <c>int</c> (32 bits) and <c>long</c> (64 bits) have fixed sizes, so exceeding their maximum value silently wraps around to a negative number.
+  </p>
+</remark>
     </subsubsection>
 
     <!-- 2.5.6.2 Inexact Decimals in Base 2 -->

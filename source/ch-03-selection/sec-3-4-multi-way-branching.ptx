@@ -103,6 +103,13 @@
     <p>
       In a series <c>if</c>, each condition is tested in order until a condition evaluates to <c>true</c>. Once a condition evaluates to <c>true</c>, its conditional code executes and the series <c>if</c> statement is complete. The rest of the series <c>if</c> is skipped and execution resumes at the first line of code following the series <c>if</c>.
     </p>
+	
+	<remark xml:id="py-if-elif">
+  <title>Yes, this is <c>if-elif</c> from Python</title>
+  <p>
+    If you're coming from Python and you think this looks like an <c>if-elif</c> statement, you're right! In Java, you write out "else if" as two separate words, but it otherwise works the same.
+  </p>
+</remark>
 
     <p>
       Notice the sifting property at work in <xref ref="listing-grading-series" />. The first condition (<c>postTestScore &lt; 60</c>) catches every score below 60. If execution falls through to the next condition (<c>postTestScore &lt; 70</c>), we already know the complement must be true: <c>postTestScore &gt;= 60</c>. As a result, when <c>postTestScore &lt; 70</c> evaluates to <c>true</c>, the score is guaranteed to be in the range <m>[60.0, 70.0)</m>. Each successive branch sifts out the next layer of values.
@@ -197,6 +204,13 @@ else
         result = "Retake with foundational intervention.";
 } else
     result = "Pass.";]]></program>
+
+<remark xml:id="py-no-braces">
+  <title>Curly braces in Java take the place of indentation in Python</title>
+  <p>
+    If you're coming from Python, you know how important indentation is!  You should follow the same indentation habits that you  learned in Python, with one important caveat: indentation communicates nothing to Java. Instead, blocks are enclosed in curly braces, and they're easy to forget if you're not used to them! Get in the habit of asking if you need braces when you're indenting. (The answer is usually -- but not always -- yes.)
+  </p>
+</remark>
 
     <p>
       It is very common for there to be multiple closing curly braces at the end of a block of code. Even when they’re properly indented, it can be difficult to see which opening curly brace is a match. Some Java style guides recommend documenting closing curly braces with single-line comments. If our code from <xref ref="listing-grading-nested" /> were the end of the program, the program would end with four closing curly braces, which we might document as shown below, to make the code more readable and easier to modify. If you wanted to add a print statement to display the result, you’d know to put it between the second and third curly braces so that it would fall within the <c>main</c> method, but after the conditional code that sets the <c>result</c> variable.

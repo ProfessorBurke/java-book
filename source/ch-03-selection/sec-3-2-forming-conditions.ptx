@@ -84,6 +84,12 @@ public class PercentSuccess {
     <p>
       This is the first line of the selection statement, beginning with the keyword <c>if</c> and followed by a condition in parentheses. (The parentheses are required.) The condition is a Boolean expression: an expression that evaluates to <c>true</c> or <c>false</c>. After the condition, we open a block with a curly brace. All of the code between the curly brace and the closing curly brace on line 33 is part of the <c>if</c> statement.
     </p>
+	<remark xml:id="py-conditional-parens">
+  <title>Parentheses are required in Java!</title>
+  <p>
+    If you're coming from Python, you might not be used to putting parentheses around the Boolean condition following the keyword if. In Java, they're required!
+  </p>
+</remark>
 
     <p>
       We don’t know what value the user will enter when prompted for the total number of freethrows. That value is unknown until the program is executing and the user has entered the value on line 21. We have written the <c>if</c> statement to prevent the program from crashing if the user has entered a zero.

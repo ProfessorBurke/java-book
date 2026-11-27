@@ -88,6 +88,13 @@ depth = depth / 12.0;]]></program>
         </li>
       </ul>
 
+<remark xml:id="py-float-double">
+  <title>Python <c>float</c> vs. Java <c>double</c></title>
+  <p>
+    If you’re coming from Python, you’ll want to break the habit of reaching for <c>float</c> whenever you need a decimal number. In Java, <c>double</c> is the standard default. In fact, Python’s <c>float</c> uses 64 bits (double precision) under the hood—the exact same size and precision as a Java <c>double</c>, whereas Java’s <c>float</c> is only 32 bits.
+  </p>
+</remark>
+
       <p>
         Why does Java offer four different types just for whole numbers? The answer comes down to memory and range. A computer stores everything in binary bits (0s and 1s). The more bits a type uses, the more distinct values it can represent, and the wider its numerical range:
       </p>

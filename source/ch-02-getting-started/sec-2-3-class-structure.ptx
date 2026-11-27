@@ -35,7 +35,7 @@
   </p>
 
   <p>
-    In programming, names that you create<mdash />such as the names of classes, variables, and methods<mdash />are called <term>identifiers</term>. Java’s compiler does not strictly enforce how you capitalize an identifier. You could name a class in all lowercase letters (like <c>mulchcalculator</c>), and your program would compile and run without any errors. However, the Java community adheres to strict naming conventions to make code consistent, and easy for other programmers to read.
+    In programming, names that you create<mdash />such as the names of classes, variables, and methods<mdash />are called identifiers. Java’s compiler does not strictly enforce how you capitalize an identifier. You could name a class in all lowercase letters (like <c>mulchcalculator</c>), and your program would compile and run without any errors. However, the Java community adheres to strict naming conventions to make code consistent, and easy for other programmers to read.
   </p>
 
   <p>
@@ -62,6 +62,13 @@
       </p>
     </li>
   </ul>
+
+<remark xml:id="py-identifier-naming">
+  <title>Identifiers in Python</title>
+  <p>
+    The big difference if you're coming from Python is that variables are named with camelCase rather than snake_case. In Python, the convention for class names is also PascalCase and the convention for constants is also UPPER_SNAKE_CASE.
+  </p>
+</remark>
 
   <p>
     At the very top of a Java file, before the class header, you will often see two types of compiler directives: package declarations and import declarations.
@@ -93,7 +100,7 @@ java.util.Scanner keyboard = new java.util.Scanner(System.in);]]></program>
   </p>
 
   <p>
-    In <xref ref="listing-mulch-calculator" />, you will notice blank lines and indented text. In programming, blank lines, spaces, and tabs are collectively referred to as <term>whitespace</term>.
+    In <xref ref="listing-mulch-calculator" />, you will notice blank lines and indented text. In programming, blank lines, spaces, and tabs are collectively referred to as whitespace.
   </p>
 
   <p>
