@@ -1672,115 +1672,43 @@ var ptx_lunr_docs = [
   "type": "Section",
   "number": "3.8",
   "title": "Writing Defensive Code with Assertions",
-  "body": " Writing Defensive Code with Assertions   Throughout this chapter, you have used selection statements ( if , if-else , and switch ) to control the flow of your programs based on runtime conditions such as validating user input or choosing an alternative algorithm. However, programmers also need a mechanism to test their own assumptions about how the code executes.  When writing complex branching logic, you will often find yourself thinking: At this point in the program, variable x must be positive, or The program should never reach this default branch. Java provides a dedicated construct called an assertion to document and automatically verify these internal assumptions during development.  Assertions are not a mechanism for changing the flow of control of your program, like selection statements. They are statements that are used only during development (not in production code) to flag programming errors caused by incorrect assumptions.       What Is an Assertion?  An assertion is a statement containing a Boolean expression that the programmer believes must be true at that specific point in execution:    If the expression evaluates to true , the program assumes that its internal state is healthy and continues executing normally without interruption.    If the expression evaluates to false , the assertion has detected an internal bug. Java immediately halts the program and throws an AssertionError , preventing corrupted data or unexpected calculations from propagating further, and giving the programmer the opportunity to examine the assumption and why it failed.    Assertions are fundamentally different from regular if statements:    if statements handle expected runtime variations, such as invalid user input, missing files, or network delays and allow the program to recover or prompt the user to try again.    assert statements catch internal programmer bugs: situations that should logically never happen if the algorithm is implemented correctly.         Syntax of the assert Statement  Java provides two forms of the assert statement:    Basic Form  assert booleanExpression;  If booleanExpression evaluates to false , Java throws an AssertionError with no additional message.    Detailed Form (Recommended)  assert booleanExpression : expressionWithMessage;  If booleanExpression evaluates to false , Java evaluates expressionWithMessage (typically a String or a variable) and includes its value in the resulting error message. This makes tracking down why an assumption failed much easier.    We had the following series if statement in :  if (postTestScore < 60) { letterGrade = 'F'; } else if (postTestScore < 70) { letterGrade = 'D'; } else if (postTestScore < 80) { letterGrade = 'C'; } else if (postTestScore < 90) { letterGrade = 'B'; } else { letterGrade = 'A'; }  In this code, we are making the assumption that postTestScore is a value between 0 and 100, otherwise we’d be awarding F grades to values below 0 and A grades to values above 100.  We can add assertions to the code so that the program will throw an error if our assumptions are incorrect:  if (postTestScore < 60) { assert postTestScore >= 0 : \"Invalid negative score\"; letterGrade = 'F'; } else if (postTestScore < 70) { letterGrade = 'D'; } else if (postTestScore < 80) { letterGrade = 'C'; } else if (postTestScore < 90) { letterGrade = 'B'; } else { assert postTestScore <= 100 : \"Invalid score above 100\"; letterGrade = 'A'; }  This program documents (and checks) our assumptions that the scores are within the range of 0 to 100 inclusive.  We could also assert the entire range 0 <= postTestScore && postTestScore <= 100 before entering the decision structure entirely.  One note about our example: we are not validating input with our assertions. If the user is entering the value for postTestScore , we should validate that it’s between 0 and 100 with an if statement and then proceed accordingly if it is not (bypass processing altogether, or as we’ll learn in the next chapter, allow the user to try again).  If the score is not entered by the user, but is calculated in the code, the assertion can catch a calculation error.  The assertion is documenting and checking a precondition that is necessary for this code to function correctly.       When to Use (and When Not to Use) Assertions  To write reliable, maintainable code, it is essential to distinguish between appropriate and inappropriate uses of assertions:   Appropriate Uses   Verifying that variables satisfy the relationships you expect.  Placing an assertion at a location the flow of control should never reach (for instance, the default case of a switch when all valid possibilities are handled).     Inappropriate Uses    Never use assertions for user input validation: Users frequently enter unexpected data. That data must be checked with if statements so the application can handle it gracefully.    Never write assertions that cause side effects: The expression inside an assertion should never alter the state of the program. For example:  \/\/ DANGEROUS: If assertions are disabled, count is never incremented! assert (count++ < MAX_CAPACITY);  If assertions are turned off, the increment count++ never executes, altering the behavior of your program between testing and deployment.          Enabling and Disabling Assertions  By default, Java disables assertions at runtime. Because of this default behavior, code with assertions will run without checking them unless you explicitly tell the Java Virtual Machine (JVM) to turn them on.  When executing a compiled class from the terminal:  To enable assertions, pass the -ea (or -enableassertions ) flag:   java -ea MyProgram   To disable assertions: pass the -da (or -disableassertions ) flag:   java -da MyProgram        Enabling and Disabling Assertions in Eclipse  Because assertions are inactive by default, you must configure Eclipse to pass the -ea argument to the JVM when running your project.  To enable assertions for a specific class\/run configuration:    Open the Java class containing your main method in the Eclipse editor.    Go to the menu bar and select Run Run Configurations... (or right-click the code editor, select Run As Run Configurations... ).    In the left sidebar, expand Java Application and click on your application's run configuration.    Select the (x)= Arguments tab in the main panel.    In the VM arguments: text area (the lower text box, not Program arguments), type: -ea    Click Apply , and then click Run .    Any assert statements in your program will now execute and trigger AssertionError if their conditions evaluate to false .  To disable assertions:    Return to Run Run Configurations... and select your configuration.    Go to the (x)= Arguments tab.    Simply delete the -ea argument from the VM arguments: field (since assertions are disabled by default in the JVM), or explicitly set -da .    Click Apply and Run .    If you want Eclipse to automatically enable assertions for all Java programs you run locally:    Go to Window Preferences (on macOS, Eclipse Settings... ).    Expand Java in the left menu and select Installed JREs .    Select your active JDK\/JRE from the list and click Edit... .    In the Default VM arguments: field, enter -ea .    Click Finish , then Apply and Close .    All future Java executions in that workspace will run with assertions enabled by default.   "
+  "body": " Writing Defensive Code with Assertions   Throughout this chapter, you have used selection statements ( if , if-else , and switch ) to control the flow of your programs based on runtime conditions such as validating user input or choosing an alternative algorithm. However, programmers also need a mechanism to test their own assumptions about how the code executes.  When writing complex branching logic, you will often find yourself thinking: At this point in the program, variable x must be positive, or The program should never reach this default branch. Java provides a dedicated construct called an assertion to document and automatically verify these internal assumptions during development.  Assertions are not a mechanism for changing the flow of control of your program, like selection statements. They are statements that are used only during development (not in production code) to flag programming errors caused by incorrect assumptions.       What Is an Assertion?  An assertion is a statement containing a Boolean expression that the programmer believes must be true at that specific point in execution:    If the expression evaluates to true , the program assumes that its internal state is healthy and continues executing normally without interruption.    If the expression evaluates to false , the assertion has detected an internal bug. Java immediately halts the program and throws an AssertionError , preventing corrupted data or unexpected calculations from propagating further, and giving the programmer the opportunity to examine the assumption and why it failed.    Assertions are fundamentally different from regular if statements:    if statements handle expected runtime variations, such as invalid user input, missing files, or network delays and allow the program to recover or prompt the user to try again.    assert statements catch internal programmer bugs: situations that should logically never happen if the algorithm is implemented correctly.         Syntax of the assert Statement  Java provides two forms of the assert statement:    Basic Form  assert booleanExpression;  If booleanExpression evaluates to false , Java throws an AssertionError with no additional message.    Detailed Form (Recommended)  assert booleanExpression : expressionWithMessage;  If booleanExpression evaluates to false , Java evaluates expressionWithMessage (typically a String or a variable) and includes its value in the resulting error message. This makes tracking down why an assumption failed much easier.    We had the following series if statement in :  if (postTestScore < 60) { letterGrade = 'F'; } else if (postTestScore < 70) { letterGrade = 'D'; } else if (postTestScore < 80) { letterGrade = 'C'; } else if (postTestScore < 90) { letterGrade = 'B'; } else { letterGrade = 'A'; }  In this code, we are making the assumption that postTestScore is a value between 0 and 100, otherwise we’d be awarding F grades to values below 0 and A grades to values above 100.  We can add assertions to the code so that the program will throw an error if our assumptions are incorrect:  if (postTestScore < 60) { assert postTestScore >= 0 : \"Invalid negative score\"; letterGrade = 'F'; } else if (postTestScore < 70) { letterGrade = 'D'; } else if (postTestScore < 80) { letterGrade = 'C'; } else if (postTestScore < 90) { letterGrade = 'B'; } else { assert postTestScore <= 100 : \"Invalid score above 100\"; letterGrade = 'A'; }  This program documents (and checks) our assumptions that the scores are within the range of 0 to 100 inclusive.  We could also assert the entire range 0 <= postTestScore && postTestScore <= 100 before entering the decision structure entirely.  One note about our example: we are not validating input with our assertions. If the user is entering the value for postTestScore , we should validate that it’s between 0 and 100 with an if statement and then proceed accordingly if it is not (bypass processing altogether, or as we’ll learn in the next chapter, allow the user to try again).  If the score is not entered by the user, but is calculated in the code, the assertion can catch a calculation error.  The assertion is documenting and checking a precondition that is necessary for this code to function correctly.       When to Use (and When Not to Use) Assertions  To write reliable, maintainable code, it is essential to distinguish between appropriate and inappropriate uses of assertions:   Appropriate Uses   Verifying that variables satisfy the relationships you expect.  Placing an assertion at a location the flow of control should never reach (for instance, the default case of a switch when all valid possibilities are handled).     Inappropriate Uses    Never use assertions for user input validation: Users frequently enter unexpected data. That data must be checked with if statements so the application can handle it gracefully.    Never write assertions that cause side effects: The expression inside an assertion should never alter the state of the program. For example:  \/\/ DANGEROUS: If assertions are disabled, count is never incremented! assert (count++ < MAX_CAPACITY);  If assertions are turned off, the increment count++ never executes, altering the behavior of your program between testing and deployment.          Enabling and Disabling Assertions  By default, Java disables assertions at runtime. Because of this default behavior, code with assertions will run without checking them unless you explicitly tell the Java Virtual Machine (JVM) to turn them on.  When executing a compiled class from the terminal:  To enable assertions, pass the -ea (or -enableassertions ) flag:   java -ea MyProgram   To disable assertions: pass the -da (or -disableassertions ) flag:   java -da MyProgram        Enabling and Disabling Assertions in Eclipse  Because assertions are inactive by default, you must configure Eclipse to pass the -ea argument to the JVM when running your project.  To enable assertions for a specific class\/run configuration:    Open the Java class containing your main method in the Eclipse editor.    Go to the menu bar and select Run → Run Configurations... (or right-click the code editor, select Run As → Run Configurations... ).    In the left sidebar, expand Java Application and click on your application's run configuration.    Select the (x)= Arguments tab in the main panel.    In the VM arguments: text area (the lower text box, not Program arguments), type: -ea    Click Apply , and then click Run .    Any assert statements in your program will now execute and trigger AssertionError if their conditions evaluate to false .  To disable assertions:    Return to Run → Run Configurations... and select your configuration.    Go to the (x)= Arguments tab.    Simply delete the -ea argument from the VM arguments: field (since assertions are disabled by default in the JVM), or explicitly set -da .    Click Apply and Run .    If you want Eclipse to automatically enable assertions for all Java programs you run locally:    Go to Window → Preferences (on macOS, Eclipse → Settings... ).    Expand Java in the left menu and select Installed JREs .    Select your active JDK\/JRE from the list and click Edit... .    In the Default VM arguments: field, enter -ea .    Click Finish , then Apply and Close .    All future Java executions in that workspace will run with assertions enabled by default.   Checkpoint   Runtime Behavior of Assertions   By default, Java checks every assert statement at runtime and throws an AssertionError if the condition is false , even if you do not pass the -ea flag.    False. Java disables assertions by default at runtime. You must pass -ea (or -enableassertions ) to the JVM—either on the command line or in Eclipse’s VM arguments—for assertions to be checked.     Choosing Between assert and if   Which situation is an appropriate use of an assert statement in Java?      Placing assert false : \"Unexpected case\"; in the default: branch of a switch that should never be reached if your logic is correct.    Correct! Assertions are designed to catch internal logic bugs and verify assumptions that should never fail during development.      Validating whether a user typed a negative number at a Scanner prompt so you can handle bad input.    Not quite. Never use assert for user input validation—always use if statements, especially since assertions are disabled in production.      Incrementing a counter inside the assertion condition, such as assert (count++ < MAX); .    Not quite. Assertions should never cause side effects like count++ , because that code will not execute when assertions are turned off.      Checking whether an input file exists on disk so the program can ask the user for another filename.    Not quite. Missing files are expected runtime variations, not internal bugs, so they should be handled with selection statements rather than assertions.       Tracing an assert Statement   Suppose assertions are enabled ( -ea ) and int score = -5; when the following statement executes. What happens?  assert score >= 0 : \"Negative score: \" + score;      The program halts immediately and throws an AssertionError containing Negative score: -5 .    Correct! Because -5 >= 0 is false and assertions are enabled, Java evaluates the message expression after the colon and throws an AssertionError with that message.      The program prints Negative score: -5 to the console and continues to the next line.    Not quite. A failed assertion does not just print a warning—it immediately halts the program by throwing an AssertionError .      The program sets score to 0 and continues running.    Not quite. An assert statement tests a condition; it never modifies variables.      It causes a compiler error because score is an int , not a boolean .    Not quite. Although score is an int , the expression score >= 0 evaluates to a boolean ( false ).       Matching Assertion Concepts   Match each item to its role in defensive Java programming.     assert x > 0 : \"x must be positive\";  Detailed assertion with a diagnostic message    -ea  JVM flag that enables assertions at runtime    AssertionError  Error thrown when an enabled assertion fails    if (input < 0)  Appropriate way to validate user input       "
 },
 {
-  "id": "sec-3-8-assertions-2-2",
+  "id": "checkpoint-3-8-default-enabled",
   "level": "2",
-  "url": "sec-3-8-assertions.html#sec-3-8-assertions-2-2",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "assertion "
+  "url": "sec-3-8-assertions.html#checkpoint-3-8-default-enabled",
+  "type": "Reading Question",
+  "number": "3.8.5.1",
+  "title": "Runtime Behavior of Assertions.",
+  "body": " Runtime Behavior of Assertions   By default, Java checks every assert statement at runtime and throws an AssertionError if the condition is false , even if you do not pass the -ea flag.    False. Java disables assertions by default at runtime. You must pass -ea (or -enableassertions ) to the JVM—either on the command line or in Eclipse’s VM arguments—for assertions to be checked.   "
 },
 {
-  "id": "subsec-3-8-5-assertions-in-eclipse-4-3-1",
+  "id": "checkpoint-3-8-when-to-use",
   "level": "2",
-  "url": "sec-3-8-assertions.html#subsec-3-8-5-assertions-in-eclipse-4-3-1",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "Java Application "
+  "url": "sec-3-8-assertions.html#checkpoint-3-8-when-to-use",
+  "type": "Reading Question",
+  "number": "3.8.5.2",
+  "title": "Choosing Between assert and if.",
+  "body": " Choosing Between assert and if   Which situation is an appropriate use of an assert statement in Java?      Placing assert false : \"Unexpected case\"; in the default: branch of a switch that should never be reached if your logic is correct.    Correct! Assertions are designed to catch internal logic bugs and verify assumptions that should never fail during development.      Validating whether a user typed a negative number at a Scanner prompt so you can handle bad input.    Not quite. Never use assert for user input validation—always use if statements, especially since assertions are disabled in production.      Incrementing a counter inside the assertion condition, such as assert (count++ < MAX); .    Not quite. Assertions should never cause side effects like count++ , because that code will not execute when assertions are turned off.      Checking whether an input file exists on disk so the program can ask the user for another filename.    Not quite. Missing files are expected runtime variations, not internal bugs, so they should be handled with selection statements rather than assertions.     "
 },
 {
-  "id": "subsec-3-8-5-assertions-in-eclipse-4-4-1",
+  "id": "checkpoint-3-8-syntax-trace",
   "level": "2",
-  "url": "sec-3-8-assertions.html#subsec-3-8-5-assertions-in-eclipse-4-4-1",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "(x)= Arguments "
+  "url": "sec-3-8-assertions.html#checkpoint-3-8-syntax-trace",
+  "type": "Reading Question",
+  "number": "3.8.5.3",
+  "title": "Tracing an assert Statement.",
+  "body": " Tracing an assert Statement   Suppose assertions are enabled ( -ea ) and int score = -5; when the following statement executes. What happens?  assert score >= 0 : \"Negative score: \" + score;      The program halts immediately and throws an AssertionError containing Negative score: -5 .    Correct! Because -5 >= 0 is false and assertions are enabled, Java evaluates the message expression after the colon and throws an AssertionError with that message.      The program prints Negative score: -5 to the console and continues to the next line.    Not quite. A failed assertion does not just print a warning—it immediately halts the program by throwing an AssertionError .      The program sets score to 0 and continues running.    Not quite. An assert statement tests a condition; it never modifies variables.      It causes a compiler error because score is an int , not a boolean .    Not quite. Although score is an int , the expression score >= 0 evaluates to a boolean ( false ).     "
 },
 {
-  "id": "subsec-3-8-5-assertions-in-eclipse-4-5-1",
+  "id": "checkpoint-3-8-match",
   "level": "2",
-  "url": "sec-3-8-assertions.html#subsec-3-8-5-assertions-in-eclipse-4-5-1",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "VM arguments: "
-},
-{
-  "id": "subsec-3-8-5-assertions-in-eclipse-4-6-1",
-  "level": "2",
-  "url": "sec-3-8-assertions.html#subsec-3-8-5-assertions-in-eclipse-4-6-1",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "Apply Run "
-},
-{
-  "id": "subsec-3-8-5-assertions-in-eclipse-7-2-1",
-  "level": "2",
-  "url": "sec-3-8-assertions.html#subsec-3-8-5-assertions-in-eclipse-7-2-1",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "(x)= Arguments "
-},
-{
-  "id": "subsec-3-8-5-assertions-in-eclipse-7-3-1",
-  "level": "2",
-  "url": "sec-3-8-assertions.html#subsec-3-8-5-assertions-in-eclipse-7-3-1",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "VM arguments: "
-},
-{
-  "id": "subsec-3-8-5-assertions-in-eclipse-7-4-1",
-  "level": "2",
-  "url": "sec-3-8-assertions.html#subsec-3-8-5-assertions-in-eclipse-7-4-1",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "Apply Run "
-},
-{
-  "id": "subsec-3-8-5-assertions-in-eclipse-9-2-1",
-  "level": "2",
-  "url": "sec-3-8-assertions.html#subsec-3-8-5-assertions-in-eclipse-9-2-1",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "Java Installed JREs "
-},
-{
-  "id": "subsec-3-8-5-assertions-in-eclipse-9-3-1",
-  "level": "2",
-  "url": "sec-3-8-assertions.html#subsec-3-8-5-assertions-in-eclipse-9-3-1",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "Edit... "
-},
-{
-  "id": "subsec-3-8-5-assertions-in-eclipse-9-4-1",
-  "level": "2",
-  "url": "sec-3-8-assertions.html#subsec-3-8-5-assertions-in-eclipse-9-4-1",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "Default VM arguments: "
-},
-{
-  "id": "subsec-3-8-5-assertions-in-eclipse-9-5-1",
-  "level": "2",
-  "url": "sec-3-8-assertions.html#subsec-3-8-5-assertions-in-eclipse-9-5-1",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "Finish Apply and Close "
+  "url": "sec-3-8-assertions.html#checkpoint-3-8-match",
+  "type": "Reading Question",
+  "number": "3.8.5.4",
+  "title": "Matching Assertion Concepts.",
+  "body": " Matching Assertion Concepts   Match each item to its role in defensive Java programming.     assert x > 0 : \"x must be positive\";  Detailed assertion with a diagnostic message    -ea  JVM flag that enables assertions at runtime    AssertionError  Error thrown when an enabled assertion fails    if (input < 0)  Appropriate way to validate user input    "
 },
 {
   "id": "sec-3-9-design-verification",

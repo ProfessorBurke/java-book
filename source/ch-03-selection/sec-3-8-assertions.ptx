@@ -9,7 +9,7 @@
     </p>
 
     <p>
-      When writing complex branching logic, you will often find yourself thinking: <q>At this point in the program, variable x must be positive,</q> or <q>The program should never reach this default branch.</q> Java provides a dedicated construct called an <term>assertion</term> to document and automatically verify these internal assumptions during development.
+      When writing complex branching logic, you will often find yourself thinking: <q>At this point in the program, variable x must be positive,</q> or <q>The program should never reach this default branch.</q> Java provides a dedicated construct called an assertion to document and automatically verify these internal assumptions during development.
     </p>
 
     <p>
@@ -218,19 +218,19 @@ assert (count++ < MAX_CAPACITY);]]></program>
         <p>Open the Java class containing your <c>main</c> method in the Eclipse editor.</p>
       </li>
       <li>
-        <p>Go to the menu bar and select <menuchoice><guimenu>Run</guimenu><guimenuitem>Run Configurations...</guimenuitem></menuchoice> (or right-click the code editor, select <menuchoice><guimenu>Run As</guimenu><guimenuitem>Run Configurations...</guimenuitem></menuchoice>).</p>
+        <p>Go to the menu bar and select <c>Run</c> &#x2192; <c>Run Configurations...</c> (or right-click the code editor, select <c>Run As</c> &#x2192; <c>Run Configurations...</c>).</p>
       </li>
       <li>
-        <p>In the left sidebar, expand <term>Java Application</term> and click on your application's run configuration.</p>
+        <p>In the left sidebar, expand <c>Java Application</c> and click on your application's run configuration.</p>
       </li>
       <li>
-        <p>Select the <term>(x)= Arguments</term> tab in the main panel.</p>
+        <p>Select the <c>(x)= Arguments</c> tab in the main panel.</p>
       </li>
       <li>
-        <p>In the <term>VM arguments:</term> text area (the lower text box, not Program arguments), type: <kbd>-ea</kbd></p>
+        <p>In the <c>VM arguments:</c> text area (the lower text box, not Program arguments), type: <kbd>-ea</kbd></p>
       </li>
       <li>
-        <p>Click <term>Apply</term>, and then click <term>Run</term>.</p>
+        <p>Click <c>Apply</c>, and then click <c>Run</c>.</p>
       </li>
     </ol>
 
@@ -244,16 +244,16 @@ assert (count++ < MAX_CAPACITY);]]></program>
 
     <ol>
       <li>
-        <p>Return to <menuchoice><guimenu>Run</guimenu><guimenuitem>Run Configurations...</guimenuitem></menuchoice> and select your configuration.</p>
+        <p>Return to <c>Run</c> &#x2192; <c>Run Configurations...</c> and select your configuration.</p>
       </li>
       <li>
-        <p>Go to the <term>(x)= Arguments</term> tab.</p>
+        <p>Go to the <c>(x)= Arguments</c> tab.</p>
       </li>
       <li>
-        <p>Simply delete the <c>-ea</c> argument from the <term>VM arguments:</term> field (since assertions are disabled by default in the JVM), or explicitly set <c>-da</c>.</p>
+        <p>Simply delete the <c>-ea</c> argument from the <c>VM arguments:</c> field (since assertions are disabled by default in the JVM), or explicitly set <c>-da</c>.</p>
       </li>
       <li>
-        <p>Click <term>Apply</term> and <term>Run</term>.</p>
+        <p>Click <c>Apply</c> and <c>Run</c>.</p>
       </li>
     </ol>
 
@@ -263,24 +263,188 @@ assert (count++ < MAX_CAPACITY);]]></program>
 
     <ol>
       <li>
-        <p>Go to <menuchoice><guimenu>Window</guimenu><guimenuitem>Preferences</guimenuitem></menuchoice> (on macOS, <menuchoice><guimenu>Eclipse</guimenu><guimenuitem>Settings...</guimenuitem></menuchoice>).</p>
+        <p>Go to <c>Window</c> &#x2192; <c>Preferences</c> (on macOS, <c>Eclipse</c> &#x2192; <c>Settings...</c>).</p>
       </li>
       <li>
-        <p>Expand <term>Java</term> in the left menu and select <term>Installed JREs</term>.</p>
+        <p>Expand <c>Java</c> in the left menu and select <c>Installed JREs</c>.</p>
       </li>
       <li>
-        <p>Select your active JDK/JRE from the list and click <term>Edit...</term>.</p>
+        <p>Select your active JDK/JRE from the list and click <c>Edit...</c>.</p>
       </li>
       <li>
-        <p>In the <term>Default VM arguments:</term> field, enter <kbd>-ea</kbd>.</p>
+        <p>In the <c>Default VM arguments:</c> field, enter <kbd>-ea</kbd>.</p>
       </li>
       <li>
-        <p>Click <term>Finish</term>, then <term>Apply and Close</term>.</p>
+        <p>Click <c>Finish</c>, then <c>Apply and Close</c>.</p>
       </li>
     </ol>
 
     <p>
       All future Java executions in that workspace will run with assertions enabled by default.
     </p>
+
+    <reading-questions xml:id="checkpoint-3-8">
+      <title>Checkpoint</title>
+
+      <exercise xml:id="checkpoint-3-8-default-enabled" label="checkpoint-3-8-default-enabled">
+        <title>Runtime Behavior of Assertions</title>
+        <statement correct="no">
+          <p>
+            By default, Java checks every <c>assert</c> statement at runtime and throws an <c>AssertionError</c> if the condition is <c>false</c>, even if you do not pass the <c>-ea</c> flag.
+          </p>
+        </statement>
+        <feedback>
+          <p>
+            False. Java disables assertions by default at runtime. You must pass <c>-ea</c> (or <c>-enableassertions</c>) to the JVM—either on the command line or in Eclipse’s VM arguments—for assertions to be checked.
+          </p>
+        </feedback>
+      </exercise>
+
+      <exercise xml:id="checkpoint-3-8-when-to-use" label="checkpoint-3-8-when-to-use">
+        <title>Choosing Between assert and if</title>
+        <statement>
+          <p>
+            Which situation is an appropriate use of an <c>assert</c> statement in Java?
+          </p>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                Placing <c>assert false : "Unexpected case";</c> in the <c>default:</c> branch of a <c>switch</c> that should never be reached if your logic is correct.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! Assertions are designed to catch internal logic bugs and verify assumptions that should never fail during development.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                Validating whether a user typed a negative number at a <c>Scanner</c> prompt so you can handle bad input.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Never use <c>assert</c> for user input validation—always use <c>if</c> statements, especially since assertions are disabled in production.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                Incrementing a counter inside the assertion condition, such as <c>assert (count++ &lt; MAX);</c>.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Assertions should never cause side effects like <c>count++</c>, because that code will not execute when assertions are turned off.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                Checking whether an input file exists on disk so the program can ask the user for another filename.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Missing files are expected runtime variations, not internal bugs, so they should be handled with selection statements rather than assertions.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-3-8-syntax-trace" label="checkpoint-3-8-syntax-trace">
+        <title>Tracing an assert Statement</title>
+        <statement>
+          <p>
+            Suppose assertions are enabled (<c>-ea</c>) and <c>int score = -5;</c> when the following statement executes. What happens?
+          </p>
+          <program language="java"><![CDATA[assert score >= 0 : "Negative score: " + score;]]></program>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                The program halts immediately and throws an <c>AssertionError</c> containing <c>Negative score: -5</c>.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! Because <c>-5 &gt;= 0</c> is <c>false</c> and assertions are enabled, Java evaluates the message expression after the colon and throws an <c>AssertionError</c> with that message.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                The program prints <c>Negative score: -5</c> to the console and continues to the next line.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. A failed assertion does not just print a warning—it immediately halts the program by throwing an <c>AssertionError</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                The program sets <c>score</c> to <c>0</c> and continues running.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. An <c>assert</c> statement tests a condition; it never modifies variables.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                It causes a compiler error because <c>score</c> is an <c>int</c>, not a <c>boolean</c>.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Although <c>score</c> is an <c>int</c>, the expression <c>score &gt;= 0</c> evaluates to a <c>boolean</c> (<c>false</c>).
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-3-8-match" label="checkpoint-3-8-match">
+        <title>Matching Assertion Concepts</title>
+        <statement>
+          <p>
+            Match each item to its role in defensive Java programming.
+          </p>
+        </statement>
+        <cardsort>
+          <match>
+            <premise order="3"><c>assert x &gt; 0 : "x must be positive";</c></premise>
+            <response>Detailed assertion with a diagnostic message</response>
+          </match>
+          <match>
+            <premise order="1"><c>-ea</c></premise>
+            <response>JVM flag that enables assertions at runtime</response>
+          </match>
+          <match>
+            <premise order="4"><c>AssertionError</c></premise>
+            <response>Error thrown when an enabled assertion fails</response>
+          </match>
+          <match>
+            <premise order="2"><c>if (input &lt; 0)</c></premise>
+            <response>Appropriate way to validate user input</response>
+          </match>
+        </cardsort>
+      </exercise>
+    </reading-questions>
   </subsection>
 </section>

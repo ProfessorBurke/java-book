@@ -395,7 +395,10 @@ eBookConfig.enable_chatcodes =  false;
 <li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-8-assertions.html#subsec-3-8-2-syntax-assert" class="internal"><span class="codenumber">3.8.2</span> <span class="title">Syntax of the <code class="code-inline tex2jax_ignore">assert</code> Statement</span></a></div></li>
 <li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-8-assertions.html#subsec-3-8-3-when-to-use-assertions" class="internal"><span class="codenumber">3.8.3</span> <span class="title">When to Use (and When Not to Use) Assertions</span></a></div></li>
 <li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-8-assertions.html#subsec-3-8-4-enabling-disabling-assertions" class="internal"><span class="codenumber">3.8.4</span> <span class="title">Enabling and Disabling Assertions</span></a></div></li>
-<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-3-8-assertions.html#subsec-3-8-5-assertions-in-eclipse" class="internal"><span class="codenumber">3.8.5</span> <span class="title">Enabling and Disabling Assertions in Eclipse</span></a></div></li>
+<li class="toc-item toc-subsection">
+<div class="toc-title-box"><a href="sec-3-8-assertions.html#subsec-3-8-5-assertions-in-eclipse" class="internal"><span class="codenumber">3.8.5</span> <span class="title">Enabling and Disabling Assertions in Eclipse</span></a></div>
+<ul id="ptx-toc-group-subsec-3-8-5-assertions-in-eclipse" class="structural toc-item-list"><li class="toc-item toc-reading-questions"><div class="toc-title-box"><a href="sec-3-8-assertions.html#checkpoint-3-8" class="internal"><span class="codenumber">3.8.5</span> <span class="title">Checkpoint</span></a></div></li></ul>
+</li>
 </ul>
 </li>
 <li class="toc-item toc-section">
@@ -1068,7 +1071,7 @@ eBookConfig.enable_chatcodes =  false;
 <section class="introduction" id="sec-3-8-assertions-2">
 <div class="para" id="sec-3-8-assertions-2-1">Throughout this chapter, you have used selection statements (<code class="code-inline tex2jax_ignore">if</code>, <code class="code-inline tex2jax_ignore">if-else</code>, and <code class="code-inline tex2jax_ignore">switch</code>) to control the flow of your programs based on runtime conditions—such as validating user input or choosing an alternative algorithm. However, programmers also need a mechanism to test their own assumptions about how the code executes.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#sec-3-8-assertions-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="para" id="sec-3-8-assertions-2-2">When writing complex branching logic, you will often find yourself thinking: “At this point in the program, variable x must be positive,” or “The program should never reach this default branch.” Java provides a dedicated construct called an <dfn class="terminology">assertion</dfn> to document and automatically verify these internal assumptions during development.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#sec-3-8-assertions-2-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="sec-3-8-assertions-2-2">When writing complex branching logic, you will often find yourself thinking: “At this point in the program, variable x must be positive,” or “The program should never reach this default branch.” Java provides a dedicated construct called an assertion to document and automatically verify these internal assumptions during development.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#sec-3-8-assertions-2-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="para" id="sec-3-8-assertions-2-3">Assertions are not a mechanism for changing the flow of control of your program, like selection statements. They are statements that are used only during development (not in production code) to flag programming errors caused by incorrect assumptions.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#sec-3-8-assertions-2-3" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div></section>
@@ -1253,27 +1256,27 @@ assert (count++ &lt; MAX_CAPACITY);
 <div class="autopermalink" aria-hidden="true" data-description="Item 1"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-4-1" title="Copy heading and permalink for Item 1" aria-label="Copy heading and permalink for Item 1">🔗</a></div>
 </li>
 <li id="subsec-3-8-5-assertions-in-eclipse-4-2">
-<div class="para" id="subsec-3-8-5-assertions-in-eclipse-4-2-1">Go to the menu bar and select RunRun Configurations... (or right-click the code editor, select Run AsRun Configurations...).<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-4-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-3-8-5-assertions-in-eclipse-4-2-1">Go to the menu bar and select <code class="code-inline tex2jax_ignore">Run</code> → <code class="code-inline tex2jax_ignore">Run Configurations...</code> (or right-click the code editor, select <code class="code-inline tex2jax_ignore">Run As</code> → <code class="code-inline tex2jax_ignore">Run Configurations...</code>).<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-4-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="autopermalink" aria-hidden="true" data-description="Item 2"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-4-2" title="Copy heading and permalink for Item 2" aria-label="Copy heading and permalink for Item 2">🔗</a></div>
 </li>
 <li id="subsec-3-8-5-assertions-in-eclipse-4-3">
-<div class="para" id="subsec-3-8-5-assertions-in-eclipse-4-3-1">In the left sidebar, expand <dfn class="terminology">Java Application</dfn> and click on your application’s run configuration.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-4-3-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-3-8-5-assertions-in-eclipse-4-3-1">In the left sidebar, expand <code class="code-inline tex2jax_ignore">Java Application</code> and click on your application’s run configuration.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-4-3-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="autopermalink" aria-hidden="true" data-description="Item 3"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-4-3" title="Copy heading and permalink for Item 3" aria-label="Copy heading and permalink for Item 3">🔗</a></div>
 </li>
 <li id="subsec-3-8-5-assertions-in-eclipse-4-4">
-<div class="para" id="subsec-3-8-5-assertions-in-eclipse-4-4-1">Select the <dfn class="terminology">(x)= Arguments</dfn> tab in the main panel.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-4-4-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-3-8-5-assertions-in-eclipse-4-4-1">Select the <code class="code-inline tex2jax_ignore">(x)= Arguments</code> tab in the main panel.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-4-4-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="autopermalink" aria-hidden="true" data-description="Item 4"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-4-4" title="Copy heading and permalink for Item 4" aria-label="Copy heading and permalink for Item 4">🔗</a></div>
 </li>
 <li id="subsec-3-8-5-assertions-in-eclipse-4-5">
-<div class="para" id="subsec-3-8-5-assertions-in-eclipse-4-5-1">In the <dfn class="terminology">VM arguments:</dfn> text area (the lower text box, not Program arguments), type: <kbd class="kbdkey">-ea</kbd><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-4-5-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-3-8-5-assertions-in-eclipse-4-5-1">In the <code class="code-inline tex2jax_ignore">VM arguments:</code> text area (the lower text box, not Program arguments), type: <kbd class="kbdkey">-ea</kbd><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-4-5-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="autopermalink" aria-hidden="true" data-description="Item 5"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-4-5" title="Copy heading and permalink for Item 5" aria-label="Copy heading and permalink for Item 5">🔗</a></div>
 </li>
 <li id="subsec-3-8-5-assertions-in-eclipse-4-6">
-<div class="para" id="subsec-3-8-5-assertions-in-eclipse-4-6-1">Click <dfn class="terminology">Apply</dfn>, and then click <dfn class="terminology">Run</dfn>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-4-6-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-3-8-5-assertions-in-eclipse-4-6-1">Click <code class="code-inline tex2jax_ignore">Apply</code>, and then click <code class="code-inline tex2jax_ignore">Run</code>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-4-6-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="autopermalink" aria-hidden="true" data-description="Item 6"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-4-6" title="Copy heading and permalink for Item 6" aria-label="Copy heading and permalink for Item 6">🔗</a></div>
 </li>
@@ -1284,22 +1287,22 @@ assert (count++ &lt; MAX_CAPACITY);
 </div>
 <ol class="decimal" id="subsec-3-8-5-assertions-in-eclipse-7">
 <li id="subsec-3-8-5-assertions-in-eclipse-7-1">
-<div class="para" id="subsec-3-8-5-assertions-in-eclipse-7-1-1">Return to RunRun Configurations... and select your configuration.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-7-1-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-3-8-5-assertions-in-eclipse-7-1-1">Return to <code class="code-inline tex2jax_ignore">Run</code> → <code class="code-inline tex2jax_ignore">Run Configurations...</code> and select your configuration.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-7-1-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="autopermalink" aria-hidden="true" data-description="Item 1"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-7-1" title="Copy heading and permalink for Item 1" aria-label="Copy heading and permalink for Item 1">🔗</a></div>
 </li>
 <li id="subsec-3-8-5-assertions-in-eclipse-7-2">
-<div class="para" id="subsec-3-8-5-assertions-in-eclipse-7-2-1">Go to the <dfn class="terminology">(x)= Arguments</dfn> tab.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-7-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-3-8-5-assertions-in-eclipse-7-2-1">Go to the <code class="code-inline tex2jax_ignore">(x)= Arguments</code> tab.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-7-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="autopermalink" aria-hidden="true" data-description="Item 2"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-7-2" title="Copy heading and permalink for Item 2" aria-label="Copy heading and permalink for Item 2">🔗</a></div>
 </li>
 <li id="subsec-3-8-5-assertions-in-eclipse-7-3">
-<div class="para" id="subsec-3-8-5-assertions-in-eclipse-7-3-1">Simply delete the <code class="code-inline tex2jax_ignore">-ea</code> argument from the <dfn class="terminology">VM arguments:</dfn> field (since assertions are disabled by default in the JVM), or explicitly set <code class="code-inline tex2jax_ignore">-da</code>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-7-3-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-3-8-5-assertions-in-eclipse-7-3-1">Simply delete the <code class="code-inline tex2jax_ignore">-ea</code> argument from the <code class="code-inline tex2jax_ignore">VM arguments:</code> field (since assertions are disabled by default in the JVM), or explicitly set <code class="code-inline tex2jax_ignore">-da</code>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-7-3-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="autopermalink" aria-hidden="true" data-description="Item 3"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-7-3" title="Copy heading and permalink for Item 3" aria-label="Copy heading and permalink for Item 3">🔗</a></div>
 </li>
 <li id="subsec-3-8-5-assertions-in-eclipse-7-4">
-<div class="para" id="subsec-3-8-5-assertions-in-eclipse-7-4-1">Click <dfn class="terminology">Apply</dfn> and <dfn class="terminology">Run</dfn>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-7-4-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-3-8-5-assertions-in-eclipse-7-4-1">Click <code class="code-inline tex2jax_ignore">Apply</code> and <code class="code-inline tex2jax_ignore">Run</code>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-7-4-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="autopermalink" aria-hidden="true" data-description="Item 4"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-7-4" title="Copy heading and permalink for Item 4" aria-label="Copy heading and permalink for Item 4">🔗</a></div>
 </li>
@@ -1308,34 +1311,147 @@ assert (count++ &lt; MAX_CAPACITY);
 </div>
 <ol class="decimal" id="subsec-3-8-5-assertions-in-eclipse-9">
 <li id="subsec-3-8-5-assertions-in-eclipse-9-1">
-<div class="para" id="subsec-3-8-5-assertions-in-eclipse-9-1-1">Go to WindowPreferences (on macOS, EclipseSettings...).<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-9-1-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-3-8-5-assertions-in-eclipse-9-1-1">Go to <code class="code-inline tex2jax_ignore">Window</code> → <code class="code-inline tex2jax_ignore">Preferences</code> (on macOS, <code class="code-inline tex2jax_ignore">Eclipse</code> → <code class="code-inline tex2jax_ignore">Settings...</code>).<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-9-1-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="autopermalink" aria-hidden="true" data-description="Item 1"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-9-1" title="Copy heading and permalink for Item 1" aria-label="Copy heading and permalink for Item 1">🔗</a></div>
 </li>
 <li id="subsec-3-8-5-assertions-in-eclipse-9-2">
-<div class="para" id="subsec-3-8-5-assertions-in-eclipse-9-2-1">Expand <dfn class="terminology">Java</dfn> in the left menu and select <dfn class="terminology">Installed JREs</dfn>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-9-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-3-8-5-assertions-in-eclipse-9-2-1">Expand <code class="code-inline tex2jax_ignore">Java</code> in the left menu and select <code class="code-inline tex2jax_ignore">Installed JREs</code>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-9-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="autopermalink" aria-hidden="true" data-description="Item 2"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-9-2" title="Copy heading and permalink for Item 2" aria-label="Copy heading and permalink for Item 2">🔗</a></div>
 </li>
 <li id="subsec-3-8-5-assertions-in-eclipse-9-3">
-<div class="para" id="subsec-3-8-5-assertions-in-eclipse-9-3-1">Select your active JDK/JRE from the list and click <dfn class="terminology">Edit...</dfn>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-9-3-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-3-8-5-assertions-in-eclipse-9-3-1">Select your active JDK/JRE from the list and click <code class="code-inline tex2jax_ignore">Edit...</code>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-9-3-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="autopermalink" aria-hidden="true" data-description="Item 3"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-9-3" title="Copy heading and permalink for Item 3" aria-label="Copy heading and permalink for Item 3">🔗</a></div>
 </li>
 <li id="subsec-3-8-5-assertions-in-eclipse-9-4">
-<div class="para" id="subsec-3-8-5-assertions-in-eclipse-9-4-1">In the <dfn class="terminology">Default VM arguments:</dfn> field, enter <kbd class="kbdkey">-ea</kbd>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-9-4-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-3-8-5-assertions-in-eclipse-9-4-1">In the <code class="code-inline tex2jax_ignore">Default VM arguments:</code> field, enter <kbd class="kbdkey">-ea</kbd>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-9-4-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="autopermalink" aria-hidden="true" data-description="Item 4"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-9-4" title="Copy heading and permalink for Item 4" aria-label="Copy heading and permalink for Item 4">🔗</a></div>
 </li>
 <li id="subsec-3-8-5-assertions-in-eclipse-9-5">
-<div class="para" id="subsec-3-8-5-assertions-in-eclipse-9-5-1">Click <dfn class="terminology">Finish</dfn>, then <dfn class="terminology">Apply and Close</dfn>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-9-5-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-3-8-5-assertions-in-eclipse-9-5-1">Click <code class="code-inline tex2jax_ignore">Finish</code>, then <code class="code-inline tex2jax_ignore">Apply and Close</code>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-9-5-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="autopermalink" aria-hidden="true" data-description="Item 5"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-9-5" title="Copy heading and permalink for Item 5" aria-label="Copy heading and permalink for Item 5">🔗</a></div>
 </li>
 </ol>
 <div class="para" id="subsec-3-8-5-assertions-in-eclipse-10">All future Java executions in that workspace will run with assertions enabled by default.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse-10" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="autopermalink" aria-hidden="true" data-description="Subsection 3.8.5: Enabling and Disabling Assertions in Eclipse"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse" title="Copy heading and permalink for Subsection 3.8.5: Enabling and Disabling Assertions in Eclipse" aria-label="Copy heading and permalink for Subsection 3.8.5: Enabling and Disabling Assertions in Eclipse">🔗</a></div>
+<section class="reading-questions" id="checkpoint-3-8">
+<h3 class="heading hide-type">
+<span class="type">Reading Questions</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber"></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Checkpoint</span>
+</h3>
+<article class="exercise exercise-like" id="checkpoint-3-8-default-enabled"><h4 class="heading">
+<span class="codenumber">1<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Runtime Behavior of Assertions.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone multiplechoice_section"><ul data-component="multiplechoice" data-multipleanswers="false" id="rs-checkpoint-3-8-default-enabled">
+<div class="para" id="checkpoint-3-8-default-enabled-2-1">By default, Java checks every <code class="code-inline tex2jax_ignore">assert</code> statement at runtime and throws an <code class="code-inline tex2jax_ignore">AssertionError</code> if the condition is <code class="code-inline tex2jax_ignore">false</code>, even if you do not pass the <code class="code-inline tex2jax_ignore">-ea</code> flag.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-3-8-default-enabled-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<li data-component="answer" id="rs-checkpoint-3-8-default-enabled_opt_t"><p>True.</p></li>
+<li data-component="feedback" id="rs-checkpoint-3-8-default-enabled_opt_t">
+<div class="para" id="checkpoint-3-8-default-enabled-3-1">False. Java disables assertions by default at runtime. You must pass <code class="code-inline tex2jax_ignore">-ea</code> (or <code class="code-inline tex2jax_ignore">-enableassertions</code>) to the JVM—either on the command line or in Eclipse’s VM arguments—for assertions to be checked.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-3-8-default-enabled_opt_f" data-correct=""><p>False.</p></li>
+<li data-component="feedback" id="rs-checkpoint-3-8-default-enabled_opt_f">
+<div class="para" id="checkpoint-3-8-default-enabled-3-1">False. Java disables assertions by default at runtime. You must pass <code class="code-inline tex2jax_ignore">-ea</code> (or <code class="code-inline tex2jax_ignore">-enableassertions</code>) to the JVM—either on the command line or in Eclipse’s VM arguments—for assertions to be checked.</div>
+</li>
+</ul></div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 3.8.5.1: Runtime Behavior of Assertions"><a tabindex="-1" href="#checkpoint-3-8-default-enabled" title="Copy heading and permalink for Reading Question 3.8.5.1: Runtime Behavior of Assertions" aria-label="Copy heading and permalink for Reading Question 3.8.5.1: Runtime Behavior of Assertions">🔗</a></div>
+</article>
+<article class="exercise exercise-like" id="checkpoint-3-8-when-to-use"><h4 class="heading">
+<span class="codenumber">2<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Choosing Between assert and if.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone multiplechoice_section">
+<div class="exercise-statement">
+<div class="para" id="checkpoint-3-8-when-to-use-2-1">Which situation is an appropriate use of an <code class="code-inline tex2jax_ignore">assert</code> statement in Java?<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-3-8-when-to-use-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</div>
+<ul data-component="multiplechoice" class="exercise-interactives" id="rs-checkpoint-3-8-when-to-use" data-multipleanswers="false" data-random="">
+<li data-component="answer" id="rs-checkpoint-3-8-when-to-use_opt_a" data-correct="">
+<div class="para" id="checkpoint-3-8-when-to-use-3-1-1-1">Placing <code class="code-inline tex2jax_ignore">assert false : "Unexpected case";</code> in the <code class="code-inline tex2jax_ignore">default:</code> branch of a <code class="code-inline tex2jax_ignore">switch</code> that should never be reached if your logic is correct.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-3-8-when-to-use_opt_a">
+<div class="para" id="checkpoint-3-8-when-to-use-3-1-2-1">Correct! Assertions are designed to catch internal logic bugs and verify assumptions that should never fail during development.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-3-8-when-to-use_opt_b">
+<div class="para" id="checkpoint-3-8-when-to-use-3-2-1-1">Validating whether a user typed a negative number at a <code class="code-inline tex2jax_ignore">Scanner</code> prompt so you can handle bad input.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-3-8-when-to-use_opt_b">
+<div class="para" id="checkpoint-3-8-when-to-use-3-2-2-1">Not quite. Never use <code class="code-inline tex2jax_ignore">assert</code> for user input validation—always use <code class="code-inline tex2jax_ignore">if</code> statements, especially since assertions are disabled in production.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-3-8-when-to-use_opt_c">
+<div class="para" id="checkpoint-3-8-when-to-use-3-3-1-1">Incrementing a counter inside the assertion condition, such as <code class="code-inline tex2jax_ignore">assert (count++ &lt; MAX);</code>.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-3-8-when-to-use_opt_c">
+<div class="para" id="checkpoint-3-8-when-to-use-3-3-2-1">Not quite. Assertions should never cause side effects like <code class="code-inline tex2jax_ignore">count++</code>, because that code will not execute when assertions are turned off.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-3-8-when-to-use_opt_d">
+<div class="para" id="checkpoint-3-8-when-to-use-3-4-1-1">Checking whether an input file exists on disk so the program can ask the user for another filename.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-3-8-when-to-use_opt_d">
+<div class="para" id="checkpoint-3-8-when-to-use-3-4-2-1">Not quite. Missing files are expected runtime variations, not internal bugs, so they should be handled with selection statements rather than assertions.</div>
+</li>
+</ul>
+</div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 3.8.5.2: Choosing Between assert and if"><a tabindex="-1" href="#checkpoint-3-8-when-to-use" title="Copy heading and permalink for Reading Question 3.8.5.2: Choosing Between assert and if" aria-label="Copy heading and permalink for Reading Question 3.8.5.2: Choosing Between assert and if">🔗</a></div>
+</article>
+<article class="exercise exercise-like" id="checkpoint-3-8-syntax-trace"><h4 class="heading">
+<span class="codenumber">3<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Tracing an assert Statement.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone multiplechoice_section">
+<div class="exercise-statement">
+<div class="para" id="checkpoint-3-8-syntax-trace-2-1">Suppose assertions are enabled (<code class="code-inline tex2jax_ignore">-ea</code>) and <code class="code-inline tex2jax_ignore">int score = -5;</code> when the following statement executes. What happens?<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-3-8-syntax-trace-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div> <div class="code-box"><pre class="program clipboardable"><code class="language-java">assert score &gt;= 0 : "Negative score: " + score;
+</code></pre></div>
+</div>
+<ul data-component="multiplechoice" class="exercise-interactives" id="rs-checkpoint-3-8-syntax-trace" data-multipleanswers="false" data-random="">
+<li data-component="answer" id="rs-checkpoint-3-8-syntax-trace_opt_a" data-correct="">
+<div class="para" id="checkpoint-3-8-syntax-trace-3-1-1-1">The program halts immediately and throws an <code class="code-inline tex2jax_ignore">AssertionError</code> containing <code class="code-inline tex2jax_ignore">Negative score: -5</code>.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-3-8-syntax-trace_opt_a">
+<div class="para" id="checkpoint-3-8-syntax-trace-3-1-2-1">Correct! Because <code class="code-inline tex2jax_ignore">-5 &gt;= 0</code> is <code class="code-inline tex2jax_ignore">false</code> and assertions are enabled, Java evaluates the message expression after the colon and throws an <code class="code-inline tex2jax_ignore">AssertionError</code> with that message.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-3-8-syntax-trace_opt_b">
+<div class="para" id="checkpoint-3-8-syntax-trace-3-2-1-1">The program prints <code class="code-inline tex2jax_ignore">Negative score: -5</code> to the console and continues to the next line.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-3-8-syntax-trace_opt_b">
+<div class="para" id="checkpoint-3-8-syntax-trace-3-2-2-1">Not quite. A failed assertion does not just print a warning—it immediately halts the program by throwing an <code class="code-inline tex2jax_ignore">AssertionError</code>.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-3-8-syntax-trace_opt_c">
+<div class="para" id="checkpoint-3-8-syntax-trace-3-3-1-1">The program sets <code class="code-inline tex2jax_ignore">score</code> to <code class="code-inline tex2jax_ignore">0</code> and continues running.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-3-8-syntax-trace_opt_c">
+<div class="para" id="checkpoint-3-8-syntax-trace-3-3-2-1">Not quite. An <code class="code-inline tex2jax_ignore">assert</code> statement tests a condition; it never modifies variables.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-3-8-syntax-trace_opt_d">
+<div class="para" id="checkpoint-3-8-syntax-trace-3-4-1-1">It causes a compiler error because <code class="code-inline tex2jax_ignore">score</code> is an <code class="code-inline tex2jax_ignore">int</code>, not a <code class="code-inline tex2jax_ignore">boolean</code>.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-3-8-syntax-trace_opt_d">
+<div class="para" id="checkpoint-3-8-syntax-trace-3-4-2-1">Not quite. Although <code class="code-inline tex2jax_ignore">score</code> is an <code class="code-inline tex2jax_ignore">int</code>, the expression <code class="code-inline tex2jax_ignore">score &gt;= 0</code> evaluates to a <code class="code-inline tex2jax_ignore">boolean</code> (<code class="code-inline tex2jax_ignore">false</code>).</div>
+</li>
+</ul>
+</div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 3.8.5.3: Tracing an assert Statement"><a tabindex="-1" href="#checkpoint-3-8-syntax-trace" title="Copy heading and permalink for Reading Question 3.8.5.3: Tracing an assert Statement" aria-label="Copy heading and permalink for Reading Question 3.8.5.3: Tracing an assert Statement">🔗</a></div>
+</article>
+<article class="exercise exercise-like" id="checkpoint-3-8-match"><h4 class="heading">
+<span class="codenumber">4<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Matching Assertion Concepts.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone cardsort_section"><ul data-component="dragndrop" data-question_label="" style="visibility: hidden;" id="rs-checkpoint-3-8-match">
+<span data-subcomponent="question">
+<div class="para" id="checkpoint-3-8-match-2-1">Match each item to its role in defensive Java programming.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-3-8-match-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div></span><li data-subcomponent="draggable" id="rs-checkpoint-3-8-match_drag1" data-category="1"><code class="code-inline tex2jax_ignore">assert x &gt; 0 : "x must be positive";</code></li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-3-8-match_drag1" data-category="1">Detailed assertion with a diagnostic message</li>
+<li data-subcomponent="draggable" id="rs-checkpoint-3-8-match_drag2" data-category="2"><code class="code-inline tex2jax_ignore">-ea</code></li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-3-8-match_drag2" data-category="2">JVM flag that enables assertions at runtime</li>
+<li data-subcomponent="draggable" id="rs-checkpoint-3-8-match_drag3" data-category="3"><code class="code-inline tex2jax_ignore">AssertionError</code></li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-3-8-match_drag3" data-category="3">Error thrown when an enabled assertion fails</li>
+<li data-subcomponent="draggable" id="rs-checkpoint-3-8-match_drag4" data-category="4"><code class="code-inline tex2jax_ignore">if (input &lt; 0)</code></li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-3-8-match_drag4" data-category="4">Appropriate way to validate user input</li>
+</ul></div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 3.8.5.4: Matching Assertion Concepts"><a tabindex="-1" href="#checkpoint-3-8-match" title="Copy heading and permalink for Reading Question 3.8.5.4: Matching Assertion Concepts" aria-label="Copy heading and permalink for Reading Question 3.8.5.4: Matching Assertion Concepts">🔗</a></div>
+</article><div class="autopermalink" aria-hidden="true" data-description="Reading Questions 3.8.5: Checkpoint"><a tabindex="-1" href="#checkpoint-3-8" title="Copy heading and permalink for Reading Questions 3.8.5: Checkpoint" aria-label="Copy heading and permalink for Reading Questions 3.8.5: Checkpoint">🔗</a></div>
+</section><div class="autopermalink" aria-hidden="true" data-description="Subsection 3.8.5: Enabling and Disabling Assertions in Eclipse"><a tabindex="-1" href="#subsec-3-8-5-assertions-in-eclipse" title="Copy heading and permalink for Subsection 3.8.5: Enabling and Disabling Assertions in Eclipse" aria-label="Copy heading and permalink for Subsection 3.8.5: Enabling and Disabling Assertions in Eclipse">🔗</a></div>
 </section><div class="autopermalink" aria-hidden="true" data-description="Section 3.8: Writing Defensive Code with Assertions"><a tabindex="-1" href="#sec-3-8-assertions" title="Copy heading and permalink for Section 3.8: Writing Defensive Code with Assertions" aria-label="Copy heading and permalink for Section 3.8: Writing Defensive Code with Assertions">🔗</a></div>
 </section>
 </div>
