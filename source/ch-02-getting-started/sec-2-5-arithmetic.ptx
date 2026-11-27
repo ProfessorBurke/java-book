@@ -326,7 +326,8 @@ x %= y; // same as: x = x % y;]]></program>
       Here is an example:
     </p>
 
-    <program language="java"><![CDATA[int score = 0;             // score is 0
+    <program language="java"><![CDATA[
+int score = 0;      // score is 0
 score++;            // score is 1
 score--;            // score is 0 
 int x = ++score;    // x is 1, score is 1

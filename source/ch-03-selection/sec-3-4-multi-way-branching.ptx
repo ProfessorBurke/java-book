@@ -206,9 +206,9 @@ else
     result = "Pass.";]]></program>
 
 <remark xml:id="py-no-braces">
-  <title>Curly braces in Java take the place of indentation in Python</title>
+  <title>Curly Braces vs. Indentation</title>
   <p>
-    If you're coming from Python, you know how important indentation is!  You should follow the same indentation habits that you  learned in Python, with one important caveat: indentation communicates nothing to Java. Instead, blocks are enclosed in curly braces, and they're easy to forget if you're not used to them! Get in the habit of asking if you need braces when you're indenting. (The answer is usually -- but not always -- yes.)
+    If you’re coming from Python, you know how important indentation is! You should follow the same indentation habits that you learned in Python, with one important caveat: indentation communicates nothing to Java. Instead, blocks are enclosed in curly braces, and they’re easy to forget if you’re not used to them! Get in the habit of asking yourself whether you need braces whenever you indent. (The answer is usually<mdash />but not always<mdash />yes.)
   </p>
 </remark>
 

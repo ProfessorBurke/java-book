@@ -77,6 +77,13 @@ if (answer.equals("yes")) {
     <p>
       In the code above, we invoke the <c>.equals</c> method on the <c>String</c> variable <c>answer</c>, passing in the literal <c>String</c> <c>"yes"</c> as an argument. Note that either <c>String</c><mdash />the one before the dot or the one passed as an argument<mdash />can be any <c>String</c> expression, including a <c>String</c> literal, variable, result of a concatenation, or result of a method that returns a <c>String</c>.
     </p>
+	
+<remark xml:id="py-test-equality">
+  <title>Python <c>==</c> vs. Java <c>.equals()</c></title>
+  <p>
+    This is another big change if you’re coming from Python! In Python, you can use <c>==</c> to compare two strings. In Java, you almost never want to do that. Under the hood, Python really isn’t so different<mdash />strings are also stored on the heap. But in Python, the equality operator <c>==</c> implicitly invokes an equality method (<c>__eq__</c> rather than <c>equals</c>) to compare two objects, so it’s Python’s syntactic sugar that makes it seem to work differently. (In Python, the <c>is</c> operator checks whether two references point to the same object, much like Java’s <c>==</c>.)
+  </p>
+</remark>
 
     <p>
       For example, if we want to accept the user’s answer regardless of case, we might write:
@@ -337,5 +344,217 @@ System.out.println(a.equals(b)); // true (same characters)]]></program>
     <p>
       This principle applies to any method that returns a boolean, including <c>.equalsIgnoreCase()</c>, and many other query methods you will encounter throughout this book.
     </p>
+
+    <reading-questions xml:id="checkpoint-3-6">
+      <title>Checkpoint</title>
+
+      <exercise xml:id="checkpoint-3-6-equality-memory" label="checkpoint-3-6-equality-memory">
+        <title>Tracing String Comparisons</title>
+        <statement>
+          <p>
+            What is printed by the following code?
+          </p>
+          <program language="java"><![CDATA[String a = "java";
+String b = new String("java");
+System.out.println(a == b);
+System.out.println(a.equals(b));]]></program>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                <c>false</c> followed by <c>true</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! Because <c>new String("java")</c> allocates a separate object outside the String Pool, <c>a</c> and <c>b</c> hold different memory addresses (<c>a == b</c> is <c>false</c>), while <c>a.equals(b)</c> compares their characters (<c>true</c>).
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>true</c> followed by <c>true</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Using <c>new String("java")</c> bypasses the String Pool, so <c>a</c> and <c>b</c> point to different objects in memory and <c>a == b</c> is <c>false</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>false</c> followed by <c>false</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. <c>a.equals(b)</c> compares the characters inside both <c>String</c> objects rather than their memory addresses, so it returns <c>true</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>true</c> followed by <c>false</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. <c>==</c> compares memory addresses (which differ here), whereas <c>.equals()</c> compares character contents (which match).
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-3-6-not-equals" label="checkpoint-3-6-not-equals">
+        <title>Checking for Non-Matching Text</title>
+        <statement>
+          <p>
+            Which condition correctly checks whether <c>String status</c> does <em>not</em> match <c>"quit"</c>, ignoring uppercase or lowercase letters?
+          </p>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                <c>!status.equalsIgnoreCase("quit")</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! Placing <c>!</c> in front of <c>status.equalsIgnoreCase("quit")</c> negates the boolean result while comparing characters case-insensitively.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>status != "quit"</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. <c>!=</c> compares memory addresses rather than characters, and it does not ignore case.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>status.notEqualsIgnoreCase("quit")</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Java’s <c>String</c> class has no <c>notEqualsIgnoreCase</c> method; use <c>!</c> with <c>equalsIgnoreCase</c> instead.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>!(status == "quit")</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. <c>==</c> still compares memory addresses rather than character contents, and it is case-sensitive.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-3-6-compareto" label="checkpoint-3-6-compareto">
+        <title>Lexicographic Ordering</title>
+        <statement>
+          <p>
+            What does <c>"Zebra".compareTo("apple") &lt; 0</c> evaluate to, and why?
+          </p>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                <c>true</c>, because uppercase <c>'Z'</c> has a smaller Unicode value than lowercase <c>'a'</c>.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! <c>compareTo</c> uses Unicode values, where all uppercase Latin letters (<c>'A'</c>–<c>'Z'</c>) come before lowercase letters (<c>'a'</c>–<c>'z'</c>), so <c>"Zebra".compareTo("apple")</c> returns a negative number.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>false</c>, because <c>'Z'</c> comes after <c>'a'</c> in the alphabet.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. <c>compareTo</c> is case-sensitive and compares Unicode values, where uppercase letters precede lowercase letters; use <c>compareToIgnoreCase</c> for standard alphabetic order.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>false</c>, because <c>"Zebra"</c> and <c>"apple"</c> have the same length.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. <c>compareTo</c> compares characters starting at index <c>0</c>, not string length (unless one string is a prefix of the other).
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                It causes a compiler error because <c>&lt;</c> cannot be used with <c>compareTo</c>.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. <c>compareTo</c> returns an <c>int</c>, so comparing its return value to <c>0</c> with <c>&lt;</c> is completely valid.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-3-6-match-methods" label="checkpoint-3-6-match-methods">
+        <title>Choosing the Right Comparison</title>
+        <statement>
+          <p>
+            Match each goal to the Java expression that accomplishes it for <c>String s1</c> and <c>String s2</c>.
+          </p>
+        </statement>
+        <cardsort>
+          <match>
+            <premise order="3">Test whether <c>s1</c> and <c>s2</c> contain the exact same characters (case-sensitive)</premise>
+            <response><c>s1.equals(s2)</c></response>
+          </match>
+          <match>
+            <premise order="1">Test whether <c>s1</c> and <c>s2</c> match regardless of case</premise>
+            <response><c>s1.equalsIgnoreCase(s2)</c></response>
+          </match>
+          <match>
+            <premise order="4">Check whether <c>s1</c> comes before <c>s2</c> alphabetically (ignoring case)</premise>
+            <response><c>s1.compareToIgnoreCase(s2) &lt; 0</c></response>
+          </match>
+          <match>
+            <premise order="2">Test whether <c>s1</c> and <c>s2</c> point to the exact same object in memory</premise>
+            <response><c>s1 == s2</c></response>
+          </match>
+        </cardsort>
+      </exercise>
+    </reading-questions>
   </subsection>
 </section>
