@@ -283,7 +283,7 @@ double value = (bonusEligible) ? baseSalary * 1.1 : baseSalary;]]></program>
     </p>
 
     <table xml:id="table-operator-precedence-conditional">
-      <title>Operator precedence including the conditional operator (new row in bold)</title>
+      <title>Operator precedence including the conditional operator (new row labeled new and marked with bold lines)</title>
       <tabular halign="left" bottom="minor" top="minor" left="minor" right="minor">
         <col width="22%"/>
         <col width="26%"/>
@@ -354,13 +354,13 @@ double value = (bonusEligible) ? baseSalary * 1.1 : baseSalary;]]></program>
           <cell>Left-to-right</cell>
           <cell>Logical and</cell>
         </row>
-        <row>
+        <row bottom="major">
           <cell>Logical or</cell>
           <cell><c>||</c></cell>
           <cell>Left-to-right</cell>
           <cell>Logical or</cell>
         </row>
-        <row bottom="medium" top="medium">
+        <row bottom="major">
           <cell><strong>Conditional (new)</strong></cell>
           <cell><strong><c>?:</c></strong></cell>
           <cell><strong>Right-to-left</strong></cell>
@@ -374,5 +374,188 @@ double value = (bonusEligible) ? baseSalary * 1.1 : baseSalary;]]></program>
         </row>
       </tabular>
     </table>
+
+    <reading-questions xml:id="checkpoint-3-7">
+      <title>Checkpoint</title>
+
+      <exercise xml:id="checkpoint-3-7-switch-fallthrough" label="checkpoint-3-7-switch-fallthrough">
+        <title>Tracing a switch Statement</title>
+        <statement>
+          <p>
+            What value is stored in <c>label</c> after the following <c>switch</c> statement executes?
+          </p>
+          <program language="java"><![CDATA[int code = 2;
+String label;
+switch (code) {
+    case 1:
+        label = "Idle";
+        break;
+    case 2:
+        label = "Active";
+    case 3:
+        label = "Charging";
+        break;
+    default:
+        label = "Unknown";
+        break;
+}]]></program>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                <c>"Charging"</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! Because <c>case 2:</c> has no <c>break;</c> statement, execution sets <c>label</c> to <c>"Active"</c> and then falls through into <c>case 3:</c>, overwriting <c>label</c> with <c>"Charging"</c> before hitting <c>break;</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>"Active"</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Look closely at <c>case 2:</c>—there is no <c>break;</c> statement at the end of it, so execution continues into <c>case 3:</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>"Unknown"</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. <c>case 3:</c> ends with <c>break;</c>, so execution exits the <c>switch</c> before reaching <c>default:</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                It causes a compiler error because <c>case 2:</c> is missing a <c>break;</c> statement.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Omitting <c>break;</c> is valid Java syntax (since fall-through is allowed), even though here it causes a logic bug.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-3-7-switch-types" label="checkpoint-3-7-switch-types">
+        <title>Valid switch Expressions</title>
+        <statement correct="no">
+          <p>
+            In Java, you can use a <c>double</c> variable as the expression in <c>switch (price)</c> with labels like <c>case 9.99:</c>.
+          </p>
+        </statement>
+        <feedback>
+          <p>
+            False. A <c>switch</c> statement works with <c>byte</c>, <c>short</c>, <c>int</c>, <c>char</c>, and <c>String</c> (plus certain enum and wrapper types), but not <c>double</c> or <c>float</c>.
+          </p>
+        </feedback>
+      </exercise>
+
+      <exercise xml:id="checkpoint-3-7-parsons-switch" label="checkpoint-3-7-parsons-switch" language="java">
+        <title>Grouping Cases in a switch</title>
+        <statement>
+          <p>
+            Put the blocks in order to build a <c>switch</c> statement on <c>char grade</c> that assigns <c>"Passing"</c> to <c>status</c> for <c>'A'</c>, <c>'B'</c>, or <c>'C'</c>, and assigns <c>"Other"</c> for anything else.
+          </p>
+        </statement>
+        <blocks>
+          <block order="4">
+            <cline>switch (grade) {</cline>
+          </block>
+          <block order="1">
+            <cline>    case 'A':</cline>
+            <cline>    case 'B':</cline>
+            <cline>    case 'C':</cline>
+          </block>
+          <block order="5">
+            <cline>        status = "Passing";</cline>
+            <cline>        break;</cline>
+          </block>
+          <block order="2">
+            <cline>    default:</cline>
+            <cline>        status = "Other";</cline>
+            <cline>        break;</cline>
+          </block>
+          <block order="3">
+            <cline>}</cline>
+          </block>
+        </blocks>
+      </exercise>
+
+      <exercise xml:id="checkpoint-3-7-ternary" label="checkpoint-3-7-ternary">
+        <title>Using the Conditional Operator</title>
+        <statement>
+          <p>
+            Given <c>int a = 8;</c> and <c>int b = 12;</c>, what value is stored in <c>result</c> after this statement executes?
+          </p>
+          <program language="java"><![CDATA[int result = (a > b) ? a * 2 : b + 5;]]></program>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                <c>17</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! Because <c>8 &gt; 12</c> is <c>false</c>, the conditional operator evaluates the false branch (<c>b + 5</c>, which is <c>17</c>) and assigns it to <c>result</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>16</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. <c>16</c> comes from the true branch (<c>a * 2</c>), which is only evaluated when <c>a &gt; b</c> is <c>true</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>false</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. The condition <c>(a &gt; b)</c> is <c>false</c>, which selects the value after <c>:</c> (<c>12 + 5 = 17</c>) rather than returning <c>false</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>12</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. The false branch is <c>b + 5</c> (<c>17</c>), not <c>b</c> alone.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+    </reading-questions>
   </subsection>
 </section>
