@@ -445,6 +445,7 @@ eBookConfig.enable_chatcodes =  false;
 <ul id="ptx-toc-group-subsec-4-2-3-post-test-loops" class="structural toc-item-list">
 <li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-4-2-conditional-loops.html#subsubsec-4-2-3-1-comparing-while-do-while" class="internal"><span class="codenumber">4.2.3.1</span> <span class="title">Comparing <code class="code-inline tex2jax_ignore">while</code> and <code class="code-inline tex2jax_ignore">do-while</code> to Validate Input</span></a></div></li>
 <li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="sec-4-2-conditional-loops.html#subsubsec-4-2-3-2-block-level-scope" class="internal"><span class="codenumber">4.2.3.2</span> <span class="title">Block-Level Scope</span></a></div></li>
+<li class="toc-item toc-reading-questions"><div class="toc-title-box"><a href="sec-4-2-conditional-loops.html#checkpoint-4-2" class="internal"><span class="codenumber">4.2.3.3</span> <span class="title">Checkpoint</span></a></div></li>
 </ul>
 </li>
 </ul>
@@ -1080,7 +1081,7 @@ eBookConfig.enable_chatcodes =  false;
 <figure class="listing figure-like" id="listing-guess-the-number"><figcaption><span class="type">Listing</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">4.1<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><code class="code-inline tex2jax_ignore">GuessTheNumber.java</code><div class="autopermalink" aria-hidden="true" data-description="Listing 4.1: GuessTheNumber.java"><a tabindex="-1" href="#listing-guess-the-number" title="Copy heading and permalink for Listing 4.1: GuessTheNumber.java" aria-label="Copy heading and permalink for Listing 4.1: GuessTheNumber.java">🔗</a></div></figcaption><div class="listing__contents"><div class="code-box"><pre class="program clipboardable line-numbers"><code class="language-java">import java.util.Scanner;
  
 /**
- * Plays a number guessing game with the user.
+- Plays a number guessing game with the user.
  */
 public class GuessTheNumber {
  
@@ -1166,7 +1167,7 @@ public class GuessTheNumber {
 <div class="autopermalink" aria-hidden="true" data-description="Item"><a tabindex="-1" href="#subsec-4-2-1-constructing-a-loop-5-2" title="Copy heading and permalink for Item" aria-label="Copy heading and permalink for Item">🔗</a></div>
 </li>
 </ul>
-<div class="para" id="subsec-4-2-1-constructing-a-loop-6">Because <code class="code-inline tex2jax_ignore">userGuess</code> is the variable that changes on each cycle to eventually satisfy the exit condition, we call it the <dfn class="terminology">loop control variable</dfn>. It controls when the loop is exited.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-2-1-constructing-a-loop-6" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-4-2-1-constructing-a-loop-6">Because <code class="code-inline tex2jax_ignore">userGuess</code> is the variable that changes on each cycle to eventually satisfy the exit condition, we call it the loop control variable. It controls when the loop is exited.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-2-1-constructing-a-loop-6" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="para" id="subsec-4-2-1-constructing-a-loop-7">To write a loop that executes correctly, you must coordinate three essential operations for your loop control variable:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-2-1-constructing-a-loop-7" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
@@ -1192,7 +1193,7 @@ public class GuessTheNumber {
 <div class="para" id="subsec-4-2-1-constructing-a-loop-10">Let’s look at another example of a <code class="code-inline tex2jax_ignore">while</code> loop. Before you read beyond <a href="sec-4-2-conditional-loops.html#listing-countdown" class="xref" data-knowl="./knowl/xref/listing-countdown.html" data-reveal-label="Reveal" data-close-label="Close" title="Listing 4.3: Countdown.java">Listing 4.3</a>, identify the loop control variable and initializer, test, and updater in the program:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-2-1-constructing-a-loop-10" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <figure class="listing figure-like" id="listing-countdown"><figcaption><span class="type">Listing</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">4.3<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><code class="code-inline tex2jax_ignore">Countdown.java</code><div class="autopermalink" aria-hidden="true" data-description="Listing 4.3: Countdown.java"><a tabindex="-1" href="#listing-countdown" title="Copy heading and permalink for Listing 4.3: Countdown.java" aria-label="Copy heading and permalink for Listing 4.3: Countdown.java">🔗</a></div></figcaption><div class="listing__contents"><div class="code-box"><pre class="program clipboardable line-numbers"><code class="language-java">/**
- * Print a countdown from 5 to blastoff.
+- Print a countdown from 5 to blastoff.
  */
 public class Countdown {
  
@@ -1383,7 +1384,7 @@ while (totalFreethrows &lt;= 0) {
     totalFreethrows = stdin.nextInt(); 
 }
 </code></pre></div>
-<div class="para" id="subsubsec-4-2-3-1-comparing-while-do-while-8">This loop follows the pattern that we’ve seen previously: an initializer before the loop header, the loop entry condition, and then the loop body which contains the updater. We must obtain an input from the user for both the initializer and the updater. Therefore we must duplicate the prompt and code that reads the user’s input. We call the code that reads the user’s input the first time a <dfn class="terminology">priming read</dfn>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-4-2-3-1-comparing-while-do-while-8" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsubsec-4-2-3-1-comparing-while-do-while-8">This loop follows the pattern that we’ve seen previously: an initializer before the loop header, the loop entry condition, and then the loop body which contains the updater. We must obtain an input from the user for both the initializer and the updater. Therefore we must duplicate the prompt and code that reads the user’s input. We call the code that reads the user’s input the first time a priming read.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-4-2-3-1-comparing-while-do-while-8" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="para" id="subsubsec-4-2-3-1-comparing-while-do-while-9">In a <code class="code-inline tex2jax_ignore">do-while</code> loop, the initializer and updater are combined, since the loop body executes before the test. There is therefore only one prompt and input statement in the code:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-4-2-3-1-comparing-while-do-while-9" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
@@ -1424,7 +1425,7 @@ while (totalFreethrows &lt;= 0) {
 </h3>
 <div class="para" id="subsubsec-4-2-3-2-block-level-scope-2">In our <code class="code-inline tex2jax_ignore">do-while</code> example above, notice that <code class="code-inline tex2jax_ignore">totalFreethrows</code> was assigned a value inside the loop body, but it was declared before the loop began.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-4-2-3-2-block-level-scope-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="para" id="subsubsec-4-2-3-2-block-level-scope-3">New programmers are often tempted to declare a variable at the exact moment they first read it:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-4-2-3-2-block-level-scope-3" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsubsec-4-2-3-2-block-level-scope-3">Many programmers are often tempted to declare a variable at the exact moment they first read it:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-4-2-3-2-block-level-scope-3" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="code-box"><pre class="program clipboardable"><code class="language-java">// SYNTAX ERROR: The do-while scope trap!
 do {
@@ -1438,25 +1439,27 @@ do {
 </code></pre></div>
 <div class="para" id="subsubsec-4-2-3-2-block-level-scope-5">This code fails to compile because of Java’s rules for block-level scope.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-4-2-3-2-block-level-scope-5" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="para" id="subsubsec-4-2-3-2-block-level-scope-6">A variable declared inside a block of code—enclosed by curly braces <code class="code-inline tex2jax_ignore">{ }</code>—only exists within that block. It is created at the point of its declaration and is destroyed the moment execution leaves the closing brace <code class="code-inline tex2jax_ignore">}</code>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-4-2-3-2-block-level-scope-6" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsubsec-4-2-3-2-block-level-scope-6">Recall from <a href="sec-2-4-variables-types.html#subsubsec-2-4-2-2-where-variables-live" class="internal" title="Subsubsection 2.4.2.2: Where Variables Live in Memory">Subsubsection 2.4.2.2</a> that a variable’s scope—where it can be seen and used in a program—begins at its declaration and ends at the closing curly brace of the block in which it was declared.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-4-2-3-2-block-level-scope-6" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="para" id="subsubsec-4-2-3-2-block-level-scope-7">In a <code class="code-inline tex2jax_ignore">do-while</code> loop:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-4-2-3-2-block-level-scope-7" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsubsec-4-2-3-2-block-level-scope-7">A variable declared inside a block of code—enclosed by curly braces <code class="code-inline tex2jax_ignore">{ }</code>—only exists within that block. It is created at the point of its declaration and is destroyed the moment execution leaves the closing brace <code class="code-inline tex2jax_ignore">}</code>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-4-2-3-2-block-level-scope-7" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<ul class="disc" id="subsubsec-4-2-3-2-block-level-scope-8">
-<li id="subsubsec-4-2-3-2-block-level-scope-8-1">
-<div class="para" id="subsubsec-4-2-3-2-block-level-scope-8-1-1">The loop body ends at the closing brace <code class="code-inline tex2jax_ignore">}</code>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-4-2-3-2-block-level-scope-8-1-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsubsec-4-2-3-2-block-level-scope-8">In a <code class="code-inline tex2jax_ignore">do-while</code> loop:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-4-2-3-2-block-level-scope-8" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="autopermalink" aria-hidden="true" data-description="Item"><a tabindex="-1" href="#subsubsec-4-2-3-2-block-level-scope-8-1" title="Copy heading and permalink for Item" aria-label="Copy heading and permalink for Item">🔗</a></div>
+<ul class="disc" id="subsubsec-4-2-3-2-block-level-scope-9">
+<li id="subsubsec-4-2-3-2-block-level-scope-9-1">
+<div class="para" id="subsubsec-4-2-3-2-block-level-scope-9-1-1">The loop body ends at the closing brace <code class="code-inline tex2jax_ignore">}</code>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-4-2-3-2-block-level-scope-9-1-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" aria-hidden="true" data-description="Item"><a tabindex="-1" href="#subsubsec-4-2-3-2-block-level-scope-9-1" title="Copy heading and permalink for Item" aria-label="Copy heading and permalink for Item">🔗</a></div>
 </li>
-<li id="subsubsec-4-2-3-2-block-level-scope-8-2">
-<div class="para" id="subsubsec-4-2-3-2-block-level-scope-8-2-1">The loop condition (<code class="code-inline tex2jax_ignore">while (totalFreethrows &lt;= 0);</code>) sits outside those braces.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-4-2-3-2-block-level-scope-8-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<li id="subsubsec-4-2-3-2-block-level-scope-9-2">
+<div class="para" id="subsubsec-4-2-3-2-block-level-scope-9-2-1">The loop condition (<code class="code-inline tex2jax_ignore">while (totalFreethrows &lt;= 0);</code>) sits outside those braces.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-4-2-3-2-block-level-scope-9-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="autopermalink" aria-hidden="true" data-description="Item"><a tabindex="-1" href="#subsubsec-4-2-3-2-block-level-scope-8-2" title="Copy heading and permalink for Item" aria-label="Copy heading and permalink for Item">🔗</a></div>
+<div class="autopermalink" aria-hidden="true" data-description="Item"><a tabindex="-1" href="#subsubsec-4-2-3-2-block-level-scope-9-2" title="Copy heading and permalink for Item" aria-label="Copy heading and permalink for Item">🔗</a></div>
 </li>
 </ul>
-<div class="para" id="subsubsec-4-2-3-2-block-level-scope-9">Because the condition is evaluated after the closing brace, any variable declared inside the <code class="code-inline tex2jax_ignore">do</code> block is already out of scope and invisible to the <code class="code-inline tex2jax_ignore">while</code> test. Furthermore, even if the loop could compile, the rest of your program wouldn’t be able to use <code class="code-inline tex2jax_ignore">totalFreethrows</code> to calculate the percentage once the loop finished.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-4-2-3-2-block-level-scope-9" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsubsec-4-2-3-2-block-level-scope-10">Because the condition is evaluated after the closing brace, any variable declared inside the <code class="code-inline tex2jax_ignore">do</code> block is already out of scope and invisible to the <code class="code-inline tex2jax_ignore">while</code> test. Furthermore, even if the loop could compile, the rest of your program wouldn’t be able to use <code class="code-inline tex2jax_ignore">totalFreethrows</code> to calculate the percentage once the loop finished.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-4-2-3-2-block-level-scope-10" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="para" id="subsubsec-4-2-3-2-block-level-scope-10">To make a variable accessible both inside the loop body, within the <code class="code-inline tex2jax_ignore">while</code> condition, and in subsequent code, you must declare it before the <code class="code-inline tex2jax_ignore">do</code> block:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-4-2-3-2-block-level-scope-10" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsubsec-4-2-3-2-block-level-scope-11">To make a variable accessible both inside the loop body, within the <code class="code-inline tex2jax_ignore">while</code> condition, and in subsequent code, you must declare it before the <code class="code-inline tex2jax_ignore">do</code> block:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-4-2-3-2-block-level-scope-11" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="code-box"><pre class="program clipboardable"><code class="language-java">// CORRECT: Declared outside the loop
 int totalFreethrows;
@@ -1472,9 +1475,147 @@ do {
  
 // totalFreethrows is still in scope and ready to use!
 </code></pre></div>
-<div class="para" id="subsubsec-4-2-3-2-block-level-scope-12">Whenever you write a <code class="code-inline tex2jax_ignore">do-while</code> loop, always declare your loop control variable before the <code class="code-inline tex2jax_ignore">do</code> keyword so its scope covers the entire structure.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-4-2-3-2-block-level-scope-12" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsubsec-4-2-3-2-block-level-scope-13">Whenever you write a <code class="code-inline tex2jax_ignore">do-while</code> loop, always declare your loop control variable before the <code class="code-inline tex2jax_ignore">do</code> keyword so its scope covers the entire structure.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsubsec-4-2-3-2-block-level-scope-13" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="autopermalink" aria-hidden="true" data-description="Subsubsection 4.2.3.2: Block-Level Scope"><a tabindex="-1" href="#subsubsec-4-2-3-2-block-level-scope" title="Copy heading and permalink for Subsubsection 4.2.3.2: Block-Level Scope" aria-label="Copy heading and permalink for Subsubsection 4.2.3.2: Block-Level Scope">🔗</a></div>
+</section>
+<section class="reading-questions" id="checkpoint-4-2">
+<h3 class="heading hide-type">
+<span class="type">Reading Questions</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">4.2.3.3</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Checkpoint</span>
+</h3>
+<article class="exercise exercise-like" id="checkpoint-4-2-loop-parts"><h4 class="heading">
+<span class="codenumber">1<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Parts of a Loop.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone cardsort_section"><ul data-component="dragndrop" data-question_label="" style="visibility: hidden;" id="rs-checkpoint-4-2-loop-parts">
+<span data-subcomponent="question">
+<div class="para" id="checkpoint-4-2-loop-parts-2-1">Match each loop component to its role in controlling execution.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-4-2-loop-parts-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div></span><li data-subcomponent="draggable" id="rs-checkpoint-4-2-loop-parts_drag1" data-category="1">Initializer</li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-4-2-loop-parts_drag1" data-category="1">Gives the loop control variable its starting value before the loop begins</li>
+<li data-subcomponent="draggable" id="rs-checkpoint-4-2-loop-parts_drag2" data-category="2">Test</li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-4-2-loop-parts_drag2" data-category="2">Evaluates the Boolean condition to decide whether the body runs</li>
+<li data-subcomponent="draggable" id="rs-checkpoint-4-2-loop-parts_drag3" data-category="3">Updater</li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-4-2-loop-parts_drag3" data-category="3">Changes the loop control variable inside the body so the loop can terminate</li>
+<li data-subcomponent="draggable" id="rs-checkpoint-4-2-loop-parts_drag4" data-category="4">Priming read</li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-4-2-loop-parts_drag4" data-category="4">Reads the first user input before a pre-test validation loop</li>
+</ul></div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 4.2.3.3.1: Parts of a Loop"><a tabindex="-1" href="#checkpoint-4-2-loop-parts" title="Copy heading and permalink for Reading Question 4.2.3.3.1: Parts of a Loop" aria-label="Copy heading and permalink for Reading Question 4.2.3.3.1: Parts of a Loop">🔗</a></div>
+</article>
+<article class="exercise exercise-like" id="checkpoint-4-2-trace-iterations"><h4 class="heading">
+<span class="codenumber">2<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Tracing a <code class="code-inline tex2jax_ignore">while</code> Loop.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone multiplechoice_section">
+<div class="exercise-statement">
+<div class="para" id="checkpoint-4-2-trace-iterations-2-1">How many times does the loop body execute in the following code?<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-4-2-trace-iterations-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div> <div class="code-box"><pre class="program clipboardable"><code class="language-java">int n = 3;
+while (n &gt;= 0) {
+    System.out.println(n);
+    n--;
+}
+</code></pre></div>
+</div>
+<ul data-component="multiplechoice" class="exercise-interactives" id="rs-checkpoint-4-2-trace-iterations" data-multipleanswers="false" data-random="">
+<li data-component="answer" id="rs-checkpoint-4-2-trace-iterations_opt_a" data-correct="">
+<div class="para" id="checkpoint-4-2-trace-iterations-3-1-1-1">4 times</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-2-trace-iterations_opt_a">
+<div class="para" id="checkpoint-4-2-trace-iterations-3-1-2-1">Correct! The loop runs for <code class="code-inline tex2jax_ignore">n = 3</code>, <code class="code-inline tex2jax_ignore">2</code>, <code class="code-inline tex2jax_ignore">1</code>, and <code class="code-inline tex2jax_ignore">0</code>, then stops when <code class="code-inline tex2jax_ignore">n</code> becomes <code class="code-inline tex2jax_ignore">-1</code>.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-4-2-trace-iterations_opt_b">
+<div class="para" id="checkpoint-4-2-trace-iterations-3-2-1-1">3 times</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-2-trace-iterations_opt_b">
+<div class="para" id="checkpoint-4-2-trace-iterations-3-2-2-1">Not quite. Because the condition is <code class="code-inline tex2jax_ignore">n &gt;= 0</code> rather than <code class="code-inline tex2jax_ignore">n &gt; 0</code>, the body also executes when <code class="code-inline tex2jax_ignore">n</code> is <code class="code-inline tex2jax_ignore">0</code>.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-4-2-trace-iterations_opt_c">
+<div class="para" id="checkpoint-4-2-trace-iterations-3-3-1-1">2 times</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-2-trace-iterations_opt_c">
+<div class="para" id="checkpoint-4-2-trace-iterations-3-3-2-1">Not quite. Trace <code class="code-inline tex2jax_ignore">n</code> starting at <code class="code-inline tex2jax_ignore">3</code> and decrementing by <code class="code-inline tex2jax_ignore">1</code> until <code class="code-inline tex2jax_ignore">n &gt;= 0</code> becomes <code class="code-inline tex2jax_ignore">false</code>.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-4-2-trace-iterations_opt_d">
+<div class="para" id="checkpoint-4-2-trace-iterations-3-4-1-1">Infinitely many times</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-2-trace-iterations_opt_d">
+<div class="para" id="checkpoint-4-2-trace-iterations-3-4-2-1">Not quite. The updater <code class="code-inline tex2jax_ignore">n--</code> moves <code class="code-inline tex2jax_ignore">n</code> downward toward <code class="code-inline tex2jax_ignore">-1</code>, so the loop terminates.</div>
+</li>
+</ul>
+</div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 4.2.3.3.2: Tracing a while Loop"><a tabindex="-1" href="#checkpoint-4-2-trace-iterations" title="Copy heading and permalink for Reading Question 4.2.3.3.2: Tracing a while Loop" aria-label="Copy heading and permalink for Reading Question 4.2.3.3.2: Tracing a while Loop">🔗</a></div>
+</article>
+<article class="exercise exercise-like" id="checkpoint-4-2-while-vs-dowhile"><h4 class="heading">
+<span class="codenumber">3<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Choosing <code class="code-inline tex2jax_ignore">while</code> vs. <code class="code-inline tex2jax_ignore">do-while</code>.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone multiplechoice_section">
+<div class="exercise-statement">
+<div class="para" id="checkpoint-4-2-while-vs-dowhile-2-1">When is a <code class="code-inline tex2jax_ignore">do-while</code> loop typically a better fit than a <code class="code-inline tex2jax_ignore">while</code> loop?<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-4-2-while-vs-dowhile-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</div>
+<ul data-component="multiplechoice" class="exercise-interactives" id="rs-checkpoint-4-2-while-vs-dowhile" data-multipleanswers="false" data-random="">
+<li data-component="answer" id="rs-checkpoint-4-2-while-vs-dowhile_opt_a" data-correct="">
+<div class="para" id="checkpoint-4-2-while-vs-dowhile-3-1-1-1">When the loop body must execute at least once before the condition can be tested, such as prompting for and reading user input.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-2-while-vs-dowhile_opt_a">
+<div class="para" id="checkpoint-4-2-while-vs-dowhile-3-1-2-1">Correct! A <code class="code-inline tex2jax_ignore">do-while</code> loop is a post-test loop, guaranteeing at least one execution before checking the condition.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-4-2-while-vs-dowhile_opt_b">
+<div class="para" id="checkpoint-4-2-while-vs-dowhile-3-2-1-1">When the loop body might need to be skipped entirely and execute zero times.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-2-while-vs-dowhile_opt_b">
+<div class="para" id="checkpoint-4-2-while-vs-dowhile-3-2-2-1">Not quite. A pre-test <code class="code-inline tex2jax_ignore">while</code> loop is the right choice when the body may execute zero times.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-4-2-while-vs-dowhile_opt_c">
+<div class="para" id="checkpoint-4-2-while-vs-dowhile-3-3-1-1">When you want to avoid writing a semicolon after the loop header.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-2-while-vs-dowhile_opt_c">
+<div class="para" id="checkpoint-4-2-while-vs-dowhile-3-3-2-1">Not quite. A <code class="code-inline tex2jax_ignore">do-while</code> loop actually requires a semicolon after <code class="code-inline tex2jax_ignore">while (booleanExpression);</code>.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-4-2-while-vs-dowhile_opt_d">
+<div class="para" id="checkpoint-4-2-while-vs-dowhile-3-4-1-1">When you want the loop control variable to be declared inside the loop body and still tested in the condition.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-2-while-vs-dowhile_opt_d">
+<div class="para" id="checkpoint-4-2-while-vs-dowhile-3-4-2-1">Not quite. Because of block-level scope, a variable declared inside the <code class="code-inline tex2jax_ignore">do</code> block is out of scope in the <code class="code-inline tex2jax_ignore">while</code> condition.</div>
+</li>
+</ul>
+</div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 4.2.3.3.3: Choosing while vs. do-while"><a tabindex="-1" href="#checkpoint-4-2-while-vs-dowhile" title="Copy heading and permalink for Reading Question 4.2.3.3.3: Choosing while vs. do-while" aria-label="Copy heading and permalink for Reading Question 4.2.3.3.3: Choosing while vs. do-while">🔗</a></div>
+</article>
+<article class="exercise exercise-like" id="checkpoint-4-2-block-scope"><h4 class="heading">
+<span class="codenumber">4<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Block-Level Scope in Loops.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone multiplechoice_section">
+<div class="exercise-statement">
+<div class="para" id="checkpoint-4-2-block-scope-2-1">Why does declaring <code class="code-inline tex2jax_ignore">int totalFreethrows = stdin.nextInt();</code> inside the <code class="code-inline tex2jax_ignore">do</code> block of a <code class="code-inline tex2jax_ignore">do-while (totalFreethrows &lt;= 0);</code> loop cause a compiler error?<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-4-2-block-scope-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</div>
+<ul data-component="multiplechoice" class="exercise-interactives" id="rs-checkpoint-4-2-block-scope" data-multipleanswers="false" data-random="">
+<li data-component="answer" id="rs-checkpoint-4-2-block-scope_opt_a" data-correct="">
+<div class="para" id="checkpoint-4-2-block-scope-3-1-1-1">The variable’s scope ends at the closing curly brace <code class="code-inline tex2jax_ignore">}</code> of the <code class="code-inline tex2jax_ignore">do</code> block, so <code class="code-inline tex2jax_ignore">totalFreethrows</code> is out of scope when the <code class="code-inline tex2jax_ignore">while</code> condition is checked.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-2-block-scope_opt_a">
+<div class="para" id="checkpoint-4-2-block-scope-3-1-2-1">Correct! Declaring <code class="code-inline tex2jax_ignore">totalFreethrows</code> before the <code class="code-inline tex2jax_ignore">do</code> block keeps it in scope for both the <code class="code-inline tex2jax_ignore">while</code> test and the code after the loop.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-4-2-block-scope_opt_b">
+<div class="para" id="checkpoint-4-2-block-scope-3-2-1-1">Java does not allow <code class="code-inline tex2jax_ignore">Scanner</code> methods such as <code class="code-inline tex2jax_ignore">nextInt()</code> to be called inside a <code class="code-inline tex2jax_ignore">do-while</code> loop.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-2-block-scope_opt_b">
+<div class="para" id="checkpoint-4-2-block-scope-3-2-2-1">Not quite. Calling <code class="code-inline tex2jax_ignore">stdin.nextInt()</code> inside the loop is fine; the problem is where the variable is declared.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-4-2-block-scope_opt_c">
+<div class="para" id="checkpoint-4-2-block-scope-3-3-1-1">A <code class="code-inline tex2jax_ignore">do-while</code> loop condition can only test <code class="code-inline tex2jax_ignore">boolean</code> variables, not <code class="code-inline tex2jax_ignore">int</code> comparisons.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-2-block-scope_opt_c">
+<div class="para" id="checkpoint-4-2-block-scope-3-3-2-1">Not quite. <code class="code-inline tex2jax_ignore">totalFreethrows &lt;= 0</code> is a valid Boolean expression as long as <code class="code-inline tex2jax_ignore">totalFreethrows</code> is in scope.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-4-2-block-scope_opt_d">
+<div class="para" id="checkpoint-4-2-block-scope-3-4-1-1">Local variables cannot be assigned new values more than once inside a loop.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-2-block-scope_opt_d">
+<div class="para" id="checkpoint-4-2-block-scope-3-4-2-1">Not quite. A non-<code class="code-inline tex2jax_ignore">final</code> variable declared before the loop can be reassigned on every iteration.</div>
+</li>
+</ul>
+</div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 4.2.3.3.4: Block-Level Scope in Loops"><a tabindex="-1" href="#checkpoint-4-2-block-scope" title="Copy heading and permalink for Reading Question 4.2.3.3.4: Block-Level Scope in Loops" aria-label="Copy heading and permalink for Reading Question 4.2.3.3.4: Block-Level Scope in Loops">🔗</a></div>
+</article><div class="autopermalink" aria-hidden="true" data-description="Reading Questions 4.2.3.3: Checkpoint"><a tabindex="-1" href="#checkpoint-4-2" title="Copy heading and permalink for Reading Questions 4.2.3.3: Checkpoint" aria-label="Copy heading and permalink for Reading Questions 4.2.3.3: Checkpoint">🔗</a></div>
 </section><div class="autopermalink" aria-hidden="true" data-description="Subsection 4.2.3: Post-Test Loops: The do-while Statement"><a tabindex="-1" href="#subsec-4-2-3-post-test-loops" title="Copy heading and permalink for Subsection 4.2.3: Post-Test Loops: The do-while Statement" aria-label="Copy heading and permalink for Subsection 4.2.3: Post-Test Loops: The do-while Statement">🔗</a></div>
 </section><div class="autopermalink" aria-hidden="true" data-description="Section 4.2: Conditional Loops: while and do-while"><a tabindex="-1" href="#sec-4-2-conditional-loops" title="Copy heading and permalink for Section 4.2: Conditional Loops: while and do-while" aria-label="Copy heading and permalink for Section 4.2: Conditional Loops: while and do-while">🔗</a></div>
 </section>

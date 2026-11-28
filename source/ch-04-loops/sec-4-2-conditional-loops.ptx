@@ -117,7 +117,7 @@ public class GuessTheNumber {
     </ul>
 
     <p>
-      Because <c>userGuess</c> is the variable that changes on each cycle to eventually satisfy the exit condition, we call it the <term>loop control variable</term>. It controls when the loop is exited.
+      Because <c>userGuess</c> is the variable that changes on each cycle to eventually satisfy the exit condition, we call it the loop control variable. It controls when the loop is exited.
     </p>
 
     <p>
@@ -146,7 +146,8 @@ public class GuessTheNumber {
 
     <listing xml:id="listing-countdown">
       <title><c>Countdown.java</c></title>
-      <program language="java" line-numbers="yes"><![CDATA[/**
+      <program language="java" line-numbers="yes"><![CDATA[
+/**
  * Print a countdown from 5 to blastoff.
  */
 public class Countdown {
@@ -326,7 +327,7 @@ while (totalFreethrows <= 0) {
 }]]></program>
 
       <p>
-        This loop follows the pattern that we’ve seen previously: an initializer before the loop header, the loop entry condition, and then the loop body which contains the updater. We must obtain an input from the user for both the initializer and the updater. Therefore we must duplicate the prompt and code that reads the user’s input. We call the code that reads the user’s input the first time a <term>priming read</term>.
+        This loop follows the pattern that we’ve seen previously: an initializer before the loop header, the loop entry condition, and then the loop body which contains the updater. We must obtain an input from the user for both the initializer and the updater. Therefore we must duplicate the prompt and code that reads the user’s input. We call the code that reads the user’s input the first time a priming read.
       </p>
 
       <p>
@@ -379,7 +380,7 @@ while (totalFreethrows <= 0) {
       </p>
 
       <p>
-        New programmers are often tempted to declare a variable at the exact moment they first read it:
+        Many programmers are often tempted to declare a variable at the exact moment they first read it:
       </p>
 
       <program language="java"><![CDATA[// SYNTAX ERROR: The do-while scope trap!
@@ -396,6 +397,9 @@ do {
         This code fails to compile because of Java’s rules for block-level scope.
       </p>
 
+	  <p>
+        Recall from <xref ref="subsubsec-2-4-2-2-where-variables-live" /> that a variable’s scope<mdash />where it can be seen and used in a program<mdash />begins at its declaration and ends at the closing curly brace of the block in which it was declared.
+      </p>
       <p>
         A variable declared inside a block of code<mdash />enclosed by curly braces <c>{ }</c><mdash />only exists within that block. It is created at the point of its declaration and is destroyed the moment execution leaves the closing brace <c>}</c>.
       </p>
@@ -435,5 +439,218 @@ do {
         Whenever you write a <c>do-while</c> loop, always declare your loop control variable before the <c>do</c> keyword so its scope covers the entire structure.
       </p>
     </subsubsection>
+
+    <reading-questions xml:id="checkpoint-4-2">
+      <title>Checkpoint</title>
+
+      <exercise xml:id="checkpoint-4-2-loop-parts" label="checkpoint-4-2-loop-parts">
+        <title>Parts of a Loop</title>
+        <statement>
+          <p>
+            Match each loop component to its role in controlling execution.
+          </p>
+        </statement>
+        <cardsort>
+          <match>
+            <premise order="2">Initializer</premise>
+            <response>Gives the loop control variable its starting value before the loop begins</response>
+          </match>
+          <match>
+            <premise order="4">Test</premise>
+            <response>Evaluates the Boolean condition to decide whether the body runs</response>
+          </match>
+          <match>
+            <premise order="1">Updater</premise>
+            <response>Changes the loop control variable inside the body so the loop can terminate</response>
+          </match>
+          <match>
+            <premise order="3">Priming read</premise>
+            <response>Reads the first user input before a pre-test validation loop</response>
+          </match>
+        </cardsort>
+      </exercise>
+
+      <exercise xml:id="checkpoint-4-2-trace-iterations" label="checkpoint-4-2-trace-iterations">
+        <title>Tracing a <c>while</c> Loop</title>
+        <statement>
+          <p>
+            How many times does the loop body execute in the following code?
+          </p>
+          <program language="java"><![CDATA[int n = 3;
+while (n >= 0) {
+    System.out.println(n);
+    n--;
+}]]></program>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                4 times
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! The loop runs for <c>n = 3</c>, <c>2</c>, <c>1</c>, and <c>0</c>, then stops when <c>n</c> becomes <c>-1</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                3 times
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Because the condition is <c>n &gt;= 0</c> rather than <c>n &gt; 0</c>, the body also executes when <c>n</c> is <c>0</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                2 times
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Trace <c>n</c> starting at <c>3</c> and decrementing by <c>1</c> until <c>n &gt;= 0</c> becomes <c>false</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                Infinitely many times
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. The updater <c>n--</c> moves <c>n</c> downward toward <c>-1</c>, so the loop terminates.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-4-2-while-vs-dowhile" label="checkpoint-4-2-while-vs-dowhile">
+        <title>Choosing <c>while</c> vs. <c>do-while</c></title>
+        <statement>
+          <p>
+            When is a <c>do-while</c> loop typically a better fit than a <c>while</c> loop?
+          </p>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                When the loop body must execute at least once before the condition can be tested, such as prompting for and reading user input.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! A <c>do-while</c> loop is a post-test loop, guaranteeing at least one execution before checking the condition.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                When the loop body might need to be skipped entirely and execute zero times.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. A pre-test <c>while</c> loop is the right choice when the body may execute zero times.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                When you want to avoid writing a semicolon after the loop header.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. A <c>do-while</c> loop actually requires a semicolon after <c>while (booleanExpression);</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                When you want the loop control variable to be declared inside the loop body and still tested in the condition.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Because of block-level scope, a variable declared inside the <c>do</c> block is out of scope in the <c>while</c> condition.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-4-2-block-scope" label="checkpoint-4-2-block-scope">
+        <title>Block-Level Scope in Loops</title>
+        <statement>
+          <p>
+            Why does declaring <c>int totalFreethrows = stdin.nextInt();</c> inside the <c>do</c> block of a <c>do-while (totalFreethrows &lt;= 0);</c> loop cause a compiler error?
+          </p>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                The variable’s scope ends at the closing curly brace <c>}</c> of the <c>do</c> block, so <c>totalFreethrows</c> is out of scope when the <c>while</c> condition is checked.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! Declaring <c>totalFreethrows</c> before the <c>do</c> block keeps it in scope for both the <c>while</c> test and the code after the loop.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                Java does not allow <c>Scanner</c> methods such as <c>nextInt()</c> to be called inside a <c>do-while</c> loop.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Calling <c>stdin.nextInt()</c> inside the loop is fine; the problem is where the variable is declared.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                A <c>do-while</c> loop condition can only test <c>boolean</c> variables, not <c>int</c> comparisons.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. <c>totalFreethrows &lt;= 0</c> is a valid Boolean expression as long as <c>totalFreethrows</c> is in scope.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                Local variables cannot be assigned new values more than once inside a loop.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. A non-<c>final</c> variable declared before the loop can be reassigned on every iteration.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+    </reading-questions>
   </subsection>
 </section>
