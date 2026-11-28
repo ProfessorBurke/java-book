@@ -276,7 +276,7 @@ public class AirQualitySummary {
     </p>
 
     <p>
-      Instead of running your program normally, run it by selecting <menuchoice><guimenu>Coverage As</guimenu><guimenuitem>Java Application</guimenuitem></menuchoice> (or clicking the Coverage button on the Eclipse toolbar). Eclipse will color-code the background of your statements in the editor:
+      Instead of running your program normally, run it by selecting <c>Coverage As</c> &#x2192; <c>Java Application</c> (or clicking the <c>Coverage</c> button on the Eclipse toolbar). Eclipse will color-code the background of your statements in the editor:
     </p>
 
     <ul>
@@ -286,7 +286,7 @@ public class AirQualitySummary {
     </ul>
 
     <p>
-      When you run Test Case 1 (<c>aqi = -1</c>), lines 23–24 will illuminate in green, while the entire <c>else</c> block will remain red. After you have run all cases in the test plan, you can confirm that every branch of the program executed by merging sessions. Open the Coverage View. The Coverage View may have automatically opened in the same part of the window as the Console View, but if not, go to <menuchoice><guimenu>Window</guimenu><guimenuitem>Show View</guimenuitem><guimenuitem>Other...</guimenuitem><guimenuitem>Java</guimenuitem><guimenuitem>Coverage</guimenuitem></menuchoice>. You will then see some icons in the top right of the view. Click the Merge Sessions icon (mouse over the icons to find it<mdash />it looks like two database cylinders, one over the other). You will be able to choose the executions you want to merge, and click OK. You should now see all branches as green, except the assertion (since the assertion never failed).
+      When you run Test Case 1 (<c>aqi = -1</c>), lines 23–24 will illuminate in green, while the entire <c>else</c> block will remain red. After you have run all cases in the test plan, you can confirm that every branch of the program executed by merging sessions. Open the <c>Coverage</c> view. The <c>Coverage</c> view may have automatically opened in the same part of the window as the <c>Console</c> view, but if not, go to <c>Window</c> &#x2192; <c>Show View</c> &#x2192; <c>Other...</c> &#x2192; <c>Java</c> &#x2192; <c>Coverage</c>. You will then see some icons in the top right of the view. Click the <c>Merge Sessions</c> icon (mouse over the icons to find it<mdash />it looks like two database cylinders, one over the other). You will be able to choose the executions you want to merge, and click <c>OK</c>. You should now see all branches as green, except the assertion (since the assertion never failed).
     </p>
 
     <figure xml:id="figure-code-coverage-test-case-1">
@@ -300,5 +300,184 @@ public class AirQualitySummary {
         </description>
       </image>
     </figure>
+
+    <reading-questions xml:id="checkpoint-3-10">
+      <title>Checkpoint</title>
+
+      <exercise xml:id="checkpoint-3-10-guard-condition" label="checkpoint-3-10-guard-condition">
+        <title>Guard Condition Placement</title>
+        <statement>
+          <p>
+            In <xref ref="listing-air-quality-summary" />, why does the <c>if</c> statement test for invalid input (<c>aqi &lt; 0 || aqi &gt; 500</c>) first instead of testing for valid input first?
+          </p>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                It keeps the short error-handling response right next to the condition so readers do not have to scroll past the entire bucketing logic to see what happens on bad input.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! Placing the short error branch first as a guard condition improves readability by resolving invalid input immediately.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                Java requires <c>||</c> conditions to appear before <c>&amp;&amp;</c> conditions in an <c>if-else</c> statement.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Java allows either order; checking invalid input first is a readability and design choice, not a syntax rule.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                An <c>assert</c> statement can only be placed inside an <c>else</c> block.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. An <c>assert</c> statement can appear anywhere inside a method where a statement is allowed.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                Testing invalid input first prevents the program from needing an <c>else if</c> chain inside the other branch.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. The <c>else</c> block still uses an <c>if-else if-else</c> chain to classify valid AQI values into three buckets.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-3-10-boundaries" label="checkpoint-3-10-boundaries">
+        <title>Identifying Boundary Test Cases</title>
+        <statement>
+          <p>
+            In the AQI problem, Healthy is <c>0–50</c> and Moderate is <c>51–150</c>. Which pair of inputs tests the exact boundary between these two categories?
+          </p>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                <c>50</c> and <c>51</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! <c>50</c> is the upper bound of Healthy and <c>51</c> is the lower bound of Moderate, catching off-by-one errors such as writing <c>&lt; 50</c> instead of <c>&lt;= 50</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>25</c> and <c>100</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Those are representative middle values, so they would miss an off-by-one error right at <c>50</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>0</c> and <c>150</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. <c>0</c> tests the lower bound of Healthy and <c>150</c> tests the upper bound of Moderate, not the edge between them.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>-1</c> and <c>501</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Those values test the invalid lower and upper boundaries outside <c>0–500</c>.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-3-10-coverage-match" label="checkpoint-3-10-coverage-match">
+        <title>Eclipse Code Coverage Indicators</title>
+        <statement>
+          <p>
+            Match each Eclipse Code Coverage indicator or action to what it represents.
+          </p>
+        </statement>
+        <cardsort>
+          <match>
+            <premise order="2">Green highlight</premise>
+            <response>Statements and branches that executed during the run</response>
+          </match>
+          <match>
+            <premise order="4">Red highlight</premise>
+            <response>Code that was completely bypassed during the run</response>
+          </match>
+          <match>
+            <premise order="1">Yellow highlight</premise>
+            <response>A decision point that was only partially exercised</response>
+          </match>
+          <match>
+            <premise order="3">Merge Sessions</premise>
+            <response>Combines multiple test runs to confirm full branch coverage</response>
+          </match>
+        </cardsort>
+      </exercise>
+
+      <exercise xml:id="checkpoint-3-10-parsons-nested-if" label="checkpoint-3-10-parsons-nested-if" language="java">
+        <title>Validating Input with a Nested <c>if</c></title>
+        <statement>
+          <p>
+            Arrange the code blocks to validate that <c>score</c> is between <c>0</c> and <c>100</c> inclusive (using a guard condition), and for valid scores print <c>"Pass"</c> if <c>score &gt;= 70</c> or <c>"Retake"</c> otherwise.
+          </p>
+        </statement>
+        <blocks>
+          <block order="1">
+            <cline>if (score &lt; 0 || score &gt; 100) {</cline>
+            <cline>    System.out.println("Invalid score.");</cline>
+          </block>
+          <block order="2">
+            <cline>} else {</cline>
+            <cline>    if (score &gt;= 70) {</cline>
+          </block>
+          <block order="3">
+            <cline>        System.out.println("Pass");</cline>
+          </block>
+          <block order="4">
+            <cline>    } else {</cline>
+            <cline>        System.out.println("Retake");</cline>
+          </block>
+          <block order="5">
+            <cline>    }</cline>
+            <cline>}</cline>
+          </block>
+        </blocks>
+      </exercise>
+    </reading-questions>
   </subsection>
 </section>
