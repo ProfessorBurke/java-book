@@ -23,15 +23,11 @@
     <title>From Branch Coverage to Loop Coverage</title>
 
     <p>
-      In Chapter 3, you designed test cases to verify that your Boolean conditions selected the correct branch. With loops, our goal shifts to <term>loop boundary coverage</term>.
+      In Chapter 3, you designed test cases to verify that your Boolean conditions selected the correct branch. With loops, our goal shifts to loop boundary coverage.
     </p>
 
     <p>
       Decades of software engineering research have shown that when loops fail, they almost always fail at the extreme edges of their repetition count. Therefore, a robust test suite for any loop must test four specific iteration milestones:
-    </p>
-
-    <p>
-      <c>[ 0 Iterations ]  ---&gt;  [ 1 Iteration ]  ---&gt;  [ Typical Iterations ]  ---&gt;  [ Maximum Boundary ]</c>
     </p>
 
     <ol>
@@ -57,7 +53,7 @@
     <title>Diagnosing and Escaping Infinite Loops</title>
 
     <p>
-      An <term>infinite loop</term> occurs when a loop’s continuation condition remains <c>true</c> forever.
+      An infinite loop occurs when a loop’s continuation condition remains <c>true</c> forever.
     </p>
 
     <p>
@@ -113,7 +109,7 @@ for (int i = 1; i != 10; i += 2) {
 }]]></program>
 
       <p>
-        Always use directional relational operators (<c>&lt;</c>, <c>&lt;=</c>, <c>&gt;</c>, <c>&gt;=</c>) rather than equality operators (<c>!=</c>, <c>==</c>) for loop boundaries.
+        For numeric counting or threshold boundaries, use directional relational operators (<c>&lt;</c>, <c>&lt;=</c>, <c>&gt;</c>, <c>&gt;=</c>) rather than equality operators (<c>!=</c>, <c>==</c>) so a stepper cannot overshoot the limit (reserving <c>!=</c> for exact sentinel checks).
       </p>
 
       <p>
@@ -122,7 +118,7 @@ for (int i = 1; i != 10; i += 2) {
 
       <ol>
         <li><p>Look at the top-right corner of the Console view at the bottom of your screen.</p></li>
-        <li><p>Click the bright red square button (<term>Terminate</term>).</p></li>
+        <li><p>Click the bright red square button (<c>Terminate</c>).</p></li>
         <li><p>The red square will turn gray, indicating that Eclipse has forcibly halted the runaway Java process.</p></li>
       </ol>
     </paragraphs>
@@ -135,11 +131,11 @@ for (int i = 1; i != 10; i += 2) {
     <title>Preventing Off-by-One Errors (<c>&lt;</c> vs. <c>&lt;=</c>)</title>
 
     <p>
-      The second most common category of loop bugs is the <term>off-by-one error</term><mdash />executing a loop one time too many or one time too few.
+      The second most common category of loop bugs is the off-by-one error<mdash />executing a loop one time too many or one time too few.
     </p>
 
     <p>
-      In computer science, this is often called the <term>fencepost error</term>: if you need to build a straight fence that is 100 feet long with posts spaced every 10 feet, how many fenceposts do you need? Beginners naturally divide 100 by 10 and answer <q>10.</q> But the correct answer is 11<mdash />you need a post at the start, a post at the end, and nine posts in between!
+      In computer science, this is often called the fencepost error: if you need to build a straight fence that is 100 feet long with posts spaced every 10 feet, how many fenceposts do you need? Beginners naturally divide 100 by 10 and answer <q>10.</q> But the correct answer is 11<mdash />you need a post at the start, a post at the end, and nine posts in between!
     </p>
 
     <p>
@@ -286,5 +282,181 @@ for (int i = 1; i != 10; i += 2) {
       <li><p><strong>Boundary Inclusion:</strong> Does the loop use <c>&lt;</c> vs. <c>&lt;=</c> properly to avoid off-by-one fencepost errors?</p></li>
       <li><p><strong>Zero-Iteration Safety:</strong> What happens if the loop body executes zero times? Are your post-loop calculations protected against uninitialized variables or division by zero?</p></li>
     </ul>
+
+    <reading-questions xml:id="checkpoint-4-9">
+      <title>Checkpoint</title>
+
+      <exercise xml:id="checkpoint-4-9-bug-match" label="checkpoint-4-9-bug-match">
+        <title>Diagnosing Loop Bugs</title>
+        <statement>
+          <p>
+            Match each buggy loop to the error it causes.
+          </p>
+        </statement>
+        <cardsort>
+          <match>
+            <premise order="3"><c>int i = 1; while (i &lt;= 10) { System.out.println(i); }</c></premise>
+            <response>Infinite loop caused by a missing update statement</response>
+          </match>
+          <match>
+            <premise order="1"><c>int i = 1; while (i &lt;= 10) { System.out.println(i); i--; }</c></premise>
+            <response>Infinite loop caused by updating away from the bound</response>
+          </match>
+          <match>
+            <premise order="4"><c>for (int i = 1; i != 10; i += 2) { System.out.println(i); }</c></premise>
+            <response>Infinite loop caused by overshooting an equality check</response>
+          </match>
+          <match>
+            <premise order="2"><c>for (int i = 0; i &lt;= 10; i++) { System.out.println(i); }</c></premise>
+            <response>Off-by-one error running 11 times instead of 10</response>
+          </match>
+        </cardsort>
+      </exercise>
+
+      <exercise xml:id="checkpoint-4-9-loop-coverage" label="checkpoint-4-9-loop-coverage">
+        <title>Loop Boundary Coverage</title>
+        <statement>
+          <p>
+            Why does loop boundary coverage emphasize testing 0 iterations and 1 iteration in addition to typical multi-iteration runs?
+          </p>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                Loop bugs such as division by zero, uninitialized variables, and off-by-one errors cluster at the extreme edges of repetition counts and are easiest to spot on tiny inputs.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! Testing 0, 1, typical, and maximum boundary iterations catches edge-case failures without needing to test every possible count.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                Because Java requires every loop to execute at least once during testing before it can be compiled.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Java compiles loops without running them; boundary testing is a verification practice to catch runtime logic bugs.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                Because Eclipse Code Coverage only highlights green lines if the loop runs exactly 0 or 1 times.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Code coverage highlights executed lines regardless of how many times the loop runs, but boundary counts catch logic errors that multi-iteration runs can hide.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                Because <c>while</c> loops cannot execute more than once without a <c>for</c> loop.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. A <c>while</c> loop can run zero, one, or many times depending on its condition.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-4-9-fencepost" label="checkpoint-4-9-fencepost">
+        <title>Spotting Off-by-One Errors</title>
+        <statement>
+          <p>
+            A programmer wants a loop to repeat <c>n</c> times starting at <c>1</c>, and writes <c>for (int i = 1; i &lt; n; i++)</c>. For <c>n &gt;= 1</c>, how many times does the loop body execute?
+          </p>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                <m>n - 1</m> times (one too few)
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! Starting at <c>1</c> with <c>&lt; n</c> stops before <c>n</c>, giving <m>n - 1</m> iterations. Use <c>i &lt;= n</c> when starting at <c>1</c> (or <c>i = 0; i &lt; n</c>).
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <m>n</m> times
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Try tracing with <c>n = 1</c>: <c>1 &lt; 1</c> is <c>false</c>, so the loop runs <c>0</c> times instead of <c>1</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <m>n + 1</m> times (one too many)
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. <m>n + 1</m> iterations occur when starting at <c>0</c> and using <c>&lt;= n</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                Infinitely many times
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Because <c>i++</c> moves <c>i</c> upward toward <c>n</c>, the loop terminates.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-4-9-test-plan-match" label="checkpoint-4-9-test-plan-match">
+        <title>Designing a Loop Test Plan</title>
+        <statement>
+          <p>
+            Match each test input stream for <c>ScoreAverager</c> (valid scores <c>0–100</c>, sentinel <c>-1</c>) to the test case category it verifies.
+          </p>
+        </statement>
+        <cardsort>
+          <match>
+            <premise order="2"><c>-1</c></premise>
+            <response>Zero iterations (verifies no division by zero)</response>
+          </match>
+          <match>
+            <premise order="4"><c>85, -1</c></premise>
+            <response>One iteration (verifies single item and sentinel exclusion)</response>
+          </match>
+          <match>
+            <premise order="1"><c>80, 90, 100, -1</c></premise>
+            <response>Multiple iterations (typical accumulation)</response>
+          </match>
+          <match>
+            <premise order="3"><c>0, 0, -1</c></premise>
+            <response>Lower data boundary (lowest valid score)</response>
+          </match>
+        </cardsort>
+      </exercise>
+    </reading-questions>
   </subsection>
 </section>

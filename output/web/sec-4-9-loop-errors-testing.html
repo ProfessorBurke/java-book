@@ -530,7 +530,10 @@ eBookConfig.enable_chatcodes =  false;
 <li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-9-loop-errors-testing.html#subsec-4-9-2-diagnosing-escaping-infinite-loops" class="internal"><span class="codenumber">4.9.2</span> <span class="title">Diagnosing and Escaping Infinite Loops</span></a></div></li>
 <li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-9-loop-errors-testing.html#subsec-4-9-3-preventing-off-by-one-errors" class="internal"><span class="codenumber">4.9.3</span> <span class="title">Preventing Off-by-One Errors (<code class="code-inline tex2jax_ignore">&lt;</code> vs. <code class="code-inline tex2jax_ignore">&lt;=</code>)</span></a></div></li>
 <li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-9-loop-errors-testing.html#subsec-4-9-4-designing-loop-test-plan" class="internal"><span class="codenumber">4.9.4</span> <span class="title">Designing a Loop Test Plan Table</span></a></div></li>
-<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-9-loop-errors-testing.html#subsec-4-9-5-checklist-loop-verification" class="internal"><span class="codenumber">4.9.5</span> <span class="title">Summary Checklist for Loop Verification</span></a></div></li>
+<li class="toc-item toc-subsection">
+<div class="toc-title-box"><a href="sec-4-9-loop-errors-testing.html#subsec-4-9-5-checklist-loop-verification" class="internal"><span class="codenumber">4.9.5</span> <span class="title">Summary Checklist for Loop Verification</span></a></div>
+<ul id="ptx-toc-group-subsec-4-9-5-checklist-loop-verification" class="structural toc-item-list"><li class="toc-item toc-reading-questions"><div class="toc-title-box"><a href="sec-4-9-loop-errors-testing.html#checkpoint-4-9" class="internal"><span class="codenumber">4.9.5</span> <span class="title">Checkpoint</span></a></div></li></ul>
+</li>
 </ul>
 </li>
 <li class="toc-item toc-section">
@@ -1104,33 +1107,30 @@ eBookConfig.enable_chatcodes =  false;
 <h2 class="heading hide-type">
 <span class="type">Subsection</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">4.9.1</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">From Branch Coverage to Loop Coverage</span>
 </h2>
-<div class="para" id="subsec-4-9-1-branch-to-loop-coverage-2">In Chapter 3, you designed test cases to verify that your Boolean conditions selected the correct branch. With loops, our goal shifts to <dfn class="terminology">loop boundary coverage</dfn>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-9-1-branch-to-loop-coverage-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-4-9-1-branch-to-loop-coverage-2">In Chapter 3, you designed test cases to verify that your Boolean conditions selected the correct branch. With loops, our goal shifts to loop boundary coverage.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-9-1-branch-to-loop-coverage-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="para" id="subsec-4-9-1-branch-to-loop-coverage-3">Decades of software engineering research have shown that when loops fail, they almost always fail at the extreme edges of their repetition count. Therefore, a robust test suite for any loop must test four specific iteration milestones:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-9-1-branch-to-loop-coverage-3" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="para" id="subsec-4-9-1-branch-to-loop-coverage-4">
-<code class="code-inline tex2jax_ignore">[ 0 Iterations ]  ---&gt;  [ 1 Iteration ]  ---&gt;  [ Typical Iterations ]  ---&gt;  [ Maximum Boundary ]</code><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-9-1-branch-to-loop-coverage-4" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<ol class="decimal" id="subsec-4-9-1-branch-to-loop-coverage-4">
+<li id="subsec-4-9-1-branch-to-loop-coverage-4-1">
+<div class="para" id="subsec-4-9-1-branch-to-loop-coverage-4-1-1">Zero Iterations (Bypassing the Loop): Does the program behave correctly if the loop body never runs at all? For a sentinel loop, this means typing the sentinel value on the very first prompt. For a counting loop, this means testing a range where the start value already exceeds the end value. (Recall from <a href="sec-4-5-sentinel-loops.html#subsec-4-5-4-example-handling-edge-case" class="internal" title="Subsection 4.5.4: Example: Handling the Edge Case">Subsection 4.5.4</a> that running zero iterations is where division-by-zero crashes often lurk!).<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-9-1-branch-to-loop-coverage-4-1-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<ol class="decimal" id="subsec-4-9-1-branch-to-loop-coverage-5">
-<li id="subsec-4-9-1-branch-to-loop-coverage-5-1">
-<div class="para" id="subsec-4-9-1-branch-to-loop-coverage-5-1-1">Zero Iterations (Bypassing the Loop): Does the program behave correctly if the loop body never runs at all? For a sentinel loop, this means typing the sentinel value on the very first prompt. For a counting loop, this means testing a range where the start value already exceeds the end value. (Recall from <a href="sec-4-5-sentinel-loops.html#subsec-4-5-4-example-handling-edge-case" class="internal" title="Subsection 4.5.4: Example: Handling the Edge Case">Subsection 4.5.4</a> that running zero iterations is where division-by-zero crashes often lurk!).<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-9-1-branch-to-loop-coverage-5-1-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
-</div>
-<div class="autopermalink" aria-hidden="true" data-description="Item 1"><a tabindex="-1" href="#subsec-4-9-1-branch-to-loop-coverage-5-1" title="Copy heading and permalink for Item 1" aria-label="Copy heading and permalink for Item 1">🔗</a></div>
+<div class="autopermalink" aria-hidden="true" data-description="Item 1"><a tabindex="-1" href="#subsec-4-9-1-branch-to-loop-coverage-4-1" title="Copy heading and permalink for Item 1" aria-label="Copy heading and permalink for Item 1">🔗</a></div>
 </li>
-<li id="subsec-4-9-1-branch-to-loop-coverage-5-2">
-<div class="para" id="subsec-4-9-1-branch-to-loop-coverage-5-2-1">One Iteration: Does the program handle a single piece of data properly? This tests entering the loop once, executing the body, updating the state, and immediately exiting without repeating.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-9-1-branch-to-loop-coverage-5-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<li id="subsec-4-9-1-branch-to-loop-coverage-4-2">
+<div class="para" id="subsec-4-9-1-branch-to-loop-coverage-4-2-1">One Iteration: Does the program handle a single piece of data properly? This tests entering the loop once, executing the body, updating the state, and immediately exiting without repeating.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-9-1-branch-to-loop-coverage-4-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="autopermalink" aria-hidden="true" data-description="Item 2"><a tabindex="-1" href="#subsec-4-9-1-branch-to-loop-coverage-5-2" title="Copy heading and permalink for Item 2" aria-label="Copy heading and permalink for Item 2">🔗</a></div>
+<div class="autopermalink" aria-hidden="true" data-description="Item 2"><a tabindex="-1" href="#subsec-4-9-1-branch-to-loop-coverage-4-2" title="Copy heading and permalink for Item 2" aria-label="Copy heading and permalink for Item 2">🔗</a></div>
 </li>
-<li id="subsec-4-9-1-branch-to-loop-coverage-5-3">
-<div class="para" id="subsec-4-9-1-branch-to-loop-coverage-5-3-1">Typical Iterations (Multiple Cycles): Does the loop successfully accumulate values, advance steppers, and terminate correctly when processing two or more items? This represents normal, everyday operation.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-9-1-branch-to-loop-coverage-5-3-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<li id="subsec-4-9-1-branch-to-loop-coverage-4-3">
+<div class="para" id="subsec-4-9-1-branch-to-loop-coverage-4-3-1">Typical Iterations (Multiple Cycles): Does the loop successfully accumulate values, advance steppers, and terminate correctly when processing two or more items? This represents normal, everyday operation.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-9-1-branch-to-loop-coverage-4-3-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="autopermalink" aria-hidden="true" data-description="Item 3"><a tabindex="-1" href="#subsec-4-9-1-branch-to-loop-coverage-5-3" title="Copy heading and permalink for Item 3" aria-label="Copy heading and permalink for Item 3">🔗</a></div>
+<div class="autopermalink" aria-hidden="true" data-description="Item 3"><a tabindex="-1" href="#subsec-4-9-1-branch-to-loop-coverage-4-3" title="Copy heading and permalink for Item 3" aria-label="Copy heading and permalink for Item 3">🔗</a></div>
 </li>
-<li id="subsec-4-9-1-branch-to-loop-coverage-5-4">
-<div class="para" id="subsec-4-9-1-branch-to-loop-coverage-5-4-1">Maximum Boundary Iterations: If the problem specifies an upper limit (such as our drone’s maximum search radius of 2,000 meters, or a maximum class size of 100 students), does the loop stop at the exact ceiling without crashing or overflowing?<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-9-1-branch-to-loop-coverage-5-4-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<li id="subsec-4-9-1-branch-to-loop-coverage-4-4">
+<div class="para" id="subsec-4-9-1-branch-to-loop-coverage-4-4-1">Maximum Boundary Iterations: If the problem specifies an upper limit (such as our drone’s maximum search radius of 2,000 meters, or a maximum class size of 100 students), does the loop stop at the exact ceiling without crashing or overflowing?<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-9-1-branch-to-loop-coverage-4-4-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="autopermalink" aria-hidden="true" data-description="Item 4"><a tabindex="-1" href="#subsec-4-9-1-branch-to-loop-coverage-5-4" title="Copy heading and permalink for Item 4" aria-label="Copy heading and permalink for Item 4">🔗</a></div>
+<div class="autopermalink" aria-hidden="true" data-description="Item 4"><a tabindex="-1" href="#subsec-4-9-1-branch-to-loop-coverage-4-4" title="Copy heading and permalink for Item 4" aria-label="Copy heading and permalink for Item 4">🔗</a></div>
 </li>
 </ol>
 <div class="autopermalink" aria-hidden="true" data-description="Subsection 4.9.1: From Branch Coverage to Loop Coverage"><a tabindex="-1" href="#subsec-4-9-1-branch-to-loop-coverage" title="Copy heading and permalink for Subsection 4.9.1: From Branch Coverage to Loop Coverage" aria-label="Copy heading and permalink for Subsection 4.9.1: From Branch Coverage to Loop Coverage">🔗</a></div>
@@ -1139,7 +1139,7 @@ eBookConfig.enable_chatcodes =  false;
 <h2 class="heading hide-type">
 <span class="type">Subsection</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">4.9.2</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Diagnosing and Escaping Infinite Loops</span>
 </h2>
-<div class="para" id="subsec-4-9-2-diagnosing-escaping-infinite-loops-2">An <dfn class="terminology">infinite loop</dfn> occurs when a loop’s continuation condition remains <code class="code-inline tex2jax_ignore">true</code> forever.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-9-2-diagnosing-escaping-infinite-loops-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-4-9-2-diagnosing-escaping-infinite-loops-2">An infinite loop occurs when a loop’s continuation condition remains <code class="code-inline tex2jax_ignore">true</code> forever.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-9-2-diagnosing-escaping-infinite-loops-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="para" id="subsec-4-9-2-diagnosing-escaping-infinite-loops-3">When an infinite loop occurs, the symptoms depend on what is inside the loop body:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-9-2-diagnosing-escaping-infinite-loops-3" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
@@ -1189,7 +1189,7 @@ for (int i = 1; i != 10; i += 2) {
     System.out.println(i);
 }
 </code></pre></div>
-<div class="para" id="subsec-4-9-2-diagnosing-escaping-infinite-loops-8-4">Always use directional relational operators (<code class="code-inline tex2jax_ignore">&lt;</code>, <code class="code-inline tex2jax_ignore">&lt;=</code>, <code class="code-inline tex2jax_ignore">&gt;</code>, <code class="code-inline tex2jax_ignore">&gt;=</code>) rather than equality operators (<code class="code-inline tex2jax_ignore">!=</code>, <code class="code-inline tex2jax_ignore">==</code>) for loop boundaries.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-9-2-diagnosing-escaping-infinite-loops-8-4" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-4-9-2-diagnosing-escaping-infinite-loops-8-4">For numeric counting or threshold boundaries, use directional relational operators (<code class="code-inline tex2jax_ignore">&lt;</code>, <code class="code-inline tex2jax_ignore">&lt;=</code>, <code class="code-inline tex2jax_ignore">&gt;</code>, <code class="code-inline tex2jax_ignore">&gt;=</code>) rather than equality operators (<code class="code-inline tex2jax_ignore">!=</code>, <code class="code-inline tex2jax_ignore">==</code>) so a stepper cannot overshoot the limit (reserving <code class="code-inline tex2jax_ignore">!=</code> for exact sentinel checks).<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-9-2-diagnosing-escaping-infinite-loops-8-4" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="para" id="subsec-4-9-2-diagnosing-escaping-infinite-loops-8-5">If your program gets stuck in an infinite loop while testing in Eclipse, do not panic:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-9-2-diagnosing-escaping-infinite-loops-8-5" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
@@ -1200,7 +1200,7 @@ for (int i = 1; i != 10; i += 2) {
 <div class="autopermalink" aria-hidden="true" data-description="Item 1"><a tabindex="-1" href="#subsec-4-9-2-diagnosing-escaping-infinite-loops-8-6-1" title="Copy heading and permalink for Item 1" aria-label="Copy heading and permalink for Item 1">🔗</a></div>
 </li>
 <li id="subsec-4-9-2-diagnosing-escaping-infinite-loops-8-6-2">
-<div class="para" id="subsec-4-9-2-diagnosing-escaping-infinite-loops-8-6-2-1">Click the bright red square button (<dfn class="terminology">Terminate</dfn>).<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-9-2-diagnosing-escaping-infinite-loops-8-6-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-4-9-2-diagnosing-escaping-infinite-loops-8-6-2-1">Click the bright red square button (<code class="code-inline tex2jax_ignore">Terminate</code>).<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-9-2-diagnosing-escaping-infinite-loops-8-6-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="autopermalink" aria-hidden="true" data-description="Item 2"><a tabindex="-1" href="#subsec-4-9-2-diagnosing-escaping-infinite-loops-8-6-2" title="Copy heading and permalink for Item 2" aria-label="Copy heading and permalink for Item 2">🔗</a></div>
 </li>
@@ -1217,9 +1217,9 @@ for (int i = 1; i != 10; i += 2) {
 <h2 class="heading hide-type">
 <span class="type">Subsection</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">4.9.3</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Preventing Off-by-One Errors (<code class="code-inline tex2jax_ignore">&lt;</code> vs. <code class="code-inline tex2jax_ignore">&lt;=</code>)</span>
 </h2>
-<div class="para" id="subsec-4-9-3-preventing-off-by-one-errors-2">The second most common category of loop bugs is the <dfn class="terminology">off-by-one error</dfn>—executing a loop one time too many or one time too few.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-9-3-preventing-off-by-one-errors-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-4-9-3-preventing-off-by-one-errors-2">The second most common category of loop bugs is the off-by-one error—executing a loop one time too many or one time too few.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-9-3-preventing-off-by-one-errors-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="para" id="subsec-4-9-3-preventing-off-by-one-errors-3">In computer science, this is often called the <dfn class="terminology">fencepost error</dfn>: if you need to build a straight fence that is 100 feet long with posts spaced every 10 feet, how many fenceposts do you need? Beginners naturally divide 100 by 10 and answer “10.” But the correct answer is 11—you need a post at the start, a post at the end, and nine posts in between!<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-9-3-preventing-off-by-one-errors-3" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-4-9-3-preventing-off-by-one-errors-3">In computer science, this is often called the fencepost error: if you need to build a straight fence that is 100 feet long with posts spaced every 10 feet, how many fenceposts do you need? Beginners naturally divide 100 by 10 and answer “10.” But the correct answer is 11—you need a post at the start, a post at the end, and nine posts in between!<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-9-3-preventing-off-by-one-errors-3" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="para" id="subsec-4-9-3-preventing-off-by-one-errors-4">In Java, off-by-one errors almost always stem from mixing up <code class="code-inline tex2jax_ignore">&lt;</code> and <code class="code-inline tex2jax_ignore">&lt;=</code>. For example, writing a loop control variable that begins at 0 but uses <code class="code-inline tex2jax_ignore">&lt;=</code> for the condition (e.g. <code class="code-inline tex2jax_ignore">i &lt;= n</code>) results in the loop executing <span class="process-math">\(n + 1\)</span> times. Writing a loop control variable that begins at 1 but uses <code class="code-inline tex2jax_ignore">&lt;</code> for the condition (e.g. <code class="code-inline tex2jax_ignore">i &lt; n</code>) results in the loop executing <span class="process-math">\(n - 1\)</span> times.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-9-3-preventing-off-by-one-errors-4" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
@@ -1418,7 +1418,122 @@ for (int i = 1; i != 10; i += 2) {
 <div class="autopermalink" aria-hidden="true" data-description="Item"><a tabindex="-1" href="#subsec-4-9-5-checklist-loop-verification-3-5" title="Copy heading and permalink for Item" aria-label="Copy heading and permalink for Item">🔗</a></div>
 </li>
 </ul>
-<div class="autopermalink" aria-hidden="true" data-description="Subsection 4.9.5: Summary Checklist for Loop Verification"><a tabindex="-1" href="#subsec-4-9-5-checklist-loop-verification" title="Copy heading and permalink for Subsection 4.9.5: Summary Checklist for Loop Verification" aria-label="Copy heading and permalink for Subsection 4.9.5: Summary Checklist for Loop Verification">🔗</a></div>
+<section class="reading-questions" id="checkpoint-4-9">
+<h3 class="heading hide-type">
+<span class="type">Reading Questions</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber"></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Checkpoint</span>
+</h3>
+<article class="exercise exercise-like" id="checkpoint-4-9-bug-match"><h4 class="heading">
+<span class="codenumber">1<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Diagnosing Loop Bugs.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone cardsort_section"><ul data-component="dragndrop" data-question_label="" style="visibility: hidden;" id="rs-checkpoint-4-9-bug-match">
+<span data-subcomponent="question">
+<div class="para" id="checkpoint-4-9-bug-match-2-1">Match each buggy loop to the error it causes.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-4-9-bug-match-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div></span><li data-subcomponent="draggable" id="rs-checkpoint-4-9-bug-match_drag1" data-category="1"><code class="code-inline tex2jax_ignore">int i = 1; while (i &lt;= 10) { System.out.println(i); }</code></li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-4-9-bug-match_drag1" data-category="1">Infinite loop caused by a missing update statement</li>
+<li data-subcomponent="draggable" id="rs-checkpoint-4-9-bug-match_drag2" data-category="2"><code class="code-inline tex2jax_ignore">int i = 1; while (i &lt;= 10) { System.out.println(i); i--; }</code></li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-4-9-bug-match_drag2" data-category="2">Infinite loop caused by updating away from the bound</li>
+<li data-subcomponent="draggable" id="rs-checkpoint-4-9-bug-match_drag3" data-category="3"><code class="code-inline tex2jax_ignore">for (int i = 1; i != 10; i += 2) { System.out.println(i); }</code></li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-4-9-bug-match_drag3" data-category="3">Infinite loop caused by overshooting an equality check</li>
+<li data-subcomponent="draggable" id="rs-checkpoint-4-9-bug-match_drag4" data-category="4"><code class="code-inline tex2jax_ignore">for (int i = 0; i &lt;= 10; i++) { System.out.println(i); }</code></li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-4-9-bug-match_drag4" data-category="4">Off-by-one error running 11 times instead of 10</li>
+</ul></div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 4.9.5.1: Diagnosing Loop Bugs"><a tabindex="-1" href="#checkpoint-4-9-bug-match" title="Copy heading and permalink for Reading Question 4.9.5.1: Diagnosing Loop Bugs" aria-label="Copy heading and permalink for Reading Question 4.9.5.1: Diagnosing Loop Bugs">🔗</a></div>
+</article>
+<article class="exercise exercise-like" id="checkpoint-4-9-loop-coverage"><h4 class="heading">
+<span class="codenumber">2<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Loop Boundary Coverage.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone multiplechoice_section">
+<div class="exercise-statement">
+<div class="para" id="checkpoint-4-9-loop-coverage-2-1">Why does loop boundary coverage emphasize testing 0 iterations and 1 iteration in addition to typical multi-iteration runs?<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-4-9-loop-coverage-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</div>
+<ul data-component="multiplechoice" class="exercise-interactives" id="rs-checkpoint-4-9-loop-coverage" data-multipleanswers="false" data-random="">
+<li data-component="answer" id="rs-checkpoint-4-9-loop-coverage_opt_a" data-correct="">
+<div class="para" id="checkpoint-4-9-loop-coverage-3-1-1-1">Loop bugs such as division by zero, uninitialized variables, and off-by-one errors cluster at the extreme edges of repetition counts and are easiest to spot on tiny inputs.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-9-loop-coverage_opt_a">
+<div class="para" id="checkpoint-4-9-loop-coverage-3-1-2-1">Correct! Testing 0, 1, typical, and maximum boundary iterations catches edge-case failures without needing to test every possible count.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-4-9-loop-coverage_opt_b">
+<div class="para" id="checkpoint-4-9-loop-coverage-3-2-1-1">Because Java requires every loop to execute at least once during testing before it can be compiled.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-9-loop-coverage_opt_b">
+<div class="para" id="checkpoint-4-9-loop-coverage-3-2-2-1">Not quite. Java compiles loops without running them; boundary testing is a verification practice to catch runtime logic bugs.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-4-9-loop-coverage_opt_c">
+<div class="para" id="checkpoint-4-9-loop-coverage-3-3-1-1">Because Eclipse Code Coverage only highlights green lines if the loop runs exactly 0 or 1 times.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-9-loop-coverage_opt_c">
+<div class="para" id="checkpoint-4-9-loop-coverage-3-3-2-1">Not quite. Code coverage highlights executed lines regardless of how many times the loop runs, but boundary counts catch logic errors that multi-iteration runs can hide.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-4-9-loop-coverage_opt_d">
+<div class="para" id="checkpoint-4-9-loop-coverage-3-4-1-1">Because <code class="code-inline tex2jax_ignore">while</code> loops cannot execute more than once without a <code class="code-inline tex2jax_ignore">for</code> loop.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-9-loop-coverage_opt_d">
+<div class="para" id="checkpoint-4-9-loop-coverage-3-4-2-1">Not quite. A <code class="code-inline tex2jax_ignore">while</code> loop can run zero, one, or many times depending on its condition.</div>
+</li>
+</ul>
+</div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 4.9.5.2: Loop Boundary Coverage"><a tabindex="-1" href="#checkpoint-4-9-loop-coverage" title="Copy heading and permalink for Reading Question 4.9.5.2: Loop Boundary Coverage" aria-label="Copy heading and permalink for Reading Question 4.9.5.2: Loop Boundary Coverage">🔗</a></div>
+</article>
+<article class="exercise exercise-like" id="checkpoint-4-9-fencepost"><h4 class="heading">
+<span class="codenumber">3<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Spotting Off-by-One Errors.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone multiplechoice_section">
+<div class="exercise-statement">
+<div class="para" id="checkpoint-4-9-fencepost-2-1">A programmer wants a loop to repeat <code class="code-inline tex2jax_ignore">n</code> times starting at <code class="code-inline tex2jax_ignore">1</code>, and writes <code class="code-inline tex2jax_ignore">for (int i = 1; i &lt; n; i++)</code>. For <code class="code-inline tex2jax_ignore">n &gt;= 1</code>, how many times does the loop body execute?<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-4-9-fencepost-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</div>
+<ul data-component="multiplechoice" class="exercise-interactives" id="rs-checkpoint-4-9-fencepost" data-multipleanswers="false" data-random="">
+<li data-component="answer" id="rs-checkpoint-4-9-fencepost_opt_a" data-correct="">
+<div class="para" id="checkpoint-4-9-fencepost-3-1-1-1">
+<span class="process-math">\(n - 1\)</span> times (one too few)</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-9-fencepost_opt_a">
+<div class="para" id="checkpoint-4-9-fencepost-3-1-2-1">Correct! Starting at <code class="code-inline tex2jax_ignore">1</code> with <code class="code-inline tex2jax_ignore">&lt; n</code> stops before <code class="code-inline tex2jax_ignore">n</code>, giving <span class="process-math">\(n - 1\)</span> iterations. Use <code class="code-inline tex2jax_ignore">i &lt;= n</code> when starting at <code class="code-inline tex2jax_ignore">1</code> (or <code class="code-inline tex2jax_ignore">i = 0; i &lt; n</code>).</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-4-9-fencepost_opt_b">
+<div class="para" id="checkpoint-4-9-fencepost-3-2-1-1">
+<span class="process-math">\(n\)</span> times</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-9-fencepost_opt_b">
+<div class="para" id="checkpoint-4-9-fencepost-3-2-2-1">Not quite. Try tracing with <code class="code-inline tex2jax_ignore">n = 1</code>: <code class="code-inline tex2jax_ignore">1 &lt; 1</code> is <code class="code-inline tex2jax_ignore">false</code>, so the loop runs <code class="code-inline tex2jax_ignore">0</code> times instead of <code class="code-inline tex2jax_ignore">1</code>.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-4-9-fencepost_opt_c">
+<div class="para" id="checkpoint-4-9-fencepost-3-3-1-1">
+<span class="process-math">\(n + 1\)</span> times (one too many)</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-9-fencepost_opt_c">
+<div class="para" id="checkpoint-4-9-fencepost-3-3-2-1">Not quite. <span class="process-math">\(n + 1\)</span> iterations occur when starting at <code class="code-inline tex2jax_ignore">0</code> and using <code class="code-inline tex2jax_ignore">&lt;= n</code>.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-4-9-fencepost_opt_d">
+<div class="para" id="checkpoint-4-9-fencepost-3-4-1-1">Infinitely many times</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-9-fencepost_opt_d">
+<div class="para" id="checkpoint-4-9-fencepost-3-4-2-1">Not quite. Because <code class="code-inline tex2jax_ignore">i++</code> moves <code class="code-inline tex2jax_ignore">i</code> upward toward <code class="code-inline tex2jax_ignore">n</code>, the loop terminates.</div>
+</li>
+</ul>
+</div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 4.9.5.3: Spotting Off-by-One Errors"><a tabindex="-1" href="#checkpoint-4-9-fencepost" title="Copy heading and permalink for Reading Question 4.9.5.3: Spotting Off-by-One Errors" aria-label="Copy heading and permalink for Reading Question 4.9.5.3: Spotting Off-by-One Errors">🔗</a></div>
+</article>
+<article class="exercise exercise-like" id="checkpoint-4-9-test-plan-match"><h4 class="heading">
+<span class="codenumber">4<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Designing a Loop Test Plan.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone cardsort_section"><ul data-component="dragndrop" data-question_label="" style="visibility: hidden;" id="rs-checkpoint-4-9-test-plan-match">
+<span data-subcomponent="question">
+<div class="para" id="checkpoint-4-9-test-plan-match-2-1">Match each test input stream for <code class="code-inline tex2jax_ignore">ScoreAverager</code> (valid scores <code class="code-inline tex2jax_ignore">0–100</code>, sentinel <code class="code-inline tex2jax_ignore">-1</code>) to the test case category it verifies.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-4-9-test-plan-match-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div></span><li data-subcomponent="draggable" id="rs-checkpoint-4-9-test-plan-match_drag1" data-category="1"><code class="code-inline tex2jax_ignore">-1</code></li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-4-9-test-plan-match_drag1" data-category="1">Zero iterations (verifies no division by zero)</li>
+<li data-subcomponent="draggable" id="rs-checkpoint-4-9-test-plan-match_drag2" data-category="2"><code class="code-inline tex2jax_ignore">85, -1</code></li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-4-9-test-plan-match_drag2" data-category="2">One iteration (verifies single item and sentinel exclusion)</li>
+<li data-subcomponent="draggable" id="rs-checkpoint-4-9-test-plan-match_drag3" data-category="3"><code class="code-inline tex2jax_ignore">80, 90, 100, -1</code></li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-4-9-test-plan-match_drag3" data-category="3">Multiple iterations (typical accumulation)</li>
+<li data-subcomponent="draggable" id="rs-checkpoint-4-9-test-plan-match_drag4" data-category="4"><code class="code-inline tex2jax_ignore">0, 0, -1</code></li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-4-9-test-plan-match_drag4" data-category="4">Lower data boundary (lowest valid score)</li>
+</ul></div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 4.9.5.4: Designing a Loop Test Plan"><a tabindex="-1" href="#checkpoint-4-9-test-plan-match" title="Copy heading and permalink for Reading Question 4.9.5.4: Designing a Loop Test Plan" aria-label="Copy heading and permalink for Reading Question 4.9.5.4: Designing a Loop Test Plan">🔗</a></div>
+</article><div class="autopermalink" aria-hidden="true" data-description="Reading Questions 4.9.5: Checkpoint"><a tabindex="-1" href="#checkpoint-4-9" title="Copy heading and permalink for Reading Questions 4.9.5: Checkpoint" aria-label="Copy heading and permalink for Reading Questions 4.9.5: Checkpoint">🔗</a></div>
+</section><div class="autopermalink" aria-hidden="true" data-description="Subsection 4.9.5: Summary Checklist for Loop Verification"><a tabindex="-1" href="#subsec-4-9-5-checklist-loop-verification" title="Copy heading and permalink for Subsection 4.9.5: Summary Checklist for Loop Verification" aria-label="Copy heading and permalink for Subsection 4.9.5: Summary Checklist for Loop Verification">🔗</a></div>
 </section><div class="autopermalink" aria-hidden="true" data-description="Section 4.9: Common Loop Errors and Designing Test Cases"><a tabindex="-1" href="#sec-4-9-loop-errors-testing" title="Copy heading and permalink for Section 4.9: Common Loop Errors and Designing Test Cases" aria-label="Copy heading and permalink for Section 4.9: Common Loop Errors and Designing Test Cases">🔗</a></div>
 </section>
 </div>
