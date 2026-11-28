@@ -246,7 +246,7 @@ Double-click 'aqi_map.html' in your project folder to view the map.</output>
 
     <figure xml:id="figure-aqi-map">
       <title>The AQI map</title>
-      <image source="figures/figure_4_3.jpg" width="85%">
+      <image source="figures/figure_4_4.jpg" width="85%">
         <shortdescription>Full-screen interactive Leaflet map of the United States with color-coded circles showing air quality levels across cities.</shortdescription>
         <description>
           <p>
