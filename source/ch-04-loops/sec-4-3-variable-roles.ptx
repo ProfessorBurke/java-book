@@ -4,11 +4,11 @@
 
   <introduction>
     <p>
-      The purpose of a loop is often to guide one or more variables through well-defined changes. For example, in <xref ref="listing-guess-the-number" />, the <c>userGuess</c> variable is given a new user-entered value each time the loop body executes, until it has the same value as <c>magicNumber</c>. In <xref ref="listing-countdown" />, the <c>seconds</c> variable is decremented by one each time through the loop until it reaches zero. In each example, the loop code is the same, but the value in a variable changes according to a specific pattern, each time the loop body executes.
+      The purpose of a loop is often to guide one or more variables through well-defined changes. For example, in <xref ref="listing-guess-the-number" />, the <c>userGuess</c> variable is given a new user-entered value each time the loop body executes, until it has the same value as <c>magicNumber</c>. In <xref ref="listing-countdown" />, the <c>seconds</c> variable is decremented by one each time through the loop until it reaches zero. In each example, the code executing within the loop body is always the same, but the value in a variable changes according to a specific pattern, each time the loop body executes.
     </p>
 
     <p>
-      There are distinct patterns of variable change during loop execution that are used to solve common classes of problems. This classification of variables into functional roles was developed by Finnish computer science education researcher Jorma Sajaniemi in 2002. Research demonstrates that understanding a variable’s behavioral role helps novice programmers design loops. So let’s look at some variable roles!
+      There are distinct patterns of variable change during loop execution that are used to solve common classes of problems. This classification of variables into functional roles was developed by Finnish computer science education researcher Jorma Sajaniemi in 2002. Research demonstrates that understanding a variable’s behavioral role helps programmers design loops. So let’s look at some variable roles!
     </p>
   </introduction>
 
@@ -23,7 +23,7 @@
     </p>
 
     <p>
-      A variable that takes on a predictable sequence of values through each iteration of a loop is in a <term>stepper</term> role. This can be a simple increment or decrement, or it can be a more complicated sequence, such as a Fibonacci sequence (0, 1, 1, 2, 3, 5, 8, 13 …), powers of a number (1, 2, 4, 8, 16 …), or successive approximations of <m>\pi</m> (4.0, 2.666, 3.466, 2.895, 3.339 …).
+      A variable that takes on a predictable sequence of values through each iteration of a loop is in a stepper role. This can be a simple increment or decrement, or it can be a more complicated sequence, such as a Fibonacci sequence (0, 1, 1, 2, 3, 5, 8, 13 …), powers of a number (1, 2, 4, 8, 16 …), or successive approximations of <m>\pi</m> (4.0, 2.666, 3.466, 2.895, 3.339 …).
     </p>
 
     <p>
@@ -62,7 +62,7 @@ while (i < 10) {
     </p>
 
     <p>
-      This is a very common role for a variable<mdash />often in a loop we’re obtaining a new value from the user, a file, a sensor, or some other source. A <term>most recent holder</term> variable holds the next value in an input stream so it can be processed. Once the value has been processed, the loop executes again and the most-recent holder value is replaced with the next value in the stream.
+      This is a very common role for a variable<mdash />often in a loop we’re obtaining a new value from the user, a file, a sensor, or some other source. A most recent holder variable holds the next value in an input stream so it can be processed. Once the value has been processed, the loop executes again and the most-recent holder value is replaced with the next value in the stream.
     </p>
   </subsection>
 
@@ -73,7 +73,7 @@ while (i < 10) {
     <title>The Gatherer Role</title>
 
     <p>
-      Suppose we want to total those values we’re reading in the input stream? We’ll need a variable to do that in a <term>gatherer</term> or <term>accumulator</term> role. <xref ref="listing-gatherer-demo" /> obtains five values from the user and adds them together using a gatherer:
+      Suppose we want to total those values we’re reading in the input stream? We’ll need a variable to do that in a gatherer or accumulator role. <xref ref="listing-gatherer-demo" /> obtains five values from the user and adds them together using a gatherer:
     </p>
 
     <listing xml:id="listing-gatherer-demo">
@@ -144,7 +144,7 @@ public class GathererDemo {
     <title>The Most-Wanted Holder Role</title>
 
     <p>
-      Often we are looking for a value that is a best fit for some property of interest, such as the smallest number, the longest word, or the letter that is alphabetically earliest. Once again, a variable can help us solve this problem, by storing the best fit so far as we process values in a loop. We call a variable in this role a <term>most-wanted holder</term>.
+      Often we are looking for a value that is a best fit for some property of interest, such as the smallest number, the longest word, or the letter that is alphabetically earliest. Once again, a variable can help us solve this problem, by storing the best fit so far as we process values in a loop. We call a variable in this role a most-wanted holder.
     </p>
 
     <p>
@@ -195,7 +195,7 @@ public class MostWantedDemo {
     </p>
 
     <p>
-      Beginning programmers often have difficulty initializing a most-wanted holder variable. Consider the first iteration of the loop. We want the first value the user enters to be the largest value so far, so we want it to be stored in <c>largest</c>. We therefore must initialize <c>largest</c> so the test on line 24 is always <c>true</c> the first time through the loop. We do that by initializing <c>largest</c> to the smallest possible integer<mdash /><c>Integer.MIN_VALUE</c>. Any integer entered by the user will be larger than the value in <c>largest</c>. (The user could enter <c>Integer.MIN_VALUE</c> as their first integer and the test would be <c>false</c>, but <c>largest</c> is already holding that value, so our code still works correctly.)
+      What initial value do you give a most-wanted holder variable? Consider the first iteration of the loop. We want the first value the user enters to be the largest value so far, so we want it to be stored in <c>largest</c>. We therefore must initialize <c>largest</c> so the test on line 24 is always <c>true</c> the first time through the loop. We do that by initializing <c>largest</c> to the smallest possible integer<mdash /><c>Integer.MIN_VALUE</c>. Any integer entered by the user will be larger than the value in <c>largest</c>. (The user could enter <c>Integer.MIN_VALUE</c> as their first integer and the test would be <c>false</c>, but <c>largest</c> is already holding that value, so our code still works correctly.)
     </p>
 
     <p>
@@ -222,7 +222,7 @@ while (i < 4) {
     </p>
 
     <p>
-      In addition to working with any comparison, this approach completely avoids the trap of guessing a <q>safe</q> artificial starting value. While choosing an initial sentinel value like <c>Integer.MIN_VALUE</c> is possible with integers, it becomes notoriously error-prone with other types. For example, if you were looking for the shortest word in a series of inputs, initializing your variable to <c>""</c> (the empty string) would fail completely, because no word entered by the user could ever be shorter than zero characters! By using the first actual value from the input stream as your baseline, your code is always guaranteed to work cleanly across all data types, including <c>double</c>, <c>char</c>, and <c>String</c>.
+      In addition to working with any comparison, this approach completely avoids the trap of guessing a <q>safe</q> artificial starting value. While choosing an extreme initial value like <c>Integer.MIN_VALUE</c> is possible with integers, it becomes notoriously error-prone with other types. For example, if you were looking for the shortest word in a series of inputs, initializing your variable to <c>""</c> (the empty string) would fail completely, because no word entered by the user could ever be shorter than zero characters. By using the first actual value from the input stream as your baseline, your code is always guaranteed to work across all data types, including <c>double</c>, <c>char</c>, and <c>String</c>.
     </p>
   </subsection>
 
@@ -233,7 +233,7 @@ while (i < 4) {
     <title>Other Variable Roles</title>
 
     <p>
-      Sajaniemi identified six additional variable roles, described in <xref ref="table-additional-variable-roles" />. The final two are for algorithms processing collection types, which we will learn in chapter 6, so don’t worry too much about them right now! If you are having difficulty solving a looping problem, refer to this table and ask if the solution requires a variable in one or more of these roles.
+      Sajaniemi identified six additional variable roles, described in <xref ref="table-additional-variable-roles" />. The final two are for algorithms processing collection types, which we will learn in chapter 7, so don’t worry too much about them right now! If you are having difficulty solving a looping problem, refer to this table and ask if the solution requires a variable in one or more of these roles.
     </p>
 
     <table xml:id="table-additional-variable-roles">
@@ -254,8 +254,8 @@ while (i < 4) {
           <cell>Represents a quantity that does not change after its initial assignment.</cell>
           <cell>Set once (by literal, input, or calculation) and remains constant throughout its scope.</cell>
           <cell>
-            <p><c>final double PI = 3.14159;</c></p>
-            <p><c>int targetNumber = (int)(Math.random() * 10) + 1;</c></p>
+            <line><c>final double PI = 3.14159;</c></line>
+            <line><c>int targetNumber = (int)(Math.random() * 10) + 1;</c></line>
           </cell>
         </row>
         <row>
@@ -273,11 +273,11 @@ while (i < 4) {
           <cell>A <c>boolean</c> variable that records whether a specific state or event has occurred.</cell>
           <cell>Starts with an initial state (usually <c>false</c>) and changes at most once (to <c>true</c>), never reverting back.</cell>
           <cell>
-            <p>In search or prime-checking loops:</p>
-            <program language="java"><![CDATA[boolean found = false;
-if (guess == magicNumber) {
-    found = true;
-}]]></program>
+            <line>In search or prime-checking loops:</line>
+            <line><c>boolean found = false;</c></line>
+            <line><c>if (guess == magicNumber) {</c></line>
+            <line><c>&#160;&#160;&#160;&#160;found = true;</c></line>
+            <line><c>}</c></line>
           </cell>
         </row>
         <row>
@@ -285,32 +285,32 @@ if (guess == magicNumber) {
           <cell>Holds a value for a very short duration, usually across just two or three lines of code.</cell>
           <cell>Assigned immediately before it is used and discarded immediately afterward.</cell>
           <cell>
-            <p>Classic 3-line variable swap:</p>
-            <program language="java"><![CDATA[int temp = a;
-a = b;
-b = temp;]]></program>
+            <line>Classic 3-line variable swap:</line>
+            <line><c>int temp = a;</c></line>
+            <line><c>a = b;</c></line>
+            <line><c>b = temp;</c></line>
           </cell>
         </row>
         <row>
           <cell>
             <p>Walker</p>
-            <p><em>(Revisit after Chapter 6)</em></p>
+            <p><em>(Revisit after Chapter 7)</em></p>
           </cell>
           <cell>Moves through a data structure (such as an array), but its movements depend on the structure’s contents rather than a fixed step.</cell>
           <cell>Successive values depend on the data structure being traversed.</cell>
           <cell>
-            <p>Jumping through a <c>String</c> from one delimiter to the next:</p>
-            <program language="java"><![CDATA[int index = text.indexOf(' ');
-while (index != -1) { 
-    // Process word... 
-    index = text.indexOf(' ', index + 1);
-}]]></program>
+            <line>Jumping through a <c>String</c> from one delimiter to the next:</line>
+            <line><c>int index = text.indexOf(' ');</c></line>
+            <line><c>while (index != -1) {</c></line>
+            <line><c>&#160;&#160;&#160;&#160;// Process word...</c></line>
+            <line><c>&#160;&#160;&#160;&#160;index = text.indexOf(' ', index + 1);</c></line>
+            <line><c>}</c></line>
           </cell>
         </row>
         <row>
           <cell>
             <p>Organizer</p>
-            <p><em>(Revisit after Chapter 6)</em></p>
+            <p><em>(Revisit after Chapter 7)</em></p>
           </cell>
           <cell>A composite collection (like an array) whose elements are rearranged or sorted.</cell>
           <cell>The variable’s identity doesn’t change, but its internal elements are reordered.</cell>
@@ -320,5 +320,181 @@ while (index != -1) {
         </row>
       </tabular>
     </table>
+
+    <reading-questions xml:id="checkpoint-4-3">
+      <title>Checkpoint</title>
+
+      <exercise xml:id="checkpoint-4-3-core-roles" label="checkpoint-4-3-core-roles">
+        <title>Core Loop Variable Roles</title>
+        <statement>
+          <p>
+            Match each variable role to the behavior it describes in a loop.
+          </p>
+        </statement>
+        <cardsort>
+          <match>
+            <premise order="3">Stepper</premise>
+            <response>Takes on a predictable sequence of values on each iteration</response>
+          </match>
+          <match>
+            <premise order="1">Most-recent holder</premise>
+            <response>Holds the latest value read from an input stream, replacing the previous one</response>
+          </match>
+          <match>
+            <premise order="4">Gatherer</premise>
+            <response>Accumulates a running total, product, or combined text across iterations</response>
+          </match>
+          <match>
+            <premise order="2">Most-wanted holder</premise>
+            <response>Stores the best fit so far, such as the largest number or shortest word</response>
+          </match>
+        </cardsort>
+      </exercise>
+
+      <exercise xml:id="checkpoint-4-3-gatherer-init" label="checkpoint-4-3-gatherer-init">
+        <title>Initializing a Gatherer</title>
+        <statement>
+          <p>
+            You are writing a loop to compute the product of five integers entered by the user using a gatherer variable named <c>product</c> (<c>product *= userValue;</c>). What should <c>product</c> be initialized to before the loop?
+          </p>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                <c>1</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! <c>1</c> is the identity element for multiplication (<m>x \times 1 = x</m>), so the product reflects only the values entered.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>0</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Initializing a multiplicative gatherer to <c>0</c> causes every subsequent multiplication to stay <c>0</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>Integer.MIN_VALUE</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Extreme initial values like <c>Integer.MIN_VALUE</c> are sometimes used for most-wanted holders, not multiplicative gatherers.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>-1</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Initializing <c>product</c> to <c>-1</c> would flip the sign of the final result.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-4-3-most-wanted-init" label="checkpoint-4-3-most-wanted-init">
+        <title>Seeding a Most-Wanted Holder</title>
+        <statement>
+          <p>
+            Why is reading the first input before the loop to initialize a most-wanted holder often safer than starting with an artificial value like <c>Integer.MIN_VALUE</c> or <c>""</c>?
+          </p>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                It guarantees the baseline is a real input value and works across all data types, avoiding traps like initializing a shortest-word search with <c>""</c>.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! Seeding with the first actual input avoids choosing an artificial starting value that may be impossible to beat for types such as <c>String</c> or <c>double</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                Java forbids initializing <c>String</c> or <c>double</c> variables before a <c>while</c> loop.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Java allows initializing any variable before a loop; the issue is choosing a starting value that works logically for the comparison.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                It eliminates the need for an <c>if</c> statement inside the loop body.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. You still use an <c>if</c> statement inside the loop to compare each new input against the current best fit.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                It allows the loop to run one extra time so the first value is counted twice.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Because the first value is read before the loop, the loop runs one fewer time (e.g., 4 times instead of 5).
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-4-3-other-roles" label="checkpoint-4-3-other-roles">
+        <title>Additional Variable Roles</title>
+        <statement>
+          <p>
+            Match each additional variable role to its description.
+          </p>
+        </statement>
+        <cardsort>
+          <match>
+            <premise order="4">Fixed value</premise>
+            <response>Set once and never changes throughout its scope</response>
+          </match>
+          <match>
+            <premise order="2">Follower</premise>
+            <response>Tracks the previous value of another variable, trailing by one step</response>
+          </match>
+          <match>
+            <premise order="1">One-way flag</premise>
+            <response>A boolean that records an event and changes state at most once</response>
+          </match>
+          <match>
+            <premise order="3">Temporary</premise>
+            <response>Holds a value briefly, such as during a variable swap</response>
+          </match>
+        </cardsort>
+      </exercise>
+    </reading-questions>
   </subsection>
 </section>

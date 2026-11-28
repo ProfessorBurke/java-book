@@ -29,13 +29,8 @@
 <td class="l m b1 r1 l1 t0 lines">Fixed value</td>
 <td class="l m b1 r1 l0 t0 lines">Represents a quantity that does not change after its initial assignment.</td>
 <td class="l m b1 r1 l0 t0 lines">Set once (by literal, input, or calculation) and remains constant throughout its scope.</td>
-<td class="l m b1 r1 l0 t0" style="max-width:180px;">
-<div class="para">
-<code class="code-inline tex2jax_ignore">final double PI = 3.14159;</code><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-additional-variable-roles-2-6-4-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
-</div>
-<div class="para">
-<code class="code-inline tex2jax_ignore">int targetNumber = (int)(Math.random() * 10) + 1;</code><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-additional-variable-roles-2-6-4-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
-</div>
+<td class="l m b1 r1 l0 t0 lines">
+<code class="code-inline tex2jax_ignore">final double PI = 3.14159;</code><br><code class="code-inline tex2jax_ignore">int targetNumber = (int)(Math.random() * 10) + 1;</code>
 </td>
 </tr>
 <tr>
@@ -57,18 +52,14 @@
 <td class="l m b1 r1 l1 t0 lines">One-way flag</td>
 <td class="l m b1 r1 l0 t0 lines">A <code class="code-inline tex2jax_ignore">boolean</code> variable that records whether a specific state or event has occurred.</td>
 <td class="l m b1 r1 l0 t0 lines">Starts with an initial state (usually <code class="code-inline tex2jax_ignore">false</code>) and changes at most once (to <code class="code-inline tex2jax_ignore">true</code>), never reverting back.</td>
-<td class="l m b1 r1 l0 t0" style="max-width:180px;">
-<div class="para">In search or prime-checking loops:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-additional-variable-roles-2-8-4-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
-</div>
+<td class="l m b1 r1 l0 t0 lines">In search or prime-checking loops:<br><code class="code-inline tex2jax_ignore">boolean found = false;</code><br><code class="code-inline tex2jax_ignore">if (guess == magicNumber) {</code><br><code class="code-inline tex2jax_ignore">    found = true;</code><br><code class="code-inline tex2jax_ignore">}</code>
 </td>
 </tr>
 <tr>
 <td class="l m b1 r1 l1 t0 lines">Temporary</td>
 <td class="l m b1 r1 l0 t0 lines">Holds a value for a very short duration, usually across just two or three lines of code.</td>
 <td class="l m b1 r1 l0 t0 lines">Assigned immediately before it is used and discarded immediately afterward.</td>
-<td class="l m b1 r1 l0 t0" style="max-width:180px;">
-<div class="para">Classic 3-line variable swap:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-additional-variable-roles-2-9-4-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
-</div>
+<td class="l m b1 r1 l0 t0 lines">Classic 3-line variable swap:<br><code class="code-inline tex2jax_ignore">int temp = a;</code><br><code class="code-inline tex2jax_ignore">a = b;</code><br><code class="code-inline tex2jax_ignore">b = temp;</code>
 </td>
 </tr>
 <tr>
@@ -76,14 +67,12 @@
 <div class="para">Walker<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-additional-variable-roles-2-10-1-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="para">
-<em class="emphasis">(Revisit after Chapter 6)</em><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-additional-variable-roles-2-10-1-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<em class="emphasis">(Revisit after Chapter 7)</em><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-additional-variable-roles-2-10-1-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 </td>
 <td class="l m b1 r1 l0 t0 lines">Moves through a data structure (such as an array), but its movements depend on the structure’s contents rather than a fixed step.</td>
 <td class="l m b1 r1 l0 t0 lines">Successive values depend on the data structure being traversed.</td>
-<td class="l m b1 r1 l0 t0" style="max-width:180px;">
-<div class="para">Jumping through a <code class="code-inline tex2jax_ignore">String</code> from one delimiter to the next:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-additional-variable-roles-2-10-4-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
-</div>
+<td class="l m b1 r1 l0 t0 lines">Jumping through a <code class="code-inline tex2jax_ignore">String</code> from one delimiter to the next:<br><code class="code-inline tex2jax_ignore">int index = text.indexOf(' ');</code><br><code class="code-inline tex2jax_ignore">while (index != -1) {</code><br><code class="code-inline tex2jax_ignore">    // Process word...</code><br><code class="code-inline tex2jax_ignore">    index = text.indexOf(' ', index + 1);</code><br><code class="code-inline tex2jax_ignore">}</code>
 </td>
 </tr>
 <tr>
@@ -91,7 +80,7 @@
 <div class="para">Organizer<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-additional-variable-roles-2-11-1-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="para">
-<em class="emphasis">(Revisit after Chapter 6)</em><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-additional-variable-roles-2-11-1-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<em class="emphasis">(Revisit after Chapter 7)</em><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-additional-variable-roles-2-11-1-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 </td>
 <td class="l m b1 r1 l0 t0 lines">A composite collection (like an array) whose elements are rearranged or sorted.</td>

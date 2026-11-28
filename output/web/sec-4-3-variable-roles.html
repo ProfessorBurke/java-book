@@ -457,7 +457,10 @@ eBookConfig.enable_chatcodes =  false;
 <li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-3-variable-roles.html#subsec-4-3-2-most-recent-holder" class="internal"><span class="codenumber">4.3.2</span> <span class="title">The Most Recent Holder Role</span></a></div></li>
 <li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-3-variable-roles.html#subsec-4-3-3-gatherer-role" class="internal"><span class="codenumber">4.3.3</span> <span class="title">The Gatherer Role</span></a></div></li>
 <li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-3-variable-roles.html#subsec-4-3-4-most-wanted-holder" class="internal"><span class="codenumber">4.3.4</span> <span class="title">The Most-Wanted Holder Role</span></a></div></li>
-<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-3-variable-roles.html#subsec-4-3-5-other-variable-roles" class="internal"><span class="codenumber">4.3.5</span> <span class="title">Other Variable Roles</span></a></div></li>
+<li class="toc-item toc-subsection">
+<div class="toc-title-box"><a href="sec-4-3-variable-roles.html#subsec-4-3-5-other-variable-roles" class="internal"><span class="codenumber">4.3.5</span> <span class="title">Other Variable Roles</span></a></div>
+<ul id="ptx-toc-group-subsec-4-3-5-other-variable-roles" class="structural toc-item-list"><li class="toc-item toc-reading-questions"><div class="toc-title-box"><a href="sec-4-3-variable-roles.html#checkpoint-4-3" class="internal"><span class="codenumber">4.3.5</span> <span class="title">Checkpoint</span></a></div></li></ul>
+</li>
 </ul>
 </li>
 <li class="toc-item toc-section">
@@ -1076,9 +1079,9 @@ eBookConfig.enable_chatcodes =  false;
 <span class="type">Section</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">4.3</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Common Loop Variable Roles: Steppers, Gatherers, and Holders</span>
 </h1>
 <section class="introduction" id="sec-4-3-variable-roles-2">
-<div class="para" id="sec-4-3-variable-roles-2-1">The purpose of a loop is often to guide one or more variables through well-defined changes. For example, in <a href="sec-4-2-conditional-loops.html#listing-guess-the-number" class="xref" data-knowl="./knowl/xref/listing-guess-the-number.html" data-reveal-label="Reveal" data-close-label="Close" title="Listing 4.1: GuessTheNumber.java">Listing 4.1</a>, the <code class="code-inline tex2jax_ignore">userGuess</code> variable is given a new user-entered value each time the loop body executes, until it has the same value as <code class="code-inline tex2jax_ignore">magicNumber</code>. In <a href="sec-4-2-conditional-loops.html#listing-countdown" class="xref" data-knowl="./knowl/xref/listing-countdown.html" data-reveal-label="Reveal" data-close-label="Close" title="Listing 4.3: Countdown.java">Listing 4.3</a>, the <code class="code-inline tex2jax_ignore">seconds</code> variable is decremented by one each time through the loop until it reaches zero. In each example, the loop code is the same, but the value in a variable changes according to a specific pattern, each time the loop body executes.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#sec-4-3-variable-roles-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="sec-4-3-variable-roles-2-1">The purpose of a loop is often to guide one or more variables through well-defined changes. For example, in <a href="sec-4-2-conditional-loops.html#listing-guess-the-number" class="xref" data-knowl="./knowl/xref/listing-guess-the-number.html" data-reveal-label="Reveal" data-close-label="Close" title="Listing 4.1: GuessTheNumber.java">Listing 4.1</a>, the <code class="code-inline tex2jax_ignore">userGuess</code> variable is given a new user-entered value each time the loop body executes, until it has the same value as <code class="code-inline tex2jax_ignore">magicNumber</code>. In <a href="sec-4-2-conditional-loops.html#listing-countdown" class="xref" data-knowl="./knowl/xref/listing-countdown.html" data-reveal-label="Reveal" data-close-label="Close" title="Listing 4.3: Countdown.java">Listing 4.3</a>, the <code class="code-inline tex2jax_ignore">seconds</code> variable is decremented by one each time through the loop until it reaches zero. In each example, the code executing within the loop body is always the same, but the value in a variable changes according to a specific pattern, each time the loop body executes.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#sec-4-3-variable-roles-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="para" id="sec-4-3-variable-roles-2-2">There are distinct patterns of variable change during loop execution that are used to solve common classes of problems. This classification of variables into functional roles was developed by Finnish computer science education researcher Jorma Sajaniemi in 2002. Research demonstrates that understanding a variable’s behavioral role helps novice programmers design loops. So let’s look at some variable roles!<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#sec-4-3-variable-roles-2-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="sec-4-3-variable-roles-2-2">There are distinct patterns of variable change during loop execution that are used to solve common classes of problems. This classification of variables into functional roles was developed by Finnish computer science education researcher Jorma Sajaniemi in 2002. Research demonstrates that understanding a variable’s behavioral role helps programmers design loops. So let’s look at some variable roles!<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#sec-4-3-variable-roles-2-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div></section>
 <section class="subsection" id="subsec-4-3-1-stepper-role">
 <h2 class="heading hide-type">
@@ -1086,7 +1089,7 @@ eBookConfig.enable_chatcodes =  false;
 </h2>
 <div class="para" id="subsec-4-3-1-stepper-role-2">In <a href="sec-4-2-conditional-loops.html#listing-countdown" class="xref" data-knowl="./knowl/xref/listing-countdown.html" data-reveal-label="Reveal" data-close-label="Close" title="Listing 4.3: Countdown.java">Listing 4.3</a>, the variable <code class="code-inline tex2jax_ignore">seconds</code> takes on a predictable sequence of values as the loop executes: 5 4 3 2 1 0. If the loop did not stop when <code class="code-inline tex2jax_ignore">seconds</code> was equal to 0, you could predict the next five values: -1 -2 -3 -4 -5. If it had been initialized to 10 rather than 5, you could predict the new first five values: 10 9 8 7 6. Each time through the loop, <code class="code-inline tex2jax_ignore">seconds</code> is decremented by 1.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-3-1-stepper-role-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="para" id="subsec-4-3-1-stepper-role-3">A variable that takes on a predictable sequence of values through each iteration of a loop is in a <dfn class="terminology">stepper</dfn> role. This can be a simple increment or decrement, or it can be a more complicated sequence, such as a Fibonacci sequence (0, 1, 1, 2, 3, 5, 8, 13 …), powers of a number (1, 2, 4, 8, 16 …), or successive approximations of <span class="process-math">\(\pi\)</span> (4.0, 2.666, 3.466, 2.895, 3.339 …).<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-3-1-stepper-role-3" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-4-3-1-stepper-role-3">A variable that takes on a predictable sequence of values through each iteration of a loop is in a stepper role. This can be a simple increment or decrement, or it can be a more complicated sequence, such as a Fibonacci sequence (0, 1, 1, 2, 3, 5, 8, 13 …), powers of a number (1, 2, 4, 8, 16 …), or successive approximations of <span class="process-math">\(\pi\)</span> (4.0, 2.666, 3.466, 2.895, 3.339 …).<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-3-1-stepper-role-3" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="para" id="subsec-4-3-1-stepper-role-4">The key to needing a stepper is that you have some quantity that will change predictably for each iteration of the loop. In the code, the stepper will be mathematically modified in the loop body. For example, here is a loop that displays the first five powers of two:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-3-1-stepper-role-4" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
@@ -1114,7 +1117,7 @@ while (i &lt; 10) {
 </h2>
 <div class="para" id="subsec-4-3-2-most-recent-holder-2">In <a href="sec-4-2-conditional-loops.html#listing-guess-the-number" class="xref" data-knowl="./knowl/xref/listing-guess-the-number.html" data-reveal-label="Reveal" data-close-label="Close" title="Listing 4.1: GuessTheNumber.java">Listing 4.1</a>, the variable <code class="code-inline tex2jax_ignore">userGuess</code> holds the user’s input. Each time the value doesn’t match <code class="code-inline tex2jax_ignore">magicNumber</code>, the loop body executes and the user enters another guess. The user’s old guess is replaced with their new guess in <code class="code-inline tex2jax_ignore">userGuess</code>. The variable <code class="code-inline tex2jax_ignore">userGuess</code> always holds the value most recently entered by the user.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-3-2-most-recent-holder-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="para" id="subsec-4-3-2-most-recent-holder-3">This is a very common role for a variable—often in a loop we’re obtaining a new value from the user, a file, a sensor, or some other source. A <dfn class="terminology">most recent holder</dfn> variable holds the next value in an input stream so it can be processed. Once the value has been processed, the loop executes again and the most-recent holder value is replaced with the next value in the stream.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-3-2-most-recent-holder-3" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-4-3-2-most-recent-holder-3">This is a very common role for a variable—often in a loop we’re obtaining a new value from the user, a file, a sensor, or some other source. A most recent holder variable holds the next value in an input stream so it can be processed. Once the value has been processed, the loop executes again and the most-recent holder value is replaced with the next value in the stream.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-3-2-most-recent-holder-3" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="autopermalink" aria-hidden="true" data-description="Subsection 4.3.2: The Most Recent Holder Role"><a tabindex="-1" href="#subsec-4-3-2-most-recent-holder" title="Copy heading and permalink for Subsection 4.3.2: The Most Recent Holder Role" aria-label="Copy heading and permalink for Subsection 4.3.2: The Most Recent Holder Role">🔗</a></div>
 </section>
@@ -1122,7 +1125,7 @@ while (i &lt; 10) {
 <h2 class="heading hide-type">
 <span class="type">Subsection</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">4.3.3</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">The Gatherer Role</span>
 </h2>
-<div class="para" id="subsec-4-3-3-gatherer-role-2">Suppose we want to total those values we’re reading in the input stream? We’ll need a variable to do that in a <dfn class="terminology">gatherer</dfn> or <dfn class="terminology">accumulator</dfn> role. <a href="sec-4-3-variable-roles.html#listing-gatherer-demo" class="xref" data-knowl="./knowl/xref/listing-gatherer-demo.html" data-reveal-label="Reveal" data-close-label="Close" title="Listing 4.5: GathererDemo.java">Listing 4.5</a> obtains five values from the user and adds them together using a gatherer:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-3-3-gatherer-role-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-4-3-3-gatherer-role-2">Suppose we want to total those values we’re reading in the input stream? We’ll need a variable to do that in a gatherer or accumulator role. <a href="sec-4-3-variable-roles.html#listing-gatherer-demo" class="xref" data-knowl="./knowl/xref/listing-gatherer-demo.html" data-reveal-label="Reveal" data-close-label="Close" title="Listing 4.5: GathererDemo.java">Listing 4.5</a> obtains five values from the user and adds them together using a gatherer:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-3-3-gatherer-role-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <figure class="listing figure-like" id="listing-gatherer-demo"><figcaption><span class="type">Listing</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">4.5<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><code class="code-inline tex2jax_ignore">GathererDemo.java</code><div class="autopermalink" aria-hidden="true" data-description="Listing 4.5: GathererDemo.java"><a tabindex="-1" href="#listing-gatherer-demo" title="Copy heading and permalink for Listing 4.5: GathererDemo.java" aria-label="Copy heading and permalink for Listing 4.5: GathererDemo.java">🔗</a></div></figcaption><div class="listing__contents"><div class="code-box"><pre class="program clipboardable line-numbers"><code class="language-java">import java.util.Scanner;
  
@@ -1187,7 +1190,7 @@ public class GathererDemo {
 <h2 class="heading hide-type">
 <span class="type">Subsection</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">4.3.4</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">The Most-Wanted Holder Role</span>
 </h2>
-<div class="para" id="subsec-4-3-4-most-wanted-holder-2">Often we are looking for a value that is a best fit for some property of interest, such as the smallest number, the longest word, or the letter that is alphabetically earliest. Once again, a variable can help us solve this problem, by storing the best fit so far as we process values in a loop. We call a variable in this role a <dfn class="terminology">most-wanted holder</dfn>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-3-4-most-wanted-holder-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-4-3-4-most-wanted-holder-2">Often we are looking for a value that is a best fit for some property of interest, such as the smallest number, the longest word, or the letter that is alphabetically earliest. Once again, a variable can help us solve this problem, by storing the best fit so far as we process values in a loop. We call a variable in this role a most-wanted holder.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-3-4-most-wanted-holder-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="para" id="subsec-4-3-4-most-wanted-holder-3">
 <a href="sec-4-3-variable-roles.html#listing-most-wanted-demo" class="xref" data-knowl="./knowl/xref/listing-most-wanted-demo.html" data-reveal-label="Reveal" data-close-label="Close" title="Listing 4.6: MostWantedDemo.java">Listing 4.6</a> obtains five integers from the user and finds the largest value entered:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-3-4-most-wanted-holder-3" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
@@ -1231,7 +1234,7 @@ public class MostWantedDemo {
 </figure>
 <div class="para" id="subsec-4-3-4-most-wanted-holder-5">Our most-wanted holder is <code class="code-inline tex2jax_ignore">largest</code>. Within the loop, on lines 24-26 we compare the value in the most-wanted holder to the value in the most-recent holder (the value we are processing in this execution of the loop). If the most-recent holder value is larger, we put that value in the most-wanted holder. This ensures that <code class="code-inline tex2jax_ignore">largest</code> will always hold the largest value we’ve encountered so far as we process values one at a time in the loop.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-3-4-most-wanted-holder-5" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="para" id="subsec-4-3-4-most-wanted-holder-6">Beginning programmers often have difficulty initializing a most-wanted holder variable. Consider the first iteration of the loop. We want the first value the user enters to be the largest value so far, so we want it to be stored in <code class="code-inline tex2jax_ignore">largest</code>. We therefore must initialize <code class="code-inline tex2jax_ignore">largest</code> so the test on line 24 is always <code class="code-inline tex2jax_ignore">true</code> the first time through the loop. We do that by initializing <code class="code-inline tex2jax_ignore">largest</code> to the smallest possible integer—<code class="code-inline tex2jax_ignore">Integer.MIN_VALUE</code>. Any integer entered by the user will be larger than the value in <code class="code-inline tex2jax_ignore">largest</code>. (The user could enter <code class="code-inline tex2jax_ignore">Integer.MIN_VALUE</code> as their first integer and the test would be <code class="code-inline tex2jax_ignore">false</code>, but <code class="code-inline tex2jax_ignore">largest</code> is already holding that value, so our code still works correctly.)<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-3-4-most-wanted-holder-6" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-4-3-4-most-wanted-holder-6">What initial value do you give a most-wanted holder variable? Consider the first iteration of the loop. We want the first value the user enters to be the largest value so far, so we want it to be stored in <code class="code-inline tex2jax_ignore">largest</code>. We therefore must initialize <code class="code-inline tex2jax_ignore">largest</code> so the test on line 24 is always <code class="code-inline tex2jax_ignore">true</code> the first time through the loop. We do that by initializing <code class="code-inline tex2jax_ignore">largest</code> to the smallest possible integer—<code class="code-inline tex2jax_ignore">Integer.MIN_VALUE</code>. Any integer entered by the user will be larger than the value in <code class="code-inline tex2jax_ignore">largest</code>. (The user could enter <code class="code-inline tex2jax_ignore">Integer.MIN_VALUE</code> as their first integer and the test would be <code class="code-inline tex2jax_ignore">false</code>, but <code class="code-inline tex2jax_ignore">largest</code> is already holding that value, so our code still works correctly.)<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-3-4-most-wanted-holder-6" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="para" id="subsec-4-3-4-most-wanted-holder-7">Another strategy for initializing <code class="code-inline tex2jax_ignore">largest</code> is to have the user enter a value before the loop and store it in <code class="code-inline tex2jax_ignore">largest</code> and then obtain the next four values in the loop. This ensures that the value in <code class="code-inline tex2jax_ignore">largest</code> is always a user-entered value:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-3-4-most-wanted-holder-7" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
@@ -1252,7 +1255,7 @@ while (i &lt; 4) {
 </code></pre></div>
 <div class="para" id="subsec-4-3-4-most-wanted-holder-9">This strategy works for any property we want to track—such as the largest number, smallest measurement, or longest word—because we seed the most-wanted holder with the first real piece of input, and then compare every subsequent value against it.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-3-4-most-wanted-holder-9" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="para" id="subsec-4-3-4-most-wanted-holder-10">In addition to working with any comparison, this approach completely avoids the trap of guessing a “safe” artificial starting value. While choosing an initial sentinel value like <code class="code-inline tex2jax_ignore">Integer.MIN_VALUE</code> is possible with integers, it becomes notoriously error-prone with other types. For example, if you were looking for the shortest word in a series of inputs, initializing your variable to <code class="code-inline tex2jax_ignore">""</code> (the empty string) would fail completely, because no word entered by the user could ever be shorter than zero characters! By using the first actual value from the input stream as your baseline, your code is always guaranteed to work cleanly across all data types, including <code class="code-inline tex2jax_ignore">double</code>, <code class="code-inline tex2jax_ignore">char</code>, and <code class="code-inline tex2jax_ignore">String</code>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-3-4-most-wanted-holder-10" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-4-3-4-most-wanted-holder-10">In addition to working with any comparison, this approach completely avoids the trap of guessing a “safe” artificial starting value. While choosing an extreme initial value like <code class="code-inline tex2jax_ignore">Integer.MIN_VALUE</code> is possible with integers, it becomes notoriously error-prone with other types. For example, if you were looking for the shortest word in a series of inputs, initializing your variable to <code class="code-inline tex2jax_ignore">""</code> (the empty string) would fail completely, because no word entered by the user could ever be shorter than zero characters. By using the first actual value from the input stream as your baseline, your code is always guaranteed to work across all data types, including <code class="code-inline tex2jax_ignore">double</code>, <code class="code-inline tex2jax_ignore">char</code>, and <code class="code-inline tex2jax_ignore">String</code>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-3-4-most-wanted-holder-10" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="autopermalink" aria-hidden="true" data-description="Subsection 4.3.4: The Most-Wanted Holder Role"><a tabindex="-1" href="#subsec-4-3-4-most-wanted-holder" title="Copy heading and permalink for Subsection 4.3.4: The Most-Wanted Holder Role" aria-label="Copy heading and permalink for Subsection 4.3.4: The Most-Wanted Holder Role">🔗</a></div>
 </section>
@@ -1260,7 +1263,7 @@ while (i &lt; 4) {
 <h2 class="heading hide-type">
 <span class="type">Subsection</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">4.3.5</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Other Variable Roles</span>
 </h2>
-<div class="para" id="subsec-4-3-5-other-variable-roles-2">Sajaniemi identified six additional variable roles, described in <a href="sec-4-3-variable-roles.html#table-additional-variable-roles" class="xref" data-knowl="./knowl/xref/table-additional-variable-roles.html" data-reveal-label="Reveal" data-close-label="Close" title="Table 4.7: Additional variable roles">Table 4.7</a>. The final two are for algorithms processing collection types, which we will learn in chapter 6, so don’t worry too much about them right now! If you are having difficulty solving a looping problem, refer to this table and ask if the solution requires a variable in one or more of these roles.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-3-5-other-variable-roles-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-4-3-5-other-variable-roles-2">Sajaniemi identified six additional variable roles, described in <a href="sec-4-3-variable-roles.html#table-additional-variable-roles" class="xref" data-knowl="./knowl/xref/table-additional-variable-roles.html" data-reveal-label="Reveal" data-close-label="Close" title="Table 4.7: Additional variable roles">Table 4.7</a>. The final two are for algorithms processing collection types, which we will learn in chapter 7, so don’t worry too much about them right now! If you are having difficulty solving a looping problem, refer to this table and ask if the solution requires a variable in one or more of these roles.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-3-5-other-variable-roles-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <figure class="table table-like" id="table-additional-variable-roles"><figcaption><span class="type">Table</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">4.7<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span>Additional variable roles<div class="autopermalink" aria-hidden="true" data-description="Table 4.7: Additional variable roles"><a tabindex="-1" href="#table-additional-variable-roles" title="Copy heading and permalink for Table 4.7: Additional variable roles" aria-label="Copy heading and permalink for Table 4.7: Additional variable roles">🔗</a></div></figcaption><div class="tabular-box natural-width"><table class="tabular">
 <tr class="header-horizontal">
@@ -1273,13 +1276,8 @@ while (i &lt; 4) {
 <td class="l m b1 r1 l1 t0 lines">Fixed value</td>
 <td class="l m b1 r1 l0 t0 lines">Represents a quantity that does not change after its initial assignment.</td>
 <td class="l m b1 r1 l0 t0 lines">Set once (by literal, input, or calculation) and remains constant throughout its scope.</td>
-<td class="l m b1 r1 l0 t0" style="max-width:180px;">
-<div class="para" id="table-additional-variable-roles-2-6-4-1">
-<code class="code-inline tex2jax_ignore">final double PI = 3.14159;</code><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-additional-variable-roles-2-6-4-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
-</div>
-<div class="para" id="table-additional-variable-roles-2-6-4-2">
-<code class="code-inline tex2jax_ignore">int targetNumber = (int)(Math.random() * 10) + 1;</code><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-additional-variable-roles-2-6-4-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
-</div>
+<td class="l m b1 r1 l0 t0 lines">
+<code class="code-inline tex2jax_ignore">final double PI = 3.14159;</code><br><code class="code-inline tex2jax_ignore">int targetNumber = (int)(Math.random() * 10) + 1;</code>
 </td>
 </tr>
 <tr>
@@ -1301,18 +1299,14 @@ while (i &lt; 4) {
 <td class="l m b1 r1 l1 t0 lines">One-way flag</td>
 <td class="l m b1 r1 l0 t0 lines">A <code class="code-inline tex2jax_ignore">boolean</code> variable that records whether a specific state or event has occurred.</td>
 <td class="l m b1 r1 l0 t0 lines">Starts with an initial state (usually <code class="code-inline tex2jax_ignore">false</code>) and changes at most once (to <code class="code-inline tex2jax_ignore">true</code>), never reverting back.</td>
-<td class="l m b1 r1 l0 t0" style="max-width:180px;">
-<div class="para" id="table-additional-variable-roles-2-8-4-1">In search or prime-checking loops:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-additional-variable-roles-2-8-4-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
-</div>
+<td class="l m b1 r1 l0 t0 lines">In search or prime-checking loops:<br><code class="code-inline tex2jax_ignore">boolean found = false;</code><br><code class="code-inline tex2jax_ignore">if (guess == magicNumber) {</code><br><code class="code-inline tex2jax_ignore">    found = true;</code><br><code class="code-inline tex2jax_ignore">}</code>
 </td>
 </tr>
 <tr>
 <td class="l m b1 r1 l1 t0 lines">Temporary</td>
 <td class="l m b1 r1 l0 t0 lines">Holds a value for a very short duration, usually across just two or three lines of code.</td>
 <td class="l m b1 r1 l0 t0 lines">Assigned immediately before it is used and discarded immediately afterward.</td>
-<td class="l m b1 r1 l0 t0" style="max-width:180px;">
-<div class="para" id="table-additional-variable-roles-2-9-4-1">Classic 3-line variable swap:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-additional-variable-roles-2-9-4-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
-</div>
+<td class="l m b1 r1 l0 t0 lines">Classic 3-line variable swap:<br><code class="code-inline tex2jax_ignore">int temp = a;</code><br><code class="code-inline tex2jax_ignore">a = b;</code><br><code class="code-inline tex2jax_ignore">b = temp;</code>
 </td>
 </tr>
 <tr>
@@ -1320,14 +1314,12 @@ while (i &lt; 4) {
 <div class="para" id="table-additional-variable-roles-2-10-1-1">Walker<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-additional-variable-roles-2-10-1-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="para" id="table-additional-variable-roles-2-10-1-2">
-<em class="emphasis">(Revisit after Chapter 6)</em><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-additional-variable-roles-2-10-1-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<em class="emphasis">(Revisit after Chapter 7)</em><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-additional-variable-roles-2-10-1-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 </td>
 <td class="l m b1 r1 l0 t0 lines">Moves through a data structure (such as an array), but its movements depend on the structure’s contents rather than a fixed step.</td>
 <td class="l m b1 r1 l0 t0 lines">Successive values depend on the data structure being traversed.</td>
-<td class="l m b1 r1 l0 t0" style="max-width:180px;">
-<div class="para" id="table-additional-variable-roles-2-10-4-1">Jumping through a <code class="code-inline tex2jax_ignore">String</code> from one delimiter to the next:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-additional-variable-roles-2-10-4-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
-</div>
+<td class="l m b1 r1 l0 t0 lines">Jumping through a <code class="code-inline tex2jax_ignore">String</code> from one delimiter to the next:<br><code class="code-inline tex2jax_ignore">int index = text.indexOf(' ');</code><br><code class="code-inline tex2jax_ignore">while (index != -1) {</code><br><code class="code-inline tex2jax_ignore">    // Process word...</code><br><code class="code-inline tex2jax_ignore">    index = text.indexOf(' ', index + 1);</code><br><code class="code-inline tex2jax_ignore">}</code>
 </td>
 </tr>
 <tr>
@@ -1335,7 +1327,7 @@ while (i &lt; 4) {
 <div class="para" id="table-additional-variable-roles-2-11-1-1">Organizer<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-additional-variable-roles-2-11-1-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="para" id="table-additional-variable-roles-2-11-1-2">
-<em class="emphasis">(Revisit after Chapter 6)</em><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-additional-variable-roles-2-11-1-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<em class="emphasis">(Revisit after Chapter 7)</em><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#table-additional-variable-roles-2-11-1-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 </td>
 <td class="l m b1 r1 l0 t0 lines">A composite collection (like an array) whose elements are rearranged or sorted.</td>
@@ -1346,7 +1338,120 @@ while (i &lt; 4) {
 </td>
 </tr>
 </table></div>
-</figure><div class="autopermalink" aria-hidden="true" data-description="Subsection 4.3.5: Other Variable Roles"><a tabindex="-1" href="#subsec-4-3-5-other-variable-roles" title="Copy heading and permalink for Subsection 4.3.5: Other Variable Roles" aria-label="Copy heading and permalink for Subsection 4.3.5: Other Variable Roles">🔗</a></div>
+</figure>
+<section class="reading-questions" id="checkpoint-4-3">
+<h3 class="heading hide-type">
+<span class="type">Reading Questions</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber"></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Checkpoint</span>
+</h3>
+<article class="exercise exercise-like" id="checkpoint-4-3-core-roles"><h4 class="heading">
+<span class="codenumber">1<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Core Loop Variable Roles.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone cardsort_section"><ul data-component="dragndrop" data-question_label="" style="visibility: hidden;" id="rs-checkpoint-4-3-core-roles">
+<span data-subcomponent="question">
+<div class="para" id="checkpoint-4-3-core-roles-2-1">Match each variable role to the behavior it describes in a loop.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-4-3-core-roles-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div></span><li data-subcomponent="draggable" id="rs-checkpoint-4-3-core-roles_drag1" data-category="1">Stepper</li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-4-3-core-roles_drag1" data-category="1">Takes on a predictable sequence of values on each iteration</li>
+<li data-subcomponent="draggable" id="rs-checkpoint-4-3-core-roles_drag2" data-category="2">Most-recent holder</li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-4-3-core-roles_drag2" data-category="2">Holds the latest value read from an input stream, replacing the previous one</li>
+<li data-subcomponent="draggable" id="rs-checkpoint-4-3-core-roles_drag3" data-category="3">Gatherer</li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-4-3-core-roles_drag3" data-category="3">Accumulates a running total, product, or combined text across iterations</li>
+<li data-subcomponent="draggable" id="rs-checkpoint-4-3-core-roles_drag4" data-category="4">Most-wanted holder</li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-4-3-core-roles_drag4" data-category="4">Stores the best fit so far, such as the largest number or shortest word</li>
+</ul></div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 4.3.5.1: Core Loop Variable Roles"><a tabindex="-1" href="#checkpoint-4-3-core-roles" title="Copy heading and permalink for Reading Question 4.3.5.1: Core Loop Variable Roles" aria-label="Copy heading and permalink for Reading Question 4.3.5.1: Core Loop Variable Roles">🔗</a></div>
+</article>
+<article class="exercise exercise-like" id="checkpoint-4-3-gatherer-init"><h4 class="heading">
+<span class="codenumber">2<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Initializing a Gatherer.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone multiplechoice_section">
+<div class="exercise-statement">
+<div class="para" id="checkpoint-4-3-gatherer-init-2-1">You are writing a loop to compute the product of five integers entered by the user using a gatherer variable named <code class="code-inline tex2jax_ignore">product</code> (<code class="code-inline tex2jax_ignore">product *= userValue;</code>). What should <code class="code-inline tex2jax_ignore">product</code> be initialized to before the loop?<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-4-3-gatherer-init-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</div>
+<ul data-component="multiplechoice" class="exercise-interactives" id="rs-checkpoint-4-3-gatherer-init" data-multipleanswers="false" data-random="">
+<li data-component="answer" id="rs-checkpoint-4-3-gatherer-init_opt_a" data-correct="">
+<div class="para" id="checkpoint-4-3-gatherer-init-3-1-1-1"><code class="code-inline tex2jax_ignore">1</code></div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-3-gatherer-init_opt_a">
+<div class="para" id="checkpoint-4-3-gatherer-init-3-1-2-1">Correct! <code class="code-inline tex2jax_ignore">1</code> is the identity element for multiplication (<span class="process-math">\(x \times 1 = x\)</span>), so the product reflects only the values entered.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-4-3-gatherer-init_opt_b">
+<div class="para" id="checkpoint-4-3-gatherer-init-3-2-1-1"><code class="code-inline tex2jax_ignore">0</code></div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-3-gatherer-init_opt_b">
+<div class="para" id="checkpoint-4-3-gatherer-init-3-2-2-1">Not quite. Initializing a multiplicative gatherer to <code class="code-inline tex2jax_ignore">0</code> causes every subsequent multiplication to stay <code class="code-inline tex2jax_ignore">0</code>.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-4-3-gatherer-init_opt_c">
+<div class="para" id="checkpoint-4-3-gatherer-init-3-3-1-1"><code class="code-inline tex2jax_ignore">Integer.MIN_VALUE</code></div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-3-gatherer-init_opt_c">
+<div class="para" id="checkpoint-4-3-gatherer-init-3-3-2-1">Not quite. Extreme initial values like <code class="code-inline tex2jax_ignore">Integer.MIN_VALUE</code> are sometimes used for most-wanted holders, not multiplicative gatherers.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-4-3-gatherer-init_opt_d">
+<div class="para" id="checkpoint-4-3-gatherer-init-3-4-1-1"><code class="code-inline tex2jax_ignore">-1</code></div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-3-gatherer-init_opt_d">
+<div class="para" id="checkpoint-4-3-gatherer-init-3-4-2-1">Not quite. Initializing <code class="code-inline tex2jax_ignore">product</code> to <code class="code-inline tex2jax_ignore">-1</code> would flip the sign of the final result.</div>
+</li>
+</ul>
+</div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 4.3.5.2: Initializing a Gatherer"><a tabindex="-1" href="#checkpoint-4-3-gatherer-init" title="Copy heading and permalink for Reading Question 4.3.5.2: Initializing a Gatherer" aria-label="Copy heading and permalink for Reading Question 4.3.5.2: Initializing a Gatherer">🔗</a></div>
+</article>
+<article class="exercise exercise-like" id="checkpoint-4-3-most-wanted-init"><h4 class="heading">
+<span class="codenumber">3<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Seeding a Most-Wanted Holder.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone multiplechoice_section">
+<div class="exercise-statement">
+<div class="para" id="checkpoint-4-3-most-wanted-init-2-1">Why is reading the first input before the loop to initialize a most-wanted holder often safer than starting with an artificial value like <code class="code-inline tex2jax_ignore">Integer.MIN_VALUE</code> or <code class="code-inline tex2jax_ignore">""</code>?<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-4-3-most-wanted-init-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</div>
+<ul data-component="multiplechoice" class="exercise-interactives" id="rs-checkpoint-4-3-most-wanted-init" data-multipleanswers="false" data-random="">
+<li data-component="answer" id="rs-checkpoint-4-3-most-wanted-init_opt_a" data-correct="">
+<div class="para" id="checkpoint-4-3-most-wanted-init-3-1-1-1">It guarantees the baseline is a real input value and works across all data types, avoiding traps like initializing a shortest-word search with <code class="code-inline tex2jax_ignore">""</code>.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-3-most-wanted-init_opt_a">
+<div class="para" id="checkpoint-4-3-most-wanted-init-3-1-2-1">Correct! Seeding with the first actual input avoids choosing an artificial starting value that may be impossible to beat for types such as <code class="code-inline tex2jax_ignore">String</code> or <code class="code-inline tex2jax_ignore">double</code>.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-4-3-most-wanted-init_opt_b">
+<div class="para" id="checkpoint-4-3-most-wanted-init-3-2-1-1">Java forbids initializing <code class="code-inline tex2jax_ignore">String</code> or <code class="code-inline tex2jax_ignore">double</code> variables before a <code class="code-inline tex2jax_ignore">while</code> loop.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-3-most-wanted-init_opt_b">
+<div class="para" id="checkpoint-4-3-most-wanted-init-3-2-2-1">Not quite. Java allows initializing any variable before a loop; the issue is choosing a starting value that works logically for the comparison.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-4-3-most-wanted-init_opt_c">
+<div class="para" id="checkpoint-4-3-most-wanted-init-3-3-1-1">It eliminates the need for an <code class="code-inline tex2jax_ignore">if</code> statement inside the loop body.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-3-most-wanted-init_opt_c">
+<div class="para" id="checkpoint-4-3-most-wanted-init-3-3-2-1">Not quite. You still use an <code class="code-inline tex2jax_ignore">if</code> statement inside the loop to compare each new input against the current best fit.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-4-3-most-wanted-init_opt_d">
+<div class="para" id="checkpoint-4-3-most-wanted-init-3-4-1-1">It allows the loop to run one extra time so the first value is counted twice.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-3-most-wanted-init_opt_d">
+<div class="para" id="checkpoint-4-3-most-wanted-init-3-4-2-1">Not quite. Because the first value is read before the loop, the loop runs one fewer time (e.g., 4 times instead of 5).</div>
+</li>
+</ul>
+</div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 4.3.5.3: Seeding a Most-Wanted Holder"><a tabindex="-1" href="#checkpoint-4-3-most-wanted-init" title="Copy heading and permalink for Reading Question 4.3.5.3: Seeding a Most-Wanted Holder" aria-label="Copy heading and permalink for Reading Question 4.3.5.3: Seeding a Most-Wanted Holder">🔗</a></div>
+</article>
+<article class="exercise exercise-like" id="checkpoint-4-3-other-roles"><h4 class="heading">
+<span class="codenumber">4<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Additional Variable Roles.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone cardsort_section"><ul data-component="dragndrop" data-question_label="" style="visibility: hidden;" id="rs-checkpoint-4-3-other-roles">
+<span data-subcomponent="question">
+<div class="para" id="checkpoint-4-3-other-roles-2-1">Match each additional variable role to its description.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-4-3-other-roles-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div></span><li data-subcomponent="draggable" id="rs-checkpoint-4-3-other-roles_drag1" data-category="1">Fixed value</li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-4-3-other-roles_drag1" data-category="1">Set once and never changes throughout its scope</li>
+<li data-subcomponent="draggable" id="rs-checkpoint-4-3-other-roles_drag2" data-category="2">Follower</li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-4-3-other-roles_drag2" data-category="2">Tracks the previous value of another variable, trailing by one step</li>
+<li data-subcomponent="draggable" id="rs-checkpoint-4-3-other-roles_drag3" data-category="3">One-way flag</li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-4-3-other-roles_drag3" data-category="3">A boolean that records an event and changes state at most once</li>
+<li data-subcomponent="draggable" id="rs-checkpoint-4-3-other-roles_drag4" data-category="4">Temporary</li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-4-3-other-roles_drag4" data-category="4">Holds a value briefly, such as during a variable swap</li>
+</ul></div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 4.3.5.4: Additional Variable Roles"><a tabindex="-1" href="#checkpoint-4-3-other-roles" title="Copy heading and permalink for Reading Question 4.3.5.4: Additional Variable Roles" aria-label="Copy heading and permalink for Reading Question 4.3.5.4: Additional Variable Roles">🔗</a></div>
+</article><div class="autopermalink" aria-hidden="true" data-description="Reading Questions 4.3.5: Checkpoint"><a tabindex="-1" href="#checkpoint-4-3" title="Copy heading and permalink for Reading Questions 4.3.5: Checkpoint" aria-label="Copy heading and permalink for Reading Questions 4.3.5: Checkpoint">🔗</a></div>
+</section><div class="autopermalink" aria-hidden="true" data-description="Subsection 4.3.5: Other Variable Roles"><a tabindex="-1" href="#subsec-4-3-5-other-variable-roles" title="Copy heading and permalink for Subsection 4.3.5: Other Variable Roles" aria-label="Copy heading and permalink for Subsection 4.3.5: Other Variable Roles">🔗</a></div>
 </section><div class="autopermalink" aria-hidden="true" data-description="Section 4.3: Common Loop Variable Roles: Steppers, Gatherers, and Holders"><a tabindex="-1" href="#sec-4-3-variable-roles" title="Copy heading and permalink for Section 4.3: Common Loop Variable Roles: Steppers, Gatherers, and Holders" aria-label="Copy heading and permalink for Section 4.3: Common Loop Variable Roles: Steppers, Gatherers, and Holders">🔗</a></div>
 </section>
 </div>
