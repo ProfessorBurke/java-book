@@ -261,7 +261,7 @@ for (int i = 0; i < 10; i++) {
 for (int i = 0; i <= 10; i++)]]></program>
 
       <p>
-        In Java, always prefer the 0-based pattern (<c>i = 0; i &lt; N; i++</c>). As you will see in Chapter 5 with strings and Chapter 6 with arrays, indexing in Java always starts at 0 and stops just before length (<m>\text{length} - 1</m>). Developing the habit of writing <c>i = 0; i &lt; N</c> now will pay dividends later.
+        In Java, always prefer the 0-based pattern (<c>i = 0; i &lt; N; i++</c>). As you will see in Chapter 7 with arrays, indexing in Java always starts at 0 and stops just before length (<m>\text{length} - 1</m>). Developing the habit of writing <c>i = 0; i &lt; N</c> now will pay dividends later.
       </p>
     </paragraphs>
 
@@ -305,5 +305,220 @@ for (double x = 0.0; x <= 1.0; x += 0.1) {
     System.out.println(x);
 }]]></program>
     </paragraphs>
+
+    <reading-questions xml:id="checkpoint-4-4">
+      <title>Checkpoint</title>
+
+      <exercise xml:id="checkpoint-4-4-execution-order" label="checkpoint-4-4-execution-order">
+        <title>Order of Operations in a <c>for</c> Loop</title>
+        <statement>
+          <p>
+            In a <c>for (initialization; condition; update)</c> loop, when does the <c>update</c> expression execute?
+          </p>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                After each execution of the loop body, right before <c>condition</c> is tested again.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! The initializer runs once at the start, then each iteration runs the test, the body (if <c>true</c>), and finally the update before returning to the test.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                Immediately after <c>initialization</c> and before the loop body runs for the first time.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. On the first pass, <c>initialization</c> runs, then <c>condition</c> is checked, and then the body executes before <c>update</c> ever runs.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                Only once, right after the loop terminates.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. The update executes at the end of every iteration so the loop makes progress toward terminating.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                Before <c>initialization</c> when the loop is first reached.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. The initializer must set the starting value before any update or test occurs.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-4-4-iteration-count" label="checkpoint-4-4-iteration-count">
+        <title>Counting Loop Iterations</title>
+        <statement>
+          <p>
+            How many times does the loop body execute in the following <c>for</c> loop?
+          </p>
+          <program language="java"><![CDATA[for (int i = 0; i <= 10; i++) {
+    System.out.println(i);
+}]]></program>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                11 times
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! Starting at <c>0</c> and using <c>&lt;= 10</c> includes both <c>0</c> and <c>10</c>, giving 11 iterations. Use <c>i &lt; 10</c> for 10 iterations.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                10 times
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Starting at <c>0</c> with <c>&lt;= 10</c> is a classic off-by-one bug: <c>0</c> through <c>10</c> inclusive is 11 values.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                9 times
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Count the integers from <c>0</c> to <c>10</c> inclusive.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                0 times
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Because <c>0 &lt;= 10</c> is <c>true</c>, the loop enters immediately.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-4-4-scope" label="checkpoint-4-4-scope">
+        <title>Scope of a <c>for</c> Loop Counter</title>
+        <statement>
+          <p>
+            What happens if you declare <c>int i = 0</c> inside a <c>for</c> loop header and then try to print <c>i</c> on the line after the loop?
+          </p>
+          <program language="java"><![CDATA[for (int i = 0; i < 5; i++) {
+    System.out.println(i);
+}
+System.out.println(i);]]></program>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                It causes a compiler error because <c>i</c> is only in scope within the <c>for</c> loop header and body.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! A variable declared in a <c>for</c> header goes out of scope as soon as the loop finishes.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                It prints <c>5</c>.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. That would only happen if <c>int i;</c> were declared before the <c>for</c> loop instead of inside the header.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                It prints <c>4</c>.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Even if <c>i</c> were in scope, its final value would be <c>5</c>, but here <c>i</c> is out of scope after the loop.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                It compiles and runs, but throws a runtime error.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Scope violations are caught by the Java compiler before the program can run.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-4-4-design-match" label="checkpoint-4-4-design-match">
+        <title><c>for</c> Loop Patterns and Pitfalls</title>
+        <statement>
+          <p>
+            Match each <c>for</c> loop header to its behavior.
+          </p>
+        </statement>
+        <cardsort>
+          <match>
+            <premise order="3"><c>for (int i = 0; i &lt; N; i++)</c></premise>
+            <response>Idiomatic 0-based loop that runs N times</response>
+          </match>
+          <match>
+            <premise order="1"><c>for (int i = 5; i &lt; 0; i--)</c></premise>
+            <response>Loop never executes because the relational operator is reversed</response>
+          </match>
+          <match>
+            <premise order="4"><c>for (double x = 0.0; x != 1.0; x += 0.1)</c></premise>
+            <response>Risks an infinite loop due to floating-point roundoff</response>
+          </match>
+          <match>
+            <premise order="2"><c>for (;;)</c></premise>
+            <response>Infinite loop with all three header sections omitted</response>
+          </match>
+        </cardsort>
+      </exercise>
+    </reading-questions>
   </subsection>
 </section>
