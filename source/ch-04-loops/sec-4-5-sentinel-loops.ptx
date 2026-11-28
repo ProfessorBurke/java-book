@@ -12,7 +12,7 @@
     </p>
 
     <p>
-      Instead, we want the computer to repeatedly prompt for scores until the user explicitly signals that they are finished. To do this, we use a <term>sentinel-controlled loop</term>.
+      Instead, we want the computer to repeatedly prompt for scores until the user explicitly signals that they are finished. To do this, we use a sentinel-controlled loop.
     </p>
   </introduction>
 
@@ -23,7 +23,7 @@
     <title>What Is a Sentinel Value?</title>
 
     <p>
-      A <term>sentinel value</term> (or simply a <term>sentinel</term>) is a predefined input value used to signal the end of data entry. It acts as an unmistakable <q>stop sign</q> to terminate the loop.
+      A sentinel value (or simply a sentinel) is a predefined input value used to signal the end of data entry. It acts as an unmistakable <q>stop sign</q> to terminate the loop.
     </p>
 
     <p>
@@ -129,11 +129,11 @@ public class SentinelScoreProcessor {
     </p>
 
     <p>
-      Beginning programmers often look at the primed-loop pattern and ask: Why do we need two separate read statements? Wouldn't it be simpler to just write the read statement once at the very top of the loop body?
+      You might be wondering why we need two separate read statements. Wouldn't it be simpler to just write the read statement once at the very top of the loop body?
     </p>
 
     <p>
-      Let’s take a look at what happens when you try to take that shortcut:
+      Let’s take a look at what happens when we try to take that shortcut:
     </p>
 
     <program language="java"><![CDATA[// DANGEROUS: The Sentinel-Leak Bug!
@@ -162,7 +162,7 @@ while (score != -1) {
     </p>
 
     <p>
-      Another common beginner mistake is a hybrid of the two styles: writing a priming read before the loop, but then placing the updating read at the top of the loop body instead of the bottom:
+      Another common sentinel loop mistake is a hybrid of the two styles: writing a priming read before the loop, but then placing the updating read at the top of the loop body instead of the bottom:
     </p>
 
     <program language="java"><![CDATA[score = stdin.nextInt();     // 1. Priming read
@@ -172,7 +172,7 @@ while (score != -1) {
 }]]></program>
 
     <p>
-      In this flawed pattern, whatever value was read during the priming read gets immediately overwritten by the second read before it is ever added to <c>total</c>, meaning the user's very first input is permanently lost!
+      In this flawed pattern, whatever value was read during the priming read gets immediately overwritten by the second read before it is ever added to <c>total</c>, meaning the user's very first input is permanently lost.
     </p>
 
     <p>
@@ -204,7 +204,7 @@ while (score != -1) {
     </p>
 
     <p>
-      One software engineering principle is that code should be self-documenting. A well-written loop adheres to what computer scientists call the <term>Single-Entry, Single-Exit (SESE)</term> principle:
+      One software engineering principle is that code should be self-documenting. A well-written loop adheres to what computer scientists call the Single-Entry, Single-Exit (SESE) principle:
     </p>
 
     <ol>
@@ -236,7 +236,7 @@ while (score != -1) {
     </p>
 
     <p>
-      The culprit was not an act of sabotage or a hardware explosion. It was a single, misplaced <c>break</c> statement inside a loop.
+      The culprit was not an act of sabotage or a hardware malfunction. It was a single, misplaced <c>break</c> statement inside a loop.
     </p>
 
     <p>
@@ -329,5 +329,225 @@ No scores were entered.</output>
     <p>
       Notice the guard on line 30: <c>if (count &gt; 0)</c>. If the user immediately types <c>-1</c>, <c>count</c> remains 0. Without that check, evaluating <c>(double)total / count</c> would attempt floating-point division by zero, yielding a <c>NaN</c> result. Always consider what happens when a sentinel loop processes zero items.
     </p>
+
+    <reading-questions xml:id="checkpoint-4-5">
+      <title>Checkpoint</title>
+
+      <exercise xml:id="checkpoint-4-5-choosing-sentinel" label="checkpoint-4-5-choosing-sentinel">
+        <title>Choosing a Sentinel Value</title>
+        <statement>
+          <p>
+            You are writing a program that reads daily outdoor temperatures in degrees Celsius (where negative, zero, and positive values are all valid measurements). Which value is the best choice for the sentinel?
+          </p>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                <c>-999</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! A sentinel must be an out-of-bounds value that could never occur as real data.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>-1</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. <c>-1°</c> Celsius is a realistic winter temperature, so it could be confused with valid data.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>0</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. <c>0°</c> Celsius (freezing) is a common valid temperature measurement.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>32</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. <c>32°</c> Celsius is a realistic summer temperature, not an impossible stop signal.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-4-5-sentinel-leak" label="checkpoint-4-5-sentinel-leak">
+        <title>The Sentinel-Leak Bug</title>
+        <statement>
+          <p>
+            What goes wrong in the following sentinel loop?
+          </p>
+          <program language="java"><![CDATA[int score = 0;
+int total = 0;
+while (score != -1) {
+    System.out.print("Enter score (-1 to stop): ");
+    score = stdin.nextInt();
+    total += score;
+}]]></program>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                When the user enters <c>-1</c>, it is added to <c>total</c> before the loop condition is checked again.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! Because <c>total += score;</c> runs immediately after reading <c>score</c> without testing first, the sentinel <c>-1</c> leaks into the sum.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                The loop never executes because <c>score</c> starts at <c>0</c>.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Since <c>0 != -1</c> is <c>true</c>, the loop enters on the first pass.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                The very first valid score entered by the user is skipped and never added to <c>total</c>.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. That happens when you write a priming read before the loop and then place another read at the top of the loop body.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                The loop becomes an infinite loop even when the user types <c>-1</c>.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. The loop still terminates after typing <c>-1</c>, but only after corrupting <c>total</c> with <c>-1</c>.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-4-5-immediate-sentinel" label="checkpoint-4-5-immediate-sentinel">
+        <title>Handling Zero Valid Inputs</title>
+        <statement>
+          <p>
+            In <xref ref="listing-score-averager" />, why does the program check <c>if (count &gt; 0)</c> after the <c>while</c> loop before calculating <c>(double) total / count</c>?
+          </p>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                If the user enters <c>-1</c> on the first prompt, <c>count</c> remains <c>0</c>, and dividing by <c>0</c> would produce <c>NaN</c>.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! Guarding with <c>if (count &gt; 0)</c> safely handles the immediate-sentinel edge case without dividing by zero.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                Because <c>count</c> becomes negative when the user enters <c>-1</c>.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. <c>count</c> only increments inside the loop, so it stays <c>0</c> when <c>-1</c> is entered immediately.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                Because Java does not allow casting <c>total</c> to <c>double</c> unless <c>count</c> is positive.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. The cast itself is always legal; the guard prevents dividing by zero when no scores were entered.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                To prevent the <c>Scanner</c> from closing before the average is printed.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. <c>stdin.close();</c> runs right after the loop regardless of whether <c>count</c> is <c>0</c>.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-4-5-parsons-sentinel" label="checkpoint-4-5-parsons-sentinel" language="java">
+        <title>Building a Primed Sentinel Loop</title>
+        <statement>
+          <p>
+            Arrange the code blocks to construct a proper sentinel loop that reads scores until the user enters <c>-1</c>, using a priming read before the loop and an updating read at the end of the loop body.
+          </p>
+        </statement>
+        <blocks>
+          <block order="1">
+            <cline>int total = 0;</cline>
+            <cline>System.out.print("Enter score (-1 to stop): ");</cline>
+            <cline>int score = stdin.nextInt();</cline>
+          </block>
+          <block order="2">
+            <cline>while (score != -1) {</cline>
+          </block>
+          <block order="3">
+            <cline>    total += score;</cline>
+          </block>
+          <block order="4">
+            <cline>    System.out.print("Enter score (-1 to stop): ");</cline>
+            <cline>    score = stdin.nextInt();</cline>
+		  </block>
+		  <block order="5">
+            <cline>}</cline>
+          </block>
+          <block order="6">
+            <cline>System.out.println("Total: " + total);</cline>
+          </block>
+        </blocks>
+      </exercise>
+    </reading-questions>
   </subsection>
 </section>

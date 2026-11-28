@@ -1,0 +1,13 @@
+INFO    : Building target web
+INFO    : XSL conversion of D:\CCRI\__Java book rewrite\cs1-java-textbook\source\main.ptx by C:\Users\Maggie\.ptx\2.56.2\core\xsl\utilities\pretext-enhanced-source.xsl
+ERROR   : Error loading file:///D:/CCRI/__Java%20book%20rewrite/cs1-java-textbook/source/ch-04-loops/sec-4-5-sentinel-loops.ptx: Opening and ending tag mismatch: block line 539 and blocks, line 548, column 18 (file:///D:/CCRI/__Java%20book%20rewrite/cs1-java-textbook/source/ch-04-loops/sec-4-5-sentinel-loops.ptx, line 548)
+ERROR   : Error assembling source file: Opening and ending tag mismatch: block line 539 and blocks, line 548, column 18 (file:///D:/CCRI/__Java%20book%20rewrite/cs1-java-textbook/source/ch-04-loops/sec-4-5-sentinel-loops.ptx, line 548)
+FATAL   : XML syntax for source file is invalid
+INFO    : ------------------------
+exit    : Failed to build without errors.  Exiting...
+INFO    : 
+----------------------------------------------------
+INFO    : While running pretext, the following errors occurred:
+
+INFO    : (see log messages above or in the 'logs' folder for more information)
+INFO    : ----------------------------------------------------
