@@ -517,7 +517,10 @@ eBookConfig.enable_chatcodes =  false;
 <ul id="ptx-toc-group-sec-4-8-loop-invariants" class="structural toc-item-list">
 <li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-8-loop-invariants.html#subsec-4-8-1-contract-of-a-loop" class="internal"><span class="codenumber">4.8.1</span> <span class="title">The Contract of a Loop: Preconditions, Postconditions, and Invariants</span></a></div></li>
 <li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-8-loop-invariants.html#subsec-4-8-2-verifying-counters-accumulators" class="internal"><span class="codenumber">4.8.2</span> <span class="title">Verifying Counters and Accumulators Upon Loop Exit</span></a></div></li>
-<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-8-loop-invariants.html#subsec-4-8-3-example-factorial-assertions" class="internal"><span class="codenumber">4.8.3</span> <span class="title">A Complete Example: Factorial with Assertions</span></a></div></li>
+<li class="toc-item toc-subsection">
+<div class="toc-title-box"><a href="sec-4-8-loop-invariants.html#subsec-4-8-3-example-factorial-assertions" class="internal"><span class="codenumber">4.8.3</span> <span class="title">A Complete Example: Factorial with Assertions</span></a></div>
+<ul id="ptx-toc-group-subsec-4-8-3-example-factorial-assertions" class="structural toc-item-list"><li class="toc-item toc-reading-questions"><div class="toc-title-box"><a href="sec-4-8-loop-invariants.html#checkpoint-4-8" class="internal"><span class="codenumber">4.8.3</span> <span class="title">Checkpoint</span></a></div></li></ul>
+</li>
 </ul>
 </li>
 <li class="toc-item toc-section">
@@ -1430,18 +1433,24 @@ do {
 <div class="ptx-runestone-container"><div class="runestone cardsort_section"><ul data-component="dragndrop" data-question_label="" style="visibility: hidden;" id="rs-checkpoint-4-7-inversion-match">
 <span data-subcomponent="question">
 <div class="para" id="checkpoint-4-7-inversion-match-2-1">Match each natural stopping goal to the Java <code class="code-inline tex2jax_ignore">while</code> continuation condition that implements it.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-4-7-inversion-match-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
-</div></span><li data-subcomponent="draggable" id="rs-checkpoint-4-7-inversion-match_drag1" data-category="1">Stop when <code class="code-inline tex2jax_ignore">x &lt;= 0</code>
+</div></span><li data-subcomponent="draggable" id="rs-checkpoint-4-7-inversion-match_drag1" data-category="1">Stop when <code class="code-inline tex2jax_ignore">x == 1</code>
 </li>
-<li data-subcomponent="dropzone" for="rs-checkpoint-4-7-inversion-match_drag1" data-category="1"><code class="code-inline tex2jax_ignore">while (x &gt; 0)</code></li>
-<li data-subcomponent="draggable" id="rs-checkpoint-4-7-inversion-match_drag2" data-category="2">Stop when <code class="code-inline tex2jax_ignore">x == -1</code>
+<li data-subcomponent="dropzone" for="rs-checkpoint-4-7-inversion-match_drag1" data-category="1"><code class="code-inline tex2jax_ignore">while (x != 1)</code></li>
+<li data-subcomponent="draggable" id="rs-checkpoint-4-7-inversion-match_drag2" data-category="2">Stop when <code class="code-inline tex2jax_ignore">x &lt;= 10</code>
 </li>
-<li data-subcomponent="dropzone" for="rs-checkpoint-4-7-inversion-match_drag2" data-category="2"><code class="code-inline tex2jax_ignore">while (x != -1)</code></li>
-<li data-subcomponent="draggable" id="rs-checkpoint-4-7-inversion-match_drag3" data-category="3">Stop when <code class="code-inline tex2jax_ignore">x &gt;= 1 &amp;&amp; x &lt;= 10</code>
+<li data-subcomponent="dropzone" for="rs-checkpoint-4-7-inversion-match_drag2" data-category="2"><code class="code-inline tex2jax_ignore">while (x &gt; 10)</code></li>
+<li data-subcomponent="draggable" id="rs-checkpoint-4-7-inversion-match_drag3" data-category="3">Stop when <code class="code-inline tex2jax_ignore">x &gt;= 10</code>
 </li>
-<li data-subcomponent="dropzone" for="rs-checkpoint-4-7-inversion-match_drag3" data-category="3"><code class="code-inline tex2jax_ignore">while (x &lt; 1 || x &gt; 10)</code></li>
-<li data-subcomponent="draggable" id="rs-checkpoint-4-7-inversion-match_drag4" data-category="4">Stop when <code class="code-inline tex2jax_ignore">x &gt; 100</code>
+<li data-subcomponent="dropzone" for="rs-checkpoint-4-7-inversion-match_drag3" data-category="3"><code class="code-inline tex2jax_ignore">while (x &lt; 10)</code></li>
+<li data-subcomponent="draggable" id="rs-checkpoint-4-7-inversion-match_drag4" data-category="4">Stop when <code class="code-inline tex2jax_ignore">x &gt;= 1 &amp;&amp; x &lt;= 10</code>
 </li>
-<li data-subcomponent="dropzone" for="rs-checkpoint-4-7-inversion-match_drag4" data-category="4"><code class="code-inline tex2jax_ignore">while (x &lt;= 100)</code></li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-4-7-inversion-match_drag4" data-category="4"><code class="code-inline tex2jax_ignore">while (x &lt; 1 || x &gt; 10)</code></li>
+<li data-subcomponent="draggable" id="rs-checkpoint-4-7-inversion-match_drag5" data-category="5">Stop when <code class="code-inline tex2jax_ignore">x &lt; 1 || x &gt; 10</code>
+</li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-4-7-inversion-match_drag5" data-category="5"><code class="code-inline tex2jax_ignore">while (x &gt;= 1 &amp;&amp; x &lt;= 10)</code></li>
+<li data-subcomponent="draggable" id="rs-checkpoint-4-7-inversion-match_drag6" data-category="6">Stop when <code class="code-inline tex2jax_ignore">x &gt; 1 &amp;&amp; x &lt; 10</code>
+</li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-4-7-inversion-match_drag6" data-category="6"><code class="code-inline tex2jax_ignore">while (x &lt;= 1 || x &gt;= 10)</code></li>
 </ul></div></div>
 <div class="autopermalink" aria-hidden="true" data-description="Reading Question 4.7.4.1: Stopping vs. Continuation Conditions"><a tabindex="-1" href="#checkpoint-4-7-inversion-match" title="Copy heading and permalink for Reading Question 4.7.4.1: Stopping vs. Continuation Conditions" aria-label="Copy heading and permalink for Reading Question 4.7.4.1: Stopping vs. Continuation Conditions">🔗</a></div>
 </article>

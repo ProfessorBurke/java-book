@@ -22,9 +22,17 @@
       Every well-designed loop operates like a miniature contract within your program:
     </p>
 
-    <p>
-      <c>[ Precondition ]  ---&gt;  ( Loop Execution / Invariant )  ---&gt;  [ Postcondition ]</c>
-    </p>
+     <figure xml:id="figure-loop-contract">
+      <title>The contract of a loop: precondition, loop invariant, and postcondition</title>
+      <image source="figures/figure_4_3.png" width="90%">
+        <shortdescription>Flowchart of a pre-test loop with shaded callouts showing where the precondition, loop invariant, and postcondition hold.</shortdescription>
+        <description>
+          <p>
+            Flowchart titled <q>The Contract of a Loop.</q> Execution flows from Before Loop through a merge point into a Loop Condition diamond. When True, execution runs the Loop Body (Work + Update) and returns to the merge point above the diamond; when False, execution exits to After Loop. Three high-contrast callout boxes annotate the flow: Precondition (blue, pointing to the incoming arrow before the merge point: <q>True before entering loop</q>), Loop Invariant (green, pointing to the merge point where entry and loop-back arrows meet: <q>True before &amp; after every iteration</q>), and Postcondition (amber, pointing to the False exit arrow: <q>Guaranteed true after exit</q>).
+          </p>
+        </description>
+      </image>
+    </figure>
 
     <ol>
       <li>
@@ -172,6 +180,10 @@ assert score == -1 : "Loop exited, but score was not -1: " + score;]]></program>
       <xref ref="listing-factorial-verifier" /> calculates a factorial (<m>n!</m>). Notice how preconditions, loop invariants, and postconditions work together to verify correctness:
     </p>
 
+    <p>
+      (Note: In a production program, you would validate user input with a loop or an <c>if</c> statement rather than an <c>assert</c>. Here, we use a precondition assertion to keep the focus on how loop contracts work<mdash />a pattern that becomes especially important once you begin writing your own methods in Chapter 5.)
+    </p>
+	
     <listing xml:id="listing-factorial-verifier">
       <title><c>FactorialVerifier.java</c></title>
       <program language="java" line-numbers="yes"><![CDATA[import java.util.Scanner;
@@ -267,5 +279,213 @@ public class FactorialVerifier {
         <li><p><strong>Document what you cannot test:</strong> If a formal condition or invariant cannot be easily checked with an executable <c>assert</c> statement (such as the factorial invariant), document it clearly as a comment so anyone reading your code understands the underlying logic.</p></li>
       </ul>
     </paragraphs>
+
+    <reading-questions xml:id="checkpoint-4-8">
+      <title>Checkpoint</title>
+
+      <exercise xml:id="checkpoint-4-8-contract-match" label="checkpoint-4-8-contract-match">
+        <title>Parts of a Loop Contract</title>
+        <statement>
+          <p>
+            Match each loop verification concept to its role.
+          </p>
+        </statement>
+        <cardsort>
+          <match>
+            <premise order="3">Precondition</premise>
+            <response>Condition that must be true immediately before entering the loop</response>
+          </match>
+          <match>
+            <premise order="1">Loop invariant</premise>
+            <response>Condition that remains true before and after every iteration</response>
+          </match>
+          <match>
+            <premise order="4">Postcondition</premise>
+            <response>Condition guaranteed to be true immediately after the loop terminates</response>
+          </match>
+          <match>
+            <premise order="2"><c>assert</c></premise>
+            <response>Executable check that throws an <c>AssertionError</c> when <c>-ea</c> is enabled</response>
+          </match>
+        </cardsort>
+      </exercise>
+
+      <exercise xml:id="checkpoint-4-8-sentinel-postcondition" label="checkpoint-4-8-sentinel-postcondition">
+        <title>Postcondition for a Sentinel Loop</title>
+        <statement>
+          <p>
+            A primed sentinel loop uses <c>while (score != -1)</c> and has no early exits inside the body. Which postcondition assertion must be <c>true</c> immediately after the loop terminates?
+          </p>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                <c>assert score == -1;</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! Because the loop only continues while <c>score != -1</c>, exiting normally guarantees that <c>score</c> holds the sentinel value <c>-1</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>assert score != -1;</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. <c>score != -1</c> is the loop’s continuation condition; when the loop ends, that condition is <c>false</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>assert score &gt;= 0;</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. After the sentinel <c>-1</c> ends the loop, <c>score</c> is negative (<c>-1</c>).
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>assert total &gt; 0;</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. If the user enters <c>-1</c> on the very first prompt, <c>total</c> remains <c>0</c>.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-4-8-overflow-lesson" label="checkpoint-4-8-overflow-lesson">
+        <title>Detecting Integer Overflow</title>
+        <statement>
+          <p>
+            In <xref ref="listing-factorial-verifier" />, when the precondition assertion was commented out and the user entered <c>15</c>, why did <c>assert product &gt; 0</c> inside the loop fail to catch the overflow?
+          </p>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                The 32-bit <c>int</c> value overflowed multiple times and wrapped around to a positive—but corrupted—number.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! Overflow does not always produce a negative number, which is why checking a precondition before the loop (<c>n &lt;= 12</c>) is far safer.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                Assertions inside <c>for</c> loops are ignored even when <c>-ea</c> is enabled.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Assertions inside loops execute normally when <c>-ea</c> is enabled; here the condition <c>product &gt; 0</c> simply evaluated to <c>true</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                Java automatically switches <c>product</c> from <c>int</c> to <c>long</c> when <c>n</c> exceeds <c>12</c>.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Java never widens a variable’s declared type automatically on overflow; the bits simply wrap around.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                The loop stopped at <c>factor = 12</c> before reaching <c>15</c>.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. With the precondition commented out, the loop ran all the way to <c>15</c>.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-4-8-true-invariant" label="checkpoint-4-8-true-invariant">
+        <title>Identifying a Loop Invariant</title>
+        <statement>
+          <p>
+            In <xref ref="listing-factorial-verifier" />, <c>product</c> starts at <c>1</c> and <c>for (int factor = 1; factor &lt;= n; factor++)</c> multiplies <c>product *= factor;</c>. Which statement is a true loop invariant at the top of each iteration?
+          </p>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                <c>product == (factor - 1)!</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! Before <c>factor = 1</c> runs, <c>product == 0! == 1</c>; after each step, <c>product</c> holds the factorial of the previous <c>factor</c>, and on exit (<c>factor == n + 1</c>), <c>product == n!</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>product == factor!</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. At the top of the loop before <c>product *= factor;</c> executes, <c>product</c> has not yet been multiplied by the current <c>factor</c>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>factor == n</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. <c>factor</c> changes on every iteration from <c>1</c> up to <c>n + 1</c>, so <c>factor == n</c> is only true on the final pass.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>product == 1</c>
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. <c>product</c> is <c>1</c> only before <c>factor = 2</c> multiplies it.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+    </reading-questions>
   </subsection>
 </section>

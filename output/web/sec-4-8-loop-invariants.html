@@ -517,7 +517,10 @@ eBookConfig.enable_chatcodes =  false;
 <ul class="structural toc-item-list active" id="ptx-toc-group-sec-4-8-loop-invariants">
 <li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-8-loop-invariants.html#subsec-4-8-1-contract-of-a-loop" class="internal"><span class="codenumber">4.8.1</span> <span class="title">The Contract of a Loop: Preconditions, Postconditions, and Invariants</span></a></div></li>
 <li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-8-loop-invariants.html#subsec-4-8-2-verifying-counters-accumulators" class="internal"><span class="codenumber">4.8.2</span> <span class="title">Verifying Counters and Accumulators Upon Loop Exit</span></a></div></li>
-<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-8-loop-invariants.html#subsec-4-8-3-example-factorial-assertions" class="internal"><span class="codenumber">4.8.3</span> <span class="title">A Complete Example: Factorial with Assertions</span></a></div></li>
+<li class="toc-item toc-subsection">
+<div class="toc-title-box"><a href="sec-4-8-loop-invariants.html#subsec-4-8-3-example-factorial-assertions" class="internal"><span class="codenumber">4.8.3</span> <span class="title">A Complete Example: Factorial with Assertions</span></a></div>
+<ul id="ptx-toc-group-subsec-4-8-3-example-factorial-assertions" class="structural toc-item-list"><li class="toc-item toc-reading-questions"><div class="toc-title-box"><a href="sec-4-8-loop-invariants.html#checkpoint-4-8" class="internal"><span class="codenumber">4.8.3</span> <span class="title">Checkpoint</span></a></div></li></ul>
+</li>
 </ul>
 </li>
 <li class="toc-item toc-section">
@@ -1101,9 +1104,14 @@ eBookConfig.enable_chatcodes =  false;
 </h2>
 <div class="para" id="subsec-4-8-1-contract-of-a-loop-2">Every well-designed loop operates like a miniature contract within your program:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-8-1-contract-of-a-loop-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="para" id="subsec-4-8-1-contract-of-a-loop-3">
-<code class="code-inline tex2jax_ignore">[ Precondition ]  ---&gt;  ( Loop Execution / Invariant )  ---&gt;  [ Postcondition ]</code><div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-8-1-contract-of-a-loop-3" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<figure class="figure figure-like" id="figure-loop-contract"><div class="image-box" style="width: 90%; margin-left: 5%; margin-right: 5%;">
+<img src="external/figures/figure_4_3.png" class="contained" alt="Flowchart of a pre-test loop with shaded callouts showing where the precondition, loop invariant, and postcondition hold."><details class="image-description" aria-live="polite"><summary title="details"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe88e;</span></summary><div id="figure-loop-contract-2-description" style="width: 88.89%; margin-left: 5.56%;">
+<div class="para" id="figure-loop-contract-2-2-1">Flowchart titled “The Contract of a Loop.” Execution flows from Before Loop through a merge point into a Loop Condition diamond. When True, execution runs the Loop Body (Work + Update) and returns to the merge point above the diamond; when False, execution exits to After Loop. Three high-contrast callout boxes annotate the flow: Precondition (blue, pointing to the incoming arrow before the merge point: “True before entering loop”), Loop Invariant (green, pointing to the merge point where entry and loop-back arrows meet: “True before &amp; after every iteration”), and Postcondition (amber, pointing to the False exit arrow: “Guaranteed true after exit”).<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#figure-loop-contract-2-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
+</div></details>
+</div>
+<figcaption><span class="type">Figure</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">4.16<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><div class="autopermalink" aria-hidden="true" data-description="Figure 4.16: The contract of a loop: precondition, loop invariant, and postcondition"><a tabindex="-1" href="#figure-loop-contract" title="Copy heading and permalink for Figure 4.16: The contract of a loop: precondition, loop invariant, and postcondition" aria-label="Copy heading and permalink for Figure 4.16: The contract of a loop: precondition, loop invariant, and postcondition">🔗</a></div></figcaption>
+</figure>
 <ol class="decimal" id="subsec-4-8-1-contract-of-a-loop-4">
 <li id="subsec-4-8-1-contract-of-a-loop-4-1">
 <div class="para" id="subsec-4-8-1-contract-of-a-loop-4-1-1">Precondition: A condition that must be true immediately before entering the loop. If the precondition is violated, the loop cannot be expected to run correctly. For example, if a loop calculates a factorial (<span class="process-math">\(n!\)</span>), a reasonable precondition is that <span class="process-math">\(n \ge 0\)</span> (and <span class="process-math">\(n \le 12\)</span> when using an <code class="code-inline tex2jax_ignore">int</code>).<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-8-1-contract-of-a-loop-4-1-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
@@ -1229,9 +1237,11 @@ assert score == -1 : "Loop exited, but score was not -1: " + score;
 <span class="type">Subsection</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">4.8.3</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">A Complete Example: Factorial with Assertions</span>
 </h2>
 <div class="para" id="subsec-4-8-3-example-factorial-assertions-2">
-<a href="sec-4-8-loop-invariants.html#listing-factorial-verifier" class="xref" data-knowl="./knowl/xref/listing-factorial-verifier.html" data-reveal-label="Reveal" data-close-label="Close" title="Listing 4.16: FactorialVerifier.java">Listing 4.16</a> calculates a factorial (<span class="process-math">\(n!\)</span>). Notice how preconditions, loop invariants, and postconditions work together to verify correctness:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-8-3-example-factorial-assertions-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<a href="sec-4-8-loop-invariants.html#listing-factorial-verifier" class="xref" data-knowl="./knowl/xref/listing-factorial-verifier.html" data-reveal-label="Reveal" data-close-label="Close" title="Listing 4.17: FactorialVerifier.java">Listing 4.17</a> calculates a factorial (<span class="process-math">\(n!\)</span>). Notice how preconditions, loop invariants, and postconditions work together to verify correctness:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-8-3-example-factorial-assertions-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<figure class="listing figure-like" id="listing-factorial-verifier"><figcaption><span class="type">Listing</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">4.16<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><code class="code-inline tex2jax_ignore">FactorialVerifier.java</code><div class="autopermalink" aria-hidden="true" data-description="Listing 4.16: FactorialVerifier.java"><a tabindex="-1" href="#listing-factorial-verifier" title="Copy heading and permalink for Listing 4.16: FactorialVerifier.java" aria-label="Copy heading and permalink for Listing 4.16: FactorialVerifier.java">🔗</a></div></figcaption><div class="listing__contents"><div class="code-box"><pre class="program clipboardable line-numbers"><code class="language-java">import java.util.Scanner;
+<div class="para" id="subsec-4-8-3-example-factorial-assertions-3">(Note: In a production program, you would validate user input with a loop or an <code class="code-inline tex2jax_ignore">if</code> statement rather than an <code class="code-inline tex2jax_ignore">assert</code>. Here, we use a precondition assertion to keep the focus on how loop contracts work—a pattern that becomes especially important once you begin writing your own methods in Chapter 5.)<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-8-3-example-factorial-assertions-3" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<figure class="listing figure-like" id="listing-factorial-verifier"><figcaption><span class="type">Listing</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">4.17<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><code class="code-inline tex2jax_ignore">FactorialVerifier.java</code><div class="autopermalink" aria-hidden="true" data-description="Listing 4.17: FactorialVerifier.java"><a tabindex="-1" href="#listing-factorial-verifier" title="Copy heading and permalink for Listing 4.17: FactorialVerifier.java" aria-label="Copy heading and permalink for Listing 4.17: FactorialVerifier.java">🔗</a></div></figcaption><div class="listing__contents"><div class="code-box"><pre class="program clipboardable line-numbers"><code class="language-java">import java.util.Scanner;
  
 /**
  * Calculates the factorial of 0 &lt;= n &lt;= 12 obtained
@@ -1271,54 +1281,187 @@ public class FactorialVerifier {
 }
 </code></pre></div></div>
 </figure>
-<div class="para" id="subsec-4-8-3-example-factorial-assertions-4">If you run this program with normal inputs like 5, it prints:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-8-3-example-factorial-assertions-4" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-4-8-3-example-factorial-assertions-5">If you run this program with normal inputs like 5, it prints:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-8-3-example-factorial-assertions-5" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="code-box"><pre class="console clipboardable">5! = 120
 </pre></div>
-<div class="para" id="subsec-4-8-3-example-factorial-assertions-6">However, if you enable assertions with <code class="code-inline tex2jax_ignore">-ea</code> and enter 15, the assertion on line 22 catches the out-of-bounds input and throws an exception:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-8-3-example-factorial-assertions-6" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-4-8-3-example-factorial-assertions-7">However, if you enable assertions with <code class="code-inline tex2jax_ignore">-ea</code> and enter 15, the assertion on line 22 catches the out-of-bounds input and throws an exception:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-8-3-example-factorial-assertions-7" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="code-box"><pre class="console clipboardable">Exception in thread "main" java.lang.AssertionError: Input out of valid bounds: 15
        at FactorialVerifier.main(FactorialVerifier.java:22)
 </pre></div>
-<div class="para" id="subsec-4-8-3-example-factorial-assertions-8">Now, let’s try an experiment: comment out the assertion on line 22 and run the program again with an input of 15. The program runs to completion and produces the following output:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-8-3-example-factorial-assertions-8" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-4-8-3-example-factorial-assertions-9">Now, let’s try an experiment: comment out the assertion on line 22 and run the program again with an input of 15. The program runs to completion and produces the following output:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-8-3-example-factorial-assertions-9" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="code-box"><pre class="console clipboardable">15! = 2,004,310,016
 </pre></div>
-<div class="para" id="subsec-4-8-3-example-factorial-assertions-10">This result is completely wrong (the true value of <span class="process-math">\(15!\)</span> is over <span class="process-math">\(1.3 \times 10^{12}\text{,}\)</span> or 1.3 trillion). Even worse, this catastrophic error was not caught by the assertion inside the loop on line 29 (<code class="code-inline tex2jax_ignore">assert product &gt; 0</code>). That assertion relied on the naive assumption that binary overflow always turns a number negative.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-8-3-example-factorial-assertions-10" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-4-8-3-example-factorial-assertions-11">This result is completely wrong (the true value of <span class="process-math">\(15!\)</span> is over <span class="process-math">\(1.3 \times 10^{12}\text{,}\)</span> or 1.3 trillion). Even worse, this catastrophic error was not caught by the assertion inside the loop on line 29 (<code class="code-inline tex2jax_ignore">assert product &gt; 0</code>). That assertion relied on the naive assumption that binary overflow always turns a number negative.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-8-3-example-factorial-assertions-11" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="para" id="subsec-4-8-3-example-factorial-assertions-11">When Java calculates <span class="process-math">\(15!\)</span> using a 32-bit <code class="code-inline tex2jax_ignore">int</code>, the value overflows <span class="process-math">\(2^{31} - 1\)</span> (<code class="code-inline tex2jax_ignore">Integer.MAX_VALUE</code>) multiple times. By sheer coincidence of binary arithmetic, the 32-bit truncated pattern still has a 0 in its sign bit, leaving it as a positive (corrupted) number! In fact, the calculation does not turn negative until factor 17.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-8-3-example-factorial-assertions-11" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-4-8-3-example-factorial-assertions-12">When Java calculates <span class="process-math">\(15!\)</span> using a 32-bit <code class="code-inline tex2jax_ignore">int</code>, the value overflows <span class="process-math">\(2^{31} - 1\)</span> (<code class="code-inline tex2jax_ignore">Integer.MAX_VALUE</code>) multiple times. By sheer coincidence of binary arithmetic, the 32-bit truncated pattern still has a 0 in its sign bit, leaving it as a positive (corrupted) number! In fact, the calculation does not turn negative until factor 17.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-8-3-example-factorial-assertions-12" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="para" id="subsec-4-8-3-example-factorial-assertions-12">This demonstrates why preconditions are so vital: trying to detect an error after a calculation has overflowed is notoriously unreliable. It is far safer to guard the gates before the loop ever begins.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-8-3-example-factorial-assertions-12" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-4-8-3-example-factorial-assertions-13">This demonstrates why preconditions are so vital: trying to detect an error after a calculation has overflowed is notoriously unreliable. It is far safer to guard the gates before the loop ever begins.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-8-3-example-factorial-assertions-13" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<section class="paragraphs" id="subsec-4-8-3-example-factorial-assertions-13"><h3 class="heading"><span class="title">Mathematical Note: What is a true loop invariant here?</span></h3>
-<div class="para" id="subsec-4-8-3-example-factorial-assertions-13-2">At the top of each cycle, we can state: <code class="code-inline tex2jax_ignore">// Invariant: product == (factor - 1)!</code>. This statement is mathematically true before every iteration, and it remains true when the loop finishes (when <code class="code-inline tex2jax_ignore">factor</code> equals <span class="process-math">\(n + 1\text{,}\)</span> meaning <code class="code-inline tex2jax_ignore">product</code> equals <span class="process-math">\(n!\)</span>). However, we cannot write an executable assertion to verify it—if we already had a simple way to calculate a factorial, we wouldn’t need to write the loop in the first place! This formal invariant serves as excellent documentation in a comment, but it is not a condition we can directly evaluate with an <code class="code-inline tex2jax_ignore">assert</code> statement.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-8-3-example-factorial-assertions-13-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<section class="paragraphs" id="subsec-4-8-3-example-factorial-assertions-14"><h3 class="heading"><span class="title">Mathematical Note: What is a true loop invariant here?</span></h3>
+<div class="para" id="subsec-4-8-3-example-factorial-assertions-14-2">At the top of each cycle, we can state: <code class="code-inline tex2jax_ignore">// Invariant: product == (factor - 1)!</code>. This statement is mathematically true before every iteration, and it remains true when the loop finishes (when <code class="code-inline tex2jax_ignore">factor</code> equals <span class="process-math">\(n + 1\text{,}\)</span> meaning <code class="code-inline tex2jax_ignore">product</code> equals <span class="process-math">\(n!\)</span>). However, we cannot write an executable assertion to verify it—if we already had a simple way to calculate a factorial, we wouldn’t need to write the loop in the first place! This formal invariant serves as excellent documentation in a comment, but it is not a condition we can directly evaluate with an <code class="code-inline tex2jax_ignore">assert</code> statement.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-8-3-example-factorial-assertions-14-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="autopermalink" aria-hidden="true" data-description="Paragraphs: Mathematical Note: What is a true loop invariant here?"><a tabindex="-1" href="#subsec-4-8-3-example-factorial-assertions-13" title="Copy heading and permalink for Paragraphs: Mathematical Note: What is a true loop invariant here?" aria-label="Copy heading and permalink for Paragraphs: Mathematical Note: What is a true loop invariant here?">🔗</a></div>
+<div class="autopermalink" aria-hidden="true" data-description="Paragraphs: Mathematical Note: What is a true loop invariant here?"><a tabindex="-1" href="#subsec-4-8-3-example-factorial-assertions-14" title="Copy heading and permalink for Paragraphs: Mathematical Note: What is a true loop invariant here?" aria-label="Copy heading and permalink for Paragraphs: Mathematical Note: What is a true loop invariant here?">🔗</a></div>
 </section>
-<section class="paragraphs" id="subsec-4-8-3-example-factorial-assertions-14"><h3 class="heading"><span class="title">Key Takeaways for Robust Loops.</span></h3>
-<ul class="disc" id="subsec-4-8-3-example-factorial-assertions-14-2">
-<li id="subsec-4-8-3-example-factorial-assertions-14-2-1">
-<div class="para" id="subsec-4-8-3-example-factorial-assertions-14-2-1-1">State your assumptions: Before writing a loop, ask yourself what must be true about your variables before the loop begins (precondition).<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-8-3-example-factorial-assertions-14-2-1-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<section class="paragraphs" id="subsec-4-8-3-example-factorial-assertions-15"><h3 class="heading"><span class="title">Key Takeaways for Robust Loops.</span></h3>
+<ul class="disc" id="subsec-4-8-3-example-factorial-assertions-15-2">
+<li id="subsec-4-8-3-example-factorial-assertions-15-2-1">
+<div class="para" id="subsec-4-8-3-example-factorial-assertions-15-2-1-1">State your assumptions: Before writing a loop, ask yourself what must be true about your variables before the loop begins (precondition).<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-8-3-example-factorial-assertions-15-2-1-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="autopermalink" aria-hidden="true" data-description="Item"><a tabindex="-1" href="#subsec-4-8-3-example-factorial-assertions-14-2-1" title="Copy heading and permalink for Item" aria-label="Copy heading and permalink for Item">🔗</a></div>
+<div class="autopermalink" aria-hidden="true" data-description="Item"><a tabindex="-1" href="#subsec-4-8-3-example-factorial-assertions-15-2-1" title="Copy heading and permalink for Item" aria-label="Copy heading and permalink for Item">🔗</a></div>
 </li>
-<li id="subsec-4-8-3-example-factorial-assertions-14-2-2">
-<div class="para" id="subsec-4-8-3-example-factorial-assertions-14-2-2-1">Know your guarantee: When the loop finishes, determine the exact state your variables must satisfy (postcondition).<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-8-3-example-factorial-assertions-14-2-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<li id="subsec-4-8-3-example-factorial-assertions-15-2-2">
+<div class="para" id="subsec-4-8-3-example-factorial-assertions-15-2-2-1">Know your guarantee: When the loop finishes, determine the exact state your variables must satisfy (postcondition).<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-8-3-example-factorial-assertions-15-2-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="autopermalink" aria-hidden="true" data-description="Item"><a tabindex="-1" href="#subsec-4-8-3-example-factorial-assertions-14-2-2" title="Copy heading and permalink for Item" aria-label="Copy heading and permalink for Item">🔗</a></div>
+<div class="autopermalink" aria-hidden="true" data-description="Item"><a tabindex="-1" href="#subsec-4-8-3-example-factorial-assertions-15-2-2" title="Copy heading and permalink for Item" aria-label="Copy heading and permalink for Item">🔗</a></div>
 </li>
-<li id="subsec-4-8-3-example-factorial-assertions-14-2-3">
-<div class="para" id="subsec-4-8-3-example-factorial-assertions-14-2-3-1">Use assertions during testing: Adding <code class="code-inline tex2jax_ignore">assert</code> statements turns silent bugs, accidental off-by-one errors, and boundary overflows into immediate, clear notifications while you are developing your code.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-8-3-example-factorial-assertions-14-2-3-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<li id="subsec-4-8-3-example-factorial-assertions-15-2-3">
+<div class="para" id="subsec-4-8-3-example-factorial-assertions-15-2-3-1">Use assertions during testing: Adding <code class="code-inline tex2jax_ignore">assert</code> statements turns silent bugs, accidental off-by-one errors, and boundary overflows into immediate, clear notifications while you are developing your code.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-8-3-example-factorial-assertions-15-2-3-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="autopermalink" aria-hidden="true" data-description="Item"><a tabindex="-1" href="#subsec-4-8-3-example-factorial-assertions-14-2-3" title="Copy heading and permalink for Item" aria-label="Copy heading and permalink for Item">🔗</a></div>
+<div class="autopermalink" aria-hidden="true" data-description="Item"><a tabindex="-1" href="#subsec-4-8-3-example-factorial-assertions-15-2-3" title="Copy heading and permalink for Item" aria-label="Copy heading and permalink for Item">🔗</a></div>
 </li>
-<li id="subsec-4-8-3-example-factorial-assertions-14-2-4">
-<div class="para" id="subsec-4-8-3-example-factorial-assertions-14-2-4-1">Document what you cannot test: If a formal condition or invariant cannot be easily checked with an executable <code class="code-inline tex2jax_ignore">assert</code> statement (such as the factorial invariant), document it clearly as a comment so anyone reading your code understands the underlying logic.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-8-3-example-factorial-assertions-14-2-4-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<li id="subsec-4-8-3-example-factorial-assertions-15-2-4">
+<div class="para" id="subsec-4-8-3-example-factorial-assertions-15-2-4-1">Document what you cannot test: If a formal condition or invariant cannot be easily checked with an executable <code class="code-inline tex2jax_ignore">assert</code> statement (such as the factorial invariant), document it clearly as a comment so anyone reading your code understands the underlying logic.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-8-3-example-factorial-assertions-15-2-4-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="autopermalink" aria-hidden="true" data-description="Item"><a tabindex="-1" href="#subsec-4-8-3-example-factorial-assertions-14-2-4" title="Copy heading and permalink for Item" aria-label="Copy heading and permalink for Item">🔗</a></div>
+<div class="autopermalink" aria-hidden="true" data-description="Item"><a tabindex="-1" href="#subsec-4-8-3-example-factorial-assertions-15-2-4" title="Copy heading and permalink for Item" aria-label="Copy heading and permalink for Item">🔗</a></div>
 </li>
 </ul>
-<div class="autopermalink" aria-hidden="true" data-description="Paragraphs: Key Takeaways for Robust Loops"><a tabindex="-1" href="#subsec-4-8-3-example-factorial-assertions-14" title="Copy heading and permalink for Paragraphs: Key Takeaways for Robust Loops" aria-label="Copy heading and permalink for Paragraphs: Key Takeaways for Robust Loops">🔗</a></div>
+<div class="autopermalink" aria-hidden="true" data-description="Paragraphs: Key Takeaways for Robust Loops"><a tabindex="-1" href="#subsec-4-8-3-example-factorial-assertions-15" title="Copy heading and permalink for Paragraphs: Key Takeaways for Robust Loops" aria-label="Copy heading and permalink for Paragraphs: Key Takeaways for Robust Loops">🔗</a></div>
+</section>
+<section class="reading-questions" id="checkpoint-4-8">
+<h3 class="heading hide-type">
+<span class="type">Reading Questions</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber"></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Checkpoint</span>
+</h3>
+<article class="exercise exercise-like" id="checkpoint-4-8-contract-match"><h4 class="heading">
+<span class="codenumber">1<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Parts of a Loop Contract.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone cardsort_section"><ul data-component="dragndrop" data-question_label="" style="visibility: hidden;" id="rs-checkpoint-4-8-contract-match">
+<span data-subcomponent="question">
+<div class="para" id="checkpoint-4-8-contract-match-2-1">Match each loop verification concept to its role.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-4-8-contract-match-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div></span><li data-subcomponent="draggable" id="rs-checkpoint-4-8-contract-match_drag1" data-category="1">Precondition</li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-4-8-contract-match_drag1" data-category="1">Condition that must be true immediately before entering the loop</li>
+<li data-subcomponent="draggable" id="rs-checkpoint-4-8-contract-match_drag2" data-category="2">Loop invariant</li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-4-8-contract-match_drag2" data-category="2">Condition that remains true before and after every iteration</li>
+<li data-subcomponent="draggable" id="rs-checkpoint-4-8-contract-match_drag3" data-category="3">Postcondition</li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-4-8-contract-match_drag3" data-category="3">Condition guaranteed to be true immediately after the loop terminates</li>
+<li data-subcomponent="draggable" id="rs-checkpoint-4-8-contract-match_drag4" data-category="4"><code class="code-inline tex2jax_ignore">assert</code></li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-4-8-contract-match_drag4" data-category="4">Executable check that throws an <code class="code-inline tex2jax_ignore">AssertionError</code> when <code class="code-inline tex2jax_ignore">-ea</code> is enabled</li>
+</ul></div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 4.8.3.1: Parts of a Loop Contract"><a tabindex="-1" href="#checkpoint-4-8-contract-match" title="Copy heading and permalink for Reading Question 4.8.3.1: Parts of a Loop Contract" aria-label="Copy heading and permalink for Reading Question 4.8.3.1: Parts of a Loop Contract">🔗</a></div>
+</article>
+<article class="exercise exercise-like" id="checkpoint-4-8-sentinel-postcondition"><h4 class="heading">
+<span class="codenumber">2<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Postcondition for a Sentinel Loop.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone multiplechoice_section">
+<div class="exercise-statement">
+<div class="para" id="checkpoint-4-8-sentinel-postcondition-2-1">A primed sentinel loop uses <code class="code-inline tex2jax_ignore">while (score != -1)</code> and has no early exits inside the body. Which postcondition assertion must be <code class="code-inline tex2jax_ignore">true</code> immediately after the loop terminates?<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-4-8-sentinel-postcondition-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</div>
+<ul data-component="multiplechoice" class="exercise-interactives" id="rs-checkpoint-4-8-sentinel-postcondition" data-multipleanswers="false" data-random="">
+<li data-component="answer" id="rs-checkpoint-4-8-sentinel-postcondition_opt_a" data-correct="">
+<div class="para" id="checkpoint-4-8-sentinel-postcondition-3-1-1-1"><code class="code-inline tex2jax_ignore">assert score == -1;</code></div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-8-sentinel-postcondition_opt_a">
+<div class="para" id="checkpoint-4-8-sentinel-postcondition-3-1-2-1">Correct! Because the loop only continues while <code class="code-inline tex2jax_ignore">score != -1</code>, exiting normally guarantees that <code class="code-inline tex2jax_ignore">score</code> holds the sentinel value <code class="code-inline tex2jax_ignore">-1</code>.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-4-8-sentinel-postcondition_opt_b">
+<div class="para" id="checkpoint-4-8-sentinel-postcondition-3-2-1-1"><code class="code-inline tex2jax_ignore">assert score != -1;</code></div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-8-sentinel-postcondition_opt_b">
+<div class="para" id="checkpoint-4-8-sentinel-postcondition-3-2-2-1">Not quite. <code class="code-inline tex2jax_ignore">score != -1</code> is the loop’s continuation condition; when the loop ends, that condition is <code class="code-inline tex2jax_ignore">false</code>.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-4-8-sentinel-postcondition_opt_c">
+<div class="para" id="checkpoint-4-8-sentinel-postcondition-3-3-1-1"><code class="code-inline tex2jax_ignore">assert score &gt;= 0;</code></div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-8-sentinel-postcondition_opt_c">
+<div class="para" id="checkpoint-4-8-sentinel-postcondition-3-3-2-1">Not quite. After the sentinel <code class="code-inline tex2jax_ignore">-1</code> ends the loop, <code class="code-inline tex2jax_ignore">score</code> is negative (<code class="code-inline tex2jax_ignore">-1</code>).</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-4-8-sentinel-postcondition_opt_d">
+<div class="para" id="checkpoint-4-8-sentinel-postcondition-3-4-1-1"><code class="code-inline tex2jax_ignore">assert total &gt; 0;</code></div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-8-sentinel-postcondition_opt_d">
+<div class="para" id="checkpoint-4-8-sentinel-postcondition-3-4-2-1">Not quite. If the user enters <code class="code-inline tex2jax_ignore">-1</code> on the very first prompt, <code class="code-inline tex2jax_ignore">total</code> remains <code class="code-inline tex2jax_ignore">0</code>.</div>
+</li>
+</ul>
+</div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 4.8.3.2: Postcondition for a Sentinel Loop"><a tabindex="-1" href="#checkpoint-4-8-sentinel-postcondition" title="Copy heading and permalink for Reading Question 4.8.3.2: Postcondition for a Sentinel Loop" aria-label="Copy heading and permalink for Reading Question 4.8.3.2: Postcondition for a Sentinel Loop">🔗</a></div>
+</article>
+<article class="exercise exercise-like" id="checkpoint-4-8-overflow-lesson"><h4 class="heading">
+<span class="codenumber">3<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Detecting Integer Overflow.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone multiplechoice_section">
+<div class="exercise-statement">
+<div class="para" id="checkpoint-4-8-overflow-lesson-2-1">In <a href="sec-4-8-loop-invariants.html#listing-factorial-verifier" class="xref" data-knowl="./knowl/xref/listing-factorial-verifier.html" data-reveal-label="Reveal" data-close-label="Close" title="Listing 4.17: FactorialVerifier.java">Listing 4.17</a>, when the precondition assertion was commented out and the user entered <code class="code-inline tex2jax_ignore">15</code>, why did <code class="code-inline tex2jax_ignore">assert product &gt; 0</code> inside the loop fail to catch the overflow?<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-4-8-overflow-lesson-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</div>
+<ul data-component="multiplechoice" class="exercise-interactives" id="rs-checkpoint-4-8-overflow-lesson" data-multipleanswers="false" data-random="">
+<li data-component="answer" id="rs-checkpoint-4-8-overflow-lesson_opt_a" data-correct="">
+<div class="para" id="checkpoint-4-8-overflow-lesson-3-1-1-1">The 32-bit <code class="code-inline tex2jax_ignore">int</code> value overflowed multiple times and wrapped around to a positive—but corrupted—number.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-8-overflow-lesson_opt_a">
+<div class="para" id="checkpoint-4-8-overflow-lesson-3-1-2-1">Correct! Overflow does not always produce a negative number, which is why checking a precondition before the loop (<code class="code-inline tex2jax_ignore">n &lt;= 12</code>) is far safer.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-4-8-overflow-lesson_opt_b">
+<div class="para" id="checkpoint-4-8-overflow-lesson-3-2-1-1">Assertions inside <code class="code-inline tex2jax_ignore">for</code> loops are ignored even when <code class="code-inline tex2jax_ignore">-ea</code> is enabled.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-8-overflow-lesson_opt_b">
+<div class="para" id="checkpoint-4-8-overflow-lesson-3-2-2-1">Not quite. Assertions inside loops execute normally when <code class="code-inline tex2jax_ignore">-ea</code> is enabled; here the condition <code class="code-inline tex2jax_ignore">product &gt; 0</code> simply evaluated to <code class="code-inline tex2jax_ignore">true</code>.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-4-8-overflow-lesson_opt_c">
+<div class="para" id="checkpoint-4-8-overflow-lesson-3-3-1-1">Java automatically switches <code class="code-inline tex2jax_ignore">product</code> from <code class="code-inline tex2jax_ignore">int</code> to <code class="code-inline tex2jax_ignore">long</code> when <code class="code-inline tex2jax_ignore">n</code> exceeds <code class="code-inline tex2jax_ignore">12</code>.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-8-overflow-lesson_opt_c">
+<div class="para" id="checkpoint-4-8-overflow-lesson-3-3-2-1">Not quite. Java never widens a variable’s declared type automatically on overflow; the bits simply wrap around.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-4-8-overflow-lesson_opt_d">
+<div class="para" id="checkpoint-4-8-overflow-lesson-3-4-1-1">The loop stopped at <code class="code-inline tex2jax_ignore">factor = 12</code> before reaching <code class="code-inline tex2jax_ignore">15</code>.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-8-overflow-lesson_opt_d">
+<div class="para" id="checkpoint-4-8-overflow-lesson-3-4-2-1">Not quite. With the precondition commented out, the loop ran all the way to <code class="code-inline tex2jax_ignore">15</code>.</div>
+</li>
+</ul>
+</div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 4.8.3.3: Detecting Integer Overflow"><a tabindex="-1" href="#checkpoint-4-8-overflow-lesson" title="Copy heading and permalink for Reading Question 4.8.3.3: Detecting Integer Overflow" aria-label="Copy heading and permalink for Reading Question 4.8.3.3: Detecting Integer Overflow">🔗</a></div>
+</article>
+<article class="exercise exercise-like" id="checkpoint-4-8-true-invariant"><h4 class="heading">
+<span class="codenumber">4<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Identifying a Loop Invariant.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone multiplechoice_section">
+<div class="exercise-statement">
+<div class="para" id="checkpoint-4-8-true-invariant-2-1">In <a href="sec-4-8-loop-invariants.html#listing-factorial-verifier" class="xref" data-knowl="./knowl/xref/listing-factorial-verifier.html" data-reveal-label="Reveal" data-close-label="Close" title="Listing 4.17: FactorialVerifier.java">Listing 4.17</a>, <code class="code-inline tex2jax_ignore">product</code> starts at <code class="code-inline tex2jax_ignore">1</code> and <code class="code-inline tex2jax_ignore">for (int factor = 1; factor &lt;= n; factor++)</code> multiplies <code class="code-inline tex2jax_ignore">product *= factor;</code>. Which statement is a true loop invariant at the top of each iteration?<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-4-8-true-invariant-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</div>
+<ul data-component="multiplechoice" class="exercise-interactives" id="rs-checkpoint-4-8-true-invariant" data-multipleanswers="false" data-random="">
+<li data-component="answer" id="rs-checkpoint-4-8-true-invariant_opt_a" data-correct="">
+<div class="para" id="checkpoint-4-8-true-invariant-3-1-1-1"><code class="code-inline tex2jax_ignore">product == (factor - 1)!</code></div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-8-true-invariant_opt_a">
+<div class="para" id="checkpoint-4-8-true-invariant-3-1-2-1">Correct! Before <code class="code-inline tex2jax_ignore">factor = 1</code> runs, <code class="code-inline tex2jax_ignore">product == 0! == 1</code>; after each step, <code class="code-inline tex2jax_ignore">product</code> holds the factorial of the previous <code class="code-inline tex2jax_ignore">factor</code>, and on exit (<code class="code-inline tex2jax_ignore">factor == n + 1</code>), <code class="code-inline tex2jax_ignore">product == n!</code>.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-4-8-true-invariant_opt_b">
+<div class="para" id="checkpoint-4-8-true-invariant-3-2-1-1"><code class="code-inline tex2jax_ignore">product == factor!</code></div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-8-true-invariant_opt_b">
+<div class="para" id="checkpoint-4-8-true-invariant-3-2-2-1">Not quite. At the top of the loop before <code class="code-inline tex2jax_ignore">product *= factor;</code> executes, <code class="code-inline tex2jax_ignore">product</code> has not yet been multiplied by the current <code class="code-inline tex2jax_ignore">factor</code>.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-4-8-true-invariant_opt_c">
+<div class="para" id="checkpoint-4-8-true-invariant-3-3-1-1"><code class="code-inline tex2jax_ignore">factor == n</code></div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-8-true-invariant_opt_c">
+<div class="para" id="checkpoint-4-8-true-invariant-3-3-2-1">Not quite. <code class="code-inline tex2jax_ignore">factor</code> changes on every iteration from <code class="code-inline tex2jax_ignore">1</code> up to <code class="code-inline tex2jax_ignore">n + 1</code>, so <code class="code-inline tex2jax_ignore">factor == n</code> is only true on the final pass.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-4-8-true-invariant_opt_d">
+<div class="para" id="checkpoint-4-8-true-invariant-3-4-1-1"><code class="code-inline tex2jax_ignore">product == 1</code></div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-8-true-invariant_opt_d">
+<div class="para" id="checkpoint-4-8-true-invariant-3-4-2-1">Not quite. <code class="code-inline tex2jax_ignore">product</code> is <code class="code-inline tex2jax_ignore">1</code> only before <code class="code-inline tex2jax_ignore">factor = 2</code> multiplies it.</div>
+</li>
+</ul>
+</div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 4.8.3.4: Identifying a Loop Invariant"><a tabindex="-1" href="#checkpoint-4-8-true-invariant" title="Copy heading and permalink for Reading Question 4.8.3.4: Identifying a Loop Invariant" aria-label="Copy heading and permalink for Reading Question 4.8.3.4: Identifying a Loop Invariant">🔗</a></div>
+</article><div class="autopermalink" aria-hidden="true" data-description="Reading Questions 4.8.3: Checkpoint"><a tabindex="-1" href="#checkpoint-4-8" title="Copy heading and permalink for Reading Questions 4.8.3: Checkpoint" aria-label="Copy heading and permalink for Reading Questions 4.8.3: Checkpoint">🔗</a></div>
 </section><div class="autopermalink" aria-hidden="true" data-description="Subsection 4.8.3: A Complete Example: Factorial with Assertions"><a tabindex="-1" href="#subsec-4-8-3-example-factorial-assertions" title="Copy heading and permalink for Subsection 4.8.3: A Complete Example: Factorial with Assertions" aria-label="Copy heading and permalink for Subsection 4.8.3: A Complete Example: Factorial with Assertions">🔗</a></div>
 </section><div class="autopermalink" aria-hidden="true" data-description="Section 4.8: Verifying Loop State: Invariants and Assertions"><a tabindex="-1" href="#sec-4-8-loop-invariants" title="Copy heading and permalink for Section 4.8: Verifying Loop State: Invariants and Assertions" aria-label="Copy heading and permalink for Section 4.8: Verifying Loop State: Invariants and Assertions">🔗</a></div>
 </section>
