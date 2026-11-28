@@ -19,7 +19,7 @@
     </ul>
 
     <p>
-      To handle multi-dimensional repetition, Java allows you to place one loop inside the body of another. This construct is called a <term>nested loop</term>.
+      To handle multi-dimensional repetition, Java allows you to place one loop inside the body of another. This construct is called a nested loop.
     </p>
   </introduction>
 
@@ -30,7 +30,7 @@
     <title>The Mechanics of Nested Loops</title>
 
     <p>
-      In a nested loop structure, we refer to the enclosing loop as the <term>outer loop</term> and the loop inside it as the <term>inner loop</term>. <xref ref="listing-simple-nested" /> demonstrates this relationship with a simple nested <c>while</c> loop:
+      In a nested loop structure, we refer to the enclosing loop as the outer loop and the loop inside it as the inner loop. <xref ref="listing-simple-nested" /> demonstrates this relationship with a simple nested <c>while</c> loop:
     </p>
 
     <listing xml:id="listing-simple-nested">
@@ -78,7 +78,7 @@ public class SimpleNested {
     </ol>
 
     <p>
-      This flow of control is easy to see in a nested <c>while</c> loop because you can physically see line 9 sitting inside the outer loop’s body.
+      This flow of control is easy to see in a nested <c>while</c> loop because you can physically see line 9 (the inner loop initializer <c>int col = 0</c>) sitting inside the outer loop’s body.
     </p>
 
     <p>
@@ -370,7 +370,7 @@ for (int y = 0; y <= 40; y += spacing) {
     <title>Common Traps in Nested Loops</title>
 
     <p>
-      We’ve already busted some of the most common nested loop misconceptions that beginning programmers face:
+      We’ve already busted some of the most common nested loop misconceptions that programmers face:
     </p>
 
     <ul>
@@ -381,7 +381,7 @@ for (int y = 0; y <= 40; y += spacing) {
     </ul>
 
     <p>
-      There are a few more frequent beginner traps that we’ll cover here.
+      There are a few more frequent traps that we’ll cover here.
     </p>
 
     <paragraphs>
@@ -453,9 +453,9 @@ for (int i = 0; i < 3; i++) {
 
       <ol>
         <li><p>The inner loop checks <c>j &lt; 4</c>.</p></li>
-        <li><p>But line 2 increments <c>i</c>, not <c>j</c>!</p></li>
-        <li><p>Because <c>j</c> never increases, <c>j &lt; 4</c> remains <c>true</c> forever, creating an infinite loop.</p></li>
-        <li><p>Meanwhile, <c>i</c> leaps ahead wildly, corrupting the outer loop’s counting.</p></li>
+        <li><p>But line 3 increments <c>i</c>, not <c>j</c>!</p></li>
+        <li><p>Because <c>j</c> never changes, <c>j &lt; 4</c> remains <c>true</c> forever, trapping the program in an infinite inner loop printing <c>*</c>.</p></li>
+        <li><p>Meanwhile, <c>i</c> keeps incrementing uselessly on every pass, and execution never even returns to the outer loop.</p></li>
       </ol>
 
       <p>
@@ -523,7 +523,7 @@ for (int i = 0; i < 5; i++) {
       </p>
 
       <p>
-        Even if the inner variable wasn't re-declared (e.g., writing <c>for (i = 0; ...)</c>), the inner loop would constantly reset the outer loop's counter back to 0, causing an infinite loop.
+        Even if the inner variable wasn't re-declared (e.g., writing <c>for (i = 0; i &lt; 5; i++)</c>), the inner loop would overwrite the outer loop's counter—exiting at <c>i = 5</c> and causing the outer loop to increment to <c>6</c> and terminate prematurely after just one pass (or loop infinitely if the inner bound were smaller than the outer bound).
       </p>
 
       <p>
@@ -547,5 +547,218 @@ for (int i = 0; i < 5; i++) {
         Whenever you nest loops, keep an eye on your bounds to ensure you are not creating unintended performance bottlenecks.
       </p>
     </paragraphs>
+
+    <reading-questions xml:id="checkpoint-4-6">
+      <title>Checkpoint</title>
+
+      <exercise xml:id="checkpoint-4-6-iteration-count" label="checkpoint-4-6-iteration-count">
+        <title>Counting Nested Loop Executions</title>
+        <statement>
+          <p>
+            How many times does <c>System.out.print("#");</c> execute in the following nested loop?
+          </p>
+          <program language="java"><![CDATA[for (int row = 0; row < 4; row++) {
+    for (int col = 0; col < 5; col++) {
+        System.out.print("#");
+    }
+}]]></program>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                20 times
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! The outer loop runs 4 times (<c>0–3</c>), and for each pass the inner loop starts over and runs 5 times (<c>0–4</c>), giving <m>4 \times 5 = 20</m>.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                9 times
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Nested loop counts multiply rather than add (<m>4 \times 5</m>, not <m>4 + 5</m>).
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                5 times
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. The inner loop resets <c>col = 0</c> on every iteration of the outer loop, so it runs all 5 times for each of the 4 rows.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                4 times
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. 4 is the number of outer loop iterations; each outer pass executes the inner loop 5 times.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-4-6-reset-trap" label="checkpoint-4-6-reset-trap">
+        <title>Accumulator Placement in Nested Loops</title>
+        <statement>
+          <p>
+            Suppose you want to compute and print the sum of each individual row in a grid, but you declare <c>int rowTotal = 0;</c> before the outer loop instead of inside it. What happens?
+          </p>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                <c>rowTotal</c> never resets between rows, so each row’s total includes the totals from all previous rows.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! To compute a fresh total for each row, <c>rowTotal = 0</c> must be initialized inside the outer loop right before the inner loop begins.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                The program fails to compile because <c>rowTotal</c> is out of scope inside the inner loop.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Declaring <c>rowTotal</c> before the outer loop keeps it in scope for both loops; the bug is logical, not a syntax error.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                <c>rowTotal</c> automatically resets to <c>0</c> every time the inner loop finishes.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Java never resets a variable automatically unless an assignment statement inside the outer loop does so.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                Only the last row’s total is printed, and earlier rows are skipped.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Each row’s total is still printed, but the numbers grow cumulatively across rows.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-4-6-grid-dimensions" label="checkpoint-4-6-grid-dimensions">
+        <title>Controlling Rows and Columns</title>
+        <statement>
+          <p>
+            You want to print a rectangle of asterisks that is 3 rows tall and 6 columns wide using <c>System.out.print("* ")</c> and <c>System.out.println()</c>. How should the loops be structured?
+          </p>
+        </statement>
+        <choices randomize="yes">
+          <choice correct="yes">
+            <statement>
+              <p>
+                The outer loop runs 3 times and calls <c>System.out.println()</c> after the inner loop; the inner loop runs 6 times and calls <c>System.out.print("* ")</c>.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct! The outer loop controls the number of lines (rows), while the inner loop prints the items across each line (columns).
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                The outer loop runs 6 times and the inner loop runs 3 times, calling <c>System.out.println()</c> after the inner loop.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. That prints 6 rows of 3 asterisks instead of 3 rows of 6.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                The outer loop runs 3 times and the inner loop runs 6 times, calling <c>System.out.println("* ")</c> inside the inner loop.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. Calling <c>println</c> inside the inner loop puts every asterisk on its own line (18 lines total).
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="no">
+            <statement>
+              <p>
+                The outer loop runs 3 times and calls <c>System.out.println()</c> before the inner loop, and the inner loop runs 3 times.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Not quite. The inner loop needs to run 6 times to print 6 columns per row.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise xml:id="checkpoint-4-6-traps-match" label="checkpoint-4-6-traps-match">
+        <title>Common Nested Loop Traps</title>
+        <statement>
+          <p>
+            Match each nested loop mistake to its consequence.
+          </p>
+        </statement>
+        <cardsort>
+          <match>
+            <premise order="3">Updating <c>i++</c> inside the <c>j</c> loop</premise>
+            <response>Infinite inner loop because <c>j</c> never changes</response>
+          </match>
+          <match>
+            <premise order="1">Declaring <c>int rowTotal = 0;</c> outside the outer loop</premise>
+            <response>Row sums accumulate across passes instead of resetting</response>
+          </match>
+          <match>
+            <premise order="4">Declaring <c>int i</c> in both outer and inner loops</premise>
+            <response>Compiler error for duplicate local variable</response>
+          </match>
+          <match>
+            <premise order="2">Nesting three loops of 1,000 iterations each</premise>
+            <response>One billion inner executions, slowing down the program</response>
+          </match>
+        </cardsort>
+      </exercise>
+    </reading-questions>
   </subsection>
 </section>

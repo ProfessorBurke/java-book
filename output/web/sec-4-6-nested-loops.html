@@ -494,7 +494,10 @@ eBookConfig.enable_chatcodes =  false;
 <li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-6-nested-loops.html#subsec-4-6-2-tracing-execution-grid" class="internal"><span class="codenumber">4.6.2</span> <span class="title">Tracing the Execution Grid</span></a></div></li>
 <li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-6-nested-loops.html#subsec-4-6-3-producing-tabular-reports" class="internal"><span class="codenumber">4.6.3</span> <span class="title">Producing Tabular Reports (Rows and Columns)</span></a></div></li>
 <li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-6-nested-loops.html#subsec-4-6-4-generating-coordinate-matrices" class="internal"><span class="codenumber">4.6.4</span> <span class="title">Generating Coordinate Matrices</span></a></div></li>
-<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-4-6-nested-loops.html#subsec-4-6-5-common-traps-nested-loops" class="internal"><span class="codenumber">4.6.5</span> <span class="title">Common Traps in Nested Loops</span></a></div></li>
+<li class="toc-item toc-subsection">
+<div class="toc-title-box"><a href="sec-4-6-nested-loops.html#subsec-4-6-5-common-traps-nested-loops" class="internal"><span class="codenumber">4.6.5</span> <span class="title">Common Traps in Nested Loops</span></a></div>
+<ul id="ptx-toc-group-subsec-4-6-5-common-traps-nested-loops" class="structural toc-item-list"><li class="toc-item toc-reading-questions"><div class="toc-title-box"><a href="sec-4-6-nested-loops.html#checkpoint-4-6" class="internal"><span class="codenumber">4.6.5</span> <span class="title">Checkpoint</span></a></div></li></ul>
+</li>
 </ul>
 </li>
 <li class="toc-item toc-section">
@@ -1111,13 +1114,13 @@ eBookConfig.enable_chatcodes =  false;
 <div class="autopermalink" aria-hidden="true" data-description="Item"><a tabindex="-1" href="#sec-4-6-nested-loops-2-3-4" title="Copy heading and permalink for Item" aria-label="Copy heading and permalink for Item">🔗</a></div>
 </li>
 </ul>
-<div class="para" id="sec-4-6-nested-loops-2-4">To handle multi-dimensional repetition, Java allows you to place one loop inside the body of another. This construct is called a <dfn class="terminology">nested loop</dfn>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#sec-4-6-nested-loops-2-4" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="sec-4-6-nested-loops-2-4">To handle multi-dimensional repetition, Java allows you to place one loop inside the body of another. This construct is called a nested loop.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#sec-4-6-nested-loops-2-4" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div></section>
 <section class="subsection" id="subsec-4-6-1-mechanics-nested-loops">
 <h2 class="heading hide-type">
 <span class="type">Subsection</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">4.6.1</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">The Mechanics of Nested Loops</span>
 </h2>
-<div class="para" id="subsec-4-6-1-mechanics-nested-loops-2">In a nested loop structure, we refer to the enclosing loop as the <dfn class="terminology">outer loop</dfn> and the loop inside it as the <dfn class="terminology">inner loop</dfn>. <a href="sec-4-6-nested-loops.html#listing-simple-nested" class="xref" data-knowl="./knowl/xref/listing-simple-nested.html" data-reveal-label="Reveal" data-close-label="Close" title="Listing 4.11: SimpleNested.java">Listing 4.11</a> demonstrates this relationship with a simple nested <code class="code-inline tex2jax_ignore">while</code> loop:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-6-1-mechanics-nested-loops-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-4-6-1-mechanics-nested-loops-2">In a nested loop structure, we refer to the enclosing loop as the outer loop and the loop inside it as the inner loop. <a href="sec-4-6-nested-loops.html#listing-simple-nested" class="xref" data-knowl="./knowl/xref/listing-simple-nested.html" data-reveal-label="Reveal" data-close-label="Close" title="Listing 4.11: SimpleNested.java">Listing 4.11</a> demonstrates this relationship with a simple nested <code class="code-inline tex2jax_ignore">while</code> loop:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-6-1-mechanics-nested-loops-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <figure class="listing figure-like" id="listing-simple-nested"><figcaption><span class="type">Listing</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">4.11<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><code class="code-inline tex2jax_ignore">SimpleNested.java</code><div class="autopermalink" aria-hidden="true" data-description="Listing 4.11: SimpleNested.java"><a tabindex="-1" href="#listing-simple-nested" title="Copy heading and permalink for Listing 4.11: SimpleNested.java" aria-label="Copy heading and permalink for Listing 4.11: SimpleNested.java">🔗</a></div></figcaption><div class="listing__contents"><div class="code-box"><pre class="program clipboardable line-numbers"><code class="language-java">/**
  * Illustrates a nested loop.
@@ -1192,7 +1195,7 @@ public class SimpleNested {
 <div class="autopermalink" aria-hidden="true" data-description="Item 7"><a tabindex="-1" href="#subsec-4-6-1-mechanics-nested-loops-7-7" title="Copy heading and permalink for Item 7" aria-label="Copy heading and permalink for Item 7">🔗</a></div>
 </li>
 </ol>
-<div class="para" id="subsec-4-6-1-mechanics-nested-loops-8">This flow of control is easy to see in a nested <code class="code-inline tex2jax_ignore">while</code> loop because you can physically see line 9 sitting inside the outer loop’s body.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-6-1-mechanics-nested-loops-8" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-4-6-1-mechanics-nested-loops-8">This flow of control is easy to see in a nested <code class="code-inline tex2jax_ignore">while</code> loop because you can physically see line 9 (the inner loop initializer <code class="code-inline tex2jax_ignore">int col = 0</code>) sitting inside the outer loop’s body.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-6-1-mechanics-nested-loops-8" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="para" id="subsec-4-6-1-mechanics-nested-loops-9">The exact same flow of control occurs if we rewrite this using <code class="code-inline tex2jax_ignore">for</code> loops:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-6-1-mechanics-nested-loops-9" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
@@ -1465,7 +1468,7 @@ for (int y = 0; y &lt;= 40; y += spacing) {
 <h2 class="heading hide-type">
 <span class="type">Subsection</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber">4.6.5</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Common Traps in Nested Loops</span>
 </h2>
-<div class="para" id="subsec-4-6-5-common-traps-nested-loops-2">We’ve already busted some of the most common nested loop misconceptions that beginning programmers face:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-6-5-common-traps-nested-loops-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-4-6-5-common-traps-nested-loops-2">We’ve already busted some of the most common nested loop misconceptions that programmers face:<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-6-5-common-traps-nested-loops-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <ul class="disc" id="subsec-4-6-5-common-traps-nested-loops-3">
 <li id="subsec-4-6-5-common-traps-nested-loops-3-1">
@@ -1489,7 +1492,7 @@ for (int y = 0; y &lt;= 40; y += spacing) {
 <div class="autopermalink" aria-hidden="true" data-description="Item"><a tabindex="-1" href="#subsec-4-6-5-common-traps-nested-loops-3-4" title="Copy heading and permalink for Item" aria-label="Copy heading and permalink for Item">🔗</a></div>
 </li>
 </ul>
-<div class="para" id="subsec-4-6-5-common-traps-nested-loops-4">There are a few more frequent beginner traps that we’ll cover here.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-6-5-common-traps-nested-loops-4" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-4-6-5-common-traps-nested-loops-4">There are a few more frequent traps that we’ll cover here.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-6-5-common-traps-nested-loops-4" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <section class="paragraphs" id="subsec-4-6-5-common-traps-nested-loops-5"><h3 class="heading"><span class="title">Trap 1: The Reset Trap (Initializing in the wrong loop).</span></h3>
 <div class="para" id="subsec-4-6-5-common-traps-nested-loops-5-2">One of the most frequent logical bugs occurs when combining a gatherer with a nested loop.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-6-5-common-traps-nested-loops-5-2" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
@@ -1548,17 +1551,17 @@ for (int i = 0; i &lt; 3; i++) {
 <div class="autopermalink" aria-hidden="true" data-description="Item 1"><a tabindex="-1" href="#subsec-4-6-5-common-traps-nested-loops-6-5-1" title="Copy heading and permalink for Item 1" aria-label="Copy heading and permalink for Item 1">🔗</a></div>
 </li>
 <li id="subsec-4-6-5-common-traps-nested-loops-6-5-2">
-<div class="para" id="subsec-4-6-5-common-traps-nested-loops-6-5-2-1">But line 2 increments <code class="code-inline tex2jax_ignore">i</code>, not <code class="code-inline tex2jax_ignore">j</code>!<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-6-5-common-traps-nested-loops-6-5-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-4-6-5-common-traps-nested-loops-6-5-2-1">But line 3 increments <code class="code-inline tex2jax_ignore">i</code>, not <code class="code-inline tex2jax_ignore">j</code>!<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-6-5-common-traps-nested-loops-6-5-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="autopermalink" aria-hidden="true" data-description="Item 2"><a tabindex="-1" href="#subsec-4-6-5-common-traps-nested-loops-6-5-2" title="Copy heading and permalink for Item 2" aria-label="Copy heading and permalink for Item 2">🔗</a></div>
 </li>
 <li id="subsec-4-6-5-common-traps-nested-loops-6-5-3">
-<div class="para" id="subsec-4-6-5-common-traps-nested-loops-6-5-3-1">Because <code class="code-inline tex2jax_ignore">j</code> never increases, <code class="code-inline tex2jax_ignore">j &lt; 4</code> remains <code class="code-inline tex2jax_ignore">true</code> forever, creating an infinite loop.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-6-5-common-traps-nested-loops-6-5-3-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-4-6-5-common-traps-nested-loops-6-5-3-1">Because <code class="code-inline tex2jax_ignore">j</code> never changes, <code class="code-inline tex2jax_ignore">j &lt; 4</code> remains <code class="code-inline tex2jax_ignore">true</code> forever, trapping the program in an infinite inner loop printing <code class="code-inline tex2jax_ignore">*</code>.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-6-5-common-traps-nested-loops-6-5-3-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="autopermalink" aria-hidden="true" data-description="Item 3"><a tabindex="-1" href="#subsec-4-6-5-common-traps-nested-loops-6-5-3" title="Copy heading and permalink for Item 3" aria-label="Copy heading and permalink for Item 3">🔗</a></div>
 </li>
 <li id="subsec-4-6-5-common-traps-nested-loops-6-5-4">
-<div class="para" id="subsec-4-6-5-common-traps-nested-loops-6-5-4-1">Meanwhile, <code class="code-inline tex2jax_ignore">i</code> leaps ahead wildly, corrupting the outer loop’s counting.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-6-5-common-traps-nested-loops-6-5-4-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-4-6-5-common-traps-nested-loops-6-5-4-1">Meanwhile, <code class="code-inline tex2jax_ignore">i</code> keeps incrementing uselessly on every pass, and execution never even returns to the outer loop.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-6-5-common-traps-nested-loops-6-5-4-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="autopermalink" aria-hidden="true" data-description="Item 4"><a tabindex="-1" href="#subsec-4-6-5-common-traps-nested-loops-6-5-4" title="Copy heading and permalink for Item 4" aria-label="Copy heading and permalink for Item 4">🔗</a></div>
 </li>
@@ -1620,7 +1623,7 @@ for (int i = 0; i &lt; 5; i++) {
 </code></pre></div>
 <div class="para" id="subsec-4-6-5-common-traps-nested-loops-8-4">In Java, declaring <code class="code-inline tex2jax_ignore">int i</code> in the inner loop when <code class="code-inline tex2jax_ignore">i</code> is already active in the outer loop causes a compiler error: “Duplicate local variable i.”<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-6-5-common-traps-nested-loops-8-4" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
-<div class="para" id="subsec-4-6-5-common-traps-nested-loops-8-5">Even if the inner variable wasn’t re-declared (e.g., writing <code class="code-inline tex2jax_ignore">for (i = 0; ...)</code>), the inner loop would constantly reset the outer loop’s counter back to 0, causing an infinite loop.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-6-5-common-traps-nested-loops-8-5" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+<div class="para" id="subsec-4-6-5-common-traps-nested-loops-8-5">Even if the inner variable wasn’t re-declared (e.g., writing <code class="code-inline tex2jax_ignore">for (i = 0; i &lt; 5; i++)</code>), the inner loop would overwrite the outer loop’s counter—exiting at <code class="code-inline tex2jax_ignore">i = 5</code> and causing the outer loop to increment to <code class="code-inline tex2jax_ignore">6</code> and terminate prematurely after just one pass (or loop infinitely if the inner bound were smaller than the outer bound).<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-6-5-common-traps-nested-loops-8-5" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="para" id="subsec-4-6-5-common-traps-nested-loops-8-6">The best practice is to use distinct, meaningful names whenever possible, such as <code class="code-inline tex2jax_ignore">row</code> and <code class="code-inline tex2jax_ignore">col</code>, <code class="code-inline tex2jax_ignore">hour</code> and <code class="code-inline tex2jax_ignore">minute</code>, or <code class="code-inline tex2jax_ignore">x</code> and <code class="code-inline tex2jax_ignore">y</code>. If you use traditional short names, follow the standard mathematical convention: use <code class="code-inline tex2jax_ignore">i</code> for the outer loop, <code class="code-inline tex2jax_ignore">j</code> for the inner loop, and <code class="code-inline tex2jax_ignore">k</code> for a third nested level.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-6-5-common-traps-nested-loops-8-6" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
@@ -1649,6 +1652,147 @@ for (int i = 0; i &lt; 5; i++) {
 <div class="para" id="subsec-4-6-5-common-traps-nested-loops-9-4">Whenever you nest loops, keep an eye on your bounds to ensure you are not creating unintended performance bottlenecks.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#subsec-4-6-5-common-traps-nested-loops-9-4" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
 </div>
 <div class="autopermalink" aria-hidden="true" data-description="Paragraphs: Trap 5: The Computational cost trap"><a tabindex="-1" href="#subsec-4-6-5-common-traps-nested-loops-9" title="Copy heading and permalink for Paragraphs: Trap 5: The Computational cost trap" aria-label="Copy heading and permalink for Paragraphs: Trap 5: The Computational cost trap">🔗</a></div>
+</section>
+<section class="reading-questions" id="checkpoint-4-6">
+<h3 class="heading hide-type">
+<span class="type">Reading Questions</span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="codenumber"></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Checkpoint</span>
+</h3>
+<article class="exercise exercise-like" id="checkpoint-4-6-iteration-count"><h4 class="heading">
+<span class="codenumber">1<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Counting Nested Loop Executions.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone multiplechoice_section">
+<div class="exercise-statement">
+<div class="para" id="checkpoint-4-6-iteration-count-2-1">How many times does <code class="code-inline tex2jax_ignore">System.out.print("#");</code> execute in the following nested loop?<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-4-6-iteration-count-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div> <div class="code-box"><pre class="program clipboardable"><code class="language-java">for (int row = 0; row &lt; 4; row++) {
+    for (int col = 0; col &lt; 5; col++) {
+        System.out.print("#");
+    }
+}
+</code></pre></div>
+</div>
+<ul data-component="multiplechoice" class="exercise-interactives" id="rs-checkpoint-4-6-iteration-count" data-multipleanswers="false" data-random="">
+<li data-component="answer" id="rs-checkpoint-4-6-iteration-count_opt_a" data-correct="">
+<div class="para" id="checkpoint-4-6-iteration-count-3-1-1-1">20 times</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-6-iteration-count_opt_a">
+<div class="para" id="checkpoint-4-6-iteration-count-3-1-2-1">Correct! The outer loop runs 4 times (<code class="code-inline tex2jax_ignore">0–3</code>), and for each pass the inner loop starts over and runs 5 times (<code class="code-inline tex2jax_ignore">0–4</code>), giving <span class="process-math">\(4 \times 5 = 20\text{.}\)</span>
+</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-4-6-iteration-count_opt_b">
+<div class="para" id="checkpoint-4-6-iteration-count-3-2-1-1">9 times</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-6-iteration-count_opt_b">
+<div class="para" id="checkpoint-4-6-iteration-count-3-2-2-1">Not quite. Nested loop counts multiply rather than add (<span class="process-math">\(4 \times 5\text{,}\)</span> not <span class="process-math">\(4 + 5\)</span>).</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-4-6-iteration-count_opt_c">
+<div class="para" id="checkpoint-4-6-iteration-count-3-3-1-1">5 times</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-6-iteration-count_opt_c">
+<div class="para" id="checkpoint-4-6-iteration-count-3-3-2-1">Not quite. The inner loop resets <code class="code-inline tex2jax_ignore">col = 0</code> on every iteration of the outer loop, so it runs all 5 times for each of the 4 rows.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-4-6-iteration-count_opt_d">
+<div class="para" id="checkpoint-4-6-iteration-count-3-4-1-1">4 times</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-6-iteration-count_opt_d">
+<div class="para" id="checkpoint-4-6-iteration-count-3-4-2-1">Not quite. 4 is the number of outer loop iterations; each outer pass executes the inner loop 5 times.</div>
+</li>
+</ul>
+</div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 4.6.5.1: Counting Nested Loop Executions"><a tabindex="-1" href="#checkpoint-4-6-iteration-count" title="Copy heading and permalink for Reading Question 4.6.5.1: Counting Nested Loop Executions" aria-label="Copy heading and permalink for Reading Question 4.6.5.1: Counting Nested Loop Executions">🔗</a></div>
+</article>
+<article class="exercise exercise-like" id="checkpoint-4-6-reset-trap"><h4 class="heading">
+<span class="codenumber">2<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Accumulator Placement in Nested Loops.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone multiplechoice_section">
+<div class="exercise-statement">
+<div class="para" id="checkpoint-4-6-reset-trap-2-1">Suppose you want to compute and print the sum of each individual row in a grid, but you declare <code class="code-inline tex2jax_ignore">int rowTotal = 0;</code> before the outer loop instead of inside it. What happens?<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-4-6-reset-trap-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</div>
+<ul data-component="multiplechoice" class="exercise-interactives" id="rs-checkpoint-4-6-reset-trap" data-multipleanswers="false" data-random="">
+<li data-component="answer" id="rs-checkpoint-4-6-reset-trap_opt_a" data-correct="">
+<div class="para" id="checkpoint-4-6-reset-trap-3-1-1-1">
+<code class="code-inline tex2jax_ignore">rowTotal</code> never resets between rows, so each row’s total includes the totals from all previous rows.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-6-reset-trap_opt_a">
+<div class="para" id="checkpoint-4-6-reset-trap-3-1-2-1">Correct! To compute a fresh total for each row, <code class="code-inline tex2jax_ignore">rowTotal = 0</code> must be initialized inside the outer loop right before the inner loop begins.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-4-6-reset-trap_opt_b">
+<div class="para" id="checkpoint-4-6-reset-trap-3-2-1-1">The program fails to compile because <code class="code-inline tex2jax_ignore">rowTotal</code> is out of scope inside the inner loop.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-6-reset-trap_opt_b">
+<div class="para" id="checkpoint-4-6-reset-trap-3-2-2-1">Not quite. Declaring <code class="code-inline tex2jax_ignore">rowTotal</code> before the outer loop keeps it in scope for both loops; the bug is logical, not a syntax error.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-4-6-reset-trap_opt_c">
+<div class="para" id="checkpoint-4-6-reset-trap-3-3-1-1">
+<code class="code-inline tex2jax_ignore">rowTotal</code> automatically resets to <code class="code-inline tex2jax_ignore">0</code> every time the inner loop finishes.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-6-reset-trap_opt_c">
+<div class="para" id="checkpoint-4-6-reset-trap-3-3-2-1">Not quite. Java never resets a variable automatically unless an assignment statement inside the outer loop does so.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-4-6-reset-trap_opt_d">
+<div class="para" id="checkpoint-4-6-reset-trap-3-4-1-1">Only the last row’s total is printed, and earlier rows are skipped.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-6-reset-trap_opt_d">
+<div class="para" id="checkpoint-4-6-reset-trap-3-4-2-1">Not quite. Each row’s total is still printed, but the numbers grow cumulatively across rows.</div>
+</li>
+</ul>
+</div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 4.6.5.2: Accumulator Placement in Nested Loops"><a tabindex="-1" href="#checkpoint-4-6-reset-trap" title="Copy heading and permalink for Reading Question 4.6.5.2: Accumulator Placement in Nested Loops" aria-label="Copy heading and permalink for Reading Question 4.6.5.2: Accumulator Placement in Nested Loops">🔗</a></div>
+</article>
+<article class="exercise exercise-like" id="checkpoint-4-6-grid-dimensions"><h4 class="heading">
+<span class="codenumber">3<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Controlling Rows and Columns.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone multiplechoice_section">
+<div class="exercise-statement">
+<div class="para" id="checkpoint-4-6-grid-dimensions-2-1">You want to print a rectangle of asterisks that is 3 rows tall and 6 columns wide using <code class="code-inline tex2jax_ignore">System.out.print("* ")</code> and <code class="code-inline tex2jax_ignore">System.out.println()</code>. How should the loops be structured?<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-4-6-grid-dimensions-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+</div>
+<ul data-component="multiplechoice" class="exercise-interactives" id="rs-checkpoint-4-6-grid-dimensions" data-multipleanswers="false" data-random="">
+<li data-component="answer" id="rs-checkpoint-4-6-grid-dimensions_opt_a" data-correct="">
+<div class="para" id="checkpoint-4-6-grid-dimensions-3-1-1-1">The outer loop runs 3 times (for the rows) and calls <code class="code-inline tex2jax_ignore">System.out.println()</code> after the inner loop; the inner loop runs 6 times (for the columns) and calls <code class="code-inline tex2jax_ignore">System.out.print("* ")</code>.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-6-grid-dimensions_opt_a">
+<div class="para" id="checkpoint-4-6-grid-dimensions-3-1-2-1">Correct! The outer loop controls the number of lines (rows), while the inner loop prints the items across each line (columns).</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-4-6-grid-dimensions_opt_b">
+<div class="para" id="checkpoint-4-6-grid-dimensions-3-2-1-1">The outer loop runs 6 times and the inner loop runs 3 times, calling <code class="code-inline tex2jax_ignore">System.out.println()</code> after the inner loop.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-6-grid-dimensions_opt_b">
+<div class="para" id="checkpoint-4-6-grid-dimensions-3-2-2-1">Not quite. That prints 6 rows of 3 asterisks instead of 3 rows of 6.</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-4-6-grid-dimensions_opt_c">
+<div class="para" id="checkpoint-4-6-grid-dimensions-3-3-1-1">The outer loop runs 3 times and the inner loop runs 6 times, calling <code class="code-inline tex2jax_ignore">System.out.println("* ")</code> inside the inner loop.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-6-grid-dimensions_opt_c">
+<div class="para" id="checkpoint-4-6-grid-dimensions-3-3-2-1">Not quite. Calling <code class="code-inline tex2jax_ignore">println</code> inside the inner loop puts every asterisk on its own line (18 lines total).</div>
+</li>
+<li data-component="answer" id="rs-checkpoint-4-6-grid-dimensions_opt_d">
+<div class="para" id="checkpoint-4-6-grid-dimensions-3-4-1-1">The outer loop runs 3 times and calls <code class="code-inline tex2jax_ignore">System.out.println()</code> before the inner loop, and the inner loop runs 3 times.</div>
+</li>
+<li data-component="feedback" id="rs-checkpoint-4-6-grid-dimensions_opt_d">
+<div class="para" id="checkpoint-4-6-grid-dimensions-3-4-2-1">Not quite. The inner loop needs to run 6 times to print 6 columns per row.</div>
+</li>
+</ul>
+</div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 4.6.5.3: Controlling Rows and Columns"><a tabindex="-1" href="#checkpoint-4-6-grid-dimensions" title="Copy heading and permalink for Reading Question 4.6.5.3: Controlling Rows and Columns" aria-label="Copy heading and permalink for Reading Question 4.6.5.3: Controlling Rows and Columns">🔗</a></div>
+</article>
+<article class="exercise exercise-like" id="checkpoint-4-6-traps-match"><h4 class="heading">
+<span class="codenumber">4<span class="period heading-divison-mark heading-divison-mark__period">.</span></span><span class="space heading-divison-mark heading-divison-mark__space"> </span><span class="title">Common Nested Loop Traps.</span>
+</h4>
+<div class="ptx-runestone-container"><div class="runestone cardsort_section"><ul data-component="dragndrop" data-question_label="" style="visibility: hidden;" id="rs-checkpoint-4-6-traps-match">
+<span data-subcomponent="question">
+<div class="para" id="checkpoint-4-6-traps-match-2-1">Match each nested loop mistake to its consequence.<div class="autopermalink" aria-hidden="true" data-description="Paragraph"><a tabindex="-1" href="#checkpoint-4-6-traps-match-2-1" title="Copy heading and permalink for Paragraph" aria-label="Copy heading and permalink for Paragraph">🔗</a></div>
+</div></span><li data-subcomponent="draggable" id="rs-checkpoint-4-6-traps-match_drag1" data-category="1">Updating <code class="code-inline tex2jax_ignore">i++</code> inside the <code class="code-inline tex2jax_ignore">j</code> loop</li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-4-6-traps-match_drag1" data-category="1">Infinite inner loop because <code class="code-inline tex2jax_ignore">j</code> never changes</li>
+<li data-subcomponent="draggable" id="rs-checkpoint-4-6-traps-match_drag2" data-category="2">Declaring <code class="code-inline tex2jax_ignore">int rowTotal = 0;</code> outside the outer loop</li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-4-6-traps-match_drag2" data-category="2">Row sums accumulate across passes instead of resetting</li>
+<li data-subcomponent="draggable" id="rs-checkpoint-4-6-traps-match_drag3" data-category="3">Declaring <code class="code-inline tex2jax_ignore">int i</code> in both outer and inner loops</li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-4-6-traps-match_drag3" data-category="3">Compiler error for duplicate local variable</li>
+<li data-subcomponent="draggable" id="rs-checkpoint-4-6-traps-match_drag4" data-category="4">Nesting three loops of 1,000 iterations each</li>
+<li data-subcomponent="dropzone" for="rs-checkpoint-4-6-traps-match_drag4" data-category="4">One billion inner executions, slowing down the program</li>
+</ul></div></div>
+<div class="autopermalink" aria-hidden="true" data-description="Reading Question 4.6.5.4: Common Nested Loop Traps"><a tabindex="-1" href="#checkpoint-4-6-traps-match" title="Copy heading and permalink for Reading Question 4.6.5.4: Common Nested Loop Traps" aria-label="Copy heading and permalink for Reading Question 4.6.5.4: Common Nested Loop Traps">🔗</a></div>
+</article><div class="autopermalink" aria-hidden="true" data-description="Reading Questions 4.6.5: Checkpoint"><a tabindex="-1" href="#checkpoint-4-6" title="Copy heading and permalink for Reading Questions 4.6.5: Checkpoint" aria-label="Copy heading and permalink for Reading Questions 4.6.5: Checkpoint">🔗</a></div>
 </section><div class="autopermalink" aria-hidden="true" data-description="Subsection 4.6.5: Common Traps in Nested Loops"><a tabindex="-1" href="#subsec-4-6-5-common-traps-nested-loops" title="Copy heading and permalink for Subsection 4.6.5: Common Traps in Nested Loops" aria-label="Copy heading and permalink for Subsection 4.6.5: Common Traps in Nested Loops">🔗</a></div>
 </section><div class="autopermalink" aria-hidden="true" data-description="Section 4.6: Nested Loops"><a tabindex="-1" href="#sec-4-6-nested-loops" title="Copy heading and permalink for Section 4.6: Nested Loops" aria-label="Copy heading and permalink for Section 4.6: Nested Loops">🔗</a></div>
 </section>
